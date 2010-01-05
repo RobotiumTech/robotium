@@ -26,28 +26,29 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 /**
- * This class is used to make instrumentation testing easier. It supports test cases
- * that span over multiple activities. When writing tests there is no need to plan for or expect
- * new activities in the test case. All is handled automatically by Robotium-Solo. Robotium-Solo
- * can be used in conjunction with ActivityInstrumentationTestCase2. The test cases
- * are written from a user perspective were technical details are not needed. 
+ * This class is used to make instrumentation testing easier. It supports test
+ * cases that span over multiple activities. When writing tests there is no need
+ * to plan for or expect new activities in the test case. All is handled
+ * automatically by Robotium-Solo. Robotium-Solo can be used in conjunction with
+ * ActivityInstrumentationTestCase2. The test cases are written from a user
+ * perspective were technical details are not needed.
  * 
  * Example of usage (test case spanning over multiple activities):
  * 
  * <pre>
  * 
- * public void setUp() throws Exception {        
- *	  solo = new Solo(getInstrumentation(), getActivity());    }
- *   
- *	public void testTextShows() throws Exception {           
- *	
- *	  solo.clickOnText("Categories");      
- *	  solo.clickOnText("Other");      
- *	  solo.clickOnButton("Edit");      
- *	  solo.searchText("Edit Window");      
- *	  solo.clickOnButton("Commit");      
- *	  assertTrue(solo.searchText("Changes have been made successfully"));     
- *
+ * public void setUp() throws Exception {
+ * 	solo = new Solo(getInstrumentation(), getActivity());
+ * }
+ * 
+ * public void testTextShows() throws Exception {
+ * 
+ * 	solo.clickOnText(&quot;Categories&quot;);
+ * 	solo.clickOnText(&quot;Other&quot;);
+ * 	solo.clickOnButton(&quot;Edit&quot;);
+ * 	solo.searchText(&quot;Edit Window&quot;);
+ * 	solo.clickOnButton(&quot;Commit&quot;);
+ * 	assertTrue(solo.searchText(&quot;Changes have been made successfully&quot;));
  * }
  * 
  * </pre>
@@ -70,7 +71,7 @@ public class Solo {
 	private ArrayList<TextView> textViewList = new ArrayList();
 
 	private ArrayList<GridView> gridViewList = new ArrayList();
-	
+
 	private ArrayList<ImageView> imageViewList = new ArrayList();
 
 	private ArrayList<View> idleList = new ArrayList();
@@ -91,6 +92,7 @@ public class Solo {
 	 * Constructor that takes in the instrumentation and the start activity.
 	 * 
 	 * @param inst the instrumentation object
+	 * 
 	 * @param activity the start activity
 	 */
 	public Solo(Instrumentation inst, Activity activity) {
@@ -103,7 +105,8 @@ public class Solo {
 	/*
 	 * This method is used to trigger a sleep with a certain time.
 	 * 
-	 * @param time the time in which the application under test should be paused.
+	 * @param time the time in which the application under test should be
+	 * paused.
 	 */
 	private void sleep(int time) {
 		try {
@@ -128,6 +131,22 @@ public class Solo {
 	}
 
 	/*
+	 * Private method used to get the absolute top view in an activity.
+	 * 
+	 * @param the view whose top parent is requested.
+	 * 
+	 * @return the top parent view.
+	 */
+	private View getTopParent(View view) {
+		if (!view.getParent().getClass().getName().equals(
+				"android.view.ViewRoot")) {
+			return getTopParent((View) view.getParent());
+		} else {
+			return view;
+		}
+	}
+
+	/*
 	 * Used to get the views located in the current activity.
 	 * 
 	 * @return ArrayList with the views.
@@ -136,10 +155,9 @@ public class Solo {
 		getCurrentActivity();
 		inst.waitForIdleSync();
 		try {
-
 			View decorView = activity.getWindow().getDecorView();
 			viewList.clear();
-			getViews(decorView);
+			getViews(getTopParent(decorView));
 			return viewList;
 		} catch (Throwable e) {
 			e.printStackTrace();
@@ -148,12 +166,8 @@ public class Solo {
 
 	}
 
-
-
-	
 	/*
-	 * Method used instead of instrumentation.waitForIdleSync()
-	 * 
+	 * Method used instead of instrumentation.waitForIdleSync().
 	 */
 	public void waitForIdle() {
 		if (idleList != null && idleList.size() != 0) {
@@ -161,8 +175,7 @@ public class Solo {
 			if (idleList.size() != getViews().size()) {
 				idleList = getViews();
 				waitForIdle();
-			}
-			else {
+			} else {
 				idleList.clear();
 			}
 		} else {
@@ -184,10 +197,11 @@ public class Solo {
 	}
 
 	/*
-	 * Private method which adds all the views located in the currently active activity to an
-	 * ArrayList.
+	 * Private method which adds all the views located in the currently active
+	 * activity to an ArrayList.
 	 * 
-	 * @param view the view who's children should be added to the viewList arraylist.
+	 * @param view the view who's children should be added to the viewList
+	 * arraylist.
 	 */
 	private void getViews(View view) {
 		viewList.add(view);
@@ -204,6 +218,7 @@ public class Solo {
 	 * activity.
 	 * 
 	 * @param search the search string to be searched.
+	 * 
 	 * @return the EditText found or null if nothing is found.
 	 */
 	public EditText searchEditText(String search) {
@@ -222,8 +237,9 @@ public class Solo {
 	/*
 	 * Method used to search for a string in the TextViews located in the
 	 * current activity.
-	 *
+	 * 
 	 * @param search the search string to be searched.
+	 * 
 	 * @return true if search string is found.
 	 */
 
@@ -235,11 +251,13 @@ public class Solo {
 		else
 			return false;
 	}
-	
+
 	/*
-	 * This method searches the current activity for a textview with a given text.
+	 * This method searches the current activity for a textview with a given
+	 * text.
 	 * 
 	 * @param search the search string to be searched.
+	 * 
 	 * @return true if found.
 	 */
 
@@ -315,7 +333,8 @@ public class Solo {
 	/*
 	 * This method will focus an item located at x,y
 	 * 
-	 * @param x the x coordinate 
+	 * @param x the x coordinate
+	 * 
 	 * @param y the y coordinate
 	 */
 	private void focusItemOnScreen(float x, float y) {
@@ -333,6 +352,7 @@ public class Solo {
 	 * Private method to click on a specific coordinate on the screen
 	 * 
 	 * @param x the x coordinate
+	 * 
 	 * @param y the y coordinate
 	 */
 	private void clickOnScreen(float x, float y) {
@@ -364,6 +384,7 @@ public class Solo {
 	 * view.
 	 * 
 	 * @param view the view that should be clicked.
+	 * 
 	 * @param side the side of the view that should be clicked.
 	 */
 	private void clickOnScreen(View view, int side) {
@@ -390,6 +411,7 @@ public class Solo {
 	 * Method used to click on a button with the given text.
 	 * 
 	 * @param name the name of the button presented to the user.
+	 * 
 	 * @return true if button is found.
 	 */
 	public boolean clickOnButton(String name) {
@@ -407,12 +429,12 @@ public class Solo {
 				found = true;
 				return found;
 			}
-			
+
 		}
 		return found;
 
 	}
-	
+
 	/*
 	 * Private method used to drag the screen.
 	 */
@@ -450,10 +472,13 @@ public class Solo {
 	}
 
 	/*
-	 * This method is used to click on a specific view displaying a certain text.
+	 * This method is used to click on a specific view displaying a certain
+	 * text.
 	 * 
 	 * @param text the text that should be clicked on.
-	 * @param side the side of the text that should be clicked. 
+	 * 
+	 * @param side the side of the text that should be clicked.
+	 * 
 	 * @return true if text is found.
 	 */
 
@@ -498,11 +523,11 @@ public class Solo {
 	}
 
 	/*
-	 *This method used to click on a button with a specific index.
+	 * This method used to click on a button with a specific index.
 	 * 
 	 * @param index the index number of the button.
-	 * @return true if button with specified index is found.
 	 * 
+	 * @return true if button with specified index is found.
 	 */
 	public boolean clickOnButton(int index) {
 		boolean found = false;
@@ -521,7 +546,7 @@ public class Solo {
 
 		return found;
 	}
-	
+
 	/*
 	 * This method is used to scroll down a list.
 	 */
@@ -546,7 +571,7 @@ public class Solo {
 		int x = activity.getWindowManager().getDefaultDisplay().getWidth() / 2;
 		drag(x, x, yStart, yEnd, Math.abs(yStart - yEnd));
 	}
-	
+
 	/*
 	 * This method is used to scroll up a list.
 	 */
@@ -570,7 +595,7 @@ public class Solo {
 	/*
 	 * This method is used to scroll horizontally.
 	 * 
-	 * @param side the side in which to scroll. 
+	 * @param side the side in which to scroll.
 	 */
 	public void scrollToSide(int side) {
 		int screenHeight = activity.getWindowManager().getDefaultDisplay()
@@ -591,6 +616,7 @@ public class Solo {
 	 * Private method used to get Y position of View.
 	 * 
 	 * @param view the view in which the Y position is requested.
+	 * 
 	 * @return y position of View.
 	 */
 	private int getY(View view) {
@@ -607,58 +633,56 @@ public class Solo {
 	 * This method is used to click on a specific text.
 	 * 
 	 * @param text the text to click on.
+	 * 
 	 * @return true if found.
 	 */
 	public void clickOnText(String text) {
 		clickOnText(text, CENTER);
 
 	}
-	
+
 	/*
 	 * This method is used to enter text into an EditText with a certain index.
 	 * 
 	 * @param index the index of the image.
-	 * @param text the text string that is to be entered into the text field.
 	 * 
+	 * @param text the text string that is to be entered into the text field.
 	 */
-	
-	public void enterText(int index, String text)
-	{
+
+	public void enterText(int index, String text) {
 		waitForIdle();
-		try{	
-		clickOnScreen(getCurrentEditTexts().get(index));
-		inst.sendStringSync(text);
-		waitForIdle();
-		inst.sendKeyDownUpSync(KeyEvent.KEYCODE_ENTER);
-		}catch(IndexOutOfBoundsException e){
+		try {
+			clickOnScreen(getCurrentEditTexts().get(index));
+			inst.sendStringSync(text);
+			waitForIdle();
+			inst.sendKeyDownUpSync(KeyEvent.KEYCODE_ENTER);
+		} catch (IndexOutOfBoundsException e) {
 			e.printStackTrace();
-			Assert.assertTrue("Index is not valid", false);	
-		}catch(NullPointerException e)
-		{
+			Assert.assertTrue("Index is not valid", false);
+		} catch (NullPointerException e) {
 			Assert.assertTrue("NullPointerException", false);
 		}
-			
+
 	}
-	
+
 	/*
 	 * This method is used to click on an image with a certain index
 	 * 
-	 * @param index the index of the image to be clicked. 
+	 * @param index the index of the image to be clicked.
 	 */
-	public void clickOnImage(int index)
-	{
+	public void clickOnImage(int index) {
 		waitForIdle();
-		try{
+		try {
 			clickOnScreen(getCurrentImageViews().get(index));
-		}catch(IndexOutOfBoundsException e)
-		{
+		} catch (IndexOutOfBoundsException e) {
 			e.printStackTrace();
 			Assert.assertTrue("Index is not valid", false);
 		}
 	}
-	
+
 	/*
-	 * This method returns an ArrayList of the images contained in the current activity.
+	 * This method returns an ArrayList of the images contained in the current
+	 * activity.
 	 * 
 	 * @return ArrayList of the images contained in the current activity.
 	 */
@@ -670,8 +694,8 @@ public class Solo {
 		while (iterator.hasNext() && viewList != null) {
 			View view = iterator.next();
 			if (view != null
-					&& view.getClass().toString().equals(
-							"class android.widget.ImageView")) {
+					&& view.getClass().getName().equals(
+							"android.widget.ImageView")) {
 				imageViewList.add((ImageView) view);
 				Log.d(LOG_TAG, "Har hittat imageview!!!");
 				inst.waitForIdleSync();
@@ -699,6 +723,7 @@ public class Solo {
 	 * This method returns a button with a certain index.
 	 * 
 	 * @param index the index of the button
+	 * 
 	 * @return a button with a specific index.
 	 */
 	public Button getButton(int index) {
@@ -709,7 +734,8 @@ public class Solo {
 	}
 
 	/*
-	 * This method returns the number of buttons located in the current activity.
+	 * This method returns the number of buttons located in the current
+	 * activity.
 	 * 
 	 * @return the number of buttons in the current activity.
 	 */
@@ -717,7 +743,9 @@ public class Solo {
 		return getCurrentButtons().size();
 	}
 
-	/* This method returns an ArrayList of all the EditTexts located in the current activity.
+	/*
+	 * This method returns an ArrayList of all the EditTexts located in the
+	 * current activity.
 	 * 
 	 * @return an arraylist of the EditTexts located in the current activity.
 	 */
@@ -727,11 +755,8 @@ public class Solo {
 		getViews();
 		Iterator<View> iterator = viewList.iterator();
 		while (iterator.hasNext() && viewList != null) {
-
 			View view = iterator.next();
-			Log.d(LOG_TAG, "view in getEditTexts: " + view.getClass().getName());
-			if (view.getClass().toString().equals(
-					"class android.widget.EditText"))
+			if (view.getClass().getName().equals("android.widget.EditText"))
 				editTextList.add((EditText) view);
 		}
 		return editTextList;
@@ -753,8 +778,7 @@ public class Solo {
 
 			View view = iterator.next();
 
-			if (view.getClass().toString().equals(
-					"class android.widget.TextView")) {
+			if (view.getClass().getName().equals("android.widget.TextView")) {
 				textViewList.add((TextView) view);
 				inst.waitForIdleSync();
 
@@ -766,7 +790,8 @@ public class Solo {
 	}
 
 	/*
-	 * This method returns an ArrayList of the GridViews located in the current activity.
+	 * This method returns an ArrayList of the GridViews located in the current
+	 * activity.
 	 * 
 	 * @return an arraylist of the GridViews located in the current activity.
 	 */
@@ -777,15 +802,15 @@ public class Solo {
 		while (iterator.hasNext() && viewList != null) {
 
 			View view = iterator.next();
-			if (view.getClass().toString().equals(
-					"class android.widget.GridView"))
+			if (view.getClass().getName().equals("android.widget.GridView"))
 				gridViewList.add((GridView) view);
 		}
 		return gridViewList;
 
 	}
+
 	/*
-	 * This method returns a button with a given index. 
+	 * This method returns a button with a given index.
 	 * 
 	 * @return button that was searched.
 	 */
@@ -807,7 +832,8 @@ public class Solo {
 	}
 
 	/*
-	 * This method returns an ArrayList with the buttons located in the current activity.
+	 * This method returns an ArrayList with the buttons located in the current
+	 * activity.
 	 * 
 	 * @return and Arraylist of the buttons located in the current activity.
 	 */
@@ -819,8 +845,7 @@ public class Solo {
 		while (iterator.hasNext() && viewList != null) {
 
 			View view = iterator.next();
-			if (view.getClass().toString()
-					.equals("class android.widget.Button"))
+			if (view.getClass().getName().equals("android.widget.Button"))
 				buttonList.add((Button) view);
 
 		}
