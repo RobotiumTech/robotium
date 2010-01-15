@@ -423,7 +423,7 @@ public class Solo {
 		while (iterator.hasNext() && button != null) {
 
 			Button but = iterator.next();
-			if (but.getText().toString().equals(name)) {
+			if (but.getText().toString().toLowerCase().equals(name.toLowerCase())) {
 				clickOnScreen(but);
 				inst.waitForIdleSync();
 				found = true;
@@ -492,7 +492,7 @@ public class Solo {
 		TextView textView = null;
 		while (iterator.hasNext()) {
 			textView = iterator.next();
-			if (textView.getText().toString().contains(text)) {
+			if (textView.getText().toString().toLowerCase().contains(text.toLowerCase())) {
 				found = true;
 				break;
 			}
