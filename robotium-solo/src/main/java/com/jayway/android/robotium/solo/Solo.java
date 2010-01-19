@@ -3,9 +3,7 @@ package com.jayway.android.robotium.solo;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-
 import junit.framework.Assert;
-
 import android.app.Activity;
 import android.app.ActivityManager;
 import android.app.Instrumentation;
@@ -14,7 +12,6 @@ import android.app.Instrumentation.ActivityMonitor;
 import android.content.ComponentName;
 import android.content.IntentFilter;
 import android.os.SystemClock;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
@@ -79,14 +76,14 @@ public class Solo {
 	static final int RIGHT = 0;
 	static final int LEFT = 1;
 	static final int CENTER = 2;
+	static final int CLICKONTEXT = 3;
+	static final int CLICKONBUTTON = 4;
 	private int countSearch = 0;
-
-	private final String LOG_TAG = "Instrumentation";
-
 	private Activity activity;
 	private Instrumentation inst;
 	private ActivityMonitor activityMonitor;
 	private IntentFilter filter;
+	private TextView checkTextView = null;
 
 	/*
 	 * Constructor that takes in the instrumentation and the start activity.
@@ -153,7 +150,7 @@ public class Solo {
 	 */
 	public ArrayList<View> getViews() {
 		getCurrentActivity();
-		inst.waitForIdleSync();
+		waitForIdle();
 		try {
 			View decorView = activity.getWindow().getDecorView();
 			viewList.clear();
@@ -245,7 +242,6 @@ public class Solo {
 
 	public boolean searchButton(String search) {
 		waitForIdle();
-		inst.waitForIdleSync();
 		if (getButton(search) != null)
 			return true;
 		else
@@ -263,7 +259,6 @@ public class Solo {
 
 	public boolean searchText(String search) {
 		waitForIdle();
-		inst.waitForIdleSync();
 		if (getTextView(search) != null)
 			return true;
 		else
@@ -278,14 +273,12 @@ public class Solo {
 	 */
 	private TextView getTextView(String search) {
 		waitForIdle();
-		inst.waitForIdleSync();
 		textViewList.clear();
-		textViewList = getCurrentTextViews();
+		textViewList = getCurrentTextViews(null);
 		Iterator<TextView> iterator = textViewList.iterator();
 		while (iterator.hasNext()) {
 			TextView textView = (TextView) iterator.next();
 			if (textView.getText().toString().contains(search)) {
-				inst.waitForIdleSync();
 				countSearch = 0;
 				return textView;
 
@@ -307,7 +300,7 @@ public class Solo {
 	 */
 
 	public Activity getCurrentActivity() {
-		inst.waitForIdleSync();
+		waitForIdle();
 		ActivityManager activityManager = (ActivityManager) inst
 				.getTargetContext().getSystemService("activity");
 		List list = activityManager.getRunningTasks(10);
@@ -319,11 +312,9 @@ public class Solo {
 		if (nameActivity.equals(nameComp)) {
 			return activity;
 		} else {
-			inst.waitForIdleSync();
 			if (activityMonitor != null) {
 				activity = activityMonitor.getLastActivity();
 				activityList.add(activity);
-				inst.waitForIdleSync();
 			}
 			return activity;
 		}
@@ -344,7 +335,7 @@ public class Solo {
 		MotionEvent event = MotionEvent.obtain(downTime, eventTime,
 				MotionEvent.ACTION_DOWN, x, y, 0);
 		inst.sendPointerSync(event);
-		inst.waitForIdleSync();
+		waitForIdle();
 
 	}
 
@@ -365,7 +356,7 @@ public class Solo {
 				MotionEvent.ACTION_UP, x, y, 0);
 		inst.sendPointerSync(event);
 		inst.sendPointerSync(event2);
-		inst.waitForIdleSync();
+		waitForIdle();
 
 	}
 
@@ -400,40 +391,38 @@ public class Solo {
 		if (side == RIGHT) {
 			clickOnScreen(activity.getWindowManager().getDefaultDisplay()
 					.getWidth() - 5, y);
-			inst.waitForIdleSync();
 		} else {
 			clickOnScreen(x, y);
-			inst.waitForIdleSync();
 		}
 	}
 
 	/*
-	 * Method used to click on a button with the given text.
+	 * Method used to click on a button with a given text.
 	 * 
 	 * @param name the name of the button presented to the user.
 	 * 
-	 * @return true if button is found.
 	 */
-	public boolean clickOnButton(String name) {
-		inst.waitForIdleSync();
+	public void clickOnButton(String name) {
+		Button button = null;
 		waitForIdle();
 		boolean found = false;
-		ArrayList<Button> button = getCurrentButtons();
-		Iterator<Button> iterator = button.iterator();
-		while (iterator.hasNext() && button != null) {
-
-			Button but = iterator.next();
-			if (but.getText().toString().toLowerCase().equals(name.toLowerCase())) {
-				clickOnScreen(but);
-				inst.waitForIdleSync();
+		ArrayList<Button> buttonList = getCurrentButtons();
+		Iterator<Button> iterator = buttonList.iterator();
+		while (iterator.hasNext()) {
+			button = iterator.next();
+			if (button.getText().toString().equals(name)) {
 				found = true;
-				return found;
+				break;
 			}
-
 		}
-		return found;
+		if (found) {
+			clickOnScreen(button, CENTER);
+		} else {
+			scrollDownList(CLICKONBUTTON, name);
+		}
 
 	}
+
 
 	/*
 	 * Private method used to drag the screen.
@@ -451,7 +440,7 @@ public class Solo {
 		MotionEvent event = MotionEvent.obtain(downTime, eventTime,
 				MotionEvent.ACTION_DOWN, fromX, y, 0);
 		inst.sendPointerSync(event);
-		inst.waitForIdleSync();
+		waitForIdle();
 
 		for (int i = 0; i < stepCount; ++i) {
 			y += yStep;
@@ -467,7 +456,7 @@ public class Solo {
 		event = MotionEvent.obtain(downTime, eventTime, MotionEvent.ACTION_UP,
 				fromX, y, 0);
 		inst.sendPointerSync(event);
-		inst.waitForIdleSync();
+		waitForIdle();
 
 	}
 
@@ -479,47 +468,27 @@ public class Solo {
 	 * 
 	 * @param side the side of the text that should be clicked.
 	 * 
-	 * @return true if text is found.
 	 */
 
-	public boolean clickOnText(String text, int side) {
+	public void clickOnText(String text, int side) {
 		waitForIdle();
 		boolean found = false;
-		String tView;
-		ArrayList<TextView> tvl = getCurrentTextViews();
-		Assert.assertTrue("The TextView List is null!", tvl != null);
-		Iterator<TextView> iterator = getCurrentTextViews().iterator();
+		Iterator<TextView> iterator = getCurrentTextViews(null).iterator();
 		TextView textView = null;
 		while (iterator.hasNext()) {
 			textView = iterator.next();
-			if (textView.getText().toString().toLowerCase().contains(text.toLowerCase())) {
+			if (textView.getText().toString().toLowerCase().contains(
+					text.toLowerCase())) {
 				found = true;
 				break;
 			}
 		}
 
 		if (found) {
-			int[] xy = new int[2];
-			textView.getLocationOnScreen(xy);
 			clickOnScreen(textView, side);
-			inst.waitForIdleSync();
-			return found;
 		} else {
-			tView = getCurrentTextViews().get(getCurrentTextViews().size() - 2)
-					.getText().toString();
-			scrollDownList();
-			inst.waitForIdleSync();
-			waitForIdle();
-			if (tView != getCurrentTextViews().get(
-					getCurrentTextViews().size() - 2).getText().toString()) {
-				found = clickOnText(text, side);
-			}
+			scrollDownList(CLICKONTEXT, text);
 		}
-		inst.waitForIdleSync();
-		Assert.assertTrue("The TextView with given text: " + text
-				+ " is not found!", found);
-		return found;
-
 	}
 
 	/*
@@ -531,15 +500,15 @@ public class Solo {
 	 */
 	public boolean clickOnButton(int index) {
 		boolean found = false;
-		Button but = null;
+		Button button = null;
 		try {
-			but = getButton(index);
+			button = getButton(index);
 		} catch (IndexOutOfBoundsException e) {
 			e.printStackTrace();
 		}
 
-		if (but != null) {
-			clickOnScreen(but, CENTER);
+		if (button != null) {
+			clickOnScreen(button, CENTER);
 			waitForIdle();
 			found = true;
 		}
@@ -548,28 +517,68 @@ public class Solo {
 	}
 
 	/*
-	 * This method is used to scroll down a list.
+	 * This method is used to scroll down a list or scroll view.
+	 * 
+	 * param method the method that makes the scrollDownList call.
+	 * 
+	 * param text the label that is to be clicked. 
 	 */
-	private void scrollDownList() {
+	private void scrollDownList(int method, String text) {
+		View scrollListView = null;
+		Iterator iterator = viewList.iterator();
+		while (iterator.hasNext()) {
+			scrollListView = (View) iterator.next();
 
-		int size = getCurrentTextViews().size();
-		ArrayList<TextView> tViewList = getCurrentTextViews();
-		int number = 0;
-		TextView tViewSelected = null;
-		TextView ttView = null;
-		for (int i = 0; i < tViewList.size(); i++) {
-			ttView = tViewList.get(i);
-			if (ttView.getText().toString().equals("")) {
-				number = i;
+			if (scrollListView.getClass().getName().equals(
+					"android.widget.ScrollView")
+					|| scrollListView.getClass().getName().equals(
+							"android.widget.ListView")) {
+				getCurrentTextViews(scrollListView);
 				break;
 			}
 
 		}
-		TextView tView1 = tViewList.get(number + 1);
-		int yStart = getY(getCurrentTextViews().get(size - 3));
-		int yEnd = getY(tView1);
+
+		int size = textViewList.size();
+		int yStart = (scrollListView.getHeight() - 10);
+		int yEnd = (scrollListView.getHeight() - (yStart - 10));
 		int x = activity.getWindowManager().getDefaultDisplay().getWidth() / 2;
 		drag(x, x, yStart, yEnd, Math.abs(yStart - yEnd));
+
+		if (checkTextView != null
+				&& !checkTextView.getText().equals(
+						textViewList.get(size - 1).getText())) {
+			checkTextView = textViewList.get(size - 1);
+			runMethod(method, text);
+		} else if (checkTextView == null) {
+			checkTextView = textViewList.get(size - 1);
+			runMethod(method, text);
+
+		} else {
+			Assert.assertTrue(text + " is not found!", false);
+		}
+
+	}
+		
+	/*
+	 * Private method used to start the method that called scrollDownList().
+	 * 
+	 * param method the method to be run.
+	 * 
+	 * param text the label that should be clicked.
+	 */
+	private void runMethod(int method, String text)
+	{
+		switch (method) {
+		case CLICKONTEXT:
+			clickOnText(text);
+			break;
+		case CLICKONBUTTON:	
+			clickOnButton(text);
+		default:
+			break;
+		}
+		
 	}
 
 	/*
@@ -579,13 +588,13 @@ public class Solo {
 		waitForIdle();
 		int x = activity.getWindowManager().getDefaultDisplay().getWidth() / 2;
 		int y = activity.getWindowManager().getDefaultDisplay().getHeight();
-		String oldText = getCurrentTextViews().get(
-				getCurrentTextViews().size() - 3).getText().toString();
+		String oldText = getCurrentTextViews(null).get(
+				getCurrentTextViews(null).size() - 3).getText().toString();
 		drag(x, x, 200, y - 100, 5);
 		waitForIdle();
-		String newText = getCurrentTextViews().get(
-				getCurrentTextViews().size() - 3).getText().toString();
-		ArrayList<TextView> newTextViews = getCurrentTextViews();
+		String newText = getCurrentTextViews(null).get(
+				getCurrentTextViews(null).size() - 3).getText().toString();
+		ArrayList<TextView> newTextViews = getCurrentTextViews(null);
 		if (!oldText.equals(newText)) {
 			scrollUpList();
 		}
@@ -610,23 +619,6 @@ public class Solo {
 			drag(0, x, y, y, screenWidth);
 		else if (side == RIGHT)
 			drag(x, 0, y, y, screenWidth);
-	}
-
-	/*
-	 * Private method used to get Y position of View.
-	 * 
-	 * @param view the view in which the Y position is requested.
-	 * 
-	 * @return y position of View.
-	 */
-	private int getY(View view) {
-
-		final int viewHeight = view.getHeight();
-		int[] xy = new int[2];
-		view.getLocationOnScreen(xy);
-
-		int y = (int) (xy[1] - (viewHeight / 2.0f));
-		return y;
 	}
 
 	/*
@@ -666,7 +658,7 @@ public class Solo {
 	}
 
 	/*
-	 * This method is used to click on an image with a certain index
+	 * This method is used to click on an image with a certain index.
 	 * 
 	 * @param index the index of the image to be clicked.
 	 */
@@ -687,9 +679,9 @@ public class Solo {
 	 * @return ArrayList of the images contained in the current activity.
 	 */
 	public ArrayList<ImageView> getCurrentImageViews() {
+		waitForIdle();
 		getViews();
 		imageViewList.clear();
-		inst.waitForIdleSync();
 		Iterator<View> iterator = viewList.iterator();
 		while (iterator.hasNext() && viewList != null) {
 			View view = iterator.next();
@@ -697,9 +689,6 @@ public class Solo {
 					&& view.getClass().getName().equals(
 							"android.widget.ImageView")) {
 				imageViewList.add((ImageView) view);
-				Log.d(LOG_TAG, "Har hittat imageview!!!");
-				inst.waitForIdleSync();
-
 			}
 
 		}
@@ -722,7 +711,7 @@ public class Solo {
 	/*
 	 * This method returns a button with a certain index.
 	 * 
-	 * @param index the index of the button
+	 * @param index the index of the button.
 	 * 
 	 * @return a button with a specific index.
 	 */
@@ -751,7 +740,6 @@ public class Solo {
 	 */
 	public ArrayList<EditText> getCurrentEditTexts() {
 		editTextList.clear();
-		inst.waitForIdleSync();
 		getViews();
 		Iterator<View> iterator = viewList.iterator();
 		while (iterator.hasNext() && viewList != null) {
@@ -767,12 +755,18 @@ public class Solo {
 	 * This method returns an arraylist of the textviews located in the current
 	 * activity.
 	 * 
-	 * @return an arraylist of the TextViews located in the current activity.
+	 * @param parent the parent View in which TextViews should be returned. Null if 
+	 * all TextViews from the current activity should be returned.
+	 * 
+	 * @return an ArrayList of the TextViews located in the current activity or view.
 	 */
-	public ArrayList<TextView> getCurrentTextViews() {
-		getViews();
+	public ArrayList<TextView> getCurrentTextViews(View parent) {
+		if(parent == null)
+			getViews();
+		else
+			getViews(parent);
+		
 		textViewList.clear();
-		inst.waitForIdleSync();
 		Iterator<View> iterator = viewList.iterator();
 		while (iterator.hasNext() && viewList != null) {
 
@@ -780,8 +774,6 @@ public class Solo {
 
 			if (view.getClass().getName().equals("android.widget.TextView")) {
 				textViewList.add((TextView) view);
-				inst.waitForIdleSync();
-
 			}
 
 		}
@@ -793,7 +785,7 @@ public class Solo {
 	 * This method returns an ArrayList of the GridViews located in the current
 	 * activity.
 	 * 
-	 * @return an arraylist of the GridViews located in the current activity.
+	 * @return an ArrayList of the GridViews located in the current activity.
 	 */
 	public ArrayList<GridView> getCurrentGridViews() {
 		getViews();
@@ -815,14 +807,12 @@ public class Solo {
 	 * @return button that was searched.
 	 */
 	private Button getButton(String search) {
-		inst.waitForIdleSync();
 		buttonList.clear();
 		buttonList = getCurrentButtons();
 		Iterator<Button> iterator = buttonList.iterator();
 		while (iterator.hasNext()) {
 			Button button = (Button) iterator.next();
 			if (button.getText().toString().contains(search)) {
-				inst.waitForIdleSync();
 				return button;
 
 			}
@@ -835,7 +825,7 @@ public class Solo {
 	 * This method returns an ArrayList with the buttons located in the current
 	 * activity.
 	 * 
-	 * @return and Arraylist of the buttons located in the current activity.
+	 * @return and ArrayList of the buttons located in the current activity.
 	 */
 	public ArrayList<Button> getCurrentButtons() {
 		buttonList.clear();
