@@ -89,8 +89,8 @@ public class Solo {
 	 * Constructor that takes in the instrumentation and the start activity.
 	 * 
 	 * @param inst the instrumentation object
-	 * 
 	 * @param activity the start activity
+	 * 
 	 */
 	public Solo(Instrumentation inst, Activity activity) {
 		this.inst = inst;
@@ -103,7 +103,8 @@ public class Solo {
 	 * This method is used to trigger a sleep with a certain time.
 	 * 
 	 * @param time the time in which the application under test should be
-	 * paused.
+	 * paused
+	 *
 	 */
 	private void sleep(int time) {
 		try {
@@ -117,6 +118,7 @@ public class Solo {
 	/*
 	 * This is were the activityMonitor is set up. The monitor will keep check
 	 * of the currently active activity.
+	 *
 	 */
 	private void setupActivityMonitor() {
 
@@ -130,9 +132,9 @@ public class Solo {
 	/*
 	 * Private method used to get the absolute top view in an activity.
 	 * 
-	 * @param the view whose top parent is requested.
+	 * @param the view whose top parent is requested
+	 * @return the top parent view
 	 * 
-	 * @return the top parent view.
 	 */
 	private View getTopParent(View view) {
 		if (!view.getParent().getClass().getName().equals(
@@ -146,11 +148,12 @@ public class Solo {
 	/*
 	 * Used to get the views located in the current activity.
 	 * 
-	 * @return ArrayList with the views.
+	 * @return ArrayList with the views
+	 *
 	 */
 	public ArrayList<View> getViews() {
 		getCurrentActivity();
-		waitForIdle();
+		inst.waitForIdleSync();
 		try {
 			View decorView = activity.getWindow().getDecorView();
 			viewList.clear();
@@ -165,6 +168,7 @@ public class Solo {
 
 	/*
 	 * Method used instead of instrumentation.waitForIdleSync().
+	 * 
 	 */
 	public void waitForIdle() {
 		if (idleList != null && idleList.size() != 0) {
@@ -198,7 +202,8 @@ public class Solo {
 	 * activity to an ArrayList.
 	 * 
 	 * @param view the view who's children should be added to the viewList
-	 * arraylist.
+	 * arraylist
+	 * 
 	 */
 	private void getViews(View view) {
 		viewList.add(view);
@@ -214,9 +219,9 @@ public class Solo {
 	 * Searches for a search string in the EditTexts located in the current
 	 * activity.
 	 * 
-	 * @param search the search string to be searched.
+	 * @param search the search string to be searched
+	 * @return the EditText found or null if nothing is found
 	 * 
-	 * @return the EditText found or null if nothing is found.
 	 */
 	public EditText searchEditText(String search) {
 		editTextList = getCurrentEditTexts();
@@ -235,9 +240,9 @@ public class Solo {
 	 * Method used to search for a string in the TextViews located in the
 	 * current activity.
 	 * 
-	 * @param search the search string to be searched.
+	 * @param search the search string to be searched
+	 * @return true if search string is found
 	 * 
-	 * @return true if search string is found.
 	 */
 
 	public boolean searchButton(String search) {
@@ -252,9 +257,9 @@ public class Solo {
 	 * This method searches the current activity for a textview with a given
 	 * text.
 	 * 
-	 * @param search the search string to be searched.
+	 * @param search the search string to be searched
+	 * @return true if found
 	 * 
-	 * @return true if found.
 	 */
 
 	public boolean searchText(String search) {
@@ -270,6 +275,7 @@ public class Solo {
 	 * string.
 	 * 
 	 * @return TextView
+	 * 
 	 */
 	private TextView getTextView(String search) {
 		waitForIdle();
@@ -297,10 +303,11 @@ public class Solo {
 	 * This method returns the current activity.
 	 * 
 	 * @return current activity
+	 * 
 	 */
 
 	public Activity getCurrentActivity() {
-		waitForIdle();
+		inst.waitForIdleSync();
 		ActivityManager activityManager = (ActivityManager) inst
 				.getTargetContext().getSystemService("activity");
 		List list = activityManager.getRunningTasks(10);
@@ -324,9 +331,9 @@ public class Solo {
 	/*
 	 * This method will focus an item located at x,y
 	 * 
-	 * @param x the x coordinate
-	 * 
+	 * @param x the x coordinate 
 	 * @param y the y coordinate
+	 * 
 	 */
 	private void focusItemOnScreen(float x, float y) {
 
@@ -342,9 +349,9 @@ public class Solo {
 	/*
 	 * Private method to click on a specific coordinate on the screen
 	 * 
-	 * @param x the x coordinate
-	 * 
+	 * @param x the x coordinate 
 	 * @param y the y coordinate
+	 * 
 	 */
 	private void clickOnScreen(float x, float y) {
 
@@ -363,7 +370,7 @@ public class Solo {
 	/*
 	 * Public method used to click on a specific view.ou
 	 * 
-	 * @param view the view that should bli clicked.
+	 * @param view the view that should bli clicked
 	 */
 
 	public void clickOnScreen(View view) {
@@ -374,9 +381,9 @@ public class Solo {
 	 * Private method used to click on a specific view on a specific side of the
 	 * view.
 	 * 
-	 * @param view the view that should be clicked.
+	 * @param view the view that should be clicked 
+	 * @param side the side of the view that should be clicked
 	 * 
-	 * @param side the side of the view that should be clicked.
 	 */
 	private void clickOnScreen(View view, int side) {
 		int[] xy = new int[2];
@@ -399,7 +406,7 @@ public class Solo {
 	/*
 	 * Method used to click on a button with a given text.
 	 * 
-	 * @param name the name of the button presented to the user.
+	 * @param name the name of the button presented to the user
 	 * 
 	 */
 	public void clickOnButton(String name) {
@@ -426,6 +433,7 @@ public class Solo {
 
 	/*
 	 * Private method used to drag the screen.
+	 * 
 	 */
 
 	private void drag(float fromX, float toX, float fromY, float toY,
@@ -464,10 +472,9 @@ public class Solo {
 	 * This method is used to click on a specific view displaying a certain
 	 * text.
 	 * 
-	 * @param text the text that should be clicked on.
-	 * 
-	 * @param side the side of the text that should be clicked.
-	 * 
+	 * @param text the text that should be clicked on
+	 * @param side the side of the text that should be clicked
+	 *  
 	 */
 
 	public void clickOnText(String text, int side) {
@@ -494,9 +501,9 @@ public class Solo {
 	/*
 	 * This method used to click on a button with a specific index.
 	 * 
-	 * @param index the index number of the button.
+	 * @param index the index number of the button
+	 * @return true if button with specified index is found
 	 * 
-	 * @return true if button with specified index is found.
 	 */
 	public boolean clickOnButton(int index) {
 		boolean found = false;
@@ -519,9 +526,9 @@ public class Solo {
 	/*
 	 * This method is used to scroll down a list or scroll view.
 	 * 
-	 * param method the method that makes the scrollDownList call.
-	 * 
-	 * param text the label that is to be clicked. 
+	 * param method the method that makes the scrollDownList call
+	 * param text the label that is to be clicked
+	 *
 	 */
 	private void scrollDownList(int method, String text) {
 		View scrollListView = null;
@@ -547,11 +554,11 @@ public class Solo {
 
 		if (checkTextView != null
 				&& !checkTextView.getText().equals(
-						textViewList.get(size - 1).getText())) {
-			checkTextView = textViewList.get(size - 1);
+						textViewList.get(size - 2).getText())) {
+			checkTextView = textViewList.get(size - 2);
 			runMethod(method, text);
 		} else if (checkTextView == null) {
-			checkTextView = textViewList.get(size - 1);
+			checkTextView = textViewList.get(size - 2);
 			runMethod(method, text);
 
 		} else {
@@ -563,9 +570,9 @@ public class Solo {
 	/*
 	 * Private method used to start the method that called scrollDownList().
 	 * 
-	 * param method the method to be run.
-	 * 
-	 * param text the label that should be clicked.
+	 * param method the method to be run
+	 * param text the label that should be clicked
+	 *
 	 */
 	private void runMethod(int method, String text)
 	{
@@ -575,6 +582,7 @@ public class Solo {
 			break;
 		case CLICKONBUTTON:	
 			clickOnButton(text);
+			break;
 		default:
 			break;
 		}
@@ -583,6 +591,7 @@ public class Solo {
 
 	/*
 	 * This method is used to scroll up a list.
+	 * 
 	 */
 	public void scrollUpList() {
 		waitForIdle();
@@ -604,7 +613,8 @@ public class Solo {
 	/*
 	 * This method is used to scroll horizontally.
 	 * 
-	 * @param side the side in which to scroll.
+	 * @param side the side in which to scroll
+	 * 
 	 */
 	public void scrollToSide(int side) {
 		int screenHeight = activity.getWindowManager().getDefaultDisplay()
@@ -624,9 +634,9 @@ public class Solo {
 	/*
 	 * This method is used to click on a specific text.
 	 * 
-	 * @param text the text to click on.
-	 * 
-	 * @return true if found.
+	 * @param text the text to click on
+	 * @return true if found
+	 *
 	 */
 	public void clickOnText(String text) {
 		clickOnText(text, CENTER);
@@ -636,9 +646,9 @@ public class Solo {
 	/*
 	 * This method is used to enter text into an EditText with a certain index.
 	 * 
-	 * @param index the index of the image.
-	 * 
-	 * @param text the text string that is to be entered into the text field.
+	 * @param index the index of the image
+	 * @param text the text string that is to be entered into the text field
+	 *
 	 */
 
 	public void enterText(int index, String text) {
@@ -660,7 +670,8 @@ public class Solo {
 	/*
 	 * This method is used to click on an image with a certain index.
 	 * 
-	 * @param index the index of the image to be clicked.
+	 * @param index the index of the image to be clicked
+	 *
 	 */
 	public void clickOnImage(int index) {
 		waitForIdle();
@@ -676,7 +687,8 @@ public class Solo {
 	 * This method returns an ArrayList of the images contained in the current
 	 * activity.
 	 * 
-	 * @return ArrayList of the images contained in the current activity.
+	 * @return ArrayList of the images contained in the current activity
+	 *
 	 */
 	public ArrayList<ImageView> getCurrentImageViews() {
 		waitForIdle();
@@ -699,7 +711,8 @@ public class Solo {
 	/*
 	 * This method returns an EditText with a certain index.
 	 * 
-	 * @return the EditText with a specified index.
+	 * @return the EditText with a specified index
+	 *
 	 */
 	public EditText getEditText(int index) {
 		if (editTextList == null)
@@ -711,9 +724,9 @@ public class Solo {
 	/*
 	 * This method returns a button with a certain index.
 	 * 
-	 * @param index the index of the button.
-	 * 
-	 * @return a button with a specific index.
+	 * @param index the index of the button
+	 * @return a button with a specific index
+	 *
 	 */
 	public Button getButton(int index) {
 		if (buttonList == null)
@@ -726,7 +739,8 @@ public class Solo {
 	 * This method returns the number of buttons located in the current
 	 * activity.
 	 * 
-	 * @return the number of buttons in the current activity.
+	 * @return the number of buttons in the current activity
+	 *
 	 */
 	public int getCurrenButtonsCount() {
 		return getCurrentButtons().size();
@@ -736,7 +750,8 @@ public class Solo {
 	 * This method returns an ArrayList of all the EditTexts located in the
 	 * current activity.
 	 * 
-	 * @return an arraylist of the EditTexts located in the current activity.
+	 * @return an arraylist of the EditTexts located in the current activity
+	 *
 	 */
 	public ArrayList<EditText> getCurrentEditTexts() {
 		editTextList.clear();
@@ -756,9 +771,10 @@ public class Solo {
 	 * activity.
 	 * 
 	 * @param parent the parent View in which TextViews should be returned. Null if 
-	 * all TextViews from the current activity should be returned.
+	 * all TextViews from the current activity should be returned
 	 * 
-	 * @return an ArrayList of the TextViews located in the current activity or view.
+	 * @return an ArrayList of the TextViews located in the current activity or view
+	 *
 	 */
 	public ArrayList<TextView> getCurrentTextViews(View parent) {
 		if(parent == null)
@@ -785,7 +801,8 @@ public class Solo {
 	 * This method returns an ArrayList of the GridViews located in the current
 	 * activity.
 	 * 
-	 * @return an ArrayList of the GridViews located in the current activity.
+	 * @return an ArrayList of the GridViews located in the current activity
+	 *
 	 */
 	public ArrayList<GridView> getCurrentGridViews() {
 		getViews();
@@ -804,7 +821,8 @@ public class Solo {
 	/*
 	 * This method returns a button with a given index.
 	 * 
-	 * @return button that was searched.
+	 * @return button that was searched
+	 *
 	 */
 	private Button getButton(String search) {
 		buttonList.clear();
@@ -825,7 +843,8 @@ public class Solo {
 	 * This method returns an ArrayList with the buttons located in the current
 	 * activity.
 	 * 
-	 * @return and ArrayList of the buttons located in the current activity.
+	 * @return and ArrayList of the buttons located in the current activity
+	 *
 	 */
 	public ArrayList<Button> getCurrentButtons() {
 		buttonList.clear();
