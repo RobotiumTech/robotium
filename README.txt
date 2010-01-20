@@ -1,1 +1,7 @@
-placeholder
+===============================================================================
+ROBOTIUM
+===============================================================================
+
+The project home page is at http://www.robotium.org/
+
+All documentation is there.
