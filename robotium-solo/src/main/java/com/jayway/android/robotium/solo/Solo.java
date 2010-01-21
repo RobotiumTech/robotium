@@ -178,7 +178,7 @@ public class Solo {
 	private void waitForIdle() {
 		sleep(1500);
 		long startTime = System.currentTimeMillis();
-		long timeout = 5000;
+		long timeout = 10000;
 		long endTime = startTime + timeout;
 		View decorView = null;
 		ArrayList<View> touchItems;
