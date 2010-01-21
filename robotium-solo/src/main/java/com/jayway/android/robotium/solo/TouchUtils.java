@@ -35,14 +35,14 @@ public class TouchUtils {
     /**
      * Simulate touching a specific location and dragging to a new location.
      * 
-     * param inst the instrumentation object. 
+     * @param instrumentation the instrumentation object. 
      * @param fromX X coordinate of the initial touch, in screen coordinates
      * @param toX Xcoordinate of the drag destination, in screen coordinates
      * @param fromY X coordinate of the initial touch, in screen coordinates
      * @param toY Y coordinate of the drag destination, in screen coordinates
      * @param stepCount How many move steps to include in the drag
      */
-	protected static void drag(Instrumentation inst, float fromX, float toX, float fromY, float toY,
+	protected static void drag(Instrumentation instrumentation, float fromX, float toX, float fromY, float toY,
 			int stepCount) {
 
 		long downTime = SystemClock.uptimeMillis();
