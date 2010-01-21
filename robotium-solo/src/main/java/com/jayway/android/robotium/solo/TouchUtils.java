@@ -53,7 +53,7 @@ public class TouchUtils {
 		float xStep = (toX - fromX) / stepCount;
 		MotionEvent event = MotionEvent.obtain(downTime, eventTime,
 				MotionEvent.ACTION_DOWN, fromX, y, 0);
-		inst.sendPointerSync(event);
+		instrumentation.sendPointerSync(event);
 		
 		for (int i = 0; i < stepCount; ++i) {
 			y += yStep;
@@ -61,14 +61,14 @@ public class TouchUtils {
 			eventTime = SystemClock.uptimeMillis();
 			event = MotionEvent.obtain(downTime, eventTime,
 					MotionEvent.ACTION_MOVE, x, y, 0);
-			inst.sendPointerSync(event);
-			inst.waitForIdleSync();
+			instrumentation.sendPointerSync(event);
+			instrumentation.waitForIdleSync();
 		}
 
 		eventTime = SystemClock.uptimeMillis();
 		event = MotionEvent.obtain(downTime, eventTime, MotionEvent.ACTION_UP,
 				fromX, y, 0);
-		inst.sendPointerSync(event);
+		instrumentation.sendPointerSync(event);
 
 	}
 
