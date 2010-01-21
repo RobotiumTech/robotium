@@ -92,6 +92,7 @@ public class Solo {
 	 * @param activity the start activity
 	 * 
 	 */
+	
 	public Solo(Instrumentation inst, Activity activity) {
 		this.inst = inst;
 		this.activity = activity;
@@ -106,6 +107,7 @@ public class Solo {
 	 * paused
 	 *
 	 */
+	
 	private void sleep(int time) {
 		try {
 			Thread.sleep(time);
@@ -117,9 +119,10 @@ public class Solo {
 
 	/*
 	 * This is were the activityMonitor is set up. The monitor will keep check
-	 * of the currently active activity.
+	 * for the currently active activity.
 	 *
 	 */
+	
 	private void setupActivityMonitor() {
 
 		try {
@@ -136,6 +139,7 @@ public class Solo {
 	 * @return the top parent view
 	 * 
 	 */
+	
 	private View getTopParent(View view) {
 		if (!view.getParent().getClass().getName().equals(
 				"android.view.ViewRoot")) {
@@ -151,6 +155,7 @@ public class Solo {
 	 * @return ArrayList with the views
 	 *
 	 */
+	
 	public ArrayList<View> getViews() {
 		getCurrentActivity();
 		inst.waitForIdleSync();
@@ -167,32 +172,24 @@ public class Solo {
 	}
 
 	/*
-	 * Method used instead of instrumentation.waitForIdleSync().
+	 * Private method used instead of instrumentation.waitForIdleSync().
 	 * 
 	 */
-	public void waitForIdle() {
-		if (idleList != null && idleList.size() != 0) {
+	
+	private void waitForIdle() {
+		sleep(1500);
+		long startTime = System.currentTimeMillis();
+		long timeout = 5000;
+		long endTime = startTime + timeout;
+		View decorView = null;
+		ArrayList<View> touchItems;
+
+		while (System.currentTimeMillis() <= endTime) {
+			decorView = getTopParent(getCurrentActivity().getWindow().getDecorView());
+			touchItems = decorView.getTouchables();
+			if (touchItems.size() > 0)
+				break;
 			sleep(1000);
-			if (idleList.size() != getViews().size()) {
-				idleList = getViews();
-				waitForIdle();
-			} else {
-				idleList.clear();
-			}
-		} else {
-			if (idleList != null) {
-				idleList = getViews();
-				waitForIdle();
-
-			} else {
-				try {
-					idleList = getViews();
-				} catch (Throwable e) {
-					e.printStackTrace();
-				}
-				waitForIdle();
-			}
-
 		}
 
 	}
@@ -205,6 +202,7 @@ public class Solo {
 	 * arraylist
 	 * 
 	 */
+	
 	private void getViews(View view) {
 		viewList.add(view);
 		if (view instanceof ViewGroup) {
@@ -223,6 +221,7 @@ public class Solo {
 	 * @return the EditText found or null if nothing is found
 	 * 
 	 */
+	
 	public EditText searchEditText(String search) {
 		editTextList = getCurrentEditTexts();
 		Iterator<EditText> iterator = editTextList.iterator();
@@ -274,9 +273,11 @@ public class Solo {
 	 * Private method that returns the textView that contains the given search
 	 * string.
 	 * 
+	 * @param search the string that is searched for.
 	 * @return TextView
 	 * 
 	 */
+	
 	private TextView getTextView(String search) {
 		waitForIdle();
 		textViewList.clear();
@@ -335,6 +336,7 @@ public class Solo {
 	 * @param y the y coordinate
 	 * 
 	 */
+	
 	private void focusItemOnScreen(float x, float y) {
 
 		long downTime = SystemClock.uptimeMillis();
@@ -353,6 +355,7 @@ public class Solo {
 	 * @param y the y coordinate
 	 * 
 	 */
+	
 	private void clickOnScreen(float x, float y) {
 
 		long downTime = SystemClock.uptimeMillis();
@@ -385,6 +388,7 @@ public class Solo {
 	 * @param side the side of the view that should be clicked
 	 * 
 	 */
+	
 	private void clickOnScreen(View view, int side) {
 		int[] xy = new int[2];
 		view.getLocationOnScreen(xy);
@@ -409,6 +413,7 @@ public class Solo {
 	 * @param name the name of the button presented to the user
 	 * 
 	 */
+	
 	public void clickOnButton(String name) {
 		Button button = null;
 		waitForIdle();
@@ -505,6 +510,7 @@ public class Solo {
 	 * @return true if button with specified index is found
 	 * 
 	 */
+	
 	public boolean clickOnButton(int index) {
 		boolean found = false;
 		Button button = null;
@@ -526,10 +532,11 @@ public class Solo {
 	/*
 	 * This method is used to scroll down a list or scroll view.
 	 * 
-	 * param method the method that makes the scrollDownList call
-	 * param text the label that is to be clicked
+	 * @param method the method that makes the scrollDownList call
+	 * @param text the label that is to be clicked
 	 *
 	 */
+	
 	private void scrollDownList(int method, String text) {
 		View scrollListView = null;
 		Iterator iterator = viewList.iterator();
@@ -570,10 +577,11 @@ public class Solo {
 	/*
 	 * Private method used to start the method that called scrollDownList().
 	 * 
-	 * param method the method to be run
-	 * param text the label that should be clicked
+	 * @param method the method to be run
+	 * @param text the label that should be clicked
 	 *
 	 */
+	
 	private void runMethod(int method, String text)
 	{
 		switch (method) {
@@ -593,6 +601,7 @@ public class Solo {
 	 * This method is used to scroll up a list.
 	 * 
 	 */
+	
 	public void scrollUpList() {
 		waitForIdle();
 		int x = activity.getWindowManager().getDefaultDisplay().getWidth() / 2;
@@ -616,6 +625,7 @@ public class Solo {
 	 * @param side the side in which to scroll
 	 * 
 	 */
+	
 	public void scrollToSide(int side) {
 		int screenHeight = activity.getWindowManager().getDefaultDisplay()
 				.getHeight();
@@ -638,6 +648,7 @@ public class Solo {
 	 * @return true if found
 	 *
 	 */
+	
 	public void clickOnText(String text) {
 		clickOnText(text, CENTER);
 
@@ -673,6 +684,7 @@ public class Solo {
 	 * @param index the index of the image to be clicked
 	 *
 	 */
+	
 	public void clickOnImage(int index) {
 		waitForIdle();
 		try {
@@ -690,6 +702,7 @@ public class Solo {
 	 * @return ArrayList of the images contained in the current activity
 	 *
 	 */
+	
 	public ArrayList<ImageView> getCurrentImageViews() {
 		waitForIdle();
 		getViews();
@@ -714,6 +727,7 @@ public class Solo {
 	 * @return the EditText with a specified index
 	 *
 	 */
+	
 	public EditText getEditText(int index) {
 		if (editTextList == null)
 			getCurrentEditTexts();
@@ -728,6 +742,7 @@ public class Solo {
 	 * @return a button with a specific index
 	 *
 	 */
+	
 	public Button getButton(int index) {
 		if (buttonList == null)
 			getCurrentButtons();
@@ -742,6 +757,7 @@ public class Solo {
 	 * @return the number of buttons in the current activity
 	 *
 	 */
+	
 	public int getCurrenButtonsCount() {
 		return getCurrentButtons().size();
 	}
@@ -753,6 +769,7 @@ public class Solo {
 	 * @return an arraylist of the EditTexts located in the current activity
 	 *
 	 */
+	
 	public ArrayList<EditText> getCurrentEditTexts() {
 		editTextList.clear();
 		getViews();
@@ -776,6 +793,7 @@ public class Solo {
 	 * @return an ArrayList of the TextViews located in the current activity or view
 	 *
 	 */
+	
 	public ArrayList<TextView> getCurrentTextViews(View parent) {
 		if(parent == null)
 			getViews();
@@ -804,6 +822,7 @@ public class Solo {
 	 * @return an ArrayList of the GridViews located in the current activity
 	 *
 	 */
+	
 	public ArrayList<GridView> getCurrentGridViews() {
 		getViews();
 		gridViewList.clear();
@@ -824,6 +843,7 @@ public class Solo {
 	 * @return button that was searched
 	 *
 	 */
+	
 	private Button getButton(String search) {
 		buttonList.clear();
 		buttonList = getCurrentButtons();
@@ -846,6 +866,7 @@ public class Solo {
 	 * @return and ArrayList of the buttons located in the current activity
 	 *
 	 */
+	
 	public ArrayList<Button> getCurrentButtons() {
 		buttonList.clear();
 		waitForIdle();
@@ -866,6 +887,7 @@ public class Solo {
 	 * 
 	 * 
 	 * All activites that have been opened are finished.
+	 *
 	 */
 
 	protected void finalize() throws Throwable {
