@@ -85,7 +85,7 @@ public class Solo {
 	private IntentFilter filter;
 	private TextView checkTextView = null;
 
-	/*
+	/**
 	 * Constructor that takes in the instrumentation and the start activity.
 	 * 
 	 * @param inst the instrumentation object
@@ -100,7 +100,7 @@ public class Solo {
 
 	}
 
-	/*
+	/**
 	 * This method is used to trigger a sleep with a certain time.
 	 * 
 	 * @param time the time in which the application under test should be
@@ -117,7 +117,7 @@ public class Solo {
 		}
 	}
 
-	/*
+	/**
 	 * This is were the activityMonitor is set up. The monitor will keep check
 	 * for the currently active activity.
 	 *
@@ -132,7 +132,7 @@ public class Solo {
 		}
 	}
 
-	/*
+	/**
 	 * Private method used to get the absolute top view in an activity.
 	 * 
 	 * @param the view whose top parent is requested
@@ -149,7 +149,7 @@ public class Solo {
 		}
 	}
 
-	/*
+	/**
 	 * Used to get the views located in the current activity.
 	 * 
 	 * @return ArrayList with the views
@@ -171,7 +171,7 @@ public class Solo {
 
 	}
 
-	/*
+	/**
 	 * Private method used instead of instrumentation.waitForIdleSync().
 	 * 
 	 */
@@ -194,7 +194,7 @@ public class Solo {
 
 	}
 
-	/*
+	/**
 	 * Private method which adds all the views located in the currently active
 	 * activity to an ArrayList.
 	 * 
@@ -213,7 +213,7 @@ public class Solo {
 		}
 	}
 
-	/*
+	/**
 	 * Searches for a search string in the EditTexts located in the current
 	 * activity.
 	 * 
@@ -235,7 +235,7 @@ public class Solo {
 
 	}
 
-	/*
+	/**
 	 * Method used to search for a string in the TextViews located in the
 	 * current activity.
 	 * 
@@ -252,7 +252,7 @@ public class Solo {
 			return false;
 	}
 
-	/*
+	/**
 	 * This method searches the current activity for a textview with a given
 	 * text.
 	 * 
@@ -269,7 +269,7 @@ public class Solo {
 			return false;
 	}
 
-	/*
+	/**
 	 * Private method that returns the textView that contains the given search
 	 * string.
 	 * 
@@ -300,7 +300,7 @@ public class Solo {
 		}
 	}
 
-	/*
+	/**
 	 * This method returns the current activity.
 	 * 
 	 * @return current activity
@@ -329,7 +329,7 @@ public class Solo {
 
 	}
 
-	/*
+	/**
 	 * This method will focus an item located at x,y
 	 * 
 	 * @param x the x coordinate 
@@ -348,7 +348,7 @@ public class Solo {
 
 	}
 
-	/*
+	/**
 	 * Private method to click on a specific coordinate on the screen
 	 * 
 	 * @param x the x coordinate 
@@ -370,7 +370,7 @@ public class Solo {
 
 	}
 
-	/*
+	/**
 	 * Public method used to click on a specific view.ou
 	 * 
 	 * @param view the view that should bli clicked
@@ -380,7 +380,7 @@ public class Solo {
 		clickOnScreen(view, CENTER);
 	}
 
-	/*
+	/**
 	 * Private method used to click on a specific view on a specific side of the
 	 * view.
 	 * 
@@ -407,7 +407,7 @@ public class Solo {
 		}
 	}
 
-	/*
+	/**
 	 * Method used to click on a button with a given text.
 	 * 
 	 * @param name the name of the button presented to the user
@@ -436,7 +436,7 @@ public class Solo {
 	}
 
 
-	/*
+	/**
 	 * Private method used to drag the screen.
 	 * 
 	 */
@@ -473,7 +473,7 @@ public class Solo {
 
 	}
 
-	/*
+	/**
 	 * This method is used to click on a specific view displaying a certain
 	 * text.
 	 * 
@@ -503,7 +503,7 @@ public class Solo {
 		}
 	}
 
-	/*
+	/**
 	 * This method used to click on a button with a specific index.
 	 * 
 	 * @param index the index number of the button
@@ -529,7 +529,7 @@ public class Solo {
 		return found;
 	}
 
-	/*
+	/**
 	 * This method is used to scroll down a list or scroll view.
 	 * 
 	 * @param method the method that makes the scrollDownList call
@@ -574,7 +574,7 @@ public class Solo {
 
 	}
 		
-	/*
+	/**
 	 * Private method used to start the method that called scrollDownList().
 	 * 
 	 * @param method the method to be run
@@ -597,7 +597,7 @@ public class Solo {
 		
 	}
 
-	/*
+	/**
 	 * This method is used to scroll up a list.
 	 * 
 	 */
@@ -619,7 +619,7 @@ public class Solo {
 
 	}
 
-	/*
+	/**
 	 * This method is used to scroll horizontally.
 	 * 
 	 * @param side the side in which to scroll
@@ -641,7 +641,7 @@ public class Solo {
 			drag(x, 0, y, y, screenWidth);
 	}
 
-	/*
+	/**
 	 * This method is used to click on a specific text.
 	 * 
 	 * @param text the text to click on
@@ -654,7 +654,7 @@ public class Solo {
 
 	}
 
-	/*
+	/**
 	 * This method is used to enter text into an EditText with a certain index.
 	 * 
 	 * @param index the index of the image
@@ -678,7 +678,7 @@ public class Solo {
 
 	}
 
-	/*
+	/**
 	 * This method is used to click on an image with a certain index.
 	 * 
 	 * @param index the index of the image to be clicked
@@ -695,7 +695,7 @@ public class Solo {
 		}
 	}
 
-	/*
+	/**
 	 * This method returns an ArrayList of the images contained in the current
 	 * activity.
 	 * 
@@ -721,7 +721,7 @@ public class Solo {
 
 	}
 
-	/*
+	/**
 	 * This method returns an EditText with a certain index.
 	 * 
 	 * @return the EditText with a specified index
@@ -735,7 +735,7 @@ public class Solo {
 		return editTextList.get(index);
 	}
 
-	/*
+	/**
 	 * This method returns a button with a certain index.
 	 * 
 	 * @param index the index of the button
@@ -750,7 +750,7 @@ public class Solo {
 		return buttonList.get(index);
 	}
 
-	/*
+	/**
 	 * This method returns the number of buttons located in the current
 	 * activity.
 	 * 
@@ -762,7 +762,7 @@ public class Solo {
 		return getCurrentButtons().size();
 	}
 
-	/*
+	/**
 	 * This method returns an ArrayList of all the EditTexts located in the
 	 * current activity.
 	 * 
@@ -783,7 +783,7 @@ public class Solo {
 
 	}
 
-	/*
+	/**
 	 * This method returns an arraylist of the textviews located in the current
 	 * activity.
 	 * 
@@ -815,7 +815,7 @@ public class Solo {
 
 	}
 
-	/*
+	/**
 	 * This method returns an ArrayList of the GridViews located in the current
 	 * activity.
 	 * 
@@ -837,7 +837,7 @@ public class Solo {
 
 	}
 
-	/*
+	/**
 	 * This method returns a button with a given index.
 	 * 
 	 * @return button that was searched
@@ -859,7 +859,7 @@ public class Solo {
 
 	}
 
-	/*
+	/**
 	 * This method returns an ArrayList with the buttons located in the current
 	 * activity.
 	 * 
@@ -882,7 +882,7 @@ public class Solo {
 		return buttonList;
 	}
 
-	/*
+	/**
 	 * (non-Javadoc)
 	 * 
 	 * 
