@@ -890,7 +890,7 @@ public class Solo {
 	 *
 	 */
 
-	protected void finalize() throws Throwable {
+	public void finalize() throws Throwable {
 		try {
 			for (int i = 0; i < activityList.size(); i++) {
 				activityList.get(i).finish();
