@@ -73,11 +73,10 @@ public class Solo {
 
 	private ArrayList<View> idleList = new ArrayList();
 
-	static final int RIGHT = 0;
-	static final int LEFT = 1;
-	static final int CENTER = 2;
-	static final int CLICKONTEXT = 3;
-	static final int CLICKONBUTTON = 4;
+	public static final int CLICKONTEXT = 1;
+	public static final int CLICKONBUTTON = 2;
+	public final static int RIGHT = 3;
+	public final static int LEFT = 4;
 	private int countSearch = 0;
 	private Activity activity;
 	private Instrumentation inst;
@@ -273,7 +272,7 @@ public class Solo {
 	 * Private method that returns the textView that contains the given search
 	 * string.
 	 * 
-	 * @param search the string that is searched for.
+	 * @param search the string that is searched for
 	 * @return TextView
 	 * 
 	 */
@@ -371,25 +370,13 @@ public class Solo {
 	}
 
 	/**
-	 * Public method used to click on a specific view.ou
-	 * 
-	 * @param view the view that should bli clicked
-	 */
-
-	public void clickOnScreen(View view) {
-		clickOnScreen(view, CENTER);
-	}
-
-	/**
-	 * Private method used to click on a specific view on a specific side of the
-	 * view.
+	 * Private method used to click on a specific view.
 	 * 
 	 * @param view the view that should be clicked 
-	 * @param side the side of the view that should be clicked
 	 * 
 	 */
 	
-	private void clickOnScreen(View view, int side) {
+	private void clickOnScreen(View view) {
 		int[] xy = new int[2];
 		view.getLocationOnScreen(xy);
 
@@ -399,12 +386,9 @@ public class Solo {
 		final float x = xy[0] + (viewWidth / 2.0f);
 		final float y = xy[1] + (viewHeight / 2.0f);
 
-		if (side == RIGHT) {
-			clickOnScreen(activity.getWindowManager().getDefaultDisplay()
-					.getWidth() - 5, y);
-		} else {
-			clickOnScreen(x, y);
-		}
+	
+		clickOnScreen(x, y);
+		
 	}
 
 	/**
@@ -428,7 +412,7 @@ public class Solo {
 			}
 		}
 		if (found) {
-			clickOnScreen(button, CENTER);
+			clickOnScreen(button);
 		} else {
 			scrollDownList(CLICKONBUTTON, name);
 		}
@@ -446,6 +430,7 @@ public class Solo {
      * @param fromY X coordinate of the initial touch, in screen coordinates
      * @param toY Y coordinate of the drag destination, in screen coordinates
      * @param stepCount How many move steps to include in the drag
+     *
      */
 
 	private void drag(float fromX, float toX, float fromY, float toY,
@@ -485,11 +470,10 @@ public class Solo {
 	 * text.
 	 * 
 	 * @param text the text that should be clicked on
-	 * @param side the side of the text that should be clicked
 	 *  
 	 */
 
-	public void clickOnText(String text, int side) {
+	public void clickOnText(String text) {
 		waitForIdle();
 		boolean found = false;
 		Iterator<TextView> iterator = getCurrentTextViews(null).iterator();
@@ -504,7 +488,7 @@ public class Solo {
 		}
 
 		if (found) {
-			clickOnScreen(textView, side);
+			clickOnScreen(textView);
 		} else {
 			scrollDownList(CLICKONTEXT, text);
 		}
@@ -528,7 +512,7 @@ public class Solo {
 		}
 
 		if (button != null) {
-			clickOnScreen(button, CENTER);
+			clickOnScreen(button);
 			waitForIdle();
 			found = true;
 		}
@@ -646,19 +630,6 @@ public class Solo {
 			drag(0, x, y, y, screenWidth);
 		else if (side == RIGHT)
 			drag(x, 0, y, y, screenWidth);
-	}
-
-	/**
-	 * This method is used to click on a specific text.
-	 * 
-	 * @param text the text to click on
-	 * @return true if found
-	 *
-	 */
-	
-	public void clickOnText(String text) {
-		clickOnText(text, CENTER);
-
 	}
 
 	/**
