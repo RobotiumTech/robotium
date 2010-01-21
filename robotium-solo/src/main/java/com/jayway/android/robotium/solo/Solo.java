@@ -135,7 +135,7 @@ public class Solo {
 	/**
 	 * Private method used to get the absolute top view in an activity.
 	 * 
-	 * @param the view whose top parent is requested
+	 * @param view the view whose top parent is requested
 	 * @return the top parent view
 	 * 
 	 */
