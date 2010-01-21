@@ -436,10 +436,17 @@ public class Solo {
 	}
 
 
-	/**
-	 * Private method used to drag the screen.
-	 * 
-	 */
+    /**
+     * Simulate touching a specific location and dragging to a new location.
+     *
+     * This method was copied from {@code TouchUtils.java} in the Android Open Source Project, and modified here.
+     *
+     * @param fromX X coordinate of the initial touch, in screen coordinates
+     * @param toX Xcoordinate of the drag destination, in screen coordinates
+     * @param fromY X coordinate of the initial touch, in screen coordinates
+     * @param toY Y coordinate of the drag destination, in screen coordinates
+     * @param stepCount How many move steps to include in the drag
+     */
 
 	private void drag(float fromX, float toX, float fromY, float toY,
 			int stepCount) {
