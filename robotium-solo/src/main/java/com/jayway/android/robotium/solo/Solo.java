@@ -59,23 +59,14 @@ import android.widget.TextView;
 public class Solo {
 	
 	private ArrayList<Button> buttonList = new ArrayList();
-	
 	private ArrayList<EditText> editTextList = new ArrayList();
-	
 	private ArrayList<View> viewList = new ArrayList();
-	
 	private ArrayList<Activity> activityList = new ArrayList();
-	
 	private ArrayList<TextView> textViewList = new ArrayList();
-	
 	private ArrayList<GridView> gridViewList = new ArrayList();
-	
 	private ArrayList<ImageView> imageViewList = new ArrayList();
-	
 	private ArrayList<MenuItem> menuItemList = new ArrayList();
-	
 	private ArrayList<View> idleList = new ArrayList();
-	
 	public static final int CLICKONTEXT = 1;
 	public static final int CLICKONBUTTON = 2;
 	public final static int RIGHT = 3;
@@ -388,7 +379,7 @@ public class Solo {
 		
 	}
 	
-	/*
+	/**
 	 * Method used to click on the hard key back
 	 * 
 	 */
@@ -425,7 +416,7 @@ public class Solo {
 		}
 		
 	}
-	/*
+	/**
 	 * Method used to click on a MenuItem with a certain index. Index 0 is the first item in the 
 	 * first row and index 3 is the first item in the second row.
 	 * 
