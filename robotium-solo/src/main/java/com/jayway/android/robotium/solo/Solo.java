@@ -1,4 +1,4 @@
-package com.jayway.test;
+package com.jayway.android.robotium.solo;
 
 import java.util.ArrayList;
 import java.util.Iterator;
