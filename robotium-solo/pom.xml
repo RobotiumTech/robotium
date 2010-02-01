@@ -30,7 +30,8 @@
 		</plugins>
 	</build>
     
-    <!-- because of a bug in nexus pom validation, we include lots of things which are actually in the parent pom here: -->
+    <!-- Because of a bug in nexus pom validation, we include a bunch of things here, which are already in the parent pom. -->
+    <!-- The bug is tracked here: https://issues.sonatype.org/browse/OSSRH-216 -->
     <!-- TODO: delete the rest of this file after the bug has been fixed. -->
     <url>http://www.robotium.org/</url>
     <licenses>
