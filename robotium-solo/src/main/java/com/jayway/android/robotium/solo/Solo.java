@@ -3,6 +3,8 @@ package com.jayway.android.robotium.solo;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import junit.framework.Assert;
 import android.app.Activity;
 import android.app.ActivityManager;
@@ -13,7 +15,6 @@ import android.content.ComponentName;
 import android.content.IntentFilter;
 import android.os.SystemClock;
 import android.view.KeyEvent;
-import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -58,20 +59,13 @@ import android.widget.TextView;
 
 public class Solo {
 	
-	private ArrayList<Button> buttonList = new ArrayList();
-	private ArrayList<EditText> editTextList = new ArrayList();
-	private ArrayList<View> viewList = new ArrayList();
-	private ArrayList<Activity> activityList = new ArrayList();
-	private ArrayList<TextView> textViewList = new ArrayList();
-	private ArrayList<GridView> gridViewList = new ArrayList();
-	private ArrayList<ImageView> imageViewList = new ArrayList();
-	private ArrayList<MenuItem> menuItemList = new ArrayList();
-	private ArrayList<View> idleList = new ArrayList();
+	private ArrayList<View> viewList = new ArrayList<View>();
+	private ArrayList<Activity> activityList = new ArrayList<Activity>();
 	public static final int CLICKONTEXT = 1;
 	public static final int CLICKONBUTTON = 2;
 	public final static int RIGHT = 3;
 	public final static int LEFT = 4;
-	private int countSearch = 0;
+	private final int PAUS = 500;
 	private Activity activity;
 	private Instrumentation inst;
 	private ActivityMonitor activityMonitor;
@@ -119,7 +113,6 @@ public class Solo {
 	private void setupActivityMonitor() {
 		
 		try {
-			
 			activityMonitor = inst.addMonitor(filter, null, false);
 		} catch (Throwable e) {
 		}
@@ -134,22 +127,24 @@ public class Solo {
 	 */
 	
 	private View getTopParent(View view) {
-		if (!view.getParent().getClass().getName().equals("android.view.ViewRoot")) {
+		if (view.getParent() != null
+				&& !view.getParent().getClass().getName().equals(
+						"android.view.ViewRoot")) {
 			return getTopParent((View) view.getParent());
 		} else {
 			return view;
 		}
 	}
-	
+
 	/**
-	 * Used to get the views located in the current activity.
+	 * Used to add the views located in the current activity to an ArrayList.
 	 *
-	 * @return ArrayList with the views
+	 * @return ArrayList with the views found in the current activity
 	 *
 	 */
 	
 	public ArrayList<View> getViews() {
-		getCurrentActivity();
+		Activity activity = getCurrentActivity();
 		inst.waitForIdleSync();
 		try {
 			View decorView = activity.getWindow().getDecorView();
@@ -160,7 +155,7 @@ public class Solo {
 			e.printStackTrace();
 		}
 		return null;
-		
+
 	}
 	
 	/**
@@ -169,28 +164,27 @@ public class Solo {
 	 */
 	
 	private void waitForIdle() {
-		sleep(1500);
+		sleep(PAUS);
 		long startTime = System.currentTimeMillis();
 		long timeout = 10000;
 		long endTime = startTime + timeout;
 		View decorView = null;
 		ArrayList<View> touchItems;
 		while (System.currentTimeMillis() <= endTime) {
-			decorView = getTopParent(getCurrentActivity().getWindow().getDecorView());
+			decorView = getTopParent(getCurrentActivity().getWindow()
+					.getDecorView());
 			touchItems = decorView.getTouchables();
 			if (touchItems.size() > 0)
 				break;
-			sleep(1000);
+			sleep(PAUS);
 		}
-		sleep(1000);
 	}
 	
 	/**
 	 * Private method which adds all the views located in the currently active
 	 * activity to an ArrayList.
 	 *
-	 * @param view the view who's children should be added to the viewList
-	 * arraylist
+	 * @param view the view who's children should be added to the ViewList arraylist
 	 *
 	 */
 	
@@ -214,7 +208,7 @@ public class Solo {
 	 */
 	
 	public EditText searchEditText(String search) {
-		editTextList = getCurrentEditTexts();
+		ArrayList<EditText> editTextList = getCurrentEditTexts();
 		Iterator<EditText> iterator = editTextList.iterator();
 		while (iterator.hasNext()) {
 			EditText editText = (EditText) iterator.next();
@@ -227,68 +221,112 @@ public class Solo {
 	}
 	
 	/**
-	 * Method used to search for a string in the TextViews located in the
-	 * current activity.
+	 * Searches for a button with the given search string and returns true if at least one button 
+	 * is found with the expected text
 	 *
-	 * @param search the search string to be searched
-	 * @return true if search string is found
+	 * @param search the string to be searched. Regular expressions are supported
+	 * @return true if a button with the given text is found and false if not found
 	 *
 	 */
 	
 	public boolean searchButton(String search) {
-		waitForIdle();
-		if (getButton(search) != null)
-			return true;
-		else
-			return false;
+		return searchButton(search, 0);
 	}
 	
 	/**
-	 * This method searches the current activity for a textview with a given
-	 * text.
+	 * Searches for a button with the given search string and returns true if the 
+	 * searched button is found a given number of times
+	 * 
+	 * @param search the string to be searched. Regular expressions are supported
+	 * @param matches the number of matches expected to be found. 0 matches means that one or more 
+	 * matches are expected to be found
+	 * @return true if a button with the given text is found a given number of times and false 
+	 * if not found
+	 *  
+	 */
+	
+	private boolean searchButton(String search, int matches) {
+		Pattern p = Pattern.compile(search);
+		Matcher matcher;
+		int countMatches=0;
+		inst.waitForIdleSync();
+		ArrayList<Button> buttonList = getCurrentButtons();
+		Iterator<Button> iterator = buttonList.iterator();
+		while (iterator.hasNext()) {
+			Button button = (Button) iterator.next();
+			matcher = p.matcher(button.getText().toString());
+			if(matcher.matches()){	
+				inst.waitForIdleSync();
+				countMatches++;
+			}
+		}
+		if (countMatches == matches && matches != 0) {
+			return true;
+		} else if (matches == 0 && countMatches > 0) {
+			return true;
+		} else if (scrollDownList())
+		{
+			return searchButton(search, matches);
+		} else {
+			return false;
+		}
+
+	}
+	
+	/**
+	 * Searches for a text string and returns true if at least one item 
+	 * is found with the expected text
 	 *
-	 * @param search the search string to be searched
-	 * @return true if found
+	 * @param search the string to be searched. Regular expressions are supported
+	 * @return true if search string is found and false if not found
 	 *
 	 */
 	
 	public boolean searchText(String search) {
-		waitForIdle();
-		if (getTextView(search) != null)
-			return true;
-		else
-			return false;
+		return searchText(search, 0);
 	}
 	
 	/**
-	 * Private method that returns the textView that contains the given search
-	 * string.
-	 *
-	 * @param search the string that is searched for
-	 * @return TextView
-	 *
+	 * Searches for a text string and returns true if the searched text is found a given
+	 * number of times
+	 * 
+	 * @param search the string to be searched. Regular expressions are supported
+	 * @param matches the number of matches expected to be found. 0 matches means that one or more 
+	 * matches are expected to be found
+	 * @return true if search string is found a given number of times and false if the search string
+	 * can not be found
+	 *  
 	 */
 	
-	private TextView getTextView(String search) {
-		textViewList.clear();
-		textViewList = getCurrentTextViews(null);
+	public boolean searchText(String search, int matches) {
+		Pattern p = Pattern.compile(search);
+		Matcher matcher;
+		int countMatches = 0;
+		waitForIdle();
+		inst.waitForIdleSync();
+		ArrayList<TextView> textViewList = getCurrentTextViews(null);
 		Iterator<TextView> iterator = textViewList.iterator();
+		TextView textView = null;
 		while (iterator.hasNext()) {
-			TextView textView = (TextView) iterator.next();
-			if (textView.getText().toString().contains(search)) {
-				countSearch = 0;
-				return textView;
-				
+			textView = (TextView) iterator.next();
+			matcher = p.matcher(textView.getText().toString());
+			if(matcher.matches()){	
+				countMatches++;
 			}
 		}
-		if (countSearch < 2) {
-			countSearch++;
-			return getTextView(search);
+		if (countMatches == matches && matches != 0) {
+			return true;
+		} else if (matches == 0 && countMatches > 0) {
+			return true;
+		} else if (scrollDownList()) 
+		{
+			return searchText(search, matches);
 		} else {
-			countSearch = 0;
-			return null;
+			return false;
 		}
+
 	}
+	
 	
 	/**
 	 * This method returns the current activity.
@@ -318,6 +356,75 @@ public class Solo {
 		}
 		
 	}
+	/**
+	 * Method used to assert that an expected activity is currently active.
+	 * 
+	 * @param message the message that should be displayed if the assert fails
+	 * @param name the name of the activity that is expected to be active e.g. MyActivity
+	 * 
+	 */
+	public void assertCurrentActivity(String message, String name)
+	{
+		Assert.assertEquals(message, name, getCurrentActivity().getClass().getSimpleName());
+		
+	}
+	
+	/**
+	 * Method used to assert that an expected activity is currently active.
+	 * 
+	 * @param message the message that should be displayed if the assert fails
+	 * @param classObject the class object that is expected to be active e.g. MyActivity.class
+	 * 
+	 */
+	public void assertCurrentActivity(String message, Class classObject)
+	{
+		waitForIdle();
+		Assert.assertEquals(message, classObject.getName(), getCurrentActivity().getClass().getName());
+	
+	}
+	
+	/**
+	 * Method used to assert that an expected activity is currently active with the possibility to 
+	 * verify that the expected activity is a new instance of the activity object.
+	 * 
+	 * @param message the message that should be displayed if the assert fails
+	 * @param name the name of the activity that is expected to be active e.g. MyActivity
+	 * @param newInstance true if the expected activity must be a new instance of the activity object
+	 * 
+	 */
+	public void assertCurrentActivity(String message, String name, boolean newInstance)
+	{
+		assertCurrentActivity(message, name);
+		assertCurrentActivity(message, getCurrentActivity().getClass(),
+				newInstance);
+	}
+	
+	/**
+	 * Method used to assert that an expected activity is currently active with the possibility to 
+	 * verify that the expected activity is a new instance of the activity object.
+	 * 
+	 * @param message the message that should be displayed if the assert fails
+	 * @param classObject the class object that is expected to be active e.g. MyActivity.class
+	 * @param newInstance true if the expected activity must be a new instance of the activity object
+	 * 
+	 */
+	public void assertCurrentActivity(String message, Class classObject,
+			boolean newInstance) {
+		boolean found = false;
+		if (newInstance) {
+			assertCurrentActivity(message, classObject);
+			Activity activity = getCurrentActivity();
+			for (int i = 0; i < activityList.size() - 1; i++) {
+				String instanceString = activityList.get(i).toString();
+				if (instanceString.equals(activity.toString()))
+					found = true;
+			}
+			Assert.assertFalse(message, found);
+
+		} else {
+			assertCurrentActivity(message, classObject);
+		}
+	}
 	
 	/**
 	 * This method will focus an item located at x,y
@@ -328,13 +435,11 @@ public class Solo {
 	 */
 	
 	private void focusItemOnScreen(float x, float y) {
-		
 		long downTime = SystemClock.uptimeMillis();
 		long eventTime = SystemClock.uptimeMillis();
-		MotionEvent event = MotionEvent.obtain(downTime, eventTime, MotionEvent.ACTION_DOWN, x, y, 0);
+		MotionEvent event = MotionEvent.obtain(downTime, eventTime,
+				MotionEvent.ACTION_DOWN, x, y, 0);
 		inst.sendPointerSync(event);
-		waitForIdle();
-		
 	}
 	
 	/**
@@ -346,15 +451,15 @@ public class Solo {
 	 */
 	
 	private void clickOnScreen(float x, float y) {
-		
 		long downTime = SystemClock.uptimeMillis();
 		long eventTime = SystemClock.uptimeMillis();
-		MotionEvent event = MotionEvent.obtain(downTime, eventTime,MotionEvent.ACTION_DOWN, x, y, 0);
-		MotionEvent event2 = MotionEvent.obtain(downTime, eventTime,MotionEvent.ACTION_UP, x, y, 0);
+		MotionEvent event = MotionEvent.obtain(downTime, eventTime,
+				MotionEvent.ACTION_DOWN, x, y, 0);
+		MotionEvent event2 = MotionEvent.obtain(downTime, eventTime,
+				MotionEvent.ACTION_UP, x, y, 0);
 		inst.sendPointerSync(event);
 		inst.sendPointerSync(event2);
 		waitForIdle();
-		
 	}
 	
 	/**
@@ -379,24 +484,41 @@ public class Solo {
 		
 	}
 	
+	
+	/**
+	 * Method used to simulate pressing the hard key back
+	 * 
+	 */
+	public void goBack()
+	{
+		waitForIdle();
+		inst.sendKeyDownUpSync(KeyEvent.KEYCODE_BACK);
+	}
+	
 	/**
 	 * Method used to click on the hard key back
+	 * 
+	 * @deprecated changed name of method to goBack() as no clicking is performed. This method will be
+	 * removed in the coming releases.
 	 * 
 	 */
 	
 	public void clickOnBack()
 	{
+		waitForIdle();
 		inst.sendKeyDownUpSync(KeyEvent.KEYCODE_BACK);
 	}
 	
 	/**
 	 * Method used to click on a button with a given text.
 	 *
-	 * @param name the name of the button presented to the user
+	 * @param name the name of the button presented to the user. Regular expressions are supported
 	 *
 	 */
 	
 	public void clickOnButton(String name) {
+		Pattern p = Pattern.compile(name);
+		Matcher matcher;
 		Button button = null;
 		waitForIdle();
 		boolean found = false;
@@ -404,46 +526,78 @@ public class Solo {
 		Iterator<Button> iterator = buttonList.iterator();
 		while (iterator.hasNext()) {
 			button = iterator.next();
-			if (button.getText().toString().equals(name)) {
+			matcher = p.matcher(button.getText().toString());
+			if(matcher.matches()){	
 				found = true;
 				break;
 			}
 		}
 		if (found) {
 			clickOnScreen(button);
-		} else {
-			scrollDownList(CLICKONBUTTON, name);
+		} else if (scrollDownList()){
+			clickOnButton(name);
+		}else
+		{
+			Assert.assertTrue("Button with the text: " + name + " is not found!", false);
 		}
-		
+
 	}
+	/**
+	 * Method used to press a MenuItem with a certain index. Index 0 is the first item in the 
+	 * first row and index 3 is the first item in the second row.
+	 * 
+	 * @param index the index of the menu item to be pressed
+	 * 
+	 */
+	
+	public void pressMenuItem(int index) {
+		waitForIdle();
+		inst.sendKeyDownUpSync(KeyEvent.KEYCODE_MENU);
+		sleep(300);
+		inst.sendKeyDownUpSync(KeyEvent.KEYCODE_DPAD_UP);
+		if (index < 3) {
+			for (int i = 0; i < index; i++) {
+				sleep(300);
+				inst.sendKeyDownUpSync(KeyEvent.KEYCODE_DPAD_RIGHT);
+			}
+		} else
+		{
+			inst.sendKeyDownUpSync(KeyEvent.KEYCODE_DPAD_DOWN);	
+			for (int i = 3; i < index; i++) {
+				sleep(300);
+				inst.sendKeyDownUpSync(KeyEvent.KEYCODE_DPAD_RIGHT);
+			}
+		}
+		inst.sendKeyDownUpSync(KeyEvent.KEYCODE_ENTER);
+	}
+	
+	
 	/**
 	 * Method used to click on a MenuItem with a certain index. Index 0 is the first item in the 
 	 * first row and index 3 is the first item in the second row.
 	 * 
-	 * param index the index of the menu item to be clicked
+	 * @param index the index of the menu item to be clicked. Regular expressions are supported
+	 * @deprecated changed the name of the method to pressMenuItem() as no clicking
+	 * is performed. This method will be removed in the coming releases.
 	 * 
 	 */
 	
 	public void clickOnMenuItem(int index) {
 		waitForIdle();
 		inst.sendKeyDownUpSync(KeyEvent.KEYCODE_MENU);
-		sleep(500);
+		sleep(300);
 		inst.sendKeyDownUpSync(KeyEvent.KEYCODE_DPAD_UP);
-		
 		if (index < 3) {
 			for (int i = 0; i < index; i++) {
-				sleep(500);
+				sleep(300);
 				inst.sendKeyDownUpSync(KeyEvent.KEYCODE_DPAD_RIGHT);
-				
 			}
 		} else
 		{
 			inst.sendKeyDownUpSync(KeyEvent.KEYCODE_DPAD_DOWN);	
-			
 			for (int i = 3; i < index; i++) {
-				sleep(500);
+				sleep(300);
 				inst.sendKeyDownUpSync(KeyEvent.KEYCODE_DPAD_RIGHT);
-				
 			}
 		}
 		inst.sendKeyDownUpSync(KeyEvent.KEYCODE_ENTER);
@@ -481,38 +635,42 @@ public class Solo {
 			inst.sendPointerSync(event);
 			inst.waitForIdleSync();
 		}
-		
 		eventTime = SystemClock.uptimeMillis();
 		event = MotionEvent.obtain(downTime, eventTime, MotionEvent.ACTION_UP,fromX, y, 0);
 		inst.sendPointerSync(event);
-		
 	}
 	
 	/**
 	 * This method is used to click on a specific view displaying a certain
 	 * text.
 	 *
-	 * @param text the text that should be clicked on
+	 * @param text the text that should be clicked on. Regular expressions are supported
 	 *
 	 */
 	
 	public void clickOnText(String text) {
+		Pattern p = Pattern.compile(text);
+		Matcher matcher;
 		waitForIdle();
 		boolean found = false;
 		Iterator<TextView> iterator = getCurrentTextViews(null).iterator();
 		TextView textView = null;
 		while (iterator.hasNext()) {
 			textView = iterator.next();
-			if (textView.getText().toString().toLowerCase().contains(text.toLowerCase())) {
+			matcher = p.matcher(textView.getText().toString());
+			if(matcher.matches()){	
 				found = true;
 				break;
 			}
 		}
-		
+
 		if (found) {
 			clickOnScreen(textView);
-		} else {
-			scrollDownList(CLICKONTEXT, text);
+		} else if (scrollDownList()){
+			clickOnText(text);
+		}else
+		{
+			Assert.assertTrue("The text: " + text + " is not found!", false);
 		}
 	}
 	
@@ -545,66 +703,56 @@ public class Solo {
 	/**
 	 * This method is used to scroll down a list or scroll view.
 	 *
-	 * @param method the method that makes the scrollDownList call
-	 * @param text the label that is to be clicked
+	 * @return true if more scrolling can be done and false if it is at the end of 
+	 * the scroll/list view 
 	 *
 	 */
 	
-	private void scrollDownList(int method, String text) {
+	private boolean scrollDownList() {
+		boolean found = false;
 		View scrollListView = null;
-		Iterator iterator = viewList.iterator();
+		Iterator iterator = getViews().iterator();
 		while (iterator.hasNext()) {
 			scrollListView = (View) iterator.next();
-			
-			if (scrollListView.getClass().getName().equals("android.widget.ScrollView")
-				|| scrollListView.getClass().getName().equals("android.widget.ListView")) {
-				getCurrentTextViews(scrollListView);
+			if (scrollListView.getClass().getName().equals(
+					"android.widget.ScrollView")
+					|| scrollListView.getClass().getName().equals(
+							"android.widget.ListView")) {
+				found = true;
 				break;
 			}
-			
+
 		}
-		
+		ArrayList<TextView> textViewList = getCurrentTextViews(scrollListView);
 		int size = textViewList.size();
-		int yStart = (scrollListView.getHeight() - 10);
-		int yEnd = (scrollListView.getHeight() - (yStart - 10));
-		int x = activity.getWindowManager().getDefaultDisplay().getWidth() / 2;
-		drag(x, x, yStart, yEnd, Math.abs(yStart - yEnd));
-		
+		Activity currentActivity = getCurrentActivity();
+		int x = currentActivity.getWindowManager().getDefaultDisplay()
+				.getWidth() / 2;
+		int yStart;
+		int yEnd;
+		if (found) {
+			int[] xy = new int[2];
+			scrollListView.getLocationOnScreen(xy);
+			yStart = ((xy[1] + scrollListView.getHeight()) - 20);
+			yEnd = (xy[1]);
+		} else {
+			yStart = (currentActivity.getWindowManager().getDefaultDisplay()
+					.getHeight() - 20);
+			yEnd = ((currentActivity.getWindowManager().getDefaultDisplay()
+					.getHeight() / 2));
+		}
+		drag(x, x, yStart, yEnd, 40);
 		if (checkTextView != null
-			&& !checkTextView.getText().equals(textViewList.get(size - 2).getText())) {
+				&& !checkTextView.getText().equals(
+						textViewList.get(size - 2).getText())) {
 			checkTextView = textViewList.get(size - 2);
-			runMethod(method, text);
+			return true;
 		} else if (checkTextView == null) {
 			checkTextView = textViewList.get(size - 2);
-			runMethod(method, text);
-			
+			return true;
 		} else {
-			Assert.assertTrue(text + " is not found!", false);
+			return false;
 		}
-		
-	}
-	
-	/**
-	 * Private method used to start the method that called scrollDownList().
-	 *
-	 * @param method the method to be run
-	 * @param text the label that should be clicked
-	 *
-	 */
-	
-	private void runMethod(int method, String text)
-	{
-		switch (method) {
-			case CLICKONTEXT:
-				clickOnText(text);
-				break;
-			case CLICKONBUTTON:
-				clickOnButton(text);
-				break;
-			default:
-				break;
-		}
-		
 	}
 	
 	/**
@@ -614,17 +762,16 @@ public class Solo {
 	
 	public void scrollUpList() {
 		waitForIdle();
+		Activity activity = getCurrentActivity();
 		int x = activity.getWindowManager().getDefaultDisplay().getWidth() / 2;
 		int y = activity.getWindowManager().getDefaultDisplay().getHeight();
 		String oldText = getCurrentTextViews(null).get(getCurrentTextViews(null).size() - 3).getText().toString();
 		drag(x, x, 200, y - 100, 5);
 		waitForIdle();
 		String newText = getCurrentTextViews(null).get(getCurrentTextViews(null).size() - 3).getText().toString();
-		ArrayList<TextView> newTextViews = getCurrentTextViews(null);
 		if (!oldText.equals(newText)) {
 			scrollUpList();
 		}
-		
 	}
 	
 	/**
@@ -639,10 +786,8 @@ public class Solo {
 		.getHeight();
 		int screenWidth = activity.getWindowManager().getDefaultDisplay()
 		.getWidth();
-		
 		float x = screenWidth / 2.0f;
 		float y = screenHeight / 2.0f;
-		
 		if (side == LEFT)
 			drag(0, x, y, y, screenWidth);
 		else if (side == RIGHT)
@@ -674,7 +819,6 @@ public class Solo {
 			} else {
 				inst.sendStringSync(text);
 			}
-			inst.sendKeyDownUpSync(KeyEvent.KEYCODE_ENTER);
 		} catch (IndexOutOfBoundsException e) {
 			e.printStackTrace();
 			Assert.assertTrue("Index is not valid", false);
@@ -711,19 +855,17 @@ public class Solo {
 	
 	public ArrayList<ImageView> getCurrentImageViews() {
 		waitForIdle();
-		getViews();
-		imageViewList.clear();
+		ArrayList<View> viewList = getViews();
+		ArrayList<ImageView> imageViewList = new ArrayList<ImageView>();
 		Iterator<View> iterator = viewList.iterator();
 		while (iterator.hasNext() && viewList != null) {
 			View view = iterator.next();
 			if (view != null
 				&& view.getClass().getName().equals("android.widget.ImageView")) {
 				imageViewList.add((ImageView) view);
-			}
-			
+			}	
 		}
 		return imageViewList;
-		
 	}
 	
 	/**
@@ -734,9 +876,7 @@ public class Solo {
 	 */
 	
 	public EditText getEditText(int index) {
-		if (editTextList == null)
-			getCurrentEditTexts();
-		
+		ArrayList<EditText> editTextList = getCurrentEditTexts();
 		return editTextList.get(index);
 	}
 	
@@ -744,14 +884,12 @@ public class Solo {
 	 * This method returns a button with a certain index.
 	 *
 	 * @param index the index of the button
-	 * @return a button with a specific index
+	 * @return the button with the specific index
 	 *
 	 */
 	
 	public Button getButton(int index) {
-		if (buttonList == null)
-			getCurrentButtons();
-		
+		ArrayList<Button> buttonList = getCurrentButtons();
 		return buttonList.get(index);
 	}
 	
@@ -769,16 +907,16 @@ public class Solo {
 	
 	
 	/**
-	 * This method returns an ArrayList of all the EditTexts located in the
+	 * This method returns an ArrayList of all the edit texts located in the
 	 * current activity.
 	 *
-	 * @return an arraylist of the EditTexts located in the current activity
+	 * @return an ArrayList of the edit texts located in the current activity
 	 *
 	 */
 	
 	public ArrayList<EditText> getCurrentEditTexts() {
-		editTextList.clear();
-		getViews();
+		ArrayList<EditText>editTextList = new ArrayList<EditText>();
+		ArrayList<View> viewList = getViews();
 		Iterator<View> iterator = viewList.iterator();
 		while (iterator.hasNext() && viewList != null) {
 			View view = iterator.next();
@@ -790,13 +928,13 @@ public class Solo {
 	}
 	
 	/**
-	 * This method returns an arraylist of the textviews located in the current
+	 * This method returns an ArrayList of the text views located in the current
 	 * activity.
 	 *
-	 * @param parent the parent View in which TextViews should be returned. Null if
-	 * all TextViews from the current activity should be returned
+	 * @param parent the parent View in which the text views should be returned. Null if
+	 * all text views from the current activity should be returned
 	 *
-	 * @return an ArrayList of the TextViews located in the current activity or view
+	 * @return an ArrayList of the text views located in the current activity or view
 	 *
 	 */
 	
@@ -806,12 +944,10 @@ public class Solo {
 		else
 			getViews(parent);
 		
-		textViewList.clear();
+		ArrayList<TextView> textViewList = new ArrayList<TextView>();
 		Iterator<View> iterator = viewList.iterator();
 		while (iterator.hasNext() && viewList != null) {
-			
 			View view = iterator.next();
-			
 			if (view.getClass().getName().equals("android.widget.TextView")) {
 				textViewList.add((TextView) view);
 			}
@@ -822,48 +958,25 @@ public class Solo {
 	}
 	
 	/**
-	 * This method returns an ArrayList of the GridViews located in the current
+	 * This method returns an ArrayList of the grid views located in the current
 	 * activity.
 	 *
-	 * @return an ArrayList of the GridViews located in the current activity
+	 * @return an ArrayList of the grid views located in the current activity
 	 *
 	 */
 	
 	public ArrayList<GridView> getCurrentGridViews() {
-		getViews();
-		gridViewList.clear();
+		ArrayList<View> viewList = getViews();
+		ArrayList<GridView> gridViewList = new ArrayList<GridView>();
 		Iterator<View> iterator = viewList.iterator();
 		while (iterator.hasNext() && viewList != null) {
-			
 			View view = iterator.next();
 			if (view.getClass().getName().equals("android.widget.GridView"))
 				gridViewList.add((GridView) view);
 		}
 		return gridViewList;
-		
 	}
 	
-	/**
-	 * This method returns a button with a given index.
-	 *
-	 * @return button that was searched
-	 *
-	 */
-	
-	private Button getButton(String search) {
-		buttonList.clear();
-		buttonList = getCurrentButtons();
-		Iterator<Button> iterator = buttonList.iterator();
-		while (iterator.hasNext()) {
-			Button button = (Button) iterator.next();
-			if (button.getText().toString().contains(search)) {
-				return button;
-				
-			}
-		}
-		return null;
-		
-	}
 	
 	/**
 	 * This method returns an ArrayList with the buttons located in the current
@@ -874,16 +987,14 @@ public class Solo {
 	 */
 	
 	public ArrayList<Button> getCurrentButtons() {
-		buttonList.clear();
-		waitForIdle();
-		getViews();
+		ArrayList<Button> buttonList = new ArrayList<Button>();
+		ArrayList<View> viewList = getViews();
 		Iterator<View> iterator = viewList.iterator();
 		while (iterator.hasNext() && viewList != null) {
 			
 			View view = iterator.next();
 			if (view.getClass().getName().equals("android.widget.Button"))
 				buttonList.add((Button) view);
-			
 		}
 		return buttonList;
 	}
