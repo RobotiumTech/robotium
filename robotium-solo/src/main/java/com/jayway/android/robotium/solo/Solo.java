@@ -22,6 +22,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 /**
@@ -360,11 +361,12 @@ public class Solo {
 	 * Method used to assert that an expected activity is currently active.
 	 * 
 	 * @param message the message that should be displayed if the assert fails
-	 * @param name the name of the activity that is expected to be active e.g. MyActivity
+	 * @param name the name of the activity that is expected to be active e.g. "MyActivity"
 	 * 
 	 */
 	public void assertCurrentActivity(String message, String name)
 	{
+		waitForIdle();
 		Assert.assertEquals(message, name, getCurrentActivity().getClass().getSimpleName());
 		
 	}
@@ -373,58 +375,54 @@ public class Solo {
 	 * Method used to assert that an expected activity is currently active.
 	 * 
 	 * @param message the message that should be displayed if the assert fails
-	 * @param classObject the class object that is expected to be active e.g. MyActivity.class
+	 * @param expectedClass the class object that is expected to be active e.g. MyActivity.class
 	 * 
 	 */
-	public void assertCurrentActivity(String message, Class classObject)
+	public void assertCurrentActivity(String message, Class expectedClass)
 	{
 		waitForIdle();
-		Assert.assertEquals(message, classObject.getName(), getCurrentActivity().getClass().getName());
+		Assert.assertEquals(message, expectedClass.getName(), getCurrentActivity().getClass().getName());
 	
 	}
 	
 	/**
 	 * Method used to assert that an expected activity is currently active with the possibility to 
-	 * verify that the expected activity is a new instance of the activity object.
+	 * verify that the expected activity is a new instance of the activity.
 	 * 
 	 * @param message the message that should be displayed if the assert fails
-	 * @param name the name of the activity that is expected to be active e.g. MyActivity
-	 * @param newInstance true if the expected activity must be a new instance of the activity object
+	 * @param name the name of the activity that is expected to be active e.g. "MyActivity"
+	 * @param isNewInstance true if the expected activity is a new instance of the activity 
 	 * 
 	 */
-	public void assertCurrentActivity(String message, String name, boolean newInstance)
+	public void assertCurrentActivity(String message, String name, boolean isNewInstance)
 	{
 		assertCurrentActivity(message, name);
 		assertCurrentActivity(message, getCurrentActivity().getClass(),
-				newInstance);
+				isNewInstance);
 	}
 	
 	/**
 	 * Method used to assert that an expected activity is currently active with the possibility to 
-	 * verify that the expected activity is a new instance of the activity object.
+	 * verify that the expected activity is a new instance of the activity.
 	 * 
 	 * @param message the message that should be displayed if the assert fails
-	 * @param classObject the class object that is expected to be active e.g. MyActivity.class
-	 * @param newInstance true if the expected activity must be a new instance of the activity object
+	 * @param expectedClass the class object that is expected to be active e.g. MyActivity.class
+	 * @param isNewInstance true if the expected activity is a new instance of the activity
 	 * 
 	 */
-	public void assertCurrentActivity(String message, Class classObject,
-			boolean newInstance) {
+	
+	public void assertCurrentActivity(String message, Class expectedClass,
+			boolean isNewInstance) {
 		boolean found = false;
-		if (newInstance) {
-			assertCurrentActivity(message, classObject);
-			Activity activity = getCurrentActivity();
-			for (int i = 0; i < activityList.size() - 1; i++) {
-				String instanceString = activityList.get(i).toString();
-				if (instanceString.equals(activity.toString()))
-					found = true;
-			}
-			Assert.assertFalse(message, found);
-
-		} else {
-			assertCurrentActivity(message, classObject);
+		assertCurrentActivity(message, expectedClass);
+		Activity activity = getCurrentActivity();
+		for (int i = 0; i < activityList.size() - 1; i++) {
+			String instanceString = activityList.get(i).toString();
+			if (instanceString.equals(activity.toString()))
+				found = true;
 		}
-	}
+			Assert.assertNotSame(message + ", isNewInstance: actual and ", isNewInstance, found);
+	}		
 	
 	/**
 	 * This method will focus an item located at x,y
@@ -491,7 +489,7 @@ public class Solo {
 	 */
 	public void goBack()
 	{
-		waitForIdle();
+		sleep(300);
 		inst.sendKeyDownUpSync(KeyEvent.KEYCODE_BACK);
 	}
 	
@@ -505,7 +503,7 @@ public class Solo {
 	
 	public void clickOnBack()
 	{
-		waitForIdle();
+		sleep(300);
 		inst.sendKeyDownUpSync(KeyEvent.KEYCODE_BACK);
 	}
 	
@@ -569,6 +567,27 @@ public class Solo {
 			}
 		}
 		inst.sendKeyDownUpSync(KeyEvent.KEYCODE_ENTER);
+	}
+	
+	/**
+	 * Method used to press on a spinner (drop-down menu) item.
+	 * 
+	 * @param spinnerIndex the index of the spinner menu to be used
+	 * @param itemIndex the index of the spinner item to be pressed
+	 * 
+	 */
+	
+	public void pressSpinnerItem(int spinnerIndex, int itemIndex)
+	{
+		clickOnScreen(getCurrentSpinners().get(spinnerIndex));
+		inst.sendKeyDownUpSync(KeyEvent.KEYCODE_DPAD_DOWN);
+		for(int i = 0; i < itemIndex; i++)
+		{
+			sleep(300);
+			inst.sendKeyDownUpSync(KeyEvent.KEYCODE_DPAD_DOWN);
+		}
+		inst.sendKeyDownUpSync(KeyEvent.KEYCODE_ENTER);
+		
 	}
 	
 	
@@ -725,6 +744,11 @@ public class Solo {
 		}
 		ArrayList<TextView> textViewList = getCurrentTextViews(scrollListView);
 		int size = textViewList.size();
+		int constant = 0;
+		if(size>2)
+			constant = 2;
+		else
+			constant = size;
 		Activity currentActivity = getCurrentActivity();
 		int x = currentActivity.getWindowManager().getDefaultDisplay()
 				.getWidth() / 2;
@@ -744,11 +768,11 @@ public class Solo {
 		drag(x, x, yStart, yEnd, 40);
 		if (checkTextView != null
 				&& !checkTextView.getText().equals(
-						textViewList.get(size - 2).getText())) {
-			checkTextView = textViewList.get(size - 2);
+						textViewList.get(size - constant).getText())) {
+			checkTextView = textViewList.get(size - constant);
 			return true;
 		} else if (checkTextView == null) {
-			checkTextView = textViewList.get(size - 2);
+			checkTextView = textViewList.get(size - constant);
 			return true;
 		} else {
 			return false;
@@ -804,19 +828,29 @@ public class Solo {
 	
 	public void enterText(int index, String text) {
 		waitForIdle();
+		Activity activity = getCurrentActivity();
 		Boolean focused = false;
 		try {
 			if (getCurrentEditTexts().size() > 0) {
 				for (int i = 0; i < getCurrentEditTexts().size(); i++) {
 					if (getCurrentEditTexts().get(i).isFocused())
+					{
 						focused = true;
+					}
 				}
 			}
 			if (!focused && getCurrentEditTexts().size() > 0) {
 				clickOnScreen(getCurrentEditTexts().get(index));
 				inst.sendStringSync(text);
 				inst.sendKeyDownUpSync(KeyEvent.KEYCODE_ENTER);
-			} else {
+				if (activity.equals(getCurrentActivity()))
+					inst.sendKeyDownUpSync(KeyEvent.KEYCODE_ENTER);
+			} else if (focused && getCurrentEditTexts().size() >1)
+			{
+				clickOnScreen(getCurrentEditTexts().get(index));
+				inst.sendStringSync(text);
+			}
+			else {
 				inst.sendStringSync(text);
 			}
 		} catch (IndexOutOfBoundsException e) {
@@ -928,6 +962,27 @@ public class Solo {
 	}
 	
 	/**
+	 * This method returns an ArrayList of spinners (drop-down menus) located in the current
+	 * activity.
+	 *
+	 * @return an ArrayList of the spinners located in the current activity or view
+	 *
+	 */
+	
+	public ArrayList<Spinner> getCurrentSpinners()
+	{
+		ArrayList<Spinner>spinnerList = new ArrayList<Spinner>();
+		ArrayList<View> viewList = getViews();
+		Iterator<View> iterator = viewList.iterator();
+		while (iterator.hasNext() && viewList != null) {
+			View view = iterator.next();
+			if (view.getClass().getName().equals("android.widget.Spinner"))
+				spinnerList.add((Spinner) view);
+		}
+		return spinnerList;
+	}
+	
+	/**
 	 * This method returns an ArrayList of the text views located in the current
 	 * activity.
 	 *
@@ -1017,5 +1072,6 @@ public class Solo {
 		}
 		super.finalize();
 	}
+	
 	
 }
