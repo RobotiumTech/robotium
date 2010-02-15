@@ -748,7 +748,7 @@ public class Solo {
 			}
 
 		}
-		ArrayList<TextView> textViewList = getCurrentTextViews(scrollListView);
+		ArrayList<TextView> textViewList = getCurrentTextViews(null);
 		int size = textViewList.size();
 		int constant = 0;
 		if(size>2)
