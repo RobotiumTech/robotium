@@ -968,24 +968,26 @@ public class Solo {
 	}
 	
 	/**
-	 * This method returns an ArrayList of all the text views included in the
-	 * ListView that is located in the current activity.
+	 * This method returns an ArrayList of all the list views located in the current activity.
 	 * 
 	 * 
-	 * @return an ArrayList of the text views included in the current list view
+	 * @return an ArrayList of the list views located in the current activity
 	 * 
 	 */
 
-	public ArrayList<TextView> getCurrentTextViewsInList() {
+	public ArrayList<ListView> getCurrentListViews() {
 
 		ArrayList<View> vList = getViews();
+		ArrayList<ListView> listViews = new ArrayList<ListView>();
 		ListView lView = null;
 		for (int i = 0; i < vList.size(); i++) {
-			if (vList.get(i).getClass().getName().equals("android.widget.ListView"))
+			if (vList.get(i).getClass().getName().equals(
+					"android.widget.ListView")) {
 				lView = (ListView) vList.get(i);
+				listViews.add(lView);
+			}
 		}
-		ArrayList<TextView> textViewList = getCurrentTextViews(lView);
-		return textViewList;
+		return listViews;
 	}
 	
 	/**
