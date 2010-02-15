@@ -63,10 +63,8 @@ public class Solo {
 	
 	private ArrayList<View> viewList = new ArrayList<View>();
 	private ArrayList<Activity> activityList = new ArrayList<Activity>();
-	public static final int CLICKONTEXT = 1;
-	public static final int CLICKONBUTTON = 2;
-	public final static int RIGHT = 3;
-	public final static int LEFT = 4;
+	public final static int RIGHT = 1;
+	public final static int LEFT = 2;
 	private final int PAUS = 500;
 	private Activity activity;
 	private Instrumentation inst;
