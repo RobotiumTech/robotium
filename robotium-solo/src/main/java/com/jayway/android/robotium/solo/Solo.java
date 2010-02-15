@@ -967,6 +967,27 @@ public class Solo {
 	}
 	
 	/**
+	 * This method returns an ArrayList of all the text views included in the
+	 * ListView that is located in the current activity.
+	 * 
+	 * 
+	 * @return an ArrayList of the text views included in the current list view
+	 * 
+	 */
+
+	public ArrayList<TextView> getCurrentTextViewsInList() {
+
+		ArrayList<View> vList = getViews();
+		ListView lView = null;
+		for (int i = 0; i < vList.size(); i++) {
+			if (vList.get(i).getClass().getName().equals("android.widget.ListView"))
+				lView = (ListView) vList.get(i);
+		}
+		ArrayList<TextView> textViewList = getCurrentTextViews(lView);
+		return textViewList;
+	}
+	
+	/**
 	 * This method returns an ArrayList of spinners (drop-down menus) located in the current
 	 * activity.
 	 *
@@ -999,6 +1020,7 @@ public class Solo {
 	 */
 	
 	public ArrayList<TextView> getCurrentTextViews(View parent) {
+		viewList.clear();		
 		if(parent == null)
 			getViews();
 		else
