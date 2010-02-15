@@ -14,6 +14,7 @@ import android.app.Instrumentation.ActivityMonitor;
 import android.content.ComponentName;
 import android.content.IntentFilter;
 import android.os.SystemClock;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
@@ -72,6 +73,7 @@ public class Solo {
 	private ActivityMonitor activityMonitor;
 	private IntentFilter filter;
 	private TextView checkTextView = null;
+	private final String LOG_TAG = "Robotium";
 	
 	/**
 	 * Constructor that takes in the instrumentation and the start activity.
@@ -536,6 +538,8 @@ public class Solo {
 			clickOnButton(name);
 		}else
 		{
+			for (int i = 0; i < buttonList.size(); i++)
+				Log.d(LOG_TAG, name + " not found, have found: " + buttonList.get(i).getText());
 			Assert.assertTrue("Button with the text: " + name + " is not found!", false);
 		}
 
@@ -672,7 +676,8 @@ public class Solo {
 		Matcher matcher;
 		waitForIdle();
 		boolean found = false;
-		Iterator<TextView> iterator = getCurrentTextViews(null).iterator();
+		ArrayList <TextView> textViews = getCurrentTextViews(null);
+		Iterator<TextView> iterator = textViews.iterator();
 		TextView textView = null;
 		while (iterator.hasNext()) {
 			textView = iterator.next();
@@ -689,6 +694,8 @@ public class Solo {
 			clickOnText(text);
 		}else
 		{
+			for (int i = 0; i < textViews.size(); i++)
+				Log.d(LOG_TAG, text + " not found, have found: " + textViews.get(i).getText());
 			Assert.assertTrue("The text: " + text + " is not found!", false);
 		}
 	}
