@@ -29,11 +29,13 @@ import android.widget.ListView;
 
 /**
  * This class is used to make instrumentation testing easier. It supports test
- * cases that span over multiple activities. When writing tests there is no need
- * to plan for or expect new activities in the test case. All is handled
- * automatically by Robotium-Solo. Robotium-Solo can be used in conjunction with
+ * cases that span over multiple activities. It also supports regular expressions and 
+ * will automatically scroll when needed.
+ * When writing tests there is no need to plan for or expect new activities in the test case. 
+ * All is handled automatically by Robotium-Solo. Robotium-Solo can be used in conjunction with
  * ActivityInstrumentationTestCase2. The test cases are written from a user
  * perspective were technical details are not needed.
+ * 
  *
  * Example of usage (test case spanning over multiple activities):
  *
@@ -184,9 +186,9 @@ public class Solo {
 	
 	/**
 	 * Private method which adds all the views located in the currently active
-	 * activity to an ArrayList.
+	 * activity to an ArrayList viewList.
 	 *
-	 * @param view the view who's children should be added to the ViewList arraylist
+	 * @param view the view who's children should be added to viewList 
 	 *
 	 */
 	
@@ -201,33 +203,39 @@ public class Solo {
 	}
 	
 	/**
-	 * Searches for a search string in the EditTexts located in the current
+	 * Searches for a text string in the edit texts located in the current
 	 * activity.
 	 *
 	 * @param search the search string to be searched
-	 * @return the EditText found or null if nothing is found
+	 * @return true if an edit text with the given text is found or false if it is not found
 	 *
 	 */
 	
-	public EditText searchEditText(String search) {
+	public boolean searchEditText(String search) {
+		Pattern p = Pattern.compile(search);
+		Matcher matcher;
 		ArrayList<EditText> editTextList = getCurrentEditTexts();
 		Iterator<EditText> iterator = editTextList.iterator();
 		while (iterator.hasNext()) {
 			EditText editText = (EditText) iterator.next();
-			if (editText.getText().toString().equals(search)) {
-				return editText;
+			matcher = p.matcher(editText.getText().toString());
+			if (matcher.matches()) {
+				return true;
 			}
 		}
-		return null;
-		
+		if (scrollDownList())
+			return searchEditText(search);
+		else
+			return false;
 	}
+	
 	
 	/**
 	 * Searches for a button with the given search string and returns true if at least one button 
 	 * is found with the expected text
 	 *
 	 * @param search the string to be searched. Regular expressions are supported
-	 * @return true if a button with the given text is found and false if not found
+	 * @return true if a button with the given text is found and false if it is not found
 	 *
 	 */
 	
@@ -243,7 +251,7 @@ public class Solo {
 	 * @param matches the number of matches expected to be found. 0 matches means that one or more 
 	 * matches are expected to be found
 	 * @return true if a button with the given text is found a given number of times and false 
-	 * if not found
+	 * if it is not found
 	 *  
 	 */
 	
@@ -280,7 +288,7 @@ public class Solo {
 	 * is found with the expected text
 	 *
 	 * @param search the string to be searched. Regular expressions are supported
-	 * @return true if search string is found and false if not found
+	 * @return true if the search string is found and false if it is not found
 	 *
 	 */
 	
@@ -296,7 +304,7 @@ public class Solo {
 	 * @param matches the number of matches expected to be found. 0 matches means that one or more 
 	 * matches are expected to be found
 	 * @return true if search string is found a given number of times and false if the search string
-	 * can not be found
+	 * is not found
 	 *  
 	 */
 	
