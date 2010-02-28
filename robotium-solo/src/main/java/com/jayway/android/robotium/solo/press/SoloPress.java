@@ -27,13 +27,15 @@ public class SoloPress{
      * @param soloClick the {@link SoloClick} instance.
      * @param inst the {@link Instrumentation} instance.
      */
+	
     public SoloPress(SoloView soloView, SoloClick soloClick, Instrumentation inst) {
         this.soloView = soloView;
         this.soloClick = soloClick;
         this.inst = inst;
     }
 
-    /**
+	
+	/**
 	 * Method used to press a MenuItem with a certain index. Index 0 is the first item in the 
 	 * first row and index 3 is the first item in the second row.
 	 * 
