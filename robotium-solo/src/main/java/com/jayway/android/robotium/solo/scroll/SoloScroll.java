@@ -3,6 +3,7 @@ package com.jayway.android.robotium.solo.scroll;
 import java.util.ArrayList;
 import java.util.Iterator;
 import com.jayway.android.robotium.solo.activity.SoloActivity;
+import com.jayway.android.robotium.solo.click.SoloClick;
 import com.jayway.android.robotium.solo.view.SoloView;
 import android.app.Activity;
 import android.app.Instrumentation;
@@ -27,14 +28,24 @@ public class SoloScroll {
     private TextView checkTextView = null;
 	public final static int RIGHT = 1;
 	public final static int LEFT = 2;
+	
 
+    /**
+     * Constructs this object.
+     *
+     * @param inst the {@link Instrumentation} instance.
+     * @param soloActivity the {@link SoloActivity} instance.
+     * @param soloView the {@link SoloView} instance.
+     */
+	
     public SoloScroll(Instrumentation inst, SoloActivity soloActivity, SoloView soloView) {
         this.inst = inst;
         this.soloActivity = soloActivity;
         this.soloView = soloView;
     }
 
-    /**
+	
+	 /**
 	 * Simulate touching a specific location and dragging to a new location.
 	 *
 	 * This method was copied from {@code TouchUtils.java} in the Android Open Source Project, and modified here.
@@ -104,7 +115,6 @@ public class SoloScroll {
 				found = true;
 				break;
 			}
-
 		}
 		ArrayList<TextView> textViewList = soloView.getCurrentTextViews(null);
 		int size = textViewList.size();
