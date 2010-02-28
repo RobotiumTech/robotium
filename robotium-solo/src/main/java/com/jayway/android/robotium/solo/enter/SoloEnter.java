@@ -37,7 +37,8 @@ public class SoloEnter{
         this.inst = inst;
     }
 
-    /**
+	
+	/**
 	 * This method is used to enter text into an EditText or a NoteField with a certain index.
 	 *
 	 * @param index the index of the text field. Index 0 if only one available.
