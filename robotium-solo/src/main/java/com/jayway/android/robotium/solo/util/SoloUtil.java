@@ -3,10 +3,9 @@ package com.jayway.android.robotium.solo.util;
 public class SoloUtil {	
 	
 	/**
-	 * This method is used to trigger a sleep with a certain time.
+	 * This method is used to trigger a sleep.
 	 *
-	 * @param time the time in which the application under test should be
-	 * paused
+	 * @param time the length of the sleep
 	 *
 	 */
 	
