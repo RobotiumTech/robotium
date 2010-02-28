@@ -9,18 +9,20 @@ import com.jayway.android.robotium.solo.scroll.SoloScroll;
 import com.jayway.android.robotium.solo.util.SoloUtil;
 import com.jayway.android.robotium.solo.view.SoloView;
 import junit.framework.Assert;
+import android.app.Activity;
 import android.app.Instrumentation;
 import android.os.SystemClock;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewConfiguration;
 import android.widget.Button;
 import android.widget.TextView;
 
 /**
  * This class contains various click methods. Examples are: clickOnButton(),
- * clickOnText(), clickOnScreen() etc.
+ * clickOnText(), clickOnScreen().
  * 
  * @author Renas Reda, renas.reda@jayway.com
  * 
@@ -34,23 +36,25 @@ public class SoloClick {
 	private final SoloScroll soloScroll;
 	private final Instrumentation inst;
 
-    /**
-     * Constructs this object.
-     *
-     * @param soloActivity the {@link SoloActivity} instance.
-     * @param soloView the {@link SoloView} instance.
-     * @param soloScroll the {@link SoloScroll} instance.
-     * @param inst the {@link Instrumentation} instance.
-     */
-    public SoloClick(SoloActivity soloActivity, SoloView soloView, SoloScroll soloScroll, Instrumentation inst) {
-        this.soloActivity = soloActivity;
-        this.soloView = soloView;
-        this.soloScroll = soloScroll;
-        this.inst = inst;
-    }
+	/**
+	 * Constructs this object.
+	 * 
+	 * @param soloActivity the {@link SoloActivity} instance.
+	 * @param soloView the {@link SoloView} instance.
+	 * @param soloScroll the {@link SoloScroll} instance.
+	 * @param inst the {@link Instrumentation} instance.
+	 */
 
+	public SoloClick(SoloActivity soloActivity, SoloView soloView,
+			SoloScroll soloScroll, Instrumentation inst) {
 
-    /**
+		this.soloActivity = soloActivity;
+		this.soloView = soloView;
+		this.soloScroll = soloScroll;
+		this.inst = inst;
+	}
+	
+	/**
 	 * Private method to click on a specific coordinate on the screen
 	 *
 	 * @param x the x coordinate
@@ -71,6 +75,36 @@ public class SoloClick {
 	}
 	
 	/**
+	 * Private method to long click on a specific coordinate on the screen
+	 *
+	 * @param x the x coordinate
+	 * @param y the y coordinate
+	 *
+	 */
+	
+	private void clickLongOnScreen(float x, float y) {
+		long downTime = SystemClock.uptimeMillis();
+        long eventTime = SystemClock.uptimeMillis();
+        MotionEvent event = MotionEvent.obtain(downTime, eventTime, MotionEvent.ACTION_DOWN, x, y, 0);
+        inst.sendPointerSync(event);
+        inst.waitForIdleSync();
+        eventTime = SystemClock.uptimeMillis();
+        event = MotionEvent.obtain(downTime, eventTime, MotionEvent.ACTION_MOVE, 
+                x + ViewConfiguration.getTouchSlop() / 2,
+                y + ViewConfiguration.getTouchSlop() / 2, 0);
+        inst.sendPointerSync(event);
+        inst.waitForIdleSync();
+        SoloUtil.sleep((int)(ViewConfiguration.getLongPressTimeout() * 1.5f));
+        eventTime = SystemClock.uptimeMillis();
+        event = MotionEvent.obtain(downTime, eventTime, MotionEvent.ACTION_UP, x, y, 0);
+        inst.sendPointerSync(event);
+        inst.waitForIdleSync();
+		SoloUtil.sleep(500);
+
+	}
+	
+	
+	/**
 	 * Method used to click on a specific view.
 	 *
 	 * @param view the view that should be clicked
@@ -78,22 +112,44 @@ public class SoloClick {
 	 */
 	
 	public void clickOnScreen(View view) {
+		clickOnScreen(view, false);
+	}
+	
+	/**
+	 * Private method used to click on a specific view.
+	 *
+	 * @param view the view that should be clicked
+	 * @param longClick true if the click should be a long click
+	 *
+	 */
+	
+	private void clickOnScreen(View view, boolean longClick) {
 		int[] xy = new int[2];
 		view.getLocationOnScreen(xy);
-		
 		final int viewWidth = view.getWidth();
 		final int viewHeight = view.getHeight();
-		
 		final float x = xy[0] + (viewWidth / 2.0f);
 		final float y = xy[1] + (viewHeight / 2.0f);
-		
-		
-		clickOnScreen(x, y);
+		if(longClick)
+			clickLongOnScreen(x, y);
+		else
+			clickOnScreen(x, y);	
+	}
+	
+	/**
+	 * Method used to long click on a specific view.
+	 *
+	 * @param view the view that should be long clicked
+	 *
+	 */
+	
+	public void clickLongOnScreen(View view) {
+		clickOnScreen(view, true);
 		
 	}
 	
 	/**
-	 * This method is used to click on a specific view displaying a certain
+	 * This method is used to click on a specific text view displaying a certain
 	 * text.
 	 *
 	 * @param text the text that should be clicked on. Regular expressions are supported
@@ -101,6 +157,41 @@ public class SoloClick {
 	 */
 	
 	public void clickOnText(String text) {
+		clickOnText(text, false);
+	}
+	
+	/**
+	 * This method is used to long click on a specific text view and then selecting
+	 * an item from the menu that appears.
+	 *
+	 * @param text the text that should be clicked on. Regular expressions are supported
+	 * @param index the index of the menu item that should be pressed
+	 *
+	 */
+	
+	public void clickLongOnTextAndPress(String text, int index)
+	{
+		clickOnText(text, true);
+		inst.sendKeyDownUpSync(KeyEvent.KEYCODE_DPAD_DOWN);
+		for(int i = 0; i < index; i++)
+		{
+			SoloUtil.sleep(300);
+			inst.sendKeyDownUpSync(KeyEvent.KEYCODE_DPAD_DOWN);
+		}
+		inst.sendKeyDownUpSync(KeyEvent.KEYCODE_ENTER);
+	}
+	
+	
+	/**
+	 * Private method that is used to click on a specific text view displaying a certain
+	 * text.
+	 *
+	 * @param text the text that should be clicked on. Regular expressions are supported
+	 * @param longClick true if the click should be a long click 
+	 *
+	 */
+	
+	private void clickOnText(String text, boolean longClick) {
 		Pattern p = Pattern.compile(text);
 		Matcher matcher; 
 		soloActivity.waitForIdle();
@@ -116,21 +207,25 @@ public class SoloClick {
 				break;
 			}
 		}
-
-		if (found) { 
-			clickOnScreen(textView);
-		} else if (soloScroll.scrollDownList()){
-			clickOnText(text);
-		}else
-		{
+		if (found) {
+			if (longClick)
+				clickLongOnScreen(textView);
+			else
+				clickOnScreen(textView);
+		} else if (soloScroll.scrollDownList()) {
+			clickOnText(text, longClick);
+		} else {
 			for (int i = 0; i < textViews.size(); i++)
-				Log.d(LOG_TAG, text + " not found. Have found: " + textViews.get(i).getText());
+				Log.d(LOG_TAG, text + " not found. Have found: "
+						+ textViews.get(i).getText());
 			Assert.assertTrue("The text: " + text + " is not found!", false);
 		}
 	}
 	
+	
+	
 	/**
-	 * This method used to click on a button with a specific index.
+	 * This method is used to click on a button with a specific index.
 	 *
 	 * @param index the index number of the button
 	 * @return true if button with specified index is found
@@ -145,13 +240,11 @@ public class SoloClick {
 		} catch (IndexOutOfBoundsException e) {
 			e.printStackTrace();
 		}
-		
 		if (button != null) {
 			clickOnScreen(button);
 			soloActivity.waitForIdle();
 			found = true;
 		}
-		
 		return found;
 	}
 	
