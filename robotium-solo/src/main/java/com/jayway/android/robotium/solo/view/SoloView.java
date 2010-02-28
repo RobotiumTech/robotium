@@ -25,25 +25,22 @@ import android.widget.TextView;
 
 public class SoloView {
 	
-	private ArrayList<View> viewList = new ArrayList<View>();
-	private SoloActivity soloActivity;
-	private Instrumentation inst;
+	private final ArrayList<View> viewList = new ArrayList<View>();
+	private final SoloActivity soloActivity;
+	private final Instrumentation inst;
 
-	/**
-	 * Constructor that takes in the instrumentation and the start activity.
-	 *
-	 * @param inst the instrumentation object
-	 * @param activity the start activity
-	 *
-	 */
-	
-	public SoloView(Instrumentation inst, Activity activity) {
-		soloActivity = new SoloActivity(inst, activity);
-		this.inst = inst;
-	
-	}
-	
-	/**
+    /**
+     * Constructs this object.
+     *
+     * @param soloActivity the {@link SoloActivity} instance.
+     * @param inst the {@link Instrumentation} instance.
+     */
+    public SoloView(SoloActivity soloActivity, Instrumentation inst) {
+        this.soloActivity = soloActivity;
+        this.inst = inst;
+    }
+
+    /**
 	 * Method used to get the absolute top view in an activity.
 	 *
 	 * @param view the view whose top parent is requested

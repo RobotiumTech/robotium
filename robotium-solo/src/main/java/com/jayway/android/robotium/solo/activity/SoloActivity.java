@@ -12,10 +12,6 @@ import android.app.ActivityManager.RunningTaskInfo;
 import android.app.Instrumentation.ActivityMonitor;
 import android.content.ComponentName;
 import android.content.IntentFilter;
-import android.os.SystemClock;
-import android.test.ActivityUnitTestCase;
-import android.view.KeyEvent;
-import android.view.MotionEvent;
 import android.view.View;
 
 /**
@@ -28,7 +24,7 @@ import android.view.View;
 
 public class SoloActivity {
 	
-	protected Instrumentation inst;
+	protected final Instrumentation inst;
 	private ActivityMonitor activityMonitor;
 	private IntentFilter filter;
 	protected Activity activity;

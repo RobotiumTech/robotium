@@ -9,7 +9,6 @@ import com.jayway.android.robotium.solo.scroll.SoloScroll;
 import com.jayway.android.robotium.solo.util.SoloUtil;
 import com.jayway.android.robotium.solo.view.SoloView;
 import junit.framework.Assert;
-import android.app.Activity;
 import android.app.Instrumentation;
 import android.os.SystemClock;
 import android.util.Log;
@@ -30,27 +29,28 @@ import android.widget.TextView;
 public class SoloClick {
 	
 	private final String LOG_TAG = "Robotium";
-	private SoloActivity soloActivity;
-	private SoloView soloView;
-	private SoloScroll soloScroll;
-	private Instrumentation inst;
+	private final SoloActivity soloActivity;
+	private final SoloView soloView;
+	private final SoloScroll soloScroll;
+	private final Instrumentation inst;
 
-	/**
-	 * Constructor that takes in the instrumentation and the start activity.
-	 *
-	 * @param inst the instrumentation object
-	 * @param activity the start activity
-	 *
-	 */
-	
-	public SoloClick(Instrumentation inst, Activity activity) {
-		this.inst = inst;
-		soloView = new SoloView(inst, activity);
-		soloActivity = new SoloActivity(inst, activity);
-		soloScroll = new SoloScroll(inst, activity);
-	}
-	
-	/**
+    /**
+     * Constructs this object.
+     *
+     * @param soloActivity the {@link SoloActivity} instance.
+     * @param soloView the {@link SoloView} instance.
+     * @param soloScroll the {@link SoloScroll} instance.
+     * @param inst the {@link Instrumentation} instance.
+     */
+    public SoloClick(SoloActivity soloActivity, SoloView soloView, SoloScroll soloScroll, Instrumentation inst) {
+        this.soloActivity = soloActivity;
+        this.soloView = soloView;
+        this.soloScroll = soloScroll;
+        this.inst = inst;
+    }
+
+
+    /**
 	 * Private method to click on a specific coordinate on the screen
 	 *
 	 * @param x the x coordinate

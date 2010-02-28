@@ -57,14 +57,14 @@ import android.widget.ListView;
 
 public class Solo {
 
-	private SoloAssertion soloAssert;
-	private SoloView soloView;
-	private SoloClick soloClick;
-	private SoloPress soloPress;
-	private SoloSearch soloSearch;
-	private SoloActivity soloActivity;
-	private SoloEnter soloEnter;
-	private SoloScroll soloScroll;
+	private final SoloAssertion soloAssert;
+	private final SoloView soloView;
+	private final SoloClick soloClick;
+	private final SoloPress soloPress;
+	private final SoloSearch soloSearch;
+	private final SoloActivity soloActivity;
+	private final SoloEnter soloEnter;
+	private final SoloScroll soloScroll;
 	public final static int RIGHT = 1;
 	public final static int LEFT = 2;
 	
@@ -75,39 +75,15 @@ public class Solo {
 	 * @param activity the start activity
 	 *
 	 */
-
 	public Solo(Instrumentation inst, Activity activity) {
-		setUp(new SoloActivity(inst, activity),
-				new SoloView(inst, activity), new SoloSearch(inst, activity),
-				new SoloAssertion(inst, activity),
-				new SoloClick(inst, activity), new SoloPress(inst, activity),
-				new SoloEnter(inst, activity), new SoloScroll(inst, activity));
-	}
-
-	/**
-	 * Private method that sets up the solo objects.
-	 * 
-	 * @param soloActivity the SoloActivity instance
-	 * @param soloView the SoloView instance
-	 * @param soloSearch the SoloSearch instance
-	 * @param soloAssert the SoloAssert instance
-	 * @param soloClick the SoloClick instance
-	 * @param soloPress the SoloPress instance
-	 * @param soloEnter the SoloEnter instance
-	 */
-
-	private void setUp(SoloActivity soloActivity, SoloView soloView,
-			SoloSearch soloSearch, SoloAssertion soloAssert,
-			SoloClick soloClick, SoloPress soloPress, SoloEnter soloEnter, SoloScroll soloScroll) {
-		this.soloActivity = soloActivity;
-		this.soloView = soloView;
-		this.soloSearch = soloSearch;
-		this.soloAssert = soloAssert;
-		this.soloClick = soloClick;
-		this.soloPress = soloPress;
-		this.soloEnter = soloEnter;
-		this.soloScroll = soloScroll;
-		
+        this.soloActivity = new SoloActivity(inst, activity);
+        this.soloAssert = new SoloAssertion(soloActivity);
+        this.soloView = new SoloView(soloActivity, inst);
+        this.soloScroll = new SoloScroll(inst, soloActivity, soloView);
+        this.soloClick = new SoloClick(soloActivity, soloView, soloScroll, inst);
+        this.soloPress = new SoloPress(soloView, soloClick, inst);
+        this.soloSearch = new SoloSearch(soloView, soloActivity, soloScroll, inst);
+        this.soloEnter = new SoloEnter(soloView, soloActivity, soloClick, inst);
 	}
 
 	/**

@@ -6,9 +6,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import com.jayway.android.robotium.solo.activity.SoloActivity;
 import com.jayway.android.robotium.solo.scroll.SoloScroll;
-import com.jayway.android.robotium.solo.util.SoloUtil;
 import com.jayway.android.robotium.solo.view.SoloView;
-import android.app.Activity;
 import android.app.Instrumentation;
 import android.widget.Button;
 import android.widget.EditText;
@@ -24,28 +22,27 @@ import android.widget.TextView;
 
 public class SoloSearch {
 	
-	private SoloView soloView;
-	private SoloActivity soloActivity;
-	private SoloScroll soloScroll;
-	private Instrumentation inst;
-	
-	/**
-	 * Constructor that takes in the instrumentation and the start activity.
-	 *
-	 * @param inst the instrumentation object
-	 * @param activity the start activity
-	 *
-	 */
-	
-	public SoloSearch(Instrumentation inst, Activity activity) {
-		this.inst = inst;
-		soloView = new SoloView(inst, activity);
-		soloActivity = new SoloActivity(inst, activity);
-		soloScroll = new SoloScroll(inst, activity);
-	}
+	private final SoloView soloView;
+	private final SoloActivity soloActivity;
+	private final SoloScroll soloScroll;
+	private final Instrumentation inst;
 
+    /**
+     * Constructs this object.
+     *
+     * @param soloView the {@link SoloView} instance.
+     * @param soloActivity the {@link SoloActivity} instance.
+     * @param soloScroll the {@link SoloScroll} instance.
+     * @param inst the {@link Instrumentation} instance.
+     */
+    public SoloSearch(SoloView soloView, SoloActivity soloActivity, SoloScroll soloScroll, Instrumentation inst) {
+        this.soloView = soloView;
+        this.soloActivity = soloActivity;
+        this.soloScroll = soloScroll;
+        this.inst = inst;
+    }
 
-	/**
+    /**
 	 * Searches for a text string in the edit texts located in the current
 	 * activity.
 	 *

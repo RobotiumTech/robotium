@@ -17,27 +17,27 @@ import android.view.KeyEvent;
 
 public class SoloEnter{
 	
-	private SoloView soloView;
-	private SoloActivity soloActivity;
-	private SoloClick soloClick;
-	private Instrumentation inst;
-	
-	/**
-	 * Constructor that takes in the instrumentation and the start activity.
-	 *
-	 * @param inst the instrumentation object
-	 * @param activity the start activity
-	 *
-	 */
-	
-	public SoloEnter(Instrumentation inst, Activity activity) {
-		this.inst = inst;
-		soloView = new SoloView(inst, activity);
-		soloActivity = new SoloActivity(inst, activity);
-		soloClick = new SoloClick(inst, activity);
-	}
-	
-	/**
+	private final SoloView soloView;
+	private final SoloActivity soloActivity;
+	private final SoloClick soloClick;
+	private final Instrumentation inst;
+
+    /**
+     * Constructs this object.
+     *
+     * @param soloView the {@link SoloView} instance.
+     * @param soloActivity the {@link SoloActivity} instance.
+     * @param soloClick the {@link SoloClick} instance.
+     * @param inst the {@link Instrumentation} instance.
+     */
+    public SoloEnter(SoloView soloView, SoloActivity soloActivity, SoloClick soloClick, Instrumentation inst) {
+        this.soloView = soloView;
+        this.soloActivity = soloActivity;
+        this.soloClick = soloClick;
+        this.inst = inst;
+    }
+
+    /**
 	 * This method is used to enter text into an EditText or a NoteField with a certain index.
 	 *
 	 * @param index the index of the text field. Index 0 if only one available.

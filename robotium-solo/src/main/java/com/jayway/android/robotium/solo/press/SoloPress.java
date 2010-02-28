@@ -1,10 +1,8 @@
 package com.jayway.android.robotium.solo.press;
 
-import com.jayway.android.robotium.solo.activity.SoloActivity;
 import com.jayway.android.robotium.solo.click.SoloClick;
 import com.jayway.android.robotium.solo.util.SoloUtil;
 import com.jayway.android.robotium.solo.view.SoloView;
-import android.app.Activity;
 import android.app.Instrumentation;
 import android.view.KeyEvent;
 
@@ -18,25 +16,24 @@ import android.view.KeyEvent;
 
 public class SoloPress{
 
-	private SoloView soloView;
-	private SoloClick soloClick;
-	private Instrumentation inst;
-	
-	/**
-	 * Constructor that takes in the instrumentation and the start activity.
-	 *
-	 * @param inst the instrumentation object
-	 * @param activity the start activity
-	 *
-	 */
-	
-	public SoloPress(Instrumentation inst, Activity activity) {
-		this.inst = inst;
-		soloView = new SoloView(inst, activity);
-		soloClick = new SoloClick(inst, activity);
-	}
-	
-	/**
+	private final SoloView soloView;
+	private final SoloClick soloClick;
+	private final Instrumentation inst;
+
+    /**
+     * Constructs this object.
+     *
+     * @param soloView the {@link SoloView} instance.
+     * @param soloClick the {@link SoloClick} instance.
+     * @param inst the {@link Instrumentation} instance.
+     */
+    public SoloPress(SoloView soloView, SoloClick soloClick, Instrumentation inst) {
+        this.soloView = soloView;
+        this.soloClick = soloClick;
+        this.inst = inst;
+    }
+
+    /**
 	 * Method used to press a MenuItem with a certain index. Index 0 is the first item in the 
 	 * first row and index 3 is the first item in the second row.
 	 * 

@@ -21,21 +21,20 @@ import android.widget.TextView;
 
 public class SoloScroll {
 	
-	private Instrumentation inst;
-	private TextView checkTextView = null;
-	private SoloActivity soloActivity;
-	private SoloView soloView;
+	private final Instrumentation inst;
+	private final SoloActivity soloActivity;
+	private final SoloView soloView;
+    private TextView checkTextView = null;
 	public final static int RIGHT = 1;
 	public final static int LEFT = 2;
-	
-	public SoloScroll(Instrumentation inst, Activity activity)
-	{
-		this.inst = inst;
-		soloView = new SoloView(inst, activity);
-		soloActivity = new SoloActivity(inst, activity);
-	}
-	
-	 /**
+
+    public SoloScroll(Instrumentation inst, SoloActivity soloActivity, SoloView soloView) {
+        this.inst = inst;
+        this.soloActivity = soloActivity;
+        this.soloView = soloView;
+    }
+
+    /**
 	 * Simulate touching a specific location and dragging to a new location.
 	 *
 	 * This method was copied from {@code TouchUtils.java} in the Android Open Source Project, and modified here.

@@ -3,7 +3,6 @@ package com.jayway.android.robotium.solo.assertion;
 import com.jayway.android.robotium.solo.activity.SoloActivity;
 import junit.framework.Assert;
 import android.app.Activity;
-import android.app.Instrumentation;
 
 /**
  * This class contains assertActivity() methods.
@@ -12,18 +11,16 @@ import android.app.Instrumentation;
  *
  */
 public class SoloAssertion {
-	private SoloActivity soloActivity;
+	private final SoloActivity soloActivity;
 	
 	/**
-	 * Constructor that takes in the instrumentation and the start activity.
+	 * Constructs this object.
 	 *
-	 * @param inst the instrumentation object
-	 * @param activity the start activity
-	 *
-	 */
+     * @param soloActivity the activity to act upon.
+     */
 	
-	public SoloAssertion(Instrumentation inst, Activity activity) {
-		soloActivity = new SoloActivity(inst, activity);
+	public SoloAssertion(SoloActivity soloActivity) {
+		this.soloActivity = soloActivity;
 	}
 
 	/**
