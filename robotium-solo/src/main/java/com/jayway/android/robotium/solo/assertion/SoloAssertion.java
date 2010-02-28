@@ -85,8 +85,8 @@ public class SoloAssertion {
 		boolean found = false;
 		assertCurrentActivity(message, expectedClass);
 		Activity activity = soloActivity.getCurrentActivity();
-		for (int i = 0; i < soloActivity.getActivityList().size() - 1; i++) {
-			String instanceString = soloActivity.getActivityList().get(i).toString();
+		for (int i = 0; i < soloActivity.getAllOpenedActivities().size() - 1; i++) {
+			String instanceString = soloActivity.getAllOpenedActivities().get(i).toString();
 			if (instanceString.equals(activity.toString()))
 				found = true;
 		}
