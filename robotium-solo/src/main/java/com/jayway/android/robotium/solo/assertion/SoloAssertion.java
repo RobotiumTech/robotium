@@ -16,8 +16,9 @@ public class SoloAssertion {
 	/**
 	 * Constructs this object.
 	 *
-     * @param soloActivity the activity to act upon.
-     */
+	 * @param soloActivity the activity to act upon.
+	 *
+	 */
 	
 	public SoloAssertion(SoloActivity soloActivity) {
 		this.soloActivity = soloActivity;
@@ -33,7 +34,8 @@ public class SoloAssertion {
 	public void assertCurrentActivity(String message, String name)
 	{
 		soloActivity.waitForIdle();
-		Assert.assertEquals(message, name, soloActivity.getCurrentActivity().getClass().getSimpleName());
+		Assert.assertEquals(message, name, soloActivity.getCurrentActivity()
+				.getClass().getSimpleName());
 		
 	}
 	
@@ -47,7 +49,8 @@ public class SoloAssertion {
 	public void assertCurrentActivity(String message, Class expectedClass)
 	{
 		soloActivity.waitForIdle();
-		Assert.assertEquals(message, expectedClass.getName(), soloActivity.getCurrentActivity().getClass().getName());
+		Assert.assertEquals(message, expectedClass.getName(), soloActivity
+				.getCurrentActivity().getClass().getName());
 	
 	}
 	
