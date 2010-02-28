@@ -6,6 +6,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import com.jayway.android.robotium.solo.activity.SoloActivity;
 import com.jayway.android.robotium.solo.scroll.SoloScroll;
+import com.jayway.android.robotium.solo.util.SoloUtil;
 import com.jayway.android.robotium.solo.view.SoloView;
 import android.app.Activity;
 import android.app.Instrumentation;
@@ -14,8 +15,8 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 /**
- * This class contains search methods. Examples are: searchEditText(),
- * searchText(), searchButton() etc.
+ * This class contains various search methods. Examples are: searchEditText(),
+ * searchText(), searchButton().
  * 
  * @author Renas Reda, renas.reda@jayway.com
  * 
