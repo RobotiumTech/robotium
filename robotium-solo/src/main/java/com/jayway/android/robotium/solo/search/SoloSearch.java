@@ -42,11 +42,13 @@ public class SoloSearch {
         this.inst = inst;
     }
 
-    /**
+
+
+	/**
 	 * Searches for a text string in the edit texts located in the current
 	 * activity.
 	 *
-	 * @param search the search string to be searched
+	 * @param search the search string to be searched. Regular expressions are supported
 	 * @return true if an edit text with the given text is found or false if it is not found
 	 *
 	 */
