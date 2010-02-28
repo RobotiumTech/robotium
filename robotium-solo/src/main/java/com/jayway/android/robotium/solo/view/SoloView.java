@@ -40,7 +40,8 @@ public class SoloView {
         this.inst = inst;
     }
 
-    /**
+	
+	/**
 	 * Method used to get the absolute top view in an activity.
 	 *
 	 * @param view the view whose top parent is requested
