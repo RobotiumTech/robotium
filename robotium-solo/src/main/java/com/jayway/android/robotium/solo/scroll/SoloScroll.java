@@ -3,7 +3,6 @@ package com.jayway.android.robotium.solo.scroll;
 import java.util.ArrayList;
 import java.util.Iterator;
 import com.jayway.android.robotium.solo.activity.SoloActivity;
-import com.jayway.android.robotium.solo.click.SoloClick;
 import com.jayway.android.robotium.solo.view.SoloView;
 import android.app.Activity;
 import android.app.Instrumentation;
@@ -25,7 +24,7 @@ public class SoloScroll {
 	private final Instrumentation inst;
 	private final SoloActivity soloActivity;
 	private final SoloView soloView;
-    private TextView checkTextView = null;
+   	private TextView checkTextView = null;
 	public final static int RIGHT = 1;
 	public final static int LEFT = 2;
 	
