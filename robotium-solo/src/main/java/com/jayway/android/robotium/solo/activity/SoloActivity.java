@@ -26,7 +26,6 @@ public class SoloActivity {
 	
 	protected final Instrumentation inst;
 	private ActivityMonitor activityMonitor;
-	private IntentFilter filter;
 	protected Activity activity;
 	protected ArrayList<Activity> activityList = new ArrayList<Activity>();
 	private final int PAUS = 500;
@@ -67,6 +66,7 @@ public class SoloActivity {
 	private void setupActivityMonitor() {
 		
 		try {
+            IntentFilter filter = null;
 			activityMonitor = inst.addMonitor(filter, null, false);
 		} catch (Throwable e) {
 		}
