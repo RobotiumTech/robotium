@@ -21,9 +21,10 @@ import android.widget.TextView;
 import android.widget.ListView;
 
 /**
- * This class is used to make instrumentation testing easier. It supports test
+ * This class contains all the methods that the sub-classes have. It supports test
  * cases that span over multiple activities. It supports regular expressions and 
  * will automatically scroll when needed.
+ * 
  * When writing tests there is no need to plan for or expect new activities in the test case. 
  * All is handled automatically by Robotium-Solo. Robotium-Solo can be used in conjunction with
  * ActivityInstrumentationTestCase2. The test cases are written from a user
@@ -65,6 +66,8 @@ public class Solo {
 	private final SoloActivity soloActivity;
 	private final SoloEnter soloEnter;
 	private final SoloScroll soloScroll;
+	public final static int RIGHT = 1;
+	public final static int LEFT = 2;
 	
 	/**
 	 * Constructor that takes in the instrumentation and the start activity.
@@ -73,6 +76,7 @@ public class Solo {
 	 * @param activity the start activity
 	 *
 	 */
+	
 	public Solo(Instrumentation inst, Activity activity) {
         this.soloActivity = new SoloActivity(inst, activity);
         this.soloAssert = new SoloAssertion(soloActivity);
@@ -326,6 +330,17 @@ public class Solo {
 	}
 	
 	/**
+	 * Method used to long click on a specific view.
+	 *
+	 * @param view the view that should be long clicked
+	 *
+	 */
+	
+	public void clickLongOnScreen(View view) {
+		soloClick.clickLongOnScreen(view);
+	}
+	
+	/**
 	 * This method is used to click on a specific view displaying a certain
 	 * text.
 	 *
@@ -335,6 +350,19 @@ public class Solo {
 	
 	public void clickOnText(String text) {
 		soloClick.clickOnText(text);
+	}
+	
+	/**
+	 * This method is used to long click on a specific text view and then selecting
+	 * an item from the menu that appears.
+	 *
+	 * @param text the text that should be clicked on. Regular expressions are supported
+	 * @param index the index of the menu item that should be pressed
+	 *
+	 */
+	
+	public void clickLongOnTextAndPress(String text, int index) {
+		soloClick.clickLongOnTextAndPress(text, index);
 	}
 	
 	/**
