@@ -1,24 +1,17 @@
 package com.jayway.android.robotium.solo;
 
 import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-import junit.framework.Assert;
+import com.jayway.android.robotium.solo.activity.SoloActivity;
+import com.jayway.android.robotium.solo.assertion.SoloAssertion;
+import com.jayway.android.robotium.solo.click.SoloClick;
+import com.jayway.android.robotium.solo.enter.SoloEnter;
+import com.jayway.android.robotium.solo.press.SoloPress;
+import com.jayway.android.robotium.solo.scroll.SoloScroll;
+import com.jayway.android.robotium.solo.search.SoloSearch;
+import com.jayway.android.robotium.solo.view.SoloView;
 import android.app.Activity;
-import android.app.ActivityManager;
 import android.app.Instrumentation;
-import android.app.ActivityManager.RunningTaskInfo;
-import android.app.Instrumentation.ActivityMonitor;
-import android.content.ComponentName;
-import android.content.IntentFilter;
-import android.os.SystemClock;
-import android.util.Log;
-import android.view.KeyEvent;
-import android.view.MotionEvent;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.GridView;
@@ -29,7 +22,7 @@ import android.widget.ListView;
 
 /**
  * This class is used to make instrumentation testing easier. It supports test
- * cases that span over multiple activities. It also supports regular expressions and 
+ * cases that span over multiple activities. It supports regular expressions and 
  * will automatically scroll when needed.
  * When writing tests there is no need to plan for or expect new activities in the test case. 
  * All is handled automatically by Robotium-Solo. Robotium-Solo can be used in conjunction with
@@ -63,18 +56,17 @@ import android.widget.ListView;
  */
 
 public class Solo {
-	
-	private ArrayList<View> viewList = new ArrayList<View>();
-	private ArrayList<Activity> activityList = new ArrayList<Activity>();
+
+	private SoloAssertion soloAssert;
+	private SoloView soloView;
+	private SoloClick soloClick;
+	private SoloPress soloPress;
+	private SoloSearch soloSearch;
+	private SoloActivity soloActivity;
+	private SoloEnter soloEnter;
+	private SoloScroll soloScroll;
 	public final static int RIGHT = 1;
 	public final static int LEFT = 2;
-	private final int PAUS = 500;
-	private Activity activity;
-	private Instrumentation inst;
-	private ActivityMonitor activityMonitor;
-	private IntentFilter filter;
-	private TextView checkTextView = null;
-	private final String LOG_TAG = "Robotium";
 	
 	/**
 	 * Constructor that takes in the instrumentation and the start activity.
@@ -83,124 +75,67 @@ public class Solo {
 	 * @param activity the start activity
 	 *
 	 */
-	
+
 	public Solo(Instrumentation inst, Activity activity) {
-		this.inst = inst;
-		this.activity = activity;
-		setupActivityMonitor();
-		
-	}
-	
-	/**
-	 * This method is used to trigger a sleep with a certain time.
-	 *
-	 * @param time the time in which the application under test should be
-	 * paused
-	 *
-	 */
-	
-	private void sleep(int time) {
-		try {
-			Thread.sleep(time);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
-	
-	/**
-	 * This is were the activityMonitor is set up. The monitor will keep check
-	 * for the currently active activity.
-	 *
-	 */
-	
-	private void setupActivityMonitor() {
-		
-		try {
-			activityMonitor = inst.addMonitor(filter, null, false);
-		} catch (Throwable e) {
-		}
-	}
-	
-	/**
-	 * Private method used to get the absolute top view in an activity.
-	 *
-	 * @param view the view whose top parent is requested
-	 * @return the top parent view
-	 *
-	 */
-	
-	private View getTopParent(View view) {
-		if (view.getParent() != null
-				&& !view.getParent().getClass().getName().equals(
-						"android.view.ViewRoot")) {
-			return getTopParent((View) view.getParent());
-		} else {
-			return view;
-		}
+		setUp(new SoloActivity(inst, activity),
+				new SoloView(inst, activity), new SoloSearch(inst, activity),
+				new SoloAssertion(inst, activity),
+				new SoloClick(inst, activity), new SoloPress(inst, activity),
+				new SoloEnter(inst, activity), new SoloScroll(inst, activity));
 	}
 
 	/**
-	 * Used to add the views located in the current activity to an ArrayList.
+	 * Private method that sets up the solo objects.
+	 * 
+	 * @param soloActivity the SoloActivity instance
+	 * @param soloView the SoloView instance
+	 * @param soloSearch the SoloSearch instance
+	 * @param soloAssert the SoloAssert instance
+	 * @param soloClick the SoloClick instance
+	 * @param soloPress the SoloPress instance
+	 * @param soloEnter the SoloEnter instance
+	 */
+
+	private void setUp(SoloActivity soloActivity, SoloView soloView,
+			SoloSearch soloSearch, SoloAssertion soloAssert,
+			SoloClick soloClick, SoloPress soloPress, SoloEnter soloEnter, SoloScroll soloScroll) {
+		this.soloActivity = soloActivity;
+		this.soloView = soloView;
+		this.soloSearch = soloSearch;
+		this.soloAssert = soloAssert;
+		this.soloClick = soloClick;
+		this.soloPress = soloPress;
+		this.soloEnter = soloEnter;
+		this.soloScroll = soloScroll;
+		
+	}
+
+	/**
+	 * This method returns an ArrayList of all the views located in the current activity.
 	 *
 	 * @return ArrayList with the views found in the current activity
 	 *
 	 */
 	
 	public ArrayList<View> getViews() {
-		Activity activity = getCurrentActivity();
-		inst.waitForIdleSync();
-		try {
-			View decorView = activity.getWindow().getDecorView();
-			viewList.clear();
-			getViews(getTopParent(decorView));
-			return viewList;
-		} catch (Throwable e) {
-			e.printStackTrace();
-		}
-		return null;
+		ArrayList<View> viewList = soloView.getViews();
+		return viewList;
 
 	}
 	
 	/**
-	 * Private method used instead of instrumentation.waitForIdleSync().
+	 * Method used to get the absolute top view in an activity.
+	 *
+	 * @param view the view whose top parent is requested
+	 * @return the top parent view
 	 *
 	 */
 	
-	private void waitForIdle() {
-		sleep(PAUS);
-		long startTime = System.currentTimeMillis();
-		long timeout = 10000;
-		long endTime = startTime + timeout;
-		View decorView = null;
-		ArrayList<View> touchItems;
-		while (System.currentTimeMillis() <= endTime) {
-			decorView = getTopParent(getCurrentActivity().getWindow()
-					.getDecorView());
-			touchItems = decorView.getTouchables();
-			if (touchItems.size() > 0)
-				break;
-			sleep(PAUS);
-		}
+	public View getTopParent(View view) {
+		View topParent = soloView.getTopParent(view);
+		return topParent;
 	}
 	
-	/**
-	 * Private method which adds all the views located in the currently active
-	 * activity to an ArrayList viewList.
-	 *
-	 * @param view the view who's children should be added to viewList 
-	 *
-	 */
-	
-	private void getViews(View view) {
-		viewList.add(view);
-		if (view instanceof ViewGroup) {
-			ViewGroup vg = (ViewGroup) view;
-			for (int i = 0; i < vg.getChildCount(); i++) {
-				getViews(vg.getChildAt(i));
-			}
-		}
-	}
 	
 	/**
 	 * Searches for a text string in the edit texts located in the current
@@ -212,21 +147,8 @@ public class Solo {
 	 */
 	
 	public boolean searchEditText(String search) {
-		Pattern p = Pattern.compile(search);
-		Matcher matcher;
-		ArrayList<EditText> editTextList = getCurrentEditTexts();
-		Iterator<EditText> iterator = editTextList.iterator();
-		while (iterator.hasNext()) {
-			EditText editText = (EditText) iterator.next();
-			matcher = p.matcher(editText.getText().toString());
-			if (matcher.matches()) {
-				return true;
-			}
-		}
-		if (scrollDownList())
-			return searchEditText(search);
-		else
-			return false;
+		boolean found = soloSearch.searchEditText(search);
+		return found;
 	}
 	
 	
@@ -240,7 +162,8 @@ public class Solo {
 	 */
 	
 	public boolean searchButton(String search) {
-		return searchButton(search, 0);
+		boolean found = soloSearch.searchButton(search);
+		return found;
 	}
 	
 	/**
@@ -255,31 +178,9 @@ public class Solo {
 	 *  
 	 */
 	
-	private boolean searchButton(String search, int matches) {
-		Pattern p = Pattern.compile(search);
-		Matcher matcher;
-		int countMatches=0;
-		inst.waitForIdleSync();
-		ArrayList<Button> buttonList = getCurrentButtons();
-		Iterator<Button> iterator = buttonList.iterator();
-		while (iterator.hasNext()) {
-			Button button = (Button) iterator.next();
-			matcher = p.matcher(button.getText().toString());
-			if(matcher.matches()){	
-				inst.waitForIdleSync();
-				countMatches++;
-			}
-		}
-		if (countMatches == matches && matches != 0) {
-			return true;
-		} else if (matches == 0 && countMatches > 0) {
-			return true;
-		} else if (scrollDownList())
-		{
-			return searchButton(search, matches);
-		} else {
-			return false;
-		}
+	public boolean searchButton(String search, int matches) {
+		boolean found = soloSearch.searchButton(search, matches);
+		return found;
 
 	}
 	
@@ -293,7 +194,8 @@ public class Solo {
 	 */
 	
 	public boolean searchText(String search) {
-		return searchText(search, 0);
+		boolean found = soloSearch.searchText(search);
+		return found;
 	}
 	
 	/**
@@ -309,34 +211,21 @@ public class Solo {
 	 */
 	
 	public boolean searchText(String search, int matches) {
-		Pattern p = Pattern.compile(search);
-		Matcher matcher;
-		int countMatches = 0;
-		waitForIdle();
-		inst.waitForIdleSync();
-		ArrayList<TextView> textViewList = getCurrentTextViews(null);
-		Iterator<TextView> iterator = textViewList.iterator();
-		TextView textView = null;
-		while (iterator.hasNext()) {
-			textView = (TextView) iterator.next();
-			matcher = p.matcher(textView.getText().toString());
-			if(matcher.matches()){	
-				countMatches++;
-			}
-		}
-		if (countMatches == matches && matches != 0) {
-			return true;
-		} else if (matches == 0 && countMatches > 0) {
-			return true;
-		} else if (scrollDownList()) 
-		{
-			return searchText(search, matches);
-		} else {
-			return false;
-		}
+		boolean found = soloSearch.searchText(search, matches);
+		return found;
 
 	}
 	
+	/**
+	 * This method returns an ArrayList of all the active activities.
+	 * 
+	 * @return ArrayList of all the active activities
+	 */
+	
+	public ArrayList<Activity> getActivityList()
+	{
+		return soloActivity.getActivityList();
+	}
 	
 	/**
 	 * This method returns the current activity.
@@ -346,25 +235,8 @@ public class Solo {
 	 */
 	
 	public Activity getCurrentActivity() {
-		inst.waitForIdleSync();
-		ActivityManager activityManager = (ActivityManager) inst
-		.getTargetContext().getSystemService("activity");
-		List list = activityManager.getRunningTasks(10);
-		RunningTaskInfo taskInfo = (RunningTaskInfo) list.get(0);
-		ComponentName comp = taskInfo.topActivity;
-		String nameActivity = "." + activity.getLocalClassName();
-		String nameComp = comp.getShortClassName();
-		
-		if (nameActivity.equals(nameComp)) {
-			return activity;
-		} else {
-			if (activityMonitor != null) {
-				activity = activityMonitor.getLastActivity();
-				activityList.add(activity);
-			}
-			return activity;
-		}
-		
+		Activity activity = soloActivity.getCurrentActivity();
+		return activity;
 	}
 	/**
 	 * Method used to assert that an expected activity is currently active.
@@ -374,10 +246,8 @@ public class Solo {
 	 * 
 	 */
 	public void assertCurrentActivity(String message, String name)
-	{
-		waitForIdle();
-		Assert.assertEquals(message, name, getCurrentActivity().getClass().getSimpleName());
-		
+	{	
+		soloAssert.assertCurrentActivity(message, name);
 	}
 	
 	/**
@@ -389,9 +259,8 @@ public class Solo {
 	 */
 	public void assertCurrentActivity(String message, Class expectedClass)
 	{
-		waitForIdle();
-		Assert.assertEquals(message, expectedClass.getName(), getCurrentActivity().getClass().getName());
-	
+		soloAssert.assertCurrentActivity(message, expectedClass);
+
 	}
 	
 	/**
@@ -405,9 +274,7 @@ public class Solo {
 	 */
 	public void assertCurrentActivity(String message, String name, boolean isNewInstance)
 	{
-		assertCurrentActivity(message, name);
-		assertCurrentActivity(message, getCurrentActivity().getClass(),
-				isNewInstance);
+		soloAssert.assertCurrentActivity(message, name, isNewInstance);
 	}
 	
 	/**
@@ -422,74 +289,8 @@ public class Solo {
 	
 	public void assertCurrentActivity(String message, Class expectedClass,
 			boolean isNewInstance) {
-		boolean found = false;
-		assertCurrentActivity(message, expectedClass);
-		Activity activity = getCurrentActivity();
-		for (int i = 0; i < activityList.size() - 1; i++) {
-			String instanceString = activityList.get(i).toString();
-			if (instanceString.equals(activity.toString()))
-				found = true;
-		}
-			Assert.assertNotSame(message + ", isNewInstance: actual and ", isNewInstance, found);
+		soloAssert.assertCurrentActivity(message, expectedClass, isNewInstance);
 	}		
-	
-	/**
-	 * This method will focus an item located at x,y
-	 *
-	 * @param x the x coordinate
-	 * @param y the y coordinate
-	 *
-	 */
-	
-	private void focusItemOnScreen(float x, float y) {
-		long downTime = SystemClock.uptimeMillis();
-		long eventTime = SystemClock.uptimeMillis();
-		MotionEvent event = MotionEvent.obtain(downTime, eventTime,
-				MotionEvent.ACTION_DOWN, x, y, 0);
-		inst.sendPointerSync(event);
-	}
-	
-	/**
-	 * Private method to click on a specific coordinate on the screen
-	 *
-	 * @param x the x coordinate
-	 * @param y the y coordinate
-	 *
-	 */
-	
-	private void clickOnScreen(float x, float y) {
-		long downTime = SystemClock.uptimeMillis();
-		long eventTime = SystemClock.uptimeMillis();
-		MotionEvent event = MotionEvent.obtain(downTime, eventTime,
-				MotionEvent.ACTION_DOWN, x, y, 0);
-		MotionEvent event2 = MotionEvent.obtain(downTime, eventTime,
-				MotionEvent.ACTION_UP, x, y, 0);
-		inst.sendPointerSync(event);
-		inst.sendPointerSync(event2);
-		waitForIdle();
-	}
-	
-	/**
-	 * Private method used to click on a specific view.
-	 *
-	 * @param view the view that should be clicked
-	 *
-	 */
-	
-	private void clickOnScreen(View view) {
-		int[] xy = new int[2];
-		view.getLocationOnScreen(xy);
-		
-		final int viewWidth = view.getWidth();
-		final int viewHeight = view.getHeight();
-		
-		final float x = xy[0] + (viewWidth / 2.0f);
-		final float y = xy[1] + (viewHeight / 2.0f);
-		
-		
-		clickOnScreen(x, y);
-		
-	}
 	
 	
 	/**
@@ -498,23 +299,9 @@ public class Solo {
 	 */
 	public void goBack()
 	{
-		sleep(300);
-		inst.sendKeyDownUpSync(KeyEvent.KEYCODE_BACK);
+		soloClick.goBack();
 	}
 	
-	/**
-	 * Method used to click on the hard key back
-	 * 
-	 * @deprecated changed name of method to goBack() as no clicking is performed. This method will be
-	 * removed in the coming releases.
-	 * 
-	 */
-	
-	public void clickOnBack()
-	{
-		sleep(300);
-		inst.sendKeyDownUpSync(KeyEvent.KEYCODE_BACK);
-	}
 	
 	/**
 	 * Method used to click on a button with a given text.
@@ -524,33 +311,10 @@ public class Solo {
 	 */
 	
 	public void clickOnButton(String name) {
-		Pattern p = Pattern.compile(name);
-		Matcher matcher;
-		Button button = null;
-		waitForIdle();
-		boolean found = false;
-		ArrayList<Button> buttonList = getCurrentButtons();
-		Iterator<Button> iterator = buttonList.iterator();
-		while (iterator.hasNext()) {
-			button = iterator.next();
-			matcher = p.matcher(button.getText().toString());
-			if(matcher.matches()){	
-				found = true;
-				break;
-			}
-		}
-		if (found) {
-			clickOnScreen(button);
-		} else if (scrollDownList()){
-			clickOnButton(name);
-		}else
-		{
-			for (int i = 0; i < buttonList.size(); i++)
-				Log.d(LOG_TAG, name + " not found, have found: " + buttonList.get(i).getText());
-			Assert.assertTrue("Button with the text: " + name + " is not found!", false);
-		}
+		soloClick.clickOnButton(name);
 
 	}
+	
 	/**
 	 * Method used to press a MenuItem with a certain index. Index 0 is the first item in the 
 	 * first row and index 3 is the first item in the second row.
@@ -560,24 +324,7 @@ public class Solo {
 	 */
 	
 	public void pressMenuItem(int index) {
-		waitForIdle();
-		inst.sendKeyDownUpSync(KeyEvent.KEYCODE_MENU);
-		sleep(300);
-		inst.sendKeyDownUpSync(KeyEvent.KEYCODE_DPAD_UP);
-		if (index < 3) {
-			for (int i = 0; i < index; i++) {
-				sleep(300);
-				inst.sendKeyDownUpSync(KeyEvent.KEYCODE_DPAD_RIGHT);
-			}
-		} else
-		{
-			inst.sendKeyDownUpSync(KeyEvent.KEYCODE_DPAD_DOWN);	
-			for (int i = 3; i < index; i++) {
-				sleep(300);
-				inst.sendKeyDownUpSync(KeyEvent.KEYCODE_DPAD_RIGHT);
-			}
-		}
-		inst.sendKeyDownUpSync(KeyEvent.KEYCODE_ENTER);
+		soloPress.pressMenuItem(index);
 	}
 	
 	/**
@@ -590,51 +337,47 @@ public class Solo {
 	
 	public void pressSpinnerItem(int spinnerIndex, int itemIndex)
 	{
-		clickOnScreen(getCurrentSpinners().get(spinnerIndex));
-		inst.sendKeyDownUpSync(KeyEvent.KEYCODE_DPAD_DOWN);
-		for(int i = 0; i < itemIndex; i++)
-		{
-			sleep(300);
-			inst.sendKeyDownUpSync(KeyEvent.KEYCODE_DPAD_DOWN);
-		}
-		inst.sendKeyDownUpSync(KeyEvent.KEYCODE_ENTER);
+		soloPress.pressSpinnerItem(spinnerIndex, itemIndex);
+	}
+	
+	/**
+	 * Method used to click on a specific view.
+	 *
+	 * @param view the view that should be clicked
+	 *
+	 */
+	
+	public void clickOnScreen(View view) {
+		soloClick.clickOnScreen(view);
+	}
+	
+	/**
+	 * This method is used to click on a specific view displaying a certain
+	 * text.
+	 *
+	 * @param text the text that should be clicked on. Regular expressions are supported
+	 *
+	 */
+	
+	public void clickOnText(String text) {
+		soloClick.clickOnText(text);
+	}
+	
+	/**
+	 * This method used to click on a button with a specific index.
+	 *
+	 * @param index the index number of the button
+	 * @return true if button with specified index is found
+	 *
+	 */
+	
+	public boolean clickOnButton(int index) {
+		boolean found = soloClick.clickOnButton(index);
+		return found;
 		
 	}
 	
-	
-	/**
-	 * Method used to click on a MenuItem with a certain index. Index 0 is the first item in the 
-	 * first row and index 3 is the first item in the second row.
-	 * 
-	 * @param index the index of the menu item to be clicked. Regular expressions are supported
-	 * @deprecated changed the name of the method to pressMenuItem() as no clicking
-	 * is performed. This method will be removed in the coming releases.
-	 * 
-	 */
-	
-	public void clickOnMenuItem(int index) {
-		waitForIdle();
-		inst.sendKeyDownUpSync(KeyEvent.KEYCODE_MENU);
-		sleep(300);
-		inst.sendKeyDownUpSync(KeyEvent.KEYCODE_DPAD_UP);
-		if (index < 3) {
-			for (int i = 0; i < index; i++) {
-				sleep(300);
-				inst.sendKeyDownUpSync(KeyEvent.KEYCODE_DPAD_RIGHT);
-			}
-		} else
-		{
-			inst.sendKeyDownUpSync(KeyEvent.KEYCODE_DPAD_DOWN);	
-			for (int i = 3; i < index; i++) {
-				sleep(300);
-				inst.sendKeyDownUpSync(KeyEvent.KEYCODE_DPAD_RIGHT);
-			}
-		}
-		inst.sendKeyDownUpSync(KeyEvent.KEYCODE_ENTER);
-	}
-	
-	
-    /**
+	 /**
 	 * Simulate touching a specific location and dragging to a new location.
 	 *
 	 * This method was copied from {@code TouchUtils.java} in the Android Open Source Project, and modified here.
@@ -647,90 +390,9 @@ public class Solo {
 	 *
 	 */
 	
-	private void drag(float fromX, float toX, float fromY, float toY,
+	public void drag(float fromX, float toX, float fromY, float toY,
 					  int stepCount) {
-		long downTime = SystemClock.uptimeMillis();
-		long eventTime = SystemClock.uptimeMillis();
-		float y = fromY;
-		float x = fromX;
-		float yStep = (toY - fromY) / stepCount;
-		float xStep = (toX - fromX) / stepCount;
-		MotionEvent event = MotionEvent.obtain(downTime, eventTime,MotionEvent.ACTION_DOWN, fromX, y, 0);
-		inst.sendPointerSync(event);
-		for (int i = 0; i < stepCount; ++i) {
-			y += yStep;
-			x += xStep;
-			eventTime = SystemClock.uptimeMillis();
-			event = MotionEvent.obtain(downTime, eventTime,MotionEvent.ACTION_MOVE, x, y, 0);
-			inst.sendPointerSync(event);
-			inst.waitForIdleSync();
-		}
-		eventTime = SystemClock.uptimeMillis();
-		event = MotionEvent.obtain(downTime, eventTime, MotionEvent.ACTION_UP,fromX, y, 0);
-		inst.sendPointerSync(event);
-	}
-	
-	/**
-	 * This method is used to click on a specific view displaying a certain
-	 * text.
-	 *
-	 * @param text the text that should be clicked on. Regular expressions are supported
-	 *
-	 */
-	
-	public void clickOnText(String text) {
-		Pattern p = Pattern.compile(text);
-		Matcher matcher;
-		waitForIdle();
-		boolean found = false;
-		ArrayList <TextView> textViews = getCurrentTextViews(null);
-		Iterator<TextView> iterator = textViews.iterator();
-		TextView textView = null;
-		while (iterator.hasNext()) {
-			textView = iterator.next();
-			matcher = p.matcher(textView.getText().toString());
-			if(matcher.matches()){	
-				found = true;
-				break;
-			}
-		}
-
-		if (found) {
-			clickOnScreen(textView);
-		} else if (scrollDownList()){
-			clickOnText(text);
-		}else
-		{
-			for (int i = 0; i < textViews.size(); i++)
-				Log.d(LOG_TAG, text + " not found, have found: " + textViews.get(i).getText());
-			Assert.assertTrue("The text: " + text + " is not found!", false);
-		}
-	}
-	
-	/**
-	 * This method used to click on a button with a specific index.
-	 *
-	 * @param index the index number of the button
-	 * @return true if button with specified index is found
-	 *
-	 */
-	
-	public boolean clickOnButton(int index) {
-		boolean found = false;
-		Button button = null;
-		try {
-			button = getButton(index);
-		} catch (IndexOutOfBoundsException e) {
-			e.printStackTrace();
-		}
-		
-		if (button != null) {
-			clickOnScreen(button);
-			waitForIdle();
-			found = true;
-		}
-		
-		return found;
+		soloScroll.drag(fromX, toX, fromY, toY, stepCount);
 	}
 	
 	/**
@@ -741,75 +403,18 @@ public class Solo {
 	 *
 	 */
 	
-	private boolean scrollDownList() {
-		boolean found = false;
-		View scrollListView = null;
-		Iterator iterator = getViews().iterator();
-		while (iterator.hasNext()) {
-			scrollListView = (View) iterator.next();
-			if (scrollListView.getClass().getName().equals(
-					"android.widget.ScrollView")
-					|| scrollListView.getClass().getName().equals(
-							"android.widget.ListView")) {
-				found = true;
-				break;
-			}
-
-		}
-		ArrayList<TextView> textViewList = getCurrentTextViews(null);
-		int size = textViewList.size();
-		int constant = 0;
-		if(size>2)
-			constant = 2;
-		else
-			constant = size;
-		Activity currentActivity = getCurrentActivity();
-		int x = currentActivity.getWindowManager().getDefaultDisplay()
-				.getWidth() / 2;
-		int yStart;
-		int yEnd;
-		if (found) {
-			int[] xy = new int[2];
-			scrollListView.getLocationOnScreen(xy);
-			yStart = ((xy[1] + scrollListView.getHeight()) - 20);
-			yEnd = (xy[1]);
-		} else {
-			yStart = (currentActivity.getWindowManager().getDefaultDisplay()
-					.getHeight() - 20);
-			yEnd = ((currentActivity.getWindowManager().getDefaultDisplay()
-					.getHeight() / 2));
-		}
-		drag(x, x, yStart, yEnd, 40);
-		if (checkTextView != null
-				&& !checkTextView.getText().equals(
-						textViewList.get(size - constant).getText())) {
-			checkTextView = textViewList.get(size - constant);
-			return true;
-		} else if (checkTextView == null) {
-			checkTextView = textViewList.get(size - constant);
-			return true;
-		} else {
-			return false;
-		}
+	public boolean scrollDownList() {
+		boolean scroll = soloScroll.scrollDownList();
+		return scroll;
 	}
-	
+		
 	/**
 	 * This method is used to scroll up a list.
 	 *
 	 */
 	
 	public void scrollUpList() {
-		waitForIdle();
-		Activity activity = getCurrentActivity();
-		int x = activity.getWindowManager().getDefaultDisplay().getWidth() / 2;
-		int y = activity.getWindowManager().getDefaultDisplay().getHeight();
-		String oldText = getCurrentTextViews(null).get(getCurrentTextViews(null).size() - 3).getText().toString();
-		drag(x, x, 200, y - 100, 5);
-		waitForIdle();
-		String newText = getCurrentTextViews(null).get(getCurrentTextViews(null).size() - 3).getText().toString();
-		if (!oldText.equals(newText)) {
-			scrollUpList();
-		}
+		soloScroll.scrollUpList();
 	}
 	
 	/**
@@ -820,16 +425,7 @@ public class Solo {
 	 */
 	
 	public void scrollToSide(int side) {
-		int screenHeight = activity.getWindowManager().getDefaultDisplay()
-		.getHeight();
-		int screenWidth = activity.getWindowManager().getDefaultDisplay()
-		.getWidth();
-		float x = screenWidth / 2.0f;
-		float y = screenHeight / 2.0f;
-		if (side == LEFT)
-			drag(0, x, y, y, screenWidth);
-		else if (side == RIGHT)
-			drag(x, 0, y, y, screenWidth);
+		soloScroll.scrollToSide(side);
 	}
 	
 	/**
@@ -841,39 +437,7 @@ public class Solo {
 	 */
 	
 	public void enterText(int index, String text) {
-		waitForIdle();
-		Activity activity = getCurrentActivity();
-		Boolean focused = false;
-		try {
-			if (getCurrentEditTexts().size() > 0) {
-				for (int i = 0; i < getCurrentEditTexts().size(); i++) {
-					if (getCurrentEditTexts().get(i).isFocused())
-					{
-						focused = true;
-					}
-				}
-			}
-			if (!focused && getCurrentEditTexts().size() > 0) {
-				clickOnScreen(getCurrentEditTexts().get(index));
-				inst.sendStringSync(text);
-				inst.sendKeyDownUpSync(KeyEvent.KEYCODE_ENTER);
-				if (activity.equals(getCurrentActivity()))
-					inst.sendKeyDownUpSync(KeyEvent.KEYCODE_ENTER);
-			} else if (focused && getCurrentEditTexts().size() >1)
-			{
-				clickOnScreen(getCurrentEditTexts().get(index));
-				inst.sendStringSync(text);
-			}
-			else {
-				inst.sendStringSync(text);
-			}
-		} catch (IndexOutOfBoundsException e) {
-			e.printStackTrace();
-			Assert.assertTrue("Index is not valid", false);
-		} catch (NullPointerException e) {
-			Assert.assertTrue("NullPointerException", false);
-		}
-		
+		soloEnter.enterText(index, text);		
 	}
 	
 	/**
@@ -884,13 +448,7 @@ public class Solo {
 	 */
 	
 	public void clickOnImage(int index) {
-		waitForIdle();
-		try {
-			clickOnScreen(getCurrentImageViews().get(index));
-		} catch (IndexOutOfBoundsException e) {
-			e.printStackTrace();
-			Assert.assertTrue("Index is not valid", false);
-		}
+		soloClick.clickOnImage(index);
 	}
 	
 	/**
@@ -902,17 +460,7 @@ public class Solo {
 	 */
 	
 	public ArrayList<ImageView> getCurrentImageViews() {
-		waitForIdle();
-		ArrayList<View> viewList = getViews();
-		ArrayList<ImageView> imageViewList = new ArrayList<ImageView>();
-		Iterator<View> iterator = viewList.iterator();
-		while (iterator.hasNext() && viewList != null) {
-			View view = iterator.next();
-			if (view != null
-				&& view.getClass().getName().equals("android.widget.ImageView")) {
-				imageViewList.add((ImageView) view);
-			}	
-		}
+		ArrayList<ImageView> imageViewList = soloView.getCurrentImageViews();
 		return imageViewList;
 	}
 	
@@ -924,8 +472,8 @@ public class Solo {
 	 */
 	
 	public EditText getEditText(int index) {
-		ArrayList<EditText> editTextList = getCurrentEditTexts();
-		return editTextList.get(index);
+		EditText editText = soloView.getEditText(index);
+		return editText;
 	}
 	
 	/**
@@ -937,8 +485,8 @@ public class Solo {
 	 */
 	
 	public Button getButton(int index) {
-		ArrayList<Button> buttonList = getCurrentButtons();
-		return buttonList.get(index);
+		Button button = soloView.getButton(index);
+		return button;
 	}
 	
 	/**
@@ -950,7 +498,8 @@ public class Solo {
 	 */
 	
 	public int getCurrenButtonsCount() {
-		return getCurrentButtons().size();
+		int number = soloView.getCurrenButtonsCount();
+		return number;
 	}
 	
 	
@@ -963,14 +512,7 @@ public class Solo {
 	 */
 	
 	public ArrayList<EditText> getCurrentEditTexts() {
-		ArrayList<EditText>editTextList = new ArrayList<EditText>();
-		ArrayList<View> viewList = getViews();
-		Iterator<View> iterator = viewList.iterator();
-		while (iterator.hasNext() && viewList != null) {
-			View view = iterator.next();
-			if (view.getClass().getName().equals("android.widget.EditText"))
-				editTextList.add((EditText) view);
-		}
+		ArrayList<EditText> editTextList = soloView.getCurrentEditTexts();
 		return editTextList;
 		
 	}
@@ -984,18 +526,8 @@ public class Solo {
 	 */
 
 	public ArrayList<ListView> getCurrentListViews() {
-
-		ArrayList<View> vList = getViews();
-		ArrayList<ListView> listViews = new ArrayList<ListView>();
-		ListView lView = null;
-		for (int i = 0; i < vList.size(); i++) {
-			if (vList.get(i).getClass().getName().equals(
-					"android.widget.ListView")) {
-				lView = (ListView) vList.get(i);
-				listViews.add(lView);
-			}
-		}
-		return listViews;
+		ArrayList<ListView> listViewList = soloView.getCurrentListViews();
+		return listViewList;
 	}
 	
 	/**
@@ -1008,14 +540,7 @@ public class Solo {
 	
 	public ArrayList<Spinner> getCurrentSpinners()
 	{
-		ArrayList<Spinner>spinnerList = new ArrayList<Spinner>();
-		ArrayList<View> viewList = getViews();
-		Iterator<View> iterator = viewList.iterator();
-		while (iterator.hasNext() && viewList != null) {
-			View view = iterator.next();
-			if (view.getClass().getName().equals("android.widget.Spinner"))
-				spinnerList.add((Spinner) view);
-		}
+		ArrayList<Spinner> spinnerList = soloView.getCurrentSpinners();
 		return spinnerList;
 	}
 	
@@ -1031,21 +556,7 @@ public class Solo {
 	 */
 	
 	public ArrayList<TextView> getCurrentTextViews(View parent) {
-		viewList.clear();		
-		if(parent == null)
-			getViews();
-		else
-			getViews(parent);
-		
-		ArrayList<TextView> textViewList = new ArrayList<TextView>();
-		Iterator<View> iterator = viewList.iterator();
-		while (iterator.hasNext() && viewList != null) {
-			View view = iterator.next();
-			if (view.getClass().getName().equals("android.widget.TextView")) {
-				textViewList.add((TextView) view);
-			}
-			
-		}
+		ArrayList<TextView> textViewList = soloView.getCurrentTextViews(parent);
 		return textViewList;
 		
 	}
@@ -1059,14 +570,7 @@ public class Solo {
 	 */
 	
 	public ArrayList<GridView> getCurrentGridViews() {
-		ArrayList<View> viewList = getViews();
-		ArrayList<GridView> gridViewList = new ArrayList<GridView>();
-		Iterator<View> iterator = viewList.iterator();
-		while (iterator.hasNext() && viewList != null) {
-			View view = iterator.next();
-			if (view.getClass().getName().equals("android.widget.GridView"))
-				gridViewList.add((GridView) view);
-		}
+		ArrayList<GridView> gridViewList = soloView.getCurrentGridViews();
 		return gridViewList;
 	}
 	
@@ -1080,35 +584,18 @@ public class Solo {
 	 */
 	
 	public ArrayList<Button> getCurrentButtons() {
-		ArrayList<Button> buttonList = new ArrayList<Button>();
-		ArrayList<View> viewList = getViews();
-		Iterator<View> iterator = viewList.iterator();
-		while (iterator.hasNext() && viewList != null) {
-			
-			View view = iterator.next();
-			if (view.getClass().getName().equals("android.widget.Button"))
-				buttonList.add((Button) view);
-		}
+		ArrayList<Button> buttonList = soloView.getCurrentButtons();
 		return buttonList;
 	}
 	
 	/**
-	 * (non-Javadoc)
 	 *
-	 *
-	 * All activites that have been opened are finished.
+	 * All activites that have been active are finished.
 	 *
 	 */
 	
 	public void finalize() throws Throwable {
-		try {
-			for (int i = 0; i < activityList.size(); i++) {
-				activityList.get(i).finish();
-			}
-		} catch (Throwable e) {
-			
-		}
-		super.finalize();
+		soloActivity.finalize();
 	}
 	
 	
