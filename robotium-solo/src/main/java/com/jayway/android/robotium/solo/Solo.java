@@ -65,8 +65,6 @@ public class Solo {
 	private final SoloActivity soloActivity;
 	private final SoloEnter soloEnter;
 	private final SoloScroll soloScroll;
-	public final static int RIGHT = 1;
-	public final static int LEFT = 2;
 	
 	/**
 	 * Constructor that takes in the instrumentation and the start activity.
