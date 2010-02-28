@@ -217,14 +217,14 @@ public class Solo {
 	}
 	
 	/**
-	 * This method returns an ArrayList of all the active activities.
+	 * This method returns an ArrayList of all the opened/active activities.
 	 * 
-	 * @return ArrayList of all the active activities
+	 * @return ArrayList of all the opened activities
 	 */
 	
-	public ArrayList<Activity> getActivityList()
+	public ArrayList<Activity> getAllOpenedActivities()
 	{
-		return soloActivity.getActivityList();
+		return soloActivity.getAllOpenedActivities();
 	}
 	
 	/**
