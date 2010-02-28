@@ -24,10 +24,10 @@ import android.view.View;
 
 public class SoloActivity {
 	
-	protected final Instrumentation inst;
+	private final Instrumentation inst;
 	private ActivityMonitor activityMonitor;
-	protected Activity activity;
-	protected ArrayList<Activity> activityList = new ArrayList<Activity>();
+	private Activity activity;
+	private ArrayList<Activity> activityList = new ArrayList<Activity>();
 	private final int PAUS = 500;
 
 	/**
@@ -66,7 +66,7 @@ public class SoloActivity {
 	private void setupActivityMonitor() {
 		
 		try {
-            IntentFilter filter = null;
+			IntentFilter filter = null;
 			activityMonitor = inst.addMonitor(filter, null, false);
 		} catch (Throwable e) {
 		}
