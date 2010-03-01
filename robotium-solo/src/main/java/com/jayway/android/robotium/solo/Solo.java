@@ -109,7 +109,7 @@ public class Solo {
 	
 	/**
 	 * Searches for a text string in the edit texts located in the current
-	 * activity.
+	 * activity. Will automatically scroll when needed. 
 	 *
 	 * @param search the search string to be searched
 	 * @return true if an edit text with the given text is found or false if it is not found
@@ -124,7 +124,7 @@ public class Solo {
 	
 	/**
 	 * Searches for a button with the given search string and returns true if at least one button 
-	 * is found with the expected text
+	 * is found with the expected text. Will automatically scroll when needed. 
 	 *
 	 * @param search the string to be searched. Regular expressions are supported
 	 * @return true if a button with the given text is found and false if it is not found
@@ -138,7 +138,7 @@ public class Solo {
 	
 	/**
 	 * Searches for a button with the given search string and returns true if the 
-	 * searched button is found a given number of times
+	 * searched button is found a given number of times. Will automatically scroll when needed. 
 	 * 
 	 * @param search the string to be searched. Regular expressions are supported
 	 * @param matches the number of matches expected to be found. 0 matches means that one or more 
@@ -156,7 +156,7 @@ public class Solo {
 	
 	/**
 	 * Searches for a text string and returns true if at least one item 
-	 * is found with the expected text
+	 * is found with the expected text. Will automatically scroll when needed. 
 	 *
 	 * @param search the string to be searched. Regular expressions are supported
 	 * @return true if the search string is found and false if it is not found
@@ -170,7 +170,7 @@ public class Solo {
 	
 	/**
 	 * Searches for a text string and returns true if the searched text is found a given
-	 * number of times
+	 * number of times. Will automatically scroll when needed. 
 	 * 
 	 * @param search the string to be searched. Regular expressions are supported
 	 * @param matches the number of matches expected to be found. 0 matches means that one or more 
@@ -274,7 +274,7 @@ public class Solo {
 	
 	
 	/**
-	 * Method used to click on a button with a given text.
+	 * Method used to click on a button with a given text. Will automatically scroll when needed. 
 	 *
 	 * @param name the name of the button presented to the user. Regular expressions are supported
 	 *
@@ -334,7 +334,7 @@ public class Solo {
 	
 	/**
 	 * This method is used to click on a specific view displaying a certain
-	 * text.
+	 * text. Will automatically scroll when needed. 
 	 *
 	 * @param text the text that should be clicked on. Regular expressions are supported
 	 *
@@ -346,7 +346,7 @@ public class Solo {
 	
 	/**
 	 * This method is used to long click on a specific text view and then selecting
-	 * an item from the menu that appears.
+	 * an item from the menu that appears. Will automatically scroll when needed. 
 	 *
 	 * @param text the text that should be clicked on. Regular expressions are supported
 	 * @param index the index of the menu item that should be pressed
