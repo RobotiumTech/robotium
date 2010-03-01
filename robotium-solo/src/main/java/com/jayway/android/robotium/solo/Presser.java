@@ -13,19 +13,19 @@ import android.view.KeyEvent;
 
 class Presser{
 
-	private final ViewHandler soloView;
+	private final ViewFetcher soloView;
 	private final Clicker soloClick;
 	private final Instrumentation inst;
 
     /**
      * Constructs this object.
      *
-     * @param soloView the {@link ViewHandler} instance.
+     * @param soloView the {@link ViewFetcher} instance.
      * @param soloClick the {@link Clicker} instance.
      * @param inst the {@link Instrumentation} instance.
      */
 	
-    public Presser(ViewHandler soloView, Clicker soloClick, Instrumentation inst) {
+    public Presser(ViewFetcher soloView, Clicker soloClick, Instrumentation inst) {
         this.soloView = soloView;
         this.soloClick = soloClick;
         this.inst = inst;

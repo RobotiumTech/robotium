@@ -21,7 +21,7 @@ import android.view.View;
  * 
  */
 
-class ActivityHandler {
+class ActivityFetcher {
 	
 	private final Instrumentation inst;
 	private ActivityMonitor activityMonitor;
@@ -37,7 +37,7 @@ class ActivityHandler {
 	 *
 	 */
 	
-	public ActivityHandler(Instrumentation inst, Activity activity) {
+	public ActivityFetcher(Instrumentation inst, Activity activity) {
 		this.inst = inst;
 		this.activity = activity;
 		setupActivityMonitor();

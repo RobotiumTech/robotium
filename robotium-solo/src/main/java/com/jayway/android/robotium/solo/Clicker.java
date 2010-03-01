@@ -28,8 +28,8 @@ import android.widget.TextView;
 class Clicker {
 	
 	private final String LOG_TAG = "Robotium";
-	private final ActivityHandler soloActivity;
-	private final ViewHandler soloView;
+	private final ActivityFetcher soloActivity;
+	private final ViewFetcher soloView;
 	private final Scroller soloScroll;
 	private final Instrumentation inst;
 
@@ -37,12 +37,12 @@ class Clicker {
 	 * Constructs this object.
 	 * 
 	 * @param soloActivity the {@link Activity} instance.
-	 * @param soloView the {@link ViewHandler} instance.
+	 * @param soloView the {@link ViewFetcher} instance.
 	 * @param soloScroll the {@link Scroller} instance.
 	 * @param inst the {@link Instrumentation} instance.
 	 */
 
-	public Clicker(ActivityHandler soloActivity, ViewHandler soloView,
+	public Clicker(ActivityFetcher soloActivity, ViewFetcher soloView,
 			Scroller soloScroll, Instrumentation inst) {
 
 		this.soloActivity = soloActivity;

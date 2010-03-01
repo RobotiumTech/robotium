@@ -20,20 +20,20 @@ import android.widget.TextView;
 
 class Searcher {
 	
-	private final ViewHandler soloView;
-	private final ActivityHandler soloActivity;
+	private final ViewFetcher soloView;
+	private final ActivityFetcher soloActivity;
 	private final Scroller soloScroll;
 	private final Instrumentation inst;
 
     /**
      * Constructs this object.
      *
-     * @param soloView the {@link ViewHandler} instance.
-     * @param soloActivity the {@link ActivityHandler} instance.
+     * @param soloView the {@link ViewFetcher} instance.
+     * @param soloActivity the {@link ActivityFetcher} instance.
      * @param soloScroll the {@link Scroller} instance.
      * @param inst the {@link Instrumentation} instance.
      */
-    public Searcher(ViewHandler soloView, ActivityHandler soloActivity, Scroller soloScroll, Instrumentation inst) {
+    public Searcher(ViewFetcher soloView, ActivityFetcher soloActivity, Scroller soloScroll, Instrumentation inst) {
         this.soloView = soloView;
         this.soloActivity = soloActivity;
         this.soloScroll = soloScroll;

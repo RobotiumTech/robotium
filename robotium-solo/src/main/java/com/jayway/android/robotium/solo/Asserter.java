@@ -12,7 +12,7 @@ import android.app.Activity;
  */
 
 class Asserter {
-	private final ActivityHandler soloActivity;
+	private final ActivityFetcher soloActivity;
 	
 	/**
 	 * Constructs this object.
@@ -21,7 +21,7 @@ class Asserter {
 	 *
 	 */
 	
-	public Asserter(ActivityHandler soloActivity) {
+	public Asserter(ActivityFetcher soloActivity) {
 		this.soloActivity = soloActivity;
 	}
 

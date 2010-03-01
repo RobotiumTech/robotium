@@ -14,20 +14,20 @@ import android.view.KeyEvent;
 
 class TextEnterer{
 	
-	private final ViewHandler soloView;
-	private final ActivityHandler soloActivity;
+	private final ViewFetcher soloView;
+	private final ActivityFetcher soloActivity;
 	private final Clicker soloClick;
 	private final Instrumentation inst;
 
     /**
      * Constructs this object.
      *
-     * @param soloView the {@link ViewHandler} instance.
+     * @param soloView the {@link ViewFetcher} instance.
      * @param soloActivity the {@link Activity} instance.
      * @param soloClick the {@link Clicker} instance.
      * @param inst the {@link Instrumentation} instance.
      */
-    public TextEnterer(ViewHandler soloView, ActivityHandler soloActivity, Clicker soloClick, Instrumentation inst) {
+    public TextEnterer(ViewFetcher soloView, ActivityFetcher soloActivity, Clicker soloClick, Instrumentation inst) {
         this.soloView = soloView;
         this.soloActivity = soloActivity;
         this.soloClick = soloClick;

@@ -51,11 +51,11 @@ import android.widget.ListView;
 public class Solo {
 
 	private final Asserter soloAssert;
-	private final ViewHandler soloView;
+	private final ViewFetcher soloView;
 	private final Clicker soloClick;
 	private final Presser soloPress;
 	private final Searcher soloSearch;
-	private final ActivityHandler soloActivity;
+	private final ActivityFetcher soloActivity;
 	private final TextEnterer soloEnter;
 	private final Scroller soloScroll;
 	public final static int RIGHT = 1;
@@ -70,9 +70,9 @@ public class Solo {
 	 */
 	
 	public Solo(Instrumentation inst, Activity activity) {
-        this.soloActivity = new ActivityHandler(inst, activity);
+        this.soloActivity = new ActivityFetcher(inst, activity);
         this.soloAssert = new Asserter(soloActivity);
-        this.soloView = new ViewHandler(soloActivity, inst);
+        this.soloView = new ViewFetcher(soloActivity, inst);
         this.soloScroll = new Scroller(inst, soloActivity, soloView);
         this.soloClick = new Clicker(soloActivity, soloView, soloScroll, inst);
         this.soloPress = new Presser(soloView, soloClick, inst);
