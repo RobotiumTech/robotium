@@ -264,7 +264,7 @@ public class Solo {
 	
 	
 	/**
-	 * Method used to simulate pressing the hard key back
+	 * Method used to simulate pressing the hard key back.
 	 * 
 	 */
 	public void goBack()

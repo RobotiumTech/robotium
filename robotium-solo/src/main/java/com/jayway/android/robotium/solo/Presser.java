@@ -80,6 +80,7 @@ class Presser{
 	
 	public void pressSpinnerItem(int spinnerIndex, int itemIndex)
 	{
+		inst.waitForIdleSync();
 		soloClick.clickOnScreen(soloView.getCurrentSpinners().get(spinnerIndex));
 		inst.sendKeyDownUpSync(KeyEvent.KEYCODE_DPAD_DOWN);
 		for(int i = 0; i < itemIndex; i++)
