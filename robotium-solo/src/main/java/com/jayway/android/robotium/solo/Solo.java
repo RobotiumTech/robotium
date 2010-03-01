@@ -1,14 +1,6 @@
 package com.jayway.android.robotium.solo;
 
 import java.util.ArrayList;
-import com.jayway.android.robotium.solo.activity.SoloActivity;
-import com.jayway.android.robotium.solo.assertion.SoloAssertion;
-import com.jayway.android.robotium.solo.click.SoloClick;
-import com.jayway.android.robotium.solo.enter.SoloEnter;
-import com.jayway.android.robotium.solo.press.SoloPress;
-import com.jayway.android.robotium.solo.scroll.SoloScroll;
-import com.jayway.android.robotium.solo.search.SoloSearch;
-import com.jayway.android.robotium.solo.view.SoloView;
 import android.app.Activity;
 import android.app.Instrumentation;
 import android.view.View;
@@ -58,14 +50,14 @@ import android.widget.ListView;
 
 public class Solo {
 
-	private final SoloAssertion soloAssert;
-	private final SoloView soloView;
-	private final SoloClick soloClick;
-	private final SoloPress soloPress;
-	private final SoloSearch soloSearch;
-	private final SoloActivity soloActivity;
-	private final SoloEnter soloEnter;
-	private final SoloScroll soloScroll;
+	private final Asserter soloAssert;
+	private final ViewGetters soloView;
+	private final Clicker soloClick;
+	private final Presser soloPress;
+	private final Searcher soloSearch;
+	private final ActivityHandler soloActivity;
+	private final TextEnterer soloEnter;
+	private final Scroller soloScroll;
 	public final static int RIGHT = 1;
 	public final static int LEFT = 2;
 	
@@ -78,14 +70,14 @@ public class Solo {
 	 */
 	
 	public Solo(Instrumentation inst, Activity activity) {
-        this.soloActivity = new SoloActivity(inst, activity);
-        this.soloAssert = new SoloAssertion(soloActivity);
-        this.soloView = new SoloView(soloActivity, inst);
-        this.soloScroll = new SoloScroll(inst, soloActivity, soloView);
-        this.soloClick = new SoloClick(soloActivity, soloView, soloScroll, inst);
-        this.soloPress = new SoloPress(soloView, soloClick, inst);
-        this.soloSearch = new SoloSearch(soloView, soloActivity, soloScroll, inst);
-        this.soloEnter = new SoloEnter(soloView, soloActivity, soloClick, inst);
+        this.soloActivity = new ActivityHandler(inst, activity);
+        this.soloAssert = new Asserter(soloActivity);
+        this.soloView = new ViewGetters(soloActivity, inst);
+        this.soloScroll = new Scroller(inst, soloActivity, soloView);
+        this.soloClick = new Clicker(soloActivity, soloView, soloScroll, inst);
+        this.soloPress = new Presser(soloView, soloClick, inst);
+        this.soloSearch = new Searcher(soloView, soloActivity, soloScroll, inst);
+        this.soloEnter = new TextEnterer(soloView, soloActivity, soloClick, inst);
 	}
 
 	/**

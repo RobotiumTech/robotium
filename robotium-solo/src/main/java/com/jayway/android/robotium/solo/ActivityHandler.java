@@ -1,9 +1,8 @@
-package com.jayway.android.robotium.solo.activity;
+package com.jayway.android.robotium.solo;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import com.jayway.android.robotium.solo.util.SoloUtil;
 
 import android.app.Activity;
 import android.app.ActivityManager;
@@ -22,7 +21,7 @@ import android.view.View;
  * 
  */
 
-public class SoloActivity {
+class ActivityHandler {
 	
 	private final Instrumentation inst;
 	private ActivityMonitor activityMonitor;
@@ -38,7 +37,7 @@ public class SoloActivity {
 	 *
 	 */
 	
-	public SoloActivity(Instrumentation inst, Activity activity) {
+	public ActivityHandler(Instrumentation inst, Activity activity) {
 		this.inst = inst;
 		this.activity = activity;
 		setupActivityMonitor();
@@ -108,7 +107,7 @@ public class SoloActivity {
 	 */
 	
 	public void waitForIdle() {
-		SoloUtil.sleep(PAUS);
+		RobotiumUtils.sleep(PAUS);
 		if(getCurrentActivity()!=null)
 		activity = getCurrentActivity();
 		long startTime = System.currentTimeMillis();
@@ -122,7 +121,7 @@ public class SoloActivity {
 			touchItems = decorView.getTouchables();
 			if (touchItems.size() > 0)
 				break;
-			SoloUtil.sleep(PAUS);
+			RobotiumUtils.sleep(PAUS);
 		}
 	}
 	

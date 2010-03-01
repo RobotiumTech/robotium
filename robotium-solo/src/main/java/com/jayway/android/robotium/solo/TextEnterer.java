@@ -1,8 +1,5 @@
-package com.jayway.android.robotium.solo.enter;
+package com.jayway.android.robotium.solo;
 
-import com.jayway.android.robotium.solo.activity.SoloActivity;
-import com.jayway.android.robotium.solo.click.SoloClick;
-import com.jayway.android.robotium.solo.view.SoloView;
 import junit.framework.Assert;
 import android.app.Activity;
 import android.app.Instrumentation;
@@ -15,22 +12,22 @@ import android.view.KeyEvent;
  *
  */
 
-public class SoloEnter{
+class TextEnterer{
 	
-	private final SoloView soloView;
-	private final SoloActivity soloActivity;
-	private final SoloClick soloClick;
+	private final ViewGetters soloView;
+	private final ActivityHandler soloActivity;
+	private final Clicker soloClick;
 	private final Instrumentation inst;
 
     /**
      * Constructs this object.
      *
-     * @param soloView the {@link SoloView} instance.
-     * @param soloActivity the {@link SoloActivity} instance.
-     * @param soloClick the {@link SoloClick} instance.
+     * @param soloView the {@link ViewGetters} instance.
+     * @param soloActivity the {@link Activity} instance.
+     * @param soloClick the {@link Clicker} instance.
      * @param inst the {@link Instrumentation} instance.
      */
-    public SoloEnter(SoloView soloView, SoloActivity soloActivity, SoloClick soloClick, Instrumentation inst) {
+    public TextEnterer(ViewGetters soloView, ActivityHandler soloActivity, Clicker soloClick, Instrumentation inst) {
         this.soloView = soloView;
         this.soloActivity = soloActivity;
         this.soloClick = soloClick;

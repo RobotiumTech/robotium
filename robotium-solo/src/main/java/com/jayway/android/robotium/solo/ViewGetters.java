@@ -1,8 +1,9 @@
-package com.jayway.android.robotium.solo.view;
+package com.jayway.android.robotium.solo;
 
 import java.util.ArrayList;
 import java.util.Iterator;
-import com.jayway.android.robotium.solo.activity.SoloActivity;
+
+
 import android.app.Activity;
 import android.app.Instrumentation;
 import android.view.View;
@@ -23,19 +24,19 @@ import android.widget.TextView;
  * 
  */
 
-public class SoloView {
-	
+class ViewGetters {
+
 	private final ArrayList<View> viewList = new ArrayList<View>();
-	private final SoloActivity soloActivity;
+	private final ActivityHandler soloActivity;
 	private final Instrumentation inst;
 
     /**
      * Constructs this object.
      *
-     * @param soloActivity the {@link SoloActivity} instance.
+     * @param soloActivity the {@link Activity} instance.
      * @param inst the {@link Instrumentation} instance.
      */
-    public SoloView(SoloActivity soloActivity, Instrumentation inst) {
+    public ViewGetters(ActivityHandler soloActivity, Instrumentation inst) {
         this.soloActivity = soloActivity;
         this.inst = inst;
     }

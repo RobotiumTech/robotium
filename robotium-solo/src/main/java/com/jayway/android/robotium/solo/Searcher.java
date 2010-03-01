@@ -1,12 +1,10 @@
-package com.jayway.android.robotium.solo.search;
+package com.jayway.android.robotium.solo;
 
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import com.jayway.android.robotium.solo.activity.SoloActivity;
-import com.jayway.android.robotium.solo.scroll.SoloScroll;
-import com.jayway.android.robotium.solo.view.SoloView;
+
 import android.app.Instrumentation;
 import android.widget.Button;
 import android.widget.EditText;
@@ -20,22 +18,22 @@ import android.widget.TextView;
  * 
  */
 
-public class SoloSearch {
+class Searcher {
 	
-	private final SoloView soloView;
-	private final SoloActivity soloActivity;
-	private final SoloScroll soloScroll;
+	private final ViewGetters soloView;
+	private final ActivityHandler soloActivity;
+	private final Scroller soloScroll;
 	private final Instrumentation inst;
 
     /**
      * Constructs this object.
      *
-     * @param soloView the {@link SoloView} instance.
-     * @param soloActivity the {@link SoloActivity} instance.
-     * @param soloScroll the {@link SoloScroll} instance.
+     * @param soloView the {@link ViewGetters} instance.
+     * @param soloActivity the {@link ActivityHandler} instance.
+     * @param soloScroll the {@link Scroller} instance.
      * @param inst the {@link Instrumentation} instance.
      */
-    public SoloSearch(SoloView soloView, SoloActivity soloActivity, SoloScroll soloScroll, Instrumentation inst) {
+    public Searcher(ViewGetters soloView, ActivityHandler soloActivity, Scroller soloScroll, Instrumentation inst) {
         this.soloView = soloView;
         this.soloActivity = soloActivity;
         this.soloScroll = soloScroll;

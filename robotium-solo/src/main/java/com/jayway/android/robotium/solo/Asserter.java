@@ -1,6 +1,6 @@
-package com.jayway.android.robotium.solo.assertion;
+package com.jayway.android.robotium.solo;
 
-import com.jayway.android.robotium.solo.activity.SoloActivity;
+
 import junit.framework.Assert;
 import android.app.Activity;
 
@@ -10,8 +10,9 @@ import android.app.Activity;
  * @author Renas Reda, renas.reda@jayway.com
  *
  */
-public class SoloAssertion {
-	private final SoloActivity soloActivity;
+
+class Asserter {
+	private final ActivityHandler soloActivity;
 	
 	/**
 	 * Constructs this object.
@@ -20,7 +21,7 @@ public class SoloAssertion {
 	 *
 	 */
 	
-	public SoloAssertion(SoloActivity soloActivity) {
+	public Asserter(ActivityHandler soloActivity) {
 		this.soloActivity = soloActivity;
 	}
 

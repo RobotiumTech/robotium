@@ -1,6 +1,6 @@
-package com.jayway.android.robotium.solo.util;
+package com.jayway.android.robotium.solo;
 
-public class SoloUtil {	
+class RobotiumUtils {	
 	
 	/**
 	 * This method is used to trigger a sleep.

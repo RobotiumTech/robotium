@@ -1,13 +1,10 @@
-package com.jayway.android.robotium.solo.click;
+package com.jayway.android.robotium.solo;
 
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import com.jayway.android.robotium.solo.activity.SoloActivity;
-import com.jayway.android.robotium.solo.scroll.SoloScroll;
-import com.jayway.android.robotium.solo.util.SoloUtil;
-import com.jayway.android.robotium.solo.view.SoloView;
+
 import junit.framework.Assert;
 import android.app.Activity;
 import android.app.Instrumentation;
@@ -28,25 +25,25 @@ import android.widget.TextView;
  * 
  */
 
-public class SoloClick {
+class Clicker {
 	
 	private final String LOG_TAG = "Robotium";
-	private final SoloActivity soloActivity;
-	private final SoloView soloView;
-	private final SoloScroll soloScroll;
+	private final ActivityHandler soloActivity;
+	private final ViewGetters soloView;
+	private final Scroller soloScroll;
 	private final Instrumentation inst;
 
 	/**
 	 * Constructs this object.
 	 * 
-	 * @param soloActivity the {@link SoloActivity} instance.
-	 * @param soloView the {@link SoloView} instance.
-	 * @param soloScroll the {@link SoloScroll} instance.
+	 * @param soloActivity the {@link Activity} instance.
+	 * @param soloView the {@link ViewGetters} instance.
+	 * @param soloScroll the {@link Scroller} instance.
 	 * @param inst the {@link Instrumentation} instance.
 	 */
 
-	public SoloClick(SoloActivity soloActivity, SoloView soloView,
-			SoloScroll soloScroll, Instrumentation inst) {
+	public Clicker(ActivityHandler soloActivity, ViewGetters soloView,
+			Scroller soloScroll, Instrumentation inst) {
 
 		this.soloActivity = soloActivity;
 		this.soloView = soloView;
@@ -94,12 +91,12 @@ public class SoloClick {
                 y + ViewConfiguration.getTouchSlop() / 2, 0);
         inst.sendPointerSync(event);
         inst.waitForIdleSync();
-        SoloUtil.sleep((int)(ViewConfiguration.getLongPressTimeout() * 1.5f));
+        RobotiumUtils.sleep((int)(ViewConfiguration.getLongPressTimeout() * 1.5f));
         eventTime = SystemClock.uptimeMillis();
         event = MotionEvent.obtain(downTime, eventTime, MotionEvent.ACTION_UP, x, y, 0);
         inst.sendPointerSync(event);
         inst.waitForIdleSync();
-		SoloUtil.sleep(500);
+		RobotiumUtils.sleep(500);
 
 	}
 	
@@ -175,7 +172,7 @@ public class SoloClick {
 		inst.sendKeyDownUpSync(KeyEvent.KEYCODE_DPAD_DOWN);
 		for(int i = 0; i < index; i++)
 		{
-			SoloUtil.sleep(300);
+			RobotiumUtils.sleep(300);
 			inst.sendKeyDownUpSync(KeyEvent.KEYCODE_DPAD_DOWN);
 		}
 		inst.sendKeyDownUpSync(KeyEvent.KEYCODE_ENTER);
@@ -308,7 +305,7 @@ public class SoloClick {
 	 * 
 	 */
 	public void goBack() {
-		SoloUtil.sleep(300);
+		RobotiumUtils.sleep(300);
 		try {
 			inst.sendKeyDownUpSync(KeyEvent.KEYCODE_BACK);
 		} catch (Throwable e) {

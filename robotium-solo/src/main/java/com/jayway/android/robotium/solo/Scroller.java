@@ -1,9 +1,8 @@
-package com.jayway.android.robotium.solo.scroll;
+package com.jayway.android.robotium.solo;
 
 import java.util.ArrayList;
 import java.util.Iterator;
-import com.jayway.android.robotium.solo.activity.SoloActivity;
-import com.jayway.android.robotium.solo.view.SoloView;
+
 import android.app.Activity;
 import android.app.Instrumentation;
 import android.os.SystemClock;
@@ -19,11 +18,11 @@ import android.widget.TextView;
 * 
 */
 
-public class SoloScroll {
+class Scroller {
 	
 	private final Instrumentation inst;
-	private final SoloActivity soloActivity;
-	private final SoloView soloView;
+	private final ActivityHandler soloActivity;
+	private final ViewGetters soloView;
    	private TextView checkTextView = null;
 	public final static int RIGHT = 1;
 	public final static int LEFT = 2;
@@ -33,11 +32,11 @@ public class SoloScroll {
      * Constructs this object.
      *
      * @param inst the {@link Instrumentation} instance.
-     * @param soloActivity the {@link SoloActivity} instance.
-     * @param soloView the {@link SoloView} instance.
+     * @param soloActivity the {@link Activity} instance.
+     * @param soloView the {@link ViewGetters} instance.
      */
 	
-    public SoloScroll(Instrumentation inst, SoloActivity soloActivity, SoloView soloView) {
+    public Scroller(Instrumentation inst, ActivityHandler soloActivity, ViewGetters soloView) {
         this.inst = inst;
         this.soloActivity = soloActivity;
         this.soloView = soloView;
