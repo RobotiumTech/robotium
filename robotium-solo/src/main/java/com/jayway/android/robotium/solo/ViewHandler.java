@@ -24,7 +24,7 @@ import android.widget.TextView;
  * 
  */
 
-class ViewGetters {
+class ViewHandler {
 
 	private final ArrayList<View> viewList = new ArrayList<View>();
 	private final ActivityHandler soloActivity;
@@ -36,7 +36,7 @@ class ViewGetters {
      * @param soloActivity the {@link Activity} instance.
      * @param inst the {@link Instrumentation} instance.
      */
-    public ViewGetters(ActivityHandler soloActivity, Instrumentation inst) {
+    public ViewHandler(ActivityHandler soloActivity, Instrumentation inst) {
         this.soloActivity = soloActivity;
         this.inst = inst;
     }

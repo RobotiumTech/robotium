@@ -22,7 +22,7 @@ class Scroller {
 	
 	private final Instrumentation inst;
 	private final ActivityHandler soloActivity;
-	private final ViewGetters soloView;
+	private final ViewHandler soloView;
    	private TextView checkTextView = null;
 	public final static int RIGHT = 1;
 	public final static int LEFT = 2;
@@ -33,10 +33,10 @@ class Scroller {
      *
      * @param inst the {@link Instrumentation} instance.
      * @param soloActivity the {@link Activity} instance.
-     * @param soloView the {@link ViewGetters} instance.
+     * @param soloView the {@link ViewHandler} instance.
      */
 	
-    public Scroller(Instrumentation inst, ActivityHandler soloActivity, ViewGetters soloView) {
+    public Scroller(Instrumentation inst, ActivityHandler soloActivity, ViewHandler soloView) {
         this.inst = inst;
         this.soloActivity = soloActivity;
         this.soloView = soloView;

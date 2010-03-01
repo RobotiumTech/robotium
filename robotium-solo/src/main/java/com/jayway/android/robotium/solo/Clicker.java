@@ -29,7 +29,7 @@ class Clicker {
 	
 	private final String LOG_TAG = "Robotium";
 	private final ActivityHandler soloActivity;
-	private final ViewGetters soloView;
+	private final ViewHandler soloView;
 	private final Scroller soloScroll;
 	private final Instrumentation inst;
 
@@ -37,12 +37,12 @@ class Clicker {
 	 * Constructs this object.
 	 * 
 	 * @param soloActivity the {@link Activity} instance.
-	 * @param soloView the {@link ViewGetters} instance.
+	 * @param soloView the {@link ViewHandler} instance.
 	 * @param soloScroll the {@link Scroller} instance.
 	 * @param inst the {@link Instrumentation} instance.
 	 */
 
-	public Clicker(ActivityHandler soloActivity, ViewGetters soloView,
+	public Clicker(ActivityHandler soloActivity, ViewHandler soloView,
 			Scroller soloScroll, Instrumentation inst) {
 
 		this.soloActivity = soloActivity;
