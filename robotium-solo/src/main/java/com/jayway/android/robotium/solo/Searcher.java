@@ -52,6 +52,7 @@ class Searcher {
 	 */
 	
 	public boolean searchEditText(String search) {
+		inst.waitForIdleSync();
 		Pattern p = Pattern.compile(search);
 		Matcher matcher;
 		ArrayList<EditText> editTextList = soloView.getCurrentEditTexts();
@@ -96,17 +97,16 @@ class Searcher {
 	 */
 	
 	public boolean searchButton(String search, int matches) {
+		inst.waitForIdleSync();
 		Pattern p = Pattern.compile(search);
 		Matcher matcher;
 		int countMatches=0;
-		inst.waitForIdleSync();
 		ArrayList<Button> buttonList = soloView.getCurrentButtons();
 		Iterator<Button> iterator = buttonList.iterator();
 		while (iterator.hasNext()) {
 			Button button = (Button) iterator.next();
 			matcher = p.matcher(button.getText().toString());
 			if(matcher.matches()){	
-				inst.waitForIdleSync();
 				countMatches++;
 			}
 		}
@@ -149,11 +149,10 @@ class Searcher {
 	 */
 	
 	public boolean searchText(String search, int matches) {
+		inst.waitForIdleSync();
 		Pattern p = Pattern.compile(search);
 		Matcher matcher;
 		int countMatches = 0;
-		soloActivity.waitForIdle();
-		inst.waitForIdleSync();
 		ArrayList<TextView> textViewList = soloView.getCurrentTextViews(null);
 		Iterator<TextView> iterator = textViewList.iterator();
 		TextView textView = null;
