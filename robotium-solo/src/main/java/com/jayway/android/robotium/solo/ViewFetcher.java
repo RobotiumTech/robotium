@@ -113,10 +113,9 @@ class ViewFetcher {
 		ArrayList<View> viewList = getViews();
 		ArrayList<ImageView> imageViewList = new ArrayList<ImageView>();
 		Iterator<View> iterator = viewList.iterator();
-		while (iterator.hasNext() && viewList != null) {
+		while (iterator.hasNext()) {
 			View view = iterator.next();
-			if (view != null
-				&& view.getClass().getName().equals("android.widget.ImageView")) {
+			if (view instanceof android.widget.ImageView) {
 				imageViewList.add((ImageView) view);
 			}	
 		}
@@ -173,9 +172,9 @@ class ViewFetcher {
 		ArrayList<EditText>editTextList = new ArrayList<EditText>();
 		ArrayList<View> viewList = getViews();
 		Iterator<View> iterator = viewList.iterator();
-		while (iterator.hasNext() && viewList != null) {
+		while (iterator.hasNext()) {
 			View view = iterator.next();
-			if (view.getClass().getName().equals("android.widget.EditText"))
+			if (view instanceof android.widget.EditText)
 				editTextList.add((EditText) view);
 		}
 		return editTextList;
@@ -191,17 +190,13 @@ class ViewFetcher {
 	 */
 
 	public ArrayList<ListView> getCurrentListViews() {
-
-		ArrayList<View> vList = getViews();
 		ArrayList<ListView> listViews = new ArrayList<ListView>();
-		ListView lView = null;
-		for (int i = 0; i < vList.size(); i++) {
-			if (vList.get(i).getClass().getName().equals(
-					"android.widget.ListView")) {
-				lView = (ListView) vList.get(i);
-				listViews.add(lView);
+		Iterator<View> iterator = viewList.iterator();
+		while (iterator.hasNext()) {
+			View view = iterator.next();
+				if (view instanceof android.widget.ListView)
+				listViews.add((ListView) view);
 			}
-		}
 		return listViews;
 	}
 	
@@ -218,9 +213,9 @@ class ViewFetcher {
 		ArrayList<Spinner>spinnerList = new ArrayList<Spinner>();
 		ArrayList<View> viewList = getViews();
 		Iterator<View> iterator = viewList.iterator();
-		while (iterator.hasNext() && viewList != null) {
+		while (iterator.hasNext()) {
 			View view = iterator.next();
-			if (view.getClass().getName().equals("android.widget.Spinner"))
+			if (view instanceof android.widget.Spinner)
 				spinnerList.add((Spinner) view);
 		}
 		return spinnerList;
@@ -246,9 +241,9 @@ class ViewFetcher {
 		
 		ArrayList<TextView> textViewList = new ArrayList<TextView>();
 		Iterator<View> iterator = viewList.iterator();
-		while (iterator.hasNext() && viewList != null) {
+		while (iterator.hasNext()) {
 			View view = iterator.next();
-			if (view.getClass().getName().equals("android.widget.TextView")) {
+			if (view instanceof android.widget.TextView) {
 				textViewList.add((TextView) view);
 			}
 			
@@ -269,9 +264,9 @@ class ViewFetcher {
 		ArrayList<View> viewList = getViews();
 		ArrayList<GridView> gridViewList = new ArrayList<GridView>();
 		Iterator<View> iterator = viewList.iterator();
-		while (iterator.hasNext() && viewList != null) {
+		while (iterator.hasNext()) {
 			View view = iterator.next();
-			if (view.getClass().getName().equals("android.widget.GridView"))
+			if (view instanceof android.widget.GridView)
 				gridViewList.add((GridView) view);
 		}
 		return gridViewList;
@@ -290,10 +285,9 @@ class ViewFetcher {
 		ArrayList<Button> buttonList = new ArrayList<Button>();
 		ArrayList<View> viewList = getViews();
 		Iterator<View> iterator = viewList.iterator();
-		while (iterator.hasNext() && viewList != null) {
-			
+		while (iterator.hasNext()) {
 			View view = iterator.next();
-			if (view.getClass().getName().equals("android.widget.Button"))
+			if (view instanceof android.widget.Button)
 				buttonList.add((Button) view);
 		}
 		return buttonList;
