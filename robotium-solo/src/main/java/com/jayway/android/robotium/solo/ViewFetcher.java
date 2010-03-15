@@ -2,8 +2,6 @@ package com.jayway.android.robotium.solo;
 
 import java.util.ArrayList;
 import java.util.Iterator;
-
-
 import android.app.Activity;
 import android.app.Instrumentation;
 import android.view.View;
@@ -191,10 +189,11 @@ class ViewFetcher {
 
 	public ArrayList<ListView> getCurrentListViews() {
 		ArrayList<ListView> listViews = new ArrayList<ListView>();
+		ArrayList<View> viewList = getViews();
 		Iterator<View> iterator = viewList.iterator();
 		while (iterator.hasNext()) {
 			View view = iterator.next();
-				if (view instanceof android.widget.ListView)
+			if (view instanceof android.widget.ListView)
 				listViews.add((ListView) view);
 			}
 		return listViews;
