@@ -74,7 +74,7 @@ class Presser{
 	 * Method used to press on a spinner (drop-down menu) item.
 	 * 
 	 * @param spinnerIndex the index of the spinner menu to be used
-	 * @param itemIndex the index of the spinner item to be pressed
+	 * @param itemIndex the index of the spinner item to be pressed relative to the current selected item. A Negative number moves up on the spinner, positive down. 
 	 * 
 	 */
 	
@@ -83,10 +83,19 @@ class Presser{
 		inst.waitForIdleSync();
 		soloClick.clickOnScreen(soloView.getCurrentSpinners().get(spinnerIndex));
 		inst.sendKeyDownUpSync(KeyEvent.KEYCODE_DPAD_DOWN);
+		boolean countingUp = true;
+		if(itemIndex < 0){
+			countingUp = false;
+			itemIndex *= -1;
+		}
 		for(int i = 0; i < itemIndex; i++)
 		{
 			RobotiumUtils.sleep(300);
-			inst.sendKeyDownUpSync(KeyEvent.KEYCODE_DPAD_DOWN);
+			if(countingUp){
+				inst.sendKeyDownUpSync(KeyEvent.KEYCODE_DPAD_DOWN);
+			}else{
+				inst.sendKeyDownUpSync(KeyEvent.KEYCODE_DPAD_UP);
+			}
 		}
 		inst.sendKeyDownUpSync(KeyEvent.KEYCODE_ENTER);
 		
