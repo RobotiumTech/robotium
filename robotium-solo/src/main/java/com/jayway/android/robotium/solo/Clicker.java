@@ -70,7 +70,6 @@ class Clicker {
 		inst.sendPointerSync(event);
 		inst.sendPointerSync(event2);
 		}catch(Throwable e){}
-		soloActivity.waitForIdle();
 	}
 	
 	/**
@@ -241,7 +240,6 @@ class Clicker {
 		} catch (IndexOutOfBoundsException e) {}
 		if (button != null) {
 			clickOnScreen(button);
-			soloActivity.waitForIdle();
 			found = true;
 		}
 		return found;
