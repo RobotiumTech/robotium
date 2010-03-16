@@ -44,6 +44,7 @@ class TextEnterer{
 	 */
 	
 	public void enterText(int index, String text) {
+		soloActivity.waitForIdle();
 		Activity activity = soloActivity.getCurrentActivity();
 		Boolean focused = false;
 		try {
