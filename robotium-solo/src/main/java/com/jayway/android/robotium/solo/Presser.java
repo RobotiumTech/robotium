@@ -42,6 +42,7 @@ class Presser{
 	
 	public void pressMenuItem(int index) {
 		inst.waitForIdleSync();
+		RobotiumUtils.sleep(500);
 		try{
 		inst.sendKeyDownUpSync(KeyEvent.KEYCODE_MENU);
 		RobotiumUtils.sleep(300);
@@ -81,6 +82,7 @@ class Presser{
 	public void pressSpinnerItem(int spinnerIndex, int itemIndex)
 	{
 		inst.waitForIdleSync();
+		RobotiumUtils.sleep(500);
 		soloClick.clickOnScreen(soloView.getCurrentSpinners().get(spinnerIndex));
 		inst.sendKeyDownUpSync(KeyEvent.KEYCODE_DPAD_DOWN);
 		for(int i = 0; i < itemIndex; i++)
