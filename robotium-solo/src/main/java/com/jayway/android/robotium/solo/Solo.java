@@ -60,10 +60,6 @@ public class Solo {
 	private final Scroller soloScroll;
 	public final static int RIGHT = 1;
 	public final static int LEFT = 2;
-	public final static int ARTIST = 3;
-	public final static int SONG = 4;
-	public final static int TOP_TRACKS_SONG = 5;
-	public final static int NORMAL = 6;
 
 	
 	/**

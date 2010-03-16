@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
 import junit.framework.Assert;
 import android.app.Activity;
 import android.app.Instrumentation;
@@ -15,7 +14,6 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewConfiguration;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 /**
@@ -33,12 +31,7 @@ class Clicker {
 	private final ViewFetcher soloView;
 	private final Scroller soloScroll;
 	private final Instrumentation inst;
-	final static int ARTIST = 3;
-	final static int SONG = 4;
-	final static int TOP_TRACKS_SONG = 5;
-	final static int NORMAL = 6;
-	final static int CENTER = 7;
-	final static int RIGHT = 1;
+
 
 	/**
 	 * Constructs this object.
@@ -130,22 +123,14 @@ class Clicker {
 	 */
 	
 	private void clickOnScreen(View view, boolean longClick) {
-		clickOnScreen(view, longClick, CENTER);
-	}
-	private void clickOnScreen(View view, boolean longClick, int side) {
 		int[] xy = new int[2];
 		view.getLocationOnScreen(xy);
 		final int viewWidth = view.getWidth();
 		final int viewHeight = view.getHeight();
 		final float x = xy[0] + (viewWidth / 2.0f);
 		final float y = xy[1] + (viewHeight / 2.0f);
-		if (side == RIGHT) {
-			clickOnScreen(soloActivity.getCurrentActivity().getWindowManager().getDefaultDisplay()
-					.getWidth() - 5, y);
-			inst.waitForIdleSync();
-		}
-		
-		else if(longClick)
+	
+		if(longClick)
 			clickLongOnScreen(x, y);
 		else
 			clickOnScreen(x, y);	
