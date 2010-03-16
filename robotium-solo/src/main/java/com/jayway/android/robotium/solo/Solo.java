@@ -60,6 +60,11 @@ public class Solo {
 	private final Scroller soloScroll;
 	public final static int RIGHT = 1;
 	public final static int LEFT = 2;
+	public final static int ARTIST = 3;
+	public final static int SONG = 4;
+	public final static int TOP_TRACKS_SONG = 5;
+	public final static int NORMAL = 6;
+
 	
 	/**
 	 * Constructor that takes in the instrumentation and the start activity.
@@ -370,6 +375,20 @@ public class Solo {
 		return found;
 		
 	}
+
+
+	/**
+	 * Method that will click on a certain list line and return the text views that
+	 * the list line is showing. 
+	 * 
+	 * @param line the line that should be clicked
+	 * @return an array list of the text views located in the list line
+	 */
+
+	public ArrayList<TextView> clickInList(int line) {
+		return soloClick.clickInList(line);
+	}
+	
 	
 	 /**
 	 * Simulate touching a specific location and dragging to a new location.

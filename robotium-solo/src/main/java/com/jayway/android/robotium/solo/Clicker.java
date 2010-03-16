@@ -15,6 +15,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewConfiguration;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 /**
@@ -32,6 +33,12 @@ class Clicker {
 	private final ViewFetcher soloView;
 	private final Scroller soloScroll;
 	private final Instrumentation inst;
+	final static int ARTIST = 3;
+	final static int SONG = 4;
+	final static int TOP_TRACKS_SONG = 5;
+	final static int NORMAL = 6;
+	final static int CENTER = 7;
+	final static int RIGHT = 1;
 
 	/**
 	 * Constructs this object.
@@ -66,8 +73,11 @@ class Clicker {
 				MotionEvent.ACTION_DOWN, x, y, 0);
 		MotionEvent event2 = MotionEvent.obtain(downTime, eventTime,
 				MotionEvent.ACTION_UP, x, y, 0);
+		try{
 		inst.sendPointerSync(event);
 		inst.sendPointerSync(event2);
+		}catch(Throwable e){}
+		soloActivity.waitForIdle();
 	}
 	
 	/**
@@ -120,13 +130,22 @@ class Clicker {
 	 */
 	
 	private void clickOnScreen(View view, boolean longClick) {
+		clickOnScreen(view, longClick, CENTER);
+	}
+	private void clickOnScreen(View view, boolean longClick, int side) {
 		int[] xy = new int[2];
 		view.getLocationOnScreen(xy);
 		final int viewWidth = view.getWidth();
 		final int viewHeight = view.getHeight();
 		final float x = xy[0] + (viewWidth / 2.0f);
 		final float y = xy[1] + (viewHeight / 2.0f);
-		if(longClick)
+		if (side == RIGHT) {
+			clickOnScreen(soloActivity.getCurrentActivity().getWindowManager().getDefaultDisplay()
+					.getWidth() - 5, y);
+			inst.waitForIdleSync();
+		}
+		
+		else if(longClick)
 			clickLongOnScreen(x, y);
 		else
 			clickOnScreen(x, y);	
@@ -229,13 +248,12 @@ class Clicker {
 	 */
 	
 	public boolean clickOnButton(int index) {
+		soloActivity.waitForIdle();
 		boolean found = false;
 		Button button = null;
 		try {
 			button = soloView.getButton(index);
-		} catch (IndexOutOfBoundsException e) {
-			e.printStackTrace();
-		}
+		} catch (IndexOutOfBoundsException e) {}
 		if (button != null) {
 			clickOnScreen(button);
 			soloActivity.waitForIdle();
@@ -294,7 +312,6 @@ class Clicker {
 		try {
 			clickOnScreen(soloView.getCurrentImageViews().get(index));
 		} catch (IndexOutOfBoundsException e) {
-			e.printStackTrace();
 			Assert.assertTrue("Index is not valid", false);
 		}
 	}
@@ -303,13 +320,65 @@ class Clicker {
 	 * Method used to simulate pressing the hard key back
 	 * 
 	 */
+	
 	public void goBack() {
 		RobotiumUtils.sleep(300);
 		try {
 			inst.sendKeyDownUpSync(KeyEvent.KEYCODE_BACK);
-		} catch (Throwable e) {
-			e.printStackTrace();
-		}
+		} catch (Throwable e) {}
 	}
-
+	
+	/**
+	 * Private method that returns the list item parent. It is used by clickInList().
+	 * 
+	 * @param view the view who's parent is requested
+	 * @return the parent of the view
+	 */
+	
+	private View getListItemParent(View view)
+	{
+		if (view.getParent() != null
+				&& !(view.getParent() instanceof android.widget.ListView)) {
+			return getListItemParent((View) view.getParent());
+		} else {
+			return view;
+		}
+		
+	}
+	
+	/**
+	 * Method that will click on a certain list line and return the text views that
+	 * the list line is showing. 
+	 * 
+	 * @param line the line that should be clicked
+	 * @return an array list of the text views located in the list line
+	 */
+	
+	public ArrayList<TextView> clickInList(int line) {
+        soloActivity.waitForIdle();
+        if(soloView.getCurrentListViews().size()==0)
+        	Assert.assertTrue("No ListView is found!", false);
+        ArrayList<TextView> textViews = soloView.getCurrentTextViews(soloView
+                .getCurrentListViews().get(0));
+        ArrayList<TextView> textViewGroup = new ArrayList<TextView>();
+        int myLine = 0;
+        for (int i = 0; i < textViews.size(); i++) {
+            View view = getListItemParent(textViews.get(i));
+            try {
+                if (view.equals(getListItemParent(textViews.get(i + 1)))) {
+                	textViewGroup.add(textViews.get(i));
+                } else {
+                    textViewGroup.add(textViews.get(i));
+                    myLine++;
+                    if (myLine == line)
+                        break;
+                    else
+                        textViewGroup.clear();
+                }
+            } catch (IndexOutOfBoundsException e) {}
+        }
+        if (textViewGroup.size() != 0)
+            clickOnScreen(textViewGroup.get(0));
+        return textViewGroup;
+    }
 }
