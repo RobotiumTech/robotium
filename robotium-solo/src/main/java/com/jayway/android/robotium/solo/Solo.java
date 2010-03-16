@@ -315,11 +315,35 @@ public class Solo {
 	 * Method used to click on a specific view.
 	 *
 	 * @param view the view that should be clicked
+	 * @deprecated replaced by {@link #clickOnView(View view)}
 	 *
 	 */
 	
 	public void clickOnScreen(View view) {
 		soloClick.clickOnScreen(view);
+	}
+	
+	/**
+	 * Method used to click on a specific view.
+	 *
+	 * @param view the view that should be clicked
+	 *
+	 */
+	
+	public void clickOnView(View view) {
+		soloClick.clickOnScreen(view);
+	}
+	
+	/**
+	 * Method used to long click on a specific view.
+	 *
+	 * @param view the view that should be long clicked
+	 * @deprecated replaced by {@link #clickLongOnView(View view)}
+	 *
+	 */
+	
+	public void clickLongOnScreen(View view) {
+		soloClick.clickLongOnScreen(view);
 	}
 	
 	/**
@@ -329,7 +353,7 @@ public class Solo {
 	 *
 	 */
 	
-	public void clickLongOnScreen(View view) {
+	public void clickLongOnView(View view) {
 		soloClick.clickLongOnScreen(view);
 	}
 	
