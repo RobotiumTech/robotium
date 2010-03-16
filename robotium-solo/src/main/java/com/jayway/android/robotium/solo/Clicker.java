@@ -68,7 +68,6 @@ class Clicker {
 				MotionEvent.ACTION_UP, x, y, 0);
 		inst.sendPointerSync(event);
 		inst.sendPointerSync(event2);
-		soloActivity.waitForIdle();
 	}
 	
 	/**
