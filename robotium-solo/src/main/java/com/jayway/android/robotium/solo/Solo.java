@@ -302,7 +302,8 @@ public class Solo {
 	 * Method used to press on a spinner (drop-down menu) item.
 	 * 
 	 * @param spinnerIndex the index of the spinner menu to be used
-	 * @param itemIndex the index of the spinner item to be pressed
+	 * @param itemIndex the index of the spinner item to be pressed relative to the current selected item. 
+	 * A Negative number moves up on the spinner, positive down
 	 * 
 	 */
 	
