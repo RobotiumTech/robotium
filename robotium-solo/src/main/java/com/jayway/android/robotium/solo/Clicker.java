@@ -331,18 +331,31 @@ class Clicker {
 	
 	/**
 	 * Method that will click on a certain list line and return the text views that
-	 * the list line is showing. 
+	 * the list line is showing. Will use the first list it finds.
 	 * 
 	 * @param line the line that should be clicked
 	 * @return an array list of the text views located in the list line
 	 */
-	
+
 	public ArrayList<TextView> clickInList(int line) {
+		return clickInList(line, 0);
+	}
+	
+	/**
+	 * Method that will click on a certain list line on a specified List and 
+	 * return the text views that the list line is showing. 
+	 * 
+	 * @param line the line that should be clicked
+	 * @param index the index of the list. E.g. Index 1 if two lists are available
+	 * @return an array list of the text views located in the list line
+	 */
+	
+	public ArrayList<TextView> clickInList(int line, int index) {
         soloActivity.waitForIdle();
-        if(soloView.getCurrentListViews().size()==0)
-        	Assert.assertTrue("No ListView is found!", false);
+        if(soloView.getCurrentListViews().size()<index)
+        	Assert.assertTrue("No ListView with index " + index + " is available", false);
         ArrayList<TextView> textViews = soloView.getCurrentTextViews(soloView
-                .getCurrentListViews().get(0));
+                .getCurrentListViews().get(index));
         ArrayList<TextView> textViewGroup = new ArrayList<TextView>();
         int myLine = 0;
         for (int i = 0; i < textViews.size(); i++) {

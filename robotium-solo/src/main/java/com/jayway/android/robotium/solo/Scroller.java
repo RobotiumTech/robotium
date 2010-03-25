@@ -24,8 +24,8 @@ class Scroller {
 	private final ActivityFetcher soloActivity;
 	private final ViewFetcher soloView;
    	private TextView checkTextView = null;
-	public final static int RIGHT = 1;
-	public final static int LEFT = 2;
+	private final static int RIGHT = 2;
+	private final static int LEFT = 3;
 	
 
     /**

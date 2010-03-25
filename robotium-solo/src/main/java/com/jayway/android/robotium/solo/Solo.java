@@ -58,8 +58,10 @@ public class Solo {
 	private final ActivityFetcher soloActivity;
 	private final TextEnterer soloEnter;
 	private final Scroller soloScroll;
-	public final static int RIGHT = 1;
-	public final static int LEFT = 2;
+	public final static int LANDSCAPE = 0;
+	public final static int PORTRAIT = 1;
+	public final static int RIGHT = 2;
+	public final static int LEFT = 3;
 
 	
 	/**
@@ -186,6 +188,17 @@ public class Solo {
 		return found;
 
 	}
+
+	/**
+	 * Public method that sets the Orientation (Landscape/Portrait) for the session.
+	 * 
+	 * @param orientation the orientation to be set. 0 for landscape and 1 for portrait 
+	 */
+	
+	public void setOrientation(int orientation)
+	{
+		soloActivity.setOrientation(orientation);
+	}
 	
 	/**
 	 * This method returns an ArrayList of all the opened/active activities.
@@ -295,6 +308,7 @@ public class Solo {
 	 */
 	
 	public void pressMenuItem(int index) {
+		soloActivity.setActivityOrientation();		
 		soloPress.pressMenuItem(index);
 	}
 	
@@ -309,6 +323,7 @@ public class Solo {
 	
 	public void pressSpinnerItem(int spinnerIndex, int itemIndex)
 	{
+		soloActivity.setActivityOrientation();		
 		soloPress.pressSpinnerItem(spinnerIndex, itemIndex);
 	}
 	
@@ -321,6 +336,7 @@ public class Solo {
 	 */
 	
 	public void clickOnScreen(View view) {
+		soloActivity.setActivityOrientation();		
 		soloClick.clickOnScreen(view);
 	}
 	
@@ -332,6 +348,7 @@ public class Solo {
 	 */
 	
 	public void clickOnView(View view) {
+		soloActivity.setActivityOrientation();		
 		soloClick.clickOnScreen(view);
 	}
 	
@@ -400,7 +417,7 @@ public class Solo {
 
 	/**
 	 * Method that will click on a certain list line and return the text views that
-	 * the list line is showing. 
+	 * the list line is showing. Will use the first list it finds.
 	 * 
 	 * @param line the line that should be clicked
 	 * @return an array list of the text views located in the list line
@@ -409,8 +426,20 @@ public class Solo {
 	public ArrayList<TextView> clickInList(int line) {
 		return soloClick.clickInList(line);
 	}
+
+	/**
+	 * Method that will click on a certain list line on a specified List and 
+	 * return the text views that the list line is showing. 
+	 * 
+	 * @param line the line that should be clicked
+	 * @param index the index of the list. E.g. Index 1 if two lists are available
+	 * @return an array list of the text views located in the list line
+	 */
 	
-	
+	public ArrayList<TextView> clickInList(int line, int index) {
+	return soloClick.clickInList(line, index);
+	}
+
 	 /**
 	 * Simulate touching a specific location and dragging to a new location.
 	 *

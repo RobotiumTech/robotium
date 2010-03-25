@@ -1,15 +1,10 @@
 package com.jayway.android.robotium.solo;
 
 import java.util.ArrayList;
-import java.util.List;
-
-
+import java.util.Iterator;
 import android.app.Activity;
-import android.app.ActivityManager;
 import android.app.Instrumentation;
-import android.app.ActivityManager.RunningTaskInfo;
 import android.app.Instrumentation.ActivityMonitor;
-import android.content.ComponentName;
 import android.content.IntentFilter;
 import android.view.View;
 
@@ -28,6 +23,7 @@ class ActivityFetcher {
 	private Activity activity;
 	private ArrayList<Activity> activityList = new ArrayList<Activity>();
 	private final int PAUS = 500;
+	private int orientation = 1;
 
 	/**
 	 * Constructor that takes in the instrumentation and the start activity.
@@ -70,7 +66,29 @@ class ActivityFetcher {
 		} catch (Throwable e) {
 		}
 	}
+
+	/**
+	 * Public method that sets the Orientation (Landscape/Portrait) for the session.
+	 * 
+	 * @param orientation the orientation to be set. 0 for landscape and 1 for portrait 
+	 */
 	
+	public void setOrientation(int orientation)
+	{
+		this.orientation = orientation;
+		setActivityOrientation();
+	}
+
+	/**
+	 * Public method that sets the Orientation (Landscape/Portrait) for the current activity.
+	 *  
+	 */
+	
+	public void setActivityOrientation()
+	{
+		activity.setRequestedOrientation(orientation);	
+	}
+
 	/**
 	 * This method returns the current activity.
 	 *
@@ -80,25 +98,25 @@ class ActivityFetcher {
 	
 	public Activity getCurrentActivity() {
 		inst.waitForIdleSync();
-		ActivityManager activityManager = (ActivityManager) inst
-		.getTargetContext().getSystemService("activity");
-		List list = activityManager.getRunningTasks(10);
-		RunningTaskInfo taskInfo = (RunningTaskInfo) list.get(0);
-		ComponentName comp = taskInfo.topActivity;
-		String nameActivity = "." + activity.getLocalClassName();
-		String nameComp = comp.getShortClassName();
-		
-		if (nameActivity.equals(nameComp)) {
-			return activity;
-		} else {
-			if (activityMonitor != null) {
-				if(activityMonitor.getLastActivity()!=null)
+		Boolean found = false;
+		if (activityMonitor != null) {
+			if (activityMonitor.getLastActivity() != null)
 				activity = activityMonitor.getLastActivity();
-				activityList.add(activity);
-			}
+		}
+		setActivityOrientation();
+		Iterator<Activity> iterator = activityList.iterator();
+		while (iterator.hasNext()) {
+			Activity storedActivity = iterator.next();
+			if (storedActivity.getClass().getName().equals(
+					activity.getClass().getName()))
+				found = true;
+		}
+		if (found)
+			return activity;
+		else {
+			activityList.add(activity);
 			return activity;
 		}
-		
 	}
 	
 	/**
@@ -138,6 +156,8 @@ class ActivityFetcher {
 			for (int i = 0; i < activityList.size(); i++) {
 				activityList.get(i).finish();
 			}
+			getCurrentActivity().finish();
+		
 		} catch (Throwable e) {
 			
 		}

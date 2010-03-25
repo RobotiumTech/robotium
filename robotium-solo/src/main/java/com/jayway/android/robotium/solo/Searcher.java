@@ -24,6 +24,7 @@ class Searcher {
 	private final ActivityFetcher soloActivity;
 	private final Scroller soloScroll;
 	private final Instrumentation inst;
+	private final int PAUS = 500;
 
     /**
      * Constructs this object.
@@ -53,6 +54,7 @@ class Searcher {
 	
 	public boolean searchEditText(String search) {
 		inst.waitForIdleSync();
+		RobotiumUtils.sleep(PAUS);
 		Pattern p = Pattern.compile(search);
 		Matcher matcher;
 		ArrayList<EditText> editTextList = soloView.getCurrentEditTexts();
@@ -60,7 +62,7 @@ class Searcher {
 		while (iterator.hasNext()) {
 			EditText editText = (EditText) iterator.next();
 			matcher = p.matcher(editText.getText().toString());
-			if (matcher.matches()) {
+			if (matcher.find()) {
 				return true;
 			}
 		}
@@ -98,6 +100,7 @@ class Searcher {
 	
 	public boolean searchButton(String search, int matches) {
 		inst.waitForIdleSync();
+		RobotiumUtils.sleep(PAUS);
 		Pattern p = Pattern.compile(search);
 		Matcher matcher;
 		int countMatches=0;
@@ -106,7 +109,7 @@ class Searcher {
 		while (iterator.hasNext()) {
 			Button button = (Button) iterator.next();
 			matcher = p.matcher(button.getText().toString());
-			if(matcher.matches()){	
+			if(matcher.find()){	
 				countMatches++;
 			}
 		}
@@ -150,6 +153,7 @@ class Searcher {
 	
 	public boolean searchText(String search, int matches) {
 		inst.waitForIdleSync();
+		RobotiumUtils.sleep(PAUS);
 		Pattern p = Pattern.compile(search);
 		Matcher matcher;
 		int countMatches = 0;
@@ -159,7 +163,7 @@ class Searcher {
 		while (iterator.hasNext()) {
 			textView = (TextView) iterator.next();
 			matcher = p.matcher(textView.getText().toString());
-			if(matcher.matches()){	
+			if(matcher.find()){	
 				countMatches++;
 			}
 		}
