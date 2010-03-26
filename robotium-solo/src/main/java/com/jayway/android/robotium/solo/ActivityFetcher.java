@@ -76,15 +76,15 @@ class ActivityFetcher {
 	public void setOrientation(int orientation)
 	{
 		this.orientation = orientation;
-		setActivityOrientation();
+		setActivityOrientation(orientation);
 	}
 
 	/**
-	 * Public method that sets the Orientation (Landscape/Portrait) for the current activity.
+	 * Private method that sets the Orientation (Landscape/Portrait) for the current activity.
 	 *  
 	 */
 	
-	public void setActivityOrientation()
+	private void setActivityOrientation(int orientation)
 	{
 		activity.setRequestedOrientation(orientation);	
 	}
@@ -103,7 +103,7 @@ class ActivityFetcher {
 			if (activityMonitor.getLastActivity() != null)
 				activity = activityMonitor.getLastActivity();
 		}
-		setActivityOrientation();
+		setActivityOrientation(orientation);
 		Iterator<Activity> iterator = activityList.iterator();
 		while (iterator.hasNext()) {
 			Activity storedActivity = iterator.next();

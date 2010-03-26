@@ -78,7 +78,7 @@ public class Solo {
         this.soloView = new ViewFetcher(soloActivity, inst);
         this.soloScroll = new Scroller(inst, soloActivity, soloView);
         this.soloClick = new Clicker(soloActivity, soloView, soloScroll, inst);
-        this.soloPress = new Presser(soloView, soloClick, inst);
+        this.soloPress = new Presser(soloView, soloActivity, soloClick, inst);
         this.soloSearch = new Searcher(soloView, soloActivity, soloScroll, inst);
         this.soloEnter = new TextEnterer(soloView, soloActivity, soloClick, inst);
 	}
@@ -307,8 +307,7 @@ public class Solo {
 	 * 
 	 */
 	
-	public void pressMenuItem(int index) {
-		soloActivity.setActivityOrientation();		
+	public void pressMenuItem(int index) {	
 		soloPress.pressMenuItem(index);
 	}
 	
@@ -323,7 +322,6 @@ public class Solo {
 	
 	public void pressSpinnerItem(int spinnerIndex, int itemIndex)
 	{
-		soloActivity.setActivityOrientation();		
 		soloPress.pressSpinnerItem(spinnerIndex, itemIndex);
 	}
 	
@@ -335,8 +333,7 @@ public class Solo {
 	 *
 	 */
 	
-	public void clickOnScreen(View view) {
-		soloActivity.setActivityOrientation();		
+	public void clickOnScreen(View view) {		
 		soloClick.clickOnScreen(view);
 	}
 	
@@ -347,8 +344,7 @@ public class Solo {
 	 *
 	 */
 	
-	public void clickOnView(View view) {
-		soloActivity.setActivityOrientation();		
+	public void clickOnView(View view) {	
 		soloClick.clickOnScreen(view);
 	}
 	
