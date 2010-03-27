@@ -13,6 +13,7 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.ToggleButton;
 
 /**
  * This class contains view methods. Examples are getViews(),
@@ -290,6 +291,26 @@ class ViewFetcher {
 				buttonList.add((Button) view);
 		}
 		return buttonList;
+	}
+
+	/**
+	 * This method returns an ArrayList with the toggle buttons located in the
+	 * current activity.
+	 * 
+	 * @return and ArrayList of the toggle buttons located in the current activity
+	 * 
+	 */
+
+	public ArrayList<ToggleButton> getCurrentToggleButtons() {
+		ArrayList<ToggleButton> toggleButtonList = new ArrayList<ToggleButton>();
+		ArrayList<View> viewList = getViews();
+		Iterator<View> iterator = viewList.iterator();
+		while (iterator.hasNext()) {
+			View view = iterator.next();
+			if (view instanceof android.widget.ToggleButton)
+				toggleButtonList.add((ToggleButton) view);
+		}
+		return toggleButtonList;
 	}
 	
 	

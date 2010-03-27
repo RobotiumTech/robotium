@@ -11,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.ListView;
+import android.widget.ToggleButton;
 
 /**
  * This class contains all the methods that the sub-classes have. It supports test
@@ -190,14 +191,14 @@ public class Solo {
 	}
 
 	/**
-	 * Public method that sets the Orientation (Landscape/Portrait) for the session.
+	 * Public method that sets the Orientation (Landscape/Portrait) for the current activity.
 	 * 
 	 * @param orientation the orientation to be set. 0 for landscape and 1 for portrait 
 	 */
 	
-	public void setOrientation(int orientation)
+	public void setActivityOrientation(int orientation)
 	{
-		soloActivity.setOrientation(orientation);
+		soloActivity.setActivityOrientation(orientation);
 	}
 	
 	/**
@@ -300,6 +301,17 @@ public class Solo {
 	}
 	
 	/**
+	 * Method used to click on a toggle button with a given text.
+	 * 
+	 * @param name the name of the toggle button presented to the user. Regular expressions are supported
+	 * 
+	 */
+
+	public void clickOnToggleButton(String name) {
+		soloClick.clickOnToggleButton(name);
+	}
+	
+	/**
 	 * Method used to press a MenuItem with a certain index. Index 0 is the first item in the 
 	 * first row and index 3 is the first item in the second row.
 	 * 
@@ -334,6 +346,7 @@ public class Solo {
 	 */
 	
 	public void clickOnScreen(View view) {		
+		soloActivity.waitForIdle();
 		soloClick.clickOnScreen(view);
 	}
 	
@@ -344,7 +357,8 @@ public class Solo {
 	 *
 	 */
 	
-	public void clickOnView(View view) {	
+	public void clickOnView(View view) {
+		soloActivity.waitForIdle();
 		soloClick.clickOnScreen(view);
 	}
 	
@@ -357,6 +371,7 @@ public class Solo {
 	 */
 	
 	public void clickLongOnScreen(View view) {
+		soloActivity.waitForIdle();
 		soloClick.clickLongOnScreen(view);
 	}
 	
@@ -368,6 +383,7 @@ public class Solo {
 	 */
 	
 	public void clickLongOnView(View view) {
+		soloActivity.waitForIdle();
 		soloClick.clickLongOnScreen(view);
 	}
 	
@@ -409,7 +425,6 @@ public class Solo {
 		return found;
 		
 	}
-
 
 	/**
 	 * Method that will click on a certain list line and return the text views that
@@ -645,6 +660,19 @@ public class Solo {
 	public ArrayList<Button> getCurrentButtons() {
 		ArrayList<Button> buttonList = soloView.getCurrentButtons();
 		return buttonList;
+	}
+	
+	/**
+	 * This method returns an ArrayList with the toggle buttons located in the current
+	 * activity.
+	 *
+	 * @return and ArrayList of the toggle buttons located in the current activity
+	 *
+	 */
+	
+	public ArrayList<ToggleButton> getCurrentToggleButtons() {
+		ArrayList<ToggleButton> toggleButtonList = soloView.getCurrentToggleButtons();
+		return toggleButtonList;
 	}
 	
 	/**

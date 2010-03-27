@@ -46,7 +46,6 @@ class Presser{
 	public void pressMenuItem(int index) {
 		inst.waitForIdleSync();
 		RobotiumUtils.sleep(PAUS);
-		soloActivity.getCurrentActivity();
 		try{
 		inst.sendKeyDownUpSync(KeyEvent.KEYCODE_MENU);
 		RobotiumUtils.sleep(300);
@@ -88,7 +87,6 @@ class Presser{
 	{
 		inst.waitForIdleSync();
 		RobotiumUtils.sleep(PAUS);
-		soloActivity.getCurrentActivity();
 		soloClick.clickOnScreen(soloView.getCurrentSpinners().get(spinnerIndex));
 		inst.sendKeyDownUpSync(KeyEvent.KEYCODE_DPAD_DOWN);
 		boolean countingUp = true;

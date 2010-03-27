@@ -68,24 +68,17 @@ class ActivityFetcher {
 	}
 
 	/**
-	 * Public method that sets the Orientation (Landscape/Portrait) for the session.
+	 * Public method that sets the Orientation (Landscape/Portrait) for the current activity.
 	 * 
 	 * @param orientation the orientation to be set. 0 for landscape and 1 for portrait 
-	 */
-	
-	public void setOrientation(int orientation)
-	{
-		this.orientation = orientation;
-		setActivityOrientation(orientation);
-	}
-
-	/**
-	 * Private method that sets the Orientation (Landscape/Portrait) for the current activity.
 	 *  
 	 */
 	
-	private void setActivityOrientation(int orientation)
+	public void setActivityOrientation(int orientation)
 	{
+		if(activity.equals(getCurrentActivity()))
+			RobotiumUtils.sleep(PAUS);
+		Activity activity = getCurrentActivity();
 		activity.setRequestedOrientation(orientation);	
 	}
 
@@ -103,7 +96,6 @@ class ActivityFetcher {
 			if (activityMonitor.getLastActivity() != null)
 				activity = activityMonitor.getLastActivity();
 		}
-		setActivityOrientation(orientation);
 		Iterator<Activity> iterator = activityList.iterator();
 		while (iterator.hasNext()) {
 			Activity storedActivity = iterator.next();
@@ -141,6 +133,7 @@ class ActivityFetcher {
 				break;
 			RobotiumUtils.sleep(PAUS);
 		}
+		getCurrentActivity();
 	}
 	
 	

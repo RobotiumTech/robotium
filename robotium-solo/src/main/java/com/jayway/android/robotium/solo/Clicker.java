@@ -15,6 +15,7 @@ import android.view.View;
 import android.view.ViewConfiguration;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.ToggleButton;
 
 /**
  * This class contains various click methods. Examples are: clickOnButton(),
@@ -282,6 +283,45 @@ class Clicker {
 		}
 
 	}
+	
+	/**
+	 * Method used to click on a toggle button with a given text.
+	 * 
+	 * @param name the name of the toggle button presented to the user. Regular expressions are supported
+	 * 
+	 */
+
+	public void clickOnToggleButton(String name) {
+		Pattern p = Pattern.compile(name);
+		Matcher matcher;
+		ToggleButton toggleButton = null;
+		soloActivity.waitForIdle();
+		boolean found = false;
+		ArrayList<ToggleButton> toggleButtonList = soloView
+				.getCurrentToggleButtons();
+		Iterator<ToggleButton> iterator = toggleButtonList.iterator();
+		while (iterator.hasNext()) {
+			toggleButton = iterator.next();
+			matcher = p.matcher(toggleButton.getText().toString());
+			if (matcher.matches()) {
+				found = true;
+				break;
+			}
+		}
+		if (found) {
+			clickOnScreen(toggleButton);
+		} else if (soloScroll.scrollDownList()) {
+			clickOnButton(name);
+		} else {
+			for (int i = 0; i < toggleButtonList.size(); i++)
+				Log.d(LOG_TAG, name + " not found. Have found: "
+						+ toggleButtonList.get(i).getText());
+			Assert.assertTrue("ToggleButton with the text: " + name
+					+ " is not found!", false);
+		}
+
+	}
+
 	
 	/**
 	 * This method is used to click on an image with a certain index.
