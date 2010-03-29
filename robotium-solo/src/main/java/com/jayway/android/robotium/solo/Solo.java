@@ -56,7 +56,7 @@ public class Solo {
 	private final Clicker soloClick;
 	private final Presser soloPress;
 	private final Searcher soloSearch;
-	private final ActivityFetcher soloActivity;
+	private final ActivityUtils soloActivity;
 	private final TextEnterer soloEnter;
 	private final Scroller soloScroll;
 	public final static int LANDSCAPE = 0;
@@ -74,7 +74,7 @@ public class Solo {
 	 */
 	
 	public Solo(Instrumentation inst, Activity activity) {
-        this.soloActivity = new ActivityFetcher(inst, activity);
+        this.soloActivity = new ActivityUtils(inst, activity);
         this.soloAssert = new Asserter(soloActivity);
         this.soloView = new ViewFetcher(soloActivity, inst);
         this.soloScroll = new Scroller(inst, soloActivity, soloView);

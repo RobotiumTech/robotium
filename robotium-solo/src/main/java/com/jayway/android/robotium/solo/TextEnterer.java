@@ -15,7 +15,7 @@ import android.view.KeyEvent;
 class TextEnterer{
 	
 	private final ViewFetcher soloView;
-	private final ActivityFetcher soloActivity;
+	private final ActivityUtils soloActivity;
 	private final Clicker soloClick;
 	private final Instrumentation inst;
 
@@ -27,7 +27,7 @@ class TextEnterer{
      * @param soloClick the {@link Clicker} instance.
      * @param inst the {@link Instrumentation} instance.
      */
-    public TextEnterer(ViewFetcher soloView, ActivityFetcher soloActivity, Clicker soloClick, Instrumentation inst) {
+    public TextEnterer(ViewFetcher soloView, ActivityUtils soloActivity, Clicker soloClick, Instrumentation inst) {
         this.soloView = soloView;
         this.soloActivity = soloActivity;
         this.soloClick = soloClick;

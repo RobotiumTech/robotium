@@ -15,7 +15,7 @@ class Presser{
 
 	private final ViewFetcher soloView;
 	private final Clicker soloClick;
-	private final ActivityFetcher soloActivity;
+	private final ActivityUtils soloActivity;
 	private final Instrumentation inst;
 	private final int PAUS = 500;
 
@@ -27,7 +27,7 @@ class Presser{
      * @param inst the {@link Instrumentation} instance.
      */
 	
-    public Presser(ViewFetcher soloView, ActivityFetcher soloActivity, Clicker soloClick, Instrumentation inst) {
+    public Presser(ViewFetcher soloView, ActivityUtils soloActivity, Clicker soloClick, Instrumentation inst) {
         this.soloView = soloView;
 	this.soloActivity = soloActivity;
         this.soloClick = soloClick;

@@ -21,7 +21,7 @@ import android.widget.TextView;
 class Scroller {
 	
 	private final Instrumentation inst;
-	private final ActivityFetcher soloActivity;
+	private final ActivityUtils soloActivity;
 	private final ViewFetcher soloView;
    	private TextView checkTextView = null;
 	private final static int RIGHT = 2;
@@ -36,7 +36,7 @@ class Scroller {
      * @param soloView the {@link ViewFetcher} instance.
      */
 	
-    public Scroller(Instrumentation inst, ActivityFetcher soloActivity, ViewFetcher soloView) {
+    public Scroller(Instrumentation inst, ActivityUtils soloActivity, ViewFetcher soloView) {
         this.inst = inst;
         this.soloActivity = soloActivity;
         this.soloView = soloView;

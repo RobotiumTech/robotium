@@ -22,7 +22,7 @@ import android.widget.ToggleButton;
 class Searcher {
 	
 	private final ViewFetcher soloView;
-	private final ActivityFetcher soloActivity;
+	private final ActivityUtils soloActivity;
 	private final Scroller soloScroll;
 	private final Instrumentation inst;
 	private final int PAUS = 500;
@@ -31,11 +31,11 @@ class Searcher {
      * Constructs this object.
      *
      * @param soloView the {@link ViewFetcher} instance.
-     * @param soloActivity the {@link ActivityFetcher} instance.
+     * @param soloActivity the {@link ActivityUtils} instance.
      * @param soloScroll the {@link Scroller} instance.
      * @param inst the {@link Instrumentation} instance.
      */
-    public Searcher(ViewFetcher soloView, ActivityFetcher soloActivity, Scroller soloScroll, Instrumentation inst) {
+    public Searcher(ViewFetcher soloView, ActivityUtils soloActivity, Scroller soloScroll, Instrumentation inst) {
         this.soloView = soloView;
         this.soloActivity = soloActivity;
         this.soloScroll = soloScroll;
