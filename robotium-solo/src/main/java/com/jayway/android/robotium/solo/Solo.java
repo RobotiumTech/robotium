@@ -141,6 +141,20 @@ public class Solo {
 	}
 	
 	/**
+	 * Searches for a toggle button with the given search string and returns true if at least one toggle button 
+	 * is found with the expected text. Will automatically scroll when needed. 
+	 *
+	 * @param search the string to be searched. Regular expressions are supported
+	 * @return true if a toggle button with the given text is found and false if it is not found
+	 *
+	 */
+	
+	public boolean searchToggleButton(String search) {
+		boolean found = soloSearch.searchToggleButton(search);
+		return found;
+	}
+	
+	/**
 	 * Searches for a button with the given search string and returns true if the 
 	 * searched button is found a given number of times. Will automatically scroll when needed. 
 	 * 
@@ -154,6 +168,24 @@ public class Solo {
 	
 	public boolean searchButton(String search, int matches) {
 		boolean found = soloSearch.searchButton(search, matches);
+		return found;
+
+	}
+	
+	/**
+	 * Searches for a toggle button with the given search string and returns true if the 
+	 * searched toggle button is found a given number of times. Will automatically scroll when needed. 
+	 * 
+	 * @param search the string to be searched. Regular expressions are supported
+	 * @param matches the number of matches expected to be found. 0 matches means that one or more 
+	 * matches are expected to be found
+	 * @return true if a toggle button with the given text is found a given number of times and false 
+	 * if it is not found
+	 *  
+	 */
+	
+	public boolean searchToggleButton(String search, int matches) {
+		boolean found = soloSearch.searchToggleButton(search, matches);
 		return found;
 
 	}

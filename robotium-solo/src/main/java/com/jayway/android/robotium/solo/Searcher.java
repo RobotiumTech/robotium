@@ -9,6 +9,7 @@ import android.app.Instrumentation;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.ToggleButton;
 
 /**
  * This class contains various search methods. Examples are: searchEditText(),
@@ -87,6 +88,19 @@ class Searcher {
 	}
 	
 	/**
+	 * Searches for a toggle button with the given search string and returns true if at least one button 
+	 * is found with the expected text
+	 *
+	 * @param search the string to be searched. Regular expressions are supported
+	 * @return true if a toggle button with the given text is found and false if it is not found
+	 *
+	 */
+	
+	public boolean searchToggleButton(String search) {
+		return searchToggleButton(search, 0);
+	}
+	
+	/**
 	 * Searches for a button with the given search string and returns true if the 
 	 * searched button is found a given number of times
 	 * 
@@ -125,7 +139,45 @@ class Searcher {
 		}
 
 	}
+	/**
+	 * Searches for a toggle button with the given search string and returns true if the 
+	 * searched toggle button is found a given number of times
+	 * 
+	 * @param search the string to be searched. Regular expressions are supported
+	 * @param matches the number of matches expected to be found. 0 matches means that one or more 
+	 * matches are expected to be found
+	 * @return true if a toggle button with the given text is found a given number of times and false 
+	 * if it is not found
+	 *  
+	 */
 	
+	public boolean searchToggleButton(String search, int matches) {
+		inst.waitForIdleSync();
+		RobotiumUtils.sleep(PAUS);
+		Pattern p = Pattern.compile(search);
+		Matcher matcher;
+		int countMatches=0;
+		ArrayList<ToggleButton> toggleButtonList = soloView.getCurrentToggleButtons();
+		Iterator<ToggleButton> iterator = toggleButtonList.iterator();
+		while (iterator.hasNext()) {
+			ToggleButton toggleButton = (ToggleButton) iterator.next();
+			matcher = p.matcher(toggleButton.getText().toString());
+			if(matcher.find()){	
+				countMatches++;
+			}
+		}
+		if (countMatches == matches && matches != 0) {
+			return true;
+		} else if (matches == 0 && countMatches > 0) {
+			return true;
+		} else if (soloScroll.scrollDownList())
+		{
+			return searchToggleButton(search, matches);
+		} else {
+			return false;
+		}
+
+	}
 	/**
 	 * Searches for a text string and returns true if at least one item 
 	 * is found with the expected text
