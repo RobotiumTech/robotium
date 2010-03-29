@@ -23,7 +23,6 @@ class ActivityUtils {
 	private Activity activity;
 	private ArrayList<Activity> activityList = new ArrayList<Activity>();
 	private final int PAUS = 500;
-	private int orientation = 1;
 
 	/**
 	 * Constructor that takes in the instrumentation and the start activity.
