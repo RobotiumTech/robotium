@@ -1,6 +1,5 @@
 package com.jayway.android.robotium.solo;
 
-
 import junit.framework.Assert;
 import android.app.Activity;
 
@@ -13,6 +12,7 @@ import android.app.Activity;
 
 class Asserter {
 	private final ActivityUtils soloActivity;
+	private final int PAUS = 500;
 	
 	/**
 	 * Constructs this object.
@@ -32,9 +32,10 @@ class Asserter {
 	 * @param name the name of the activity that is expected to be active e.g. "MyActivity"
 	 * 
 	 */
+	
 	public void assertCurrentActivity(String message, String name)
 	{
-		soloActivity.waitForIdle();
+		RobotiumUtils.sleep(PAUS);
 		Assert.assertEquals(message, name, soloActivity.getCurrentActivity()
 				.getClass().getSimpleName());
 		
@@ -47,9 +48,10 @@ class Asserter {
 	 * @param expectedClass the class object that is expected to be active e.g. MyActivity.class
 	 * 
 	 */
+	
 	public void assertCurrentActivity(String message, Class expectedClass)
 	{
-		soloActivity.waitForIdle();
+		RobotiumUtils.sleep(PAUS);
 		Assert.assertEquals(message, expectedClass.getName(), soloActivity
 				.getCurrentActivity().getClass().getName());
 	
@@ -64,6 +66,7 @@ class Asserter {
 	 * @param isNewInstance true if the expected activity is a new instance of the activity 
 	 * 
 	 */
+	
 	public void assertCurrentActivity(String message, String name, boolean isNewInstance)
 	{
 		assertCurrentActivity(message, name);

@@ -2,7 +2,6 @@ package com.jayway.android.robotium.solo;
 
 import java.util.ArrayList;
 import java.util.Iterator;
-
 import android.app.Activity;
 import android.app.Instrumentation;
 import android.os.SystemClock;
@@ -103,7 +102,7 @@ class Scroller {
 	public boolean scrollDownList() {
 		boolean found = false;
 		View scrollListView = null;
-		Iterator iterator = soloView.getViews().iterator();
+		Iterator<View> iterator = soloView.getViews().iterator();
 		while (iterator.hasNext()) {
 			scrollListView = (View) iterator.next();
 			if (scrollListView.getClass().getName().equals(

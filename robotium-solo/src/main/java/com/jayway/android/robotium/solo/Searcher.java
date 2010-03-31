@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
 import android.app.Instrumentation;
 import android.widget.Button;
 import android.widget.EditText;
@@ -22,7 +21,6 @@ import android.widget.ToggleButton;
 class Searcher {
 	
 	private final ViewFetcher soloView;
-	private final ActivityUtils soloActivity;
 	private final Scroller soloScroll;
 	private final Instrumentation inst;
 	private final int PAUS = 500;
@@ -35,9 +33,8 @@ class Searcher {
      * @param soloScroll the {@link Scroller} instance.
      * @param inst the {@link Instrumentation} instance.
      */
-    public Searcher(ViewFetcher soloView, ActivityUtils soloActivity, Scroller soloScroll, Instrumentation inst) {
+    public Searcher(ViewFetcher soloView, Scroller soloScroll, Instrumentation inst) {
         this.soloView = soloView;
-        this.soloActivity = soloActivity;
         this.soloScroll = soloScroll;
         this.inst = inst;
     }

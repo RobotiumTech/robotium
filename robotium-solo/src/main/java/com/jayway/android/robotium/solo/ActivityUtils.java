@@ -132,7 +132,6 @@ class ActivityUtils {
 				break;
 			RobotiumUtils.sleep(PAUS);
 		}
-		getCurrentActivity();
 	}
 	
 	

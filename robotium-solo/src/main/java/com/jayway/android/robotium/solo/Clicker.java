@@ -32,6 +32,7 @@ class Clicker {
 	private final ViewFetcher soloView;
 	private final Scroller soloScroll;
 	private final Instrumentation inst;
+	private final int PAUS = 500;
 
 
 	/**
@@ -345,7 +346,7 @@ class Clicker {
 	 */
 	
 	public void goBack() {
-		RobotiumUtils.sleep(300);
+		RobotiumUtils.sleep(PAUS);
 		try {
 			inst.sendKeyDownUpSync(KeyEvent.KEYCODE_BACK);
 		} catch (Throwable e) {}
@@ -411,7 +412,7 @@ class Clicker {
                     else
                         textViewGroup.clear();
                 }
-            } catch (IndexOutOfBoundsException e) {}
+            } catch (IndexOutOfBoundsException e) {textViewGroup.add(textViews.get(i));}
         }
         if (textViewGroup.size() != 0)
             clickOnScreen(textViewGroup.get(0));

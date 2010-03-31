@@ -51,9 +51,7 @@ class TextEnterer{
 			if (soloView.getCurrentEditTexts().size() > 0) {
 				for (int i = 0; i < soloView.getCurrentEditTexts().size(); i++) {
 					if (soloView.getCurrentEditTexts().get(i).isFocused())
-					{
 						focused = true;
-					}
 				}
 			}
 			if (!focused && soloView.getCurrentEditTexts().size() > 0) {
@@ -70,9 +68,7 @@ class TextEnterer{
 			else {
 				try {
 					inst.sendStringSync(text);
-				} catch (Throwable e) {
-					e.printStackTrace();
-				}
+				} catch (Throwable e) {}
 			}
 		} catch (IndexOutOfBoundsException e) {
 			e.printStackTrace();

@@ -79,8 +79,8 @@ public class Solo {
         this.soloView = new ViewFetcher(soloActivity, inst);
         this.soloScroll = new Scroller(inst, soloActivity, soloView);
         this.soloClick = new Clicker(soloActivity, soloView, soloScroll, inst);
-        this.soloPress = new Presser(soloView, soloActivity, soloClick, inst);
-        this.soloSearch = new Searcher(soloView, soloActivity, soloScroll, inst);
+        this.soloPress = new Presser(soloView, soloClick, inst);
+        this.soloSearch = new Searcher(soloView, soloScroll, inst);
         this.soloEnter = new TextEnterer(soloView, soloActivity, soloClick, inst);
 	}
 
@@ -475,12 +475,12 @@ public class Solo {
 	 * return the text views that the list line is showing. 
 	 * 
 	 * @param line the line that should be clicked
-	 * @param index the index of the list. E.g. Index 1 if two lists are available
+	 * @param listIndex the index of the list. E.g. Index 1 if two lists are available
 	 * @return an array list of the text views located in the list line
 	 */
 	
-	public ArrayList<TextView> clickInList(int line, int index) {
-	return soloClick.clickInList(line, index);
+	public ArrayList<TextView> clickInList(int line, int listIndex) {
+	return soloClick.clickInList(line, listIndex);
 	}
 
 	 /**
@@ -705,6 +705,18 @@ public class Solo {
 	public ArrayList<ToggleButton> getCurrentToggleButtons() {
 		ArrayList<ToggleButton> toggleButtonList = soloView.getCurrentToggleButtons();
 		return toggleButtonList;
+	}
+	
+	/**
+	 * This method is used to tell Robotium to sleep a specified time.
+	 * 
+	 * @param time the time that Robotium should sleep 
+	 * 
+	 */
+	
+	public void sleep(int time)
+	{
+		RobotiumUtils.sleep(time);
 	}
 	
 	/**
