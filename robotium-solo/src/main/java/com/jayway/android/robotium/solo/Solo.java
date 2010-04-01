@@ -223,7 +223,7 @@ public class Solo {
 	}
 
 	/**
-	 * Public method that sets the Orientation (Landscape/Portrait) for the current activity.
+	 * Method that sets the Orientation (Landscape/Portrait) for the current activity.
 	 * 
 	 * @param orientation the orientation to be set. 0 for landscape and 1 for portrait 
 	 */
