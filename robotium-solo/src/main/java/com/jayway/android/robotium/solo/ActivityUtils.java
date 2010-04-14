@@ -148,6 +148,7 @@ class ActivityUtils {
 				activityList.get(i).finish();
 			}
 			getCurrentActivity().finish();
+			activityList.clear();
 		
 		} catch (Throwable e) {
 			
