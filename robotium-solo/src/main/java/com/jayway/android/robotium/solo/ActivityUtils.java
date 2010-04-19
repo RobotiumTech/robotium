@@ -135,7 +135,6 @@ class ActivityUtils {
 	}
 	
 	
-	
 	/**
 	 *
 	 * All activites that have been active are finished.

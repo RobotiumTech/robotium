@@ -59,6 +59,7 @@ public class Solo {
 	private final ActivityUtils soloActivity;
 	private final TextEnterer soloEnter;
 	private final Scroller soloScroll;
+	private final RobotiumUtils robotiumUtils;
 	public final static int LANDSCAPE = 0;
 	public final static int PORTRAIT = 1;
 	public final static int RIGHT = 2;
@@ -82,6 +83,7 @@ public class Solo {
         this.soloPress = new Presser(soloView, soloClick, inst);
         this.soloSearch = new Searcher(soloView, soloScroll, inst);
         this.soloEnter = new TextEnterer(soloView, soloActivity, soloClick, inst);
+        this.robotiumUtils = new RobotiumUtils(soloActivity, soloSearch, soloView);
 	}
 
 	/**
@@ -109,6 +111,53 @@ public class Solo {
 		View topParent = soloView.getTopParent(view);
 		return topParent;
 	}
+	
+	 /**
+     * Clears the value of an edit text
+     * 
+     * @param index the index of the edit text that should be cleared
+     */
+	
+    public void clearEditText(int index)
+    {
+        final EditText editText = soloView.getCurrentEditTexts().get(index);
+
+        soloActivity.getCurrentActivity().runOnUiThread(new Runnable()
+        {
+            public void run()
+            {
+                editText.setText("");
+            }
+        });
+    }
+    
+    /**
+	 * Waits for a text to be shown. Default timeout is 20 seconds. 
+	 * 
+	 * @param text the text that needs to be shown
+	 * 
+	 */
+	
+	public void waitForText(String text) throws RuntimeException {
+
+		robotiumUtils.waitForText(text);
+	}
+
+	
+	 /**
+	 * Waits for a text to be shown.
+	 * 
+	 * @param text the text that needs to be shown
+	 * @param matches the number of matches of text that must be shown. 0 means any number of matches
+	 * @param timeout the the amount of time before a RuntimeException should be thrown
+	 * 
+	 */
+	
+	public void waitForText(String text, int matches, long timeout)
+            throws RuntimeException
+    {
+       robotiumUtils.waitForText(text, matches, timeout);
+    }
 	
 	
 	/**
