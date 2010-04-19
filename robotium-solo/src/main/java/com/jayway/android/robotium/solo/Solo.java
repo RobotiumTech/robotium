@@ -112,7 +112,7 @@ public class Solo {
 		return topParent;
 	}
 	
-	 /**
+	/**
      * Clears the value of an edit text
      * 
      * @param index the index of the edit text that should be cleared
@@ -120,15 +120,7 @@ public class Solo {
 	
     public void clearEditText(int index)
     {
-        final EditText editText = soloView.getCurrentEditTexts().get(index);
-
-        soloActivity.getCurrentActivity().runOnUiThread(new Runnable()
-        {
-            public void run()
-            {
-                editText.setText("");
-            }
-        });
+       robotiumUtils.clearEditText(index);
     }
     
     /**
