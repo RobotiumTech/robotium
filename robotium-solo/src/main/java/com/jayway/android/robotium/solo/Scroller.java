@@ -5,6 +5,7 @@ import java.util.Iterator;
 import android.app.Activity;
 import android.app.Instrumentation;
 import android.os.SystemClock;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.TextView;
@@ -161,7 +162,8 @@ class Scroller {
 		Activity activity = soloActivity.getCurrentActivity();
 		int x = activity.getWindowManager().getDefaultDisplay().getWidth() / 2;
 		int y = activity.getWindowManager().getDefaultDisplay().getHeight();
-		drag(x, x, 200, y - 100, 40);
+		Log.d("Instrumentation", "scrollUpList y: " + y);
+		drag(x, x, 200, y, 10);
 	}
 	
 	/**

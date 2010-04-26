@@ -128,7 +128,7 @@ class ActivityUtils {
 			decorView = activity.getWindow()
 					.getDecorView();
 			touchItems = decorView.getTouchables();
-			if (touchItems.size() > 0)
+			if (touchItems.size() > 0)  
 				break;
 			RobotiumUtils.sleep(PAUS);
 		}

@@ -14,6 +14,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewConfiguration;
 import android.widget.Button;
+import android.widget.SlidingDrawer;
 import android.widget.TextView;
 import android.widget.ToggleButton;
 
@@ -32,7 +33,9 @@ class Clicker {
 	private final ViewFetcher soloView;
 	private final Scroller soloScroll;
 	private final Instrumentation inst;
+	private final RobotiumUtils robotiumUtils;
 	private final int PAUS = 500;
+	private final int TIMEOUT = 10000;
 
 
 	/**
@@ -41,27 +44,29 @@ class Clicker {
 	 * @param soloActivity the {@link Activity} instance.
 	 * @param soloView the {@link ViewFetcher} instance.
 	 * @param soloScroll the {@link Scroller} instance.
+	 * @param robotiumUtils the {@link RobotiumUtils} instance.
 	 * @param inst the {@link Instrumentation} instance.
 	 */
 
 	public Clicker(ActivityUtils soloActivity, ViewFetcher soloView,
-			Scroller soloScroll, Instrumentation inst) {
+			Scroller soloScroll, RobotiumUtils robotiumUtils, Instrumentation inst) {
 
 		this.soloActivity = soloActivity;
 		this.soloView = soloView;
 		this.soloScroll = soloScroll;
 		this.inst = inst;
+		this.robotiumUtils = robotiumUtils;
 	}
 	
 	/**
-	 * Private method to click on a specific coordinate on the screen
+	 * Clicks on a specific coordinate on the screen
 	 *
 	 * @param x the x coordinate
 	 * @param y the y coordinate
 	 *
 	 */
 	
-	private void clickOnScreen(float x, float y) {
+	public void clickOnScreen(float x, float y) {
 		long downTime = SystemClock.uptimeMillis();
 		long eventTime = SystemClock.uptimeMillis();
 		MotionEvent event = MotionEvent.obtain(downTime, eventTime,
@@ -71,7 +76,9 @@ class Clicker {
 		try{
 		inst.sendPointerSync(event);
 		inst.sendPointerSync(event2);
-		}catch(Throwable e){}
+		}catch(Throwable e){e.printStackTrace();
+		Log.d(LOG_TAG, "Click could not be completed. Something is in the way e.g. keyboard");
+		}
 	}
 	
 	/**
@@ -125,16 +132,27 @@ class Clicker {
 	
 	private void clickOnScreen(View view, boolean longClick) {
 		int[] xy = new int[2];
+		long now = System.currentTimeMillis();
+		final long endTime = now + TIMEOUT;
+		while ((!view.isShown() || view.isLayoutRequested()) && now < endTime) {
+			RobotiumUtils.sleep(500);
+			now = System.currentTimeMillis();
+		}
 		view.getLocationOnScreen(xy);
+		if (xy[1] + 20 > soloActivity.getCurrentActivity().getWindowManager()
+				.getDefaultDisplay().getHeight()) {
+			soloScroll.scrollDownList();
+			view.getLocationOnScreen(xy);
+		}
 		final int viewWidth = view.getWidth();
 		final int viewHeight = view.getHeight();
 		final float x = xy[0] + (viewWidth / 2.0f);
 		final float y = xy[1] + (viewHeight / 2.0f);
-	
-		if(longClick)
+		
+		if (longClick)
 			clickLongOnScreen(x, y);
 		else
-			clickOnScreen(x, y);	
+			clickOnScreen(x, y);
 	}
 	
 	/**
@@ -195,7 +213,7 @@ class Clicker {
 	private void clickOnText(String text, boolean longClick) {
 		Pattern p = Pattern.compile(text);
 		Matcher matcher; 
-		soloActivity.waitForIdle();
+		robotiumUtils.waitForText(text);
 		boolean found = false;
 		ArrayList <TextView> textViews = soloView.getCurrentTextViews(null);
 		Iterator<TextView> iterator = textViews.iterator();
@@ -260,7 +278,7 @@ class Clicker {
 		Pattern p = Pattern.compile(name);
 		Matcher matcher;
 		Button button = null;
-		soloActivity.waitForIdle();
+		robotiumUtils.waitForText(name);
 		boolean found = false;
 		ArrayList<Button> buttonList = soloView.getCurrentButtons();
 		Iterator<Button> iterator = buttonList.iterator();
@@ -296,7 +314,7 @@ class Clicker {
 		Pattern p = Pattern.compile(name);
 		Matcher matcher;
 		ToggleButton toggleButton = null;
-		soloActivity.waitForIdle();
+		robotiumUtils.waitForText(name);
 		boolean found = false;
 		ArrayList<ToggleButton> toggleButtonList = soloView
 				.getCurrentToggleButtons();
@@ -392,7 +410,7 @@ class Clicker {
 	 */
 	
 	public ArrayList<TextView> clickInList(int line, int index) {
-        soloActivity.waitForIdle();
+		soloActivity.waitForIdle();
         if(soloView.getCurrentListViews().size()<index)
         	Assert.assertTrue("No ListView with index " + index + " is available", false);
         ArrayList<TextView> textViews = soloView.getCurrentTextViews(soloView

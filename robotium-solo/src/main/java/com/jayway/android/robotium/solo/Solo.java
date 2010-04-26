@@ -3,6 +3,9 @@ package com.jayway.android.robotium.solo;
 import java.util.ArrayList;
 import android.app.Activity;
 import android.app.Instrumentation;
+import android.os.SystemClock;
+import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -79,15 +82,16 @@ public class Solo {
         this.soloAssert = new Asserter(soloActivity);
         this.soloView = new ViewFetcher(soloActivity, inst);
         this.soloScroll = new Scroller(inst, soloActivity, soloView);
-        this.soloClick = new Clicker(soloActivity, soloView, soloScroll, inst);
-        this.soloPress = new Presser(soloView, soloClick, inst);
         this.soloSearch = new Searcher(soloView, soloScroll, inst);
-        this.soloEnter = new TextEnterer(soloView, soloActivity, soloClick, inst);
         this.robotiumUtils = new RobotiumUtils(soloActivity, soloSearch, soloView);
+        this.soloClick = new Clicker(soloActivity, soloView, soloScroll,robotiumUtils, inst);
+        this.soloPress = new Presser(soloView, soloClick, inst);
+        this.soloEnter = new TextEnterer(soloView, soloActivity, soloClick, inst);
+        
 	}
 
 	/**
-	 * This method returns an ArrayList of all the views located in the current activity.
+	 * Returns an ArrayList of all the views located in the current activity.
 	 *
 	 * @return ArrayList with the views found in the current activity
 	 *
@@ -100,7 +104,7 @@ public class Solo {
 	}
 	
 	/**
-	 * Method used to get the absolute top view in an activity.
+	 * Returns the absolute top view in an activity.
 	 *
 	 * @param view the view whose top parent is requested
 	 * @return the top parent view
@@ -127,28 +131,29 @@ public class Solo {
 	 * Waits for a text to be shown. Default timeout is 20 seconds. 
 	 * 
 	 * @param text the text that needs to be shown
+	 * @return true if text is found and false if it is not found before the timeout
 	 * 
 	 */
 	
-	public void waitForText(String text) throws RuntimeException {
+	public void waitForText(String text) {
 
 		robotiumUtils.waitForText(text);
 	}
 
 	
 	 /**
-	 * Waits for a text to be shown.
+	 * Waits for a text to be shown. 
 	 * 
 	 * @param text the text that needs to be shown
 	 * @param matches the number of matches of text that must be shown. 0 means any number of matches
-	 * @param timeout the the amount of time before a RuntimeException should be thrown
+	 * @param timeout the the amount of time in milliseconds to wait 
+	 * @return true if text is found and false if it is not found before the timeout
 	 * 
 	 */
 	
-	public void waitForText(String text, int matches, long timeout)
-            throws RuntimeException
+	public boolean waitForText(String text, int matches, long timeout)
     {
-       robotiumUtils.waitForText(text, matches, timeout);
+       return robotiumUtils.waitForText(text, matches, timeout);
     }
 	
 	
@@ -264,7 +269,7 @@ public class Solo {
 	}
 
 	/**
-	 * Method that sets the Orientation (Landscape/Portrait) for the current activity.
+	 * Sets the Orientation (Landscape/Portrait) for the current activity.
 	 * 
 	 * @param orientation the orientation to be set. 0 for landscape and 1 for portrait 
 	 */
@@ -275,7 +280,7 @@ public class Solo {
 	}
 	
 	/**
-	 * This method returns an ArrayList of all the opened/active activities.
+	 * Returns an ArrayList of all the opened/active activities.
 	 * 
 	 * @return ArrayList of all the opened activities
 	 */
@@ -286,7 +291,7 @@ public class Solo {
 	}
 	
 	/**
-	 * This method returns the current activity.
+	 * Returns the current activity.
 	 *
 	 * @return current activity
 	 *
@@ -297,7 +302,7 @@ public class Solo {
 		return activity;
 	}
 	/**
-	 * Method used to assert that an expected activity is currently active.
+	 * Asserts that an expected activity is currently active.
 	 * 
 	 * @param message the message that should be displayed if the assert fails
 	 * @param name the name of the activity that is expected to be active e.g. "MyActivity"
@@ -309,7 +314,7 @@ public class Solo {
 	}
 	
 	/**
-	 * Method used to assert that an expected activity is currently active.
+	 * Asserts that an expected activity is currently active.
 	 * 
 	 * @param message the message that should be displayed if the assert fails
 	 * @param expectedClass the class object that is expected to be active e.g. MyActivity.class
@@ -322,7 +327,7 @@ public class Solo {
 	}
 	
 	/**
-	 * Method used to assert that an expected activity is currently active with the possibility to 
+	 * Asserts that an expected activity is currently active with the possibility to 
 	 * verify that the expected activity is a new instance of the activity.
 	 * 
 	 * @param message the message that should be displayed if the assert fails
@@ -336,7 +341,7 @@ public class Solo {
 	}
 	
 	/**
-	 * Method used to assert that an expected activity is currently active with the possibility to 
+	 * Asserts that an expected activity is currently active with the possibility to 
 	 * verify that the expected activity is a new instance of the activity.
 	 * 
 	 * @param message the message that should be displayed if the assert fails
@@ -352,7 +357,7 @@ public class Solo {
 	
 	
 	/**
-	 * Method used to simulate pressing the hard key back.
+	 * Simulates pressing the hard key back.
 	 * 
 	 */
 	public void goBack()
@@ -360,9 +365,22 @@ public class Solo {
 		soloClick.goBack();
 	}
 	
+	/**
+	 * Clicks on a specific coordinate on the screen.
+	 *
+	 * @param x the x coordinate
+	 * @param y the y coordinate
+	 *
+	 */
+	
+	public void clickOnScreen(float x, float y) {
+		soloActivity.waitForIdle();
+		soloClick.clickOnScreen(x, y);
+	}
+	
 	
 	/**
-	 * Method used to click on a button with a given text. Will automatically scroll when needed. 
+	 * Clicks on a button with a given text. Will automatically scroll when needed. 
 	 *
 	 * @param name the name of the button presented to the user. Regular expressions are supported
 	 *
@@ -374,7 +392,7 @@ public class Solo {
 	}
 	
 	/**
-	 * Method used to click on a toggle button with a given text.
+	 * Clicks on a toggle button with a given text.
 	 * 
 	 * @param name the name of the toggle button presented to the user. Regular expressions are supported
 	 * 
@@ -385,7 +403,7 @@ public class Solo {
 	}
 	
 	/**
-	 * Method used to press a MenuItem with a certain index. Index 0 is the first item in the 
+	 * Presses a MenuItem with a certain index. Index 0 is the first item in the 
 	 * first row and index 3 is the first item in the second row.
 	 * 
 	 * @param index the index of the menu item to be pressed
@@ -397,7 +415,7 @@ public class Solo {
 	}
 	
 	/**
-	 * Method used to press on a spinner (drop-down menu) item.
+	 * Presses on a spinner (drop-down menu) item.
 	 * 
 	 * @param spinnerIndex the index of the spinner menu to be used
 	 * @param itemIndex the index of the spinner item to be pressed relative to the current selected item. 
@@ -411,7 +429,7 @@ public class Solo {
 	}
 	
 	/**
-	 * Method used to click on a specific view.
+	 * Clicks on a specific view.
 	 *
 	 * @param view the view that should be clicked
 	 * @deprecated replaced by {@link #clickOnView(View view)}
@@ -424,7 +442,7 @@ public class Solo {
 	}
 	
 	/**
-	 * Method used to click on a specific view.
+	 * Clicks on a specific view.
 	 *
 	 * @param view the view that should be clicked
 	 *
@@ -436,7 +454,7 @@ public class Solo {
 	}
 	
 	/**
-	 * Method used to long click on a specific view.
+	 * Long clicks on a specific view.
 	 *
 	 * @param view the view that should be long clicked
 	 * @deprecated replaced by {@link #clickLongOnView(View view)}
@@ -449,7 +467,7 @@ public class Solo {
 	}
 	
 	/**
-	 * Method used to long click on a specific view.
+	 * Long clicks on a specific view.
 	 *
 	 * @param view the view that should be long clicked
 	 *
@@ -461,7 +479,7 @@ public class Solo {
 	}
 	
 	/**
-	 * This method is used to click on a specific view displaying a certain
+	 * Clicks on a specific view displaying a certain
 	 * text. Will automatically scroll when needed. 
 	 *
 	 * @param text the text that should be clicked on. Regular expressions are supported
@@ -473,11 +491,11 @@ public class Solo {
 	}
 	
 	/**
-	 * This method is used to long click on a specific text view and then selecting
+	 * Long clicks on a specific text view and then selects
 	 * an item from the menu that appears. Will automatically scroll when needed. 
 	 *
-	 * @param text the text that should be clicked on. Regular expressions are supported
-	 * @param index the index of the menu item that should be pressed
+	 * @param text the text to be clicked on. Regular expressions are supported
+	 * @param index the index of the menu item to be pressed
 	 *
 	 */
 	
@@ -486,7 +504,7 @@ public class Solo {
 	}
 	
 	/**
-	 * This method used to click on a button with a specific index.
+	 * Clicks on a button with a specific index.
 	 *
 	 * @param index the index number of the button
 	 * @return true if button with specified index is found
@@ -500,7 +518,7 @@ public class Solo {
 	}
 
 	/**
-	 * Method that will click on a certain list line and return the text views that
+	 * Clicks on a certain list line and return the text views that
 	 * the list line is showing. Will use the first list it finds.
 	 * 
 	 * @param line the line that should be clicked
@@ -512,7 +530,7 @@ public class Solo {
 	}
 
 	/**
-	 * Method that will click on a certain list line on a specified List and 
+	 * Clicks on a certain list line on a specified List and 
 	 * return the text views that the list line is showing. 
 	 * 
 	 * @param line the line that should be clicked
@@ -543,7 +561,7 @@ public class Solo {
 	}
 	
 	/**
-	 * This method is used to scroll down a list or scroll view.
+	 * Scrolls down a list or scroll view.
 	 *
 	 * @return true if more scrolling can be done and false if it is at the end of 
 	 * the scroll/list view 
@@ -556,7 +574,7 @@ public class Solo {
 	}
 		
 	/**
-	 * This method is used to scroll up a list.
+	 * Scrolls up a list.
 	 *
 	 */
 	
@@ -565,7 +583,7 @@ public class Solo {
 	}
 	
 	/**
-	 * This method is used to scroll horizontally.
+	 * Scrolls horizontally.
 	 *
 	 * @param side the side in which to scroll
 	 *
@@ -576,7 +594,7 @@ public class Solo {
 	}
 	
 	/**
-	 * This method is used to enter text into an EditText or a NoteField with a certain index.
+	 * Enters text into an EditText or a NoteField with a certain index.
 	 *
 	 * @param index the index of the text field. Index 0 if only one available.
 	 * @param text the text string that is to be entered into the text field
@@ -588,7 +606,7 @@ public class Solo {
 	}
 	
 	/**
-	 * This method is used to click on an image with a certain index.
+	 * Clicks on an image with a certain index.
 	 *
 	 * @param index the index of the image to be clicked
 	 *
@@ -599,7 +617,7 @@ public class Solo {
 	}
 	
 	/**
-	 * This method returns an ArrayList of the images contained in the current
+	 * Returns an ArrayList of the images contained in the current
 	 * activity.
 	 *
 	 * @return ArrayList of the images contained in the current activity
@@ -612,7 +630,7 @@ public class Solo {
 	}
 	
 	/**
-	 * This method returns an EditText with a certain index.
+	 * Returns an EditText with a certain index.
 	 *
 	 * @return the EditText with a specified index
 	 *
@@ -624,7 +642,7 @@ public class Solo {
 	}
 	
 	/**
-	 * This method returns a button with a certain index.
+	 * Returns a button with a certain index.
 	 *
 	 * @param index the index of the button
 	 * @return the button with the specific index
@@ -637,7 +655,7 @@ public class Solo {
 	}
 	
 	/**
-	 * This method returns the number of buttons located in the current
+	 * Returns the number of buttons located in the current
 	 * activity.
 	 *
 	 * @return the number of buttons in the current activity
@@ -651,7 +669,7 @@ public class Solo {
 	
 	
 	/**
-	 * This method returns an ArrayList of all the edit texts located in the
+	 * Returns an ArrayList of all the edit texts located in the
 	 * current activity.
 	 *
 	 * @return an ArrayList of the edit texts located in the current activity
@@ -665,7 +683,7 @@ public class Solo {
 	}
 	
 	/**
-	 * This method returns an ArrayList of all the list views located in the current activity.
+	 * Returns an ArrayList of all the list views located in the current activity.
 	 * 
 	 * 
 	 * @return an ArrayList of the list views located in the current activity
@@ -678,7 +696,7 @@ public class Solo {
 	}
 	
 	/**
-	 * This method returns an ArrayList of spinners (drop-down menus) located in the current
+	 * Returns an ArrayList of spinners (drop-down menus) located in the current
 	 * activity.
 	 *
 	 * @return an ArrayList of the spinners located in the current activity or view
@@ -692,7 +710,7 @@ public class Solo {
 	}
 	
 	/**
-	 * This method returns an ArrayList of the text views located in the current
+	 * Returns an ArrayList of the text views located in the current
 	 * activity.
 	 *
 	 * @param parent the parent View in which the text views should be returned. Null if
@@ -709,7 +727,7 @@ public class Solo {
 	}
 	
 	/**
-	 * This method returns an ArrayList of the grid views located in the current
+	 * Returns an ArrayList of the grid views located in the current
 	 * activity.
 	 *
 	 * @return an ArrayList of the grid views located in the current activity
@@ -723,7 +741,7 @@ public class Solo {
 	
 	
 	/**
-	 * This method returns an ArrayList with the buttons located in the current
+	 * Returns an ArrayList with the buttons located in the current
 	 * activity.
 	 *
 	 * @return and ArrayList of the buttons located in the current activity
@@ -736,7 +754,7 @@ public class Solo {
 	}
 	
 	/**
-	 * This method returns an ArrayList with the toggle buttons located in the current
+	 * Returns an ArrayList with the toggle buttons located in the current
 	 * activity.
 	 *
 	 * @return and ArrayList of the toggle buttons located in the current activity
@@ -749,7 +767,7 @@ public class Solo {
 	}
 	
 	/**
-	 * This method is used to tell Robotium to sleep a specified time.
+	 * Robotium will sleep for a specified time.
 	 * 
 	 * @param time the time that Robotium should sleep 
 	 * 
@@ -759,6 +777,7 @@ public class Solo {
 	{
 		RobotiumUtils.sleep(time);
 	}
+	
 	
 	/**
 	 *
