@@ -68,7 +68,6 @@ class TextEnterer{
 			else {
 				try {
 					inst.sendStringSync(text);
-					inst.sendKeyDownUpSync(KeyEvent.KEYCODE_ENTER);
 				} catch (Throwable e) {}
 			}
 		} catch (IndexOutOfBoundsException e) {
