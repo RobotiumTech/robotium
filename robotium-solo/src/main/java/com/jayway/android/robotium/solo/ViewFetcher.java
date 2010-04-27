@@ -1,11 +1,15 @@
 package com.jayway.android.robotium.solo;
 
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Iterator;
 import android.app.Activity;
+import android.app.Dialog;
 import android.app.Instrumentation;
+import android.util.SparseArray;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.GridView;
@@ -68,20 +72,51 @@ class ViewFetcher {
 	 */
 	
 	public ArrayList<View> getViews() {
-		Activity activity = soloActivity.getCurrentActivity();
-		inst.waitForIdleSync();
-		try {
-			View decorView = activity.getWindow().getDecorView();
-			viewList.clear();
-			getViews(getTopParent(decorView));
-			return viewList;
-		} catch (Throwable e) {
-			e.printStackTrace();
-		}
-		return null;
+    Activity activity = soloActivity.getCurrentActivity();
+    inst.waitForIdleSync();
+    final Window window;
+    final Dialog currentDialog = getCurrentDialog(activity);
+    try {
+      if (currentDialog != null) {
+        window = currentDialog.getWindow();
+      } else {
+        window = activity.getWindow();
+      }
+      View decorView = window.getDecorView();
+      viewList.clear();
+      getViews(getTopParent(decorView));
+      return viewList;
+    } catch (Throwable e) {
+      e.printStackTrace();
+    }
+    return null;
+  }
 
-	}
-	
+  private Dialog getCurrentDialog(Activity activity) {
+    final SparseArray<Dialog> managedDialogs = getManagedDialogs(activity);
+    if (managedDialogs != null){
+      for(int size = managedDialogs.size(), i=0; i<size; i++){
+        final Dialog dialog = managedDialogs.valueAt(i);
+        if (dialog.isShowing()){
+          return dialog;
+        }
+      }
+    }
+    return null;
+  }
+
+  private SparseArray<Dialog> getManagedDialogs(Activity activity) {
+    try {
+      final Field field = Activity.class.getDeclaredField("mManagedDialogs");
+      field.setAccessible(true);
+      return (SparseArray<Dialog>) field.get(activity);
+    } catch (NoSuchFieldException e) {
+      throw new RuntimeException(e);
+    } catch (IllegalAccessException e) {
+      throw new RuntimeException(e);
+    }
+  }
+
 	/**
 	 * Private method which adds all the views located in the currently active
 	 * activity to an ArrayList viewList.
