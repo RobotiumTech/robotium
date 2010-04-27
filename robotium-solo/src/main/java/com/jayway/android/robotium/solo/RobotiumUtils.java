@@ -88,7 +88,6 @@ class RobotiumUtils {
 	
 	public boolean waitForText(String text, int matches, long timeout)
     {
-		RobotiumUtils.sleep(PAUS);
 		long now = System.currentTimeMillis();
         final long endTime = now + timeout;
 
