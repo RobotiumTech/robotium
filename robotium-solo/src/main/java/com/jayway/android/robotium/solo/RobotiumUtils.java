@@ -93,7 +93,6 @@ class RobotiumUtils {
 
         while (!soloSearch.searchForText(text, matches) && !soloSearch.searchForEditText(text) && now < endTime)
         {
-        	 RobotiumUtils.sleep(PAUS);
         	 now = System.currentTimeMillis();
         	
         }

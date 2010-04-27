@@ -56,8 +56,8 @@ class Searcher {
         final long endTime = now + TIMEOUT;
         while (!searchForEditText(search) && now < endTime)
         {
-        	RobotiumUtils.sleep(PAUS);
-        	now = System.currentTimeMillis();
+		RobotiumUtils.sleep(PAUS);        	
+		now = System.currentTimeMillis();
         }
         return searchForEditText(search);
     }
@@ -135,7 +135,6 @@ class Searcher {
         final long endTime = now + TIMEOUT;
         while (!searchForButton(search, matches) && now < endTime)
         {
-        	RobotiumUtils.sleep(PAUS);
         	now = System.currentTimeMillis();
         }
         return searchForButton(search, matches);
@@ -155,6 +154,7 @@ class Searcher {
 	
 	private boolean searchForButton(String search, int matches) {
 		inst.waitForIdleSync();
+		RobotiumUtils.sleep(PAUS);
 		Pattern p = Pattern.compile(search);
 		Matcher matcher;
 		int countMatches=0;
@@ -196,7 +196,6 @@ class Searcher {
         final long endTime = now + TIMEOUT;
         while (!searchForToggleButton(search, matches) && now < endTime)
         {
-        	RobotiumUtils.sleep(PAUS);
         	now = System.currentTimeMillis();
         }
         return searchForToggleButton(search, matches);
@@ -217,6 +216,7 @@ class Searcher {
 	
 	private boolean searchForToggleButton(String search, int matches) {
 		inst.waitForIdleSync();
+		RobotiumUtils.sleep(PAUS);
 		Pattern p = Pattern.compile(search);
 		Matcher matcher;
 		int countMatches=0;
@@ -271,7 +271,6 @@ class Searcher {
         final long endTime = now + TIMEOUT;
         while (!searchForText(search, matches) && now < endTime)
         {
-         	RobotiumUtils.sleep(PAUS);
         	now = System.currentTimeMillis();
         }
         return searchForText(search, matches);
@@ -291,6 +290,7 @@ class Searcher {
 	
 	public boolean searchForText(String search, int matches) {
 		inst.waitForIdleSync();
+		RobotiumUtils.sleep(PAUS);
 		Pattern p = Pattern.compile(search);
 		Matcher matcher;
 		int countMatches = 0;
