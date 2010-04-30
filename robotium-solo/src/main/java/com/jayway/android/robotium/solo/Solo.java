@@ -2,10 +2,8 @@ package com.jayway.android.robotium.solo;
 
 import java.util.ArrayList;
 import android.app.Activity;
+import android.app.Dialog;
 import android.app.Instrumentation;
-import android.os.SystemClock;
-import android.util.Log;
-import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -54,13 +52,14 @@ import android.widget.ToggleButton;
 
 public class Solo {
 
-	private final Asserter soloAssert;
-	private final ViewFetcher soloView;
-	private final Clicker soloClick;
-	private final Presser soloPress;
-	private final Searcher soloSearch;
-	private final ActivityUtils soloActivity;
-	private final TextEnterer soloEnter;
+	private final Asserter asserter;
+	private final ViewFetcher viewFetcher;
+	private final Clicker clicker;
+	private final Presser presser;
+	private final Searcher searcher;
+	private final ActivityUtils activitiyUtils;
+	private final DialogUtils dialogUtils;
+	private final TextEnterer textEnterer;
 	private final Scroller soloScroll;
 	private final RobotiumUtils robotiumUtils;
 	public final static int LANDSCAPE = 0;
@@ -78,15 +77,16 @@ public class Solo {
 	 */
 	
 	public Solo(Instrumentation inst, Activity activity) {
-        this.soloActivity = new ActivityUtils(inst, activity);
-        this.soloAssert = new Asserter(soloActivity);
-        this.soloView = new ViewFetcher(soloActivity, inst);
-        this.soloScroll = new Scroller(inst, soloActivity, soloView);
-        this.soloSearch = new Searcher(soloView, soloScroll, inst);
-        this.robotiumUtils = new RobotiumUtils(soloActivity, soloSearch, soloView);
-        this.soloClick = new Clicker(soloActivity, soloView, soloScroll,robotiumUtils, inst);
-        this.soloPress = new Presser(soloView, soloClick, inst);
-        this.soloEnter = new TextEnterer(soloView, soloActivity, soloClick, inst);
+        this.activitiyUtils = new ActivityUtils(inst, activity);
+        this.dialogUtils = new DialogUtils(activitiyUtils);
+        this.asserter = new Asserter(activitiyUtils);
+        this.viewFetcher = new ViewFetcher(activitiyUtils,dialogUtils, inst);
+        this.soloScroll = new Scroller(inst, activitiyUtils, viewFetcher);
+        this.searcher = new Searcher(viewFetcher, soloScroll, inst);
+        this.robotiumUtils = new RobotiumUtils(activitiyUtils, searcher, viewFetcher);
+        this.clicker = new Clicker(activitiyUtils, viewFetcher, soloScroll,robotiumUtils, inst);
+        this.presser = new Presser(viewFetcher, clicker, inst);
+        this.textEnterer = new TextEnterer(viewFetcher, activitiyUtils, clicker, inst);
         
 	}
 
@@ -98,7 +98,7 @@ public class Solo {
 	 */
 	
 	public ArrayList<View> getViews() {
-		ArrayList<View> viewList = soloView.getViews();
+		ArrayList<View> viewList = viewFetcher.getViews();
 		return viewList;
 
 	}
@@ -112,7 +112,7 @@ public class Solo {
 	 */
 	
 	public View getTopParent(View view) {
-		View topParent = soloView.getTopParent(view);
+		View topParent = viewFetcher.getTopParent(view);
 		return topParent;
 	}
 	
@@ -167,7 +167,7 @@ public class Solo {
 	 */
 	
 	public boolean searchEditText(String search) {
-		boolean found = soloSearch.searchEditText(search);
+		boolean found = searcher.searchEditText(search);
 		return found;
 	}
 	
@@ -182,7 +182,7 @@ public class Solo {
 	 */
 	
 	public boolean searchButton(String search) {
-		boolean found = soloSearch.searchButton(search);
+		boolean found = searcher.searchButton(search);
 		return found;
 	}
 	
@@ -196,7 +196,7 @@ public class Solo {
 	 */
 	
 	public boolean searchToggleButton(String search) {
-		boolean found = soloSearch.searchToggleButton(search);
+		boolean found = searcher.searchToggleButton(search);
 		return found;
 	}
 	
@@ -213,7 +213,7 @@ public class Solo {
 	 */
 	
 	public boolean searchButton(String search, int matches) {
-		boolean found = soloSearch.searchButton(search, matches);
+		boolean found = searcher.searchButton(search, matches);
 		return found;
 
 	}
@@ -231,7 +231,7 @@ public class Solo {
 	 */
 	
 	public boolean searchToggleButton(String search, int matches) {
-		boolean found = soloSearch.searchToggleButton(search, matches);
+		boolean found = searcher.searchToggleButton(search, matches);
 		return found;
 
 	}
@@ -246,7 +246,7 @@ public class Solo {
 	 */
 	
 	public boolean searchText(String search) {
-		boolean found = soloSearch.searchText(search);
+		boolean found = searcher.searchText(search);
 		return found;
 	}
 	
@@ -263,7 +263,7 @@ public class Solo {
 	 */
 	
 	public boolean searchText(String search, int matches) {
-		boolean found = soloSearch.searchText(search, matches);
+		boolean found = searcher.searchText(search, matches);
 		return found;
 
 	}
@@ -276,7 +276,7 @@ public class Solo {
 	
 	public void setActivityOrientation(int orientation)
 	{
-		soloActivity.setActivityOrientation(orientation);
+		activitiyUtils.setActivityOrientation(orientation);
 	}
 	
 	/**
@@ -287,7 +287,7 @@ public class Solo {
 	
 	public ArrayList<Activity> getAllOpenedActivities()
 	{
-		return soloActivity.getAllOpenedActivities();
+		return activitiyUtils.getAllOpenedActivities();
 	}
 	
 	/**
@@ -298,9 +298,10 @@ public class Solo {
 	 */
 	
 	public Activity getCurrentActivity() {
-		Activity activity = soloActivity.getCurrentActivity();
+		Activity activity = activitiyUtils.getCurrentActivity();
 		return activity;
 	}
+	
 	/**
 	 * Asserts that an expected activity is currently active.
 	 * 
@@ -308,9 +309,10 @@ public class Solo {
 	 * @param name the name of the activity that is expected to be active e.g. "MyActivity"
 	 * 
 	 */
+	
 	public void assertCurrentActivity(String message, String name)
 	{	
-		soloAssert.assertCurrentActivity(message, name);
+		asserter.assertCurrentActivity(message, name);
 	}
 	
 	/**
@@ -320,9 +322,10 @@ public class Solo {
 	 * @param expectedClass the class object that is expected to be active e.g. MyActivity.class
 	 * 
 	 */
+	
 	public void assertCurrentActivity(String message, Class expectedClass)
 	{
-		soloAssert.assertCurrentActivity(message, expectedClass);
+		asserter.assertCurrentActivity(message, expectedClass);
 
 	}
 	
@@ -335,9 +338,10 @@ public class Solo {
 	 * @param isNewInstance true if the expected activity is a new instance of the activity 
 	 * 
 	 */
+	
 	public void assertCurrentActivity(String message, String name, boolean isNewInstance)
 	{
-		soloAssert.assertCurrentActivity(message, name, isNewInstance);
+		asserter.assertCurrentActivity(message, name, isNewInstance);
 	}
 	
 	/**
@@ -352,17 +356,61 @@ public class Solo {
 	
 	public void assertCurrentActivity(String message, Class expectedClass,
 			boolean isNewInstance) {
-		soloAssert.assertCurrentActivity(message, expectedClass, isNewInstance);
+		asserter.assertCurrentActivity(message, expectedClass, isNewInstance);
 	}		
+	
+	/**
+	 * Returns the currently active dialog. If no dialog is active, null will be
+	 * returned.
+	 * 
+	 * @return the currently active dialog. Null is returned if no dialog is active.
+	 * 
+	 */
+
+	public Dialog getCurrentDialog() {
+		return dialogUtils.getCurrentDialog();
+	}
+	
+	/**
+	 * Checks if a dialog is shown/active.
+	 * 
+	 * @return true if a dialog is currently shown/active and false it is not.
+	 */
+
+	public boolean isDialogShown() {
+		return dialogUtils.isDialogShown();
+	}
+	
+	/**
+	 * Waits for a dialog to close.
+	 * 
+	 * @param timeout the the amount of time in milliseconds to wait
+	 */
+
+	public void waitForDialogToClose(long timeout) {
+		dialogUtils.waitForDialogToClose(timeout);
+	}
+	
+	/**
+	 * This method returns an ArrayList of all the opened/active dialogs.
+	 * 
+	 * @return ArrayList of all the opened dialogs
+	 * 
+	 */
+
+	public ArrayList<Dialog> getAllOpenedDialogs() {
+		return dialogUtils.getAllOpenedDialogs();
+	}
 	
 	
 	/**
 	 * Simulates pressing the hard key back.
 	 * 
 	 */
+	
 	public void goBack()
 	{
-		soloClick.goBack();
+		clicker.goBack();
 	}
 	
 	/**
@@ -374,8 +422,8 @@ public class Solo {
 	 */
 	
 	public void clickOnScreen(float x, float y) {
-		soloActivity.waitForIdle();
-		soloClick.clickOnScreen(x, y);
+		activitiyUtils.waitForIdle();
+		clicker.clickOnScreen(x, y);
 	}
 	
 	
@@ -387,7 +435,7 @@ public class Solo {
 	 */
 	
 	public void clickOnButton(String name) {
-		soloClick.clickOnButton(name);
+		clicker.clickOnButton(name);
 
 	}
 	
@@ -399,19 +447,20 @@ public class Solo {
 	 */
 
 	public void clickOnToggleButton(String name) {
-		soloClick.clickOnToggleButton(name);
+		clicker.clickOnToggleButton(name);
 	}
 	
 	/**
 	 * Presses a MenuItem with a certain index. Index 0 is the first item in the 
-	 * first row and index 3 is the first item in the second row.
+	 * first row, index 3 is the first item in the second row and 
+	 * index 5 is the first item in the third row.
 	 * 
 	 * @param index the index of the menu item to be pressed
 	 * 
 	 */
 	
 	public void pressMenuItem(int index) {	
-		soloPress.pressMenuItem(index);
+		presser.pressMenuItem(index);
 	}
 	
 	/**
@@ -425,7 +474,7 @@ public class Solo {
 	
 	public void pressSpinnerItem(int spinnerIndex, int itemIndex)
 	{
-		soloPress.pressSpinnerItem(spinnerIndex, itemIndex);
+		presser.pressSpinnerItem(spinnerIndex, itemIndex);
 	}
 	
 	/**
@@ -437,8 +486,8 @@ public class Solo {
 	 */
 	
 	public void clickOnScreen(View view) {		
-		soloActivity.waitForIdle();
-		soloClick.clickOnScreen(view);
+		activitiyUtils.waitForIdle();
+		clicker.clickOnScreen(view);
 	}
 	
 	/**
@@ -449,8 +498,8 @@ public class Solo {
 	 */
 	
 	public void clickOnView(View view) {
-		soloActivity.waitForIdle();
-		soloClick.clickOnScreen(view);
+		activitiyUtils.waitForIdle();
+		clicker.clickOnScreen(view);
 	}
 	
 	/**
@@ -462,8 +511,8 @@ public class Solo {
 	 */
 	
 	public void clickLongOnScreen(View view) {
-		soloActivity.waitForIdle();
-		soloClick.clickLongOnScreen(view);
+		activitiyUtils.waitForIdle();
+		clicker.clickLongOnScreen(view);
 	}
 	
 	/**
@@ -474,8 +523,8 @@ public class Solo {
 	 */
 	
 	public void clickLongOnView(View view) {
-		soloActivity.waitForIdle();
-		soloClick.clickLongOnScreen(view);
+		activitiyUtils.waitForIdle();
+		clicker.clickLongOnScreen(view);
 	}
 	
 	/**
@@ -487,7 +536,7 @@ public class Solo {
 	 */
 	
 	public void clickOnText(String text) {
-		soloClick.clickOnText(text);
+		clicker.clickOnText(text);
 	}
 	
 	/**
@@ -500,7 +549,7 @@ public class Solo {
 	 */
 	
 	public void clickLongOnTextAndPress(String text, int index) {
-		soloClick.clickLongOnTextAndPress(text, index);
+		clicker.clickLongOnTextAndPress(text, index);
 	}
 	
 	/**
@@ -512,7 +561,7 @@ public class Solo {
 	 */
 	
 	public boolean clickOnButton(int index) {
-		boolean found = soloClick.clickOnButton(index);
+		boolean found = clicker.clickOnButton(index);
 		return found;
 		
 	}
@@ -526,7 +575,7 @@ public class Solo {
 	 */
 
 	public ArrayList<TextView> clickInList(int line) {
-		return soloClick.clickInList(line);
+		return clicker.clickInList(line);
 	}
 
 	/**
@@ -539,7 +588,7 @@ public class Solo {
 	 */
 	
 	public ArrayList<TextView> clickInList(int line, int listIndex) {
-	return soloClick.clickInList(line, listIndex);
+	return clicker.clickInList(line, listIndex);
 	}
 
 	 /**
@@ -602,7 +651,7 @@ public class Solo {
 	 */
 	
 	public void enterText(int index, String text) {
-		soloEnter.enterText(index, text);		
+		textEnterer.enterText(index, text);		
 	}
 	
 	/**
@@ -613,7 +662,7 @@ public class Solo {
 	 */
 	
 	public void clickOnImage(int index) {
-		soloClick.clickOnImage(index);
+		clicker.clickOnImage(index);
 	}
 	
 	/**
@@ -625,7 +674,7 @@ public class Solo {
 	 */
 	
 	public ArrayList<ImageView> getCurrentImageViews() {
-		ArrayList<ImageView> imageViewList = soloView.getCurrentImageViews();
+		ArrayList<ImageView> imageViewList = viewFetcher.getCurrentImageViews();
 		return imageViewList;
 	}
 	
@@ -637,7 +686,7 @@ public class Solo {
 	 */
 	
 	public EditText getEditText(int index) {
-		EditText editText = soloView.getEditText(index);
+		EditText editText = viewFetcher.getEditText(index);
 		return editText;
 	}
 	
@@ -650,7 +699,7 @@ public class Solo {
 	 */
 	
 	public Button getButton(int index) {
-		Button button = soloView.getButton(index);
+		Button button = viewFetcher.getButton(index);
 		return button;
 	}
 	
@@ -663,7 +712,7 @@ public class Solo {
 	 */
 	
 	public int getCurrenButtonsCount() {
-		int number = soloView.getCurrenButtonsCount();
+		int number = viewFetcher.getCurrenButtonsCount();
 		return number;
 	}
 	
@@ -677,7 +726,7 @@ public class Solo {
 	 */
 	
 	public ArrayList<EditText> getCurrentEditTexts() {
-		ArrayList<EditText> editTextList = soloView.getCurrentEditTexts();
+		ArrayList<EditText> editTextList = viewFetcher.getCurrentEditTexts();
 		return editTextList;
 		
 	}
@@ -691,7 +740,7 @@ public class Solo {
 	 */
 
 	public ArrayList<ListView> getCurrentListViews() {
-		ArrayList<ListView> listViewList = soloView.getCurrentListViews();
+		ArrayList<ListView> listViewList = viewFetcher.getCurrentListViews();
 		return listViewList;
 	}
 	
@@ -705,7 +754,7 @@ public class Solo {
 	
 	public ArrayList<Spinner> getCurrentSpinners()
 	{
-		ArrayList<Spinner> spinnerList = soloView.getCurrentSpinners();
+		ArrayList<Spinner> spinnerList = viewFetcher.getCurrentSpinners();
 		return spinnerList;
 	}
 	
@@ -721,7 +770,7 @@ public class Solo {
 	 */
 	
 	public ArrayList<TextView> getCurrentTextViews(View parent) {
-		ArrayList<TextView> textViewList = soloView.getCurrentTextViews(parent);
+		ArrayList<TextView> textViewList = viewFetcher.getCurrentTextViews(parent);
 		return textViewList;
 		
 	}
@@ -735,7 +784,7 @@ public class Solo {
 	 */
 	
 	public ArrayList<GridView> getCurrentGridViews() {
-		ArrayList<GridView> gridViewList = soloView.getCurrentGridViews();
+		ArrayList<GridView> gridViewList = viewFetcher.getCurrentGridViews();
 		return gridViewList;
 	}
 	
@@ -749,7 +798,7 @@ public class Solo {
 	 */
 	
 	public ArrayList<Button> getCurrentButtons() {
-		ArrayList<Button> buttonList = soloView.getCurrentButtons();
+		ArrayList<Button> buttonList = viewFetcher.getCurrentButtons();
 		return buttonList;
 	}
 	
@@ -762,7 +811,7 @@ public class Solo {
 	 */
 	
 	public ArrayList<ToggleButton> getCurrentToggleButtons() {
-		ArrayList<ToggleButton> toggleButtonList = soloView.getCurrentToggleButtons();
+		ArrayList<ToggleButton> toggleButtonList = viewFetcher.getCurrentToggleButtons();
 		return toggleButtonList;
 	}
 	
@@ -786,7 +835,7 @@ public class Solo {
 	 */
 	
 	public void finalize() throws Throwable {
-		soloActivity.finalize();
+		activitiyUtils.finalize();
 	}
 	
 	

@@ -31,16 +31,20 @@ class ViewFetcher {
 
 	private final ArrayList<View> viewList = new ArrayList<View>();
 	private final ActivityUtils soloActivity;
+	private final DialogUtils dialogUtils;
 	private final Instrumentation inst;
 
     /**
      * Constructs this object.
      *
      * @param soloActivity the {@link Activity} instance.
+     * @param dialogUtils the {@link Dialog} instance.
      * @param inst the {@link Instrumentation} instance.
      */
-    public ViewFetcher(ActivityUtils soloActivity, Instrumentation inst) {
+	
+    public ViewFetcher(ActivityUtils soloActivity, DialogUtils dialogUtils, Instrumentation inst) {
         this.soloActivity = soloActivity;
+        this.dialogUtils = dialogUtils;
         this.inst = inst;
     }
 
@@ -65,57 +69,34 @@ class ViewFetcher {
 	
 
 	/**
-	 * This method returns an ArrayList of all the views located in the current activity.
+	 * This method returns an ArrayList of all the views located in the current activity or dialog.
 	 *
-	 * @return ArrayList with the views found in the current activity
+	 * @return ArrayList with the views found in the current activity or dialog
 	 *
 	 */
 	
 	public ArrayList<View> getViews() {
-    Activity activity = soloActivity.getCurrentActivity();
-    inst.waitForIdleSync();
-    final Window window;
-    final Dialog currentDialog = getCurrentDialog(activity);
-    try {
-      if (currentDialog != null) {
-        window = currentDialog.getWindow();
-      } else {
-        window = activity.getWindow();
-      }
-      View decorView = window.getDecorView();
-      viewList.clear();
-      getViews(getTopParent(decorView));
-      return viewList;
-    } catch (Throwable e) {
-      e.printStackTrace();
-    }
-    return null;
-  }
+		final Activity activity = soloActivity.getCurrentActivity();
+		final Dialog currentDialog = dialogUtils.getCurrentDialog();
+		inst.waitForIdleSync();
+		final Window window;
+		try {
+			if (currentDialog != null) {
+				window = currentDialog.getWindow();
+			} else {
+				window = activity.getWindow();
+			}
+			View decorView = window.getDecorView();
+			viewList.clear();
+			getViews(getTopParent(decorView));
+			return viewList;
+		} catch (Throwable e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
 
-  private Dialog getCurrentDialog(Activity activity) {
-    final SparseArray<Dialog> managedDialogs = getManagedDialogs(activity);
-    if (managedDialogs != null){
-      for(int size = managedDialogs.size(), i=0; i<size; i++){
-        final Dialog dialog = managedDialogs.valueAt(i);
-        if (dialog.isShowing()){
-          return dialog;
-        }
-      }
-    }
-    return null;
-  }
-
-  private SparseArray<Dialog> getManagedDialogs(Activity activity) {
-    try {
-      final Field field = Activity.class.getDeclaredField("mManagedDialogs");
-      field.setAccessible(true);
-      return (SparseArray<Dialog>) field.get(activity);
-    } catch (NoSuchFieldException e) {
-      throw new RuntimeException(e);
-    } catch (IllegalAccessException e) {
-      throw new RuntimeException(e);
-    }
-  }
+ 
 
 	/**
 	 * Private method which adds all the views located in the currently active

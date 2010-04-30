@@ -34,8 +34,9 @@ class Presser{
 
 	
 	/**
-	 * Method used to press a MenuItem with a certain index. Index 0 is the first item in the 
-	 * first row and index 3 is the first item in the second row.
+	 * Presses a MenuItem with a certain index. Index 0 is the first item in the 
+	 * first row, index 3 is the first item in the second row and 
+	 * index 5 is the first item in the third row.
 	 * 
 	 * @param index the index of the menu item to be pressed
 	 * 
@@ -48,6 +49,7 @@ class Presser{
 		inst.sendKeyDownUpSync(KeyEvent.KEYCODE_MENU);
 		RobotiumUtils.sleep(300);
 		inst.sendKeyDownUpSync(KeyEvent.KEYCODE_DPAD_UP);
+		inst.sendKeyDownUpSync(KeyEvent.KEYCODE_DPAD_UP);
 		}catch(Throwable e)
 		{
 			e.printStackTrace();
@@ -57,14 +59,23 @@ class Presser{
 				RobotiumUtils.sleep(300);
 				inst.sendKeyDownUpSync(KeyEvent.KEYCODE_DPAD_RIGHT);
 			}
-		} else
-		{
+		} else if (index >= 3 && index <= 5) {
 			inst.sendKeyDownUpSync(KeyEvent.KEYCODE_DPAD_DOWN);	
+			
 			for (int i = 3; i < index; i++) {
 				RobotiumUtils.sleep(300);
 				inst.sendKeyDownUpSync(KeyEvent.KEYCODE_DPAD_RIGHT);
 			}
+		} else if (index > 5) {
+			inst.sendKeyDownUpSync(KeyEvent.KEYCODE_DPAD_DOWN);	
+			inst.sendKeyDownUpSync(KeyEvent.KEYCODE_DPAD_DOWN);	
+			
+			for (int i = 5; i < index; i++) {
+				RobotiumUtils.sleep(300);
+				inst.sendKeyDownUpSync(KeyEvent.KEYCODE_DPAD_RIGHT);
+			}
 		}
+			
 		try{
 		inst.sendKeyDownUpSync(KeyEvent.KEYCODE_ENTER);
 		}catch (Throwable e) {

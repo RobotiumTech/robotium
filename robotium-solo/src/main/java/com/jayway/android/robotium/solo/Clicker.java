@@ -367,6 +367,7 @@ class Clicker {
 		RobotiumUtils.sleep(PAUS);
 		try {
 			inst.sendKeyDownUpSync(KeyEvent.KEYCODE_BACK);
+			RobotiumUtils.sleep(PAUS);
 		} catch (Throwable e) {}
 	}
 	
@@ -410,7 +411,8 @@ class Clicker {
 	 */
 	
 	public ArrayList<TextView> clickInList(int line, int index) {
-		soloActivity.waitForIdle();
+	RobotiumUtils.sleep(PAUS);	
+	soloActivity.waitForIdle();
         if(soloView.getCurrentListViews().size()<index)
         	Assert.assertTrue("No ListView with index " + index + " is available", false);
         ArrayList<TextView> textViews = soloView.getCurrentTextViews(soloView
