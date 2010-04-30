@@ -89,7 +89,7 @@ public class Solo {
         this.searcher = new Searcher(viewFetcher, soloScroll, inst);
         this.robotiumUtils = new RobotiumUtils(activitiyUtils, searcher, viewFetcher, inst);
         this.clicker = new Clicker(activitiyUtils, viewFetcher, soloScroll,robotiumUtils, inst);
-        this.presser = new Presser(activitiyUtils,viewFetcher, clicker, inst);
+        this.presser = new Presser(viewFetcher, clicker, inst);
         this.textEnterer = new TextEnterer(viewFetcher, activitiyUtils, clicker, inst);
         
 	}
@@ -482,18 +482,7 @@ public class Solo {
 	{
 		presser.pressSpinnerItem(spinnerIndex, itemIndex);
 	}
-	
-	 /**
-     * Presses a radio button with a given index to check or uncheck it. 
-     * 
-     * @param index the index of the radio button that should be pressed
-     * 
-     */
-	
-    public void pressRadioButton(int index)
-    {
-    	presser.pressRadioButton(index);
-    }
+    
 	
 	/**
 	 * Clicks on a specific view.
@@ -582,6 +571,17 @@ public class Solo {
 		boolean found = clicker.clickOnButton(index);
 		return found;
 		
+	}
+	
+	 /**
+	 * Clicks on a radio button with a certain index.
+	 *
+	 * @param index the index of the radio button to be clicked
+	 *
+	 */
+	
+	public void clickOnRadioButton(int index) {
+		clicker.clickOnRadioButton(index);
 	}
 
 	/**

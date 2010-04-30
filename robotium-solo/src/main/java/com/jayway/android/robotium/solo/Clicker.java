@@ -358,6 +358,22 @@ class Clicker {
 	}
 	
 	/**
+	 * This method is used to click on a radio button with a certain index.
+	 *
+	 * @param index the index of the radio button to be clicked
+	 *
+	 */
+	
+	public void clickOnRadioButton(int index) {
+		soloActivity.waitForIdle();
+		try {
+			clickOnScreen(soloView.getCurrentRadioButtons().get(index));
+		} catch (IndexOutOfBoundsException e) {
+			Assert.assertTrue("Index is not valid", false);
+		}
+	}
+	
+	/**
 	 * Method used to simulate pressing the hard key back
 	 * 
 	 */
