@@ -1,12 +1,10 @@
 package com.jayway.android.robotium.solo;
 
-import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Iterator;
 import android.app.Activity;
 import android.app.Dialog;
 import android.app.Instrumentation;
-import android.util.SparseArray;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
@@ -15,6 +13,7 @@ import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.RadioButton;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.ToggleButton;
@@ -136,6 +135,7 @@ class ViewFetcher {
 		}
 		return imageViewList;
 	}
+	
 	
 	/**
 	 * This method returns an EditText with a certain index.
@@ -327,6 +327,27 @@ class ViewFetcher {
 				toggleButtonList.add((ToggleButton) view);
 		}
 		return toggleButtonList;
+	}
+	
+	/**
+	 * This method returns an ArrayList of the radio buttons contained in the current
+	 * activity.
+	 *
+	 * @return ArrayList of the radio buttons contained in the current activity
+	 *
+	 */
+	
+	public ArrayList<RadioButton> getCurrentRadioButtons() {
+		ArrayList<View> viewList = getViews();
+		ArrayList<RadioButton> radioButtonList = new ArrayList<RadioButton>();
+		Iterator<View> iterator = viewList.iterator();
+		while (iterator.hasNext()) {
+			View view = iterator.next();
+			if (view instanceof android.widget.RadioButton) {
+				radioButtonList.add((RadioButton) view);
+			}	
+		}
+		return radioButtonList;
 	}
 	
 	

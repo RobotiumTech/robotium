@@ -1,28 +1,30 @@
 package com.jayway.android.robotium.solo;
 
-import java.io.File;
-import java.io.FileOutputStream;
-
-import junit.framework.Assert;
-import android.graphics.Bitmap;
-import android.test.TouchUtils;
-import android.util.Log;
-import android.view.View;
+import java.util.ArrayList;
+import android.app.Instrumentation;
+import android.view.KeyEvent;
 import android.widget.EditText;
+import android.widget.RadioButton;
 
 class RobotiumUtils {	
 	
 	private ViewFetcher soloView;
 	private Searcher soloSearch;
 	private ActivityUtils soloActivity;
+	private Instrumentation inst;
 	private final int TIMEOUT = 20000;
-	private final int PAUS = 500;
+	private final static int RIGHT = 2;
+	private final static int LEFT = 3;
+	private final static int UP = 4;
+	private final static int DOWN = 5;
+	private final static int ENTER = 6;
 	
-	public RobotiumUtils(ActivityUtils activityUtils ,Searcher searcher, ViewFetcher viewFetcher)
-	{
+	public RobotiumUtils(ActivityUtils activityUtils, Searcher searcher,
+			ViewFetcher viewFetcher, Instrumentation inst) {
 		soloActivity = activityUtils;
 		soloSearch = searcher;
 		soloView = viewFetcher;
+		this.inst = inst;
 	}
 	
 	
@@ -61,6 +63,9 @@ class RobotiumUtils {
             }
         });
     }
+    
+   
+    
     
     /**
 	 * Waits for a text to be shown. Default timeout is 20 seconds. 
@@ -103,6 +108,49 @@ class RobotiumUtils {
         
        return true;
     }
+	
+	/**
+	 * Checks if a radio button with a given index is checked
+	 * 
+	 * @param index of the radio button to check
+	 * @return true if radio button is checked and false if it is not checked
+	 */
+	
+	public boolean isRadioButtonChecked(int index)
+	{
+		ArrayList<RadioButton> radioButtonList = soloView.getCurrentRadioButtons();
+		return radioButtonList.get(index).isChecked();
+	}
+	
+	/**
+	 * Tells Robotium to send a key: Right, Left, Up, Down or Enter
+	 * @param key the key to be sent. Use Solo.RIGHT/LEFT/UP/DOWN/ENTER
+	 * 
+	 */
+	
+	public void sendKey(int key)
+	{
+		switch (key) {
+		case RIGHT:
+			inst.sendCharacterSync(KeyEvent.KEYCODE_DPAD_RIGHT);
+			break;
+		case LEFT:
+			inst.sendCharacterSync(KeyEvent.KEYCODE_DPAD_LEFT);
+			break;
+		case UP:
+			inst.sendCharacterSync(KeyEvent.KEYCODE_DPAD_UP);
+			break;
+		case DOWN:
+			inst.sendCharacterSync(KeyEvent.KEYCODE_DPAD_DOWN);
+			break;
+		case ENTER:
+			inst.sendCharacterSync(KeyEvent.KEYCODE_ENTER);
+			break;
+		default:
+			break;
+		}
+		
+	}
 
 
 	

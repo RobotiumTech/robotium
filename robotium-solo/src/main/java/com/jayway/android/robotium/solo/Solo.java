@@ -9,6 +9,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.ImageView;
+import android.widget.RadioButton;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.ListView;
@@ -66,6 +67,9 @@ public class Solo {
 	public final static int PORTRAIT = 1;
 	public final static int RIGHT = 2;
 	public final static int LEFT = 3;
+	public final static int UP = 4;
+	public final static int DOWN = 5;
+	public final static int ENTER = 6;
 
 	
 	/**
@@ -83,9 +87,9 @@ public class Solo {
         this.viewFetcher = new ViewFetcher(activitiyUtils,dialogUtils, inst);
         this.soloScroll = new Scroller(inst, activitiyUtils, viewFetcher);
         this.searcher = new Searcher(viewFetcher, soloScroll, inst);
-        this.robotiumUtils = new RobotiumUtils(activitiyUtils, searcher, viewFetcher);
+        this.robotiumUtils = new RobotiumUtils(activitiyUtils, searcher, viewFetcher, inst);
         this.clicker = new Clicker(activitiyUtils, viewFetcher, soloScroll,robotiumUtils, inst);
-        this.presser = new Presser(viewFetcher, clicker, inst);
+        this.presser = new Presser(activitiyUtils,viewFetcher, clicker, inst);
         this.textEnterer = new TextEnterer(viewFetcher, activitiyUtils, clicker, inst);
         
 	}
@@ -323,6 +327,7 @@ public class Solo {
 	 * 
 	 */
 	
+	@SuppressWarnings("unchecked")
 	public void assertCurrentActivity(String message, Class expectedClass)
 	{
 		asserter.assertCurrentActivity(message, expectedClass);
@@ -354,6 +359,7 @@ public class Solo {
 	 * 
 	 */
 	
+	@SuppressWarnings("unchecked")
 	public void assertCurrentActivity(String message, Class expectedClass,
 			boolean isNewInstance) {
 		asserter.assertCurrentActivity(message, expectedClass, isNewInstance);
@@ -476,6 +482,18 @@ public class Solo {
 	{
 		presser.pressSpinnerItem(spinnerIndex, itemIndex);
 	}
+	
+	 /**
+     * Presses a radio button with a given index to check or uncheck it. 
+     * 
+     * @param index the index of the radio button that should be pressed
+     * 
+     */
+	
+    public void pressRadioButton(int index)
+    {
+    	presser.pressRadioButton(index);
+    }
 	
 	/**
 	 * Clicks on a specific view.
@@ -813,6 +831,42 @@ public class Solo {
 	public ArrayList<ToggleButton> getCurrentToggleButtons() {
 		ArrayList<ToggleButton> toggleButtonList = viewFetcher.getCurrentToggleButtons();
 		return toggleButtonList;
+	}
+	
+	/**
+	 * This method returns an ArrayList of the radio buttons contained in the current
+	 * activity.
+	 *
+	 * @return ArrayList of the radio buttons contained in the current activity
+	 *
+	 */
+	
+	public ArrayList<RadioButton> getCurrentRadioButtons() {
+		return viewFetcher.getCurrentRadioButtons();
+	}
+	
+	/**
+	 * Checks if a radio button with a given index is checked
+	 * 
+	 * @param index of the radio button to check
+	 * @return true if radio button is checked and false if it is not checked
+	 */
+	
+	public boolean isRadioButtonChecked(int index)
+	{
+		return robotiumUtils.isRadioButtonChecked(index);
+	}
+	
+
+	/**
+	 * Tells Robotium to send a key: Right, Left, Up, Down or Enter
+	 * @param key the key to be sent. Use Solo.RIGHT/LEFT/UP/DOWN/ENTER
+	 * 
+	 */
+	
+	public void sendKey(int key)
+	{
+		robotiumUtils.sendKey(key);
 	}
 	
 	/**

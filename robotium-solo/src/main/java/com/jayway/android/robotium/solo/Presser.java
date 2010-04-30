@@ -2,6 +2,7 @@ package com.jayway.android.robotium.solo;
 
 import android.app.Instrumentation;
 import android.view.KeyEvent;
+import android.widget.RadioButton;
 
 /**
  * This class contains press methods. Examples are pressMenuItem(),
@@ -14,6 +15,7 @@ import android.view.KeyEvent;
 class Presser{
 
 	private final ViewFetcher soloView;
+	private final ActivityUtils activityUtils;
 	private final Clicker soloClick;
 	private final Instrumentation inst;
 	private final int PAUS = 500;
@@ -26,11 +28,14 @@ class Presser{
      * @param inst the {@link Instrumentation} instance.
      */
 	
-    public Presser(ViewFetcher soloView, Clicker soloClick, Instrumentation inst) {
-        this.soloView = soloView;
-        this.soloClick = soloClick;
-        this.inst = inst;
-    }
+	public Presser(ActivityUtils activituUtils, ViewFetcher soloView,
+			Clicker soloClick, Instrumentation inst) {
+
+		this.activityUtils = activituUtils;
+		this.soloView = soloView;
+		this.soloClick = soloClick;
+		this.inst = inst;
+	}
 
 	
 	/**
@@ -115,6 +120,31 @@ class Presser{
 		inst.sendKeyDownUpSync(KeyEvent.KEYCODE_ENTER);
 		
 	}
+	
+	 /**
+     * Presses a radio button with a given index to check or uncheck it. 
+     * 
+     * @param index the index of the radio button that should be pressed
+     * 
+     */
+	
+    public void pressRadioButton(int index)
+    {
+    	inst.waitForIdleSync();
+    	activityUtils.waitForIdle();
+    	final RadioButton radioButton = soloView.getCurrentRadioButtons().get(index);
+
+        activityUtils.getCurrentActivity().runOnUiThread(new Runnable()
+        {
+            public void run()
+            {
+                if(radioButton.isChecked())
+                	radioButton.setChecked(false);
+                else
+                	radioButton.setChecked(true);
+            }
+        });
+    }
 	
 
 }

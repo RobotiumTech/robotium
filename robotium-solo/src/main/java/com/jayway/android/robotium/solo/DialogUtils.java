@@ -63,6 +63,7 @@ class DialogUtils {
 	 * 
 	 */
 
+	@SuppressWarnings("unchecked")
 	private SparseArray<Dialog> getManagedDialogs(Activity activity) {
 		try {
 			final Field field = Activity.class

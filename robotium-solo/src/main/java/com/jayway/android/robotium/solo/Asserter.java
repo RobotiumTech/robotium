@@ -49,6 +49,7 @@ class Asserter {
 	 * 
 	 */
 	
+	@SuppressWarnings("unchecked")
 	public void assertCurrentActivity(String message, Class expectedClass)
 	{
 		RobotiumUtils.sleep(PAUS);
@@ -84,6 +85,7 @@ class Asserter {
 	 * 
 	 */
 	
+	@SuppressWarnings("unchecked")
 	public void assertCurrentActivity(String message, Class expectedClass,
 			boolean isNewInstance) {
 		boolean found = false;
