@@ -140,7 +140,7 @@ class Clicker {
 		view.getLocationOnScreen(xy);
 		if (xy[1] + 20 > soloActivity.getCurrentActivity().getWindowManager()
 				.getDefaultDisplay().getHeight()) {
-			soloScroll.scrollDownList();
+			soloScroll.scrollDown();
 			view.getLocationOnScreen(xy);
 		}
 		final int viewWidth = view.getWidth();
@@ -230,7 +230,7 @@ class Clicker {
 				clickLongOnScreen(textView);
 			else
 				clickOnScreen(textView);
-		} else if (soloScroll.scrollDownList()) {
+		} else if (soloScroll.scrollDown()) {
 			clickOnText(text, longClick);
 		} else {
 			for (int i = 0; i < textViews.size(); i++)
@@ -291,7 +291,7 @@ class Clicker {
 		}
 		if (found) {
 			clickOnScreen(button);
-		} else if (soloScroll.scrollDownList()){
+		} else if (soloScroll.scrollDown()){
 			clickOnButton(name);
 		}else
 		{
@@ -328,7 +328,7 @@ class Clicker {
 		}
 		if (found) {
 			clickOnScreen(toggleButton);
-		} else if (soloScroll.scrollDownList()) {
+		} else if (soloScroll.scrollDown()) {
 			clickOnButton(name);
 		} else {
 			for (int i = 0; i < toggleButtonList.size(); i++)

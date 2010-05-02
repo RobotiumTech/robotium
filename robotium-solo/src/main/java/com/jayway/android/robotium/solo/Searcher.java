@@ -83,7 +83,7 @@ class Searcher {
 				return true;
 			}
 		}
-		if (soloScroll.scrollDownList())
+		if (soloScroll.scrollDown())
 			return searchForEditText(search);
 		else
 			return false;
@@ -170,7 +170,7 @@ class Searcher {
 			return true;
 		} else if (matches == 0 && countMatches > 0) {
 			return true;
-		} else if (soloScroll.scrollDownList())
+		} else if (soloScroll.scrollDown())
 		{
 			return searchForButton(search, matches);
 		} else {
@@ -232,7 +232,7 @@ class Searcher {
 			return true;
 		} else if (matches == 0 && countMatches > 0) {
 			return true;
-		} else if (soloScroll.scrollDownList())
+		} else if (soloScroll.scrollDown())
 		{
 			return searchForToggleButton(search, matches);
 		} else {
@@ -307,7 +307,7 @@ class Searcher {
 			return true;
 		} else if (matches == 0 && countMatches > 0) {
 			return true;
-		} else if (soloScroll.scrollDownList()) 
+		} else if (soloScroll.scrollDown()) 
 		{
 			return searchForText(search, matches);
 		} else {

@@ -19,6 +19,7 @@ class DialogUtils {
 	private ActivityUtils activityUtils;
 	private ArrayList<Dialog> dialogList = new ArrayList<Dialog>();
 	private final int PAUS = 1000;
+	private final int TIMEOUT = 5000;
 
 	/**
 	 * Constructs this object.
@@ -84,10 +85,16 @@ class DialogUtils {
 	 */
 
 	public boolean isDialogShown() {
-		if (getCurrentDialog() == null)
-			return false;
-		else
-			return true;
+		long now = System.currentTimeMillis();
+		final long endTime = now + TIMEOUT;
+		while (getCurrentDialog() == null && now < endTime) {
+			RobotiumUtils.sleep(PAUS);
+			now = System.currentTimeMillis();
+		}
+		 if (now > endTime)
+	        	return false;
+	        
+	       return true;
 	}
 
 	/**

@@ -61,7 +61,7 @@ public class Solo {
 	private final ActivityUtils activitiyUtils;
 	private final DialogUtils dialogUtils;
 	private final TextEnterer textEnterer;
-	private final Scroller soloScroll;
+	private final Scroller scroller;
 	private final RobotiumUtils robotiumUtils;
 	public final static int LANDSCAPE = 0;
 	public final static int PORTRAIT = 1;
@@ -85,10 +85,10 @@ public class Solo {
         this.dialogUtils = new DialogUtils(activitiyUtils);
         this.asserter = new Asserter(activitiyUtils);
         this.viewFetcher = new ViewFetcher(activitiyUtils,dialogUtils, inst);
-        this.soloScroll = new Scroller(inst, activitiyUtils, viewFetcher);
-        this.searcher = new Searcher(viewFetcher, soloScroll, inst);
+        this.scroller = new Scroller(inst, activitiyUtils, viewFetcher);
+        this.searcher = new Searcher(viewFetcher, scroller, inst);
         this.robotiumUtils = new RobotiumUtils(activitiyUtils, searcher, viewFetcher, inst);
-        this.clicker = new Clicker(activitiyUtils, viewFetcher, soloScroll,robotiumUtils, inst);
+        this.clicker = new Clicker(activitiyUtils, viewFetcher, scroller,robotiumUtils, inst);
         this.presser = new Presser(viewFetcher, clicker, inst);
         this.textEnterer = new TextEnterer(viewFetcher, activitiyUtils, clicker, inst);
         
@@ -624,29 +624,76 @@ public class Solo {
 	
 	public void drag(float fromX, float toX, float fromY, float toY,
 					  int stepCount) {
-		soloScroll.drag(fromX, toX, fromY, toY, stepCount);
+		scroller.drag(fromX, toX, fromY, toY, stepCount);
+	}
+	
+	/**
+	 * Scrolls down the screen.
+	 *
+	 * @return true if more scrolling can be done and false if it is at the end of 
+	 * the screen 
+	 *
+	 */
+	
+	public boolean scrollDown() {
+		return scroller.scrollDown();
+	}
+	
+
+	/**
+	 * Scrolls up the screen.
+	 *
+	 * @return true if more scrolling can be done and false if it is at the top of 
+	 * the screen 
+	 *
+	 */
+	
+	public boolean scrollUp(){
+		return scroller.scrollUp();
+	}
+	
+	/**
+	 * Scrolls down a list with a given listIndex.
+	 * @param listIndex the list to be scrolled. 0 if only one list is available 
+	 */
+	
+	public void scrollDownList(int listIndex)
+	{
+		scroller.scrollDownList(listIndex);
+	}
+	
+	/**
+	 * Scrolls up a list with a given listIndex.
+	 * @param listIndex the ListView to be scrolled. 0 if only one list is available
+	 */
+	
+	public void scrollUpList(int listIndex)
+	{
+		scroller.scrollUpList(listIndex);
 	}
 	
 	/**
 	 * Scrolls down a list or scroll view.
 	 *
 	 * @return true if more scrolling can be done and false if it is at the end of 
-	 * the scroll/list view 
+	 * the screen
+	 * @deprecated replaced by {@link #scrollDownList(int listIndex)} and {@link #scrollDown()} 
 	 *
 	 */
 	
 	public boolean scrollDownList() {
-		boolean scroll = soloScroll.scrollDownList();
+		boolean scroll = scroller.scrollDown();
 		return scroll;
 	}
 		
 	/**
 	 * Scrolls up a list.
-	 *
+	 * @deprecated replaced by {@link #scrollUpList(int listIndex)} and {@link #scrollUp()}
+	 *  
 	 */
 	
 	public void scrollUpList() {
-		soloScroll.scrollUpList();
+		scroller.scrollUp();
 	}
 	
 	/**
@@ -657,7 +704,7 @@ public class Solo {
 	 */
 	
 	public void scrollToSide(int side) {
-		soloScroll.scrollToSide(side);
+		scroller.scrollToSide(side);
 	}
 	
 	/**
