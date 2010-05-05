@@ -139,9 +139,9 @@ public class Solo {
 	 * 
 	 */
 	
-	public void waitForText(String text) {
+	public boolean waitForText(String text) {
 
-		robotiumUtils.waitForText(text);
+		return robotiumUtils.waitForText(text);
 	}
 
 	
