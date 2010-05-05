@@ -2,7 +2,6 @@ package com.jayway.android.robotium.solo;
 
 import java.util.ArrayList;
 import android.app.Activity;
-import android.app.Dialog;
 import android.app.Instrumentation;
 import android.view.View;
 import android.widget.Button;
@@ -70,6 +69,7 @@ public class Solo {
 	public final static int UP = 4;
 	public final static int DOWN = 5;
 	public final static int ENTER = 6;
+	public final static int MENU = 7;
 
 	
 	/**
@@ -82,9 +82,9 @@ public class Solo {
 	
 	public Solo(Instrumentation inst, Activity activity) {
         this.activitiyUtils = new ActivityUtils(inst, activity);
-        this.dialogUtils = new DialogUtils(activitiyUtils);
+        this.viewFetcher = new ViewFetcher(inst);
         this.asserter = new Asserter(activitiyUtils);
-        this.viewFetcher = new ViewFetcher(activitiyUtils,dialogUtils, inst);
+        this.dialogUtils = new DialogUtils(viewFetcher);
         this.scroller = new Scroller(inst, activitiyUtils, viewFetcher);
         this.searcher = new Searcher(viewFetcher, scroller, inst);
         this.robotiumUtils = new RobotiumUtils(activitiyUtils, searcher, viewFetcher, inst);
@@ -365,47 +365,17 @@ public class Solo {
 		asserter.assertCurrentActivity(message, expectedClass, isNewInstance);
 	}		
 	
-	/**
-	 * Returns the currently active dialog. If no dialog is active, null will be
-	 * returned.
-	 * 
-	 * @return the currently active dialog. Null is returned if no dialog is active.
-	 * 
-	 */
-
-	public Dialog getCurrentDialog() {
-		return dialogUtils.getCurrentDialog();
-	}
 	
 	/**
-	 * Checks if a dialog is shown/active.
-	 * 
-	 * @return true if a dialog is currently shown/active and false it is not.
-	 */
-
-	public boolean isDialogShown() {
-		return dialogUtils.isDialogShown();
-	}
-	
-	/**
-	 * Waits for a dialog to close.
+	 * Waits for a Dialog to close.
 	 * 
 	 * @param timeout the the amount of time in milliseconds to wait
-	 */
-
-	public void waitForDialogToClose(long timeout) {
-		dialogUtils.waitForDialogToClose(timeout);
-	}
-	
-	/**
-	 * This method returns an ArrayList of all the opened/active dialogs.
-	 * 
-	 * @return ArrayList of all the opened dialogs
+	 * @return true if the dialog is closed before the timeout and false if it is not closed.
 	 * 
 	 */
 
-	public ArrayList<Dialog> getAllOpenedDialogs() {
-		return dialogUtils.getAllOpenedDialogs();
+	public boolean waitForDialogToClose(long timeout) {
+		return dialogUtils.waitForDialogToClose(timeout);
 	}
 	
 	
@@ -454,6 +424,16 @@ public class Solo {
 
 	public void clickOnToggleButton(String name) {
 		clicker.clickOnToggleButton(name);
+	}
+	
+	/**
+	 * Clicks on a menu item with a given text
+	 * @param text the menu text that should be clicked on. Regular expressions are supported 
+	 */
+	
+	public void clickOnMenuItem(String text)
+	{	
+		clicker.clickOnMenuItem(text);
 	}
 	
 	/**
@@ -907,7 +887,7 @@ public class Solo {
 
 	/**
 	 * Tells Robotium to send a key: Right, Left, Up, Down or Enter
-	 * @param key the key to be sent. Use Solo.RIGHT/LEFT/UP/DOWN/ENTER
+	 * @param key the key to be sent. Use Solo.RIGHT/LEFT/UP/DOWN/ENTER/MENU
 	 * 
 	 */
 	
@@ -919,7 +899,7 @@ public class Solo {
 	/**
 	 * Robotium will sleep for a specified time.
 	 * 
-	 * @param time the time that Robotium should sleep 
+	 * @param time the time in milliseconds that Robotium should sleep 
 	 * 
 	 */
 	

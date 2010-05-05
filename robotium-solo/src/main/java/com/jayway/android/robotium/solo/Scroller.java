@@ -140,7 +140,11 @@ class Scroller {
 		int x = soloActivity.getCurrentActivity().getWindowManager()
 				.getDefaultDisplay().getWidth() / 2;
 
-		drag(x, x, yStart, yEnd, 40);
+		if(soloView.getCurrentListViews().size()==1)
+			scrollList(0, direction);
+		else
+			drag(x, x, yStart, yEnd, 40);
+		
 		if (isSameText()) {
 			return true;
 		} else {
@@ -213,7 +217,13 @@ class Scroller {
 		listView.getLocationOnScreen(xy);
 		while (xy[1] + 20 > soloActivity.getCurrentActivity()
 				.getWindowManager().getDefaultDisplay().getHeight()) {
-			scrollDown();
+			int yStart = (soloActivity.getCurrentActivity().getWindowManager()
+					.getDefaultDisplay().getHeight() - 20);
+			int yEnd = ((soloActivity.getCurrentActivity().getWindowManager()
+					.getDefaultDisplay().getHeight() / 2));
+			int x = soloActivity.getCurrentActivity().getWindowManager()
+			.getDefaultDisplay().getWidth() / 2;
+			drag(x, x, yStart, yEnd, 40);
 			listView.getLocationOnScreen(xy);
 		}
 		int yStart;

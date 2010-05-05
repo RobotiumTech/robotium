@@ -35,6 +35,7 @@ class Clicker {
 	private final RobotiumUtils robotiumUtils;
 	private final int PAUS = 500;
 	private final int TIMEOUT = 10000;
+	private final static int MENU = 7;
 
 
 	/**
@@ -197,6 +198,17 @@ class Clicker {
 			inst.sendKeyDownUpSync(KeyEvent.KEYCODE_DPAD_DOWN);
 		}
 		inst.sendKeyDownUpSync(KeyEvent.KEYCODE_ENTER);
+	}
+	
+	/**
+	 * Clicks on a menu item with a given text
+	 * @param text the menu text that should be clicked on. Regular expressions are supported 
+	 */
+	
+	public void clickOnMenuItem(String text)
+	{	
+		robotiumUtils.sendKey(MENU);
+		clickOnText(text);
 	}
 	
 	

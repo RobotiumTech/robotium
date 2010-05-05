@@ -18,6 +18,7 @@ class RobotiumUtils {
 	private final static int UP = 4;
 	private final static int DOWN = 5;
 	private final static int ENTER = 6;
+	private final static int MENU = 7;
 	
 	public RobotiumUtils(ActivityUtils activityUtils, Searcher searcher,
 			ViewFetcher viewFetcher, Instrumentation inst) {
@@ -130,6 +131,8 @@ class RobotiumUtils {
 	
 	public void sendKey(int key)
 	{
+		inst.waitForIdleSync();
+		RobotiumUtils.sleep(500);
 		switch (key) {
 		case RIGHT:
 			inst.sendCharacterSync(KeyEvent.KEYCODE_DPAD_RIGHT);
@@ -145,6 +148,9 @@ class RobotiumUtils {
 			break;
 		case ENTER:
 			inst.sendCharacterSync(KeyEvent.KEYCODE_ENTER);
+			break;
+		case MENU:
+			inst.sendCharacterSync(KeyEvent.KEYCODE_MENU);
 			break;
 		default:
 			break;

@@ -1,13 +1,14 @@
 package com.jayway.android.robotium.solo;
 
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Iterator;
 import android.app.Activity;
 import android.app.Dialog;
 import android.app.Instrumentation;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.GridView;
@@ -29,8 +30,6 @@ import android.widget.ToggleButton;
 class ViewFetcher {
 
 	private final ArrayList<View> viewList = new ArrayList<View>();
-	private final ActivityUtils soloActivity;
-	private final DialogUtils dialogUtils;
 	private final Instrumentation inst;
 
     /**
@@ -41,9 +40,7 @@ class ViewFetcher {
      * @param inst the {@link Instrumentation} instance.
      */
 	
-    public ViewFetcher(ActivityUtils soloActivity, DialogUtils dialogUtils, Instrumentation inst) {
-        this.soloActivity = soloActivity;
-        this.dialogUtils = dialogUtils;
+    public ViewFetcher(Instrumentation inst) {
         this.inst = inst;
     }
 
@@ -75,19 +72,13 @@ class ViewFetcher {
 	 */
 	
 	public ArrayList<View> getViews() {
-		final Activity activity = soloActivity.getCurrentActivity();
-		final Dialog currentDialog = dialogUtils.getCurrentDialog();
 		inst.waitForIdleSync();
-		final Window window;
+		View decorView;
+		viewList.clear();
+		View [] views = getWindowDecorViews();
 		try {
-			if (currentDialog != null) {
-				window = currentDialog.getWindow();
-			} else {
-				window = activity.getWindow();
-			}
-			View decorView = window.getDecorView();
-			viewList.clear();
-			getViews(getTopParent(decorView));
+			decorView = views[views.length-1];
+			getViews(decorView);
 			return viewList;
 		} catch (Throwable e) {
 			e.printStackTrace();
@@ -348,6 +339,50 @@ class ViewFetcher {
 			}	
 		}
 		return radioButtonList;
+	}
+	
+	private static Class<?> windowManager;
+	static{
+		try {
+			Log.d("Instrumentation", " satter launcherActivityClass: ");
+			windowManager = Class.forName("android.view.WindowManagerImpl");
+			
+		} catch (ClassNotFoundException e) {
+			throw new RuntimeException(e);
+		} catch (SecurityException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} 
+	}
+	
+	/**
+	 * Returns the WindorDecorViews shown on the screen
+	 * @return the WindorDecorViews shown on the screen
+	 * 
+	 */
+	
+	public View[] getWindowDecorViews()
+	{
+
+		Field viewsField;
+		Field instanceField;
+		try {
+			viewsField = windowManager.getDeclaredField("mViews");
+			instanceField = windowManager.getDeclaredField("mWindowManager");
+			viewsField.setAccessible(true);
+			instanceField.setAccessible(true);
+			Object instance = instanceField.get(null);
+			return (View[]) viewsField.get(instance);
+		} catch (SecurityException e) {
+			e.printStackTrace();
+		} catch (NoSuchFieldException e) {
+			e.printStackTrace();
+		} catch (IllegalArgumentException e) {
+			e.printStackTrace();
+		} catch (IllegalAccessException e) {
+			e.printStackTrace();
+		} 
+		return null;
 	}
 	
 	
