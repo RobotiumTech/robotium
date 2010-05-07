@@ -9,6 +9,7 @@ import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.RadioButton;
+import android.widget.ScrollView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.ListView;
@@ -807,6 +808,19 @@ public class Solo {
 		ArrayList<ListView> listViewList = viewFetcher.getCurrentListViews();
 		return listViewList;
 	}
+
+      /**
+     	* Returns an ArrayList of all the scroll views located in the current activity.
+     	*
+     	*
+     	* @return an ArrayList of the scroll views located in the current activity
+     	*
+     	*/
+	
+    public ArrayList<ScrollView> getCurrentScrollViews() {
+        return viewFetcher.getCurrentScrollViews();
+    }
+
 	
 	/**
 	 * Returns an ArrayList of spinners (drop-down menus) located in the current

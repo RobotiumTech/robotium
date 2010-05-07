@@ -14,6 +14,7 @@ import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RadioButton;
+import android.widget.ScrollView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.ToggleButton;
@@ -204,6 +205,25 @@ class ViewFetcher {
 				listViews.add((ListView) view);
 			}
 		return listViews;
+	}
+
+	/**
+	 * This method returns an ArrayList of all the scroll views located in the current activity.
+	 * 
+	 * @return an ArrayList of the scroll views located in the current activity
+	 * 
+	 */
+
+	public ArrayList<ScrollView> getCurrentScrollViews() {
+		ArrayList<ScrollView> scrollViews = new ArrayList<ScrollView>();
+		ArrayList<View> viewList = getViews();
+		Iterator<View> iterator = viewList.iterator();
+		while (iterator.hasNext()) {
+			View view = iterator.next();
+			if (view instanceof android.widget.ScrollView)
+				scrollViews.add((ScrollView) view);
+		}
+		return scrollViews;
 	}
 	
 	/**

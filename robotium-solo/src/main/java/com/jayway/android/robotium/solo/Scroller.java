@@ -142,16 +142,12 @@ class Scroller {
 		int x = soloActivity.getCurrentActivity().getWindowManager()
 				.getDefaultDisplay().getWidth() / 2;
 
-		if(soloView.getCurrentListViews().size()>0)
-		{
-			return scrollList(0, direction);	
+		if (soloView.getCurrentListViews().size() > 0) {
+			return scrollList(0, direction);
 		}
-		
-		else
+
+		else if (!isSameText() && soloView.getCurrentScrollViews().size() > 0) {
 			drag(x, x, yStart, yEnd, 40);
-			
-		
-		if (!isSameText()) {
 			return true;
 		} else {
 			return false;
@@ -232,7 +228,7 @@ class Scroller {
 			int yEnd = ((soloActivity.getCurrentActivity().getWindowManager()
 					.getDefaultDisplay().getHeight() / 2));
 			int x = soloActivity.getCurrentActivity().getWindowManager()
-			.getDefaultDisplay().getWidth() / 2;
+					.getDefaultDisplay().getWidth() / 2;
 			drag(x, x, yStart, yEnd, 40);
 			listView.getLocationOnScreen(xy);
 		}
@@ -242,20 +238,20 @@ class Scroller {
 			yStart = ((xy[1] + listView.getHeight()) - 20);
 			yEnd = (xy[1]);
 		} else {
-			yStart = ((xy[1])+25);
+			yStart = ((xy[1]) + 25);
 			yEnd = ((xy[1] + listView.getHeight()) - 20);
 		}
 		int x = soloActivity.getCurrentActivity().getWindowManager()
 				.getDefaultDisplay().getWidth() / 2;
-		
-		drag(x, x, yStart, yEnd, 40);
-		
-		if (!isSameText()) {
+
+		if (listView.getLastVisiblePosition() < listView.getCount() - 1) {
+			drag(x, x, yStart, yEnd, 40);
 			return true;
+
 		} else {
 			return false;
 		}
-		
+
 	}
 	
 	
