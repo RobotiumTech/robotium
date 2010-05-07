@@ -90,7 +90,7 @@ public class Solo {
         this.robotiumUtils = new RobotiumUtils(activitiyUtils, searcher, viewFetcher, inst);
         this.clicker = new Clicker(activitiyUtils, viewFetcher, scroller,robotiumUtils, inst);
         this.presser = new Presser(viewFetcher, clicker, inst);
-        this.textEnterer = new TextEnterer(viewFetcher, activitiyUtils, clicker, inst);
+        this.textEnterer = new TextEnterer(viewFetcher, robotiumUtils, clicker, inst);
         
 	}
 
@@ -398,7 +398,7 @@ public class Solo {
 	 */
 	
 	public void clickOnScreen(float x, float y) {
-		activitiyUtils.waitForIdle();
+		robotiumUtils.waitForIdle();
 		clicker.clickOnScreen(x, y);
 	}
 	
@@ -473,7 +473,7 @@ public class Solo {
 	 */
 	
 	public void clickOnScreen(View view) {		
-		activitiyUtils.waitForIdle();
+		robotiumUtils.waitForIdle();
 		clicker.clickOnScreen(view);
 	}
 	
@@ -485,7 +485,7 @@ public class Solo {
 	 */
 	
 	public void clickOnView(View view) {
-		activitiyUtils.waitForIdle();
+		robotiumUtils.waitForIdle();
 		clicker.clickOnScreen(view);
 	}
 	
@@ -498,7 +498,7 @@ public class Solo {
 	 */
 	
 	public void clickLongOnScreen(View view) {
-		activitiyUtils.waitForIdle();
+		robotiumUtils.waitForIdle();
 		clicker.clickLongOnScreen(view);
 	}
 	
@@ -510,7 +510,7 @@ public class Solo {
 	 */
 	
 	public void clickLongOnView(View view) {
-		activitiyUtils.waitForIdle();
+		robotiumUtils.waitForIdle();
 		clicker.clickLongOnScreen(view);
 	}
 	
@@ -527,8 +527,21 @@ public class Solo {
 	}
 	
 	/**
+	 * Long clicks on a specific text view. ClickOnText() can then be
+	 * used to click on the context menu items that appear after the long click.
+	 *
+	 * @param text the text that should be clicked on. Regular expressions are supported
+	 *
+	 */
+	
+	public void clickLongOnText(String text)
+	{
+		clicker.clickLongOnText(text);
+	}
+	
+	/**
 	 * Long clicks on a specific text view and then selects
-	 * an item from the menu that appears. Will automatically scroll when needed. 
+	 * an item from the context menu that appears. Will automatically scroll when needed. 
 	 *
 	 * @param text the text to be clicked on. Regular expressions are supported
 	 * @param index the index of the menu item to be pressed
@@ -634,22 +647,28 @@ public class Solo {
 	
 	/**
 	 * Scrolls down a list with a given listIndex.
+	 * 
 	 * @param listIndex the list to be scrolled. 0 if only one list is available 
+	 * @return true if more scrolling can be done
+	 * 
 	 */
 	
-	public void scrollDownList(int listIndex)
+	public boolean scrollDownList(int listIndex)
 	{
-		scroller.scrollDownList(listIndex);
+		return scroller.scrollDownList(listIndex);
 	}
 	
 	/**
 	 * Scrolls up a list with a given listIndex.
+	 * 
 	 * @param listIndex the ListView to be scrolled. 0 if only one list is available
+	 * @return true if more scrolling can be done
+	 * 
 	 */
 	
-	public void scrollUpList(int listIndex)
+	public boolean scrollUpList(int listIndex)
 	{
-		scroller.scrollUpList(listIndex);
+		return scroller.scrollUpList(listIndex);
 	}
 	
 	/**
@@ -809,7 +828,7 @@ public class Solo {
 	 *
 	 * @param parent the parent View in which the text views should be returned. Null if
 	 * all text views from the current activity should be returned
-	 *
+	 * 
 	 * @return an ArrayList of the text views located in the current activity or view
 	 *
 	 */

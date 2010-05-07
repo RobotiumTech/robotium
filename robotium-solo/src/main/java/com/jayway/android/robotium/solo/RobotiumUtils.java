@@ -3,6 +3,7 @@ package com.jayway.android.robotium.solo;
 import java.util.ArrayList;
 import android.app.Instrumentation;
 import android.view.KeyEvent;
+import android.view.View;
 import android.widget.EditText;
 import android.widget.RadioButton;
 
@@ -13,6 +14,7 @@ class RobotiumUtils {
 	private ActivityUtils soloActivity;
 	private Instrumentation inst;
 	private final int TIMEOUT = 20000;
+	private final int PAUS = 500;
 	private final static int RIGHT = 2;
 	private final static int LEFT = 3;
 	private final static int UP = 4;
@@ -53,7 +55,7 @@ class RobotiumUtils {
 	
     public void clearEditText(int index)
     {
-        soloActivity.waitForIdle();
+        waitForIdle();
     	final EditText editText = soloView.getCurrentEditTexts().get(index);
 
         soloActivity.getCurrentActivity().runOnUiThread(new Runnable()
@@ -65,8 +67,26 @@ class RobotiumUtils {
         });
     }
     
+    /**
+	 * Private method used instead of instrumentation.waitForIdleSync().
+	 *
+	 */
    
-    
+    public void waitForIdle() {
+		sleep(PAUS);
+		long startTime = System.currentTimeMillis();
+		long timeout = 10000;
+		long endTime = startTime + timeout;
+		View decorView;
+		ArrayList<View> touchItems;
+		while (System.currentTimeMillis() <= endTime) {
+			decorView = soloView.getWindowDecorViews()[soloView.getWindowDecorViews().length-1];
+			touchItems = decorView.getTouchables();
+			if (touchItems.size() > 0)  
+				break;
+			RobotiumUtils.sleep(PAUS);
+		}
+	}
     
     /**
 	 * Waits for a text to be shown. Default timeout is 20 seconds. 
@@ -99,8 +119,7 @@ class RobotiumUtils {
 
         while (!soloSearch.searchForText(text, matches) && !soloSearch.searchForEditText(text) && now < endTime)
         {
-        	 now = System.currentTimeMillis();
-        	
+        	now = System.currentTimeMillis();	
         }
         now = System.currentTimeMillis();
 

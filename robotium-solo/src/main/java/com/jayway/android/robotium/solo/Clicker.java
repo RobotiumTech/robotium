@@ -54,8 +54,8 @@ class Clicker {
 		this.soloActivity = soloActivity;
 		this.soloView = soloView;
 		this.soloScroll = soloScroll;
-		this.inst = inst;
 		this.robotiumUtils = robotiumUtils;
+		this.inst = inst;
 	}
 	
 	/**
@@ -201,6 +201,19 @@ class Clicker {
 	}
 	
 	/**
+	 * Long clicks on a specific text view. ClickOnText() can then be
+	 * used to click on the context menu items that appear after the long click.
+	 *
+	 * @param text the text that should be clicked on. Regular expressions are supported
+	 *
+	 */
+	
+	public void clickLongOnText(String text)
+	{
+		clickOnText(text, true);
+	}
+	
+	/**
 	 * Clicks on a menu item with a given text
 	 * @param text the menu text that should be clicked on. Regular expressions are supported 
 	 */
@@ -220,11 +233,11 @@ class Clicker {
 	 * @param longClick true if the click should be a long click 
 	 *
 	 */
-	
+
 	private void clickOnText(String text, boolean longClick) {
 		Pattern p = Pattern.compile(text);
 		Matcher matcher; 
-		robotiumUtils.waitForText(text);
+		robotiumUtils.waitForText(text, 0, TIMEOUT);
 		boolean found = false;
 		ArrayList <TextView> textViews = soloView.getCurrentTextViews(null);
 		Iterator<TextView> iterator = textViews.iterator();
@@ -263,7 +276,7 @@ class Clicker {
 	 */
 	
 	public boolean clickOnButton(int index) {
-		soloActivity.waitForIdle();
+		robotiumUtils.waitForIdle();
 		boolean found = false;
 		Button button = null;
 		try {
@@ -289,7 +302,7 @@ class Clicker {
 		Pattern p = Pattern.compile(name);
 		Matcher matcher;
 		Button button = null;
-		robotiumUtils.waitForText(name);
+		robotiumUtils.waitForText(name, 0, TIMEOUT);
 		boolean found = false;
 		ArrayList<Button> buttonList = soloView.getCurrentButtons();
 		Iterator<Button> iterator = buttonList.iterator();
@@ -325,7 +338,7 @@ class Clicker {
 		Pattern p = Pattern.compile(name);
 		Matcher matcher;
 		ToggleButton toggleButton = null;
-		robotiumUtils.waitForText(name);
+		robotiumUtils.waitForText(name, 0, TIMEOUT);
 		boolean found = false;
 		ArrayList<ToggleButton> toggleButtonList = soloView
 				.getCurrentToggleButtons();
@@ -361,7 +374,7 @@ class Clicker {
 	 */
 	
 	public void clickOnImage(int index) {
-		soloActivity.waitForIdle();
+		robotiumUtils.waitForIdle();
 		try {
 			clickOnScreen(soloView.getCurrentImageViews().get(index));
 		} catch (IndexOutOfBoundsException e) {
@@ -377,7 +390,7 @@ class Clicker {
 	 */
 	
 	public void clickOnRadioButton(int index) {
-		soloActivity.waitForIdle();
+		robotiumUtils.waitForIdle();
 		try {
 			clickOnScreen(soloView.getCurrentRadioButtons().get(index));
 		} catch (IndexOutOfBoundsException e) {
@@ -437,9 +450,9 @@ class Clicker {
 	 * @return an array list of the text views located in the list line
 	 */
 	
-	public ArrayList<TextView> clickInList(int line, int index) {
-	RobotiumUtils.sleep(PAUS);	
-	soloActivity.waitForIdle();
+	public ArrayList<TextView> clickInList(int line, int index) {	
+	robotiumUtils.waitForIdle();
+	RobotiumUtils.sleep(PAUS);
         if(soloView.getCurrentListViews().size()<index)
         	Assert.assertTrue("No ListView with index " + index + " is available", false);
         ArrayList<TextView> textViews = soloView.getCurrentTextViews(soloView

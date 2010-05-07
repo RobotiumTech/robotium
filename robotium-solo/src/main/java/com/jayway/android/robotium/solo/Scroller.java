@@ -119,8 +119,10 @@ class Scroller {
 	
 	/**
 	 * Private method used to scroll up and down
+	 * 
 	 * @param direction the direction in which to scroll
 	 * @return true if more scrolling can be done
+	 * 
 	 */
 	
 	private boolean scroll(int direction) {
@@ -140,12 +142,16 @@ class Scroller {
 		int x = soloActivity.getCurrentActivity().getWindowManager()
 				.getDefaultDisplay().getWidth() / 2;
 
-		if(soloView.getCurrentListViews().size()==1)
-			scrollList(0, direction);
+		if(soloView.getCurrentListViews().size()>0)
+		{
+			return scrollList(0, direction);	
+		}
+		
 		else
 			drag(x, x, yStart, yEnd, 40);
+			
 		
-		if (isSameText()) {
+		if (!isSameText()) {
 			return true;
 		} else {
 			return false;
@@ -153,8 +159,8 @@ class Scroller {
 	}
 	
 	/**
-	 * Determines if no more scrolling can be done.
-	 * @return true if no more scrolling can be done
+	 * Determines if a previous text is the same as the current.
+	 * @return true if it is the same text and false if it is not
 	 * 
 	 */
 	
@@ -169,49 +175,53 @@ class Scroller {
 		
 		if (checkTextView != null
 				&& !checkTextView.getText().equals(
-						soloView.getCurrentTextViews(null).get(
-								soloView.getCurrentTextViews(null).size()
-										- constant).getText())) {
+						textViewList.get(size - constant).getText())) {
 			checkTextView = textViewList.get(size - constant);
-			return true;
+			return false;
 		} else if (checkTextView == null) {
 			checkTextView = textViewList.get(size - constant);
-			return true;
+			return false;
 		}
 		else
-			return false;
+			return true;
 	}
 	
 	/**
 	 * Scrolls up a list with a given listIndex. 
 	 * @param listIndex the ListView to be scrolled. 0 if only one list is available.
+	 * @return true if more scrolling can be done
 	 * 
 	 */
 	
-	public void scrollUpList(int listIndex)
+	public boolean scrollUpList(int listIndex)
 	{
-		scrollList(listIndex, UP);
+		return scrollList(listIndex, UP);
 	}
 	
 	/**
 	 * Scrolls down a list with a given listIndex.
-	 * @param listIndex the list to be scrolled. 0 if only one list is available.
+	 * 
+	 * @param listIndex the list to be scrolled. 0 if only one list is available
+	 * @return true if more scrolling can be done
 	 * 
 	 */
 	
-	public void scrollDownList(int listIndex)
+	public boolean scrollDownList(int listIndex)
 	{
-		scrollList(listIndex, DOWN);
+		return scrollList(listIndex, DOWN);
 		
 	}
 	
 	/**
 	 * Scrolls a list
+	 * 
 	 * @param listIndex the list to be scrolled
 	 * @param direction the direction to be scrolled
+	 * @return true if more scrolling can be done
+	 * 
 	 */
 	
-	private void scrollList(int listIndex, int direction) {
+	private boolean scrollList(int listIndex, int direction) {
 		ListView listView = soloView.getCurrentListViews().get(listIndex);
 		int[] xy = new int[2];
 		listView.getLocationOnScreen(xy);
@@ -237,7 +247,15 @@ class Scroller {
 		}
 		int x = soloActivity.getCurrentActivity().getWindowManager()
 				.getDefaultDisplay().getWidth() / 2;
+		
 		drag(x, x, yStart, yEnd, 40);
+		
+		if (!isSameText()) {
+			return true;
+		} else {
+			return false;
+		}
+		
 	}
 	
 	

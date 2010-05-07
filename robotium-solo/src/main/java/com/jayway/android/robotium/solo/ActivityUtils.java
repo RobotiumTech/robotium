@@ -6,7 +6,6 @@ import android.app.Activity;
 import android.app.Instrumentation;
 import android.app.Instrumentation.ActivityMonitor;
 import android.content.IntentFilter;
-import android.view.View;
 
 /**
  * This class contains activity related methods. Examples are:
@@ -107,30 +106,6 @@ class ActivityUtils {
 		else {
 			activityList.add(activity);
 			return activity;
-		}
-	}
-	
-	/**
-	 * Private method used instead of instrumentation.waitForIdleSync().
-	 *
-	 */
-	
-	public void waitForIdle() {
-		RobotiumUtils.sleep(PAUS);
-		if(getCurrentActivity()!=null)
-		activity = getCurrentActivity();
-		long startTime = System.currentTimeMillis();
-		long timeout = 10000;
-		long endTime = startTime + timeout;
-		View decorView;
-		ArrayList<View> touchItems;
-		while (System.currentTimeMillis() <= endTime) {
-			decorView = activity.getWindow()
-					.getDecorView();
-			touchItems = decorView.getTouchables();
-			if (touchItems.size() > 0)  
-				break;
-			RobotiumUtils.sleep(PAUS);
 		}
 	}
 	

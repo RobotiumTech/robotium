@@ -6,7 +6,6 @@ import java.util.Iterator;
 import android.app.Activity;
 import android.app.Dialog;
 import android.app.Instrumentation;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -344,7 +343,6 @@ class ViewFetcher {
 	private static Class<?> windowManager;
 	static{
 		try {
-			Log.d("Instrumentation", " satter launcherActivityClass: ");
 			windowManager = Class.forName("android.view.WindowManagerImpl");
 			
 		} catch (ClassNotFoundException e) {
