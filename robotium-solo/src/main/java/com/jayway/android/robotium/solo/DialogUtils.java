@@ -12,7 +12,7 @@ package com.jayway.android.robotium.solo;
 class DialogUtils {
 	
 	private final ViewFetcher viewFetcher;
-	private final int PAUS = 1000;
+	private final int PAUS = 500;
 
 	/**
 	 * Constructs this object.
@@ -31,10 +31,11 @@ class DialogUtils {
 	 * Waits for a Dialog to close.
 	 * 
 	 * @param timeout the the amount of time in milliseconds to wait
-	 * @return true if the dialog is closed before the timeout and false if it is not closed.
+	 * @return true if the dialog is closed before the timeout and false if it is not closed
 	 */
 
 	public boolean waitForDialogToClose(long timeout) {
+		RobotiumUtils.sleep(PAUS);
 		int elements = viewFetcher.getWindowDecorViews().length;
 		long now = System.currentTimeMillis();
 		final long endTime = now + timeout;

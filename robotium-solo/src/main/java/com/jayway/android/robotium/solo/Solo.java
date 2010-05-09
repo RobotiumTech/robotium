@@ -591,7 +591,7 @@ public class Solo {
 	}
 
 	/**
-	 * Clicks on a certain list line on a specified List and 
+	 * Clicks on a certain list line on a specified list and 
 	 * return the text views that the list line is showing. 
 	 * 
 	 * @param line the line that should be clicked
@@ -906,7 +906,7 @@ public class Solo {
 	}
 	
 	/**
-	 * Checks if a radio button with a given index is checked
+	 * Checks if a radio button with a given index is checked.
 	 * 
 	 * @param index of the radio button to check
 	 * @return true if radio button is checked and false if it is not checked
@@ -919,7 +919,8 @@ public class Solo {
 	
 
 	/**
-	 * Tells Robotium to send a key: Right, Left, Up, Down or Enter
+	 * Tells Robotium to send a key: Right, Left, Up, Down, Enter or Menu.
+	 * 
 	 * @param key the key to be sent. Use Solo.RIGHT/LEFT/UP/DOWN/ENTER/MENU
 	 * 
 	 */
