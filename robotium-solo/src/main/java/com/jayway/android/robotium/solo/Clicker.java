@@ -35,6 +35,7 @@ class Clicker {
 	private final RobotiumUtils robotiumUtils;
 	private final int PAUS = 500;
 	private final int TIMEOUT = 10000;
+	private final int CLICKTIMEOUT = 5000;	
 	private final static int MENU = 7;
 
 
@@ -133,7 +134,7 @@ class Clicker {
 	private void clickOnScreen(View view, boolean longClick) {
 		int[] xy = new int[2];
 		long now = System.currentTimeMillis();
-		final long endTime = now + TIMEOUT;
+		final long endTime = now + CLICKTIMEOUT;
 		while ((!view.isShown() || view.isLayoutRequested()) && now < endTime) {
 			RobotiumUtils.sleep(500);
 			now = System.currentTimeMillis();
