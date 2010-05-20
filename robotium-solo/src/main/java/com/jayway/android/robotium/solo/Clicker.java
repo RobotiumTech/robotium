@@ -143,6 +143,7 @@ class Clicker {
 		if (xy[1] + 20 > soloActivity.getCurrentActivity().getWindowManager()
 				.getDefaultDisplay().getHeight()) {
 			soloScroll.scrollDown();
+			RobotiumUtils.sleep(200);
 			view.getLocationOnScreen(xy);
 		}
 		final int viewWidth = view.getWidth();
