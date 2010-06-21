@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import android.app.Instrumentation;
 import android.view.KeyEvent;
 import android.view.View;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.RadioButton;
 
@@ -21,6 +22,7 @@ class RobotiumUtils {
 	private final static int DOWN = 5;
 	private final static int ENTER = 6;
 	private final static int MENU = 7;
+	private final static int DELETE = 8;
 	
 	public RobotiumUtils(ActivityUtils activityUtils, Searcher searcher,
 			ViewFetcher viewFetcher, Instrumentation inst) {
@@ -46,6 +48,7 @@ class RobotiumUtils {
 			e.printStackTrace();
 		}
 	}
+	
 	
 	 /**
      * Clears the value of an edit text
@@ -98,9 +101,22 @@ class RobotiumUtils {
 	
 	public boolean waitForText(String text) {
 
-		return waitForText(text, 0, TIMEOUT);
+		return waitForText(text, 0, TIMEOUT, true);
 	}
+	
+	 /**
+	 * Waits for a text to be shown. Default timeout is 20 seconds. 
+	 * 
+	 * @param text the text that needs to be shown
+	 * @param matches the number of matches of text that must be shown. 0 means any number of matches
+	 * @return true if text is found and false if it is not found before the timeout
+	 * 
+	 */
+	
+	public boolean waitForText(String text, int matches) {
 
+		return waitForText(text, matches, TIMEOUT, true);
+	}
 	
 	 /**
 	 * Waits for a text to be shown. 
@@ -113,11 +129,28 @@ class RobotiumUtils {
 	 */
 	
 	public boolean waitForText(String text, int matches, long timeout)
+	{
+		return waitForText(text, matches, timeout, true);
+	}
+
+	
+	 /**
+	 * Waits for a text to be shown. 
+	 * 
+	 * @param text the text that needs to be shown
+	 * @param matches the number of matches of text that must be shown. 0 means any number of matches
+	 * @param timeout the the amount of time in milliseconds to wait
+	 * @param scroll true if scrolling should be performed
+	 * @return true if text is found and false if it is not found before the timeout
+	 * 
+	 */
+	
+	public boolean waitForText(String text, int matches, long timeout, boolean scroll)
     {
 		long now = System.currentTimeMillis();
         final long endTime = now + timeout;
 
-        while (!soloSearch.searchForText(text, matches) && !soloSearch.searchForEditText(text) && now < endTime)
+        while (!soloSearch.searchForText(text, matches, scroll) && !soloSearch.searchForEditText(text, scroll) && now < endTime)
         {
         	now = System.currentTimeMillis();	
         }
@@ -143,8 +176,21 @@ class RobotiumUtils {
 	}
 	
 	/**
+	 * Checks if a check box with a given index is checked
+	 * 
+	 * @param index of the check box to check
+	 * @return true if check box is checked and false if it is not checked
+	 */
+	
+	public boolean isCheckBoxChecked(int index)
+	{
+		ArrayList<CheckBox> checkBoxList = soloView.getCurrentCheckBoxes();
+		return checkBoxList.get(index).isChecked();
+	}
+	
+	/**
 	 * Tells Robotium to send a key: Right, Left, Up, Down or Enter
-	 * @param key the key to be sent. Use Solo.RIGHT/LEFT/UP/DOWN/ENTER
+	 * @param key the key to be sent. Use Solo.RIGHT/LEFT/UP/DOWN/MENU/ENTER/DELETE
 	 * 
 	 */
 	
@@ -170,6 +216,9 @@ class RobotiumUtils {
 			break;
 		case MENU:
 			inst.sendCharacterSync(KeyEvent.KEYCODE_MENU);
+			break;
+		case DELETE:
+			inst.sendCharacterSync(KeyEvent.KEYCODE_DEL);
 			break;
 		default:
 			break;

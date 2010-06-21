@@ -54,14 +54,14 @@ class TextEnterer{
 				}
 			}
 			if (!focused && soloView.getCurrentEditTexts().size() > 0) {
-				soloClick.clickOnScreen(soloView.getCurrentEditTexts().get(index));
+				soloClick.clickOnEditText(index);
 				inst.sendStringSync(text);
 				inst.sendKeyDownUpSync(KeyEvent.KEYCODE_ENTER);
 				inst.sendKeyDownUpSync(KeyEvent.KEYCODE_ENTER);
 				
 			} else if (focused && soloView.getCurrentEditTexts().size() >1)
 			{
-				soloClick.clickOnScreen(soloView.getCurrentEditTexts().get(index));
+				soloClick.clickOnEditText(index);
 				inst.sendStringSync(text);
 			}
 			else {

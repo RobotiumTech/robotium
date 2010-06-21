@@ -5,8 +5,10 @@ import android.app.Activity;
 import android.app.Instrumentation;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.GridView;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.ScrollView;
@@ -71,6 +73,7 @@ public class Solo {
 	public final static int DOWN = 5;
 	public final static int ENTER = 6;
 	public final static int MENU = 7;
+	public final static int DELETE = 8;
 
 	
 	/**
@@ -159,6 +162,22 @@ public class Solo {
 	public boolean waitForText(String text, int matches, long timeout)
     {
        return robotiumUtils.waitForText(text, matches, timeout);
+    }
+	
+	 /**
+	 * Waits for a text to be shown. 
+	 * 
+	 * @param text the text that needs to be shown
+	 * @param matches the number of matches of text that must be shown. 0 means any number of matches
+	 * @param timeout the the amount of time in milliseconds to wait
+	 * @param scroll true if scrolling should be performed
+	 * @return true if text is found and false if it is not found before the timeout
+	 * 
+	 */
+	
+	public boolean waitForText(String text, int matches, long timeout, boolean scroll)
+    {
+		return robotiumUtils.waitForText(text, matches, timeout, scroll);
     }
 	
 	
@@ -272,6 +291,23 @@ public class Solo {
 		return found;
 
 	}
+	
+	/**
+	 * Searches for a text string and returns true if the searched text is found a given
+	 * number of times
+	 * 
+	 * @param search the string to be searched. Regular expressions are supported
+	 * @param matches the number of matches expected to be found. 0 matches means that one or more 
+	 * matches are expected to be found
+	 * @param scroll true if scrolling should be performed
+	 * @return true if search string is found a given number of times and false if the search string
+	 * is not found
+	 *  
+	 */
+	
+	public boolean searchText(String search, int matches, boolean scroll) {
+		return searcher.searchText(search, matches, scroll);
+	}
 
 	/**
 	 * Sets the Orientation (Landscape/Portrait) for the current activity.
@@ -364,7 +400,17 @@ public class Solo {
 	public void assertCurrentActivity(String message, Class expectedClass,
 			boolean isNewInstance) {
 		asserter.assertCurrentActivity(message, expectedClass, isNewInstance);
-	}		
+	}	
+	
+	/**
+	 * Asserts that the available memory in the system is not low.
+	 * 
+	 */
+	
+	public void assertLowMemory()
+	{
+		asserter.assertLowMemory();
+	}
 	
 	
 	/**
@@ -414,6 +460,17 @@ public class Solo {
 	public void clickOnButton(String name) {
 		clicker.clickOnButton(name);
 
+	}
+	
+	/**
+	 * Clicks on an image button with a certain index.
+	 *
+	 * @param index the index of the image button to be clicked
+	 *
+	 */
+	
+	public void clickOnImageButton(int index) {
+		clicker.clickOnImageButton(index);
 	}
 	
 	/**
@@ -469,19 +526,6 @@ public class Solo {
 	 * Clicks on a specific view.
 	 *
 	 * @param view the view that should be clicked
-	 * @deprecated replaced by {@link #clickOnView(View view)}
-	 *
-	 */
-	
-	public void clickOnScreen(View view) {		
-		robotiumUtils.waitForIdle();
-		clicker.clickOnScreen(view);
-	}
-	
-	/**
-	 * Clicks on a specific view.
-	 *
-	 * @param view the view that should be clicked
 	 *
 	 */
 	
@@ -490,18 +534,6 @@ public class Solo {
 		clicker.clickOnScreen(view);
 	}
 	
-	/**
-	 * Long clicks on a specific view.
-	 *
-	 * @param view the view that should be long clicked
-	 * @deprecated replaced by {@link #clickLongOnView(View view)}
-	 *
-	 */
-	
-	public void clickLongOnScreen(View view) {
-		robotiumUtils.waitForIdle();
-		clicker.clickLongOnScreen(view);
-	}
 	
 	/**
 	 * Long clicks on a specific view.
@@ -528,6 +560,19 @@ public class Solo {
 	}
 	
 	/**
+	 * This method is used to click on a specific text view displaying a certain
+	 * text.
+	 *
+	 * @param text the text that should be clicked on. Regular expressions are supported
+	 * @param match the match that should be clicked on 
+	 *
+	 */
+	
+	public void clickOnText(String text, int match) {
+		clicker.clickOnText(text, match);
+	}
+	
+	/**
 	 * Long clicks on a specific text view. ClickOnText() can then be
 	 * used to click on the context menu items that appear after the long click.
 	 *
@@ -538,6 +583,20 @@ public class Solo {
 	public void clickLongOnText(String text)
 	{
 		clicker.clickLongOnText(text);
+	}
+	
+	/**
+	 * Long clicks on a specific text view. ClickOnText() can then be
+	 * used to click on the context menu items that appear after the long click.
+	 *
+	 * @param text the text that should be clicked on. Regular expressions are supported
+	 * @param match the match that should be clicked on 
+	 *
+	 */
+	
+	public void clickLongOnText(String text, int match)
+	{
+		clicker.clickLongOnText(text, match);
 	}
 	
 	/**
@@ -554,7 +613,7 @@ public class Solo {
 	}
 	
 	/**
-	 * Clicks on a button with a specific index.
+	 * Clicks on a button with a certain index.
 	 *
 	 * @param index the index number of the button
 	 * @return true if button with specified index is found
@@ -567,7 +626,7 @@ public class Solo {
 		
 	}
 	
-	 /**
+	/**
 	 * Clicks on a radio button with a certain index.
 	 *
 	 * @param index the index of the radio button to be clicked
@@ -576,6 +635,28 @@ public class Solo {
 	
 	public void clickOnRadioButton(int index) {
 		clicker.clickOnRadioButton(index);
+	}
+	
+	/**
+	 * Clicks on a check box with a certain index.
+	 *
+	 * @param index the index of the check box to be clicked
+	 *
+	 */
+	
+	public void clickOnCheckBox(int index) {
+		clicker.clickOnCheckBox(index);
+	}
+	
+	/**
+	 * Clicks on an edit text with a certain index.
+	 *
+	 * @param index the index of the edit text to be clicked
+	 *
+	 */
+	
+	public void clickOnEditText(int index) {
+		clicker.clickOnEditText(index);
 	}
 
 	/**
@@ -670,30 +751,6 @@ public class Solo {
 	public boolean scrollUpList(int listIndex)
 	{
 		return scroller.scrollUpList(listIndex);
-	}
-	
-	/**
-	 * Scrolls down a list or scroll view.
-	 *
-	 * @return true if more scrolling can be done and false if it is at the end of 
-	 * the screen
-	 * @deprecated replaced by {@link #scrollDownList(int listIndex)} and {@link #scrollDown()} 
-	 *
-	 */
-	
-	public boolean scrollDownList() {
-		boolean scroll = scroller.scrollDown();
-		return scroll;
-	}
-		
-	/**
-	 * Scrolls up a list.
-	 * @deprecated replaced by {@link #scrollUpList(int listIndex)} and {@link #scrollUp()}
-	 *  
-	 */
-	
-	public void scrollUpList() {
-		scroller.scrollUp();
 	}
 	
 	/**
@@ -894,7 +951,7 @@ public class Solo {
 	}
 	
 	/**
-	 * This method returns an ArrayList of the radio buttons contained in the current
+	 * Returns an ArrayList of the radio buttons contained in the current
 	 * activity.
 	 *
 	 * @return ArrayList of the radio buttons contained in the current activity
@@ -903,6 +960,32 @@ public class Solo {
 	
 	public ArrayList<RadioButton> getCurrentRadioButtons() {
 		return viewFetcher.getCurrentRadioButtons();
+	}
+	
+	/**
+	 * Returns an ArrayList of the check boxes contained in the current
+	 * activity.
+	 *
+	 * @return ArrayList of the check boxes contained in the current activity
+	 *
+	 */
+	
+	public ArrayList<CheckBox> getCurrentCheckBoxes()
+	{
+		return viewFetcher.getCurrentCheckBoxes();
+	}
+	
+	/**
+	 * Returns an ArrayList of the image buttons contained in the current
+	 * activity.
+	 *
+	 * @return ArrayList of the image buttons contained in the current activity
+	 *
+	 */
+	
+	public ArrayList<ImageButton> getCurrentImageButtons()
+	{
+		return viewFetcher.getCurrentImageButtons();
 	}
 	
 	/**
@@ -917,11 +1000,23 @@ public class Solo {
 		return robotiumUtils.isRadioButtonChecked(index);
 	}
 	
+	/**
+	 * Checks if a check box with a given index is checked
+	 * 
+	 * @param index of the check box to check
+	 * @return true if check box is checked and false if it is not checked
+	 */
+	
+	public boolean isCheckBoxChecked(int index)
+	{
+		return robotiumUtils.isCheckBoxChecked(index);
+	}
+	
 
 	/**
-	 * Tells Robotium to send a key: Right, Left, Up, Down, Enter or Menu.
+	 * Tells Robotium to send a key: Right, Left, Up, Down, Enter, Menu or Delete.
 	 * 
-	 * @param key the key to be sent. Use Solo.RIGHT/LEFT/UP/DOWN/ENTER/MENU
+	 * @param key the key to be sent. Use Solo.RIGHT/LEFT/UP/DOWN/ENTER/MENU/DELETE
 	 * 
 	 */
 	

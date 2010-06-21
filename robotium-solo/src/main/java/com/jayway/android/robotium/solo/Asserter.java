@@ -2,6 +2,7 @@ package com.jayway.android.robotium.solo;
 
 import junit.framework.Assert;
 import android.app.Activity;
+import android.app.ActivityManager;
 
 /**
  * This class contains assertActivity() methods.
@@ -97,6 +98,18 @@ class Asserter {
 				found = true;
 		}
 			Assert.assertNotSame(message + ", isNewInstance: actual and ", isNewInstance, found);
-	}	
+	}
+	
+	/**
+	 * Asserts that the available memory in the system is not low.
+	 * 
+	 */
+	
+	public void assertLowMemory()
+	{
+		ActivityManager.MemoryInfo mi = new ActivityManager.MemoryInfo();
+		((ActivityManager)soloActivity.getCurrentActivity().getSystemService("activity")).getMemoryInfo(mi);
+		Assert.assertFalse("Low memory available: " + mi.availMem + " bytes", mi.lowMemory);
+	}
 
 }

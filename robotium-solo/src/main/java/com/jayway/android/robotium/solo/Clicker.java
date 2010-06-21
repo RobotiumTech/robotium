@@ -33,6 +33,7 @@ class Clicker {
 	private final Scroller soloScroll;
 	private final Instrumentation inst;
 	private final RobotiumUtils robotiumUtils;
+	private int countMatches=0;
 	private final int PAUS = 500;
 	private final int TIMEOUT = 10000;
 	private final int CLICKTIMEOUT = 5000;	
@@ -139,13 +140,15 @@ class Clicker {
 			RobotiumUtils.sleep(500);
 			now = System.currentTimeMillis();
 		}
+		if(!view.isShown())
+			Assert.assertTrue("View can not be clicked!", false);
 		view.getLocationOnScreen(xy);
-		if (xy[1] + 20 > soloActivity.getCurrentActivity().getWindowManager()
-				.getDefaultDisplay().getHeight()) {
-			soloScroll.scrollDown();
-			RobotiumUtils.sleep(200);
+		while (xy[1] + 10> soloActivity.getCurrentActivity().getWindowManager() 
+				.getDefaultDisplay().getHeight() && soloScroll.scrollDown()) {
 			view.getLocationOnScreen(xy);
 		}
+		RobotiumUtils.sleep(300);
+		view.getLocationOnScreen(xy);
 		final int viewWidth = view.getWidth();
 		final int viewHeight = view.getHeight();
 		final float x = xy[0] + (viewWidth / 2.0f);
@@ -178,7 +181,20 @@ class Clicker {
 	 */
 	
 	public void clickOnText(String text) {
-		clickOnText(text, false);
+		clickOnText(text, false, 1);
+	}
+	
+	/**
+	 * This method is used to click on a specific text view displaying a certain
+	 * text.
+	 *
+	 * @param text the text that should be clicked on. Regular expressions are supported
+	 * @param matches the match that should be clicked on 
+	 *
+	 */
+	
+	public void clickOnText(String text, int matches) {
+		clickOnText(text, false, matches);
 	}
 	
 	/**
@@ -192,7 +208,7 @@ class Clicker {
 	
 	public void clickLongOnTextAndPress(String text, int index)
 	{
-		clickOnText(text, true);
+		clickOnText(text, true, 0);
 		inst.sendKeyDownUpSync(KeyEvent.KEYCODE_DPAD_DOWN);
 		for(int i = 0; i < index; i++)
 		{
@@ -212,7 +228,20 @@ class Clicker {
 	
 	public void clickLongOnText(String text)
 	{
-		clickOnText(text, true);
+		clickOnText(text, true, 1);
+	}
+	
+	/**
+	 * Long clicks on a specific text view. ClickOnText() can then be
+	 * used to click on the context menu items that appear after the long click.
+	 *
+	 * @param text the text that should be clicked on. Regular expressions are supported
+	 *
+	 */
+	
+	public void clickLongOnText(String text, int matches)
+	{
+		clickOnText(text, true, matches);
 	}
 	
 	/**
@@ -233,21 +262,28 @@ class Clicker {
 	 *
 	 * @param text the text that should be clicked on. Regular expressions are supported
 	 * @param longClick true if the click should be a long click 
+	 * @param match the match that should be clicked on 
 	 *
 	 */
 
-	private void clickOnText(String text, boolean longClick) {
+	private void clickOnText(String text, boolean longClick, int match) {
 		Pattern p = Pattern.compile(text);
 		Matcher matcher; 
-		robotiumUtils.waitForText(text, 0, TIMEOUT);
+		robotiumUtils.waitForText(text, 0, TIMEOUT, true);
 		boolean found = false;
 		ArrayList <TextView> textViews = soloView.getCurrentTextViews(null);
 		Iterator<TextView> iterator = textViews.iterator();
 		TextView textView = null;
+		if(match == 0)
+			match = 1;
 		while (iterator.hasNext()) {
 			textView = iterator.next();
 			matcher = p.matcher(textView.getText().toString());
 			if(matcher.matches()){	
+				countMatches++;
+			}
+			if (countMatches == match) {
+				countMatches = 0;
 				found = true;
 				break;
 			}
@@ -258,12 +294,15 @@ class Clicker {
 			else
 				clickOnScreen(textView);
 		} else if (soloScroll.scrollDown()) {
-			clickOnText(text, longClick);
+			clickOnText(text, longClick, match);
 		} else {
-			for (int i = 0; i < textViews.size(); i++)
-				Log.d(LOG_TAG, text + " not found. Have found: "
-						+ textViews.get(i).getText());
-			Assert.assertTrue("The text: " + text + " is not found!", false);
+			if (countMatches > 0)
+				Assert.assertTrue("There are only " + countMatches + " matches of " + text, false);
+			else {
+				for (int i = 0; i < textViews.size(); i++)
+					Log.d(LOG_TAG, text + " not found. Have found: " + textViews.get(i).getText());
+				Assert.assertTrue("The text: " + text + " is not found!", false);
+			}
 		}
 	}
 	
@@ -304,7 +343,7 @@ class Clicker {
 		Pattern p = Pattern.compile(name);
 		Matcher matcher;
 		Button button = null;
-		robotiumUtils.waitForText(name, 0, TIMEOUT);
+		robotiumUtils.waitForText(name, 0, TIMEOUT, true);
 		boolean found = false;
 		ArrayList<Button> buttonList = soloView.getCurrentButtons();
 		Iterator<Button> iterator = buttonList.iterator();
@@ -340,7 +379,7 @@ class Clicker {
 		Pattern p = Pattern.compile(name);
 		Matcher matcher;
 		ToggleButton toggleButton = null;
-		robotiumUtils.waitForText(name, 0, TIMEOUT);
+		robotiumUtils.waitForText(name, 0, TIMEOUT, true);
 		boolean found = false;
 		ArrayList<ToggleButton> toggleButtonList = soloView
 				.getCurrentToggleButtons();
@@ -359,10 +398,8 @@ class Clicker {
 			clickOnButton(name);
 		} else {
 			for (int i = 0; i < toggleButtonList.size(); i++)
-				Log.d(LOG_TAG, name + " not found. Have found: "
-						+ toggleButtonList.get(i).getText());
-			Assert.assertTrue("ToggleButton with the text: " + name
-					+ " is not found!", false);
+				Log.d(LOG_TAG, name + " not found. Have found: " + toggleButtonList.get(i).getText());
+			Assert.assertTrue("ToggleButton with the text: " + name + " is not found!", false);
 		}
 
 	}
@@ -385,6 +422,22 @@ class Clicker {
 	}
 	
 	/**
+	 * This method is used to click on an image button with a certain index.
+	 *
+	 * @param index the index of the image button to be clicked
+	 *
+	 */
+	
+	public void clickOnImageButton(int index) {
+		robotiumUtils.waitForIdle();
+		try {
+			clickOnScreen(soloView.getCurrentImageButtons().get(index));
+		} catch (IndexOutOfBoundsException e) {
+			Assert.assertTrue("Index is not valid", false);
+		}
+	}
+	
+	/**
 	 * This method is used to click on a radio button with a certain index.
 	 *
 	 * @param index the index of the radio button to be clicked
@@ -395,6 +448,38 @@ class Clicker {
 		robotiumUtils.waitForIdle();
 		try {
 			clickOnScreen(soloView.getCurrentRadioButtons().get(index));
+		} catch (IndexOutOfBoundsException e) {
+			Assert.assertTrue("Index is not valid", false);
+		}
+	}
+	
+	/**
+	 * This method is used to click on a check box with a certain index.
+	 *
+	 * @param index the index of the check box to be clicked
+	 *
+	 */
+	
+	public void clickOnCheckBox(int index) {
+		robotiumUtils.waitForIdle();
+		try {
+			clickOnScreen(soloView.getCurrentCheckBoxes().get(index));
+		} catch (IndexOutOfBoundsException e) {
+			Assert.assertTrue("Index is not valid", false);
+		}
+	}
+	
+	/**
+	 * Clicks on an edit text with a certain index.
+	 *
+	 * @param index the index of the edit text to be clicked
+	 *
+	 */
+	
+	public void clickOnEditText(int index) {
+		robotiumUtils.waitForIdle();
+		try {
+			clickOnScreen(soloView.getCurrentEditTexts().get(index));
 		} catch (IndexOutOfBoundsException e) {
 			Assert.assertTrue("Index is not valid", false);
 		}
@@ -413,23 +498,7 @@ class Clicker {
 		} catch (Throwable e) {}
 	}
 	
-	/**
-	 * Private method that returns the list item parent. It is used by clickInList().
-	 * 
-	 * @param view the view who's parent is requested
-	 * @return the parent of the view
-	 */
 	
-	private View getListItemParent(View view)
-	{
-		if (view.getParent() != null
-				&& !(view.getParent() instanceof android.widget.ListView)) {
-			return getListItemParent((View) view.getParent());
-		} else {
-			return view;
-		}
-		
-	}
 	
 	/**
 	 * Method that will click on a certain list line and return the text views that
@@ -455,16 +524,24 @@ class Clicker {
 	public ArrayList<TextView> clickInList(int line, int index) {	
 	robotiumUtils.waitForIdle();
 	RobotiumUtils.sleep(PAUS);
-        if(soloView.getCurrentListViews().size()<index)
+	long now = System.currentTimeMillis();
+	final long endTime = now + CLICKTIMEOUT;
+        while((soloView.getCurrentListViews().size()<index+1) && now < endTime)
+        {
+        	RobotiumUtils.sleep(PAUS);
+        }
+        if (now > endTime)
         	Assert.assertTrue("No ListView with index " + index + " is available", false);
-        ArrayList<TextView> textViews = soloView.getCurrentTextViews(soloView
+        	
+        ArrayList<TextView> textViews = null;
+        textViews = soloView.getCurrentTextViews(soloView
                 .getCurrentListViews().get(index));
-        ArrayList<TextView> textViewGroup = new ArrayList<TextView>();
+       ArrayList<TextView> textViewGroup = new ArrayList<TextView>();
         int myLine = 0;
         for (int i = 0; i < textViews.size(); i++) {
-            View view = getListItemParent(textViews.get(i));
+            View view = soloView.getListItemParent(textViews.get(i));
             try {
-                if (view.equals(getListItemParent(textViews.get(i + 1)))) {
+                if (view.equals(soloView.getListItemParent(textViews.get(i + 1)))) {
                 	textViewGroup.add(textViews.get(i));
                 } else {
                     textViewGroup.add(textViews.get(i));

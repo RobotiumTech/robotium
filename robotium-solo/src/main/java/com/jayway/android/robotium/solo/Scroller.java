@@ -1,12 +1,12 @@
 package com.jayway.android.robotium.solo;
 
-import java.util.ArrayList;
 import android.app.Activity;
 import android.app.Instrumentation;
 import android.os.SystemClock;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.widget.ListView;
-import android.widget.TextView;
+import android.widget.ScrollView;
 
 /**
 * This class contains scroll methods. Examples are scrollDown(), scrollUpList(),
@@ -21,7 +21,7 @@ class Scroller {
 	private final Instrumentation inst;
 	private final ActivityUtils soloActivity;
 	private final ViewFetcher soloView;
-   	private TextView checkTextView = null;
+   	private int scrollAmount = 0;
 	private final static int RIGHT = 2;
 	private final static int LEFT = 3;
 	private final static int UP = 4;
@@ -64,7 +64,7 @@ class Scroller {
 		float x = fromX;
 		float yStep = (toY - fromY) / stepCount;
 		float xStep = (toX - fromX) / stepCount;
-		MotionEvent event = MotionEvent.obtain(downTime, eventTime,MotionEvent.ACTION_DOWN, fromX, y, 0);
+		MotionEvent event = MotionEvent.obtain(downTime, eventTime,MotionEvent.ACTION_DOWN, fromX, fromY, 0);
 		try {
 			inst.sendPointerSync(event);
 		} catch (Throwable e) {
@@ -83,7 +83,7 @@ class Scroller {
 			inst.waitForIdleSync();
 		}
 		eventTime = SystemClock.uptimeMillis();
-		event = MotionEvent.obtain(downTime, eventTime, MotionEvent.ACTION_UP,fromX, y, 0);
+		event = MotionEvent.obtain(downTime, eventTime, MotionEvent.ACTION_UP,toX, toY, 0);
 		try {
 			inst.sendPointerSync(event);
 		} catch (Throwable e) {
@@ -133,7 +133,8 @@ class Scroller {
 					.getDefaultDisplay().getHeight() - 20);
 			yEnd = ((soloActivity.getCurrentActivity().getWindowManager()
 					.getDefaultDisplay().getHeight() / 2));
-		} else {
+		} 
+		else {
 			yStart = ((soloActivity.getCurrentActivity().getWindowManager()
 					.getDefaultDisplay().getHeight() / 2));
 			yEnd = (soloActivity.getCurrentActivity().getWindowManager()
@@ -144,42 +145,21 @@ class Scroller {
 
 		if (soloView.getCurrentListViews().size() > 0) {
 			return scrollList(0, direction);
-		}
+		} 
+		else if (soloView.getCurrentScrollViews().size() > 0) {
+			ScrollView scroll = soloView.getCurrentScrollViews().get(0);
+			scrollAmount = scroll.getScrollY();
+			drag(x, x, yStart, yEnd, 20);
+			if (scrollAmount == scroll.getScrollY()) {
+				scrollAmount = 0;
+				return false;
+			} 
+			else
+				return true;
+		} 
+		else
+			return false;
 
-		else if (!isSameText() && soloView.getCurrentScrollViews().size() > 0) {
-			drag(x, x, yStart, yEnd, 40);
-			return true;
-		} else {
-			return false;
-		}
-	}
-	
-	/**
-	 * Determines if a previous text is the same as the current.
-	 * @return true if it is the same text and false if it is not
-	 * 
-	 */
-	
-	private boolean isSameText() {
-		ArrayList<TextView> textViewList = soloView.getCurrentTextViews(null);
-		int size = textViewList.size();
-		int constant = 0;
-		if (size > 2)
-			constant = 2;
-		else
-			constant = size;
-		
-		if (checkTextView != null
-				&& !checkTextView.getText().equals(
-						textViewList.get(size - constant).getText())) {
-			checkTextView = textViewList.get(size - constant);
-			return false;
-		} else if (checkTextView == null) {
-			checkTextView = textViewList.get(size - constant);
-			return false;
-		}
-		else
-			return true;
 	}
 	
 	/**
@@ -221,6 +201,7 @@ class Scroller {
 		ListView listView = soloView.getCurrentListViews().get(listIndex);
 		int[] xy = new int[2];
 		listView.getLocationOnScreen(xy);
+
 		while (xy[1] + 20 > soloActivity.getCurrentActivity()
 				.getWindowManager().getDefaultDisplay().getHeight()) {
 			int yStart = (soloActivity.getCurrentActivity().getWindowManager()
@@ -236,15 +217,16 @@ class Scroller {
 		int yEnd;
 		if (direction == DOWN) {
 			yStart = ((xy[1] + listView.getHeight()) - 20);
-			yEnd = (xy[1]);
+			yEnd = (xy[1] + 20);
 		} else {
-			yStart = ((xy[1]) + 25);
-			yEnd = ((xy[1] + listView.getHeight()) - 20);
+			
+			yStart = ((xy[1]) + 20);
+			yEnd = (xy[1] + listView.getHeight());
 		}
 		int x = soloActivity.getCurrentActivity().getWindowManager()
 				.getDefaultDisplay().getWidth() / 2;
-
-		if (listView.getLastVisiblePosition() < listView.getCount() - 1) {
+		
+		if (listView.getLastVisiblePosition() < listView.getCount()-1) {
 			drag(x, x, yStart, yEnd, 40);
 			return true;
 

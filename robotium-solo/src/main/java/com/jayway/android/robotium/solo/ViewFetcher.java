@@ -9,8 +9,10 @@ import android.app.Instrumentation;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.GridView;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RadioButton;
@@ -46,7 +48,7 @@ class ViewFetcher {
 
 	
 	/**
-	 * Method used to get the absolute top view in an activity.
+	 * Returns the absolute top view in an activity.
 	 *
 	 * @param view the view whose top parent is requested
 	 * @return the top parent view
@@ -61,6 +63,24 @@ class ViewFetcher {
 		} else {
 			return view;
 		}
+	}
+	
+	/**
+	 * Returns the list item parent. It is used by clickInList().
+	 * 
+	 * @param view the view who's parent is requested
+	 * @return the parent of the view
+	 */
+	
+	public View getListItemParent(View view)
+	{
+		if (view.getParent() != null
+				&& !(view.getParent() instanceof android.widget.ListView)) {
+			return getListItemParent((View) view.getParent());
+		} else {
+			return view;
+		}
+		
 	}
 	
 
@@ -198,12 +218,14 @@ class ViewFetcher {
 	public ArrayList<ListView> getCurrentListViews() {
 		ArrayList<ListView> listViews = new ArrayList<ListView>();
 		ArrayList<View> viewList = getViews();
+		try{
 		Iterator<View> iterator = viewList.iterator();
 		while (iterator.hasNext()) {
 			View view = iterator.next();
 			if (view instanceof android.widget.ListView)
 				listViews.add((ListView) view);
 			}
+		}catch(NullPointerException e){}
 		return listViews;
 	}
 
@@ -274,8 +296,7 @@ class ViewFetcher {
 			}
 			
 		}
-		return textViewList;
-		
+		return textViewList;	
 	}
 	
 	/**
@@ -358,6 +379,50 @@ class ViewFetcher {
 			}	
 		}
 		return radioButtonList;
+	}
+	
+	/**
+	 * This method returns an ArrayList of the check boxes contained in the current
+	 * activity.
+	 *
+	 * @return ArrayList of the check boxes contained in the current activity
+	 *
+	 */
+	
+	public ArrayList<CheckBox> getCurrentCheckBoxes()
+	{
+		ArrayList<View> viewList = getViews();
+		ArrayList<CheckBox> checkBoxList = new ArrayList<CheckBox>();
+		Iterator<View> iterator = viewList.iterator();
+		while (iterator.hasNext()) {
+			View view = iterator.next();
+			if (view instanceof android.widget.CheckBox) {
+				checkBoxList.add((CheckBox) view);
+			}	
+		}
+		return checkBoxList;
+	}
+	
+	/**
+	 * This method returns an ArrayList of the image buttons contained in the current
+	 * activity.
+	 *
+	 * @return ArrayList of the image buttons contained in the current activity
+	 *
+	 */
+	
+	public ArrayList<ImageButton> getCurrentImageButtons()
+	{
+		ArrayList<View> viewList = getViews();
+		ArrayList<ImageButton> imageButtonList = new ArrayList<ImageButton>();
+		Iterator<View> iterator = viewList.iterator();
+		while (iterator.hasNext()) {
+			View view = iterator.next();
+			if (view instanceof android.widget.ImageButton) {
+				imageButtonList.add((ImageButton) view);
+			}	
+		}
+		return imageButtonList;
 	}
 	
 	private static Class<?> windowManager;
