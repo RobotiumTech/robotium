@@ -125,7 +125,7 @@ public class Solo {
 	}
 	
 	/**
-     * Clears the value of an edit text
+     * Clears the value of an edit text.
      * 
      * @param index the index of the edit text that should be cleared
      */
@@ -294,7 +294,7 @@ public class Solo {
 	
 	/**
 	 * Searches for a text string and returns true if the searched text is found a given
-	 * number of times
+	 * number of times.
 	 * 
 	 * @param search the string to be searched. Regular expressions are supported
 	 * @param matches the number of matches expected to be found. 0 matches means that one or more 
@@ -485,7 +485,7 @@ public class Solo {
 	}
 	
 	/**
-	 * Clicks on a menu item with a given text
+	 * Clicks on a menu item with a given text.
 	 * @param text the menu text that should be clicked on. Regular expressions are supported 
 	 */
 	
@@ -1001,7 +1001,7 @@ public class Solo {
 	}
 	
 	/**
-	 * Checks if a check box with a given index is checked
+	 * Checks if a check box with a given index is checked.
 	 * 
 	 * @param index of the check box to check
 	 * @return true if check box is checked and false if it is not checked
