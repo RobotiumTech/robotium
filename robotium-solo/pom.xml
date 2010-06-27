@@ -30,24 +30,4 @@
 		</plugins>
 	</build>
     
-    <!-- Because of a bug in nexus pom validation, we include a bunch of things here, which are already in the parent pom. -->
-    <!-- The bug is tracked here: https://issues.sonatype.org/browse/OSSRH-216 -->
-    <!-- TODO: delete the rest of this file after the bug has been fixed. -->
-    <url>http://www.robotium.org/</url>
-    <licenses>
-        <license>
-            <name>Apache 2.0</name>
-            <url>LICENSE</url>
-        </license>
-    </licenses>
-    <properties>
-        <scm.branch>master</scm.branch>
-    </properties>
-    <scm>
-        <url>http://github.com/jayway/robotium/tree/${scm.branch}</url>
-        <connection>scm:git:git://github.com/jayway/robotium.git</connection>
-        <developerConnection>scm:git:git://git@github.com/jayway/robotium.git</developerConnection>
-    </scm>
-    <!-- TODO: end delete. -->
-    
 </project>
