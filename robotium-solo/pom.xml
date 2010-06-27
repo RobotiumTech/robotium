@@ -12,8 +12,14 @@
     </parent>
 	<dependencies>
 		<dependency>
-			<groupId>android</groupId>
+			<groupId>com.google.android</groupId>
 			<artifactId>android</artifactId>
+			<version>[1.6_r1,1.7)</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>com.google.android</groupId>
+			<artifactId>android-test</artifactId>
 			<version>[1.6_r1,1.7)</version>
 			<scope>provided</scope>
 		</dependency>
