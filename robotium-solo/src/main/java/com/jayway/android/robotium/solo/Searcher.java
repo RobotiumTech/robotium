@@ -154,9 +154,7 @@ class Searcher {
         while (!searchForButton(search, matches) && now < endTime)
         {
         	now = System.currentTimeMillis();
-        	countMatches = 0;
         }
-        countMatches = 0;
         if(now < endTime)
         	return true;
         else
@@ -200,6 +198,7 @@ class Searcher {
 			return searchForButton(search, matches);
 		} else {
 			Log.d(LOG_TAG, " There are only " + countMatches + " matches of " + search);
+			countMatches = 0;
 			return false;
 		}
 		
@@ -222,9 +221,7 @@ class Searcher {
         while (!searchForToggleButton(search, matches) && now < endTime)
         {
         	now = System.currentTimeMillis();
-        	countMatches = 0;
         }
-        countMatches = 0;
         if(now < endTime)
         	return true;
         else
@@ -270,6 +267,7 @@ class Searcher {
 		} else {
 			if(countMatches > 0)
 				Log.d(LOG_TAG, " There are only " + countMatches + " matches of " + search);
+			countMatches = 0;
 			return false;
 		}
 		
@@ -322,9 +320,7 @@ class Searcher {
         while (!searchForText(search, matches, scroll) && now < endTime)
         {
         	now = System.currentTimeMillis();
-        	countMatches = 0;
         }
-        countMatches = 0;
         if(now < endTime)
         	return true;
         else
@@ -371,6 +367,7 @@ class Searcher {
 		} else {
 			if (countMatches > 0)
 				Log.d(LOG_TAG, " There are only " + countMatches + " matches of " + search);
+			countMatches=0;
 			return false;
 		}
 		
