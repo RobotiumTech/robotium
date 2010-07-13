@@ -28,7 +28,7 @@ class Searcher {
 	private final int TIMEOUT = 5000;
 	private int countMatches=0;
 	private final String LOG_TAG = "Robotium";
-
+	
     /**
      * Constructs this object.
      *
@@ -41,9 +41,9 @@ class Searcher {
         this.soloScroll = soloScroll;
         this.inst = inst;
     }
-
-
-
+	
+	
+	
 	/**
 	 * Searches for a text string in the edit texts located in the current
 	 * activity.
@@ -58,8 +58,8 @@ class Searcher {
         final long endTime = now + TIMEOUT;
         while (!searchForEditText(search) && now < endTime)
         {
-		RobotiumUtils.sleep(PAUS);        	
-		now = System.currentTimeMillis();
+			RobotiumUtils.sleep(PAUS);        	
+			now = System.currentTimeMillis();
         }
         return searchForEditText(search);
     }
@@ -79,7 +79,7 @@ class Searcher {
 	}
 	
 	
-	 /**
+	/**
 	 * Searches for a text string in the edit texts located in the current
 	 * activity.
 	 *
@@ -154,8 +154,13 @@ class Searcher {
         while (!searchForButton(search, matches) && now < endTime)
         {
         	now = System.currentTimeMillis();
+        	countMatches = 0;
         }
-        return searchForButton(search, matches);
+        countMatches = 0;
+        if(now < endTime)
+        	return true;
+        else
+        	return false;
 	}
 	
 	/**
@@ -190,14 +195,14 @@ class Searcher {
 				return true;
 			} 	
 		}
-		 if (soloScroll.scrollDown())
+		if (soloScroll.scrollDown())
 		{
 			return searchForButton(search, matches);
 		} else {
 			Log.d(LOG_TAG, " There are only " + countMatches + " matches of " + search);
 			return false;
 		}
-
+		
 	}
 	/**
 	 * Searches for a toggle button with the given search string and returns true if the 
@@ -217,8 +222,13 @@ class Searcher {
         while (!searchForToggleButton(search, matches) && now < endTime)
         {
         	now = System.currentTimeMillis();
+        	countMatches = 0;
         }
-        return searchForToggleButton(search, matches);
+        countMatches = 0;
+        if(now < endTime)
+        	return true;
+        else
+        	return false;
 	}
 	
 	
@@ -262,7 +272,7 @@ class Searcher {
 				Log.d(LOG_TAG, " There are only " + countMatches + " matches of " + search);
 			return false;
 		}
-
+		
 	}
 	
 	/**
@@ -312,8 +322,13 @@ class Searcher {
         while (!searchForText(search, matches, scroll) && now < endTime)
         {
         	now = System.currentTimeMillis();
+        	countMatches = 0;
         }
-        return searchForText(search, matches, scroll);
+        countMatches = 0;
+        if(now < endTime)
+        	return true;
+        else
+        	return false;
 	}
 	
 	
@@ -358,8 +373,8 @@ class Searcher {
 				Log.d(LOG_TAG, " There are only " + countMatches + " matches of " + search);
 			return false;
 		}
-
+		
 	}
 	
-
+	
 }

@@ -252,9 +252,9 @@ class Scroller {
 		float x = screenWidth / 2.0f;
 		float y = screenHeight / 2.0f;
 		if (side == LEFT)
-			drag(0, x, y, y, screenWidth);
+			drag(0, x, y, y, 40);
 		else if (side == RIGHT)
-			drag(x, 0, y, y, screenWidth);
+			drag(x, 0, y, y, 40);
 	}
 	
 
