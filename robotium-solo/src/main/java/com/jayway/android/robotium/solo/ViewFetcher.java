@@ -30,10 +30,10 @@ import android.widget.ToggleButton;
  */
 
 class ViewFetcher {
-
+	
 	private final ArrayList<View> viewList = new ArrayList<View>();
 	private final Instrumentation inst;
-
+	
     /**
      * Constructs this object.
      *
@@ -45,7 +45,7 @@ class ViewFetcher {
     public ViewFetcher(Instrumentation inst) {
         this.inst = inst;
     }
-
+	
 	
 	/**
 	 * Returns the absolute top view in an activity.
@@ -57,8 +57,8 @@ class ViewFetcher {
 	
 	public View getTopParent(View view) {
 		if (view.getParent() != null
-				&& !view.getParent().getClass().getName().equals(
-						"android.view.ViewRoot")) {
+			&& !view.getParent().getClass().getName().equals(
+															 "android.view.ViewRoot")) {
 			return getTopParent((View) view.getParent());
 		} else {
 			return view;
@@ -75,7 +75,7 @@ class ViewFetcher {
 	public View getListItemParent(View view)
 	{
 		if (view.getParent() != null
-				&& !(view.getParent() instanceof android.widget.ListView)) {
+			&& !(view.getParent() instanceof android.widget.ListView)) {
 			return getListItemParent((View) view.getParent());
 		} else {
 			return view;
@@ -83,7 +83,30 @@ class ViewFetcher {
 		
 	}
 	
-
+	/**
+	 * Returns the most recent DecorView. 
+	 * 
+	 * @return DecorView
+	 */
+	
+	private View getDecorView()
+	{
+		View [] views = getWindowDecorViews();
+		if(views.length > 0)
+		{
+			int length = views.length;
+			for(int i = length - 1; i >= 0; i--){
+				if(views[i].hasFocus()){
+					return views[i];
+				}
+			}
+			return views[views.length-1];
+		}
+		else
+			return null;
+	}
+	
+	
 	/**
 	 * This method returns an ArrayList of all the views located in the current activity or dialog.
 	 *
@@ -93,21 +116,19 @@ class ViewFetcher {
 	
 	public ArrayList<View> getViews() {
 		inst.waitForIdleSync();
-		View decorView;
 		viewList.clear();
-		View [] views = getWindowDecorViews();
 		try {
-			decorView = views[views.length-1];
-			getViews(decorView);
+			if(getDecorView() != null)
+				getViews(getDecorView());
 			return viewList;
 		} catch (Throwable e) {
 			e.printStackTrace();
 		}
 		return null;
 	}
-
- 
-
+	
+	
+	
 	/**
 	 * Private method which adds all the views located in the currently active
 	 * activity to an ArrayList viewList.
@@ -125,7 +146,7 @@ class ViewFetcher {
 			}
 		}
 	}
-
+	
 	/**
 	 * This method returns an ArrayList of the images contained in the current
 	 * activity.
@@ -203,8 +224,7 @@ class ViewFetcher {
 			if (view instanceof android.widget.EditText)
 				editTextList.add((EditText) view);
 		}
-		return editTextList;
-		
+		return editTextList;	
 	}
 	
 	/**
@@ -214,28 +234,26 @@ class ViewFetcher {
 	 * @return an ArrayList of the list views located in the current activity
 	 * 
 	 */
-
+	
 	public ArrayList<ListView> getCurrentListViews() {
 		ArrayList<ListView> listViews = new ArrayList<ListView>();
 		ArrayList<View> viewList = getViews();
-		try{
 		Iterator<View> iterator = viewList.iterator();
 		while (iterator.hasNext()) {
 			View view = iterator.next();
 			if (view instanceof android.widget.ListView)
 				listViews.add((ListView) view);
-			}
-		}catch(NullPointerException e){}
+		}
 		return listViews;
 	}
-
+	
 	/**
 	 * This method returns an ArrayList of all the scroll views located in the current activity.
 	 * 
 	 * @return an ArrayList of the scroll views located in the current activity
 	 * 
 	 */
-
+	
 	public ArrayList<ScrollView> getCurrentScrollViews() {
 		ArrayList<ScrollView> scrollViews = new ArrayList<ScrollView>();
 		ArrayList<View> viewList = getViews();
@@ -339,7 +357,7 @@ class ViewFetcher {
 		}
 		return buttonList;
 	}
-
+	
 	/**
 	 * This method returns an ArrayList with the toggle buttons located in the
 	 * current activity.
@@ -347,7 +365,7 @@ class ViewFetcher {
 	 * @return and ArrayList of the toggle buttons located in the current activity
 	 * 
 	 */
-
+	
 	public ArrayList<ToggleButton> getCurrentToggleButtons() {
 		ArrayList<ToggleButton> toggleButtonList = new ArrayList<ToggleButton>();
 		ArrayList<View> viewList = getViews();
@@ -446,7 +464,7 @@ class ViewFetcher {
 	
 	public View[] getWindowDecorViews()
 	{
-
+		
 		Field viewsField;
 		Field instanceField;
 		try {
