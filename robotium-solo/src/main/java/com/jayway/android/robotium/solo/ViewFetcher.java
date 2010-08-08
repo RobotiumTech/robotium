@@ -2,7 +2,6 @@ package com.jayway.android.robotium.solo;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
-import java.util.Iterator;
 import android.app.Activity;
 import android.app.Dialog;
 import android.app.Instrumentation;
@@ -158,9 +157,7 @@ class ViewFetcher {
 	public ArrayList<ImageView> getCurrentImageViews() {
 		ArrayList<View> viewList = getViews();
 		ArrayList<ImageView> imageViewList = new ArrayList<ImageView>();
-		Iterator<View> iterator = viewList.iterator();
-		while (iterator.hasNext()) {
-			View view = iterator.next();
+		for(View view : viewList){
 			if (view instanceof android.widget.ImageView) {
 				imageViewList.add((ImageView) view);
 			}	
@@ -218,9 +215,7 @@ class ViewFetcher {
 	public ArrayList<EditText> getCurrentEditTexts() {
 		ArrayList<EditText>editTextList = new ArrayList<EditText>();
 		ArrayList<View> viewList = getViews();
-		Iterator<View> iterator = viewList.iterator();
-		while (iterator.hasNext()) {
-			View view = iterator.next();
+		for(View view : viewList){
 			if (view instanceof android.widget.EditText)
 				editTextList.add((EditText) view);
 		}
@@ -238,9 +233,7 @@ class ViewFetcher {
 	public ArrayList<ListView> getCurrentListViews() {
 		ArrayList<ListView> listViews = new ArrayList<ListView>();
 		ArrayList<View> viewList = getViews();
-		Iterator<View> iterator = viewList.iterator();
-		while (iterator.hasNext()) {
-			View view = iterator.next();
+		for(View view : viewList){
 			if (view instanceof android.widget.ListView)
 				listViews.add((ListView) view);
 		}
@@ -257,9 +250,7 @@ class ViewFetcher {
 	public ArrayList<ScrollView> getCurrentScrollViews() {
 		ArrayList<ScrollView> scrollViews = new ArrayList<ScrollView>();
 		ArrayList<View> viewList = getViews();
-		Iterator<View> iterator = viewList.iterator();
-		while (iterator.hasNext()) {
-			View view = iterator.next();
+		for(View view : viewList){
 			if (view instanceof android.widget.ScrollView)
 				scrollViews.add((ScrollView) view);
 		}
@@ -278,9 +269,7 @@ class ViewFetcher {
 	{
 		ArrayList<Spinner>spinnerList = new ArrayList<Spinner>();
 		ArrayList<View> viewList = getViews();
-		Iterator<View> iterator = viewList.iterator();
-		while (iterator.hasNext()) {
-			View view = iterator.next();
+		for(View view : viewList){
 			if (view instanceof android.widget.Spinner)
 				spinnerList.add((Spinner) view);
 		}
@@ -298,17 +287,16 @@ class ViewFetcher {
 	 *
 	 */
 	
-	public ArrayList<TextView> getCurrentTextViews(View parent) {
-		viewList.clear();		
+	public ArrayList<TextView> getCurrentTextViews(View parent) {		
 		if(parent == null)
 			getViews();
 		else
+		{
+			viewList.clear();
 			getViews(parent);
-		
+		}
 		ArrayList<TextView> textViewList = new ArrayList<TextView>();
-		Iterator<View> iterator = viewList.iterator();
-		while (iterator.hasNext()) {
-			View view = iterator.next();
+		for(View view : viewList){
 			if (view instanceof android.widget.TextView) {
 				textViewList.add((TextView) view);
 			}
@@ -328,9 +316,7 @@ class ViewFetcher {
 	public ArrayList<GridView> getCurrentGridViews() {
 		ArrayList<View> viewList = getViews();
 		ArrayList<GridView> gridViewList = new ArrayList<GridView>();
-		Iterator<View> iterator = viewList.iterator();
-		while (iterator.hasNext()) {
-			View view = iterator.next();
+		for(View view : viewList){
 			if (view instanceof android.widget.GridView)
 				gridViewList.add((GridView) view);
 		}
@@ -349,9 +335,7 @@ class ViewFetcher {
 	public ArrayList<Button> getCurrentButtons() {
 		ArrayList<Button> buttonList = new ArrayList<Button>();
 		ArrayList<View> viewList = getViews();
-		Iterator<View> iterator = viewList.iterator();
-		while (iterator.hasNext()) {
-			View view = iterator.next();
+		for(View view : viewList){
 			if (view instanceof android.widget.Button)
 				buttonList.add((Button) view);
 		}
@@ -369,9 +353,7 @@ class ViewFetcher {
 	public ArrayList<ToggleButton> getCurrentToggleButtons() {
 		ArrayList<ToggleButton> toggleButtonList = new ArrayList<ToggleButton>();
 		ArrayList<View> viewList = getViews();
-		Iterator<View> iterator = viewList.iterator();
-		while (iterator.hasNext()) {
-			View view = iterator.next();
+		for(View view : viewList){
 			if (view instanceof android.widget.ToggleButton)
 				toggleButtonList.add((ToggleButton) view);
 		}
@@ -389,9 +371,7 @@ class ViewFetcher {
 	public ArrayList<RadioButton> getCurrentRadioButtons() {
 		ArrayList<View> viewList = getViews();
 		ArrayList<RadioButton> radioButtonList = new ArrayList<RadioButton>();
-		Iterator<View> iterator = viewList.iterator();
-		while (iterator.hasNext()) {
-			View view = iterator.next();
+		for(View view : viewList){
 			if (view instanceof android.widget.RadioButton) {
 				radioButtonList.add((RadioButton) view);
 			}	
@@ -411,9 +391,7 @@ class ViewFetcher {
 	{
 		ArrayList<View> viewList = getViews();
 		ArrayList<CheckBox> checkBoxList = new ArrayList<CheckBox>();
-		Iterator<View> iterator = viewList.iterator();
-		while (iterator.hasNext()) {
-			View view = iterator.next();
+		for(View view : viewList){
 			if (view instanceof android.widget.CheckBox) {
 				checkBoxList.add((CheckBox) view);
 			}	
@@ -433,9 +411,7 @@ class ViewFetcher {
 	{
 		ArrayList<View> viewList = getViews();
 		ArrayList<ImageButton> imageButtonList = new ArrayList<ImageButton>();
-		Iterator<View> iterator = viewList.iterator();
-		while (iterator.hasNext()) {
-			View view = iterator.next();
+		for(View view : viewList){
 			if (view instanceof android.widget.ImageButton) {
 				imageButtonList.add((ImageButton) view);
 			}	
