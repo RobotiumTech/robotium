@@ -1,7 +1,6 @@
 package com.jayway.android.robotium.solo;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import android.app.Instrumentation;
@@ -94,9 +93,7 @@ class Searcher {
 		Pattern p = Pattern.compile(search);
 		Matcher matcher;
 		ArrayList<EditText> editTextList = soloView.getCurrentEditTexts();
-		Iterator<EditText> iterator = editTextList.iterator();
-		while (iterator.hasNext()) {
-			EditText editText = (EditText) iterator.next();
+		for(EditText editText : editTextList){
 			matcher = p.matcher(editText.getText().toString());
 			if (matcher.find()) {
 				return true;
@@ -179,11 +176,9 @@ class Searcher {
 		Pattern p = Pattern.compile(search);
 		Matcher matcher;
 		ArrayList<Button> buttonList = soloView.getCurrentButtons();
-		Iterator<Button> iterator = buttonList.iterator();
 		if(matches == 0)
 			matches = 1;
-		while (iterator.hasNext()) {
-			Button button = (Button) iterator.next();
+		for(Button button : buttonList){
 			matcher = p.matcher(button.getText().toString());
 			if(matcher.find()){	
 				countMatches++;
@@ -247,11 +242,9 @@ class Searcher {
 		Pattern p = Pattern.compile(search);
 		Matcher matcher;
 		ArrayList<ToggleButton> toggleButtonList = soloView.getCurrentToggleButtons();
-		Iterator<ToggleButton> iterator = toggleButtonList.iterator();
 		if(matches == 0)
 			matches = 1;
-		while (iterator.hasNext()) {
-			ToggleButton toggleButton = (ToggleButton) iterator.next();
+		for(ToggleButton toggleButton : toggleButtonList){
 			matcher = p.matcher(toggleButton.getText().toString());
 			if(matcher.find()){	
 				countMatches++;
@@ -347,12 +340,9 @@ class Searcher {
 		Pattern p = Pattern.compile(search);
 		Matcher matcher;
 		ArrayList<TextView> textViewList = soloView.getCurrentTextViews(null);
-		Iterator<TextView> iterator = textViewList.iterator();
-		TextView textView = null;
 		if(matches == 0)
 			matches = 1;
-		while (iterator.hasNext()) {
-			textView = (TextView) iterator.next();
+		for(TextView textView : textViewList){
 			matcher = p.matcher(textView.getText().toString());
 			if(matcher.find()){	
 				countMatches++;

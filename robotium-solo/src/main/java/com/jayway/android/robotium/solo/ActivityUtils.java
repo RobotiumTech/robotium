@@ -1,11 +1,14 @@
 package com.jayway.android.robotium.solo;
 
 import java.util.ArrayList;
-import java.util.Iterator;
+
+import junit.framework.Assert;
 import android.app.Activity;
 import android.app.Instrumentation;
 import android.app.Instrumentation.ActivityMonitor;
 import android.content.IntentFilter;
+import android.util.Log;
+import android.view.KeyEvent;
 
 /**
  * This class contains activity related methods. Examples are:
@@ -88,15 +91,14 @@ class ActivityUtils {
 	 */
 	
 	public Activity getCurrentActivity() {
+		RobotiumUtils.sleep(PAUS);
 		inst.waitForIdleSync();
 		Boolean found = false;
 		if (activityMonitor != null) {
 			if (activityMonitor.getLastActivity() != null)
 				activity = activityMonitor.getLastActivity();
 		}
-		Iterator<Activity> iterator = activityList.iterator();
-		while (iterator.hasNext()) {
-			Activity storedActivity = iterator.next();
+		for(Activity storedActivity : activityList){
 			if (storedActivity.getClass().getName().equals(
 					activity.getClass().getName()))
 				found = true;
@@ -109,6 +111,49 @@ class ActivityUtils {
 		}
 	}
 	
+	public boolean waitForActivity(String name, int timeout)
+	{
+
+        long now = System.currentTimeMillis();
+        final long endTime = now + timeout;
+		while(!getCurrentActivity().getClass().getSimpleName().equals(name) && now < endTime)
+		{	
+			now = System.currentTimeMillis();
+		}
+		
+		if(now < endTime)
+			return true;
+		else
+			return false;
+	}
+	
+	public void goBackToActivity(String name)
+	{
+		boolean found = false;
+		for(Activity activity : activityList){
+			if(activity.getClass().getSimpleName().equals(name))
+				found = true;
+		}
+		if(found){
+			while(!getCurrentActivity().getClass().getSimpleName().equals(name))
+			{
+				try{
+				inst.sendKeyDownUpSync(KeyEvent.KEYCODE_BACK);
+				}catch(Throwable e){
+					Assert.assertTrue("Activity named " + name + " can not be returned to", false);}
+			}
+		}
+		else{
+			for (int i = 0; i < activityList.size(); i++)
+				Log.d("Robotium", "Activity priorly opened: "+ activityList.get(i).getClass().getSimpleName());
+			Assert.assertTrue("No Activity named " + name + " has been priorly opened", false);
+		}
+	}
+	
+	public String getString(int resId)
+	{
+		return activity.getString(resId);
+	}
 	
 	/**
 	 *

@@ -416,7 +416,7 @@ public class Solo {
 	/**
 	 * Waits for a Dialog to close.
 	 * 
-	 * @param timeout the the amount of time in milliseconds to wait
+	 * @param timeout the amount of time in milliseconds to wait
 	 * @return true if the dialog is closed before the timeout and false if it is not closed.
 	 * 
 	 */
@@ -447,6 +447,17 @@ public class Solo {
 	public void clickOnScreen(float x, float y) {
 		robotiumUtils.waitForIdle();
 		clicker.clickOnScreen(x, y);
+	}
+	/**
+	 * Long clicks a specific coordinate on the screen
+	 *
+	 * @param x the x coordinate
+	 * @param y the y coordinate
+	 *
+	 */
+	
+	public void clickLongOnScreen(float x, float y) {
+		clicker.clickLongOnScreen(x, y);
 	}
 	
 	
@@ -830,6 +841,7 @@ public class Solo {
 	 * activity.
 	 *
 	 * @return the number of buttons in the current activity
+	 * @deprecated legacy method that is not needed anymore
 	 *
 	 */
 	
@@ -929,7 +941,7 @@ public class Solo {
 	 * activity.
 	 *
 	 * @return and ArrayList of the buttons located in the current activity
-	 *
+	 * 
 	 */
 	
 	public ArrayList<Button> getCurrentButtons() {
@@ -1025,6 +1037,29 @@ public class Solo {
 		robotiumUtils.sendKey(key);
 	}
 	
+	/**
+	 * Returns to the given Activity.
+	 * @param name the name of the Activity to be returned to e.g. "MyActivity"
+	 */
+	
+	public void goBackToActivity(String name)
+	{
+		activitiyUtils.goBackToActivity(name);
+	}
+	
+	/**
+	 * Waits for the given Activity.
+	 * @param name the name of the Activity to wait for e.g. "MyActivity"
+	 * @param timeout the amount of time in milliseconds to wait
+	 * @return true if Activity appears before the timeout and false if it does not
+	 */
+	
+	public boolean waitForActivity(String name, int timeout)
+	{
+		return activitiyUtils.waitForActivity(name, timeout);
+	}
+	
+
 	/**
 	 * Robotium will sleep for a specified time.
 	 * 

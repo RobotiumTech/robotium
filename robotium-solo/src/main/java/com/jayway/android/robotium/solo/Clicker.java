@@ -1,7 +1,6 @@
 package com.jayway.android.robotium.solo;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import junit.framework.Assert;
@@ -84,14 +83,14 @@ class Clicker {
 	}
 	
 	/**
-	 * Private method to long click on a specific coordinate on the screen
+	 * Long clicks a specific coordinate on the screen
 	 *
 	 * @param x the x coordinate
 	 * @param y the y coordinate
 	 *
 	 */
 	
-	private void clickLongOnScreen(float x, float y) {
+	public void clickLongOnScreen(float x, float y) {
 		long downTime = SystemClock.uptimeMillis();
         long eventTime = SystemClock.uptimeMillis();
         MotionEvent event = MotionEvent.obtain(downTime, eventTime, MotionEvent.ACTION_DOWN, x, y, 0);
@@ -255,6 +254,14 @@ class Clicker {
 		clickOnText(text);
 	}
 	
+	public void clickOnMenuItem(String text, boolean more)
+	{
+		robotiumUtils.sendKey(MENU);
+		if(more){
+			
+		}
+	}
+	
 	
 	/**
 	 * Private method that is used to click on a specific text view displaying a certain
@@ -270,39 +277,34 @@ class Clicker {
 		Pattern p = Pattern.compile(text);
 		Matcher matcher; 
 		robotiumUtils.waitForText(text, 0, TIMEOUT, true);
-		boolean found = false;
-		ArrayList <TextView> textViews = soloView.getCurrentTextViews(null);
-		Iterator<TextView> iterator = textViews.iterator();
-		TextView textView = null;
+		TextView textToClick = null;
+		ArrayList <TextView> textViewList = soloView.getCurrentTextViews(null);
 		if(match == 0)
 			match = 1;
-		while (iterator.hasNext()) {
-			textView = iterator.next();
+		for(TextView textView : textViewList){
 			matcher = p.matcher(textView.getText().toString());
 			if(matcher.matches()){	
 				countMatches++;
 			}
 			if (countMatches == match) {
 				countMatches = 0;
-				found = true;
+				textToClick = textView;
 				break;
 			}
 		}
-		if (found) {
-			if (longClick)
-				clickLongOnScreen(textView);
-			else
-				clickOnScreen(textView);
+		if (textToClick != null) {
+			clickOnScreen(textToClick, longClick);
 		} else if (soloScroll.scrollDown()) {
 			clickOnText(text, longClick, match);
 		} else {
 			if (countMatches > 0)
 				Assert.assertTrue("There are only " + countMatches + " matches of " + text, false);
 			else {
-				for (int i = 0; i < textViews.size(); i++)
-					Log.d(LOG_TAG, text + " not found. Have found: " + textViews.get(i).getText());
+				for (int i = 0; i < textViewList.size(); i++)
+					Log.d(LOG_TAG, text + " not found. Have found: " + textViewList.get(i).getText());
 				Assert.assertTrue("The text: " + text + " is not found!", false);
 			}
+			countMatches = 0;
 		}
 	}
 	
@@ -342,21 +344,18 @@ class Clicker {
 	public void clickOnButton(String name) {
 		Pattern p = Pattern.compile(name);
 		Matcher matcher;
-		Button button = null;
+		Button buttonToClick = null;
 		robotiumUtils.waitForText(name, 0, TIMEOUT, true);
-		boolean found = false;
 		ArrayList<Button> buttonList = soloView.getCurrentButtons();
-		Iterator<Button> iterator = buttonList.iterator();
-		while (iterator.hasNext()) {
-			button = iterator.next();
+		for(Button button : buttonList){
 			matcher = p.matcher(button.getText().toString());
 			if(matcher.matches()){	
-				found = true;
+				buttonToClick = button;
 				break;
 			}
 		}
-		if (found) {
-			clickOnScreen(button);
+		if (buttonToClick != null) {
+			clickOnScreen(buttonToClick);
 		} else if (soloScroll.scrollDown()){
 			clickOnButton(name);
 		}else
@@ -378,22 +377,19 @@ class Clicker {
 	public void clickOnToggleButton(String name) {
 		Pattern p = Pattern.compile(name);
 		Matcher matcher;
-		ToggleButton toggleButton = null;
+		ToggleButton buttonToClick = null;
 		robotiumUtils.waitForText(name, 0, TIMEOUT, true);
-		boolean found = false;
 		ArrayList<ToggleButton> toggleButtonList = soloView
 				.getCurrentToggleButtons();
-		Iterator<ToggleButton> iterator = toggleButtonList.iterator();
-		while (iterator.hasNext()) {
-			toggleButton = iterator.next();
+		for(ToggleButton toggleButton : toggleButtonList){
 			matcher = p.matcher(toggleButton.getText().toString());
 			if (matcher.matches()) {
-				found = true;
+				buttonToClick = toggleButton;
 				break;
 			}
 		}
-		if (found) {
-			clickOnScreen(toggleButton);
+		if (buttonToClick != null) {
+			clickOnScreen(buttonToClick);
 		} else if (soloScroll.scrollDown()) {
 			clickOnButton(name);
 		} else {

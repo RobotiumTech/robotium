@@ -81,9 +81,10 @@ class RobotiumUtils {
 		long timeout = 10000;
 		long endTime = startTime + timeout;
 		View decorView;
-		ArrayList<View> touchItems;
+		ArrayList<View> touchItems = new ArrayList<View>();
 		while (System.currentTimeMillis() <= endTime) {
-			decorView = soloView.getWindowDecorViews()[soloView.getWindowDecorViews().length-1];
+			decorView = soloView.getActiveDecorView();
+			if(decorView != null)
 			touchItems = decorView.getTouchables();
 			if (touchItems.size() > 0)  
 				break;

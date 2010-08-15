@@ -83,15 +83,15 @@ class ViewFetcher {
 	}
 	
 	/**
-	 * Returns the most recent DecorView. 
+	 * Returns the active DecorView. 
 	 * 
 	 * @return DecorView
 	 */
 	
-	private View getDecorView()
+	public View getActiveDecorView()
 	{
 		View [] views = getWindowDecorViews();
-		if(views.length > 0)
+		if(views !=null && views.length > 0)
 		{
 			int length = views.length;
 			for(int i = length - 1; i >= 0; i--){
@@ -117,15 +117,14 @@ class ViewFetcher {
 		inst.waitForIdleSync();
 		viewList.clear();
 		try {
-			if(getDecorView() != null)
-				getViews(getDecorView());
+			if(getActiveDecorView() != null)
+				getViews(getActiveDecorView());
 			return viewList;
 		} catch (Throwable e) {
 			e.printStackTrace();
 		}
 		return null;
 	}
-	
 	
 	
 	/**
@@ -196,7 +195,7 @@ class ViewFetcher {
 	 * activity.
 	 *
 	 * @return the number of buttons in the current activity
-	 *
+	 * @deprecated
 	 */
 	
 	public int getCurrenButtonsCount() {
