@@ -451,7 +451,7 @@ public class Solo {
 		clicker.clickOnScreen(x, y);
 	}
 	/**
-	 * Long clicks a specific coordinate on the screen
+	 * Long clicks a specific coordinate on the screen.
 	 *
 	 * @param x the x coordinate
 	 * @param y the y coordinate
@@ -509,7 +509,7 @@ public class Solo {
 	}
 	
 	/**
-	 * Clicks on a menu item with a given text
+	 * Clicks on a menu item with a given text.
 	 * 
 	 * @param text the menu text that should be clicked on. Regular expressions are supported 
 	 * @param subMenu true if the menu item could be located in a sub menu
@@ -1147,7 +1147,7 @@ public class Solo {
 	}
 	
 	/**
-	 * Returns a localized string
+	 * Returns a localized string.
 	 * 
 	 * @param resId the resource ID of the view
 	 * @return the localized string
