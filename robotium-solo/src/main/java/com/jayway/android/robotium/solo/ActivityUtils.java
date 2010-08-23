@@ -1,7 +1,6 @@
 package com.jayway.android.robotium.solo;
 
 import java.util.ArrayList;
-
 import junit.framework.Assert;
 import android.app.Activity;
 import android.app.Instrumentation;
@@ -29,8 +28,8 @@ class ActivityUtils {
 	/**
 	 * Constructor that takes in the instrumentation and the start activity.
 	 *
-	 * @param inst the instrumentation object
-	 * @param activity the start activity
+	 * @param inst the {@link Instrumentation} instance.
+	 * @param activity {@link Activity} the start activity
 	 *
 	 */
 	
@@ -45,6 +44,7 @@ class ActivityUtils {
 	 * This method returns an ArrayList of all the opened/active activities.
 	 * 
 	 * @return ArrayList of all the opened activities
+	 * 
 	 */
 	
 	public ArrayList<Activity> getAllOpenedActivities()
@@ -111,21 +111,33 @@ class ActivityUtils {
 		}
 	}
 	
+	/**
+	 * Waits for the given Activity.
+	 * @param name the name of the Activity to wait for e.g. "MyActivity"
+	 * @param timeout the amount of time in milliseconds to wait
+	 * @return true if Activity appears before the timeout and false if it does not
+	 * 
+	 */
+	
 	public boolean waitForActivity(String name, int timeout)
 	{
-
         long now = System.currentTimeMillis();
         final long endTime = now + timeout;
 		while(!getCurrentActivity().getClass().getSimpleName().equals(name) && now < endTime)
 		{	
 			now = System.currentTimeMillis();
 		}
-		
 		if(now < endTime)
 			return true;
 		else
 			return false;
 	}
+	
+	/**
+	 * Returns to the given Activity.
+	 * @param name the name of the Activity to be returned to e.g. "MyActivity"
+	 * 
+	 */
 	
 	public void goBackToActivity(String name)
 	{
@@ -149,6 +161,14 @@ class ActivityUtils {
 			Assert.assertTrue("No Activity named " + name + " has been priorly opened", false);
 		}
 	}
+	
+	/**
+	 * Returns a localized string
+	 * 
+	 * @param resId the resource ID of the view
+	 * @return the localized string
+	 * 
+	 */
 	
 	public String getString(int resId)
 	{

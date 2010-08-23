@@ -2,8 +2,6 @@ package com.jayway.android.robotium.solo;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
-import android.app.Activity;
-import android.app.Dialog;
 import android.app.Instrumentation;
 import android.view.View;
 import android.view.ViewGroup;
@@ -36,8 +34,6 @@ class ViewFetcher {
     /**
      * Constructs this object.
      *
-     * @param soloActivity the {@link Activity} instance.
-     * @param dialogUtils the {@link Dialog} instance.
      * @param inst the {@link Instrumentation} instance.
      */
 	
@@ -56,8 +52,7 @@ class ViewFetcher {
 	
 	public View getTopParent(View view) {
 		if (view.getParent() != null
-			&& !view.getParent().getClass().getName().equals(
-															 "android.view.ViewRoot")) {
+			&& !view.getParent().getClass().getName().equals("android.view.ViewRoot")) {
 			return getTopParent((View) view.getParent());
 		} else {
 			return view;
@@ -91,11 +86,13 @@ class ViewFetcher {
 	public View getActiveDecorView()
 	{
 		View [] views = getWindowDecorViews();
+		int []xy = new int[2];
 		if(views !=null && views.length > 0)
 		{
 			int length = views.length;
 			for(int i = length - 1; i >= 0; i--){
-				if(views[i].hasFocus()){
+				views[i].getLocationOnScreen(xy);
+				if(xy[0] > 0 || xy[1] > 0 ){
 					return views[i];
 				}
 			}
@@ -120,12 +117,9 @@ class ViewFetcher {
 			if(getActiveDecorView() != null)
 				getViews(getActiveDecorView());
 			return viewList;
-		} catch (Throwable e) {
-			e.printStackTrace();
-		}
+		} catch (Throwable e) {}
 		return null;
 	}
-	
 	
 	/**
 	 * Private method which adds all the views located in the currently active
@@ -174,7 +168,11 @@ class ViewFetcher {
 	
 	public EditText getEditText(int index) {
 		ArrayList<EditText> editTextList = getCurrentEditTexts();
-		return editTextList.get(index);
+		EditText editText = null;
+		try{
+			editText = editTextList.get(index);
+		}catch (Throwable e){}
+		return editText;
 	}
 	
 	/**
@@ -187,7 +185,62 @@ class ViewFetcher {
 	
 	public Button getButton(int index) {
 		ArrayList<Button> buttonList = getCurrentButtons();
-		return buttonList.get(index);
+		Button button = null;
+		try{
+			button = buttonList.get(index);
+		}catch (Throwable e){}
+		return button;
+	}
+	
+	/**
+	 * This method returns a text view with a certain index.
+	 *
+	 * @param index the index of the text view
+	 * @return the text view with the specific index
+	 *
+	 */
+	
+	public TextView getText(int index) {
+		ArrayList<TextView> textList = getCurrentTextViews(null);
+		TextView textView =  null;
+		try{
+			textView = textList.get(index);
+		} catch(Throwable e){}
+		return textView;
+	}
+	
+	/**
+	 * This method returns an image view with a certain index.
+	 *
+	 * @param index the index of the imave view
+	 * @return the image view with the specific index
+	 *
+	 */
+	
+	public ImageView getImage(int index) {
+		ArrayList<ImageView> imageList = getCurrentImageViews();
+		ImageView imageView = null;
+		try{
+			imageView = imageList.get(index);
+		}catch(Throwable e){}
+		return imageView;
+	}
+	
+	/**
+	 * This method returns an image button with a certain index.
+	 *
+	 * @param index the index of the image button
+	 * @return the image button with the specific index
+	 *
+	 */
+	
+	public ImageButton getImageButton(int index) {
+		ArrayList<ImageButton> buttonList = getCurrentImageButtons();
+		ImageButton imageButton = null;
+		try{
+			imageButton = buttonList.get(index);
+		}catch(Throwable e){}
+		return imageButton;
 	}
 	
 	/**
@@ -195,7 +248,7 @@ class ViewFetcher {
 	 * activity.
 	 *
 	 * @return the number of buttons in the current activity
-	 * @deprecated
+	 * @deprecated legacy method that is outdated
 	 */
 	
 	public int getCurrenButtonsCount() {
@@ -313,8 +366,8 @@ class ViewFetcher {
 	 */
 	
 	public ArrayList<GridView> getCurrentGridViews() {
-		ArrayList<View> viewList = getViews();
 		ArrayList<GridView> gridViewList = new ArrayList<GridView>();
+		ArrayList<View> viewList = getViews();
 		for(View view : viewList){
 			if (view instanceof android.widget.GridView)
 				gridViewList.add((GridView) view);
@@ -368,8 +421,8 @@ class ViewFetcher {
 	 */
 	
 	public ArrayList<RadioButton> getCurrentRadioButtons() {
-		ArrayList<View> viewList = getViews();
 		ArrayList<RadioButton> radioButtonList = new ArrayList<RadioButton>();
+		ArrayList<View> viewList = getViews();
 		for(View view : viewList){
 			if (view instanceof android.widget.RadioButton) {
 				radioButtonList.add((RadioButton) view);
@@ -388,8 +441,8 @@ class ViewFetcher {
 	
 	public ArrayList<CheckBox> getCurrentCheckBoxes()
 	{
-		ArrayList<View> viewList = getViews();
 		ArrayList<CheckBox> checkBoxList = new ArrayList<CheckBox>();
+		ArrayList<View> viewList = getViews();
 		for(View view : viewList){
 			if (view instanceof android.widget.CheckBox) {
 				checkBoxList.add((CheckBox) view);
@@ -408,8 +461,8 @@ class ViewFetcher {
 	
 	public ArrayList<ImageButton> getCurrentImageButtons()
 	{
-		ArrayList<View> viewList = getViews();
 		ArrayList<ImageButton> imageButtonList = new ArrayList<ImageButton>();
+		ArrayList<View> viewList = getViews();
 		for(View view : viewList){
 			if (view instanceof android.widget.ImageButton) {
 				imageButtonList.add((ImageButton) view);

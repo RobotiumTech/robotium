@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import junit.framework.Assert;
-import android.app.Activity;
 import android.app.Instrumentation;
 import android.os.SystemClock;
 import android.util.Log;
@@ -27,13 +26,14 @@ import android.widget.ToggleButton;
 class Clicker {
 	
 	private final String LOG_TAG = "Robotium";
-	private final ActivityUtils soloActivity;
-	private final ViewFetcher soloView;
-	private final Scroller soloScroll;
+	private final ActivityUtils activityUtils;
+	private final ViewFetcher viewFetcher;
+	private final Scroller scroller;
 	private final Instrumentation inst;
 	private final RobotiumUtils robotiumUtils;
 	private int countMatches=0;
 	private final int PAUS = 500;
+	private final int MINIPAUS = 300;
 	private final int TIMEOUT = 10000;
 	private final int CLICKTIMEOUT = 5000;	
 	private final static int MENU = 7;
@@ -42,19 +42,19 @@ class Clicker {
 	/**
 	 * Constructs this object.
 	 * 
-	 * @param soloActivity the {@link Activity} instance.
-	 * @param soloView the {@link ViewFetcher} instance.
-	 * @param soloScroll the {@link Scroller} instance.
+	 * @param ativityUtils the {@link ActivityUtils} instance.
+	 * @param viewFetcher the {@link ViewFetcher} instance.
+	 * @param scroller the {@link Scroller} instance.
 	 * @param robotiumUtils the {@link RobotiumUtils} instance.
 	 * @param inst the {@link Instrumentation} instance.
 	 */
 
-	public Clicker(ActivityUtils soloActivity, ViewFetcher soloView,
-			Scroller soloScroll, RobotiumUtils robotiumUtils, Instrumentation inst) {
+	public Clicker(ActivityUtils ativityUtils, ViewFetcher viewFetcher,
+			Scroller scroller, RobotiumUtils robotiumUtils, Instrumentation inst) {
 
-		this.soloActivity = soloActivity;
-		this.soloView = soloView;
-		this.soloScroll = soloScroll;
+		this.activityUtils = ativityUtils;
+		this.viewFetcher = viewFetcher;
+		this.scroller = scroller;
 		this.robotiumUtils = robotiumUtils;
 		this.inst = inst;
 	}
@@ -75,10 +75,10 @@ class Clicker {
 		MotionEvent event2 = MotionEvent.obtain(downTime, eventTime,
 				MotionEvent.ACTION_UP, x, y, 0);
 		try{
-		inst.sendPointerSync(event);
-		inst.sendPointerSync(event2);
-		}catch(Throwable e){e.printStackTrace();
-		Log.d(LOG_TAG, "Click could not be completed. Something is in the way e.g. keyboard");
+			inst.sendPointerSync(event);
+			inst.sendPointerSync(event2);
+		}catch(Throwable e){
+			Assert.assertTrue("Click can not be completed. Something is in the way e.g. the keyboard.", false);
 		}
 	}
 	
@@ -94,7 +94,11 @@ class Clicker {
 		long downTime = SystemClock.uptimeMillis();
         long eventTime = SystemClock.uptimeMillis();
         MotionEvent event = MotionEvent.obtain(downTime, eventTime, MotionEvent.ACTION_DOWN, x, y, 0);
-        inst.sendPointerSync(event);
+        try{
+        	inst.sendPointerSync(event);
+        }catch(Throwable e){
+        	Assert.assertTrue("Click can not be completed. Something is in the way e.g. the keyboard.", false);
+        }
         inst.waitForIdleSync();
         eventTime = SystemClock.uptimeMillis();
         event = MotionEvent.obtain(downTime, eventTime, MotionEvent.ACTION_MOVE, 
@@ -107,7 +111,7 @@ class Clicker {
         event = MotionEvent.obtain(downTime, eventTime, MotionEvent.ACTION_UP, x, y, 0);
         inst.sendPointerSync(event);
         inst.waitForIdleSync();
-		RobotiumUtils.sleep(500);
+		RobotiumUtils.sleep(PAUS);
 
 	}
 	
@@ -136,23 +140,23 @@ class Clicker {
 		long now = System.currentTimeMillis();
 		final long endTime = now + CLICKTIMEOUT;
 		while ((!view.isShown() || view.isLayoutRequested()) && now < endTime) {
-			RobotiumUtils.sleep(500);
+			RobotiumUtils.sleep(PAUS);
 			now = System.currentTimeMillis();
 		}
 		if(!view.isShown())
 			Assert.assertTrue("View can not be clicked!", false);
 		view.getLocationOnScreen(xy);
-		while (xy[1] + 10> soloActivity.getCurrentActivity().getWindowManager() 
-				.getDefaultDisplay().getHeight() && soloScroll.scrollDown()) {
+		while (xy[1] + 10> activityUtils.getCurrentActivity().getWindowManager() 
+				.getDefaultDisplay().getHeight() && scroller.scrollDown()) {
 			view.getLocationOnScreen(xy);
 		}
-		RobotiumUtils.sleep(300);
+		RobotiumUtils.sleep(MINIPAUS);
 		view.getLocationOnScreen(xy);
 		final int viewWidth = view.getWidth();
 		final int viewHeight = view.getHeight();
 		final float x = xy[0] + (viewWidth / 2.0f);
 		final float y = xy[1] + (viewHeight / 2.0f);
-		
+
 		if (longClick)
 			clickLongOnScreen(x, y);
 		else
@@ -180,7 +184,7 @@ class Clicker {
 	 */
 	
 	public void clickOnText(String text) {
-		clickOnText(text, false, 1);
+		clickOnText(text, false, 1, true);
 	}
 	
 	/**
@@ -193,8 +197,23 @@ class Clicker {
 	 */
 	
 	public void clickOnText(String text, int matches) {
-		clickOnText(text, false, matches);
+		clickOnText(text, false, matches, true);
 	}
+	
+	/**
+	 * This method is used to click on a specific text view displaying a certain
+	 * text.
+	 *
+	 * @param text the text that should be clicked on. Regular expressions are supported
+	 * @param matches the match that should be clicked on 
+	 * @param scroll true if scrolling should be performed
+	 *
+	 */
+	
+	public void clickOnText(String text, int matches, boolean scroll) {
+		clickOnText(text, false, matches, scroll);
+	}
+	
 	
 	/**
 	 * This method is used to long click on a specific text view and then selecting
@@ -207,11 +226,15 @@ class Clicker {
 	
 	public void clickLongOnTextAndPress(String text, int index)
 	{
-		clickOnText(text, true, 0);
-		inst.sendKeyDownUpSync(KeyEvent.KEYCODE_DPAD_DOWN);
+		clickOnText(text, true, 0, true);
+		try{
+			inst.sendKeyDownUpSync(KeyEvent.KEYCODE_DPAD_DOWN);
+		}catch(Throwable e){
+			Assert.assertTrue("Can not press the context menu!", false);
+		}
 		for(int i = 0; i < index; i++)
 		{
-			RobotiumUtils.sleep(300);
+			RobotiumUtils.sleep(MINIPAUS);
 			inst.sendKeyDownUpSync(KeyEvent.KEYCODE_DPAD_DOWN);
 		}
 		inst.sendKeyDownUpSync(KeyEvent.KEYCODE_ENTER);
@@ -227,7 +250,7 @@ class Clicker {
 	
 	public void clickLongOnText(String text)
 	{
-		clickOnText(text, true, 1);
+		clickOnText(text, true, 1, true);
 	}
 	
 	/**
@@ -240,26 +263,78 @@ class Clicker {
 	
 	public void clickLongOnText(String text, int matches)
 	{
-		clickOnText(text, true, matches);
+		clickOnText(text, true, matches, true);
+	}
+	
+	/**
+	 * Long clicks on a specific text view. ClickOnText() can then be
+	 * used to click on the context menu items that appear after the long click.
+	 *
+	 * @param text the text that should be clicked on. Regular expressions are supported
+	 * @param match the match that should be clicked on 
+	 * @param scroll true if scrolling should be performed
+	 *
+	 */
+	
+	public void clickLongOnText(String text, int matches, boolean scroll)
+	{
+		clickOnText(text, true, matches, scroll);
 	}
 	
 	/**
 	 * Clicks on a menu item with a given text
 	 * @param text the menu text that should be clicked on. Regular expressions are supported 
+	 * 
 	 */
 	
 	public void clickOnMenuItem(String text)
 	{	
-		robotiumUtils.sendKey(MENU);
+		RobotiumUtils.sleep(PAUS);
+		inst.waitForIdleSync();
+		try{
+			robotiumUtils.sendKey(MENU);
+		}catch(Throwable e){
+			Assert.assertTrue("Can not open the menu!", false);
+		}
 		clickOnText(text);
 	}
 	
-	public void clickOnMenuItem(String text, boolean more)
+	/**
+	 * Clicks on a menu item with a given text
+	 * 
+	 * @param text the menu text that should be clicked on. Regular expressions are supported 
+	 * @param subMenu true if the menu item could be located in a sub menu
+	 * 
+	 */
+	
+	public void clickOnMenuItem(String text, boolean subMenu)
 	{
+		RobotiumUtils.sleep(PAUS);
+		inst.waitForIdleSync();
+		TextView textMore = null;
+		int [] xy = new int[2];
+		int x = 0;
+		int y = 0;
+		
+		try{
 		robotiumUtils.sendKey(MENU);
-		if(more){
-			
+		}catch(Throwable e){
+			Assert.assertTrue("Can not open the menu!", false);
 		}
+		if(subMenu && (viewFetcher.getCurrentTextViews(null).size() > 5) && !robotiumUtils.waitForText(text, 1, 1500, false)){
+			for(TextView textView : viewFetcher.getCurrentTextViews(null)){
+				x = xy[0];
+				y = xy[1];
+				textView.getLocationOnScreen(xy);
+
+				if(xy[0] > x || xy[1] > y)
+						textMore = textView;
+				}
+		}
+		if(textMore != null)
+			clickOnScreen(textMore);
+		
+		clickOnText(text);
 	}
 	
 	
@@ -273,12 +348,12 @@ class Clicker {
 	 *
 	 */
 
-	private void clickOnText(String text, boolean longClick, int match) {
+	private void clickOnText(String text, boolean longClick, int match, boolean scroll) {
 		Pattern p = Pattern.compile(text);
 		Matcher matcher; 
 		robotiumUtils.waitForText(text, 0, TIMEOUT, true);
 		TextView textToClick = null;
-		ArrayList <TextView> textViewList = soloView.getCurrentTextViews(null);
+		ArrayList <TextView> textViewList = viewFetcher.getCurrentTextViews(null);
 		if(match == 0)
 			match = 1;
 		for(TextView textView : textViewList){
@@ -294,8 +369,8 @@ class Clicker {
 		}
 		if (textToClick != null) {
 			clickOnScreen(textToClick, longClick);
-		} else if (soloScroll.scrollDown()) {
-			clickOnText(text, longClick, match);
+		} else if (scroll && scroller.scrollDown()) {
+			clickOnText(text, longClick, match, scroll);
 		} else {
 			if (countMatches > 0)
 				Assert.assertTrue("There are only " + countMatches + " matches of " + text, false);
@@ -314,22 +389,16 @@ class Clicker {
 	 * This method is used to click on a button with a specific index.
 	 *
 	 * @param index the index number of the button
-	 * @return true if button with specified index is found
 	 *
 	 */
 	
-	public boolean clickOnButton(int index) {
+	public void clickOnButton(int index) {
 		robotiumUtils.waitForIdle();
-		boolean found = false;
-		Button button = null;
 		try {
-			button = soloView.getButton(index);
-		} catch (IndexOutOfBoundsException e) {}
-		if (button != null) {
-			clickOnScreen(button);
-			found = true;
+			clickOnScreen(viewFetcher.getButton(index));
+		}catch (IndexOutOfBoundsException e) {
+			Assert.assertTrue("Index is not valid", false);
 		}
-		return found;
 	}
 	
 
@@ -346,7 +415,7 @@ class Clicker {
 		Matcher matcher;
 		Button buttonToClick = null;
 		robotiumUtils.waitForText(name, 0, TIMEOUT, true);
-		ArrayList<Button> buttonList = soloView.getCurrentButtons();
+		ArrayList<Button> buttonList = viewFetcher.getCurrentButtons();
 		for(Button button : buttonList){
 			matcher = p.matcher(button.getText().toString());
 			if(matcher.matches()){	
@@ -356,7 +425,7 @@ class Clicker {
 		}
 		if (buttonToClick != null) {
 			clickOnScreen(buttonToClick);
-		} else if (soloScroll.scrollDown()){
+		} else if (scroller.scrollDown()){
 			clickOnButton(name);
 		}else
 		{
@@ -379,7 +448,7 @@ class Clicker {
 		Matcher matcher;
 		ToggleButton buttonToClick = null;
 		robotiumUtils.waitForText(name, 0, TIMEOUT, true);
-		ArrayList<ToggleButton> toggleButtonList = soloView
+		ArrayList<ToggleButton> toggleButtonList = viewFetcher
 				.getCurrentToggleButtons();
 		for(ToggleButton toggleButton : toggleButtonList){
 			matcher = p.matcher(toggleButton.getText().toString());
@@ -390,7 +459,7 @@ class Clicker {
 		}
 		if (buttonToClick != null) {
 			clickOnScreen(buttonToClick);
-		} else if (soloScroll.scrollDown()) {
+		} else if (scroller.scrollDown()) {
 			clickOnButton(name);
 		} else {
 			for (int i = 0; i < toggleButtonList.size(); i++)
@@ -411,7 +480,7 @@ class Clicker {
 	public void clickOnImage(int index) {
 		robotiumUtils.waitForIdle();
 		try {
-			clickOnScreen(soloView.getCurrentImageViews().get(index));
+			clickOnScreen(viewFetcher.getCurrentImageViews().get(index));
 		} catch (IndexOutOfBoundsException e) {
 			Assert.assertTrue("Index is not valid", false);
 		}
@@ -427,7 +496,7 @@ class Clicker {
 	public void clickOnImageButton(int index) {
 		robotiumUtils.waitForIdle();
 		try {
-			clickOnScreen(soloView.getCurrentImageButtons().get(index));
+			clickOnScreen(viewFetcher.getCurrentImageButtons().get(index));
 		} catch (IndexOutOfBoundsException e) {
 			Assert.assertTrue("Index is not valid", false);
 		}
@@ -443,7 +512,7 @@ class Clicker {
 	public void clickOnRadioButton(int index) {
 		robotiumUtils.waitForIdle();
 		try {
-			clickOnScreen(soloView.getCurrentRadioButtons().get(index));
+			clickOnScreen(viewFetcher.getCurrentRadioButtons().get(index));
 		} catch (IndexOutOfBoundsException e) {
 			Assert.assertTrue("Index is not valid", false);
 		}
@@ -459,7 +528,7 @@ class Clicker {
 	public void clickOnCheckBox(int index) {
 		robotiumUtils.waitForIdle();
 		try {
-			clickOnScreen(soloView.getCurrentCheckBoxes().get(index));
+			clickOnScreen(viewFetcher.getCurrentCheckBoxes().get(index));
 		} catch (IndexOutOfBoundsException e) {
 			Assert.assertTrue("Index is not valid", false);
 		}
@@ -475,7 +544,7 @@ class Clicker {
 	public void clickOnEditText(int index) {
 		robotiumUtils.waitForIdle();
 		try {
-			clickOnScreen(soloView.getCurrentEditTexts().get(index));
+			clickOnScreen(viewFetcher.getCurrentEditTexts().get(index));
 		} catch (IndexOutOfBoundsException e) {
 			Assert.assertTrue("Index is not valid", false);
 		}
@@ -488,6 +557,7 @@ class Clicker {
 	
 	public void goBack() {
 		RobotiumUtils.sleep(PAUS);
+		inst.waitForIdleSync();
 		try {
 			inst.sendKeyDownUpSync(KeyEvent.KEYCODE_BACK);
 			RobotiumUtils.sleep(PAUS);
@@ -518,39 +588,46 @@ class Clicker {
 	 */
 	
 	public ArrayList<TextView> clickInList(int line, int index) {	
-	robotiumUtils.waitForIdle();
-	RobotiumUtils.sleep(PAUS);
-	long now = System.currentTimeMillis();
-	final long endTime = now + CLICKTIMEOUT;
-        while((soloView.getCurrentListViews().size()<index+1) && now < endTime)
-        {
-        	RobotiumUtils.sleep(PAUS);
-        }
-        if (now > endTime)
-        	Assert.assertTrue("No ListView with index " + index + " is available", false);
-        	
-        ArrayList<TextView> textViews = null;
-        textViews = soloView.getCurrentTextViews(soloView
-                .getCurrentListViews().get(index));
-       ArrayList<TextView> textViewGroup = new ArrayList<TextView>();
-        int myLine = 0;
-        for (int i = 0; i < textViews.size(); i++) {
-            View view = soloView.getListItemParent(textViews.get(i));
-            try {
-                if (view.equals(soloView.getListItemParent(textViews.get(i + 1)))) {
-                	textViewGroup.add(textViews.get(i));
-                } else {
-                    textViewGroup.add(textViews.get(i));
-                    myLine++;
-                    if (myLine == line)
-                        break;
-                    else
-                        textViewGroup.clear();
-                }
-            } catch (IndexOutOfBoundsException e) {textViewGroup.add(textViews.get(i));}
-        }
-        if (textViewGroup.size() != 0)
-            clickOnScreen(textViewGroup.get(0));
-        return textViewGroup;
-    }
+		robotiumUtils.waitForIdle();
+		RobotiumUtils.sleep(PAUS);
+		long now = System.currentTimeMillis();
+		final long endTime = now + CLICKTIMEOUT;
+		int size = viewFetcher.getCurrentListViews().size();
+		while((size > 0 && size <index+1) && now < endTime)
+		{
+			RobotiumUtils.sleep(PAUS);
+		}
+		if (now > endTime)
+			Assert.assertTrue("No ListView with index " + index + " is available", false);
+
+		ArrayList<TextView> textViews = null;
+		try{
+			textViews = viewFetcher.getCurrentTextViews(viewFetcher
+					.getCurrentListViews().get(index));
+		}catch(IndexOutOfBoundsException e){
+			Assert.assertTrue("Index is not valid!", false);
+		}
+		ArrayList<TextView> textViewGroup = new ArrayList<TextView>();
+		int myLine = 0;
+		if(textViews !=null ){
+			for (int i = 0; i < textViews.size(); i++) {
+				View view = viewFetcher.getListItemParent(textViews.get(i));
+				try {
+					if (view.equals(viewFetcher.getListItemParent(textViews.get(i + 1)))) {
+						textViewGroup.add(textViews.get(i));
+					} else {
+						textViewGroup.add(textViews.get(i));
+						myLine++;
+						if (myLine == line)
+							break;
+						else
+							textViewGroup.clear();
+					}
+				} catch (IndexOutOfBoundsException e) {textViewGroup.add(textViews.get(i));}
+			}
+		}
+		if (textViewGroup.size() != 0)
+			clickOnScreen(textViewGroup.get(0));
+		return textViewGroup;
+	}
 }

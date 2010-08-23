@@ -1,9 +1,8 @@
 package com.jayway.android.robotium.solo;
 
-import android.app.Activity;
+import junit.framework.Assert;
 import android.app.Instrumentation;
 import android.os.SystemClock;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.widget.ListView;
 import android.widget.ScrollView;
@@ -19,8 +18,8 @@ import android.widget.ScrollView;
 class Scroller {
 	
 	private final Instrumentation inst;
-	private final ActivityUtils soloActivity;
-	private final ViewFetcher soloView;
+	private final ActivityUtils activityUtils;
+	private final ViewFetcher viewFetcher;
    	private int scrollAmount = 0;
 	private final static int RIGHT = 2;
 	private final static int LEFT = 3;
@@ -32,14 +31,14 @@ class Scroller {
      * Constructs this object.
      *
      * @param inst the {@link Instrumentation} instance.
-     * @param soloActivity the {@link Activity} instance.
-     * @param soloView the {@link ViewFetcher} instance.
+     * @param activityUtils the {@link ActivityUtils} instance.
+     * @param viewFetcher the {@link ViewFetcher} instance.
      */
 	
-    public Scroller(Instrumentation inst, ActivityUtils soloActivity, ViewFetcher soloView) {
+    public Scroller(Instrumentation inst, ActivityUtils activityUtils, ViewFetcher viewFetcher) {
         this.inst = inst;
-        this.soloActivity = soloActivity;
-        this.soloView = soloView;
+        this.activityUtils = activityUtils;
+        this.viewFetcher = viewFetcher;
     }
 
 	
@@ -68,7 +67,7 @@ class Scroller {
 		try {
 			inst.sendPointerSync(event);
 		} catch (Throwable e) {
-			e.printStackTrace();
+			Assert.assertTrue("Application can not be dragged!", false);
 		}
 		for (int i = 0; i < stepCount; ++i) {
 			y += yStep;
@@ -77,18 +76,14 @@ class Scroller {
 			event = MotionEvent.obtain(downTime, eventTime,MotionEvent.ACTION_MOVE, x, y, 0);
 			try {
 				inst.sendPointerSync(event);
-			} catch (Throwable e) {
-				e.printStackTrace();
-			}
+			} catch (Throwable e) {}
 			inst.waitForIdleSync();
 		}
 		eventTime = SystemClock.uptimeMillis();
 		event = MotionEvent.obtain(downTime, eventTime, MotionEvent.ACTION_UP,toX, toY, 0);
 		try {
 			inst.sendPointerSync(event);
-		} catch (Throwable e) {
-			e.printStackTrace();
-		}
+		} catch (Throwable e) {}
 	}
 	
 	
@@ -129,25 +124,25 @@ class Scroller {
 		int yStart;
 		int yEnd;
 		if (direction == DOWN) {
-			yStart = (soloActivity.getCurrentActivity().getWindowManager()
+			yStart = (activityUtils.getCurrentActivity().getWindowManager()
 					.getDefaultDisplay().getHeight() - 20);
-			yEnd = ((soloActivity.getCurrentActivity().getWindowManager()
+			yEnd = ((activityUtils.getCurrentActivity().getWindowManager()
 					.getDefaultDisplay().getHeight() / 2));
 		} 
 		else {
-			yStart = ((soloActivity.getCurrentActivity().getWindowManager()
+			yStart = ((activityUtils.getCurrentActivity().getWindowManager()
 					.getDefaultDisplay().getHeight() / 2));
-			yEnd = (soloActivity.getCurrentActivity().getWindowManager()
+			yEnd = (activityUtils.getCurrentActivity().getWindowManager()
 					.getDefaultDisplay().getHeight() - 20);
 		}
-		int x = soloActivity.getCurrentActivity().getWindowManager()
+		int x = activityUtils.getCurrentActivity().getWindowManager()
 				.getDefaultDisplay().getWidth() / 2;
 
-		if (soloView.getCurrentListViews().size() > 0) {
+		if (viewFetcher.getCurrentListViews().size() > 0) {
 			return scrollList(0, direction);
 		} 
-		else if (soloView.getCurrentScrollViews().size() > 0) {
-			ScrollView scroll = soloView.getCurrentScrollViews().get(0);
+		else if (viewFetcher.getCurrentScrollViews().size() > 0) {
+			ScrollView scroll = viewFetcher.getCurrentScrollViews().get(0);
 			scrollAmount = scroll.getScrollY();
 			drag(x, x, yStart, yEnd, 20);
 			if (scrollAmount == scroll.getScrollY()) {
@@ -198,17 +193,17 @@ class Scroller {
 	 */
 	
 	private boolean scrollList(int listIndex, int direction) {
-		ListView listView = soloView.getCurrentListViews().get(listIndex);
+		ListView listView = viewFetcher.getCurrentListViews().get(listIndex);
 		int[] xy = new int[2];
 		listView.getLocationOnScreen(xy);
 
-		while (xy[1] + 20 > soloActivity.getCurrentActivity()
+		while (xy[1] + 20 > activityUtils.getCurrentActivity()
 				.getWindowManager().getDefaultDisplay().getHeight()) {
-			int yStart = (soloActivity.getCurrentActivity().getWindowManager()
+			int yStart = (activityUtils.getCurrentActivity().getWindowManager()
 					.getDefaultDisplay().getHeight() - 20);
-			int yEnd = ((soloActivity.getCurrentActivity().getWindowManager()
+			int yEnd = ((activityUtils.getCurrentActivity().getWindowManager()
 					.getDefaultDisplay().getHeight() / 2));
-			int x = soloActivity.getCurrentActivity().getWindowManager()
+			int x = activityUtils.getCurrentActivity().getWindowManager()
 					.getDefaultDisplay().getWidth() / 2;
 			drag(x, x, yStart, yEnd, 40);
 			listView.getLocationOnScreen(xy);
@@ -223,7 +218,7 @@ class Scroller {
 			yStart = ((xy[1]) + 20);
 			yEnd = (xy[1] + listView.getHeight());
 		}
-		int x = soloActivity.getCurrentActivity().getWindowManager()
+		int x = activityUtils.getCurrentActivity().getWindowManager()
 				.getDefaultDisplay().getWidth() / 2;
 		
 		if (listView.getLastVisiblePosition() < listView.getCount()-1) {
@@ -245,9 +240,9 @@ class Scroller {
 	 */
 	
 	public void scrollToSide(int side) {
-		int screenHeight = soloActivity.getCurrentActivity().getWindowManager().getDefaultDisplay()
+		int screenHeight = activityUtils.getCurrentActivity().getWindowManager().getDefaultDisplay()
 		.getHeight();
-		int screenWidth = soloActivity.getCurrentActivity().getWindowManager().getDefaultDisplay()
+		int screenWidth = activityUtils.getCurrentActivity().getWindowManager().getDefaultDisplay()
 		.getWidth();
 		float x = screenWidth / 2.0f;
 		float y = screenHeight / 2.0f;

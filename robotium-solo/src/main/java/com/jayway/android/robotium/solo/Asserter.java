@@ -12,18 +12,18 @@ import android.app.ActivityManager;
  */
 
 class Asserter {
-	private final ActivityUtils soloActivity;
+	private final ActivityUtils activityUtils;
 	private final int PAUS = 500;
 	
 	/**
 	 * Constructs this object.
 	 *
-	 * @param soloActivity the activity to act upon.
+	 * @param soloActivity the {@link ActivityUtils} instance.
 	 *
 	 */
 	
-	public Asserter(ActivityUtils soloActivity) {
-		this.soloActivity = soloActivity;
+	public Asserter(ActivityUtils activityUtils) {
+		this.activityUtils = activityUtils;
 	}
 
 	/**
@@ -37,7 +37,7 @@ class Asserter {
 	public void assertCurrentActivity(String message, String name)
 	{
 		RobotiumUtils.sleep(PAUS);
-		Assert.assertEquals(message, name, soloActivity.getCurrentActivity()
+		Assert.assertEquals(message, name, activityUtils.getCurrentActivity()
 				.getClass().getSimpleName());
 		
 	}
@@ -54,7 +54,7 @@ class Asserter {
 	public void assertCurrentActivity(String message, Class expectedClass)
 	{
 		RobotiumUtils.sleep(PAUS);
-		Assert.assertEquals(message, expectedClass.getName(), soloActivity
+		Assert.assertEquals(message, expectedClass.getName(), activityUtils
 				.getCurrentActivity().getClass().getName());
 	
 	}
@@ -72,7 +72,7 @@ class Asserter {
 	public void assertCurrentActivity(String message, String name, boolean isNewInstance)
 	{
 		assertCurrentActivity(message, name);
-		assertCurrentActivity(message, soloActivity.getCurrentActivity().getClass(),
+		assertCurrentActivity(message, activityUtils.getCurrentActivity().getClass(),
 				isNewInstance);
 	}
 	
@@ -91,9 +91,9 @@ class Asserter {
 			boolean isNewInstance) {
 		boolean found = false;
 		assertCurrentActivity(message, expectedClass);
-		Activity activity = soloActivity.getCurrentActivity();
-		for (int i = 0; i < soloActivity.getAllOpenedActivities().size() - 1; i++) {
-			String instanceString = soloActivity.getAllOpenedActivities().get(i).toString();
+		Activity activity = activityUtils.getCurrentActivity();
+		for (int i = 0; i < activityUtils.getAllOpenedActivities().size() - 1; i++) {
+			String instanceString = activityUtils.getAllOpenedActivities().get(i).toString();
 			if (instanceString.equals(activity.toString()))
 				found = true;
 		}
@@ -108,7 +108,7 @@ class Asserter {
 	public void assertLowMemory()
 	{
 		ActivityManager.MemoryInfo mi = new ActivityManager.MemoryInfo();
-		((ActivityManager)soloActivity.getCurrentActivity().getSystemService("activity")).getMemoryInfo(mi);
+		((ActivityManager)activityUtils.getCurrentActivity().getSystemService("activity")).getMemoryInfo(mi);
 		Assert.assertFalse("Low memory available: " + mi.availMem + " bytes", mi.lowMemory);
 	}
 

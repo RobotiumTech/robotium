@@ -1,7 +1,6 @@
 package com.jayway.android.robotium.solo;
 
 import junit.framework.Assert;
-import android.app.Activity;
 import android.app.Instrumentation;
 import android.view.KeyEvent;
 
@@ -14,23 +13,23 @@ import android.view.KeyEvent;
 
 class TextEnterer{
 	
-	private final ViewFetcher soloView;
+	private final ViewFetcher viewFetcher;
 	private final RobotiumUtils robotiumUtils;
-	private final Clicker soloClick;
+	private final Clicker clicker;
 	private final Instrumentation inst;
 
     /**
      * Constructs this object.
      *
-     * @param soloView the {@link ViewFetcher} instance.
-     * @param soloActivity the {@link Activity} instance.
-     * @param soloClick the {@link Clicker} instance.
+     * @param viewFetcher the {@link ViewFetcher} instance.
+     * @param robotiumUtils the {@link RobotiumUtils} instance.
+     * @param clicker the {@link Clicker} instance.
      * @param inst the {@link Instrumentation} instance.
      */
-    public TextEnterer(ViewFetcher soloView, RobotiumUtils robotiumUtils, Clicker soloClick, Instrumentation inst) {
-        this.soloView = soloView;
+    public TextEnterer(ViewFetcher viewFetcher, RobotiumUtils robotiumUtils, Clicker clicker, Instrumentation inst) {
+        this.viewFetcher = viewFetcher;
         this.robotiumUtils = robotiumUtils;
-        this.soloClick = soloClick;
+        this.clicker = clicker;
         this.inst = inst;
     }
 
@@ -43,39 +42,48 @@ class TextEnterer{
 	 *
 	 */
 	
-	public void enterText(int index, String text) {
-		robotiumUtils.waitForIdle();
-		Boolean focused = false;
-		try {
-			if (soloView.getCurrentEditTexts().size() > 0) {
-				for (int i = 0; i < soloView.getCurrentEditTexts().size(); i++) {
-					if (soloView.getCurrentEditTexts().get(i).isFocused())
-						focused = true;
-				}
-			}
-			if (!focused && soloView.getCurrentEditTexts().size() > 0) {
-				soloClick.clickOnEditText(index);
-				inst.sendStringSync(text);
-				inst.sendKeyDownUpSync(KeyEvent.KEYCODE_ENTER);
-				inst.sendKeyDownUpSync(KeyEvent.KEYCODE_ENTER);
-				
-			} else if (focused && soloView.getCurrentEditTexts().size() >1)
-			{
-				soloClick.clickOnEditText(index);
-				inst.sendStringSync(text);
-			}
-			else {
-				try {
-					inst.sendStringSync(text);
-				} catch (Throwable e) {}
-			}
-		} catch (IndexOutOfBoundsException e) {
-			e.printStackTrace();
-			Assert.assertTrue("Index is not valid", false);
-		} catch (NullPointerException e) {
-			Assert.assertTrue("NullPointerException", false);
-		}
-		
-	}
+    public void enterText(int index, String text) {
+    	robotiumUtils.waitForIdle();
+    	Boolean focused = false;
+    	try {
+    		if (viewFetcher.getCurrentEditTexts().size() > 0) {
+    			for (int i = 0; i < viewFetcher.getCurrentEditTexts().size(); i++) {
+    				if (viewFetcher.getCurrentEditTexts().get(i).isFocused())
+    					focused = true;
+    			}
+    		}
+    		if (!focused && viewFetcher.getCurrentEditTexts().size() > 0) {
+    			clicker.clickOnEditText(index);
+    			try{
+    				inst.sendStringSync(text);
+    				inst.sendKeyDownUpSync(KeyEvent.KEYCODE_ENTER);
+    				inst.sendKeyDownUpSync(KeyEvent.KEYCODE_ENTER);
+    			}catch(Throwable e){
+    				Assert.assertTrue("Text can not be entered!", false);	
+    			}
+
+    		} else if (focused && viewFetcher.getCurrentEditTexts().size() >1)
+    		{
+    			clicker.clickOnEditText(index);
+    			try{
+    				inst.sendStringSync(text);
+    			}catch(Throwable e){
+    				Assert.assertTrue("Text can not be entered!", false);	
+    			}
+    		}
+    		else {
+    			try{
+    				inst.sendStringSync(text);
+    			}catch(Throwable e){
+    				Assert.assertTrue("Text can not be entered!", false);	
+    			}
+    		}
+    	} catch (IndexOutOfBoundsException e) {
+    		Assert.assertTrue("Index is not valid!", false);
+    	} catch (NullPointerException e) {
+    		Assert.assertTrue("NullPointerException!", false);
+    	}
+
+    }
 
 }

@@ -1,6 +1,8 @@
 package com.jayway.android.robotium.solo;
 
 import java.util.ArrayList;
+import junit.framework.Assert;
+import android.app.Activity;
 import android.app.Instrumentation;
 import android.view.KeyEvent;
 import android.view.View;
@@ -10,9 +12,9 @@ import android.widget.RadioButton;
 
 class RobotiumUtils {	
 	
-	private ViewFetcher soloView;
-	private Searcher soloSearch;
-	private ActivityUtils soloActivity;
+	private ViewFetcher viewFetcher;
+	private Searcher searcher;
+	private ActivityUtils activityUtils;
 	private Instrumentation inst;
 	private final int TIMEOUT = 20000;
 	private final int PAUS = 500;
@@ -24,11 +26,20 @@ class RobotiumUtils {
 	private final static int MENU = 7;
 	private final static int DELETE = 8;
 	
+	/**
+	 * Constructs this object.
+	 * 
+	 * @param activityUtils the {@link Activity} instance.
+	 * @param searcher the {@link Searcher} instance.
+	 * @param viewFetcher the {@link ViewFetcher} instance.
+	 * @param inst the {@link Instrumentation} instance.
+	 */
+	
 	public RobotiumUtils(ActivityUtils activityUtils, Searcher searcher,
 			ViewFetcher viewFetcher, Instrumentation inst) {
-		soloActivity = activityUtils;
-		soloSearch = searcher;
-		soloView = viewFetcher;
+		this.activityUtils = activityUtils;
+		this.searcher = searcher;
+		this.viewFetcher = viewFetcher;
 		this.inst = inst;
 	}
 	
@@ -43,10 +54,7 @@ class RobotiumUtils {
 	public static void sleep(int time) {
 		try {
 			Thread.sleep(time);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		} catch (InterruptedException e) {}
 	}
 	
 	
@@ -56,19 +64,24 @@ class RobotiumUtils {
      * @param index the index of the edit text that should be cleared
      */
 	
-    public void clearEditText(int index)
-    {
-        waitForIdle();
-    	final EditText editText = soloView.getCurrentEditTexts().get(index);
-
-        soloActivity.getCurrentActivity().runOnUiThread(new Runnable()
-        {
-            public void run()
-            {
-                editText.setText("");
-            }
-        });
-    }
+	public void clearEditText(int index)
+	{
+		waitForIdle();    
+		try{
+			final EditText	editText = viewFetcher.getCurrentEditTexts().get(index);
+			if(editText != null){
+				activityUtils.getCurrentActivity().runOnUiThread(new Runnable()
+				{
+					public void run()
+					{
+						editText.setText("");
+					}
+				});
+			}
+		}catch(Throwable e){
+			Assert.assertTrue("No edit text with index " + index + " is found", false);
+		}
+	}
     
     /**
 	 * Private method used instead of instrumentation.waitForIdleSync().
@@ -83,7 +96,7 @@ class RobotiumUtils {
 		View decorView;
 		ArrayList<View> touchItems = new ArrayList<View>();
 		while (System.currentTimeMillis() <= endTime) {
-			decorView = soloView.getActiveDecorView();
+			decorView = viewFetcher.getActiveDecorView();
 			if(decorView != null)
 			touchItems = decorView.getTouchables();
 			if (touchItems.size() > 0)  
@@ -151,12 +164,10 @@ class RobotiumUtils {
 		long now = System.currentTimeMillis();
         final long endTime = now + timeout;
 
-        while (!soloSearch.searchForText(text, matches, scroll) && !soloSearch.searchForEditText(text, scroll) && now < endTime)
+        while (!searcher.searchForText(text, matches, scroll) && !searcher.searchForEditText(text, scroll) && now < endTime)
         {
         	now = System.currentTimeMillis();	
-        }
-        now = System.currentTimeMillis();
-
+        }    
         if (now > endTime)
         	return false;
         
@@ -172,7 +183,9 @@ class RobotiumUtils {
 	
 	public boolean isRadioButtonChecked(int index)
 	{
-		ArrayList<RadioButton> radioButtonList = soloView.getCurrentRadioButtons();
+		ArrayList<RadioButton> radioButtonList = viewFetcher.getCurrentRadioButtons();
+		if(index < 0 || index > radioButtonList.size()-1)
+			Assert.assertTrue("No radio button with index " + index + " is found", false);
 		return radioButtonList.get(index).isChecked();
 	}
 	
@@ -185,7 +198,9 @@ class RobotiumUtils {
 	
 	public boolean isCheckBoxChecked(int index)
 	{
-		ArrayList<CheckBox> checkBoxList = soloView.getCurrentCheckBoxes();
+		ArrayList<CheckBox> checkBoxList = viewFetcher.getCurrentCheckBoxes();
+		if(index < 0 || index > checkBoxList.size()-1)
+			Assert.assertTrue("No checkbox with index " + index + " is found", false);
 		return checkBoxList.get(index).isChecked();
 	}
 	
@@ -197,34 +212,38 @@ class RobotiumUtils {
 	
 	public void sendKey(int key)
 	{
+		RobotiumUtils.sleep(PAUS);
 		inst.waitForIdleSync();
-		RobotiumUtils.sleep(500);
-		switch (key) {
-		case RIGHT:
-			inst.sendCharacterSync(KeyEvent.KEYCODE_DPAD_RIGHT);
-			break;
-		case LEFT:
-			inst.sendCharacterSync(KeyEvent.KEYCODE_DPAD_LEFT);
-			break;
-		case UP:
-			inst.sendCharacterSync(KeyEvent.KEYCODE_DPAD_UP);
-			break;
-		case DOWN:
-			inst.sendCharacterSync(KeyEvent.KEYCODE_DPAD_DOWN);
-			break;
-		case ENTER:
-			inst.sendCharacterSync(KeyEvent.KEYCODE_ENTER);
-			break;
-		case MENU:
-			inst.sendCharacterSync(KeyEvent.KEYCODE_MENU);
-			break;
-		case DELETE:
-			inst.sendCharacterSync(KeyEvent.KEYCODE_DEL);
-			break;
-		default:
-			break;
+		try{
+			switch (key) {
+			case RIGHT:
+				inst.sendCharacterSync(KeyEvent.KEYCODE_DPAD_RIGHT);
+				break;
+			case LEFT:
+				inst.sendCharacterSync(KeyEvent.KEYCODE_DPAD_LEFT);
+				break;
+			case UP:
+				inst.sendCharacterSync(KeyEvent.KEYCODE_DPAD_UP);
+				break;
+			case DOWN:
+				inst.sendCharacterSync(KeyEvent.KEYCODE_DPAD_DOWN);
+				break;
+			case ENTER:
+				inst.sendCharacterSync(KeyEvent.KEYCODE_ENTER);
+				break;
+			case MENU:
+				inst.sendCharacterSync(KeyEvent.KEYCODE_MENU);
+				break;
+			case DELETE:
+				inst.sendCharacterSync(KeyEvent.KEYCODE_DEL);
+				break;
+			default:
+				break;
+			}
+		}catch(Throwable e){
+			Assert.assertTrue("Can not complete action!", false);
 		}
-		
+
 	}
 
 

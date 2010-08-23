@@ -20,8 +20,8 @@ import android.widget.ToggleButton;
 
 class Searcher {
 	
-	private final ViewFetcher soloView;
-	private final Scroller soloScroll;
+	private final ViewFetcher viewFetcher;
+	private final Scroller scroller;
 	private final Instrumentation inst;
 	private final int PAUS = 500;
 	private final int TIMEOUT = 5000;
@@ -31,13 +31,13 @@ class Searcher {
     /**
      * Constructs this object.
      *
-     * @param soloView the {@link ViewFetcher} instance.
-     * @param soloScroll the {@link Scroller} instance.
+     * @param viewFetcher the {@link ViewFetcher} instance.
+     * @param scroller the {@link Scroller} instance.
      * @param inst the {@link Instrumentation} instance.
      */
-    public Searcher(ViewFetcher soloView, Scroller soloScroll, Instrumentation inst) {
-        this.soloView = soloView;
-        this.soloScroll = soloScroll;
+    public Searcher(ViewFetcher viewFetcher, Scroller scroller, Instrumentation inst) {
+        this.viewFetcher = viewFetcher;
+        this.scroller = scroller;
         this.inst = inst;
     }
 	
@@ -92,14 +92,14 @@ class Searcher {
 		inst.waitForIdleSync();
 		Pattern p = Pattern.compile(search);
 		Matcher matcher;
-		ArrayList<EditText> editTextList = soloView.getCurrentEditTexts();
+		ArrayList<EditText> editTextList = viewFetcher.getCurrentEditTexts();
 		for(EditText editText : editTextList){
 			matcher = p.matcher(editText.getText().toString());
 			if (matcher.find()) {
 				return true;
 			}
 		}
-		if (scroll && soloScroll.scrollDown())
+		if (scroll && scroller.scrollDown())
 			return searchForEditText(search, scroll);
 		else
 			return false;
@@ -171,11 +171,11 @@ class Searcher {
 	 */
 	
 	private boolean searchForButton(String search, int matches) {
-		inst.waitForIdleSync();
 		RobotiumUtils.sleep(PAUS);
+		inst.waitForIdleSync();
 		Pattern p = Pattern.compile(search);
 		Matcher matcher;
-		ArrayList<Button> buttonList = soloView.getCurrentButtons();
+		ArrayList<Button> buttonList = viewFetcher.getCurrentButtons();
 		if(matches == 0)
 			matches = 1;
 		for(Button button : buttonList){
@@ -188,15 +188,16 @@ class Searcher {
 				return true;
 			} 	
 		}
-		if (soloScroll.scrollDown())
+		if (scroller.scrollDown())
 		{
 			return searchForButton(search, matches);
 		} else {
-			Log.d(LOG_TAG, " There are only " + countMatches + " matches of " + search);
+			if (countMatches > 0)
+				Log.d(LOG_TAG, " There are only " + countMatches + " matches of " + search);
 			countMatches = 0;
 			return false;
 		}
-		
+
 	}
 	/**
 	 * Searches for a toggle button with the given search string and returns true if the 
@@ -237,11 +238,11 @@ class Searcher {
 	 */
 	
 	private boolean searchForToggleButton(String search, int matches) {
-		inst.waitForIdleSync();
 		RobotiumUtils.sleep(PAUS);
+		inst.waitForIdleSync();
 		Pattern p = Pattern.compile(search);
 		Matcher matcher;
-		ArrayList<ToggleButton> toggleButtonList = soloView.getCurrentToggleButtons();
+		ArrayList<ToggleButton> toggleButtonList = viewFetcher.getCurrentToggleButtons();
 		if(matches == 0)
 			matches = 1;
 		for(ToggleButton toggleButton : toggleButtonList){
@@ -254,7 +255,7 @@ class Searcher {
 				return true;
 			} 
 		}
-		if (soloScroll.scrollDown())
+		if (scroller.scrollDown())
 		{
 			return searchForToggleButton(search, matches);
 		} else {
@@ -335,11 +336,11 @@ class Searcher {
 	 */
 	
 	public boolean searchForText(String search, int matches, boolean scroll) {
-		inst.waitForIdleSync();
 		RobotiumUtils.sleep(PAUS);
+		inst.waitForIdleSync();
 		Pattern p = Pattern.compile(search);
 		Matcher matcher;
-		ArrayList<TextView> textViewList = soloView.getCurrentTextViews(null);
+		ArrayList<TextView> textViewList = viewFetcher.getCurrentTextViews(null);
 		if(matches == 0)
 			matches = 1;
 		for(TextView textView : textViewList){
@@ -352,7 +353,7 @@ class Searcher {
 				return true;
 			}
 		}
-		if (scroll && soloScroll.scrollDown()) {
+		if (scroll && scroller.scrollDown()) {
 			return searchForText(search, matches, scroll);
 		} else {
 			if (countMatches > 0)

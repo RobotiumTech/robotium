@@ -1,5 +1,6 @@
 package com.jayway.android.robotium.solo;
 
+import junit.framework.Assert;
 import android.app.Instrumentation;
 import android.view.KeyEvent;
 
@@ -13,24 +14,25 @@ import android.view.KeyEvent;
 
 class Presser{
 
-	private final ViewFetcher soloView;
-	private final Clicker soloClick;
+	private final ViewFetcher viewFetcher;
+	private final Clicker clicker;
 	private final Instrumentation inst;
 	private final int PAUS = 500;
+	private final int MINIPAUS = 300;
 
     /**
      * Constructs this object.
      *
-     * @param soloView the {@link ViewFetcher} instance.
-     * @param soloClick the {@link Clicker} instance.
+     * @param viewFetcher the {@link ViewFetcher} instance.
+     * @param clicker the {@link Clicker} instance.
      * @param inst the {@link Instrumentation} instance.
      */
 	
-	public Presser(ViewFetcher soloView,
-			Clicker soloClick, Instrumentation inst) {
+	public Presser(ViewFetcher viewFetcher,
+			Clicker clicker, Instrumentation inst) {
 
-		this.soloView = soloView;
-		this.soloClick = soloClick;
+		this.viewFetcher = viewFetcher;
+		this.clicker = clicker;
 		this.inst = inst;
 	}
 
@@ -48,43 +50,40 @@ class Presser{
 		inst.waitForIdleSync();
 		RobotiumUtils.sleep(PAUS);
 		try{
-		inst.sendKeyDownUpSync(KeyEvent.KEYCODE_MENU);
-		RobotiumUtils.sleep(300);
-		inst.sendKeyDownUpSync(KeyEvent.KEYCODE_DPAD_UP);
-		inst.sendKeyDownUpSync(KeyEvent.KEYCODE_DPAD_UP);
-		}catch(Throwable e)
-		{
-			e.printStackTrace();
+			inst.sendKeyDownUpSync(KeyEvent.KEYCODE_MENU);
+			RobotiumUtils.sleep(MINIPAUS);
+			inst.sendKeyDownUpSync(KeyEvent.KEYCODE_DPAD_UP);
+			inst.sendKeyDownUpSync(KeyEvent.KEYCODE_DPAD_UP);
+		}catch(Throwable e){
+			Assert.assertTrue("Can not press the menu!", false);
 		}
 		if (index < 3) {
 			for (int i = 0; i < index; i++) {
-				RobotiumUtils.sleep(300);
+				RobotiumUtils.sleep(MINIPAUS);
 				inst.sendKeyDownUpSync(KeyEvent.KEYCODE_DPAD_RIGHT);
 			}
 		} else if (index >= 3 && index < 5) {
 			inst.sendKeyDownUpSync(KeyEvent.KEYCODE_DPAD_DOWN);	
-			
+
 			for (int i = 3; i < index; i++) {
-				RobotiumUtils.sleep(300);
+				RobotiumUtils.sleep(MINIPAUS);
 				inst.sendKeyDownUpSync(KeyEvent.KEYCODE_DPAD_RIGHT);
 			}
 		} else if (index >= 5) {
 			inst.sendKeyDownUpSync(KeyEvent.KEYCODE_DPAD_DOWN);	
 			inst.sendKeyDownUpSync(KeyEvent.KEYCODE_DPAD_DOWN);	
-			
+
 			for (int i = 5; i < index; i++) {
-				RobotiumUtils.sleep(300);
+				RobotiumUtils.sleep(MINIPAUS);
 				inst.sendKeyDownUpSync(KeyEvent.KEYCODE_DPAD_RIGHT);
 			}
 		}
-			
+
 		try{
-		inst.sendKeyDownUpSync(KeyEvent.KEYCODE_ENTER);
-		}catch (Throwable e) {
-			e.printStackTrace();
-		}
+			inst.sendKeyDownUpSync(KeyEvent.KEYCODE_ENTER);
+		}catch (Throwable e) {}
 	}
-	
+
 	/**
 	 * Method used to press on a spinner (drop-down menu) item.
 	 * 
@@ -98,7 +97,7 @@ class Presser{
 	{
 		inst.waitForIdleSync();
 		RobotiumUtils.sleep(PAUS);
-		soloClick.clickOnScreen(soloView.getCurrentSpinners().get(spinnerIndex));
+		clicker.clickOnScreen(viewFetcher.getCurrentSpinners().get(spinnerIndex));
 		inst.sendKeyDownUpSync(KeyEvent.KEYCODE_DPAD_DOWN);
 		boolean countingUp = true;
 		if(itemIndex < 0){
@@ -107,7 +106,7 @@ class Presser{
 		}
 		for(int i = 0; i < itemIndex; i++)
 		{
-			RobotiumUtils.sleep(300);
+			RobotiumUtils.sleep(MINIPAUS);
 			if(countingUp){
 				inst.sendKeyDownUpSync(KeyEvent.KEYCODE_DPAD_DOWN);
 			}else{

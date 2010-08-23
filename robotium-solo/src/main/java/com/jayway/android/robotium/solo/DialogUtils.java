@@ -12,12 +12,12 @@ package com.jayway.android.robotium.solo;
 class DialogUtils {
 	
 	private final ViewFetcher viewFetcher;
-	private final int PAUS = 500;
+	private final int MINIPAUS = 300;
 
 	/**
 	 * Constructs this object.
 	 * 
-	 * @param soloActivity the activity to act upon
+	 * @param viewFetcher the {@link ViewFetcher} instance.
 	 * 
 	 */
 
@@ -35,12 +35,21 @@ class DialogUtils {
 	 */
 
 	public boolean waitForDialogToClose(long timeout) {
-		RobotiumUtils.sleep(PAUS);
+		RobotiumUtils.sleep(MINIPAUS);
 		int elements = viewFetcher.getWindowDecorViews().length;
 		long now = System.currentTimeMillis();
 		final long endTime = now + timeout;
-		while (viewFetcher.getWindowDecorViews().length >= elements && now < endTime) {
-			RobotiumUtils.sleep(PAUS);
+		while (now < endTime) {
+			if(elements < viewFetcher.getWindowDecorViews().length){
+				elements = viewFetcher.getWindowDecorViews().length;
+			}
+			if(elements > viewFetcher.getWindowDecorViews().length)
+				break;
+			
+			if(!viewFetcher.getActiveDecorView().isEnabled())
+				break;
+			
+			RobotiumUtils.sleep(MINIPAUS);
 			now = System.currentTimeMillis();
 		}
 		
