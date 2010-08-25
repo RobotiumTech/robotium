@@ -351,7 +351,7 @@ class Clicker {
 	private void clickOnText(String text, boolean longClick, int match, boolean scroll) {
 		Pattern p = Pattern.compile(text);
 		Matcher matcher; 
-		robotiumUtils.waitForText(text, 0, TIMEOUT, true);
+		robotiumUtils.waitForText(text, 0, TIMEOUT, scroll);
 		TextView textToClick = null;
 		ArrayList <TextView> textViewList = viewFetcher.getCurrentTextViews(null);
 		if(match == 0)
