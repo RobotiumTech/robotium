@@ -29,7 +29,7 @@ class RobotiumUtils {
 	/**
 	 * Constructs this object.
 	 * 
-	 * @param activityUtils the {@link Activity} instance.
+	 * @param activityUtils the {@link ActivityUtils} instance.
 	 * @param searcher the {@link Searcher} instance.
 	 * @param viewFetcher the {@link ViewFetcher} instance.
 	 * @param inst the {@link Instrumentation} instance.

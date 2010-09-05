@@ -18,7 +18,7 @@ class Asserter {
 	/**
 	 * Constructs this object.
 	 *
-	 * @param soloActivity the {@link ActivityUtils} instance.
+	 * @param activityUtils the {@link ActivityUtils} instance.
 	 *
 	 */
 	

@@ -86,7 +86,7 @@ public class Solo {
 	
 	public Solo(Instrumentation inst, Activity activity) {
         this.activitiyUtils = new ActivityUtils(inst, activity);
-        this.viewFetcher = new ViewFetcher(inst);
+        this.viewFetcher = new ViewFetcher(inst, activitiyUtils);
         this.asserter = new Asserter(activitiyUtils);
         this.dialogUtils = new DialogUtils(viewFetcher);
         this.scroller = new Scroller(inst, activitiyUtils, viewFetcher);
@@ -670,7 +670,7 @@ public class Solo {
 	/**
 	 * Clicks on a button with a certain index.
 	 *
-	 * @param index the index number of the button
+	 * @param index the index number of the button. 0 if only one is available
 	 *
 	 */
 	

@@ -91,8 +91,21 @@ class ActivityUtils {
 	 */
 	
 	public Activity getCurrentActivity() {
-		RobotiumUtils.sleep(PAUS);
-		inst.waitForIdleSync();
+	return getCurrentActivity(PAUS);	
+	}
+	
+	/**
+	 * This method returns the current activity.
+	 *
+	 * @return current activity
+	 * @param paus the time to paus
+	 */
+	
+	public Activity getCurrentActivity(int paus) {
+		if(paus > 0){
+			RobotiumUtils.sleep(paus);
+			inst.waitForIdleSync();
+		}
 		Boolean found = false;
 		if (activityMonitor != null) {
 			if (activityMonitor.getLastActivity() != null)

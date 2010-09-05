@@ -66,9 +66,7 @@ class Scroller {
 		MotionEvent event = MotionEvent.obtain(downTime, eventTime,MotionEvent.ACTION_DOWN, fromX, fromY, 0);
 		try {
 			inst.sendPointerSync(event);
-		} catch (Throwable e) {
-			Assert.assertTrue("Application can not be dragged!", false);
-		}
+		} catch (Throwable e) {}
 		for (int i = 0; i < stepCount; ++i) {
 			y += yStep;
 			x += xStep;
