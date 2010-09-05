@@ -78,7 +78,7 @@ class Clicker {
 			inst.sendPointerSync(event);
 			inst.sendPointerSync(event2);
 		}catch(Throwable e){
-			Assert.assertTrue("Click can not be completed. Something is in the way e.g. the keyboard.", false);
+			Assert.assertTrue("Click can not be completed! Something is in the way e.g. the keyboard.", false);
 		}
 	}
 	
@@ -97,7 +97,7 @@ class Clicker {
         try{
         	inst.sendPointerSync(event);
         }catch(Throwable e){
-        	Assert.assertTrue("Click can not be completed. Something is in the way e.g. the keyboard.", false);
+        	Assert.assertTrue("Click can not be completed! Something is in the way e.g. the keyboard.", false);
         }
         inst.waitForIdleSync();
         eventTime = SystemClock.uptimeMillis();
@@ -397,7 +397,7 @@ class Clicker {
 		try {
 			clickOnScreen(viewFetcher.getButton(index));
 		}catch (IndexOutOfBoundsException e) {
-			Assert.assertTrue("Index is not valid", false);
+			Assert.assertTrue("Index is not valid!", false);
 		}
 	}
 	
@@ -482,7 +482,7 @@ class Clicker {
 		try {
 			clickOnScreen(viewFetcher.getCurrentImageViews().get(index));
 		} catch (IndexOutOfBoundsException e) {
-			Assert.assertTrue("Index is not valid", false);
+			Assert.assertTrue("Index is not valid!", false);
 		}
 	}
 	
@@ -498,7 +498,7 @@ class Clicker {
 		try {
 			clickOnScreen(viewFetcher.getCurrentImageButtons().get(index));
 		} catch (IndexOutOfBoundsException e) {
-			Assert.assertTrue("Index is not valid", false);
+			Assert.assertTrue("Index is not valid!", false);
 		}
 	}
 	
@@ -514,7 +514,7 @@ class Clicker {
 		try {
 			clickOnScreen(viewFetcher.getCurrentRadioButtons().get(index));
 		} catch (IndexOutOfBoundsException e) {
-			Assert.assertTrue("Index is not valid", false);
+			Assert.assertTrue("Index is not valid!", false);
 		}
 	}
 	
@@ -530,7 +530,7 @@ class Clicker {
 		try {
 			clickOnScreen(viewFetcher.getCurrentCheckBoxes().get(index));
 		} catch (IndexOutOfBoundsException e) {
-			Assert.assertTrue("Index is not valid", false);
+			Assert.assertTrue("Index is not valid!", false);
 		}
 	}
 	
@@ -546,7 +546,7 @@ class Clicker {
 		try {
 			clickOnScreen(viewFetcher.getCurrentEditTexts().get(index));
 		} catch (IndexOutOfBoundsException e) {
-			Assert.assertTrue("Index is not valid", false);
+			Assert.assertTrue("Index is not valid!", false);
 		}
 	}
 	
