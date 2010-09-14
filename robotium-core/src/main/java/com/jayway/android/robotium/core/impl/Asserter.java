@@ -1,4 +1,4 @@
-package com.jayway.android.robotium.solo;
+package com.jayway.android.robotium.core.impl;
 
 import junit.framework.Assert;
 import android.app.Activity;

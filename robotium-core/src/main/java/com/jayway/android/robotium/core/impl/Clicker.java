@@ -1,4 +1,4 @@
-package com.jayway.android.robotium.solo;
+package com.jayway.android.robotium.core.impl;
 
 import java.util.ArrayList;
 import java.util.regex.Matcher;
@@ -40,10 +40,10 @@ class Clicker {
 	/**
 	 * Constructs this object.
 	 * 
-	 * @param ativityUtils the {@link com.jayway.android.robotium.solo.ActivityUtils} instance.
-     * @param viewFetcher the {@link com.jayway.android.robotium.solo.ViewFetcher} instance.
-     * @param scroller the {@link com.jayway.android.robotium.solo.Scroller} instance.
-     * @param robotiumUtils the {@link com.jayway.android.robotium.solo.RobotiumUtils} instance.
+	 * @param ativityUtils the {@link ActivityUtils} instance.
+     * @param viewFetcher the {@link ViewFetcher} instance.
+     * @param scroller the {@link Scroller} instance.
+     * @param robotiumUtils the {@link RobotiumUtils} instance.
      * @param inst the {@link android.app.Instrumentation} instance.
      * @param sleeper the {@code Sleeper} instance
      */

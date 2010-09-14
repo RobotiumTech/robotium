@@ -18,6 +18,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.ListView;
 import android.widget.ToggleButton;
+import com.jayway.android.robotium.core.impl.*;
 
 /**
  * This class contains all the methods that the sub-classes have. It supports test
