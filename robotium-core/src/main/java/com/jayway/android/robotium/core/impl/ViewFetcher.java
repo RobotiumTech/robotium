@@ -28,7 +28,7 @@ import android.widget.ToggleButton;
  * 
  */
 
-class ViewFetcher {
+public class ViewFetcher {
 	
 	private final ArrayList<View> viewList = new ArrayList<View>();
 	private final Instrumentation inst;

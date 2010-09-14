@@ -11,7 +11,7 @@ import android.app.ActivityManager;
  *
  */
 
-class Asserter {
+public class Asserter {
 	private final ActivityUtils activityUtils;
     private final Sleeper sleeper;
 

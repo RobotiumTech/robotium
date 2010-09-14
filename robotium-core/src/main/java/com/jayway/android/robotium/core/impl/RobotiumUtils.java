@@ -9,7 +9,7 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.RadioButton;
 
-class RobotiumUtils {	
+public class RobotiumUtils {
 	
 	private final ViewFetcher viewFetcher;
 	private final Searcher searcher;

@@ -1,6 +1,6 @@
 package com.jayway.android.robotium.core.impl;
 
-class Sleeper {
+public class Sleeper {
 
 	private final int PAUSE = 500;
 	private final int MINIPAUSE = 300;

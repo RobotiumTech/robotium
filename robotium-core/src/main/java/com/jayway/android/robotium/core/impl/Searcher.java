@@ -18,7 +18,7 @@ import android.widget.ToggleButton;
  * 
  */
 
-class Searcher {
+public class Searcher {
 	
 	private final ViewFetcher viewFetcher;
 	private final Scroller scroller;

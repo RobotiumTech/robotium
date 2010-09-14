@@ -9,7 +9,7 @@ package com.jayway.android.robotium.core.impl;
  * 
  */
 
-class DialogUtils {
+public class DialogUtils {
 	
 	private final ViewFetcher viewFetcher;
     private final Sleeper sleeper;

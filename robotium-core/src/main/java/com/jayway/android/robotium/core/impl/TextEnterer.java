@@ -11,7 +11,7 @@ import android.view.KeyEvent;
  *
  */
 
-class TextEnterer{
+public class TextEnterer{
 	
 	private final ViewFetcher viewFetcher;
 	private final RobotiumUtils robotiumUtils;
