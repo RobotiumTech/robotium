@@ -3,6 +3,7 @@ package com.jayway.android.robotium.solo;
 import java.util.ArrayList;
 import android.app.Activity;
 import android.app.Instrumentation;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -1140,8 +1141,32 @@ public class Solo {
 	
 	public void sendKey(int key)
 	{
-		robotiumUtils.sendKey(key);
-	}
+        switch (key) {
+            case RIGHT:
+                robotiumUtils.sendKeyCode(KeyEvent.KEYCODE_DPAD_RIGHT);
+                break;
+            case LEFT:
+                robotiumUtils.sendKeyCode(KeyEvent.KEYCODE_DPAD_LEFT);
+                break;
+            case UP:
+                robotiumUtils.sendKeyCode(KeyEvent.KEYCODE_DPAD_UP);
+                break;
+            case DOWN:
+                robotiumUtils.sendKeyCode(KeyEvent.KEYCODE_DPAD_DOWN);
+                break;
+            case ENTER:
+                robotiumUtils.sendKeyCode(KeyEvent.KEYCODE_ENTER);
+                break;
+            case MENU:
+                robotiumUtils.sendKeyCode(KeyEvent.KEYCODE_MENU);
+                break;
+            case DELETE:
+                robotiumUtils.sendKeyCode(KeyEvent.KEYCODE_DEL);
+                break;
+            default:
+                break;
+        }
+    }
 	
 	/**
 	 * Returns to the given {@link Activity}.

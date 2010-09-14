@@ -36,7 +36,6 @@ class Clicker {
 	private final int MINIPAUS = 300;
 	private final int TIMEOUT = 10000;
 	private final int CLICKTIMEOUT = 5000;	
-	private final static int MENU = 7;
 
 
 	/**
@@ -290,7 +289,7 @@ class Clicker {
 		RobotiumUtils.sleep(PAUS);
 		inst.waitForIdleSync();
 		try{
-			robotiumUtils.sendKey(MENU);
+			robotiumUtils.sendKeyCode(KeyEvent.KEYCODE_MENU);
 		}catch(Throwable e){
 			Assert.assertTrue("Can not open the menu!", false);
 		}
@@ -315,7 +314,7 @@ class Clicker {
 		int y = 0;
 		
 		try{
-		robotiumUtils.sendKey(MENU);
+		robotiumUtils.sendKeyCode(KeyEvent.KEYCODE_MENU);
 		}catch(Throwable e){
 			Assert.assertTrue("Can not open the menu!", false);
 		}

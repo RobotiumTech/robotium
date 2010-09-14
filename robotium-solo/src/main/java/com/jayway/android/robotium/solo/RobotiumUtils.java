@@ -2,7 +2,6 @@ package com.jayway.android.robotium.solo;
 
 import java.util.ArrayList;
 import junit.framework.Assert;
-import android.app.Activity;
 import android.app.Instrumentation;
 import android.view.KeyEvent;
 import android.view.View;
@@ -18,14 +17,7 @@ class RobotiumUtils {
 	private Instrumentation inst;
 	private final int TIMEOUT = 20000;
 	private final int PAUS = 500;
-	private final static int RIGHT = 2;
-	private final static int LEFT = 3;
-	private final static int UP = 4;
-	private final static int DOWN = 5;
-	private final static int ENTER = 6;
-	private final static int MENU = 7;
-	private final static int DELETE = 8;
-	
+
 	/**
 	 * Constructs this object.
 	 * 
@@ -205,46 +197,16 @@ class RobotiumUtils {
 	}
 	
 	/**
-	 * Tells Robotium to send a key: Right, Left, Up, Down, Enter, Menu or Delete.
-	 *
-	 * @param key the key to be sent. Use {@code RobotiumUtils.}{@link #RIGHT}, {@link #LEFT}, {@link #UP}, {@link #DOWN}, {@link #ENTER}, {@link #MENU}, {@link #DELETE}
+	 * Tells Robotium to send a key code: Right, Left, Up, Down, Enter or other.
+	 * @param keycode the key code to be sent. Use {@link KeyEvent#KEYCODE_ENTER}, {@link KeyEvent#KEYCODE_MENU}, {@link KeyEvent#KEYCODE_DEL}, {@link KeyEvent#KEYCODE_DPAD_RIGHT} and so on...
 	 * 
 	 */
 	
-	public void sendKey(int key)
+	public void sendKeyCode(int keycode)
 	{
 		RobotiumUtils.sleep(PAUS);
 		inst.waitForIdleSync();
-		try{
-			switch (key) {
-			case RIGHT:
-				inst.sendCharacterSync(KeyEvent.KEYCODE_DPAD_RIGHT);
-				break;
-			case LEFT:
-				inst.sendCharacterSync(KeyEvent.KEYCODE_DPAD_LEFT);
-				break;
-			case UP:
-				inst.sendCharacterSync(KeyEvent.KEYCODE_DPAD_UP);
-				break;
-			case DOWN:
-				inst.sendCharacterSync(KeyEvent.KEYCODE_DPAD_DOWN);
-				break;
-			case ENTER:
-				inst.sendCharacterSync(KeyEvent.KEYCODE_ENTER);
-				break;
-			case MENU:
-				inst.sendCharacterSync(KeyEvent.KEYCODE_MENU);
-				break;
-			case DELETE:
-				inst.sendCharacterSync(KeyEvent.KEYCODE_DEL);
-				break;
-			default:
-				break;
-			}
-		}catch(Throwable e){
-			Assert.assertTrue("Can not complete action!", false);
-		}
-
+		inst.sendCharacterSync(keycode);
 	}
 
 
