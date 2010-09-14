@@ -828,7 +828,10 @@ public class Solo {
 	 */
 	
 	public void scrollToSide(int side) {
-		scroller.scrollToSide(side);
+        switch (side){
+            case RIGHT: scroller.scrollToSide(Scroller.Side.RIGHT); break;
+            case LEFT:  scroller.scrollToSide(Scroller.Side.LEFT);  break;
+        }
 	}
 	
 	/**

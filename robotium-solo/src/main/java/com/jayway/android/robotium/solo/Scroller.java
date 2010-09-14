@@ -1,6 +1,5 @@
 package com.jayway.android.robotium.solo;
 
-import junit.framework.Assert;
 import android.app.Instrumentation;
 import android.os.SystemClock;
 import android.view.MotionEvent;
@@ -17,15 +16,13 @@ import android.widget.ScrollView;
 
 class Scroller {
 	
+    public enum Direction {UP, DOWN}
+    public enum Side {LEFT, RIGHT}
+
 	private final Instrumentation inst;
 	private final ActivityUtils activityUtils;
 	private final ViewFetcher viewFetcher;
    	private int scrollAmount = 0;
-	private final static int RIGHT = 2;
-	private final static int LEFT = 3;
-	private final static int UP = 4;
-	private final static int DOWN = 5;
-	
 
     /**
      * Constructs this object.
@@ -94,7 +91,7 @@ class Scroller {
 	 */
 	
 	public boolean scrollDown() {
-		return scroll(DOWN);
+		return scroll(Direction.DOWN);
 	
 	}
 	
@@ -107,7 +104,7 @@ class Scroller {
 	 */
 	
 	public boolean scrollUp(){
-		return scroll(UP);
+		return scroll(Direction.UP);
 	}
 	
 	/**
@@ -118,10 +115,10 @@ class Scroller {
 	 * 
 	 */
 	
-	private boolean scroll(int direction) {
+	private boolean scroll(Direction direction) {
 		int yStart;
 		int yEnd;
-		if (direction == DOWN) {
+		if (direction == Direction.DOWN) {
 			yStart = (activityUtils.getCurrentActivity().getWindowManager()
 					.getDefaultDisplay().getHeight() - 20);
 			yEnd = ((activityUtils.getCurrentActivity().getWindowManager()
@@ -165,7 +162,7 @@ class Scroller {
 	
 	public boolean scrollUpList(int listIndex)
 	{
-		return scrollList(listIndex, UP);
+		return scrollList(listIndex, Direction.UP);
 	}
 	
 	/**
@@ -178,7 +175,7 @@ class Scroller {
 	
 	public boolean scrollDownList(int listIndex)
 	{
-		return scrollList(listIndex, DOWN);
+		return scrollList(listIndex, Direction.DOWN);
 		
 	}
 	
@@ -191,7 +188,7 @@ class Scroller {
 	 * 
 	 */
 	
-	private boolean scrollList(int listIndex, int direction) {
+	private boolean scrollList(int listIndex, Direction direction) {
 		ListView listView = viewFetcher.getCurrentListViews().get(listIndex);
 		int[] xy = new int[2];
 		listView.getLocationOnScreen(xy);
@@ -209,7 +206,7 @@ class Scroller {
 		}
 		int yStart;
 		int yEnd;
-		if (direction == DOWN) {
+		if (direction == Direction.DOWN) {
 			yStart = ((xy[1] + listView.getHeight()) - 20);
 			yEnd = (xy[1] + 20);
 		} else {
@@ -238,16 +235,16 @@ class Scroller {
 	 *
 	 */
 	
-	public void scrollToSide(int side) {
+	public void scrollToSide(Side side) {
 		int screenHeight = activityUtils.getCurrentActivity().getWindowManager().getDefaultDisplay()
 		.getHeight();
 		int screenWidth = activityUtils.getCurrentActivity().getWindowManager().getDefaultDisplay()
 		.getWidth();
 		float x = screenWidth / 2.0f;
 		float y = screenHeight / 2.0f;
-		if (side == LEFT)
+		if (side == Side.LEFT)
 			drag(0, x, y, y, 40);
-		else if (side == RIGHT)
+		else if (side == Side.RIGHT)
 			drag(x, 0, y, y, 40);
 	}
 	
