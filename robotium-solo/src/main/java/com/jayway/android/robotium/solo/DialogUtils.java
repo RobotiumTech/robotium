@@ -12,7 +12,6 @@ package com.jayway.android.robotium.solo;
 class DialogUtils {
 	
 	private final ViewFetcher viewFetcher;
-	private final int MINIPAUS = 300;
 
 	/**
 	 * Constructs this object.
@@ -35,7 +34,7 @@ class DialogUtils {
 	 */
 
 	public boolean waitForDialogToClose(long timeout) {
-		RobotiumUtils.sleep(MINIPAUS);
+		RobotiumUtils.sleepMini();
 		int elements = viewFetcher.getWindowDecorViews().length;
 		long now = System.currentTimeMillis();
 		final long endTime = now + timeout;
@@ -49,7 +48,7 @@ class DialogUtils {
 			if(!viewFetcher.getActiveDecorView().isEnabled())
 				break;
 			
-			RobotiumUtils.sleep(MINIPAUS);
+			RobotiumUtils.sleepMini();
 			now = System.currentTimeMillis();
 		}
 		

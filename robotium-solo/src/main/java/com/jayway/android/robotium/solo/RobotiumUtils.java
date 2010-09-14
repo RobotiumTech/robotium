@@ -17,6 +17,7 @@ class RobotiumUtils {
 	private Instrumentation inst;
 	private final int TIMEOUT = 20000;
 	static final int PAUSE = 500;
+	private static final int MINIPAUSE = 300;
 
 	/**
 	 * Constructs this object.
@@ -44,7 +45,17 @@ class RobotiumUtils {
 	public static void sleep() {
         sleep(PAUSE);
 	}
-	
+
+
+	/**
+	 * Sleeps the current thread for a default mini pause length.
+	 *
+	 */
+
+	public static void sleepMini() {
+        sleep(MINIPAUSE);
+	}
+
 	
 	/**
 	 * Sleeps the current thread for <code>time</code> milliseconds.

@@ -32,7 +32,6 @@ class Clicker {
 	private final Instrumentation inst;
 	private final RobotiumUtils robotiumUtils;
 	private int countMatches=0;
-	private final int MINIPAUS = 300;
 	private final int TIMEOUT = 10000;
 	private final int CLICKTIMEOUT = 5000;	
 
@@ -148,7 +147,7 @@ class Clicker {
 				.getDefaultDisplay().getHeight() && scroller.scrollDown()) {
 			view.getLocationOnScreen(xy);
 		}
-		RobotiumUtils.sleep(MINIPAUS);
+		RobotiumUtils.sleepMini();
 		view.getLocationOnScreen(xy);
 		final int viewWidth = view.getWidth();
 		final int viewHeight = view.getHeight();
@@ -230,7 +229,7 @@ class Clicker {
 		}
 		for(int i = 0; i < index; i++)
 		{
-			RobotiumUtils.sleep(MINIPAUS);
+			RobotiumUtils.sleepMini();
 			inst.sendKeyDownUpSync(KeyEvent.KEYCODE_DPAD_DOWN);
 		}
 		inst.sendKeyDownUpSync(KeyEvent.KEYCODE_ENTER);

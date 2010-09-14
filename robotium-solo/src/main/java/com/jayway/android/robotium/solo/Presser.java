@@ -17,7 +17,6 @@ class Presser{
 	private final ViewFetcher viewFetcher;
 	private final Clicker clicker;
 	private final Instrumentation inst;
-	private final int MINIPAUS = 300;
 
     /**
      * Constructs this object.
@@ -50,7 +49,7 @@ class Presser{
 		RobotiumUtils.sleep();
 		try{
 			inst.sendKeyDownUpSync(KeyEvent.KEYCODE_MENU);
-			RobotiumUtils.sleep(MINIPAUS);
+			RobotiumUtils.sleepMini();
 			inst.sendKeyDownUpSync(KeyEvent.KEYCODE_DPAD_UP);
 			inst.sendKeyDownUpSync(KeyEvent.KEYCODE_DPAD_UP);
 		}catch(Throwable e){
@@ -58,14 +57,14 @@ class Presser{
 		}
 		if (index < 3) {
 			for (int i = 0; i < index; i++) {
-				RobotiumUtils.sleep(MINIPAUS);
+				RobotiumUtils.sleepMini();
 				inst.sendKeyDownUpSync(KeyEvent.KEYCODE_DPAD_RIGHT);
 			}
 		} else if (index >= 3 && index < 5) {
 			inst.sendKeyDownUpSync(KeyEvent.KEYCODE_DPAD_DOWN);	
 
 			for (int i = 3; i < index; i++) {
-				RobotiumUtils.sleep(MINIPAUS);
+				RobotiumUtils.sleepMini();
 				inst.sendKeyDownUpSync(KeyEvent.KEYCODE_DPAD_RIGHT);
 			}
 		} else if (index >= 5) {
@@ -73,7 +72,7 @@ class Presser{
 			inst.sendKeyDownUpSync(KeyEvent.KEYCODE_DPAD_DOWN);	
 
 			for (int i = 5; i < index; i++) {
-				RobotiumUtils.sleep(MINIPAUS);
+				RobotiumUtils.sleepMini();
 				inst.sendKeyDownUpSync(KeyEvent.KEYCODE_DPAD_RIGHT);
 			}
 		}
@@ -105,7 +104,7 @@ class Presser{
 		}
 		for(int i = 0; i < itemIndex; i++)
 		{
-			RobotiumUtils.sleep(MINIPAUS);
+			RobotiumUtils.sleepMini();
 			if(countingUp){
 				inst.sendKeyDownUpSync(KeyEvent.KEYCODE_DPAD_DOWN);
 			}else{
