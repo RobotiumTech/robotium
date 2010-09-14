@@ -85,26 +85,26 @@ class ActivityUtils {
 	}
 
 	/**
-	 * Returns the current {@code Activity}.
+	 * Returns the current {@code Activity}, after sleeping a default pause length.
 	 *
 	 * @return the current {@code Activity}
 	 *
 	 */
 	
 	public Activity getCurrentActivity() {
-	    return getCurrentActivity(RobotiumUtils.PAUSE);
+	    return getCurrentActivity(true);
 	}
 	
 	/**
 	 * Returns the current {@code Activity}.
 	 *
+	 * @param shouldSleepFirst whether to sleep a default pause first
 	 * @return the current {@code Activity}
-	 * @param pause the time to pause in milliseconds
 	 */
 	
-	public Activity getCurrentActivity(int pause) {
-		if(pause > 0){
-			RobotiumUtils.sleep(pause);
+	public Activity getCurrentActivity(boolean shouldSleepFirst) {
+		if(shouldSleepFirst){
+			RobotiumUtils.sleep();
 			inst.waitForIdleSync();
 		}
 		Boolean found = false;

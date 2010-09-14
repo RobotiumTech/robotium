@@ -90,7 +90,7 @@ class ViewFetcher {
 	public View getActiveDecorView()
 	{
 		View [] views = getWindowDecorViews();
-		Activity activity = activityUtils.getCurrentActivity(0);
+		Activity activity = activityUtils.getCurrentActivity(false);
 		if(views !=null && views.length > 0)
 		{
 			int length = views.length;

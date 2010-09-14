@@ -16,7 +16,7 @@ class RobotiumUtils {
 	private ActivityUtils activityUtils;
 	private Instrumentation inst;
 	private final int TIMEOUT = 20000;
-	static final int PAUSE = 500;
+	private static final int PAUSE = 500;
 	private static final int MINIPAUSE = 300;
 
 	/**
