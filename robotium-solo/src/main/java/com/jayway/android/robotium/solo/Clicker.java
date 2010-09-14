@@ -32,7 +32,6 @@ class Clicker {
 	private final Instrumentation inst;
 	private final RobotiumUtils robotiumUtils;
 	private int countMatches=0;
-	private final int PAUS = 500;
 	private final int MINIPAUS = 300;
 	private final int TIMEOUT = 10000;
 	private final int CLICKTIMEOUT = 5000;	
@@ -110,7 +109,7 @@ class Clicker {
         event = MotionEvent.obtain(downTime, eventTime, MotionEvent.ACTION_UP, x, y, 0);
         inst.sendPointerSync(event);
         inst.waitForIdleSync();
-		RobotiumUtils.sleep(PAUS);
+		RobotiumUtils.sleep();
 
 	}
 	
@@ -139,7 +138,7 @@ class Clicker {
 		long now = System.currentTimeMillis();
 		final long endTime = now + CLICKTIMEOUT;
 		while ((!view.isShown() || view.isLayoutRequested()) && now < endTime) {
-			RobotiumUtils.sleep(PAUS);
+			RobotiumUtils.sleep();
 			now = System.currentTimeMillis();
 		}
 		if(!view.isShown())
@@ -286,7 +285,7 @@ class Clicker {
 	
 	public void clickOnMenuItem(String text)
 	{	
-		RobotiumUtils.sleep(PAUS);
+		RobotiumUtils.sleep();
 		inst.waitForIdleSync();
 		try{
 			robotiumUtils.sendKeyCode(KeyEvent.KEYCODE_MENU);
@@ -306,7 +305,7 @@ class Clicker {
 	
 	public void clickOnMenuItem(String text, boolean subMenu)
 	{
-		RobotiumUtils.sleep(PAUS);
+		RobotiumUtils.sleep();
 		inst.waitForIdleSync();
 		TextView textMore = null;
 		int [] xy = new int[2];
@@ -553,11 +552,11 @@ class Clicker {
 	 */
 	
 	public void goBack() {
-		RobotiumUtils.sleep(PAUS);
+		RobotiumUtils.sleep();
 		inst.waitForIdleSync();
 		try {
 			inst.sendKeyDownUpSync(KeyEvent.KEYCODE_BACK);
-			RobotiumUtils.sleep(PAUS);
+			RobotiumUtils.sleep();
 		} catch (Throwable e) {}
 	}
 	
@@ -586,13 +585,13 @@ class Clicker {
 	
 	public ArrayList<TextView> clickInList(int line, int index) {	
 		robotiumUtils.waitForIdle();
-		RobotiumUtils.sleep(PAUS);
+		RobotiumUtils.sleep();
 		long now = System.currentTimeMillis();
 		final long endTime = now + CLICKTIMEOUT;
 		int size = viewFetcher.getCurrentListViews().size();
 		while((size > 0 && size <index+1) && now < endTime)
 		{
-			RobotiumUtils.sleep(PAUS);
+			RobotiumUtils.sleep();
 		}
 		if (now > endTime)
 			Assert.assertTrue("No ListView with index " + index + " is available", false);

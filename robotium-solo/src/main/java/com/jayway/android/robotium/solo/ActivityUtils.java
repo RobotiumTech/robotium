@@ -23,7 +23,6 @@ class ActivityUtils {
 	private ActivityMonitor activityMonitor;
 	private Activity activity;
 	private ArrayList<Activity> activityList = new ArrayList<Activity>();
-	private final int PAUS = 500;
 
 	/**
 	 * Constructor that takes in the instrumentation and the start activity.
@@ -80,7 +79,7 @@ class ActivityUtils {
 	public void setActivityOrientation(int orientation)
 	{
 		if(activity.equals(getCurrentActivity()))
-			RobotiumUtils.sleep(PAUS);
+			RobotiumUtils.sleep();
 		Activity activity = getCurrentActivity();
 		activity.setRequestedOrientation(orientation);	
 	}
@@ -93,7 +92,7 @@ class ActivityUtils {
 	 */
 	
 	public Activity getCurrentActivity() {
-	return getCurrentActivity(PAUS);	
+	    return getCurrentActivity(RobotiumUtils.PAUSE);
 	}
 	
 	/**

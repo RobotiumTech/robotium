@@ -23,7 +23,6 @@ class Searcher {
 	private final ViewFetcher viewFetcher;
 	private final Scroller scroller;
 	private final Instrumentation inst;
-	private final int PAUS = 500;
 	private final int TIMEOUT = 5000;
 	private int countMatches=0;
 	private final String LOG_TAG = "Robotium";
@@ -57,7 +56,7 @@ class Searcher {
         final long endTime = now + TIMEOUT;
         while (!searchForEditText(search) && now < endTime)
         {
-			RobotiumUtils.sleep(PAUS);        	
+			RobotiumUtils.sleep();
 			now = System.currentTimeMillis();
         }
         return searchForEditText(search);
@@ -171,7 +170,7 @@ class Searcher {
 	 */
 	
 	private boolean searchForButton(String search, int matches) {
-		RobotiumUtils.sleep(PAUS);
+		RobotiumUtils.sleep();
 		inst.waitForIdleSync();
 		Pattern p = Pattern.compile(search);
 		Matcher matcher;
@@ -238,7 +237,7 @@ class Searcher {
 	 */
 	
 	private boolean searchForToggleButton(String search, int matches) {
-		RobotiumUtils.sleep(PAUS);
+		RobotiumUtils.sleep();
 		inst.waitForIdleSync();
 		Pattern p = Pattern.compile(search);
 		Matcher matcher;
@@ -337,7 +336,7 @@ class Searcher {
 	 */
 	
 	public boolean searchForText(String search, int matches, boolean scroll) {
-		RobotiumUtils.sleep(PAUS);
+		RobotiumUtils.sleep();
 		inst.waitForIdleSync();
 		Pattern p = Pattern.compile(search);
 		Matcher matcher;

@@ -13,8 +13,7 @@ import android.app.ActivityManager;
 
 class Asserter {
 	private final ActivityUtils activityUtils;
-	private final int PAUS = 500;
-	
+
 	/**
 	 * Constructs this object.
 	 *
@@ -36,7 +35,7 @@ class Asserter {
 
 	public void assertCurrentActivity(String message, String name)
 	{
-		RobotiumUtils.sleep(PAUS);
+		RobotiumUtils.sleep();
 		Assert.assertEquals(message, name, activityUtils.getCurrentActivity()
 				.getClass().getSimpleName());
 		
@@ -52,7 +51,7 @@ class Asserter {
 	
 	public void assertCurrentActivity(String message, Class<? extends Activity> expectedClass)
 	{
-		RobotiumUtils.sleep(PAUS);
+		RobotiumUtils.sleep();
 		Assert.assertEquals(message, expectedClass.getName(), activityUtils
 				.getCurrentActivity().getClass().getName());
 	

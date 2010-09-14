@@ -17,7 +17,6 @@ class Presser{
 	private final ViewFetcher viewFetcher;
 	private final Clicker clicker;
 	private final Instrumentation inst;
-	private final int PAUS = 500;
 	private final int MINIPAUS = 300;
 
     /**
@@ -48,7 +47,7 @@ class Presser{
 	
 	public void pressMenuItem(int index) {
 		inst.waitForIdleSync();
-		RobotiumUtils.sleep(PAUS);
+		RobotiumUtils.sleep();
 		try{
 			inst.sendKeyDownUpSync(KeyEvent.KEYCODE_MENU);
 			RobotiumUtils.sleep(MINIPAUS);
@@ -96,7 +95,7 @@ class Presser{
 	public void pressSpinnerItem(int spinnerIndex, int itemIndex)
 	{
 		inst.waitForIdleSync();
-		RobotiumUtils.sleep(PAUS);
+		RobotiumUtils.sleep();
 		clicker.clickOnScreen(viewFetcher.getCurrentSpinners().get(spinnerIndex));
 		inst.sendKeyDownUpSync(KeyEvent.KEYCODE_DPAD_DOWN);
 		boolean countingUp = true;

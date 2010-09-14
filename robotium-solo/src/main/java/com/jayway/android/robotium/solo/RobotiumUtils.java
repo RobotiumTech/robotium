@@ -16,7 +16,7 @@ class RobotiumUtils {
 	private ActivityUtils activityUtils;
 	private Instrumentation inst;
 	private final int TIMEOUT = 20000;
-	private final int PAUS = 500;
+	static final int PAUSE = 500;
 
 	/**
 	 * Constructs this object.
@@ -37,19 +37,29 @@ class RobotiumUtils {
 	
 	
 	/**
+	 * Sleeps the current thread for a default pause length.
+	 *
+	 */
+	
+	public static void sleep() {
+        sleep(PAUSE);
+	}
+	
+	
+	/**
 	 * Sleeps the current thread for <code>time</code> milliseconds.
 	 *
 	 * @param time the length of the sleep in milliseconds
 	 *
 	 */
-	
+
 	public static void sleep(int time) {
 		try {
 			Thread.sleep(time);
 		} catch (InterruptedException ignored) {}
 	}
-	
-	
+
+
 	 /**
      * Clears the value of an edit text
      * 
@@ -81,7 +91,7 @@ class RobotiumUtils {
 	 */
    
     public void waitForIdle() {
-		sleep(PAUS);
+		RobotiumUtils.sleep();
 		long startTime = System.currentTimeMillis();
 		long timeout = 10000;
 		long endTime = startTime + timeout;
@@ -93,7 +103,7 @@ class RobotiumUtils {
 			touchItems = decorView.getTouchables();
 			if (touchItems.size() > 0)  
 				break;
-			RobotiumUtils.sleep(PAUS);
+			RobotiumUtils.sleep();
 		}
 	}
     
@@ -204,7 +214,7 @@ class RobotiumUtils {
 	
 	public void sendKeyCode(int keycode)
 	{
-		RobotiumUtils.sleep(PAUS);
+		RobotiumUtils.sleep();
 		inst.waitForIdleSync();
 		inst.sendCharacterSync(keycode);
 	}
