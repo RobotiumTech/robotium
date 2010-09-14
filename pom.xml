@@ -9,6 +9,7 @@
     <url>http://www.robotium.org/</url>
     <inceptionYear>2009</inceptionYear>
     <modules>
+        <module>robotium-core</module>
         <module>robotium-solo</module>
     </modules>
     <properties>
