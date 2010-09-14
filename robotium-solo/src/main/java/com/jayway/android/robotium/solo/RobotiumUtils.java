@@ -45,16 +45,16 @@ class RobotiumUtils {
 	
 	
 	/**
-	 * Used to trigger a sleep.
+	 * Sleeps the current thread for <code>time</code> milliseconds.
 	 *
-	 * @param time the length of the sleep
+	 * @param time the length of the sleep in milliseconds
 	 *
 	 */
 	
 	public static void sleep(int time) {
 		try {
 			Thread.sleep(time);
-		} catch (InterruptedException e) {}
+		} catch (InterruptedException ignored) {}
 	}
 	
 	
