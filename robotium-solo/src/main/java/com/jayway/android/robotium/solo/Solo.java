@@ -66,8 +66,12 @@ public class Solo {
 	private final TextEnterer textEnterer;
 	private final Scroller scroller;
 	private final RobotiumUtils robotiumUtils;
+
+    /** @deprecated @see {@link #setActivityOrientation} */
 	public final static int LANDSCAPE = 0;
-	public final static int PORTRAIT = 1;
+    /** @deprecated @see {@link #setActivityOrientation} */
+    public final static int PORTRAIT = 1;
+
 	public final static int RIGHT = 2;
 	public final static int LEFT = 3;
 	public final static int UP = 4;
@@ -96,7 +100,7 @@ public class Solo {
         this.clicker = new Clicker(activitiyUtils, viewFetcher, scroller,robotiumUtils, inst);
         this.presser = new Presser(viewFetcher, clicker, inst);
         this.textEnterer = new TextEnterer(viewFetcher, robotiumUtils, clicker, inst);
-        
+
 	}
 
 	/**
@@ -315,7 +319,7 @@ public class Solo {
 	/**
 	 * Sets the Orientation (Landscape/Portrait) for the current activity.
 	 * 
-	 * @param orientation the orientation to be set. 0 for landscape and 1 for portrait 
+	 * @param orientation An orientation constant such as {@link android.content.pm.ActivityInfo#SCREEN_ORIENTATION_LANDSCAPE} or {@link android.content.pm.ActivityInfo#SCREEN_ORIENTATION_PORTRAIT}.
 	 */
 	
 	public void setActivityOrientation(int orientation)

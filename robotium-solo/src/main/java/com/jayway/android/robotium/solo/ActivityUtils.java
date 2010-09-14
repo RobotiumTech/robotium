@@ -71,7 +71,9 @@ class ActivityUtils {
 	/**
 	 * Public method that sets the Orientation (Landscape/Portrait) for the current activity.
 	 * 
-	 * @param orientation the orientation to be set. 0 for landscape and 1 for portrait 
+	 * @param orientation An orientation constant such as {@link android.content.pm.ActivityInfo#SCREEN_ORIENTATION_LANDSCAPE} or {@link android.content.pm.ActivityInfo#SCREEN_ORIENTATION_PORTRAIT}.
+     *
+     * @see android.app.Activity#setRequestedOrientation(int)
 	 *  
 	 */
 	
