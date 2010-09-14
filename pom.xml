@@ -14,6 +14,7 @@
     <properties>
         <scm.branch>master</scm.branch>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <maven.version>2.2.1</maven.version>
     </properties>
     <scm>
         <url>http://github.com/jayway/robotium/tree/${scm.branch}</url>
@@ -52,7 +53,7 @@
         </mailingList>
     </mailingLists>
     <prerequisites>
-        <maven>2.2.1</maven>
+        <maven>${maven.version}</maven>
     </prerequisites>
     <build>
         <pluginManagement>
@@ -166,16 +167,17 @@
                         <goals>
                             <goal>enforce</goal>
                         </goals>
-                        <configuration>
-                            <rules>
-                                <requireMavenVersion>
-                                    <version>[${maven.version},)</version>
-                                    <message>Check for Maven version &gt;=${maven.version} failed. Update your Maven install.</message>
-                                </requireMavenVersion>
-                            </rules>
-                        </configuration>
+                        <phase>initialize</phase>
                     </execution>
                 </executions>
+                <configuration>
+                    <rules>
+                        <requireMavenVersion>
+                            <version>[${maven.version},)</version>
+                            <message>Check for Maven version &gt;=${maven.version} failed. Update your Maven install.</message>
+                        </requireMavenVersion>
+                    </rules>
+                </configuration>
             </plugin>
         </plugins>
     </build>
