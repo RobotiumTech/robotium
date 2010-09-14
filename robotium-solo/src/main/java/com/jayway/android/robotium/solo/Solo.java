@@ -67,6 +67,7 @@ public class Solo {
 	private final TextEnterer textEnterer;
 	private final Scroller scroller;
 	private final RobotiumUtils robotiumUtils;
+	private final Sleeper sleeper;
 
     /** @deprecated @see {@link #setActivityOrientation} */
 	public final static int LANDSCAPE = ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE;
@@ -91,15 +92,16 @@ public class Solo {
 	 */
 	
 	public Solo(Instrumentation inst, Activity activity) {
-        this.activitiyUtils = new ActivityUtils(inst, activity);
+        this.sleeper = new Sleeper();
+        this.activitiyUtils = new ActivityUtils(inst, activity, sleeper);
         this.viewFetcher = new ViewFetcher(inst, activitiyUtils);
-        this.asserter = new Asserter(activitiyUtils);
-        this.dialogUtils = new DialogUtils(viewFetcher);
+        this.asserter = new Asserter(activitiyUtils, sleeper);
+        this.dialogUtils = new DialogUtils(viewFetcher, sleeper);
         this.scroller = new Scroller(inst, activitiyUtils, viewFetcher);
-        this.searcher = new Searcher(viewFetcher, scroller, inst);
-        this.robotiumUtils = new RobotiumUtils(activitiyUtils, searcher, viewFetcher, inst);
-        this.clicker = new Clicker(activitiyUtils, viewFetcher, scroller,robotiumUtils, inst);
-        this.presser = new Presser(viewFetcher, clicker, inst);
+        this.searcher = new Searcher(viewFetcher, scroller, inst, sleeper);
+        this.robotiumUtils = new RobotiumUtils(activitiyUtils, searcher, viewFetcher, inst, sleeper);
+        this.clicker = new Clicker(activitiyUtils, viewFetcher, scroller,robotiumUtils, inst, sleeper);
+        this.presser = new Presser(viewFetcher, clicker, inst, sleeper);
         this.textEnterer = new TextEnterer(viewFetcher, robotiumUtils, clicker, inst);
 
 	}
@@ -1225,7 +1227,7 @@ public class Solo {
 	
 	public void sleep(int time)
 	{
-		RobotiumUtils.sleep(time);
+		sleeper.sleep(time);
 	}
 	
 	

@@ -22,21 +22,23 @@ class ActivityUtils {
 	private final Instrumentation inst;
 	private ActivityMonitor activityMonitor;
 	private Activity activity;
+    private final Sleeper sleeper;
 	private ArrayList<Activity> activityList = new ArrayList<Activity>();
 
 	/**
 	 * Constructor that takes in the instrumentation and the start activity.
 	 *
-	 * @param inst the {@link Instrumentation} instance.
-	 * @param activity {@link Activity} the start activity
-	 *
+	 * @param inst the {@code Instrumentation} instance.
+     * @param activity the start {@code Activity}
+     * @param sleeper the {@code Sleeper} instance
+     *
 	 */
 	
-	public ActivityUtils(Instrumentation inst, Activity activity) {
+	public ActivityUtils(Instrumentation inst, Activity activity, Sleeper sleeper) {
 		this.inst = inst;
 		this.activity = activity;
-		setupActivityMonitor();
-		
+        this.sleeper = sleeper;
+        setupActivityMonitor();
 	}
 	
 	/**
@@ -79,7 +81,7 @@ class ActivityUtils {
 	public void setActivityOrientation(int orientation)
 	{
 		if(activity.equals(getCurrentActivity()))
-			RobotiumUtils.sleep();
+			sleeper.sleep();
 		Activity activity = getCurrentActivity();
 		activity.setRequestedOrientation(orientation);	
 	}
@@ -104,7 +106,7 @@ class ActivityUtils {
 	
 	public Activity getCurrentActivity(boolean shouldSleepFirst) {
 		if(shouldSleepFirst){
-			RobotiumUtils.sleep();
+			sleeper.sleep();
 			inst.waitForIdleSync();
 		}
 		Boolean found = false;

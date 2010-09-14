@@ -11,66 +11,33 @@ import android.widget.RadioButton;
 
 class RobotiumUtils {	
 	
-	private ViewFetcher viewFetcher;
-	private Searcher searcher;
-	private ActivityUtils activityUtils;
-	private Instrumentation inst;
+	private final ViewFetcher viewFetcher;
+	private final Searcher searcher;
+	private final ActivityUtils activityUtils;
+	private final Instrumentation inst;
+	private final Sleeper sleeper;
 	private final int TIMEOUT = 20000;
-	private static final int PAUSE = 500;
-	private static final int MINIPAUSE = 300;
 
 	/**
 	 * Constructs this object.
 	 * 
-	 * @param activityUtils the {@link ActivityUtils} instance.
-	 * @param searcher the {@link Searcher} instance.
-	 * @param viewFetcher the {@link ViewFetcher} instance.
-	 * @param inst the {@link Instrumentation} instance.
-	 */
+	 * @param activityUtils the {@code ActivityUtils} instance.
+     * @param searcher the {@code Searcher} instance.
+     * @param viewFetcher the {@code ViewFetcher} instance.
+     * @param inst the {@code Instrumentation} instance.
+     * @param sleeper the {@code Sleeper} instance.
+     */
 	
 	public RobotiumUtils(ActivityUtils activityUtils, Searcher searcher,
-			ViewFetcher viewFetcher, Instrumentation inst) {
+                         ViewFetcher viewFetcher, Instrumentation inst, Sleeper sleeper) {
 		this.activityUtils = activityUtils;
 		this.searcher = searcher;
 		this.viewFetcher = viewFetcher;
 		this.inst = inst;
-	}
+        this.sleeper = sleeper;
+    }
 	
 	
-	/**
-	 * Sleeps the current thread for a default pause length.
-	 *
-	 */
-	
-	public static void sleep() {
-        sleep(PAUSE);
-	}
-
-
-	/**
-	 * Sleeps the current thread for a default mini pause length.
-	 *
-	 */
-
-	public static void sleepMini() {
-        sleep(MINIPAUSE);
-	}
-
-	
-	/**
-	 * Sleeps the current thread for <code>time</code> milliseconds.
-	 *
-	 * @param time the length of the sleep in milliseconds
-	 *
-	 */
-
-	public static void sleep(int time) {
-		try {
-			Thread.sleep(time);
-		} catch (InterruptedException ignored) {}
-	}
-
-
 	 /**
      * Clears the value of an edit text
      * 
@@ -102,7 +69,7 @@ class RobotiumUtils {
 	 */
    
     public void waitForIdle() {
-		RobotiumUtils.sleep();
+		sleeper.sleep();
 		long startTime = System.currentTimeMillis();
 		long timeout = 10000;
 		long endTime = startTime + timeout;
@@ -114,7 +81,7 @@ class RobotiumUtils {
 			touchItems = decorView.getTouchables();
 			if (touchItems.size() > 0)  
 				break;
-			RobotiumUtils.sleep();
+			sleeper.sleep();
 		}
 	}
     
@@ -225,7 +192,7 @@ class RobotiumUtils {
 	
 	public void sendKeyCode(int keycode)
 	{
-		RobotiumUtils.sleep();
+		sleeper.sleep();
 		inst.waitForIdleSync();
 		inst.sendCharacterSync(keycode);
 	}

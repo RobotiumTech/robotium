@@ -31,6 +31,7 @@ class Clicker {
 	private final Scroller scroller;
 	private final Instrumentation inst;
 	private final RobotiumUtils robotiumUtils;
+	private final Sleeper sleeper;
 	private int countMatches=0;
 	private final int TIMEOUT = 10000;
 	private final int CLICKTIMEOUT = 5000;	
@@ -39,22 +40,24 @@ class Clicker {
 	/**
 	 * Constructs this object.
 	 * 
-	 * @param ativityUtils the {@link ActivityUtils} instance.
-	 * @param viewFetcher the {@link ViewFetcher} instance.
-	 * @param scroller the {@link Scroller} instance.
-	 * @param robotiumUtils the {@link RobotiumUtils} instance.
-	 * @param inst the {@link Instrumentation} instance.
-	 */
+	 * @param ativityUtils the {@link com.jayway.android.robotium.solo.ActivityUtils} instance.
+     * @param viewFetcher the {@link com.jayway.android.robotium.solo.ViewFetcher} instance.
+     * @param scroller the {@link com.jayway.android.robotium.solo.Scroller} instance.
+     * @param robotiumUtils the {@link com.jayway.android.robotium.solo.RobotiumUtils} instance.
+     * @param inst the {@link android.app.Instrumentation} instance.
+     * @param sleeper
+     */
 
 	public Clicker(ActivityUtils ativityUtils, ViewFetcher viewFetcher,
-			Scroller scroller, RobotiumUtils robotiumUtils, Instrumentation inst) {
+                   Scroller scroller, RobotiumUtils robotiumUtils, Instrumentation inst, Sleeper sleeper) {
 
 		this.activityUtils = ativityUtils;
 		this.viewFetcher = viewFetcher;
 		this.scroller = scroller;
 		this.robotiumUtils = robotiumUtils;
 		this.inst = inst;
-	}
+        this.sleeper = sleeper;
+    }
 	
 	/**
 	 * Clicks on a specific coordinate on the screen
@@ -103,12 +106,12 @@ class Clicker {
                 y + ViewConfiguration.getTouchSlop() / 2, 0);
         inst.sendPointerSync(event);
         inst.waitForIdleSync();
-        RobotiumUtils.sleep((int)(ViewConfiguration.getLongPressTimeout() * 1.5f));
+        sleeper.sleep((int)(ViewConfiguration.getLongPressTimeout() * 1.5f));
         eventTime = SystemClock.uptimeMillis();
         event = MotionEvent.obtain(downTime, eventTime, MotionEvent.ACTION_UP, x, y, 0);
         inst.sendPointerSync(event);
         inst.waitForIdleSync();
-		RobotiumUtils.sleep();
+		sleeper.sleep();
 
 	}
 	
@@ -137,7 +140,7 @@ class Clicker {
 		long now = System.currentTimeMillis();
 		final long endTime = now + CLICKTIMEOUT;
 		while ((!view.isShown() || view.isLayoutRequested()) && now < endTime) {
-			RobotiumUtils.sleep();
+			sleeper.sleep();
 			now = System.currentTimeMillis();
 		}
 		if(!view.isShown())
@@ -147,7 +150,7 @@ class Clicker {
 				.getDefaultDisplay().getHeight() && scroller.scrollDown()) {
 			view.getLocationOnScreen(xy);
 		}
-		RobotiumUtils.sleepMini();
+		sleeper.sleepMini();
 		view.getLocationOnScreen(xy);
 		final int viewWidth = view.getWidth();
 		final int viewHeight = view.getHeight();
@@ -229,7 +232,7 @@ class Clicker {
 		}
 		for(int i = 0; i < index; i++)
 		{
-			RobotiumUtils.sleepMini();
+			sleeper.sleepMini();
 			inst.sendKeyDownUpSync(KeyEvent.KEYCODE_DPAD_DOWN);
 		}
 		inst.sendKeyDownUpSync(KeyEvent.KEYCODE_ENTER);
@@ -284,7 +287,7 @@ class Clicker {
 	
 	public void clickOnMenuItem(String text)
 	{	
-		RobotiumUtils.sleep();
+		sleeper.sleep();
 		inst.waitForIdleSync();
 		try{
 			robotiumUtils.sendKeyCode(KeyEvent.KEYCODE_MENU);
@@ -304,7 +307,7 @@ class Clicker {
 	
 	public void clickOnMenuItem(String text, boolean subMenu)
 	{
-		RobotiumUtils.sleep();
+		sleeper.sleep();
 		inst.waitForIdleSync();
 		TextView textMore = null;
 		int [] xy = new int[2];
@@ -551,11 +554,11 @@ class Clicker {
 	 */
 	
 	public void goBack() {
-		RobotiumUtils.sleep();
+		sleeper.sleep();
 		inst.waitForIdleSync();
 		try {
 			inst.sendKeyDownUpSync(KeyEvent.KEYCODE_BACK);
-			RobotiumUtils.sleep();
+			sleeper.sleep();
 		} catch (Throwable e) {}
 	}
 	
@@ -584,13 +587,13 @@ class Clicker {
 	
 	public ArrayList<TextView> clickInList(int line, int index) {	
 		robotiumUtils.waitForIdle();
-		RobotiumUtils.sleep();
+		sleeper.sleep();
 		long now = System.currentTimeMillis();
 		final long endTime = now + CLICKTIMEOUT;
 		int size = viewFetcher.getCurrentListViews().size();
 		while((size > 0 && size <index+1) && now < endTime)
 		{
-			RobotiumUtils.sleep();
+			sleeper.sleep();
 		}
 		if (now > endTime)
 			Assert.assertTrue("No ListView with index " + index + " is available", false);

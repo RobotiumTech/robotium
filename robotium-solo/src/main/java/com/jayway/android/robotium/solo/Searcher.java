@@ -23,6 +23,7 @@ class Searcher {
 	private final ViewFetcher viewFetcher;
 	private final Scroller scroller;
 	private final Instrumentation inst;
+    private final Sleeper sleeper;
 	private final int TIMEOUT = 5000;
 	private int countMatches=0;
 	private final String LOG_TAG = "Robotium";
@@ -30,14 +31,16 @@ class Searcher {
     /**
      * Constructs this object.
      *
-     * @param viewFetcher the {@link ViewFetcher} instance.
-     * @param scroller the {@link Scroller} instance.
-     * @param inst the {@link Instrumentation} instance.
+     * @param viewFetcher the {@code ViewFetcher} instance.
+     * @param scroller the {@code Scroller} instance.
+     * @param inst the {@code Instrumentation} instance.
+     * @param sleeper the {@code RobotiumUtils} instance.
      */
-    public Searcher(ViewFetcher viewFetcher, Scroller scroller, Instrumentation inst) {
+    public Searcher(ViewFetcher viewFetcher, Scroller scroller, Instrumentation inst, Sleeper sleeper) {
         this.viewFetcher = viewFetcher;
         this.scroller = scroller;
         this.inst = inst;
+        this.sleeper = sleeper;
     }
 	
 	
@@ -56,7 +59,7 @@ class Searcher {
         final long endTime = now + TIMEOUT;
         while (!searchForEditText(search) && now < endTime)
         {
-			RobotiumUtils.sleep();
+			sleeper.sleep();
 			now = System.currentTimeMillis();
         }
         return searchForEditText(search);
@@ -170,7 +173,7 @@ class Searcher {
 	 */
 	
 	private boolean searchForButton(String search, int matches) {
-		RobotiumUtils.sleep();
+		sleeper.sleep();
 		inst.waitForIdleSync();
 		Pattern p = Pattern.compile(search);
 		Matcher matcher;
@@ -237,7 +240,7 @@ class Searcher {
 	 */
 	
 	private boolean searchForToggleButton(String search, int matches) {
-		RobotiumUtils.sleep();
+		sleeper.sleep();
 		inst.waitForIdleSync();
 		Pattern p = Pattern.compile(search);
 		Matcher matcher;
@@ -336,7 +339,7 @@ class Searcher {
 	 */
 	
 	public boolean searchForText(String search, int matches, boolean scroll) {
-		RobotiumUtils.sleep();
+		sleeper.sleep();
 		inst.waitForIdleSync();
 		Pattern p = Pattern.compile(search);
 		Matcher matcher;

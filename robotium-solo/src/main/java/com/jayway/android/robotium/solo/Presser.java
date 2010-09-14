@@ -17,22 +17,25 @@ class Presser{
 	private final ViewFetcher viewFetcher;
 	private final Clicker clicker;
 	private final Instrumentation inst;
+    private final Sleeper sleeper;
 
     /**
      * Constructs this object.
      *
-     * @param viewFetcher the {@link ViewFetcher} instance.
-     * @param clicker the {@link Clicker} instance.
-     * @param inst the {@link Instrumentation} instance.
+     * @param viewFetcher the {@code ViewFetcher} instance.
+     * @param clicker the {@code Clicker} instance.
+     * @param inst the {@code Instrumentation} instance.
+     * @param sleeper the {@code RobotiumUtils} instance.
      */
 	
 	public Presser(ViewFetcher viewFetcher,
-			Clicker clicker, Instrumentation inst) {
+                   Clicker clicker, Instrumentation inst, Sleeper sleeper) {
 
 		this.viewFetcher = viewFetcher;
 		this.clicker = clicker;
 		this.inst = inst;
-	}
+        this.sleeper = sleeper;
+    }
 
 	
 	/**
@@ -46,10 +49,10 @@ class Presser{
 	
 	public void pressMenuItem(int index) {
 		inst.waitForIdleSync();
-		RobotiumUtils.sleep();
+		sleeper.sleep();
 		try{
 			inst.sendKeyDownUpSync(KeyEvent.KEYCODE_MENU);
-			RobotiumUtils.sleepMini();
+			sleeper.sleepMini();
 			inst.sendKeyDownUpSync(KeyEvent.KEYCODE_DPAD_UP);
 			inst.sendKeyDownUpSync(KeyEvent.KEYCODE_DPAD_UP);
 		}catch(Throwable e){
@@ -57,14 +60,14 @@ class Presser{
 		}
 		if (index < 3) {
 			for (int i = 0; i < index; i++) {
-				RobotiumUtils.sleepMini();
+				sleeper.sleepMini();
 				inst.sendKeyDownUpSync(KeyEvent.KEYCODE_DPAD_RIGHT);
 			}
 		} else if (index >= 3 && index < 5) {
 			inst.sendKeyDownUpSync(KeyEvent.KEYCODE_DPAD_DOWN);	
 
 			for (int i = 3; i < index; i++) {
-				RobotiumUtils.sleepMini();
+				sleeper.sleepMini();
 				inst.sendKeyDownUpSync(KeyEvent.KEYCODE_DPAD_RIGHT);
 			}
 		} else if (index >= 5) {
@@ -72,7 +75,7 @@ class Presser{
 			inst.sendKeyDownUpSync(KeyEvent.KEYCODE_DPAD_DOWN);	
 
 			for (int i = 5; i < index; i++) {
-				RobotiumUtils.sleepMini();
+				sleeper.sleepMini();
 				inst.sendKeyDownUpSync(KeyEvent.KEYCODE_DPAD_RIGHT);
 			}
 		}
@@ -94,7 +97,7 @@ class Presser{
 	public void pressSpinnerItem(int spinnerIndex, int itemIndex)
 	{
 		inst.waitForIdleSync();
-		RobotiumUtils.sleep();
+		sleeper.sleep();
 		clicker.clickOnScreen(viewFetcher.getCurrentSpinners().get(spinnerIndex));
 		inst.sendKeyDownUpSync(KeyEvent.KEYCODE_DPAD_DOWN);
 		boolean countingUp = true;
@@ -104,7 +107,7 @@ class Presser{
 		}
 		for(int i = 0; i < itemIndex; i++)
 		{
-			RobotiumUtils.sleepMini();
+			sleeper.sleepMini();
 			if(countingUp){
 				inst.sendKeyDownUpSync(KeyEvent.KEYCODE_DPAD_DOWN);
 			}else{

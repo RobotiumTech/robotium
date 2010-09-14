@@ -13,17 +13,20 @@ import android.app.ActivityManager;
 
 class Asserter {
 	private final ActivityUtils activityUtils;
+    private final Sleeper sleeper;
 
 	/**
 	 * Constructs this object.
 	 *
-	 * @param activityUtils the {@link ActivityUtils} instance.
+	 * @param activityUtils the {@code ActivityUtils} instance.
+     * @param sleeper the {@code Sleeper} instance.
 	 *
 	 */
 	
-	public Asserter(ActivityUtils activityUtils) {
+	public Asserter(ActivityUtils activityUtils, Sleeper sleeper) {
 		this.activityUtils = activityUtils;
-	}
+        this.sleeper = sleeper;
+    }
 
     /**
      * Asserts that an expected {@link Activity} is currently active one.
@@ -35,7 +38,7 @@ class Asserter {
 
 	public void assertCurrentActivity(String message, String name)
 	{
-		RobotiumUtils.sleep();
+		sleeper.sleep();
 		Assert.assertEquals(message, name, activityUtils.getCurrentActivity()
 				.getClass().getSimpleName());
 		
@@ -51,7 +54,7 @@ class Asserter {
 	
 	public void assertCurrentActivity(String message, Class<? extends Activity> expectedClass)
 	{
-		RobotiumUtils.sleep();
+		sleeper.sleep();
 		Assert.assertEquals(message, expectedClass.getName(), activityUtils
 				.getCurrentActivity().getClass().getName());
 	
