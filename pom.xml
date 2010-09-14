@@ -114,6 +114,10 @@
                     <version>1.0-beta-1</version>
                 </plugin>
                 <plugin>
+                    <!--
+                        the versions plugin can be used to check for new plugin versions like this:
+                        mvn versions:display-plugin-updates
+                     -->
                     <groupId>org.codehaus.mojo</groupId>
                     <artifactId>versions-maven-plugin</artifactId>
                     <version>1.2</version>
@@ -172,14 +176,6 @@
                         </configuration>
                     </execution>
                 </executions>
-            </plugin>
-            <!--
-                the versions plugin can be used to check for new plugin versions like this:
-                mvn versions:display-plugin-updates
-             -->
-            <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>versions-maven-plugin</artifactId>
             </plugin>
         </plugins>
     </build>
