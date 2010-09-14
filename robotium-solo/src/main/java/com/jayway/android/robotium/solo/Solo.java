@@ -75,7 +75,7 @@ public class Solo {
 	public final static int MENU = 7;
 	public final static int DELETE = 8;
 
-	
+
 	/**
 	 * Constructor that takes in the instrumentation and the start activity.
 	 *
@@ -607,8 +607,8 @@ public class Solo {
 	 *
 	 */
 	
-	public void clickOnText(String text, int matches, boolean scroll) {
-		clicker.clickOnText(text,matches, scroll);
+	public void clickOnText(String text, int match, boolean scroll) {
+		clicker.clickOnText(text,match, scroll);
 	}
 	
 	

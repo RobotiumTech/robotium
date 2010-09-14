@@ -276,9 +276,9 @@ class Clicker {
 	 *
 	 */
 	
-	public void clickLongOnText(String text, int matches, boolean scroll)
+	public void clickLongOnText(String text, int match, boolean scroll)
 	{
-		clickOnText(text, true, matches, scroll);
+		clickOnText(text, true, match, scroll);
 	}
 	
 	/**
