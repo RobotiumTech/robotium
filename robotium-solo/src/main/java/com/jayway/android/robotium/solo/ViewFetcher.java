@@ -386,10 +386,10 @@ class ViewFetcher {
 	
 	
 	/**
-	 * This method returns an ArrayList with the buttons located in the current
-	 * activity.
+	 * Returns a {@code List} of the {@code Button}s located in the current
+	 * {@code Activity}.
 	 *
-	 * @return and ArrayList of the buttons located in the current activity
+	 * @return a {@code List} of the {@code Button}s located in the current {@code Activity}
 	 *
 	 */
 	
