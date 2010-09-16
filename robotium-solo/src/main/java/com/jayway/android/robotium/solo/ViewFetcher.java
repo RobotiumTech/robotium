@@ -266,10 +266,11 @@ class ViewFetcher {
 	
 	
 	/**
-	 * This method returns an ArrayList of all the edit texts located in the
-	 * current activity.
+	 * Returns a {@code List} of the {@code EditText}s contained in the current
+	 * {@code Activity}.
 	 *
-	 * @return an ArrayList of the edit texts located in the current activity
+	 * @return a {@code List} of the {@code EditText}s contained in the current
+	 * {@code Activity}
 	 *
 	 */
 	
