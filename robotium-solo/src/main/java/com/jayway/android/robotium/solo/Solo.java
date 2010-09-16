@@ -1107,10 +1107,10 @@ public class Solo {
 	}
 	
 	/**
-	 * Checks if a check box with a given index is checked.
+	 * Checks if a {@link CheckBox} with a given index is checked.
 	 * 
-	 * @param index of the check box to check. 0 if only one is available
-	 * @return true if check box is checked and false if it is not checked
+	 * @param index of the {@code CheckBox} to check. {@code 0} if only one is available
+	 * @return {@code true} if {@code CheckBox} is checked and {@code false} if it is not checked
 	 * 
 	 */
 	
