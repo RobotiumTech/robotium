@@ -176,8 +176,8 @@ class Clicker {
 	}
 	
 	/**
-	 * This method is used to click on a specific text view displaying a certain
-	 * text.
+	 * Finds and clicks a view displaying a certain
+	 * text. Will automatically scroll when needed.
 	 *
 	 * @param text the text that should be clicked on. Regular expressions are supported
 	 *
@@ -188,11 +188,10 @@ class Clicker {
 	}
 	
 	/**
-	 * This method is used to click on a specific text view displaying a certain
-	 * text.
+	 * Finds and clicks a view displaying a certain text. Will automatically scroll when needed.
 	 *
 	 * @param text the text that should be clicked on. Regular expressions are supported
-	 * @param matches the match that should be clicked on 
+	 * @param match the match that should be clicked on
 	 *
 	 */
 	
@@ -201,11 +200,10 @@ class Clicker {
 	}
 	
 	/**
-	 * This method is used to click on a specific text view displaying a certain
-	 * text.
+	 * Finds and clicks a view displaying a certain text.
 	 *
 	 * @param text the text that should be clicked on. Regular expressions are supported
-	 * @param matches the match that should be clicked on 
+	 * @param match the match that should be clicked on
 	 * @param scroll true if scrolling should be performed
 	 *
 	 */

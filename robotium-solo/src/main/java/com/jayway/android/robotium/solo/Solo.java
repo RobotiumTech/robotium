@@ -575,7 +575,7 @@ public class Solo {
 	}
 	
 	/**
-	 * Clicks on a specific view displaying a certain
+	 * Finds and clicks a view displaying a certain
 	 * text. Will automatically scroll when needed. 
 	 *
 	 * @param text the text that should be clicked on. Regular expressions are supported
@@ -587,7 +587,7 @@ public class Solo {
 	}
 	
 	/**
-	 * Clicks on a specific view displaying a certain text. Will automatically scroll when needed.
+	 * Finds and clicks a view displaying a certain text. Will automatically scroll when needed.
 	 *
 	 * @param text the text that should be clicked on. Regular expressions are supported
 	 * @param match the match that should be clicked on 
@@ -599,7 +599,7 @@ public class Solo {
 	}
 	
 	/**
-	 * Clicks on a specific view displaying a certain text. 
+	 * Finds and clicks a view displaying a certain text.
 	 *
 	 * @param text the text that should be clicked on. Regular expressions are supported
 	 * @param match the match that should be clicked on 
