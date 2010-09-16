@@ -103,7 +103,7 @@ class Asserter {
 	 * 
 	 */
 	
-	public void assertLowMemory()
+	public void assertNotLowMemory()
 	{
 		ActivityManager.MemoryInfo mi = new ActivityManager.MemoryInfo();
 		((ActivityManager)activityUtils.getCurrentActivity().getSystemService("activity")).getMemoryInfo(mi);

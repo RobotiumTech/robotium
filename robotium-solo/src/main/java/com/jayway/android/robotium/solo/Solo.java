@@ -410,7 +410,7 @@ public class Solo {
 	
 	public void assertLowMemory()
 	{
-		asserter.assertLowMemory();
+		asserter.assertNotLowMemory();
 	}
 	
 	
