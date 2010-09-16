@@ -962,14 +962,15 @@ public class Solo {
 		return listViewList;
 	}
 
-      /**
-     	* Returns an ArrayList of all the scroll views located in the current activity.
-     	*
-     	*
-     	* @return an ArrayList of the scroll views located in the current activity
-     	*
-     	*/
-	
+	/**
+	 * Returns a {@code List} of the {@code ScrollView}s contained in the current
+	 * {@code Activity}.
+	 *
+	 * @return a {@code List} of the {@code ScrollView}s contained in the current
+	 * {@code Activity}
+	 *
+	 */
+
     public ArrayList<ScrollView> getCurrentScrollViews() {
         return viewFetcher.getCurrentScrollViews();
     }
