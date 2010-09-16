@@ -187,10 +187,10 @@ class ViewFetcher {
 	}
 	
 	/**
-	 * This method returns a button with a certain index.
+	 * Returns a {@code Button} with a certain index.
 	 *
-	 * @param index the index of the button
-	 * @return the button with the specific index
+	 * @param index the index of the {@code Button}. 0 if only one is available
+	 * @return the {@code Button} with a specified index or {@code null} if index is invalid
 	 *
 	 */
 	
