@@ -141,7 +141,7 @@ public class Solo {
 	 * Waits for a text to be shown. Default timeout is 20 seconds. 
 	 * 
 	 * @param text the text that needs to be shown
-	 * @return true if text is found and false if it is not found before the timeout
+	 * @return {@code true} if text is found and {@code false} if it is not found before the timeout
 	 * 
 	 */
 	
@@ -155,9 +155,9 @@ public class Solo {
 	 * Waits for a text to be shown. 
 	 * 
 	 * @param text the text that needs to be shown
-	 * @param matches the number of matches of text that must be shown. 0 means any number of matches
+	 * @param matches the number of matches of text that must be shown. {@code 0} means any number of matches
 	 * @param timeout the the amount of time in milliseconds to wait 
-	 * @return true if text is found and false if it is not found before the timeout
+	 * @return {@code true} if text is found and {@code false} if it is not found before the timeout
 	 * 
 	 */
 	
@@ -170,10 +170,10 @@ public class Solo {
 	 * Waits for a text to be shown. 
 	 * 
 	 * @param text the text that needs to be shown
-	 * @param matches the number of matches of text that must be shown. 0 means any number of matches
+	 * @param matches the number of matches of text that must be shown. {@code 0} means any number of matches
 	 * @param timeout the the amount of time in milliseconds to wait
-	 * @param scroll true if scrolling should be performed
-	 * @return true if text is found and false if it is not found before the timeout
+	 * @param scroll {@code true} if scrolling should be performed
+	 * @return {@code true} if text is found and {@code false} if it is not found before the timeout
 	 * 
 	 */
 	
