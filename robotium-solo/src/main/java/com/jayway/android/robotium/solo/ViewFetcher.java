@@ -253,11 +253,11 @@ class ViewFetcher {
 	}
 	
 	/**
-	 * This method returns the number of buttons located in the current
+	 * Returns the number of buttons located in the current
 	 * activity.
 	 *
 	 * @return the number of buttons in the current activity
-	 * @deprecated legacy method that is outdated
+	 * @deprecated use {@link #getCurrentButtons()}<code>.size()</code> instead.
 	 */
 	
 	public int getCurrenButtonsCount() {

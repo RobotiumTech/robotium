@@ -922,7 +922,7 @@ public class Solo {
 	 * activity.
 	 *
 	 * @return the number of buttons in the current activity
-	 * @deprecated legacy method that is outdated
+	 * @deprecated use {@link #getCurrentButtons()}<code>.size()</code> instead.
 	 *
 	 */
 	
