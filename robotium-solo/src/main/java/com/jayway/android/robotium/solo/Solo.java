@@ -811,7 +811,7 @@ public class Solo {
 	/**
 	 * Scrolls horizontally.
 	 *
-	 * @param side the side in which to scroll
+	 * @param side the side to which to scroll; {@link #RIGHT} or {@link #LEFT}
 	 *
 	 */
 	
