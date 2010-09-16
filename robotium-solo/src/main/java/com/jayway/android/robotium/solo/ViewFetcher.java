@@ -221,10 +221,10 @@ class ViewFetcher {
 	}
 	
 	/**
-	 * This method returns an image view with a certain index.
+	 * Returns an {@code ImageView} with a certain index.
 	 *
-	 * @param index the index of the imave view
-	 * @return the image view with the specific index
+	 * @param index the index of the {@code ImageView}. 0 if only one is available
+	 * @return the {@code ImageView} with a specified index or {@code null} if index is invalid
 	 *
 	 */
 	

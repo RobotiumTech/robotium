@@ -894,10 +894,10 @@ public class Solo {
 	}
 	
 	/**
-	 * Returns an image view with a certain index.
+	 * Returns an {@code ImageView} with a certain index.
 	 *
-	 * @param index the index of the imave view. 0 if only one is available
-	 * @return the image view with the specific index or null if index is invalid
+	 * @param index the index of the {@code ImageView}. 0 if only one is available
+	 * @return the {@code ImageView} with a specified index or {@code null} if index is invalid
 	 *
 	 */
 	
