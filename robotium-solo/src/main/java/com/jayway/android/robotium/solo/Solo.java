@@ -99,9 +99,10 @@ public class Solo {
 	}
 
 	/**
-	 * Returns an ArrayList of all the views located in the current activity.
+	 * Returns a {@code List} of the {@code View}s located in the current
+	 * {@code Activity}.
 	 *
-	 * @return ArrayList with the views found in the current activity
+	 * @return a {@code List} of the {@code View}s located in the current {@code Activity}
 	 *
 	 */
 	
