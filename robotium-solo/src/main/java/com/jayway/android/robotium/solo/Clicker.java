@@ -549,7 +549,7 @@ class Clicker {
 	}
 	
 	/**
-	 * Method used to simulate pressing the hard key back
+	 * Simulates pressing the hardware back key.
 	 * 
 	 */
 	

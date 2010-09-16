@@ -430,7 +430,7 @@ public class Solo {
 	
 	
 	/**
-	 * Simulates pressing the hard key back.
+	 * Simulates pressing the hardware back key.
 	 * 
 	 */
 	
