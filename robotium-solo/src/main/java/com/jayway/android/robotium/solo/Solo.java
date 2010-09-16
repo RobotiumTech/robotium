@@ -1094,10 +1094,10 @@ public class Solo {
 	}
 	
 	/**
-	 * Checks if a radio button with a given index is checked.
-	 * 
-	 * @param index of the radio button to check. 0 if only one is available
-	 * @return true if radio button is checked and false if it is not checked
+	 * Checks if a {@link RadioButton} with a given index is checked.
+	 *
+	 * @param index of the {@code RadioButton} to check. {@code 0} if only one is available
+	 * @return {@code true} if {@code RadioButton} is checked and {@code false} if it is not checked
 	 * 
 	 */
 	
