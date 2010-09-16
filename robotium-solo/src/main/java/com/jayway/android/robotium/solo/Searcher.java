@@ -120,11 +120,11 @@ class Searcher {
 	}
 	
 	/**
-	 * Searches for a toggle button with the given search string and returns true if at least one button 
-	 * is found with the expected text
+	 * Searches for a {@link ToggleButton} with the given search string and returns {@code true} if at least one {@code ToggleButton}
+	 * is found with the expected text. Will automatically scroll when needed.
 	 *
 	 * @param search the string to be searched. Regular expressions are supported
-	 * @return true if a toggle button with the given text is found and false if it is not found
+	 * @return {@code true} if a {@code ToggleButton} with the given text is found and {@code false} if it is not found
 	 *
 	 */
 	
