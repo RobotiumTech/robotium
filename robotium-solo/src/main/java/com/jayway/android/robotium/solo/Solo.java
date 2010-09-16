@@ -701,9 +701,9 @@ public class Solo {
 	}
 	
 	/**
-	 * Clicks on an edit text with a certain index.
+	 * Clicks on an {@link EditText} with a certain index.
 	 *
-	 * @param index the index of the edit text to be clicked. 0 if only one is available
+	 * @param index the index of the {@code EditText} to be clicked. 0 if only one is available
 	 *
 	 */
 	
