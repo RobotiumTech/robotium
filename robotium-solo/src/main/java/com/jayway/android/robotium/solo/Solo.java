@@ -1123,7 +1123,7 @@ public class Solo {
 	/**
 	 * Tells Robotium to send a key: Right, Left, Up, Down, Enter, Menu or Delete.
 	 * 
-	 * @param key the key to be sent. Use Solo.RIGHT/LEFT/UP/DOWN/ENTER/MENU/DELETE
+	 * @param key the key to be sent. Use {@code Solo.}{@link #RIGHT}, {@link #LEFT}, {@link #UP}, {@link #DOWN}, {@link #ENTER}, {@link #MENU}, {@link #DELETE}
 	 * 
 	 */
 	

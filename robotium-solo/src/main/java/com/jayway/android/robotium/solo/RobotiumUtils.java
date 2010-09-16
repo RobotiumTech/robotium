@@ -205,8 +205,9 @@ class RobotiumUtils {
 	}
 	
 	/**
-	 * Tells Robotium to send a key: Right, Left, Up, Down or Enter
-	 * @param key the key to be sent. Use Solo.RIGHT/LEFT/UP/DOWN/MENU/ENTER/DELETE
+	 * Tells Robotium to send a key: Right, Left, Up, Down, Enter, Menu or Delete.
+	 *
+	 * @param key the key to be sent. Use {@code RobotiumUtils.}{@link #RIGHT}, {@link #LEFT}, {@link #UP}, {@link #DOWN}, {@link #ENTER}, {@link #MENU}, {@link #DELETE}
 	 * 
 	 */
 	
