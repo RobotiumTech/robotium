@@ -856,10 +856,10 @@ public class Solo {
 	}
 	
 	/**
-	 * Returns an EditText with a certain index.
+	 * Returns an {@code EditText} with a certain index.
 	 *
-	 * @param index the index of the edit text. 0 if only one is available
-	 * @return the EditText with a specified index or null if index is invalid
+	 * @param index the index of the {@code EditText}. 0 if only one is available
+	 * @return the {@code EditText} with a specified index or {@code null} if index is invalid
 	 *
 	 */
 	
