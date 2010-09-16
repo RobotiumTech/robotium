@@ -204,10 +204,10 @@ class ViewFetcher {
 	}
 	
 	/**
-	 * This method returns a text view with a certain index.
+	 * Returns a {@code TextView} with a certain index.
 	 *
-	 * @param index the index of the text view
-	 * @return the text view with the specific index
+	 * @param index the index of the {@code TextView}. 0 if only one is available
+	 * @return the {@code TextView} with a specified index or {@code null} if index is invalid
 	 *
 	 */
 	
