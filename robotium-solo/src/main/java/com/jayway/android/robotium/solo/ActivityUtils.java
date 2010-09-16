@@ -41,9 +41,9 @@ class ActivityUtils {
 	}
 	
 	/**
-	 * This method returns an ArrayList of all the opened/active activities.
+	 * Returns a {@code List} of all the opened/active activities.
 	 * 
-	 * @return ArrayList of all the opened activities
+	 * @return a {@code List} of all the opened/active activities
 	 * 
 	 */
 	
