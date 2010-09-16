@@ -67,7 +67,7 @@ class Searcher {
 	 * Searches for a text string in the edit texts located in the current
 	 * activity.
 	 *
-	 * @param search the search string to be searched. Regular expressions are supported
+	 * @param search the search string to be searched. The parameter <strong>will</strong> be interpreted as a regular expression.
 	 * @return true if an edit text with the given text is found or false if it is not found
 	 *
 	 */
@@ -82,7 +82,7 @@ class Searcher {
 	 * Searches for a text string in the edit texts located in the current
 	 * activity.
 	 *
-	 * @param search the search string to be searched. Regular expressions are supported
+	 * @param search the search string to be searched. The parameter <strong>will</strong> be interpreted as a regular expression.
 	 * @param scroll set to true if scrolling should be performed
 	 * @return true if an edit text with the given text is found or false if it is not found
 	 *
@@ -110,7 +110,7 @@ class Searcher {
 	 * Searches for a {@link Button} with the given search string and returns true if at least one {@code Button}
 	 * is found with the expected text. Will automatically scroll when needed.
 	 *
-	 * @param search the string to be searched. Regular expressions are supported
+	 * @param search the string to be searched. The parameter <strong>will</strong> be interpreted as a regular expression.
 	 * @return {@code true} if a {@code Button} with the given text is found and {@code false} if it is not found
 	 *
 	 */
@@ -123,7 +123,7 @@ class Searcher {
 	 * Searches for a {@link ToggleButton} with the given search string and returns {@code true} if at least one {@code ToggleButton}
 	 * is found with the expected text. Will automatically scroll when needed.
 	 *
-	 * @param search the string to be searched. Regular expressions are supported
+	 * @param search the string to be searched. The parameter <strong>will</strong> be interpreted as a regular expression.
 	 * @return {@code true} if a {@code ToggleButton} with the given text is found and {@code false} if it is not found
 	 *
 	 */
@@ -136,7 +136,7 @@ class Searcher {
 	 * Searches for a {@link Button} with the given search string and returns {@code true} if the
 	 * searched {@code Button} is found a given number of times. Will automatically scroll when needed.
 	 *
-	 * @param search the string to be searched. Regular expressions are supported
+	 * @param search the string to be searched. The parameter <strong>will</strong> be interpreted as a regular expression.
 	 * @param matches the number of matches expected to be found. {@code 0} matches means that one or more
 	 * matches are expected to be found
 	 * @return {@code true} if a {@code Button} with the given text is found a given number of times and {@code false}
@@ -162,7 +162,7 @@ class Searcher {
 	 * Searches for a button with the given search string and returns true if the 
 	 * searched button is found a given number of times
 	 * 
-	 * @param search the string to be searched. Regular expressions are supported
+	 * @param search the string to be searched. The parameter <strong>will</strong> be interpreted as a regular expression.
 	 * @param matches the number of matches expected to be found. 0 matches means that one or more 
 	 * matches are expected to be found
 	 * @return true if a button with the given text is found a given number of times and false 
@@ -203,7 +203,7 @@ class Searcher {
 	 * Searches for a {@link ToggleButton} with the given search string and returns {@code true} if the
 	 * searched {@code ToggleButton} is found a given number of times. Will automatically scroll when needed.
 	 *
-	 * @param search the string to be searched. Regular expressions are supported
+	 * @param search the string to be searched. The parameter <strong>will</strong> be interpreted as a regular expression.
 	 * @param matches the number of matches expected to be found. {@code 0} matches means that one or more
 	 * matches are expected to be found
 	 * @return {@code true} if a {@code ToggleButton} with the given text is found a given number of times and {@code false}
@@ -229,7 +229,7 @@ class Searcher {
 	 * Searches for a toggle button with the given search string and returns true if the 
 	 * searched toggle button is found a given number of times
 	 * 
-	 * @param search the string to be searched. Regular expressions are supported
+	 * @param search the string to be searched. The parameter <strong>will</strong> be interpreted as a regular expression.
 	 * @param matches the number of matches expected to be found. 0 matches means that one or more 
 	 * matches are expected to be found
 	 * @return true if a toggle button with the given text is found a given number of times and false 
@@ -271,7 +271,7 @@ class Searcher {
 	 * Searches for a text string and returns {@code true} if at least one item
 	 * is found with the expected text. Will automatically scroll when needed.
 	 *
-	 * @param search the string to be searched. Regular expressions are supported
+	 * @param search the string to be searched. The parameter <strong>will</strong> be interpreted as a regular expression.
 	 * @return {@code true} if the search string is found and {@code false} if it is not found
 	 *
 	 */
@@ -284,7 +284,7 @@ class Searcher {
 	 * Searches for a text string and returns {@code true} if the searched text is found a given
 	 * number of times. Will automatically scroll when needed.
 	 *
-	 * @param search the string to be searched. Regular expressions are supported
+	 * @param search the string to be searched. The parameter <strong>will</strong> be interpreted as a regular expression.
 	 * @param matches the number of matches expected to be found. {@code 0} matches means that one or more
 	 * matches are expected to be found
 	 * @return {@code true} if search string is found a given number of times and {@code false} if the search string
@@ -300,7 +300,7 @@ class Searcher {
 	 * Searches for a text string and returns {@code true} if the searched text is found a given
 	 * number of times.
 	 *
-	 * @param search the string to be searched. Regular expressions are supported
+	 * @param search the string to be searched. The parameter <strong>will</strong> be interpreted as a regular expression.
 	 * @param matches the number of matches expected to be found. {@code 0} matches means that one or more
 	 * matches are expected to be found
 	 * @param scroll {@code true} if scrolling should be performed
@@ -327,7 +327,7 @@ class Searcher {
 	 * Searches for a text string and returns true if the searched text is found a given
 	 * number of times
 	 * 
-	 * @param search the string to be searched. Regular expressions are supported
+	 * @param search the string to be searched. The parameter <strong>will</strong> be interpreted as a regular expression.
 	 * @param matches the number of matches expected to be found. 0 matches means that one or more 
 	 * matches are expected to be found
 	 * @param scroll true if scrolling should be performed

@@ -179,7 +179,7 @@ class Clicker {
 	 * Finds and clicks a view displaying a certain
 	 * text. Will automatically scroll when needed.
 	 *
-	 * @param text the text that should be clicked on. Regular expressions are supported
+	 * @param text the text that should be clicked on. The parameter <strong>will</strong> be interpreted as a regular expression.
 	 *
 	 */
 	
@@ -190,7 +190,7 @@ class Clicker {
 	/**
 	 * Finds and clicks a view displaying a certain text. Will automatically scroll when needed.
 	 *
-	 * @param text the text that should be clicked on. Regular expressions are supported
+	 * @param text the text that should be clicked on. The parameter <strong>will</strong> be interpreted as a regular expression.
 	 * @param match the match that should be clicked on
 	 *
 	 */
@@ -202,7 +202,7 @@ class Clicker {
 	/**
 	 * Finds and clicks a view displaying a certain text.
 	 *
-	 * @param text the text that should be clicked on. Regular expressions are supported
+	 * @param text the text that should be clicked on. The parameter <strong>will</strong> be interpreted as a regular expression.
 	 * @param match the match that should be clicked on
 	 * @param scroll true if scrolling should be performed
 	 *
@@ -217,7 +217,7 @@ class Clicker {
 	 * Long clicks on a specific {@link TextView} and then selects
 	 * an item from the context menu that appears. Will automatically scroll when needed.
 	 *
-	 * @param text the text that should be clicked on. Regular expressions are supported
+	 * @param text the text that should be clicked on. The parameter <strong>will</strong> be interpreted as a regular expression.
 	 * @param index the index of the menu item that should be pressed
 	 *
 	 */
@@ -242,7 +242,7 @@ class Clicker {
 	 * Long clicks on a specific {@link TextView}. Will automatically scroll when needed. {@link #clickOnText(String)} can then be
 	 * used to click on the context menu items that appear after the long click.
 	 *
-	 * @param text the text that should be clicked on. Regular expressions are supported
+	 * @param text the text that should be clicked on. The parameter <strong>will</strong> be interpreted as a regular expression.
 	 *
 	 */
 	
@@ -255,7 +255,7 @@ class Clicker {
 	 * Long clicks on a specific {@link TextView}. Will automatically scroll when needed. {@link #clickOnText(String)} can then be
 	 * used to click on the context menu items that appear after the long click.
 	 *
-	 * @param text the text that should be clicked on. Regular expressions are supported
+	 * @param text the text that should be clicked on. The parameter <strong>will</strong> be interpreted as a regular expression.
 	 *
 	 */
 	
@@ -268,7 +268,7 @@ class Clicker {
 	 * Long clicks on a specific {@link TextView}. {@link #clickOnText(String)} can then be
 	 * used to click on the context menu items that appear after the long click.
 	 *
-	 * @param text the text that should be clicked on. Regular expressions are supported
+	 * @param text the text that should be clicked on. The parameter <strong>will</strong> be interpreted as a regular expression.
 	 * @param match the match that should be clicked on 
 	 * @param scroll true if scrolling should be performed
 	 *
@@ -281,7 +281,7 @@ class Clicker {
 	
 	/**
 	 * Clicks on a menu item with a given text
-	 * @param text the menu text that should be clicked on. Regular expressions are supported 
+	 * @param text the menu text that should be clicked on. The parameter <strong>will</strong> be interpreted as a regular expression.
 	 * 
 	 */
 	
@@ -300,7 +300,7 @@ class Clicker {
 	/**
 	 * Clicks on a menu item with a given text
 	 * 
-	 * @param text the menu text that should be clicked on. Regular expressions are supported 
+	 * @param text the menu text that should be clicked on. The parameter <strong>will</strong> be interpreted as a regular expression.
 	 * @param subMenu true if the menu item could be located in a sub menu
 	 * 
 	 */
@@ -340,7 +340,7 @@ class Clicker {
 	 * Private method that is used to click on a specific text view displaying a certain
 	 * text.
 	 *
-	 * @param text the text that should be clicked on. Regular expressions are supported
+	 * @param text the text that should be clicked on. The parameter <strong>will</strong> be interpreted as a regular expression.
 	 * @param longClick true if the click should be a long click 
 	 * @param match the match that should be clicked on 
 	 *
@@ -404,7 +404,7 @@ class Clicker {
 	/**
 	 * Method used to click on a button with a given text.
 	 *
-	 * @param name the name of the button presented to the user. Regular expressions are supported
+	 * @param name the name of the button presented to the user. The parameter <strong>will</strong> be interpreted as a regular expression.
 	 *
 	 */
 	
@@ -437,7 +437,7 @@ class Clicker {
 	/**
 	 * Method used to click on a toggle button with a given text.
 	 * 
-	 * @param name the name of the toggle button presented to the user. Regular expressions are supported
+	 * @param name the name of the toggle button presented to the user. The parameter <strong>will</strong> be interpreted as a regular expression.
 	 * 
 	 */
 

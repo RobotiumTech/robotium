@@ -202,7 +202,7 @@ public class Solo {
 	 * Searches for a {@link Button} with the given search string and returns true if at least one {@code Button}
 	 * is found with the expected text. Will automatically scroll when needed. 
 	 *
-	 * @param search the string to be searched. Regular expressions are supported
+	 * @param search the string to be searched. The parameter <strong>will</strong> be interpreted as a regular expression.
 	 * @return {@code true} if a {@code Button} with the given text is found and {@code false} if it is not found
 	 *
 	 */
@@ -216,7 +216,7 @@ public class Solo {
 	 * Searches for a {@link ToggleButton} with the given search string and returns {@code true} if at least one {@code ToggleButton}
 	 * is found with the expected text. Will automatically scroll when needed. 
 	 *
-	 * @param search the string to be searched. Regular expressions are supported
+	 * @param search the string to be searched. The parameter <strong>will</strong> be interpreted as a regular expression.
 	 * @return {@code true} if a {@code ToggleButton} with the given text is found and {@code false} if it is not found
 	 *
 	 */
@@ -230,7 +230,7 @@ public class Solo {
 	 * Searches for a {@link Button} with the given search string and returns {@code true} if the
 	 * searched {@code Button} is found a given number of times. Will automatically scroll when needed.
 	 * 
-	 * @param search the string to be searched. Regular expressions are supported
+	 * @param search the string to be searched. The parameter <strong>will</strong> be interpreted as a regular expression.
 	 * @param matches the number of matches expected to be found. {@code 0} matches means that one or more
 	 * matches are expected to be found
 	 * @return {@code true} if a {@code Button} with the given text is found a given number of times and {@code false}
@@ -248,7 +248,7 @@ public class Solo {
 	 * Searches for a {@link ToggleButton} with the given search string and returns {@code true} if the
 	 * searched {@code ToggleButton} is found a given number of times. Will automatically scroll when needed.
 	 * 
-	 * @param search the string to be searched. Regular expressions are supported
+	 * @param search the string to be searched. The parameter <strong>will</strong> be interpreted as a regular expression.
 	 * @param matches the number of matches expected to be found. {@code 0} matches means that one or more
 	 * matches are expected to be found
 	 * @return {@code true} if a {@code ToggleButton} with the given text is found a given number of times and {@code false}
@@ -266,7 +266,7 @@ public class Solo {
 	 * Searches for a text string and returns {@code true} if at least one item
 	 * is found with the expected text. Will automatically scroll when needed. 
 	 *
-	 * @param search the string to be searched. Regular expressions are supported
+	 * @param search the string to be searched. The parameter <strong>will</strong> be interpreted as a regular expression.
 	 * @return {@code true} if the search string is found and {@code false} if it is not found
 	 *
 	 */
@@ -280,7 +280,7 @@ public class Solo {
 	 * Searches for a text string and returns {@code true} if the searched text is found a given
 	 * number of times. Will automatically scroll when needed. 
 	 * 
-	 * @param search the string to be searched. Regular expressions are supported
+	 * @param search the string to be searched. The parameter <strong>will</strong> be interpreted as a regular expression.
 	 * @param matches the number of matches expected to be found. {@code 0} matches means that one or more
 	 * matches are expected to be found
 	 * @return {@code true} if search string is found a given number of times and {@code false} if the search string
@@ -298,7 +298,7 @@ public class Solo {
 	 * Searches for a text string and returns {@code true} if the searched text is found a given
 	 * number of times.
 	 * 
-	 * @param search the string to be searched. Regular expressions are supported
+	 * @param search the string to be searched. The parameter <strong>will</strong> be interpreted as a regular expression.
 	 * @param matches the number of matches expected to be found. {@code 0} matches means that one or more
 	 * matches are expected to be found
 	 * @param scroll {@code true} if scrolling should be performed
@@ -467,7 +467,7 @@ public class Solo {
 	/**
 	 * Clicks on a button with a given text. Will automatically scroll when needed. 
 	 *
-	 * @param name the name of the button presented to the user. Regular expressions are supported
+	 * @param name the name of the button presented to the user. The parameter <strong>will</strong> be interpreted as a regular expression.
 	 *
 	 */
 	
@@ -490,7 +490,7 @@ public class Solo {
 	/**
 	 * Clicks on a toggle button with a given text.
 	 * 
-	 * @param name the name of the toggle button presented to the user. Regular expressions are supported
+	 * @param name the name of the toggle button presented to the user. The parameter <strong>will</strong> be interpreted as a regular expression.
 	 * 
 	 */
 
@@ -500,7 +500,7 @@ public class Solo {
 	
 	/**
 	 * Clicks on a menu item with a given text.
-	 * @param text the menu text that should be clicked on. Regular expressions are supported 
+	 * @param text the menu text that should be clicked on. The parameter <strong>will</strong> be interpreted as a regular expression.
 	 *
 	 */
 	
@@ -512,7 +512,7 @@ public class Solo {
 	/**
 	 * Clicks on a menu item with a given text.
 	 * 
-	 * @param text the menu text that should be clicked on. Regular expressions are supported 
+	 * @param text the menu text that should be clicked on. The parameter <strong>will</strong> be interpreted as a regular expression.
 	 * @param subMenu true if the menu item could be located in a sub menu
 	 * 
 	 */
@@ -579,7 +579,7 @@ public class Solo {
 	 * Finds and clicks a view displaying a certain
 	 * text. Will automatically scroll when needed. 
 	 *
-	 * @param text the text that should be clicked on. Regular expressions are supported
+	 * @param text the text that should be clicked on. The parameter <strong>will</strong> be interpreted as a regular expression.
 	 *
 	 */
 	
@@ -590,7 +590,7 @@ public class Solo {
 	/**
 	 * Finds and clicks a view displaying a certain text. Will automatically scroll when needed.
 	 *
-	 * @param text the text that should be clicked on. Regular expressions are supported
+	 * @param text the text that should be clicked on. The parameter <strong>will</strong> be interpreted as a regular expression.
 	 * @param match the match that should be clicked on 
 	 *
 	 */
@@ -602,7 +602,7 @@ public class Solo {
 	/**
 	 * Finds and clicks a view displaying a certain text.
 	 *
-	 * @param text the text that should be clicked on. Regular expressions are supported
+	 * @param text the text that should be clicked on. The parameter <strong>will</strong> be interpreted as a regular expression.
 	 * @param match the match that should be clicked on 
 	 * @param scroll true if scrolling should be performed
 	 *
@@ -617,7 +617,7 @@ public class Solo {
 	 * Long clicks on a specific {@link TextView}. Will automatically scroll when needed. {@link #clickOnText(String)} can then be
 	 * used to click on the context menu items that appear after the long click.
 	 *
-	 * @param text the text that should be clicked on. Regular expressions are supported
+	 * @param text the text that should be clicked on. The parameter <strong>will</strong> be interpreted as a regular expression.
 	 *
 	 */
 	
@@ -630,7 +630,7 @@ public class Solo {
 	 * Long clicks on a specific {@link TextView}. Will automatically scroll when needed. {@link #clickOnText(String)} can then be
 	 * used to click on the context menu items that appear after the long click.
 	 *
-	 * @param text the text that should be clicked on. Regular expressions are supported
+	 * @param text the text that should be clicked on. The parameter <strong>will</strong> be interpreted as a regular expression.
 	 * @param match the match that should be clicked on 
 	 *
 	 */
@@ -644,7 +644,7 @@ public class Solo {
 	 * Long clicks on a specific {@link TextView}. {@link #clickOnText(String)} can then be
 	 * used to click on the context menu items that appear after the long click.
 	 *
-	 * @param text the text that should be clicked on. Regular expressions are supported
+	 * @param text the text that should be clicked on. The parameter <strong>will</strong> be interpreted as a regular expression.
 	 * @param match the match that should be clicked on 
 	 * @param scroll true if scrolling should be performed
 	 *
@@ -659,7 +659,7 @@ public class Solo {
 	 * Long clicks on a specific {@link TextView} and then selects
 	 * an item from the context menu that appears. Will automatically scroll when needed. 
 	 *
-	 * @param text the text to be clicked on. Regular expressions are supported
+	 * @param text the text to be clicked on. The parameter <strong>will</strong> be interpreted as a regular expression.
 	 * @param index the index of the menu item to be pressed. 0 if only one is available
 	 *
 	 */
