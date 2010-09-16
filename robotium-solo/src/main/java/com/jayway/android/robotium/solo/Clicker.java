@@ -567,11 +567,11 @@ class Clicker {
 	
 	
 	/**
-	 * Method that will click on a certain list line and return the text views that
+	 * Clicks on a certain list line and returns the {@link TextView}s that
 	 * the list line is showing. Will use the first list it finds.
 	 * 
 	 * @param line the line that should be clicked
-	 * @return an array list of the text views located in the list line
+	 * @return a {@code List} of the {@code TextView}s located in the list line
 	 */
 
 	public ArrayList<TextView> clickInList(int line) {
@@ -579,12 +579,12 @@ class Clicker {
 	}
 	
 	/**
-	 * Method that will click on a certain list line on a specified List and 
-	 * return the text views that the list line is showing. 
+	 * Clicks on a certain list line on a specified List and
+	 * returns the {@link TextView}s that the list line is showing.
 	 * 
 	 * @param line the line that should be clicked
 	 * @param index the index of the list. E.g. Index 1 if two lists are available
-	 * @return an array list of the text views located in the list line
+	 * @return a {@code List} of the {@code TextView}s located in the list line
 	 */
 	
 	public ArrayList<TextView> clickInList(int line, int index) {	
