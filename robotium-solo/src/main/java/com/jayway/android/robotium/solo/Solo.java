@@ -773,7 +773,7 @@ public class Solo {
 	/**
 	 * Scrolls up the screen.
 	 *
-	 * @return true if more scrolling can be done and false if it is at the top of 
+	 * @return {@code true} if more scrolling can be done and {@code false} if it is at the top of
 	 * the screen 
 	 *
 	 */
