@@ -44,11 +44,11 @@ class Searcher {
 	
 	
 	/**
-	 * Searches for a text string in the edit texts located in the current
-	 * activity.
+	 * Searches for a text string in the {@link EditText}s located in the current
+	 * {@code Activity}. Will automatically scroll when needed.
 	 *
-	 * @param search the search string to be searched. Regular expressions are supported
-	 * @return true if an edit text with the given text is found or false if it is not found
+	 * @param search the search string to be searched
+	 * @return {@code true} if an {@code EditText} with the given text is found or {@code false} if it is not found
 	 *
 	 */
     

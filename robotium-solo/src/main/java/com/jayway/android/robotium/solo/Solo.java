@@ -184,11 +184,11 @@ public class Solo {
 	
 	
 	/**
-	 * Searches for a text string in the edit texts located in the current
-	 * activity. Will automatically scroll when needed. 
+	 * Searches for a text string in the {@link EditText}s located in the current
+	 * {@code Activity}. Will automatically scroll when needed.
 	 *
 	 * @param search the search string to be searched
-	 * @return true if an edit text with the given text is found or false if it is not found
+	 * @return {@code true} if an {@code EditText} with the given text is found or {@code false} if it is not found
 	 *
 	 */
 	
