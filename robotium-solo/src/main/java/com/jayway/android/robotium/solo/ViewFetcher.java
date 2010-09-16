@@ -324,10 +324,11 @@ class ViewFetcher {
 	}
 	
 	/**
-	 * This method returns an ArrayList of spinners (drop-down menus) located in the current
-	 * activity.
+	 * Returns a {@code List} of the {@code Spinner}s (drop-down menus) contained in the current
+	 * {@code Activity}.
 	 *
-	 * @return an ArrayList of the spinners located in the current activity or view
+	 * @return a {@code List} of the {@code Spinner}s (drop-down menus) contained in the current
+	 * {@code Activity}
 	 *
 	 */
 	
