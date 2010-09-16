@@ -426,10 +426,11 @@ class ViewFetcher {
 	}
 	
 	/**
-	 * This method returns an ArrayList of the radio buttons contained in the current
-	 * activity.
+	 * Returns a {@code List} of the {@code RadioButton}s contained in the current
+	 * {@code Activity}.
 	 *
-	 * @return ArrayList of the radio buttons contained in the current activity
+	 * @return a {@code List} of the {@code RadioButton}s contained in the current
+	 * {@code Activity}
 	 *
 	 */
 	
