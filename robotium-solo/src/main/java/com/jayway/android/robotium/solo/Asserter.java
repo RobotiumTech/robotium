@@ -50,8 +50,7 @@ class Asserter {
 	 * 
 	 */
 	
-	@SuppressWarnings("unchecked")
-	public void assertCurrentActivity(String message, Class expectedClass)
+	public void assertCurrentActivity(String message, Class<? extends Activity> expectedClass)
 	{
 		RobotiumUtils.sleep(PAUS);
 		Assert.assertEquals(message, expectedClass.getName(), activityUtils
@@ -86,8 +85,7 @@ class Asserter {
 	 * 
 	 */
 	
-	@SuppressWarnings("unchecked")
-	public void assertCurrentActivity(String message, Class expectedClass,
+	public void assertCurrentActivity(String message, Class<? extends Activity> expectedClass,
 			boolean isNewInstance) {
 		boolean found = false;
 		assertCurrentActivity(message, expectedClass);
