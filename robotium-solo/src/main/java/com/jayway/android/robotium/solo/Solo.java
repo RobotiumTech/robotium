@@ -417,10 +417,10 @@ public class Solo {
 	
 	
 	/**
-	 * Waits for a Dialog to close.
+	 * Waits for a {@link android.app.Dialog} to close.
 	 * 
 	 * @param timeout the amount of time in milliseconds to wait
-	 * @return true if the dialog is closed before the timeout and false if it is not closed.
+	 * @return {@code true} if the {@code Dialog} is closed before the timeout and {@code false} if it is not closed.
 	 * 
 	 */
 
