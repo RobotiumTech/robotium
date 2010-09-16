@@ -346,10 +346,10 @@ public class Solo {
 	}
 	
 	/**
-	 * Asserts that an expected activity is currently active.
+	 * Asserts that an expected {@link Activity} is currently active one.
 	 * 
 	 * @param message the message that should be displayed if the assert fails
-	 * @param name the name of the activity that is expected to be active e.g. "MyActivity"
+	 * @param name the name of the {@code Activity} that is expected to be active e.g. {@code "MyActivity"}
 	 * 
 	 */
 	
@@ -359,10 +359,10 @@ public class Solo {
 	}
 	
 	/**
-	 * Asserts that an expected activity is currently active.
+	 * Asserts that an expected {@link Activity} is currently active one.
 	 * 
 	 * @param message the message that should be displayed if the assert fails
-	 * @param expectedClass the class object that is expected to be active e.g. MyActivity.class
+	 * @param expectedClass the {@code Class} object that is expected to be active e.g. {@code MyActivity.class}
 	 * 
 	 */
 	
@@ -374,12 +374,12 @@ public class Solo {
 	}
 	
 	/**
-	 * Asserts that an expected activity is currently active with the possibility to 
-	 * verify that the expected activity is a new instance of the activity.
+	 * Asserts that an expected {@link Activity} is currently active one, with the possibility to
+	 * verify that the expected {@code Activity} is a new instance of the {@code Activity}.
 	 * 
 	 * @param message the message that should be displayed if the assert fails
 	 * @param name the name of the activity that is expected to be active e.g. "MyActivity"
-	 * @param isNewInstance true if the expected activity is a new instance of the activity 
+	 * @param isNewInstance {@code true} if the expected {@code Activity} is a new instance of the {@code Activity}
 	 * 
 	 */
 	
@@ -389,12 +389,12 @@ public class Solo {
 	}
 	
 	/**
-	 * Asserts that an expected activity is currently active with the possibility to 
-	 * verify that the expected activity is a new instance of the activity.
+	 * Asserts that an expected {@link Activity} is currently active one, with the possibility to
+	 * verify that the expected {@code Activity} is a new instance of the {@code Activity}.
 	 * 
 	 * @param message the message that should be displayed if the assert fails
-	 * @param expectedClass the class object that is expected to be active e.g. MyActivity.class
-	 * @param isNewInstance true if the expected activity is a new instance of the activity
+	 * @param expectedClass the {@code Class} object that is expected to be active e.g. {@code MyActivity.class}
+	 * @param isNewInstance {@code true} if the expected {@code Activity} is a new instance of the {@code Activity}
 	 * 
 	 */
 	

@@ -26,14 +26,14 @@ class Asserter {
 		this.activityUtils = activityUtils;
 	}
 
-	/**
-	 * Method used to assert that an expected activity is currently active.
-	 * 
-	 * @param message the message that should be displayed if the assert fails
-	 * @param name the name of the activity that is expected to be active e.g. "MyActivity"
-	 * 
-	 */
-	
+    /**
+     * Asserts that an expected {@link Activity} is currently active one.
+     *
+     * @param message the message that should be displayed if the assert fails
+     * @param name the name of the {@code Activity} that is expected to be active e.g. {@code "MyActivity"}
+     *
+     */
+
 	public void assertCurrentActivity(String message, String name)
 	{
 		RobotiumUtils.sleep(PAUS);
@@ -43,10 +43,10 @@ class Asserter {
 	}
 	
 	/**
-	 * Method used to assert that an expected activity is currently active.
-	 * 
-	 * @param message the message that should be displayed if the assert fails
-	 * @param expectedClass the class object that is expected to be active e.g. MyActivity.class
+     * Asserts that an expected {@link Activity} is currently active one.
+     *
+     * @param message the message that should be displayed if the assert fails
+	 * @param expectedClass the {@code Class} object that is expected to be active e.g. {@code MyActivity.class}
 	 * 
 	 */
 	
@@ -60,12 +60,12 @@ class Asserter {
 	}
 	
 	/**
-	 * Method used to assert that an expected activity is currently active with the possibility to 
-	 * verify that the expected activity is a new instance of the activity.
+	 * Asserts that an expected {@link Activity} is currently active one, with the possibility to
+	 * verify that the expected {@code Activity} is a new instance of the {@code Activity}.
 	 * 
 	 * @param message the message that should be displayed if the assert fails
-	 * @param name the name of the activity that is expected to be active e.g. "MyActivity"
-	 * @param isNewInstance true if the expected activity is a new instance of the activity 
+	 * @param name the name of the {@code Activity} that is expected to be active e.g. {@code "MyActivity"}
+	 * @param isNewInstance {@code true} if the expected {@code Activity} is a new instance of the {@code Activity}
 	 * 
 	 */
 	
@@ -77,12 +77,12 @@ class Asserter {
 	}
 	
 	/**
-	 * Method used to assert that an expected activity is currently active with the possibility to 
-	 * verify that the expected activity is a new instance of the activity.
+	 * Asserts that an expected {@link Activity} is currently active one, with the possibility to
+	 * verify that the expected {@code Activity} is a new instance of the {@code Activity}.
 	 * 
 	 * @param message the message that should be displayed if the assert fails
-	 * @param expectedClass the class object that is expected to be active e.g. MyActivity.class
-	 * @param isNewInstance true if the expected activity is a new instance of the activity
+	 * @param expectedClass the {@code Class} object that is expected to be active e.g. {@code MyActivity.class}
+	 * @param isNewInstance {@code true} if the expected {@code Activity} is a new instance of the {@code Activity}
 	 * 
 	 */
 	
