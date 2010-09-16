@@ -783,10 +783,10 @@ public class Solo {
 	}
 	
 	/**
-	 * Scrolls down a list with a given listIndex.
+	 * Scrolls down a list with a given {@code listIndex}.
 	 * 
-	 * @param listIndex the list to be scrolled. 0 if only one list is available 
-	 * @return true if more scrolling can be done
+	 * @param listIndex the {@link ListView} to be scrolled. {@code 0} if only one list is available
+	 * @return {@code true} if more scrolling can be done
 	 * 
 	 */
 	
