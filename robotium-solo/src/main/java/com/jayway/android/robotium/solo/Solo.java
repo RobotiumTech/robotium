@@ -1133,10 +1133,10 @@ public class Solo {
 	}
 	
 	/**
-	 * Returns to the given Activity.
+	 * Returns to the given {@link Activity}.
 	 *
-	 * @param name the name of the Activity to be returned to e.g. "MyActivity"
-	 * 
+	 * @param name the name of the {@code Activity} to return to, e.g. {@code "MyActivity"}
+	 *
 	 */
 	
 	public void goBackToActivity(String name)
