@@ -1005,10 +1005,11 @@ public class Solo {
 	}
 	
 	/**
-	 * Returns an ArrayList of the grid views located in the current
-	 * activity.
+	 * Returns a {@code List} of the {@code GridView}s contained in the current
+	 * {@code Activity}.
 	 *
-	 * @return an ArrayList of the grid views located in the current activity
+	 * @return a {@code List} of the {@code GridView}s contained in the current
+	 * {@code Activity}
 	 *
 	 */
 	
