@@ -125,9 +125,9 @@ public class Solo {
 	}
 	
 	/**
-     * Clears the value of an edit text.
+     * Clears the value of an {@link EditText}.
      * 
-     * @param index the index of the edit text that should be cleared. 0 if only one is available
+     * @param index the index of the {@code EditText} that should be cleared. 0 if only one is available.
 	 *
      */
 	
