@@ -178,7 +178,7 @@ class ActivityUtils {
 	/**
 	 * Returns a localized string
 	 * 
-	 * @param resId the resource ID of the view
+	 * @param resId the resource ID for the string
 	 * @return the localized string
 	 * 
 	 */
