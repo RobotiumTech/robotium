@@ -117,7 +117,7 @@ class Clicker {
 	
 	
 	/**
-	 * Method used to click on a specific view.
+	 * Clicks on a specific {@link View}.
 	 *
 	 * @param view the view that should be clicked
 	 *
@@ -164,7 +164,7 @@ class Clicker {
 	}
 	
 	/**
-	 * Method used to long click on a specific view.
+	 * Long clicks on a specific {@link View}.
 	 *
 	 * @param view the view that should be long clicked
 	 *

@@ -550,7 +550,7 @@ public class Solo {
     
 	
 	/**
-	 * Clicks on a specific view.
+	 * Clicks on a specific {@link View}.
 	 *
 	 * @param view the view that should be clicked
 	 *
@@ -563,7 +563,7 @@ public class Solo {
 	
 	
 	/**
-	 * Long clicks on a specific view.
+	 * Long clicks on a specific {@link View}.
 	 *
 	 * @param view the view that should be long clicked
 	 *
