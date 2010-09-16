@@ -906,10 +906,10 @@ public class Solo {
 	}
 	
 	/**
-	 * Returns an image button with a certain index.
+	 * Returns an {@code ImageButton} with a certain index.
 	 *
-	 * @param index the index of the image button. 0 if only one is available
-	 * @return the image button with the specific index or null if index is invalid
+	 * @param index the index of the {@code ImageButton}. 0 if only one is available
+	 * @return the {@code ImageButton} with a specified index or {@code null} if index is invalid
 	 *
 	 */
 	
