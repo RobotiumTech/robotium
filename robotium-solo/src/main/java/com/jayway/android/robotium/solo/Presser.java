@@ -38,11 +38,11 @@ class Presser{
 
 	
 	/**
-	 * Presses a MenuItem with a certain index. Index 0 is the first item in the 
-	 * first row, index 3 is the first item in the second row and 
-	 * index 5 is the first item in the third row.
-	 * 
-	 * @param index the index of the menu item to be pressed
+	 * Presses a {@link android.view.MenuItem} with a certain index. Index {@code 0} is the first item in the
+	 * first row, Index {@code 3} is the first item in the second row and
+	 * index {@code 5} is the first item in the third row.
+	 *
+	 * @param index the index of the {@code MenuItem} to be pressed
 	 * 
 	 */
 	
