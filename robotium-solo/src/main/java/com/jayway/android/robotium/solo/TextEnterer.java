@@ -35,7 +35,7 @@ class TextEnterer{
 
 	
 	/**
-	 * This method is used to enter text into an EditText or a NoteField with a certain index.
+	 * Enters text into an {@link android.widget.EditText} or a NoteField with a certain index.
 	 *
 	 * @param index the index of the text field. Index 0 if only one available.
 	 * @param text the text string that is to be entered into the text field

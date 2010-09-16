@@ -819,7 +819,7 @@ public class Solo {
 	}
 	
 	/**
-	 * Enters text into an EditText or a NoteField with a certain index.
+	 * Enters text into an {@link EditText} or a NoteField with a certain index.
 	 *
 	 * @param index the index of the text field. 0 if only one is available
 	 * @param text the text string that is to be entered into the text field
