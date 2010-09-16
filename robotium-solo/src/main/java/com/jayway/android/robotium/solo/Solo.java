@@ -295,14 +295,14 @@ public class Solo {
 	}
 	
 	/**
-	 * Searches for a text string and returns true if the searched text is found a given
+	 * Searches for a text string and returns {@code true} if the searched text is found a given
 	 * number of times.
 	 * 
 	 * @param search the string to be searched. Regular expressions are supported
-	 * @param matches the number of matches expected to be found. 0 matches means that one or more 
+	 * @param matches the number of matches expected to be found. {@code 0} matches means that one or more
 	 * matches are expected to be found
-	 * @param scroll true if scrolling should be performed
-	 * @return true if search string is found a given number of times and false if the search string
+	 * @param scroll {@code true} if scrolling should be performed
+	 * @return {@code true} if search string is found a given number of times and {@code false} if the search string
 	 * is not found
 	 *  
 	 */
