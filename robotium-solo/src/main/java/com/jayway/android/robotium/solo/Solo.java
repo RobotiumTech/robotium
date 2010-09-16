@@ -1038,10 +1038,11 @@ public class Solo {
 	}
 	
 	/**
-	 * Returns an ArrayList with the toggle buttons located in the current
-	 * activity.
+	 * Returns a {@code List} of the {@code ToggleButton}s contained in the current
+	 * {@code Activity}.
 	 *
-	 * @return and ArrayList of the toggle buttons located in the current activity
+	 * @return a {@code List} of the {@code ToggleButton}s contained in the current
+	 * {@code Activity}
 	 *
 	 */
 	

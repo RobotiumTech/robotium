@@ -412,10 +412,11 @@ class ViewFetcher {
 	}
 	
 	/**
-	 * This method returns an ArrayList with the toggle buttons located in the
-	 * current activity.
-	 * 
-	 * @return and ArrayList of the toggle buttons located in the current activity
+	 * Returns a {@code List} of the {@code ToggleButton}s contained in the current
+	 * {@code Activity}.
+	 *
+	 * @return a {@code List} of the {@code ToggleButton}s contained in the current
+	 * {@code Activity}
 	 * 
 	 */
 	
