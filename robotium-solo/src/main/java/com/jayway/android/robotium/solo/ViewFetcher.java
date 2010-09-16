@@ -286,10 +286,11 @@ class ViewFetcher {
 	}
 	
 	/**
-	 * This method returns an ArrayList of all the list views located in the current activity.
-	 * 
-	 * 
-	 * @return an ArrayList of the list views located in the current activity
+	 * Returns a {@code List} of the {@code ListView}s contained in the current
+	 * {@code Activity}.
+	 *
+	 * @return a {@code List} of the {@code ListView}s contained in the current
+	 * {@code Activity}
 	 * 
 	 */
 	
