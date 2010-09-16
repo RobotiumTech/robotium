@@ -84,9 +84,9 @@ class ActivityUtils {
 	}
 
 	/**
-	 * This method returns the current activity.
+	 * Returns the current {@code Activity}.
 	 *
-	 * @return current activity
+	 * @return the current {@code Activity}
 	 *
 	 */
 	
@@ -95,15 +95,15 @@ class ActivityUtils {
 	}
 	
 	/**
-	 * This method returns the current activity.
+	 * Returns the current {@code Activity}.
 	 *
-	 * @return current activity
-	 * @param paus the time to paus
+	 * @return the current {@code Activity}
+	 * @param pause the time to pause in milliseconds
 	 */
 	
-	public Activity getCurrentActivity(int paus) {
-		if(paus > 0){
-			RobotiumUtils.sleep(paus);
+	public Activity getCurrentActivity(int pause) {
+		if(pause > 0){
+			RobotiumUtils.sleep(pause);
 			inst.waitForIdleSync();
 		}
 		Boolean found = false;

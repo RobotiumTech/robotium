@@ -334,9 +334,9 @@ public class Solo {
 	}
 	
 	/**
-	 * Returns the current activity.
+	 * Returns the current {@code Activity}.
 	 *
-	 * @return current activity
+	 * @return the current {@code Activity}
 	 *
 	 */
 	
