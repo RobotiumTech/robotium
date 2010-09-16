@@ -227,13 +227,13 @@ public class Solo {
 	}
 	
 	/**
-	 * Searches for a button with the given search string and returns true if the 
-	 * searched button is found a given number of times. Will automatically scroll when needed. 
+	 * Searches for a {@link Button} with the given search string and returns {@code true} if the
+	 * searched {@code Button} is found a given number of times. Will automatically scroll when needed.
 	 * 
 	 * @param search the string to be searched. Regular expressions are supported
-	 * @param matches the number of matches expected to be found. 0 matches means that one or more 
+	 * @param matches the number of matches expected to be found. {@code 0} matches means that one or more
 	 * matches are expected to be found
-	 * @return true if a button with the given text is found a given number of times and false 
+	 * @return {@code true} if a {@code Button} with the given text is found a given number of times and {@code false}
 	 * if it is not found
 	 *  
 	 */
