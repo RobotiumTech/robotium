@@ -760,7 +760,7 @@ public class Solo {
 	/**
 	 * Scrolls down the screen.
 	 *
-	 * @return true if more scrolling can be done and false if it is at the end of 
+	 * @return {@code true} if more scrolling can be done and {@code false} if it is at the end of
 	 * the screen 
 	 *
 	 */
