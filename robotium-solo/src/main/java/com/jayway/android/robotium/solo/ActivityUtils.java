@@ -125,10 +125,11 @@ class ActivityUtils {
 	}
 	
 	/**
-	 * Waits for the given Activity.
-	 * @param name the name of the Activity to wait for e.g. "MyActivity"
+	 * Waits for the given {@link Activity}.
+	 *
+	 * @param name the name of the {@code Activity} to wait for e.g. {@code "MyActivity"}
 	 * @param timeout the amount of time in milliseconds to wait
-	 * @return true if Activity appears before the timeout and false if it does not
+	 * @return {@code true} if {@code Activity} appears before the timeout and {@code false} if it does not
 	 * 
 	 */
 	
