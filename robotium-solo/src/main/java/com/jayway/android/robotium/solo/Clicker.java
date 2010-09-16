@@ -216,8 +216,8 @@ class Clicker {
 	
 	
 	/**
-	 * This method is used to long click on a specific text view and then selecting
-	 * an item from the menu that appears.
+	 * Long clicks on a specific {@link TextView} and then selects
+	 * an item from the context menu that appears. Will automatically scroll when needed.
 	 *
 	 * @param text the text that should be clicked on. Regular expressions are supported
 	 * @param index the index of the menu item that should be pressed
@@ -241,7 +241,7 @@ class Clicker {
 	}
 	
 	/**
-	 * Long clicks on a specific text view. ClickOnText() can then be
+	 * Long clicks on a specific {@link TextView}. Will automatically scroll when needed. {@link #clickOnText(String)} can then be
 	 * used to click on the context menu items that appear after the long click.
 	 *
 	 * @param text the text that should be clicked on. Regular expressions are supported
@@ -254,7 +254,7 @@ class Clicker {
 	}
 	
 	/**
-	 * Long clicks on a specific text view. ClickOnText() can then be
+	 * Long clicks on a specific {@link TextView}. Will automatically scroll when needed. {@link #clickOnText(String)} can then be
 	 * used to click on the context menu items that appear after the long click.
 	 *
 	 * @param text the text that should be clicked on. Regular expressions are supported
@@ -267,7 +267,7 @@ class Clicker {
 	}
 	
 	/**
-	 * Long clicks on a specific text view. ClickOnText() can then be
+	 * Long clicks on a specific {@link TextView}. {@link #clickOnText(String)} can then be
 	 * used to click on the context menu items that appear after the long click.
 	 *
 	 * @param text the text that should be clicked on. Regular expressions are supported
