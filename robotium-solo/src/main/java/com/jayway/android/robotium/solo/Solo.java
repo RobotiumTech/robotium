@@ -842,10 +842,11 @@ public class Solo {
 	}
 	
 	/**
-	 * Returns an ArrayList of the images contained in the current
-	 * activity.
+	 * Returns a {@code List} of the {@code ImageView}s contained in the current
+	 * {@code Activity}.
 	 *
-	 * @return ArrayList of the images contained in the current activity
+	 * @return a {@code List} of the {@code ImageView}s contained in the current
+	 * {@code Activity}
 	 *
 	 */
 	
