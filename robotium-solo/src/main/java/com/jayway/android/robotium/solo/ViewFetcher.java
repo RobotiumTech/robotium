@@ -344,16 +344,17 @@ class ViewFetcher {
 	}
 	
 	/**
-	 * This method returns an ArrayList of the text views located in the current
-	 * activity.
+	 * Returns a {@code List} of the {@code TextView}s contained in the current
+	 * {@code Activity} or {@code View}.
 	 *
-	 * @param parent the parent View in which the text views should be returned. Null if
-	 * all text views from the current activity should be returned
+	 * @param parent the parent {@code View} from which the {@code TextView}s should be returned. {@code null} if
+	 * all {@code TextView}s from the current {@code Activity} should be returned
 	 *
-	 * @return an ArrayList of the text views located in the current activity or view
+	 * @return a {@code List} of the {@code TextView}s contained in the current
+	 * {@code Activity} or {@code View}
 	 *
 	 */
-	
+
 	public ArrayList<TextView> getCurrentTextViews(View parent) {		
 		if(parent == null)
 			getViews();
