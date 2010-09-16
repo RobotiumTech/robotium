@@ -536,11 +536,11 @@ public class Solo {
 	}
 	
 	/**
-	 * Presses on a spinner (drop-down menu) item.
+	 * Presses on a {@link Spinner} (drop-down menu) item.
 	 * 
-	 * @param spinnerIndex the index of the spinner menu to be used
-	 * @param itemIndex the index of the spinner item to be pressed relative to the current selected item. 
-	 * A Negative number moves up on the spinner, positive down
+	 * @param spinnerIndex the index of the {@code Spinner} menu to be used
+	 * @param itemIndex the index of the {@code Spinner} item to be pressed relative to the currently selected item.
+	 * A Negative number moves up on the {@code Spinner}, positive moves down
 	 * 
 	 */
 	
