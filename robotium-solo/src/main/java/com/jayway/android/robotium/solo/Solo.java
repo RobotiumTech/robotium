@@ -199,11 +199,11 @@ public class Solo {
 	
 	
 	/**
-	 * Searches for a button with the given search string and returns true if at least one button 
+	 * Searches for a {@link Button} with the given search string and returns true if at least one {@code Button}
 	 * is found with the expected text. Will automatically scroll when needed. 
 	 *
 	 * @param search the string to be searched. Regular expressions are supported
-	 * @return true if a button with the given text is found and false if it is not found
+	 * @return {@code true} if a {@code Button} with the given text is found and {@code false} if it is not found
 	 *
 	 */
 	
