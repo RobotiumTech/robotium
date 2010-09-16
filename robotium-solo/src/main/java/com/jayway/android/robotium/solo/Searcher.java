@@ -268,11 +268,11 @@ class Searcher {
 	}
 	
 	/**
-	 * Searches for a text string and returns true if at least one item 
-	 * is found with the expected text
+	 * Searches for a text string and returns {@code true} if at least one item
+	 * is found with the expected text. Will automatically scroll when needed.
 	 *
 	 * @param search the string to be searched. Regular expressions are supported
-	 * @return true if the search string is found and false if it is not found
+	 * @return {@code true} if the search string is found and {@code false} if it is not found
 	 *
 	 */
 	
