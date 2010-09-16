@@ -47,10 +47,10 @@ class ViewFetcher {
 	
 	
 	/**
-	 * Returns the absolute top view in an activity.
+	 * Returns the absolute top parent {@code View} in for a given {@code View}.
 	 *
-	 * @param view the view whose top parent is requested
-	 * @return the top parent view
+	 * @param view the {@code View} whose top parent is requested
+	 * @return the top parent {@code View}
 	 *
 	 */
 	
