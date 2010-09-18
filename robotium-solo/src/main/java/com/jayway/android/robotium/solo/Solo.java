@@ -3,7 +3,6 @@ package com.jayway.android.robotium.solo;
 import java.util.ArrayList;
 import android.app.Activity;
 import android.app.Instrumentation;
-import android.content.pm.ActivityInfo;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
@@ -68,12 +67,8 @@ public class Solo {
 	private final Scroller scroller;
 	private final RobotiumUtils robotiumUtils;
 	private final Sleeper sleeper;
-
-    /** @deprecated @see {@link #setActivityOrientation} */
-	public final static int LANDSCAPE = ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE;
-    /** @deprecated @see {@link #setActivityOrientation} */
-    public final static int PORTRAIT = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT;
-
+	public final static int LANDSCAPE = 0;
+    public final static int PORTRAIT = 1;
 	public final static int RIGHT = 2;
 	public final static int LEFT = 3;
 	public final static int UP = 4;
@@ -322,7 +317,8 @@ public class Solo {
 	/**
 	 * Sets the Orientation (Landscape/Portrait) for the current activity.
 	 * 
-	 * @param orientation An orientation constant such as {@link ActivityInfo#SCREEN_ORIENTATION_LANDSCAPE} or {@link ActivityInfo#SCREEN_ORIENTATION_PORTRAIT}.
+	 * @param orientation the orientation to be set. Solo.LANDSCAPE for landscape and Solo.PORTRAIT for portrait 
+	 *
 	 */
 	
 	public void setActivityOrientation(int orientation)

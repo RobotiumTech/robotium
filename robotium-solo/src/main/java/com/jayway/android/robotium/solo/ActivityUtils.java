@@ -71,12 +71,10 @@ class ActivityUtils {
 	}
 
 	/**
-	 * Public method that sets the Orientation (Landscape/Portrait) for the current activity.
+	 * Sets the Orientation (Landscape/Portrait) for the current activity.
 	 * 
-	 * @param orientation An orientation constant such as {@link android.content.pm.ActivityInfo#SCREEN_ORIENTATION_LANDSCAPE} or {@link android.content.pm.ActivityInfo#SCREEN_ORIENTATION_PORTRAIT}.
-     *
-     * @see android.app.Activity#setRequestedOrientation(int)
-	 *  
+	 * @param orientation the orientation to be set. Solo.LANDSCAPE for landscape and Solo.PORTRAIT for portrait 
+	 *
 	 */
 	
 	public void setActivityOrientation(int orientation)
@@ -103,6 +101,7 @@ class ActivityUtils {
 	 *
 	 * @param shouldSleepFirst whether to sleep a default pause first
 	 * @return the current {@code Activity}
+	 * 
 	 */
 	
 	public Activity getCurrentActivity(boolean shouldSleepFirst) {
