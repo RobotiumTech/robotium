@@ -55,7 +55,7 @@ class Presser{
 			sleeper.sleepMini();
 			inst.sendKeyDownUpSync(KeyEvent.KEYCODE_DPAD_UP);
 			inst.sendKeyDownUpSync(KeyEvent.KEYCODE_DPAD_UP);
-		}catch(Throwable e){
+		}catch(SecurityException e){
 			Assert.assertTrue("Can not press the menu!", false);
 		}
 		if (index < 3) {
@@ -82,7 +82,7 @@ class Presser{
 
 		try{
 			inst.sendKeyDownUpSync(KeyEvent.KEYCODE_ENTER);
-		}catch (Throwable e) {}
+		}catch (SecurityException ignored) {}
 	}
 
 	/**
@@ -99,7 +99,9 @@ class Presser{
 		inst.waitForIdleSync();
 		sleeper.sleep();
 		clicker.clickOnScreen(viewFetcher.getCurrentSpinners().get(spinnerIndex));
-		inst.sendKeyDownUpSync(KeyEvent.KEYCODE_DPAD_DOWN);
+		try{
+			inst.sendKeyDownUpSync(KeyEvent.KEYCODE_DPAD_DOWN);
+		}catch(SecurityException ignored){}
 		boolean countingUp = true;
 		if(itemIndex < 0){
 			countingUp = false;
@@ -109,13 +111,18 @@ class Presser{
 		{
 			sleeper.sleepMini();
 			if(countingUp){
-				inst.sendKeyDownUpSync(KeyEvent.KEYCODE_DPAD_DOWN);
+				try{
+					inst.sendKeyDownUpSync(KeyEvent.KEYCODE_DPAD_DOWN);
+				}catch(SecurityException ignored){}
 			}else{
-				inst.sendKeyDownUpSync(KeyEvent.KEYCODE_DPAD_UP);
+				try{
+					inst.sendKeyDownUpSync(KeyEvent.KEYCODE_DPAD_UP);
+				}catch(SecurityException ignored){}
 			}
 		}
-		inst.sendKeyDownUpSync(KeyEvent.KEYCODE_ENTER);
-		
+		try{
+			inst.sendKeyDownUpSync(KeyEvent.KEYCODE_ENTER);
+		}catch(SecurityException ignored){}
 	}
 	
 
