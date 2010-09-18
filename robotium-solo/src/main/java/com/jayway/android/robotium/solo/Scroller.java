@@ -63,7 +63,7 @@ class Scroller {
 		MotionEvent event = MotionEvent.obtain(downTime, eventTime,MotionEvent.ACTION_DOWN, fromX, fromY, 0);
 		try {
 			inst.sendPointerSync(event);
-		} catch (Throwable e) {}
+		} catch (SecurityException ignored) {}
 		for (int i = 0; i < stepCount; ++i) {
 			y += yStep;
 			x += xStep;
@@ -71,14 +71,14 @@ class Scroller {
 			event = MotionEvent.obtain(downTime, eventTime,MotionEvent.ACTION_MOVE, x, y, 0);
 			try {
 				inst.sendPointerSync(event);
-			} catch (Throwable e) {}
+			} catch (SecurityException ignored) {}
 			inst.waitForIdleSync();
 		}
 		eventTime = SystemClock.uptimeMillis();
 		event = MotionEvent.obtain(downTime, eventTime, MotionEvent.ACTION_UP,toX, toY, 0);
 		try {
 			inst.sendPointerSync(event);
-		} catch (Throwable e) {}
+		} catch (SecurityException ignored) {}
 	}
 	
 	
