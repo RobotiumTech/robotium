@@ -77,7 +77,7 @@ class Clicker {
 		try{
 			inst.sendPointerSync(event);
 			inst.sendPointerSync(event2);
-		}catch(Throwable e){
+		}catch(SecurityException e){
 			Assert.assertTrue("Click can not be completed! Something is in the way e.g. the keyboard.", false);
 		}
 	}
@@ -96,7 +96,7 @@ class Clicker {
         MotionEvent event = MotionEvent.obtain(downTime, eventTime, MotionEvent.ACTION_DOWN, x, y, 0);
         try{
         	inst.sendPointerSync(event);
-        }catch(Throwable e){
+        }catch(SecurityException e){
         	Assert.assertTrue("Click can not be completed! Something is in the way e.g. the keyboard.", false);
         }
         inst.waitForIdleSync();
@@ -227,7 +227,7 @@ class Clicker {
 		clickOnText(text, true, 0, true);
 		try{
 			inst.sendKeyDownUpSync(KeyEvent.KEYCODE_DPAD_DOWN);
-		}catch(Throwable e){
+		}catch(SecurityException e){
 			Assert.assertTrue("Can not press the context menu!", false);
 		}
 		for(int i = 0; i < index; i++)
@@ -291,7 +291,7 @@ class Clicker {
 		inst.waitForIdleSync();
 		try{
 			robotiumUtils.sendKeyCode(KeyEvent.KEYCODE_MENU);
-		}catch(Throwable e){
+		}catch(SecurityException e){
 			Assert.assertTrue("Can not open the menu!", false);
 		}
 		clickOnText(text);
@@ -316,7 +316,7 @@ class Clicker {
 		
 		try{
 		robotiumUtils.sendKeyCode(KeyEvent.KEYCODE_MENU);
-		}catch(Throwable e){
+		}catch(SecurityException e){
 			Assert.assertTrue("Can not open the menu!", false);
 		}
 		if(subMenu && (viewFetcher.getCurrentTextViews(null).size() > 5) && !robotiumUtils.waitForText(text, 1, 1500, false)){
