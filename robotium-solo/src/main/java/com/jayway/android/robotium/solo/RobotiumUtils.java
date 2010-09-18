@@ -194,7 +194,11 @@ class RobotiumUtils {
 	{
 		sleeper.sleep();
 		inst.waitForIdleSync();
-		inst.sendCharacterSync(keycode);
+		try{
+			inst.sendCharacterSync(keycode);
+		}catch(SecurityException e){
+			Assert.assertTrue("Can not complete action!", false);
+		}
 	}
 
 
