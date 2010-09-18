@@ -58,7 +58,7 @@ class RobotiumUtils {
 					}
 				});
 			}
-		}catch(Throwable e){
+		}catch(IndexOutOfBoundsException e){
 			Assert.assertTrue("No edit text with index " + index + " is found", false);
 		}
 	}
