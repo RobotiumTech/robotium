@@ -2,6 +2,7 @@ package com.jayway.android.robotium.solo;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
+import junit.framework.Assert;
 import android.app.Activity;
 import android.app.Instrumentation;
 import android.view.View;
@@ -125,7 +126,7 @@ class ViewFetcher {
 			if(decorView!= null)
 				getViews(decorView);
 			return viewList;
-		} catch (Throwable e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return null;
@@ -183,7 +184,9 @@ class ViewFetcher {
 		EditText editText = null;
 		try{
 			editText = editTextList.get(index);
-		}catch (Throwable e){}
+		}catch (IndexOutOfBoundsException e){
+			Assert.assertTrue("No edit text with index " + index + " is found", false);
+		}
 		return editText;
 	}
 	
@@ -200,7 +203,9 @@ class ViewFetcher {
 		Button button = null;
 		try{
 			button = buttonList.get(index);
-		}catch (Throwable e){}
+		}catch (IndexOutOfBoundsException e){
+			Assert.assertTrue("No button with index " + index + " is found", false);
+		}
 		return button;
 	}
 	
@@ -217,7 +222,9 @@ class ViewFetcher {
 		TextView textView =  null;
 		try{
 			textView = textList.get(index);
-		} catch(Throwable e){}
+		} catch (IndexOutOfBoundsException e){
+			Assert.assertTrue("No text view with index " + index + " is found", false);
+		}
 		return textView;
 	}
 	
@@ -234,7 +241,9 @@ class ViewFetcher {
 		ImageView imageView = null;
 		try{
 			imageView = imageList.get(index);
-		}catch(Throwable e){}
+		}catch (IndexOutOfBoundsException e){
+			Assert.assertTrue("No image view with index " + index + " is found", false);
+		}
 		return imageView;
 	}
 	
@@ -251,7 +260,9 @@ class ViewFetcher {
 		ImageButton imageButton = null;
 		try{
 			imageButton = buttonList.get(index);
-		}catch(Throwable e){}
+		}catch (IndexOutOfBoundsException e){
+			Assert.assertTrue("No image button with index " + index + " is found", false);
+		}
 		return imageButton;
 	}
 	
