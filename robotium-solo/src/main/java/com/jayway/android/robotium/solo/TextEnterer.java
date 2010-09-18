@@ -58,7 +58,7 @@ class TextEnterer{
     				inst.sendStringSync(text);
     				inst.sendKeyDownUpSync(KeyEvent.KEYCODE_ENTER);
     				inst.sendKeyDownUpSync(KeyEvent.KEYCODE_ENTER);
-    			}catch(Throwable e){
+    			}catch(SecurityException e){
     				Assert.assertTrue("Text can not be entered!", false);	
     			}
 
@@ -67,14 +67,14 @@ class TextEnterer{
     			clicker.clickOnEditText(index);
     			try{
     				inst.sendStringSync(text);
-    			}catch(Throwable e){
+    			}catch(SecurityException e){
     				Assert.assertTrue("Text can not be entered!", false);	
     			}
     		}
     		else {
     			try{
     				inst.sendStringSync(text);
-    			}catch(Throwable e){
+    			}catch(SecurityException e){
     				Assert.assertTrue("Text can not be entered!", false);	
     			}
     		}
