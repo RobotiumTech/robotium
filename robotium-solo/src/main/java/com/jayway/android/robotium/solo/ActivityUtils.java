@@ -65,7 +65,8 @@ class ActivityUtils {
 		try {
 			IntentFilter filter = null;
 			activityMonitor = inst.addMonitor(filter, null, false);
-		} catch (Throwable e) {
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
 	}
 
@@ -169,7 +170,7 @@ class ActivityUtils {
 			{
 				try{
 				inst.sendKeyDownUpSync(KeyEvent.KEYCODE_BACK);
-				}catch(Throwable e){
+				}catch(SecurityException e){
 					Assert.assertTrue("Activity named " + name + " can not be returned to", false);}
 			}
 		}
@@ -207,9 +208,7 @@ class ActivityUtils {
 			getCurrentActivity().finish();
 			activityList.clear();
 		
-		} catch (Throwable e) {
-			
-		}
+		} catch (Exception ignored) {}
 		super.finalize();
 	}
 
