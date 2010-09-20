@@ -317,7 +317,8 @@ public class Solo {
 	/**
 	 * Sets the Orientation (Landscape/Portrait) for the current activity.
 	 * 
-	 * @param orientation the orientation to be set. Solo.LANDSCAPE for landscape and Solo.PORTRAIT for portrait 
+	 * @param orientation the orientation to be set. <code>Solo.</code>{@link #LANDSCAPE} for landscape or
+	 * <code>Solo.</code>{@link #PORTRAIT} for portrait.
 	 *
 	 */
 	
