@@ -231,7 +231,7 @@ class Scroller {
 	/**
 	 * Scrolls horizontally.
 	 *
-	 * @param side the side to which to scroll; {@link #RIGHT} or {@link #LEFT}
+	 * @param side the side to which to scroll; {@link Side#RIGHT} or {@link Side#LEFT}
 	 *
 	 */
 	
