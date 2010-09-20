@@ -3,6 +3,7 @@ package com.jayway.android.robotium.solo;
 import java.util.ArrayList;
 import android.app.Activity;
 import android.app.Instrumentation;
+import android.content.pm.ActivityInfo;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
@@ -67,8 +68,8 @@ public class Solo {
 	private final Scroller scroller;
 	private final RobotiumUtils robotiumUtils;
 	private final Sleeper sleeper;
-	public final static int LANDSCAPE = 0;
-    public final static int PORTRAIT = 1;
+	public final static int LANDSCAPE = ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE;   // 0
+	public final static int PORTRAIT = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT;     // 1
 	public final static int RIGHT = 2;
 	public final static int LEFT = 3;
 	public final static int UP = 4;
