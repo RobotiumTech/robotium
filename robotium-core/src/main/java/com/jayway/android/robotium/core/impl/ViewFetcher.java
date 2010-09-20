@@ -156,7 +156,7 @@ public class ViewFetcher {
 	 *
 	 * @return a {@code List} of the {@code ImageView}s contained in the current
 	 * {@code Activity}
-	 *
+	 * @deprecated Use {@link #getCurrentViews(Class)} instead.
 	 */
 	
 	public ArrayList<ImageView> getCurrentImageViews() {
@@ -285,7 +285,7 @@ public class ViewFetcher {
 	 *
 	 * @return a {@code List} of the {@code EditText}s contained in the current
 	 * {@code Activity}
-	 *
+	 * @deprecated Use {@link #getCurrentViews(Class)} instead.
 	 */
 	
 	public ArrayList<EditText> getCurrentEditTexts() {
@@ -304,7 +304,7 @@ public class ViewFetcher {
 	 *
 	 * @return a {@code List} of the {@code ListView}s contained in the current
 	 * {@code Activity}
-	 * 
+	 * @deprecated Use {@link #getCurrentViews(Class)} instead.
 	 */
 	
 	public ArrayList<ListView> getCurrentListViews() {
@@ -323,7 +323,7 @@ public class ViewFetcher {
 	 *
 	 * @return a {@code List} of the {@code ScrollView}s contained in the current
 	 * {@code Activity}
-	 *
+	 * @deprecated Use {@link #getCurrentViews(Class)} instead.
 	 */
 
 	public ArrayList<ScrollView> getCurrentScrollViews() {
@@ -342,7 +342,7 @@ public class ViewFetcher {
 	 *
 	 * @return a {@code List} of the {@code Spinner}s (drop-down menus) contained in the current
 	 * {@code Activity}
-	 *
+	 * @deprecated Use {@link #getCurrentViews(Class)} instead.
 	 */
 	
 	public ArrayList<Spinner> getCurrentSpinners()
@@ -392,7 +392,7 @@ public class ViewFetcher {
 	 *
 	 * @return a {@code List} of the {@code GridView}s contained in the current
 	 * {@code Activity}
-	 *
+	 * @deprecated Use {@link #getCurrentViews(Class)} instead.
 	 */
 	
 	public ArrayList<GridView> getCurrentGridViews() {
@@ -411,7 +411,7 @@ public class ViewFetcher {
 	 * {@code Activity}.
 	 *
 	 * @return a {@code List} of the {@code Button}s located in the current {@code Activity}
-	 *
+	 * @deprecated Use {@link #getCurrentViews(Class)} instead.
 	 */
 	
 	public ArrayList<Button> getCurrentButtons() {
@@ -442,7 +442,7 @@ public class ViewFetcher {
 	 *
 	 * @return a {@code List} of the {@code ToggleButton}s contained in the current
 	 * {@code Activity}
-	 * 
+	 * @deprecated Use {@link #getCurrentViews(Class)} instead.
 	 */
 	
 	public ArrayList<ToggleButton> getCurrentToggleButtons() {
@@ -461,7 +461,7 @@ public class ViewFetcher {
 	 *
 	 * @return a {@code List} of the {@code RadioButton}s contained in the current
 	 * {@code Activity}
-	 *
+	 * @deprecated Use {@link #getCurrentViews(Class)} instead.
 	 */
 	
 	public ArrayList<RadioButton> getCurrentRadioButtons() {
@@ -481,7 +481,7 @@ public class ViewFetcher {
 	 *
 	 * @return a {@code List} of the {@code CheckBox}es contained in the current
 	 * {@code Activity}
-	 *
+	 * @deprecated Use {@link #getCurrentViews(Class)} instead.
 	 */
 	
 	public ArrayList<CheckBox> getCurrentCheckBoxes()
@@ -502,7 +502,7 @@ public class ViewFetcher {
 	 *
 	 * @return a {@code List} of the {@code ImageButton}s contained in the current
 	 * {@code Activity}
-	 *
+	 * @deprecated Use {@link #getCurrentViews(Class)} instead.
 	 */
 	
 	public ArrayList<ImageButton> getCurrentImageButtons()
