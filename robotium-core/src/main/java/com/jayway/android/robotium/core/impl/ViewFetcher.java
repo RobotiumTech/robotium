@@ -153,16 +153,27 @@ public class ViewFetcher {
 	 */
 	
 	public EditText getEditText(int index) {
-		ArrayList<EditText> editTextList = getCurrentViews(EditText.class);
-		EditText editText = null;
-		try{
-			editText = editTextList.get(index);
-		}catch (IndexOutOfBoundsException e){
-			Assert.assertTrue("No edit text with index " + index + " is found", false);
-		}
-		return editText;
+		return getView(EditText.class, index);
 	}
-	
+
+	/**
+	 * Returns a {@code View} with a certain index, from the list of current {@code View}s of the specified type.
+	 *
+	 * @param classToFilterBy which {@code View}s to choose from
+	 * @param index choose among all instances of this type, e.g. {@code Button.class} or {@code EditText.class}
+	 * @return a {@code View} with a certain index, from the list of current {@code View}s of the specified type
+	 */
+	public <T extends View> T getView(Class<T> classToFilterBy, int index) {
+		ArrayList<T> views = getCurrentViews(classToFilterBy);
+		T view = null;
+		try{
+			view = views.get(index);
+		}catch (IndexOutOfBoundsException e){
+			Assert.assertTrue("No " + classToFilterBy.getSimpleName() + " with index " + index + " is found", false);
+		}
+		return view;
+	}
+
 	/**
 	 * Returns a {@code Button} with a certain index.
 	 *
