@@ -415,15 +415,27 @@ public class ViewFetcher {
 	 */
 	
 	public ArrayList<Button> getCurrentButtons() {
-		ArrayList<Button> buttonList = new ArrayList<Button>();
-		ArrayList<View> viewList = getViews();
-		for(View view : viewList){
-			if (view instanceof android.widget.Button)
-				buttonList.add((Button) view);
-		}
-		return buttonList;
+		return getCurrentViews(Button.class);
 	}
-	
+
+	/**
+	 * Returns a {@code List} of {@code View}s of the specified {@code Class} located in the current
+	 * {@code Activity}.
+	 *
+	 * @param classToFilterBy return all instances of this class, e.g. {@code Button.class} or {@code GridView.class}
+	 * @return a {@code List} of {@code View}s of the specified {@code Class} located in the current {@code Activity}
+	 */
+	public <T extends View> ArrayList<T> getCurrentViews(Class<T> classToFilterBy) {
+		ArrayList<T> filteredViews = new ArrayList<T>();
+		ArrayList<View> allViews = getViews();
+		for(View view : allViews){
+			if (view != null && classToFilterBy.isAssignableFrom(view.getClass())) {
+				filteredViews.add(classToFilterBy.cast(view));
+			}
+		}
+		return filteredViews;
+	}
+
 	/**
 	 * Returns a {@code List} of the {@code ToggleButton}s contained in the current
 	 * {@code Activity}.
