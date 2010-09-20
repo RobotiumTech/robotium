@@ -133,22 +133,24 @@ public class Scroller {
 		int x = activityUtils.getCurrentActivity().getWindowManager()
 				.getDefaultDisplay().getWidth() / 2;
 
-		if (viewFetcher.getCurrentListViews().size() > 0) {
+		if (viewFetcher.getCurrentViews(ListView.class).size() > 0) {
 			return scrollList(0, direction);
 		} 
-		else if (viewFetcher.getCurrentScrollViews().size() > 0) {
-			ScrollView scroll = viewFetcher.getCurrentScrollViews().get(0);
-			scrollAmount = scroll.getScrollY();
-			drag(x, x, yStart, yEnd, 20);
-			if (scrollAmount == scroll.getScrollY()) {
-				scrollAmount = 0;
-				return false;
-			} 
+		else {
+			if (viewFetcher.getCurrentViews(ScrollView.class).size() > 0) {
+				ScrollView scroll = viewFetcher.getCurrentViews(ScrollView.class).get(0);
+				scrollAmount = scroll.getScrollY();
+				drag(x, x, yStart, yEnd, 20);
+				if (scrollAmount == scroll.getScrollY()) {
+					scrollAmount = 0;
+					return false;
+				}
+				else
+					return true;
+			}
 			else
-				return true;
-		} 
-		else
-			return false;
+				return false;
+		}
 
 	}
 	
@@ -189,7 +191,7 @@ public class Scroller {
 	 */
 	
 	private boolean scrollList(int listIndex, Direction direction) {
-		ListView listView = viewFetcher.getCurrentListViews().get(listIndex);
+		ListView listView = viewFetcher.getCurrentViews(ListView.class).get(listIndex);
 		int[] xy = new int[2];
 		listView.getLocationOnScreen(xy);
 

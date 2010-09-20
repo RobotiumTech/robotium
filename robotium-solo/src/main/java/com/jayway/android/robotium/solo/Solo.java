@@ -875,7 +875,7 @@ public class Solo {
 	 */
 	
 	public ArrayList<ImageView> getCurrentImageViews() {
-		ArrayList<ImageView> imageViewList = viewFetcher.getCurrentImageViews();
+		ArrayList<ImageView> imageViewList = viewFetcher.getCurrentViews(ImageView.class);
 		return imageViewList;
 	}
 	
@@ -952,7 +952,7 @@ public class Solo {
 	 */
 	
 	public int getCurrenButtonsCount() {
-		int number = viewFetcher.getCurrenButtonsCount();
+		int number = viewFetcher.getCurrentViews(Button.class).size();
 		return number;
 	}
 	
@@ -967,7 +967,7 @@ public class Solo {
 	 */
 	
 	public ArrayList<EditText> getCurrentEditTexts() {
-		ArrayList<EditText> editTextList = viewFetcher.getCurrentEditTexts();
+		ArrayList<EditText> editTextList = viewFetcher.getCurrentViews(EditText.class);
 		return editTextList;
 		
 	}
@@ -982,7 +982,7 @@ public class Solo {
 	 */
 
 	public ArrayList<ListView> getCurrentListViews() {
-		ArrayList<ListView> listViewList = viewFetcher.getCurrentListViews();
+		ArrayList<ListView> listViewList = viewFetcher.getCurrentViews(ListView.class);
 		return listViewList;
 	}
 
@@ -996,8 +996,8 @@ public class Solo {
 	 */
 
     public ArrayList<ScrollView> getCurrentScrollViews() {
-        return viewFetcher.getCurrentScrollViews();
-    }
+		return viewFetcher.getCurrentViews(ScrollView.class);
+	}
 
 	
 	/**
@@ -1011,7 +1011,7 @@ public class Solo {
 	
 	public ArrayList<Spinner> getCurrentSpinners()
 	{
-		ArrayList<Spinner> spinnerList = viewFetcher.getCurrentSpinners();
+		ArrayList<Spinner> spinnerList = viewFetcher.getCurrentViews(Spinner.class);
 		return spinnerList;
 	}
 	
@@ -1043,7 +1043,7 @@ public class Solo {
 	 */
 	
 	public ArrayList<GridView> getCurrentGridViews() {
-		ArrayList<GridView> gridViewList = viewFetcher.getCurrentGridViews();
+		ArrayList<GridView> gridViewList = viewFetcher.getCurrentViews(GridView.class);
 		return gridViewList;
 	}
 	
@@ -1057,7 +1057,7 @@ public class Solo {
 	 */
 	
 	public ArrayList<Button> getCurrentButtons() {
-		ArrayList<Button> buttonList = viewFetcher.getCurrentButtons();
+		ArrayList<Button> buttonList = viewFetcher.getCurrentViews(Button.class);
 		return buttonList;
 	}
 	
@@ -1071,7 +1071,7 @@ public class Solo {
 	 */
 	
 	public ArrayList<ToggleButton> getCurrentToggleButtons() {
-		ArrayList<ToggleButton> toggleButtonList = viewFetcher.getCurrentToggleButtons();
+		ArrayList<ToggleButton> toggleButtonList = viewFetcher.getCurrentViews(ToggleButton.class);
 		return toggleButtonList;
 	}
 	
@@ -1085,7 +1085,7 @@ public class Solo {
 	 */
 	
 	public ArrayList<RadioButton> getCurrentRadioButtons() {
-		return viewFetcher.getCurrentRadioButtons();
+		return viewFetcher.getCurrentViews(RadioButton.class);
 	}
 	
 	/**
@@ -1099,7 +1099,7 @@ public class Solo {
 	
 	public ArrayList<CheckBox> getCurrentCheckBoxes()
 	{
-		return viewFetcher.getCurrentCheckBoxes();
+		return viewFetcher.getCurrentViews(CheckBox.class);
 	}
 	
 	/**
@@ -1113,7 +1113,7 @@ public class Solo {
 	
 	public ArrayList<ImageButton> getCurrentImageButtons()
 	{
-		return viewFetcher.getCurrentImageButtons();
+		return viewFetcher.getCurrentViews(ImageButton.class);
 	}
 	
 	/**

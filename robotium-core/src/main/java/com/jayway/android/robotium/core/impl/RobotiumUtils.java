@@ -48,7 +48,7 @@ public class RobotiumUtils {
 	{
 		waitForIdle();    
 		try{
-			final EditText	editText = viewFetcher.getCurrentEditTexts().get(index);
+			final EditText	editText = viewFetcher.getCurrentViews(EditText.class).get(index);
 			if(editText != null){
 				activityUtils.getCurrentActivity().runOnUiThread(new Runnable()
 				{
@@ -163,7 +163,7 @@ public class RobotiumUtils {
 	
 	public boolean isRadioButtonChecked(int index)
 	{
-		ArrayList<RadioButton> radioButtonList = viewFetcher.getCurrentRadioButtons();
+		ArrayList<RadioButton> radioButtonList = viewFetcher.getCurrentViews(RadioButton.class);
 		if(index < 0 || index > radioButtonList.size()-1)
 			Assert.assertTrue("No radio button with index " + index + " is found", false);
 		return radioButtonList.get(index).isChecked();
@@ -178,7 +178,7 @@ public class RobotiumUtils {
 	
 	public boolean isCheckBoxChecked(int index)
 	{
-		ArrayList<CheckBox> checkBoxList = viewFetcher.getCurrentCheckBoxes();
+		ArrayList<CheckBox> checkBoxList = viewFetcher.getCurrentViews(CheckBox.class);
 		if(index < 0 || index > checkBoxList.size()-1)
 			Assert.assertTrue("No checkbox with index " + index + " is found", false);
 		return checkBoxList.get(index).isChecked();

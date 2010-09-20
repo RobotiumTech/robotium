@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import android.widget.*;
 import junit.framework.Assert;
 import android.app.Instrumentation;
 import android.os.SystemClock;
@@ -12,9 +14,6 @@ import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewConfiguration;
-import android.widget.Button;
-import android.widget.TextView;
-import android.widget.ToggleButton;
 
 /**
  * This class contains various click methods. Examples are: clickOnButton(),
@@ -410,7 +409,7 @@ public class Clicker {
 	 */
 	
 	public void clickOnButton(String nameRegex) {
-		clickOnButton(nameRegex, viewFetcher.getCurrentButtons(), "Button");
+		clickOnButton(nameRegex, viewFetcher.getCurrentViews(Button.class), "Button");
 	}
 
 	/**
@@ -421,7 +420,7 @@ public class Clicker {
 	 */
 
 	public void clickOnToggleButton(String nameRegex) {
-		clickOnButton(nameRegex, viewFetcher.getCurrentToggleButtons(), "ToggleButton");
+		clickOnButton(nameRegex, viewFetcher.getCurrentViews(ToggleButton.class), "ToggleButton");
 	}
 
 	/**
@@ -466,7 +465,7 @@ public class Clicker {
 	public void clickOnImage(int index) {
 		robotiumUtils.waitForIdle();
 		try {
-			clickOnScreen(viewFetcher.getCurrentImageViews().get(index));
+			clickOnScreen(viewFetcher.getCurrentViews(ImageView.class).get(index));
 		} catch (IndexOutOfBoundsException e) {
 			Assert.assertTrue("Index is not valid!", false);
 		}
@@ -482,7 +481,7 @@ public class Clicker {
 	public void clickOnImageButton(int index) {
 		robotiumUtils.waitForIdle();
 		try {
-			clickOnScreen(viewFetcher.getCurrentImageButtons().get(index));
+			clickOnScreen(viewFetcher.getCurrentViews(ImageButton.class).get(index));
 		} catch (IndexOutOfBoundsException e) {
 			Assert.assertTrue("Index is not valid!", false);
 		}
@@ -498,7 +497,7 @@ public class Clicker {
 	public void clickOnRadioButton(int index) {
 		robotiumUtils.waitForIdle();
 		try {
-			clickOnScreen(viewFetcher.getCurrentRadioButtons().get(index));
+			clickOnScreen(viewFetcher.getCurrentViews(RadioButton.class).get(index));
 		} catch (IndexOutOfBoundsException e) {
 			Assert.assertTrue("Index is not valid!", false);
 		}
@@ -514,7 +513,7 @@ public class Clicker {
 	public void clickOnCheckBox(int index) {
 		robotiumUtils.waitForIdle();
 		try {
-			clickOnScreen(viewFetcher.getCurrentCheckBoxes().get(index));
+			clickOnScreen(viewFetcher.getCurrentViews(CheckBox.class).get(index));
 		} catch (IndexOutOfBoundsException e) {
 			Assert.assertTrue("Index is not valid!", false);
 		}
@@ -530,7 +529,7 @@ public class Clicker {
 	public void clickOnEditText(int index) {
 		robotiumUtils.waitForIdle();
 		try {
-			clickOnScreen(viewFetcher.getCurrentEditTexts().get(index));
+			clickOnScreen(viewFetcher.getCurrentViews(EditText.class).get(index));
 		} catch (IndexOutOfBoundsException e) {
 			Assert.assertTrue("Index is not valid!", false);
 		}
@@ -578,7 +577,7 @@ public class Clicker {
 		sleeper.sleep();
 		long now = System.currentTimeMillis();
 		final long endTime = now + CLICKTIMEOUT;
-		int size = viewFetcher.getCurrentListViews().size();
+		int size = viewFetcher.getCurrentViews(ListView.class).size();
 		while((size > 0 && size <index+1) && now < endTime)
 		{
 			sleeper.sleep();
@@ -588,8 +587,7 @@ public class Clicker {
 
 		ArrayList<TextView> textViews = null;
 		try{
-			textViews = viewFetcher.getCurrentTextViews(viewFetcher
-					.getCurrentListViews().get(index));
+			textViews = viewFetcher.getCurrentTextViews(viewFetcher.getCurrentViews(ListView.class).get(index));
 		}catch(IndexOutOfBoundsException e){
 			Assert.assertTrue("Index is not valid!", false);
 		}

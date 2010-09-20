@@ -8,17 +8,10 @@ import android.app.Instrumentation;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.CheckBox;
 import android.widget.EditText;
-import android.widget.GridView;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.ListView;
-import android.widget.RadioButton;
-import android.widget.ScrollView;
-import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.ToggleButton;
 
 /**
  * This class contains view methods. Examples are getViews(),
@@ -149,21 +142,8 @@ public class ViewFetcher {
 			}
 		}
 	}
-	
-	/**
-	 * Returns a {@code List} of the {@code ImageView}s contained in the current
-	 * {@code Activity}.
-	 *
-	 * @return a {@code List} of the {@code ImageView}s contained in the current
-	 * {@code Activity}
-	 * @deprecated Use {@link #getCurrentViews(Class)} instead.
-	 */
-	
-	public ArrayList<ImageView> getCurrentImageViews() {
-		return getCurrentViews(ImageView.class);
-	}
-	
-	
+
+
 	/**
 	 * Returns an {@code EditText} with a certain index.
 	 *
@@ -173,7 +153,7 @@ public class ViewFetcher {
 	 */
 	
 	public EditText getEditText(int index) {
-		ArrayList<EditText> editTextList = getCurrentEditTexts();
+		ArrayList<EditText> editTextList = getCurrentViews(EditText.class);
 		EditText editText = null;
 		try{
 			editText = editTextList.get(index);
@@ -192,7 +172,7 @@ public class ViewFetcher {
 	 */
 	
 	public Button getButton(int index) {
-		ArrayList<Button> buttonList = getCurrentButtons();
+		ArrayList<Button> buttonList = getCurrentViews(Button.class);
 		Button button = null;
 		try{
 			button = buttonList.get(index);
@@ -230,7 +210,7 @@ public class ViewFetcher {
 	 */
 	
 	public ImageView getImage(int index) {
-		ArrayList<ImageView> imageList = getCurrentImageViews();
+		ArrayList<ImageView> imageList = getCurrentViews(ImageView.class);
 		ImageView imageView = null;
 		try{
 			imageView = imageList.get(index);
@@ -249,7 +229,7 @@ public class ViewFetcher {
 	 */
 	
 	public ImageButton getImageButton(int index) {
-		ArrayList<ImageButton> buttonList = getCurrentImageButtons();
+		ArrayList<ImageButton> buttonList = getCurrentViews(ImageButton.class);
 		ImageButton imageButton = null;
 		try{
 			imageButton = buttonList.get(index);
@@ -258,72 +238,8 @@ public class ViewFetcher {
 		}
 		return imageButton;
 	}
-	
-	/**
-	 * Returns the number of buttons located in the current
-	 * activity.
-	 *
-	 * @return the number of buttons in the current activity
-	 * @deprecated use {@code getCurrentViews(Button.class)}<code>.size()</code> instead.
-	 */
-	
-	public int getCurrenButtonsCount() {
-		return getCurrentViews(Button.class).size();
-	}
-	
-	
-	/**
-	 * Returns a {@code List} of the {@code EditText}s contained in the current
-	 * {@code Activity}.
-	 *
-	 * @return a {@code List} of the {@code EditText}s contained in the current
-	 * {@code Activity}
-	 * @deprecated Use {@link #getCurrentViews(Class)} instead.
-	 */
-	
-	public ArrayList<EditText> getCurrentEditTexts() {
-		return getCurrentViews(EditText.class);
-	}
-	
-	/**
-	 * Returns a {@code List} of the {@code ListView}s contained in the current
-	 * {@code Activity}.
-	 *
-	 * @return a {@code List} of the {@code ListView}s contained in the current
-	 * {@code Activity}
-	 * @deprecated Use {@link #getCurrentViews(Class)} instead.
-	 */
-	
-	public ArrayList<ListView> getCurrentListViews() {
-		return getCurrentViews(ListView.class);
-	}
-	
-	/**
-	 * Returns a {@code List} of the {@code ScrollView}s contained in the current
-	 * {@code Activity}.
-	 *
-	 * @return a {@code List} of the {@code ScrollView}s contained in the current
-	 * {@code Activity}
-	 * @deprecated Use {@link #getCurrentViews(Class)} instead.
-	 */
 
-	public ArrayList<ScrollView> getCurrentScrollViews() {
-		return getCurrentViews(ScrollView.class);
-	}
-	
-	/**
-	 * Returns a {@code List} of the {@code Spinner}s (drop-down menus) contained in the current
-	 * {@code Activity}.
-	 *
-	 * @return a {@code List} of the {@code Spinner}s (drop-down menus) contained in the current
-	 * {@code Activity}
-	 * @deprecated Use {@link #getCurrentViews(Class)} instead.
-	 */
-	
-	public ArrayList<Spinner> getCurrentSpinners() {
-		return getCurrentViews(Spinner.class);
-	}
-	
+
 	/**
 	 * Returns a {@code List} of the {@code TextView}s contained in the current
 	 * {@code Activity} or {@code View}.
@@ -353,32 +269,7 @@ public class ViewFetcher {
 		}
 		return textViewList;	
 	}
-	
-	/**
-	 * Returns a {@code List} of the {@code GridView}s contained in the current
-	 * {@code Activity}.
-	 *
-	 * @return a {@code List} of the {@code GridView}s contained in the current
-	 * {@code Activity}
-	 * @deprecated Use {@link #getCurrentViews(Class)} instead.
-	 */
-	
-	public ArrayList<GridView> getCurrentGridViews() {
-		return getCurrentViews(GridView.class);
-	}
-	
-	
-	/**
-	 * Returns a {@code List} of the {@code Button}s located in the current
-	 * {@code Activity}.
-	 *
-	 * @return a {@code List} of the {@code Button}s located in the current {@code Activity}
-	 * @deprecated Use {@link #getCurrentViews(Class)} instead.
-	 */
-	
-	public ArrayList<Button> getCurrentButtons() {
-		return getCurrentViews(Button.class);
-	}
+
 
 	/**
 	 * Returns a {@code List} of {@code View}s of the specified {@code Class} located in the current
@@ -398,58 +289,6 @@ public class ViewFetcher {
 		return filteredViews;
 	}
 
-	/**
-	 * Returns a {@code List} of the {@code ToggleButton}s contained in the current
-	 * {@code Activity}.
-	 *
-	 * @return a {@code List} of the {@code ToggleButton}s contained in the current
-	 * {@code Activity}
-	 * @deprecated Use {@link #getCurrentViews(Class)} instead.
-	 */
-	
-	public ArrayList<ToggleButton> getCurrentToggleButtons() {
-		return getCurrentViews(ToggleButton.class);
-	}
-	
-	/**
-	 * Returns a {@code List} of the {@code RadioButton}s contained in the current
-	 * {@code Activity}.
-	 *
-	 * @return a {@code List} of the {@code RadioButton}s contained in the current
-	 * {@code Activity}
-	 * @deprecated Use {@link #getCurrentViews(Class)} instead.
-	 */
-	
-	public ArrayList<RadioButton> getCurrentRadioButtons() {
-		return getCurrentViews(RadioButton.class);
-	}
-	
-	/**
-	 * Returns a {@code List} of the {@code CheckBox}es contained in the current
-	 * {@code Activity}.
-	 *
-	 * @return a {@code List} of the {@code CheckBox}es contained in the current
-	 * {@code Activity}
-	 * @deprecated Use {@link #getCurrentViews(Class)} instead.
-	 */
-	
-	public ArrayList<CheckBox> getCurrentCheckBoxes() {
-		return getCurrentViews(CheckBox.class);
-	}
-	
-	/**
-	 * Returns a {@code List} of the {@code ImageButton}s contained in the current
-	 * {@code Activity}.
-	 *
-	 * @return a {@code List} of the {@code ImageButton}s contained in the current
-	 * {@code Activity}
-	 * @deprecated Use {@link #getCurrentViews(Class)} instead.
-	 */
-	
-	public ArrayList<ImageButton> getCurrentImageButtons() {
-		return getCurrentViews(ImageButton.class);
-	}
-	
 	private static Class<?> windowManager;
 	static{
 		try {

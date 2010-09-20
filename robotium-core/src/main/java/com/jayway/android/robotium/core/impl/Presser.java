@@ -1,5 +1,6 @@
 package com.jayway.android.robotium.core.impl;
 
+import android.widget.Spinner;
 import junit.framework.Assert;
 import android.app.Instrumentation;
 import android.view.KeyEvent;
@@ -98,7 +99,7 @@ public class Presser{
 	{
 		inst.waitForIdleSync();
 		sleeper.sleep();
-		clicker.clickOnScreen(viewFetcher.getCurrentSpinners().get(spinnerIndex));
+		clicker.clickOnScreen(viewFetcher.getCurrentViews(Spinner.class).get(spinnerIndex));
 		try{
 			inst.sendKeyDownUpSync(KeyEvent.KEYCODE_DPAD_DOWN);
 		}catch(SecurityException ignored){}

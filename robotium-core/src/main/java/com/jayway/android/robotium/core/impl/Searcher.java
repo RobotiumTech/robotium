@@ -94,7 +94,7 @@ public class Searcher {
 		inst.waitForIdleSync();
 		Pattern p = Pattern.compile(search);
 		Matcher matcher;
-		ArrayList<EditText> editTextList = viewFetcher.getCurrentEditTexts();
+		ArrayList<EditText> editTextList = viewFetcher.getCurrentViews(EditText.class);
 		for(EditText editText : editTextList){
 			matcher = p.matcher(editText.getText().toString());
 			if (matcher.find()) {
@@ -177,7 +177,7 @@ public class Searcher {
 		inst.waitForIdleSync();
 		Pattern p = Pattern.compile(search);
 		Matcher matcher;
-		ArrayList<Button> buttonList = viewFetcher.getCurrentButtons();
+		ArrayList<Button> buttonList = viewFetcher.getCurrentViews(Button.class);
 		if(matches == 0)
 			matches = 1;
 		for(Button button : buttonList){
@@ -244,7 +244,7 @@ public class Searcher {
 		inst.waitForIdleSync();
 		Pattern p = Pattern.compile(search);
 		Matcher matcher;
-		ArrayList<ToggleButton> toggleButtonList = viewFetcher.getCurrentToggleButtons();
+		ArrayList<ToggleButton> toggleButtonList = viewFetcher.getCurrentViews(ToggleButton.class);
 		if(matches == 0)
 			matches = 1;
 		for(ToggleButton toggleButton : toggleButtonList){

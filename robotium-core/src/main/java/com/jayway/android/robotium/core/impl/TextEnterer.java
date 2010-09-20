@@ -1,5 +1,6 @@
 package com.jayway.android.robotium.core.impl;
 
+import android.widget.EditText;
 import junit.framework.Assert;
 import android.app.Instrumentation;
 import android.view.KeyEvent;
@@ -46,13 +47,13 @@ public class TextEnterer{
     	robotiumUtils.waitForIdle();
     	Boolean focused = false;
     	try {
-    		if (viewFetcher.getCurrentEditTexts().size() > 0) {
-    			for (int i = 0; i < viewFetcher.getCurrentEditTexts().size(); i++) {
-    				if (viewFetcher.getCurrentEditTexts().get(i).isFocused())
+			if (viewFetcher.getCurrentViews(EditText.class).size() > 0) {
+				for (int i = 0; i < viewFetcher.getCurrentViews(EditText.class).size(); i++) {
+					if (viewFetcher.getCurrentViews(EditText.class).get(i).isFocused())
     					focused = true;
     			}
     		}
-    		if (!focused && viewFetcher.getCurrentEditTexts().size() > 0) {
+			if (!focused && viewFetcher.getCurrentViews(EditText.class).size() > 0) {
     			clicker.clickOnEditText(index);
     			try{
     				inst.sendStringSync(text);
@@ -62,20 +63,20 @@ public class TextEnterer{
     				Assert.assertTrue("Text can not be entered!", false);	
     			}
 
-    		} else if (focused && viewFetcher.getCurrentEditTexts().size() >1)
+    		} else if (focused && viewFetcher.getCurrentViews(EditText.class).size() >1)
     		{
     			clicker.clickOnEditText(index);
     			try{
     				inst.sendStringSync(text);
     			}catch(SecurityException e){
-    				Assert.assertTrue("Text can not be entered!", false);	
+    				Assert.assertTrue("Text can not be entered!", false);
     			}
     		}
     		else {
     			try{
     				inst.sendStringSync(text);
     			}catch(SecurityException e){
-    				Assert.assertTrue("Text can not be entered!", false);	
+    				Assert.assertTrue("Text can not be entered!", false);
     			}
     		}
     	} catch (IndexOutOfBoundsException e) {
