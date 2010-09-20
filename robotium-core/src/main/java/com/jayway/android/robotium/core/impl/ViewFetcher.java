@@ -160,14 +160,7 @@ public class ViewFetcher {
 	 */
 	
 	public ArrayList<ImageView> getCurrentImageViews() {
-		ArrayList<View> viewList = getViews();
-		ArrayList<ImageView> imageViewList = new ArrayList<ImageView>();
-		for(View view : viewList){
-			if (view instanceof android.widget.ImageView) {
-				imageViewList.add((ImageView) view);
-			}	
-		}
-		return imageViewList;
+		return getCurrentViews(ImageView.class);
 	}
 	
 	
@@ -271,11 +264,11 @@ public class ViewFetcher {
 	 * activity.
 	 *
 	 * @return the number of buttons in the current activity
-	 * @deprecated use {@link #getCurrentButtons()}<code>.size()</code> instead.
+	 * @deprecated use {@code getCurrentViews(Button.class)}<code>.size()</code> instead.
 	 */
 	
 	public int getCurrenButtonsCount() {
-		return getCurrentButtons().size();
+		return getCurrentViews(Button.class).size();
 	}
 	
 	
@@ -289,13 +282,7 @@ public class ViewFetcher {
 	 */
 	
 	public ArrayList<EditText> getCurrentEditTexts() {
-		ArrayList<EditText>editTextList = new ArrayList<EditText>();
-		ArrayList<View> viewList = getViews();
-		for(View view : viewList){
-			if (view instanceof android.widget.EditText)
-				editTextList.add((EditText) view);
-		}
-		return editTextList;	
+		return getCurrentViews(EditText.class);
 	}
 	
 	/**
@@ -308,13 +295,7 @@ public class ViewFetcher {
 	 */
 	
 	public ArrayList<ListView> getCurrentListViews() {
-		ArrayList<ListView> listViews = new ArrayList<ListView>();
-		ArrayList<View> viewList = getViews();
-		for(View view : viewList){
-			if (view instanceof android.widget.ListView)
-				listViews.add((ListView) view);
-		}
-		return listViews;
+		return getCurrentViews(ListView.class);
 	}
 	
 	/**
@@ -327,13 +308,7 @@ public class ViewFetcher {
 	 */
 
 	public ArrayList<ScrollView> getCurrentScrollViews() {
-		ArrayList<ScrollView> scrollViews = new ArrayList<ScrollView>();
-		ArrayList<View> viewList = getViews();
-		for(View view : viewList){
-			if (view instanceof android.widget.ScrollView)
-				scrollViews.add((ScrollView) view);
-		}
-		return scrollViews;
+		return getCurrentViews(ScrollView.class);
 	}
 	
 	/**
@@ -345,15 +320,8 @@ public class ViewFetcher {
 	 * @deprecated Use {@link #getCurrentViews(Class)} instead.
 	 */
 	
-	public ArrayList<Spinner> getCurrentSpinners()
-	{
-		ArrayList<Spinner>spinnerList = new ArrayList<Spinner>();
-		ArrayList<View> viewList = getViews();
-		for(View view : viewList){
-			if (view instanceof android.widget.Spinner)
-				spinnerList.add((Spinner) view);
-		}
-		return spinnerList;
+	public ArrayList<Spinner> getCurrentSpinners() {
+		return getCurrentViews(Spinner.class);
 	}
 	
 	/**
@@ -396,13 +364,7 @@ public class ViewFetcher {
 	 */
 	
 	public ArrayList<GridView> getCurrentGridViews() {
-		ArrayList<GridView> gridViewList = new ArrayList<GridView>();
-		ArrayList<View> viewList = getViews();
-		for(View view : viewList){
-			if (view instanceof android.widget.GridView)
-				gridViewList.add((GridView) view);
-		}
-		return gridViewList;
+		return getCurrentViews(GridView.class);
 	}
 	
 	
@@ -446,13 +408,7 @@ public class ViewFetcher {
 	 */
 	
 	public ArrayList<ToggleButton> getCurrentToggleButtons() {
-		ArrayList<ToggleButton> toggleButtonList = new ArrayList<ToggleButton>();
-		ArrayList<View> viewList = getViews();
-		for(View view : viewList){
-			if (view instanceof android.widget.ToggleButton)
-				toggleButtonList.add((ToggleButton) view);
-		}
-		return toggleButtonList;
+		return getCurrentViews(ToggleButton.class);
 	}
 	
 	/**
@@ -465,14 +421,7 @@ public class ViewFetcher {
 	 */
 	
 	public ArrayList<RadioButton> getCurrentRadioButtons() {
-		ArrayList<RadioButton> radioButtonList = new ArrayList<RadioButton>();
-		ArrayList<View> viewList = getViews();
-		for(View view : viewList){
-			if (view instanceof android.widget.RadioButton) {
-				radioButtonList.add((RadioButton) view);
-			}	
-		}
-		return radioButtonList;
+		return getCurrentViews(RadioButton.class);
 	}
 	
 	/**
@@ -484,16 +433,8 @@ public class ViewFetcher {
 	 * @deprecated Use {@link #getCurrentViews(Class)} instead.
 	 */
 	
-	public ArrayList<CheckBox> getCurrentCheckBoxes()
-	{
-		ArrayList<CheckBox> checkBoxList = new ArrayList<CheckBox>();
-		ArrayList<View> viewList = getViews();
-		for(View view : viewList){
-			if (view instanceof android.widget.CheckBox) {
-				checkBoxList.add((CheckBox) view);
-			}	
-		}
-		return checkBoxList;
+	public ArrayList<CheckBox> getCurrentCheckBoxes() {
+		return getCurrentViews(CheckBox.class);
 	}
 	
 	/**
@@ -505,16 +446,8 @@ public class ViewFetcher {
 	 * @deprecated Use {@link #getCurrentViews(Class)} instead.
 	 */
 	
-	public ArrayList<ImageButton> getCurrentImageButtons()
-	{
-		ArrayList<ImageButton> imageButtonList = new ArrayList<ImageButton>();
-		ArrayList<View> viewList = getViews();
-		for(View view : viewList){
-			if (view instanceof android.widget.ImageButton) {
-				imageButtonList.add((ImageButton) view);
-			}	
-		}
-		return imageButtonList;
+	public ArrayList<ImageButton> getCurrentImageButtons() {
+		return getCurrentViews(ImageButton.class);
 	}
 	
 	private static Class<?> windowManager;
