@@ -1,6 +1,7 @@
 package com.jayway.android.robotium.core.impl;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import junit.framework.Assert;
@@ -402,21 +403,42 @@ public class Clicker {
 
 	
 	/**
-	 * Method used to click on a button with a given text.
+	 * Clicks on a {@link Button} with a given text.
 	 *
-	 * @param name the name of the button presented to the user. The parameter <strong>will</strong> be interpreted as a regular expression.
+	 * @param nameRegex the name of the {@code Button} presented to the user. The parameter <strong>will</strong> be interpreted as a regular expression.
 	 *
 	 */
 	
-	public void clickOnButton(String name) {
-		Pattern p = Pattern.compile(name);
+	public void clickOnButton(String nameRegex) {
+		clickOnButton(nameRegex, viewFetcher.getCurrentButtons(), "Button");
+	}
+
+	/**
+	 * Clicks on a {@link ToggleButton} with a given text.
+	 *
+	 * @param nameRegex the name of the {@code ToggleButton} presented to the user. The parameter <strong>will</strong> be interpreted as a regular expression.
+	 *
+	 */
+
+	public void clickOnToggleButton(String nameRegex) {
+		clickOnButton(nameRegex, viewFetcher.getCurrentToggleButtons(), "ToggleButton");
+	}
+
+	/**
+	 * Clicks on a {@link Button} with a given text.
+	 *
+	 * @param nameRegex the name of the button presented to the user. The parameter <strong>will</strong> be interpreted as a regular expression.
+	 * @param buttons available buttons
+	 * @param buttonClassName simple class name of the button class in question, used in an internal Assert's message.
+	 */
+	private void clickOnButton(String nameRegex, List<? extends Button> buttons, String buttonClassName) {
+		Pattern p = Pattern.compile(nameRegex);
 		Matcher matcher;
+		robotiumUtils.waitForText(nameRegex, 0, TIMEOUT, true);
 		Button buttonToClick = null;
-		robotiumUtils.waitForText(name, 0, TIMEOUT, true);
-		ArrayList<Button> buttonList = viewFetcher.getCurrentButtons();
-		for(Button button : buttonList){
+		for(Button button : buttons){
 			matcher = p.matcher(button.getText().toString());
-			if(matcher.matches()){	
+			if(matcher.matches()){
 				buttonToClick = button;
 				break;
 			}
@@ -424,47 +446,12 @@ public class Clicker {
 		if (buttonToClick != null) {
 			clickOnScreen(buttonToClick);
 		} else if (scroller.scrollDown()){
-			clickOnButton(name);
-		}else
-		{
-			for (int i = 0; i < buttonList.size(); i++)
-				Log.d(LOG_TAG, name + " not found. Have found: " + buttonList.get(i).getText());
-			Assert.assertTrue("Button with the text: " + name + " is not found!", false);
+			clickOnButton(nameRegex);
+		}else {
+			for (int i = 0; i < buttons.size(); i++)
+				Log.d(LOG_TAG, nameRegex + " not found. Have found: " + buttons.get(i).getText());
+			Assert.assertTrue(buttonClassName + " with the text: " + nameRegex + " is not found!", false);
 		}
-
-	}
-	
-	/**
-	 * Method used to click on a toggle button with a given text.
-	 * 
-	 * @param name the name of the toggle button presented to the user. The parameter <strong>will</strong> be interpreted as a regular expression.
-	 * 
-	 */
-
-	public void clickOnToggleButton(String name) {
-		Pattern p = Pattern.compile(name);
-		Matcher matcher;
-		ToggleButton buttonToClick = null;
-		robotiumUtils.waitForText(name, 0, TIMEOUT, true);
-		ArrayList<ToggleButton> toggleButtonList = viewFetcher
-				.getCurrentToggleButtons();
-		for(ToggleButton toggleButton : toggleButtonList){
-			matcher = p.matcher(toggleButton.getText().toString());
-			if (matcher.matches()) {
-				buttonToClick = toggleButton;
-				break;
-			}
-		}
-		if (buttonToClick != null) {
-			clickOnScreen(buttonToClick);
-		} else if (scroller.scrollDown()) {
-			clickOnButton(name);
-		} else {
-			for (int i = 0; i < toggleButtonList.size(); i++)
-				Log.d(LOG_TAG, name + " not found. Have found: " + toggleButtonList.get(i).getText());
-			Assert.assertTrue("ToggleButton with the text: " + name + " is not found!", false);
-		}
-
 	}
 
 	
