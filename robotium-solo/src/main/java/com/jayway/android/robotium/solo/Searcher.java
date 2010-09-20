@@ -34,7 +34,7 @@ class Searcher {
      * @param viewFetcher the {@code ViewFetcher} instance.
      * @param scroller the {@code Scroller} instance.
      * @param inst the {@code Instrumentation} instance.
-     * @param sleeper the {@code RobotiumUtils} instance.
+     * @param sleeper the {@code Sleeper} instance.
      */
     public Searcher(ViewFetcher viewFetcher, Scroller scroller, Instrumentation inst, Sleeper sleeper) {
         this.viewFetcher = viewFetcher;

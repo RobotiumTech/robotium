@@ -18,7 +18,7 @@ class DialogUtils {
 	 * Constructs this object.
 	 * 
 	 * @param viewFetcher the {@code ViewFetcher} instance.
-     * @param sleeper the {@code RobotiumUtils} instance.
+     * @param sleeper the {@code Sleeper} instance.
 	 * 
 	 */
 

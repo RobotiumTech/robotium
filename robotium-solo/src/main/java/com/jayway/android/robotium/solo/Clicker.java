@@ -45,7 +45,7 @@ class Clicker {
      * @param scroller the {@link com.jayway.android.robotium.solo.Scroller} instance.
      * @param robotiumUtils the {@link com.jayway.android.robotium.solo.RobotiumUtils} instance.
      * @param inst the {@link android.app.Instrumentation} instance.
-     * @param sleeper
+     * @param sleeper the {@code Sleeper} instance
      */
 
 	public Clicker(ActivityUtils ativityUtils, ViewFetcher viewFetcher,
