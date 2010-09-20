@@ -195,8 +195,8 @@ class Clicker {
 	 *
 	 */
 	
-	public void clickOnText(String text, int matches) {
-		clickOnText(text, false, matches, true);
+	public void clickOnText(String text, int match) {
+		clickOnText(text, false, match, true);
 	}
 	
 	/**
@@ -208,8 +208,8 @@ class Clicker {
 	 *
 	 */
 	
-	public void clickOnText(String text, int matches, boolean scroll) {
-		clickOnText(text, false, matches, scroll);
+	public void clickOnText(String text, int match, boolean scroll) {
+		clickOnText(text, false, match, scroll);
 	}
 	
 	
