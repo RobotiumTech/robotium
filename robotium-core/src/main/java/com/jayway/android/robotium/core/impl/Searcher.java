@@ -1,6 +1,5 @@
 package com.jayway.android.robotium.core.impl;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -59,12 +58,12 @@ public class Searcher {
         long now = System.currentTimeMillis();
         final long endTime = now + TIMEOUT;
 
-		while (!searchForEditText(regex, true) && now < endTime) {
+		while (!searchFor(EditText.class, regex, 1, true) && now < endTime) {
 			sleeper.sleep();
 			now = System.currentTimeMillis();
         }
 
-		return searchForEditText(regex, true);
+		return searchFor(EditText.class, regex, 1, true);
 	}
 
 
@@ -91,21 +90,6 @@ public class Searcher {
 			return true;
 		else
 			return false;
-	}
-
-
-	/**
-	 * Searches for a text string in the edit texts located in the current
-	 * activity.
-	 *
-	 * @param regex the text to search for. The parameter <strong>will</strong> be interpreted as a regular expression.
-	 * @param scroll set to true if scrolling should be performed
-	 * @return true if an edit text with the given text is found or false if it is not found
-	 *
-	 */
-
-	public boolean searchForEditText(String regex, boolean scroll) {
-		return searchFor(EditText.class, regex, 1, scroll);
 	}
 
 
