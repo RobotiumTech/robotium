@@ -183,14 +183,7 @@ public class ViewFetcher {
 	 */
 	
 	public Button getButton(int index) {
-		ArrayList<Button> buttonList = getCurrentViews(Button.class);
-		Button button = null;
-		try{
-			button = buttonList.get(index);
-		}catch (IndexOutOfBoundsException e){
-			Assert.assertTrue("No button with index " + index + " is found", false);
-		}
-		return button;
+		return getView(Button.class, index);
 	}
 	
 	/**
@@ -202,14 +195,7 @@ public class ViewFetcher {
 	 */
 	
 	public TextView getText(int index) {
-		ArrayList<TextView> textList = getCurrentTextViews(null);
-		TextView textView =  null;
-		try{
-			textView = textList.get(index);
-		} catch (IndexOutOfBoundsException e){
-			Assert.assertTrue("No text view with index " + index + " is found", false);
-		}
-		return textView;
+		return getView(TextView.class, index);
 	}
 	
 	/**
@@ -221,14 +207,7 @@ public class ViewFetcher {
 	 */
 	
 	public ImageView getImage(int index) {
-		ArrayList<ImageView> imageList = getCurrentViews(ImageView.class);
-		ImageView imageView = null;
-		try{
-			imageView = imageList.get(index);
-		}catch (IndexOutOfBoundsException e){
-			Assert.assertTrue("No image view with index " + index + " is found", false);
-		}
-		return imageView;
+		return getView(ImageView.class, index);
 	}
 	
 	/**
@@ -240,14 +219,7 @@ public class ViewFetcher {
 	 */
 	
 	public ImageButton getImageButton(int index) {
-		ArrayList<ImageButton> buttonList = getCurrentViews(ImageButton.class);
-		ImageButton imageButton = null;
-		try{
-			imageButton = buttonList.get(index);
-		}catch (IndexOutOfBoundsException e){
-			Assert.assertTrue("No image button with index " + index + " is found", false);
-		}
-		return imageButton;
+		return getView(ImageButton.class, index);
 	}
 
 
