@@ -888,7 +888,7 @@ public class Solo {
 	 */
 	
 	public EditText getEditText(int index) {
-		EditText editText = viewFetcher.getEditText(index);
+		EditText editText = viewFetcher.getView(EditText.class, index);
 		return editText;
 	}
 	
@@ -901,7 +901,7 @@ public class Solo {
 	 */
 	
 	public Button getButton(int index) {
-		Button button = viewFetcher.getButton(index);
+		Button button = viewFetcher.getView(Button.class, index);
 		return button;
 	}
 	
@@ -914,7 +914,7 @@ public class Solo {
 	 */
 	
 	public TextView getText(int index) {
-		return viewFetcher.getText(index);
+		return viewFetcher.getView(TextView.class, index);
 	}
 	
 	/**
@@ -926,7 +926,7 @@ public class Solo {
 	 */
 	
 	public ImageView getImage(int index) {
-		return viewFetcher.getImage(index);
+		return viewFetcher.getView(ImageView.class, index);
 	}
 	
 	/**
@@ -938,7 +938,7 @@ public class Solo {
 	 */
 	
 	public ImageButton getImageButton(int index) {
-		return viewFetcher.getImageButton(index);
+		return viewFetcher.getView(ImageButton.class, index);
 	}
 	
 	

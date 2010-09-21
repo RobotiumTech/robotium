@@ -7,10 +7,6 @@ import android.app.Activity;
 import android.app.Instrumentation;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 /**
@@ -145,18 +141,6 @@ public class ViewFetcher {
 
 
 	/**
-	 * Returns an {@code EditText} with a certain index.
-	 *
-	 * @param index the index of the {@code EditText}. 0 if only one is available
-	 * @return the {@code EditText} with a specified index or {@code null} if index is invalid
-	 * @deprecated Use {@link #getView(Class, int)} instead.
-	 */
-	
-	public EditText getEditText(int index) {
-		return getView(EditText.class, index);
-	}
-
-	/**
 	 * Returns a {@code View} with a certain index, from the list of current {@code View}s of the specified type.
 	 *
 	 * @param classToFilterBy which {@code View}s to choose from
@@ -172,54 +156,6 @@ public class ViewFetcher {
 			Assert.assertTrue("No " + classToFilterBy.getSimpleName() + " with index " + index + " is found", false);
 		}
 		return view;
-	}
-
-	/**
-	 * Returns a {@code Button} with a certain index.
-	 *
-	 * @param index the index of the {@code Button}. 0 if only one is available
-	 * @return the {@code Button} with a specified index or {@code null} if index is invalid
-	 * @deprecated Use {@link #getView(Class, int)} instead.
-	 */
-	
-	public Button getButton(int index) {
-		return getView(Button.class, index);
-	}
-	
-	/**
-	 * Returns a {@code TextView} with a certain index.
-	 *
-	 * @param index the index of the {@code TextView}. 0 if only one is available
-	 * @return the {@code TextView} with a specified index or {@code null} if index is invalid
-	 * @deprecated Use {@link #getView(Class, int)} instead.
-	 */
-	
-	public TextView getText(int index) {
-		return getView(TextView.class, index);
-	}
-	
-	/**
-	 * Returns an {@code ImageView} with a certain index.
-	 *
-	 * @param index the index of the {@code ImageView}. 0 if only one is available
-	 * @return the {@code ImageView} with a specified index or {@code null} if index is invalid
-	 * @deprecated Use {@link #getView(Class, int)} instead.
-	 */
-	
-	public ImageView getImage(int index) {
-		return getView(ImageView.class, index);
-	}
-	
-	/**
-	 * Returns an {@code ImageButton} with a certain index.
-	 *
-	 * @param index the index of the {@code ImageButton}. 0 if only one is available
-	 * @return the {@code ImageButton} with a specified index or {@code null} if index is invalid
-	 * @deprecated Use {@link #getView(Class, int)} instead.
-	 */
-	
-	public ImageButton getImageButton(int index) {
-		return getView(ImageButton.class, index);
 	}
 
 

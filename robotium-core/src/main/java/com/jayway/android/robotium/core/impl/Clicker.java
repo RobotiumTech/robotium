@@ -393,7 +393,7 @@ public class Clicker {
 	public void clickOnButton(int index) {
 		robotiumUtils.waitForIdle();
 		try {
-			clickOnScreen(viewFetcher.getButton(index));
+			clickOnScreen(viewFetcher.getView(Button.class, index));
 		}catch (IndexOutOfBoundsException e) {
 			Assert.assertTrue("Index is not valid!", false);
 		}
