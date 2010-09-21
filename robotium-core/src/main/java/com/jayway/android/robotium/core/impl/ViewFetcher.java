@@ -110,13 +110,8 @@ public class ViewFetcher {
 	
 	public List<View> getViews() {
 		inst.waitForIdleSync();
-		try {
-			final View decorView = getActiveDecorView();
-			return getViews(decorView);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return null;
+		final View decorView = getActiveDecorView();
+		return getViews(decorView);
 	}
 	
 	/**

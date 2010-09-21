@@ -114,7 +114,12 @@ public class Solo {
 	 */
 	
 	public ArrayList<View> getViews() {
-		return ensureArrayListOrNull(viewFetcher.getViews());
+		try {
+			return ensureArrayListOrNull(viewFetcher.getViews());
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
 	}
 	
 	/**
