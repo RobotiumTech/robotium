@@ -176,7 +176,7 @@ public class Searcher {
 	 *  
 	 */
 	
-	public boolean searchToggleButton(String regex, int matches) {
+	public boolean searchForToggleButtonWithTimeout(String regex, int matches) {
         long now = System.currentTimeMillis();
         final long endTime = now + TIMEOUT;
         while (!searchForToggleButton(regex, matches) && now < endTime)
