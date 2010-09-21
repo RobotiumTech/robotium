@@ -6,7 +6,6 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import android.app.Instrumentation;
 import android.util.Log;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -115,7 +114,7 @@ public class Searcher {
 
 		long now = System.currentTimeMillis();
 		final long endTime = now + TIMEOUT;
-		while (!searchForButton(regex, matches) && now < endTime)
+		while (!searchFor(Button.class, regex, matches) && now < endTime)
 		{
 			now = System.currentTimeMillis();
 		}
@@ -140,7 +139,7 @@ public class Searcher {
 	public boolean searchForToggleButtonWithTimeout(String regex, int matches) {
 		long now = System.currentTimeMillis();
 		final long endTime = now + TIMEOUT;
-		while (!searchForToggleButton(regex, matches) && now < endTime)
+		while (!searchFor(ToggleButton.class, regex, matches) && now < endTime)
 		{
 			now = System.currentTimeMillis();
 		}
@@ -185,37 +184,17 @@ public class Searcher {
 
 
 	/**
-	 * Searches for a button with the given regex string and returns true if the
-	 * searched button is found a given number of times
+	 * Searches for a {@code View} with the given regex string and returns {@code true} if the
+	 * searched {@code View} is found a given number of times
 	 *
+	 * @param viewClass what kind of {@code View} to search for, e.g. {@code Button.class} or {@code TextView.class}
 	 * @param regex the text to search for. The parameter <strong>will</strong> be interpreted as a regular expression.
-	 * @param matches the number of matches expected to be found. 0 matches means that one or more
-	 * matches are expected to be found
-	 * @return true if a button with the given text is found a given number of times and false
-	 * if it is not found
+	 * @param matches the number of matches expected to be found. {@code 0} matches means that one or more
+	 * matches are expected to be found.
+	 * @return {@code true} if a view of the specified class with the given text is found a given number of times.
+	 * {@code false} if it is not found.
 	 *
 	 */
-
-	private boolean searchForButton(String regex, int matches) {
-		return searchFor(Button.class, regex, matches);
-	}
-
-	/**
-	 * Searches for a toggle button with the given regex string and returns true if the
-	 * searched toggle button is found a given number of times
-	 *
-	 * @param regex the text to search for. The parameter <strong>will</strong> be interpreted as a regular expression.
-	 * @param matches the number of matches expected to be found. 0 matches means that one or more
-	 * matches are expected to be found
-	 * @return true if a toggle button with the given text is found a given number of times and false
-	 * if it is not found
-	 *
-	 */
-
-	private boolean searchForToggleButton(String regex, int matches) {
-		return searchFor(ToggleButton.class, regex, matches);
-	}
-
 	private <T extends TextView> boolean searchFor(Class<T> viewClass, String regex, int matches) {
 		sleeper.sleep();
 		inst.waitForIdleSync();
