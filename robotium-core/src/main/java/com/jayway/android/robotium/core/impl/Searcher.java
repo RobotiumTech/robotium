@@ -105,21 +105,7 @@ public class Searcher {
 	 */
 
 	public boolean searchForEditText(String regex, boolean scroll) {
-		inst.waitForIdleSync();
-		Pattern p = Pattern.compile(regex);
-		Matcher matcher;
-		ArrayList<EditText> editTextList = viewFetcher.getCurrentViews(EditText.class);
-		for(EditText editText : editTextList){
-			matcher = p.matcher(editText.getText().toString());
-			if (matcher.find()) {
-				return true;
-			}
-		}
-
-		if (scroll && scroller.scroll(Scroller.Direction.DOWN))
-			return searchForEditText(regex, scroll);
-		else
-			return false;
+		return searchFor(EditText.class, regex, 1, scroll);
 	}
 
 
