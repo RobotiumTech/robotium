@@ -85,18 +85,17 @@ public class Searcher {
 	 *
 	 */
 	public boolean searchWithTimeoutFor(Class<? extends TextView> viewClass, String regex, int matches, boolean scroll) {
-		long now = System.currentTimeMillis();
-		final long endTime = now + TIMEOUT;
-		boolean shouldContinue = true;
-		while (shouldContinue) {
+		final long endTime = System.currentTimeMillis() + TIMEOUT;
+
+		while (System.currentTimeMillis() < endTime) {
 			sleeper.sleep();
-			shouldContinue = !searchFor(viewClass, regex, matches, scroll) && now < endTime;
-			now = System.currentTimeMillis();
+			final boolean foundAnyMatchingView = searchFor(viewClass, regex, matches, scroll);
+			if (foundAnyMatchingView){
+				return true;
+			}
 		}
-		if(now < endTime)
-			return true;
-		else
-			return false;
+
+		return false;
 	}
 
 
