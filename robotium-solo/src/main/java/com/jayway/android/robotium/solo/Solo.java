@@ -492,7 +492,7 @@ public class Solo {
 	 */
 	
 	public void clickOnButton(String name) {
-		clicker.clickOnButton(name);
+		clicker.clickOn(Button.class, name);
 
 	}
 	
@@ -515,7 +515,7 @@ public class Solo {
 	 */
 
 	public void clickOnToggleButton(String name) {
-		clicker.clickOnToggleButton(name);
+		clicker.clickOn(ToggleButton.class, name);
 	}
 	
 	/**

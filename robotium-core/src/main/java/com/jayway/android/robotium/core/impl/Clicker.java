@@ -398,30 +398,7 @@ public class Clicker {
 			Assert.assertTrue("Index is not valid!", false);
 		}
 	}
-	
 
-	
-	/**
-	 * Clicks on a {@link Button} with a given text.
-	 *
-	 * @param nameRegex the name of the {@code Button} presented to the user. The parameter <strong>will</strong> be interpreted as a regular expression.
-	 *
-	 */
-	
-	public void clickOnButton(String nameRegex) {
-		clickOn(Button.class, nameRegex);
-	}
-
-	/**
-	 * Clicks on a {@link ToggleButton} with a given text.
-	 *
-	 * @param nameRegex the name of the {@code ToggleButton} presented to the user. The parameter <strong>will</strong> be interpreted as a regular expression.
-	 *
-	 */
-
-	public void clickOnToggleButton(String nameRegex) {
-		clickOn(ToggleButton.class, nameRegex);
-	}
 
 	/**
 	 * Clicks on a {@code View} of a specific class, with a given text.
@@ -429,7 +406,7 @@ public class Clicker {
 	 * @param viewClass what kind of {@code View} to click, e.g. {@code Button.class} or {@code TextView.class}
 	 * @param nameRegex the name of the view presented to the user. The parameter <strong>will</strong> be interpreted as a regular expression.
 	 */
-	private <T extends TextView> void clickOn(Class<T> viewClass, String nameRegex) {
+	public <T extends TextView> void clickOn(Class<T> viewClass, String nameRegex) {
 		final List<T> views = viewFetcher.getCurrentViews(viewClass);
 		final Pattern pattern = Pattern.compile(nameRegex);
 		robotiumUtils.waitForText(nameRegex, 0, TIMEOUT, true);
