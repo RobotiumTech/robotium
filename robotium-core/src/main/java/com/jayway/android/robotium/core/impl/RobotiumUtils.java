@@ -148,11 +148,11 @@ public class RobotiumUtils {
 
 		while (!searcher.searchFor(TextView.class, text, matches, scroll) && !searcher.searchForEditText(text, scroll) && now < endTime) {
         	now = System.currentTimeMillis();	
-        }    
-        if (now > endTime)
-        	return false;
-        
-       return true;
+        }
+
+		final boolean timedOut = now > endTime;
+		return !timedOut;
+
     }
 	
 	/**
