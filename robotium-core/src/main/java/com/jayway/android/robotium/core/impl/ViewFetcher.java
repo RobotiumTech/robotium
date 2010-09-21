@@ -149,7 +149,7 @@ public class ViewFetcher {
 	 *
 	 * @param index the index of the {@code EditText}. 0 if only one is available
 	 * @return the {@code EditText} with a specified index or {@code null} if index is invalid
-	 *
+	 * @deprecated Use {@link #getView(Class, int)} instead.
 	 */
 	
 	public EditText getEditText(int index) {
@@ -179,7 +179,7 @@ public class ViewFetcher {
 	 *
 	 * @param index the index of the {@code Button}. 0 if only one is available
 	 * @return the {@code Button} with a specified index or {@code null} if index is invalid
-	 *
+	 * @deprecated Use {@link #getView(Class, int)} instead.
 	 */
 	
 	public Button getButton(int index) {
@@ -198,7 +198,7 @@ public class ViewFetcher {
 	 *
 	 * @param index the index of the {@code TextView}. 0 if only one is available
 	 * @return the {@code TextView} with a specified index or {@code null} if index is invalid
-	 *
+	 * @deprecated Use {@link #getView(Class, int)} instead.
 	 */
 	
 	public TextView getText(int index) {
@@ -217,7 +217,7 @@ public class ViewFetcher {
 	 *
 	 * @param index the index of the {@code ImageView}. 0 if only one is available
 	 * @return the {@code ImageView} with a specified index or {@code null} if index is invalid
-	 *
+	 * @deprecated Use {@link #getView(Class, int)} instead.
 	 */
 	
 	public ImageView getImage(int index) {
@@ -236,7 +236,7 @@ public class ViewFetcher {
 	 *
 	 * @param index the index of the {@code ImageButton}. 0 if only one is available
 	 * @return the {@code ImageButton} with a specified index or {@code null} if index is invalid
-	 *
+	 * @deprecated Use {@link #getView(Class, int)} instead.
 	 */
 	
 	public ImageButton getImageButton(int index) {
