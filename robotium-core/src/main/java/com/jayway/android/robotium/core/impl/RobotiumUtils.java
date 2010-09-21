@@ -150,6 +150,8 @@ public class RobotiumUtils {
 				return false;
 			}
 
+			sleeper.sleep();
+
 			final boolean foundAnyTextView = searcher.searchFor(TextView.class, text, matches, scroll);
 			if (foundAnyTextView){
 				return true;

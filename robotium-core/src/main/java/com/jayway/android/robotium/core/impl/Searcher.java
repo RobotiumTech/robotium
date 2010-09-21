@@ -58,11 +58,15 @@ public class Searcher {
         long now = System.currentTimeMillis();
         final long endTime = now + TIMEOUT;
 
-		while (!searchFor(EditText.class, regex, 1, true) && now < endTime) {
+		boolean shouldContinue = true;
+		while (shouldContinue) {
+			sleeper.sleep();
+			shouldContinue = !searchFor(EditText.class, regex, 1, true) && now < endTime;
 			sleeper.sleep();
 			now = System.currentTimeMillis();
         }
 
+		sleeper.sleep();
 		return searchFor(EditText.class, regex, 1, true);
 	}
 
@@ -83,7 +87,10 @@ public class Searcher {
 	public boolean searchWithTimeoutFor(Class<? extends TextView> viewClass, String regex, int matches, boolean scroll) {
 		long now = System.currentTimeMillis();
 		final long endTime = now + TIMEOUT;
-		while (!searchFor(viewClass, regex, matches, scroll) && now < endTime) {
+		boolean shouldContinue = true;
+		while (shouldContinue) {
+			sleeper.sleep();
+			shouldContinue = !searchFor(viewClass, regex, matches, scroll) && now < endTime;
 			now = System.currentTimeMillis();
 		}
 		if(now < endTime)
@@ -107,7 +114,6 @@ public class Searcher {
 	 *
 	 */
 	public <T extends TextView> boolean searchFor(Class<T> viewClass, String regex, int expectedNumberOfMatches, boolean scroll) {
-		sleeper.sleep();
 		inst.waitForIdleSync();
 
 		if(expectedNumberOfMatches == 0) {
@@ -129,6 +135,7 @@ public class Searcher {
 		}
 
 		if (scroll && scroller.scroll(Scroller.Direction.DOWN)) {
+			sleeper.sleep();
 			return searchFor(viewClass, regex, expectedNumberOfMatches, scroll);
 		} else {
 			if (matchesFound > 0) {
