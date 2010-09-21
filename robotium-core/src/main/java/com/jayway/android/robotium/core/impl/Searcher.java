@@ -49,21 +49,21 @@ public class Searcher {
 	 * Searches for a text string in the {@link EditText}s located in the current
 	 * {@code Activity}. Will automatically scroll when needed.
 	 *
-	 * @param search the search string to be searched
+	 * @param regex the text to search for. The parameter <strong>will</strong> be interpreted as a regular expression.
 	 * @return {@code true} if an {@code EditText} with the given text is found or {@code false} if it is not found
 	 *
 	 */
     
-    public boolean searchForEditTextWithTimeout(String search) {
+    public boolean searchForEditTextWithTimeout(String regex) {
         long now = System.currentTimeMillis();
         final long endTime = now + TIMEOUT;
 
-		while (!searchForEditText(search, true) && now < endTime) {
+		while (!searchForEditText(regex, true) && now < endTime) {
 			sleeper.sleep();
 			now = System.currentTimeMillis();
         }
 
-		return searchForEditText(search, true);
+		return searchForEditText(regex, true);
 	}
 
 
@@ -71,15 +71,15 @@ public class Searcher {
 	 * Searches for a text string in the edit texts located in the current
 	 * activity.
 	 *
-	 * @param search the search string to be searched. The parameter <strong>will</strong> be interpreted as a regular expression.
+	 * @param regex the text to search for. The parameter <strong>will</strong> be interpreted as a regular expression.
 	 * @param scroll set to true if scrolling should be performed
 	 * @return true if an edit text with the given text is found or false if it is not found
 	 *
 	 */
 	
-	public boolean searchForEditText(String search, boolean scroll) {
+	public boolean searchForEditText(String regex, boolean scroll) {
 		inst.waitForIdleSync();
-		Pattern p = Pattern.compile(search);
+		Pattern p = Pattern.compile(regex);
 		Matcher matcher;
 		ArrayList<EditText> editTextList = viewFetcher.getCurrentViews(EditText.class);
 		for(EditText editText : editTextList){
@@ -90,17 +90,17 @@ public class Searcher {
 		}
 
 		if (scroll && scroller.scroll(Scroller.Direction.DOWN))
-			return searchForEditText(search, scroll);
+			return searchForEditText(regex, scroll);
 		else
 			return false;
 	}
 
 
 	/**
-	 * Searches for a {@link Button} with the given search string and returns {@code true} if the
+	 * Searches for a {@link Button} with the given regex string and returns {@code true} if the
 	 * searched {@code Button} is found a given number of times. Will automatically scroll when needed.
 	 *
-	 * @param search the string to be searched. The parameter <strong>will</strong> be interpreted as a regular expression.
+	 * @param regex the text to search for. The parameter <strong>will</strong> be interpreted as a regular expression.
 	 * @param matches the number of matches expected to be found. {@code 0} matches means that one or more
 	 * matches are expected to be found
 	 * @return {@code true} if a {@code Button} with the given text is found a given number of times and {@code false}
@@ -108,11 +108,11 @@ public class Searcher {
 	 *  
 	 */
 	
-	public boolean searchButton(String search, int matches) {
+	public boolean searchButton(String regex, int matches) {
 		
         long now = System.currentTimeMillis();
         final long endTime = now + TIMEOUT;
-        while (!searchForButton(search, matches) && now < endTime)
+        while (!searchForButton(regex, matches) && now < endTime)
         {
         	now = System.currentTimeMillis();
         }
@@ -123,10 +123,10 @@ public class Searcher {
 	}
 	
 	/**
-	 * Searches for a button with the given search string and returns true if the 
+	 * Searches for a button with the given regex string and returns true if the
 	 * searched button is found a given number of times
 	 * 
-	 * @param search the string to be searched. The parameter <strong>will</strong> be interpreted as a regular expression.
+	 * @param regex the text to search for. The parameter <strong>will</strong> be interpreted as a regular expression.
 	 * @param matches the number of matches expected to be found. 0 matches means that one or more 
 	 * matches are expected to be found
 	 * @return true if a button with the given text is found a given number of times and false 
@@ -134,10 +134,10 @@ public class Searcher {
 	 *  
 	 */
 	
-	private boolean searchForButton(String search, int matches) {
+	private boolean searchForButton(String regex, int matches) {
 		sleeper.sleep();
 		inst.waitForIdleSync();
-		Pattern p = Pattern.compile(search);
+		Pattern p = Pattern.compile(regex);
 		Matcher matcher;
 		ArrayList<Button> buttonList = viewFetcher.getCurrentViews(Button.class);
 		if(matches == 0)
@@ -155,20 +155,20 @@ public class Searcher {
 
 		if (scroller.scroll(Scroller.Direction.DOWN))
 		{
-			return searchForButton(search, matches);
+			return searchForButton(regex, matches);
 		} else {
 			if (countMatches > 0)
-				Log.d(LOG_TAG, " There are only " + countMatches + " matches of " + search);
+				Log.d(LOG_TAG, " There are only " + countMatches + " matches of " + regex);
 			countMatches = 0;
 			return false;
 		}
 
 	}
 	/**
-	 * Searches for a {@link ToggleButton} with the given search string and returns {@code true} if the
+	 * Searches for a {@link ToggleButton} with the given regex string and returns {@code true} if the
 	 * searched {@code ToggleButton} is found a given number of times. Will automatically scroll when needed.
 	 *
-	 * @param search the string to be searched. The parameter <strong>will</strong> be interpreted as a regular expression.
+	 * @param regex the text to search for. The parameter <strong>will</strong> be interpreted as a regular expression.
 	 * @param matches the number of matches expected to be found. {@code 0} matches means that one or more
 	 * matches are expected to be found
 	 * @return {@code true} if a {@code ToggleButton} with the given text is found a given number of times and {@code false}
@@ -176,10 +176,10 @@ public class Searcher {
 	 *  
 	 */
 	
-	public boolean searchToggleButton(String search, int matches) {
+	public boolean searchToggleButton(String regex, int matches) {
         long now = System.currentTimeMillis();
         final long endTime = now + TIMEOUT;
-        while (!searchForToggleButton(search, matches) && now < endTime)
+        while (!searchForToggleButton(regex, matches) && now < endTime)
         {
         	now = System.currentTimeMillis();
         }
@@ -191,10 +191,10 @@ public class Searcher {
 	
 	
 	/**
-	 * Searches for a toggle button with the given search string and returns true if the 
+	 * Searches for a toggle button with the given regex string and returns true if the
 	 * searched toggle button is found a given number of times
 	 * 
-	 * @param search the string to be searched. The parameter <strong>will</strong> be interpreted as a regular expression.
+	 * @param regex the text to search for. The parameter <strong>will</strong> be interpreted as a regular expression.
 	 * @param matches the number of matches expected to be found. 0 matches means that one or more 
 	 * matches are expected to be found
 	 * @return true if a toggle button with the given text is found a given number of times and false 
@@ -202,10 +202,10 @@ public class Searcher {
 	 *  
 	 */
 	
-	private boolean searchForToggleButton(String search, int matches) {
+	private boolean searchForToggleButton(String regex, int matches) {
 		sleeper.sleep();
 		inst.waitForIdleSync();
-		Pattern p = Pattern.compile(search);
+		Pattern p = Pattern.compile(regex);
 		Matcher matcher;
 		ArrayList<ToggleButton> toggleButtonList = viewFetcher.getCurrentViews(ToggleButton.class);
 		if(matches == 0)
@@ -223,10 +223,10 @@ public class Searcher {
 
 		if (scroller.scroll(Scroller.Direction.DOWN))
 		{
-			return searchForToggleButton(search, matches);
+			return searchForToggleButton(regex, matches);
 		} else {
 			if(countMatches > 0)
-				Log.d(LOG_TAG, " There are only " + countMatches + " matches of " + search);
+				Log.d(LOG_TAG, " There are only " + countMatches + " matches of " + regex);
 			countMatches = 0;
 			return false;
 		}
@@ -237,19 +237,19 @@ public class Searcher {
 	 * Searches for a text string and returns {@code true} if the searched text is found a given
 	 * number of times.
 	 *
-	 * @param search the string to be searched. The parameter <strong>will</strong> be interpreted as a regular expression.
+	 * @param regex the text to search for. The parameter <strong>will</strong> be interpreted as a regular expression.
 	 * @param matches the number of matches expected to be found. {@code 0} matches means that one or more
 	 * matches are expected to be found
 	 * @param scroll {@code true} if scrolling should be performed
-	 * @return {@code true} if search string is found a given number of times and {@code false} if the search string
+	 * @return {@code true} if regex string is found a given number of times and {@code false} if the regex string
 	 * is not found
 	 *  
 	 */
 	
-	public boolean searchText(String search, int matches, boolean scroll) {
+	public boolean searchText(String regex, int matches, boolean scroll) {
         long now = System.currentTimeMillis();
         final long endTime = now + TIMEOUT;
-        while (!searchForText(search, matches, scroll) && now < endTime)
+        while (!searchForText(regex, matches, scroll) && now < endTime)
         {
         	now = System.currentTimeMillis();
         }
@@ -264,19 +264,19 @@ public class Searcher {
 	 * Searches for a text string and returns true if the searched text is found a given
 	 * number of times
 	 * 
-	 * @param search the string to be searched. The parameter <strong>will</strong> be interpreted as a regular expression.
+	 * @param regex the text to search for. The parameter <strong>will</strong> be interpreted as a regular expression.
 	 * @param matches the number of matches expected to be found. 0 matches means that one or more 
 	 * matches are expected to be found
 	 * @param scroll true if scrolling should be performed
-	 * @return true if search string is found a given number of times and false if the search string
+	 * @return true if regex string is found a given number of times and false if the regex string
 	 * is not found
 	 *  
 	 */
 	
-	public boolean searchForText(String search, int matches, boolean scroll) {
+	public boolean searchForText(String regex, int matches, boolean scroll) {
 		sleeper.sleep();
 		inst.waitForIdleSync();
-		Pattern p = Pattern.compile(search);
+		Pattern p = Pattern.compile(regex);
 		Matcher matcher;
 		ArrayList<TextView> textViewList = viewFetcher.getCurrentViews(TextView.class);
 		if(matches == 0)
@@ -293,10 +293,10 @@ public class Searcher {
 		}
 
 		if (scroll && scroller.scroll(Scroller.Direction.DOWN)) {
-			return searchForText(search, matches, scroll);
+			return searchForText(regex, matches, scroll);
 		} else {
 			if (countMatches > 0)
-				Log.d(LOG_TAG, " There are only " + countMatches + " matches of " + search);
+				Log.d(LOG_TAG, " There are only " + countMatches + " matches of " + regex);
 			countMatches=0;
 			return false;
 		}
