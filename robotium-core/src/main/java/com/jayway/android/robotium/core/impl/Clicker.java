@@ -391,12 +391,7 @@ public class Clicker {
 	 */
 	
 	public void clickOnButton(int index) {
-		robotiumUtils.waitForIdle();
-		try {
-			clickOnScreen(viewFetcher.getView(Button.class, index));
-		}catch (IndexOutOfBoundsException e) {
-			Assert.assertTrue("Index is not valid!", false);
-		}
+		clickOn(Button.class, index);
 	}
 
 
@@ -429,6 +424,21 @@ public class Clicker {
 		}
 	}
 
+	/**
+	 * Clicks on a {@code View} of a specific class, with a certain index.
+	 *
+	 * @param viewClass what kind of {@code View} to click, e.g. {@code Button.class} or {@code ImageView.class}
+	 * @param index the index of the {@code View} to be clicked, within {@code View}s of the specified class
+	 */
+	public <T extends View> void clickOn(Class<T> viewClass, int index) {
+		robotiumUtils.waitForIdle();
+		try {
+			clickOnScreen(viewFetcher.getCurrentViews(viewClass).get(index));
+		} catch (IndexOutOfBoundsException e) {
+			Assert.assertTrue("Index is not valid!", false);
+		}
+	}
+
 	
 	/**
 	 * This method is used to click on an image with a certain index.
@@ -438,12 +448,7 @@ public class Clicker {
 	 */
 	
 	public void clickOnImage(int index) {
-		robotiumUtils.waitForIdle();
-		try {
-			clickOnScreen(viewFetcher.getCurrentViews(ImageView.class).get(index));
-		} catch (IndexOutOfBoundsException e) {
-			Assert.assertTrue("Index is not valid!", false);
-		}
+		clickOn(ImageView.class, index);
 	}
 	
 	/**
@@ -454,12 +459,7 @@ public class Clicker {
 	 */
 	
 	public void clickOnImageButton(int index) {
-		robotiumUtils.waitForIdle();
-		try {
-			clickOnScreen(viewFetcher.getCurrentViews(ImageButton.class).get(index));
-		} catch (IndexOutOfBoundsException e) {
-			Assert.assertTrue("Index is not valid!", false);
-		}
+		clickOn(ImageButton.class, index);
 	}
 	
 	/**
@@ -470,12 +470,7 @@ public class Clicker {
 	 */
 	
 	public void clickOnRadioButton(int index) {
-		robotiumUtils.waitForIdle();
-		try {
-			clickOnScreen(viewFetcher.getCurrentViews(RadioButton.class).get(index));
-		} catch (IndexOutOfBoundsException e) {
-			Assert.assertTrue("Index is not valid!", false);
-		}
+		clickOn(RadioButton.class, index);
 	}
 	
 	/**
@@ -486,12 +481,7 @@ public class Clicker {
 	 */
 	
 	public void clickOnCheckBox(int index) {
-		robotiumUtils.waitForIdle();
-		try {
-			clickOnScreen(viewFetcher.getCurrentViews(CheckBox.class).get(index));
-		} catch (IndexOutOfBoundsException e) {
-			Assert.assertTrue("Index is not valid!", false);
-		}
+		clickOn(CheckBox.class, index);
 	}
 	
 	/**
@@ -502,12 +492,7 @@ public class Clicker {
 	 */
 	
 	public void clickOnEditText(int index) {
-		robotiumUtils.waitForIdle();
-		try {
-			clickOnScreen(viewFetcher.getCurrentViews(EditText.class).get(index));
-		} catch (IndexOutOfBoundsException e) {
-			Assert.assertTrue("Index is not valid!", false);
-		}
+		clickOn(EditText.class, index);
 	}
 	
 	/**
