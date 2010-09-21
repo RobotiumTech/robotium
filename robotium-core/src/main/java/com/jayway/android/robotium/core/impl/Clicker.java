@@ -163,44 +163,7 @@ public class Clicker {
 			clickOnScreen(x, y);
 	}
 
-	/**
-	 * Finds and clicks a view displaying a certain
-	 * text. Will automatically scroll when needed.
-	 *
-	 * @param text the text that should be clicked on. The parameter <strong>will</strong> be interpreted as a regular expression.
-	 *
-	 */
-	
-	public void clickOnText(String text) {
-		clickOnText(text, false, 1, true);
-	}
-	
-	/**
-	 * Finds and clicks a view displaying a certain text. Will automatically scroll when needed.
-	 *
-	 * @param text the text that should be clicked on. The parameter <strong>will</strong> be interpreted as a regular expression.
-	 * @param match the match that should be clicked on
-	 *
-	 */
-	
-	public void clickOnText(String text, int match) {
-		clickOnText(text, false, match, true);
-	}
-	
-	/**
-	 * Finds and clicks a view displaying a certain text.
-	 *
-	 * @param text the text that should be clicked on. The parameter <strong>will</strong> be interpreted as a regular expression.
-	 * @param match the match that should be clicked on
-	 * @param scroll true if scrolling should be performed
-	 *
-	 */
-	
-	public void clickOnText(String text, int match, boolean scroll) {
-		clickOnText(text, false, match, scroll);
-	}
-	
-	
+
 	/**
 	 * Long clicks on a specific {@link TextView} and then selects
 	 * an item from the context menu that appears. Will automatically scroll when needed.
@@ -227,7 +190,7 @@ public class Clicker {
 	}
 	
 	/**
-	 * Long clicks on a specific {@link TextView}. Will automatically scroll when needed. {@link #clickOnText(String)} can then be
+	 * Long clicks on a specific {@link TextView}. Will automatically scroll when needed. {@link #clickOnText} can then be
 	 * used to click on the context menu items that appear after the long click.
 	 *
 	 * @param text the text that should be clicked on. The parameter <strong>will</strong> be interpreted as a regular expression.
@@ -240,7 +203,7 @@ public class Clicker {
 	}
 	
 	/**
-	 * Long clicks on a specific {@link TextView}. Will automatically scroll when needed. {@link #clickOnText(String)} can then be
+	 * Long clicks on a specific {@link TextView}. Will automatically scroll when needed. {@link #clickOnText} can then be
 	 * used to click on the context menu items that appear after the long click.
 	 *
 	 * @param text the text that should be clicked on. The parameter <strong>will</strong> be interpreted as a regular expression.
@@ -253,7 +216,7 @@ public class Clicker {
 	}
 	
 	/**
-	 * Long clicks on a specific {@link TextView}. {@link #clickOnText(String)} can then be
+	 * Long clicks on a specific {@link TextView}. {@link #clickOnText} can then be
 	 * used to click on the context menu items that appear after the long click.
 	 *
 	 * @param text the text that should be clicked on. The parameter <strong>will</strong> be interpreted as a regular expression.
@@ -282,7 +245,7 @@ public class Clicker {
 		}catch(SecurityException e){
 			Assert.assertTrue("Can not open the menu!", false);
 		}
-		clickOnText(text);
+		clickOnText(text, false, 1, true);
 	}
 	
 	/**
@@ -319,8 +282,8 @@ public class Clicker {
 		}
 		if(textMore != null)
 			clickOnScreen(textMore);
-		
-		clickOnText(text);
+
+		clickOnText(text, false, 1, true);
 	}
 	
 	
@@ -333,7 +296,7 @@ public class Clicker {
 	 * @param scroll whether to scroll to find the text
 	 */
 
-	private void clickOnText(String text, boolean longClick, int match, boolean scroll) {
+	public void clickOnText(String text, boolean longClick, int match, boolean scroll) {
 		Pattern p = Pattern.compile(text);
 		Matcher matcher; 
 		robotiumUtils.waitForText(text, 0, TIMEOUT, scroll);

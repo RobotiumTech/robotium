@@ -605,7 +605,7 @@ public class Solo {
 	 */
 	
 	public void clickOnText(String text) {
-		clicker.clickOnText(text);
+		clicker.clickOnText(text, false, 1, true);
 	}
 	
 	/**
@@ -617,7 +617,7 @@ public class Solo {
 	 */
 	
 	public void clickOnText(String text, int match) {
-		clicker.clickOnText(text, match);
+		clicker.clickOnText(text, false, match, true);
 	}
 	
 	/**
@@ -630,7 +630,7 @@ public class Solo {
 	 */
 	
 	public void clickOnText(String text, int match, boolean scroll) {
-		clicker.clickOnText(text,match, scroll);
+		clicker.clickOnText(text, false, match, scroll);
 	}
 	
 	
