@@ -280,7 +280,7 @@ public class Solo {
 	 */
 	
 	public boolean searchText(String regex) {
-		boolean found = searcher.searchText(regex, 0, true);
+		boolean found = searcher.searchForTextWithTimeout(regex, 0, true);
 		return found;
 	}
 	
@@ -297,9 +297,8 @@ public class Solo {
 	 */
 	
 	public boolean searchText(String regex, int matches) {
-		boolean found = searcher.searchText(regex, matches, true);
+		boolean found = searcher.searchForTextWithTimeout(regex, matches, true);
 		return found;
-
 	}
 	
 	/**
@@ -316,7 +315,7 @@ public class Solo {
 	 */
 	
 	public boolean searchText(String regex, int matches, boolean scroll) {
-		return searcher.searchText(regex, matches, scroll);
+		return searcher.searchForTextWithTimeout(regex, matches, scroll);
 	}
 
 	/**

@@ -12,7 +12,7 @@ import android.widget.ToggleButton;
 
 /**
  * This class contains various search methods. Examples are: searchForEditTextWithTimeout(),
- * searchText(), searchForButtonWithTimeout().
+ * searchForTextWithTimeout(), searchForButtonWithTimeout().
  * 
  * @author Renas Reda, renas.reda@jayway.com
  * 
@@ -246,7 +246,7 @@ public class Searcher {
 	 *  
 	 */
 	
-	public boolean searchText(String regex, int matches, boolean scroll) {
+	public boolean searchForTextWithTimeout(String regex, int matches, boolean scroll) {
         long now = System.currentTimeMillis();
         final long endTime = now + TIMEOUT;
         while (!searchForText(regex, matches, scroll) && now < endTime)
