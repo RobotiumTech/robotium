@@ -446,6 +446,7 @@ public class Clicker {
 		if (buttonToClick != null) {
 			clickOnScreen(buttonToClick);
 		} else if (scroller.scrollDown()){
+			// TODO: This is probably a bug. Should it make different calls depending on what class we want to click on?
 			clickOnButton(nameRegex);
 		}else {
 			for (int i = 0; i < buttons.size(); i++)
