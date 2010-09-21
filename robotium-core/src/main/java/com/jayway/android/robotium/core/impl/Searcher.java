@@ -6,10 +6,8 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import android.app.Instrumentation;
 import android.util.Log;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.ToggleButton;
 
 /**
  * This class contains various search methods. Examples are: searchForEditTextWithTimeout(),
@@ -99,22 +97,21 @@ public class Searcher {
 
 
 	/**
-	 * Searches for a {@link Button} with the given regex string and returns {@code true} if the
+	 * Searches for a {@code View} with the given regex string and returns {@code true} if the
 	 * searched {@code Button} is found a given number of times. Will automatically scroll when needed.
 	 *
+	 * @param viewClass what kind of {@code View} to search for, e.g. {@code Button.class} or {@code TextView.class}
 	 * @param regex the text to search for. The parameter <strong>will</strong> be interpreted as a regular expression.
 	 * @param matches the number of matches expected to be found. {@code 0} matches means that one or more
 	 * matches are expected to be found
-	 * @return {@code true} if a {@code Button} with the given text is found a given number of times and {@code false}
-	 * if it is not found
+	 * @return {@code true} if a {@code View} of the specified class with the given text is found a given number of
+	 * times, and {@code false} if it is not found
 	 *
 	 */
-
-	public boolean searchForButtonWithTimeout(String regex, int matches) {
-
+	public boolean searchWithTimeoutFor(Class<? extends TextView> viewClass, String regex, int matches) {
 		long now = System.currentTimeMillis();
 		final long endTime = now + TIMEOUT;
-		while (!searchFor(Button.class, regex, matches) && now < endTime)
+		while (!searchFor(viewClass, regex, matches) && now < endTime)
 		{
 			now = System.currentTimeMillis();
 		}
@@ -123,35 +120,6 @@ public class Searcher {
 		else
 			return false;
 	}
-
-	/**
-	 * Searches for a {@link ToggleButton} with the given regex string and returns {@code true} if the
-	 * searched {@code ToggleButton} is found a given number of times. Will automatically scroll when needed.
-	 *
-	 * @param regex the text to search for. The parameter <strong>will</strong> be interpreted as a regular expression.
-	 * @param matches the number of matches expected to be found. {@code 0} matches means that one or more
-	 * matches are expected to be found
-	 * @return {@code true} if a {@code ToggleButton} with the given text is found a given number of times and {@code false}
-	 * if it is not found
-	 *
-	 */
-
-	public boolean searchForToggleButtonWithTimeout(String regex, int matches) {
-		long now = System.currentTimeMillis();
-		final long endTime = now + TIMEOUT;
-		while (!searchFor(ToggleButton.class, regex, matches) && now < endTime)
-		{
-			now = System.currentTimeMillis();
-		}
-		if(now < endTime)
-			return true;
-		else
-			return false;
-	}
-
-
-
-
 
 
 	/**
