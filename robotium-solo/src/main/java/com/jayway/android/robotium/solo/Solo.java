@@ -592,7 +592,8 @@ public class Solo {
 	
 	public void clickLongOnView(View view) {
 		robotiumUtils.waitForIdle();
-		clicker.clickLongOnScreen(view);
+		clicker.clickOnScreen(view, true);
+
 	}
 	
 	/**

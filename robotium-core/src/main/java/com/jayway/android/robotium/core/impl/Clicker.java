@@ -134,8 +134,8 @@ public class Clicker {
 	 * @param longClick true if the click should be a long click
 	 *
 	 */
-	
-	private void clickOnScreen(View view, boolean longClick) {
+
+	public void clickOnScreen(View view, boolean longClick) {
 		int[] xy = new int[2];
 		long now = System.currentTimeMillis();
 		final long endTime = now + CLICKTIMEOUT;
@@ -162,19 +162,7 @@ public class Clicker {
 		else
 			clickOnScreen(x, y);
 	}
-	
-	/**
-	 * Long clicks on a specific {@link View}.
-	 *
-	 * @param view the view that should be long clicked
-	 *
-	 */
-	
-	public void clickLongOnScreen(View view) {
-		clickOnScreen(view, true);
-		
-	}
-	
+
 	/**
 	 * Finds and clicks a view displaying a certain
 	 * text. Will automatically scroll when needed.
