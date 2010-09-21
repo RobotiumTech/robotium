@@ -792,7 +792,7 @@ public class Solo {
 	 */
 	
 	public boolean scrollDown() {
-		return scroller.scrollDown();
+		return scroller.scroll(Scroller.Direction.DOWN);
 	}
 	
 
@@ -805,7 +805,7 @@ public class Solo {
 	 */
 	
 	public boolean scrollUp(){
-		return scroller.scrollUp();
+		return scroller.scroll(Scroller.Direction.UP);
 	}
 	
 	/**
@@ -816,9 +816,8 @@ public class Solo {
 	 * 
 	 */
 	
-	public boolean scrollDownList(int listIndex)
-	{
-		return scroller.scrollDownList(listIndex);
+	public boolean scrollDownList(int listIndex) {
+		return scroller.scrollList(listIndex, Scroller.Direction.DOWN);
 	}
 	
 	/**
@@ -829,9 +828,8 @@ public class Solo {
 	 * 
 	 */
 	
-	public boolean scrollUpList(int listIndex)
-	{
-		return scroller.scrollUpList(listIndex);
+	public boolean scrollUpList(int listIndex) {
+		return scroller.scrollList(listIndex, Scroller.Direction.UP);
 	}
 	
 	/**

@@ -101,7 +101,8 @@ public class Searcher {
 				return true;
 			}
 		}
-		if (scroll && scroller.scrollDown())
+
+		if (scroll && scroller.scroll(Scroller.Direction.DOWN))
 			return searchForEditText(search, scroll);
 		else
 			return false;
@@ -190,7 +191,8 @@ public class Searcher {
 				return true;
 			} 	
 		}
-		if (scroller.scrollDown())
+
+		if (scroller.scroll(Scroller.Direction.DOWN))
 		{
 			return searchForButton(search, matches);
 		} else {
@@ -257,7 +259,8 @@ public class Searcher {
 				return true;
 			} 
 		}
-		if (scroller.scrollDown())
+
+		if (scroller.scroll(Scroller.Direction.DOWN))
 		{
 			return searchForToggleButton(search, matches);
 		} else {
@@ -356,7 +359,8 @@ public class Searcher {
 				return true;
 			}
 		}
-		if (scroll && scroller.scrollDown()) {
+
+		if (scroll && scroller.scroll(Scroller.Direction.DOWN)) {
 			return searchForText(search, matches, scroll);
 		} else {
 			if (countMatches > 0)

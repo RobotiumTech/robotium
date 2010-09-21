@@ -80,42 +80,17 @@ public class Scroller {
 			inst.sendPointerSync(event);
 		} catch (SecurityException ignored) {}
 	}
-	
-	
+
+
 	/**
-	 * Scrolls down the screen.
-	 *
-	 * @return {@code true} if more scrolling can be done and {@code false} if it is at the end of
-	 * the screen
-	 *
-	 */
-	
-	public boolean scrollDown() {
-		return scroll(Direction.DOWN);
-	
-	}
-	
-	/**
-	 * Scrolls up the screen.
-	 *
-	 * @return {@code true} if more scrolling can be done and {@code false} if it is at the top of
-	 * the screen
-	 *
-	 */
-	
-	public boolean scrollUp(){
-		return scroll(Direction.UP);
-	}
-	
-	/**
-	 * Private method used to scroll up and down
+	 * Scrolls up and down.
 	 * 
 	 * @param direction the direction in which to scroll
-	 * @return true if more scrolling can be done
+	 * @return {@code true} if more scrolling can be done
 	 * 
 	 */
 	
-	private boolean scroll(Direction direction) {
+	public boolean scroll(Direction direction) {
 		int yStart;
 		int yEnd;
 		if (direction == Direction.DOWN) {
@@ -153,44 +128,17 @@ public class Scroller {
 		}
 
 	}
-	
+
 	/**
-	 * Scrolls up a list with a given {@code listIndex}.
-	 *
-	 * @param listIndex the {@link ListView} to be scrolled. {@code 0} if only one list is available
-	 * @return {@code true} if more scrolling can be done
-	 * 
-	 */
-	
-	public boolean scrollUpList(int listIndex)
-	{
-		return scrollList(listIndex, Direction.UP);
-	}
-	
-	/**
-	 * Scrolls down a list with a given {@code listIndex}.
-	 *
-	 * @param listIndex the {@link ListView} to be scrolled. {@code 0} if only one list is available
-	 * @return {@code true} if more scrolling can be done
-	 * 
-	 */
-	
-	public boolean scrollDownList(int listIndex)
-	{
-		return scrollList(listIndex, Direction.DOWN);
-		
-	}
-	
-	/**
-	 * Scrolls a list
+	 * Scrolls a list.
 	 * 
 	 * @param listIndex the list to be scrolled
 	 * @param direction the direction to be scrolled
-	 * @return true if more scrolling can be done
+	 * @return {@code true} if more scrolling can be done
 	 * 
 	 */
 	
-	private boolean scrollList(int listIndex, Direction direction) {
+	public boolean scrollList(int listIndex, Direction direction) {
 		ListView listView = viewFetcher.getCurrentViews(ListView.class).get(listIndex);
 		int[] xy = new int[2];
 		listView.getLocationOnScreen(xy);

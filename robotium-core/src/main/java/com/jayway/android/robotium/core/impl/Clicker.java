@@ -146,8 +146,9 @@ public class Clicker {
 		if(!view.isShown())
 			Assert.assertTrue("View can not be clicked!", false);
 		view.getLocationOnScreen(xy);
-		while (xy[1] + 10> activityUtils.getCurrentActivity().getWindowManager() 
-				.getDefaultDisplay().getHeight() && scroller.scrollDown()) {
+
+		while (xy[1] + 10> activityUtils.getCurrentActivity().getWindowManager()
+				.getDefaultDisplay().getHeight() && scroller.scroll(Scroller.Direction.DOWN)) {
 			view.getLocationOnScreen(xy);
 		}
 		sleeper.sleepMini();
@@ -276,7 +277,7 @@ public class Clicker {
 		}
 		if (textToClick != null) {
 			clickOnScreen(textToClick, longClick);
-		} else if (scroll && scroller.scrollDown()) {
+		} else if (scroll && scroller.scroll(Scroller.Direction.DOWN)) {
 			clickOnText(text, longClick, match, scroll);
 		} else {
 			if (countMatches > 0)
@@ -310,7 +311,7 @@ public class Clicker {
 		}
 		if (viewToClick != null) {
 			clickOnScreen(viewToClick);
-		} else if (scroller.scrollDown()){
+		} else if (scroller.scroll(Scroller.Direction.DOWN)){
 			clickOn(viewClass, nameRegex);
 		}else {
 			for (T view : views) {
