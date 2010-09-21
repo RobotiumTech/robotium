@@ -1,10 +1,12 @@
 package com.jayway.android.robotium.core.impl;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import android.app.Instrumentation;
 import android.util.Log;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -195,34 +197,7 @@ public class Searcher {
 	 */
 
 	private boolean searchForButton(String regex, int matches) {
-		sleeper.sleep();
-		inst.waitForIdleSync();
-		Pattern p = Pattern.compile(regex);
-		Matcher matcher;
-		ArrayList<Button> buttonList = viewFetcher.getCurrentViews(Button.class);
-		if(matches == 0)
-			matches = 1;
-		for(Button button : buttonList){
-			matcher = p.matcher(button.getText().toString());
-			if(matcher.find()){
-				countMatches++;
-			}
-			if (countMatches == matches) {
-				countMatches = 0;
-				return true;
-			}
-		}
-
-		if (scroller.scroll(Scroller.Direction.DOWN))
-		{
-			return searchForButton(regex, matches);
-		} else {
-			if (countMatches > 0)
-				Log.d(LOG_TAG, " There are only " + countMatches + " matches of " + regex);
-			countMatches = 0;
-			return false;
-		}
-
+		return searchFor(Button.class, regex, matches);
 	}
 
 	/**
@@ -238,34 +213,37 @@ public class Searcher {
 	 */
 
 	private boolean searchForToggleButton(String regex, int matches) {
+		return searchFor(ToggleButton.class, regex, matches);
+	}
+
+	private <T extends TextView> boolean searchFor(Class<T> viewClass, String regex, int matches) {
 		sleeper.sleep();
 		inst.waitForIdleSync();
 		Pattern p = Pattern.compile(regex);
 		Matcher matcher;
-		ArrayList<ToggleButton> toggleButtonList = viewFetcher.getCurrentViews(ToggleButton.class);
+		List<T> views = viewFetcher.getCurrentViews(viewClass);
 		if(matches == 0)
 			matches = 1;
-		for(ToggleButton toggleButton : toggleButtonList){
-			matcher = p.matcher(toggleButton.getText().toString());
+		for(T view : views){
+			matcher = p.matcher(view.getText().toString());
 			if(matcher.find()){
 				countMatches++;
 			}
 			if (countMatches == matches) {
-				countMatches=0;
+				countMatches = 0;
 				return true;
 			}
 		}
 
 		if (scroller.scroll(Scroller.Direction.DOWN))
 		{
-			return searchForToggleButton(regex, matches);
+			return searchFor(viewClass, regex, matches);
 		} else {
-			if(countMatches > 0)
+			if (countMatches > 0)
 				Log.d(LOG_TAG, " There are only " + countMatches + " matches of " + regex);
 			countMatches = 0;
 			return false;
 		}
-
 	}
 
 	
