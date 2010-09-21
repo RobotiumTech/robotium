@@ -218,7 +218,7 @@ public class Solo {
 	 */
 	
 	public boolean searchButton(String regex) {
-		boolean found = searcher.searchButton(regex, 0);
+		boolean found = searcher.searchForButtonWithTimeout(regex, 0);
 		return found;
 	}
 	
@@ -249,7 +249,7 @@ public class Solo {
 	 */
 	
 	public boolean searchButton(String regex, int matches) {
-		boolean found = searcher.searchButton(regex, matches);
+		boolean found = searcher.searchForButtonWithTimeout(regex, matches);
 		return found;
 
 	}
