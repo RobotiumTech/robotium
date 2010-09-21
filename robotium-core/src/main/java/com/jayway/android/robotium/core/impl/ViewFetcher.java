@@ -2,6 +2,8 @@ package com.jayway.android.robotium.core.impl;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
+import java.util.List;
+
 import junit.framework.Assert;
 import android.app.Activity;
 import android.app.Instrumentation;
@@ -19,7 +21,6 @@ import android.widget.TextView;
 
 public class ViewFetcher {
 	
-	private final ArrayList<View> viewList = new ArrayList<View>();
 	private final Instrumentation inst;
 	private final ActivityUtils activityUtils;
 	
@@ -107,14 +108,15 @@ public class ViewFetcher {
 	 *
 	 */
 	
-	public ArrayList<View> getViews() {
+	public List<View> getViews() {
 		inst.waitForIdleSync();
-		viewList.clear();
 		try {
 			View decorView = getActiveDecorView();
-			if(decorView!= null)
-				getViews(decorView);
-			return viewList;
+			if(decorView!= null) {
+				return getViews(decorView);
+			}else{
+				return new ArrayList<View>();
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -122,19 +124,37 @@ public class ViewFetcher {
 	}
 	
 	/**
-	 * Private method which adds all the views located in the currently active
-	 * activity to an ArrayList viewList.
+	 * Extracts all {@code View}s located in the currently active {@code Activity}, recursively.
 	 *
-	 * @param view the view who's children should be added to viewList 
-	 *
+	 * @param parent the {@code View} whose children should be returned
+	 * @return all {@code View}s located in the currently active {@code Activity}, never {@code null}
 	 */
 	
-	private void getViews(View view) {
-		viewList.add(view);
-		if (view instanceof ViewGroup) {
-			ViewGroup vg = (ViewGroup) view;
-			for (int i = 0; i < vg.getChildCount(); i++) {
-				getViews(vg.getChildAt(i));
+	private List<View> getViews(View parent) {
+		final List<View> views = new ArrayList<View>();
+
+		views.add(parent);
+
+		if (parent instanceof ViewGroup) {
+			addChildren(views, (ViewGroup) parent);
+		}
+
+		return views;
+	}
+
+	/**
+	 * Adds all children of {@code viewGroup} (recursively) into {@code views}.
+	 * @param views a {@code List} of {@code View}s
+	 * @param viewGroup the {@code ViewGroup} to extract children from
+	 */
+	private void addChildren(List<View> views, ViewGroup viewGroup) {
+		for (int i = 0; i < viewGroup.getChildCount(); i++) {
+			final View child = viewGroup.getChildAt(i);
+
+			views.add(child);
+
+			if (child instanceof ViewGroup) {
+				addChildren(views, (ViewGroup) child);
 			}
 		}
 	}
@@ -172,12 +192,11 @@ public class ViewFetcher {
 	 */
 
 	public ArrayList<TextView> getCurrentTextViews(View parent) {		
-		if(parent == null)
-			getViews();
-		else
-		{
-			viewList.clear();
-			getViews(parent);
+		final List<View> viewList;
+		if(parent == null) {
+			viewList = getViews();
+		}else{
+			viewList = getViews(parent);
 		}
 		ArrayList<TextView> textViewList = new ArrayList<TextView>();
 		for(View view : viewList){
@@ -199,7 +218,7 @@ public class ViewFetcher {
 	 */
 	public <T extends View> ArrayList<T> getCurrentViews(Class<T> classToFilterBy) {
 		ArrayList<T> filteredViews = new ArrayList<T>();
-		ArrayList<View> allViews = getViews();
+		List<View> allViews = getViews();
 		for(View view : allViews){
 			if (view != null && classToFilterBy.isAssignableFrom(view.getClass())) {
 				filteredViews.add(classToFilterBy.cast(view));
