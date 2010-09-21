@@ -218,7 +218,7 @@ public class Solo {
 	 */
 	
 	public boolean searchButton(String regex) {
-		boolean found = searcher.searchWithTimeoutFor(Button.class, regex, 0);
+		boolean found = searcher.searchWithTimeoutFor(Button.class, regex, 0, true);
 		return found;
 	}
 	
@@ -232,7 +232,7 @@ public class Solo {
 	 */
 	
 	public boolean searchToggleButton(String regex) {
-		boolean found = searcher.searchWithTimeoutFor(ToggleButton.class, regex, 0);
+		boolean found = searcher.searchWithTimeoutFor(ToggleButton.class, regex, 0, true);
 		return found;
 	}
 	
@@ -249,7 +249,7 @@ public class Solo {
 	 */
 	
 	public boolean searchButton(String regex, int matches) {
-		boolean found = searcher.searchWithTimeoutFor(Button.class, regex, matches);
+		boolean found = searcher.searchWithTimeoutFor(Button.class, regex, matches, true);
 		return found;
 	}
 	
@@ -266,7 +266,7 @@ public class Solo {
 	 */
 	
 	public boolean searchToggleButton(String regex, int matches) {
-		boolean found = searcher.searchWithTimeoutFor(ToggleButton.class, regex, matches);
+		boolean found = searcher.searchWithTimeoutFor(ToggleButton.class, regex, matches, true);
 		return found;
 	}
 	
@@ -280,7 +280,7 @@ public class Solo {
 	 */
 	
 	public boolean searchText(String regex) {
-		boolean found = searcher.searchForTextWithTimeout(regex, 0, true);
+		boolean found = searcher.searchWithTimeoutFor(TextView.class, regex, 0, true);
 		return found;
 	}
 	
@@ -297,7 +297,7 @@ public class Solo {
 	 */
 	
 	public boolean searchText(String regex, int matches) {
-		boolean found = searcher.searchForTextWithTimeout(regex, matches, true);
+		boolean found = searcher.searchWithTimeoutFor(TextView.class, regex, matches, true);
 		return found;
 	}
 	
@@ -315,7 +315,7 @@ public class Solo {
 	 */
 	
 	public boolean searchText(String regex, int matches, boolean scroll) {
-		return searcher.searchForTextWithTimeout(regex, matches, scroll);
+		return searcher.searchWithTimeoutFor(TextView.class, regex, matches, scroll);
 	}
 
 	/**

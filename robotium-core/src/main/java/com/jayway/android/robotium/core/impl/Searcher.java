@@ -70,32 +70,6 @@ public class Searcher {
 
 
 	/**
-	 * Searches for a text string and returns {@code true} if the searched text is found a given
-	 * number of times.
-	 *
-	 * @param regex the text to search for. The parameter <strong>will</strong> be interpreted as a regular expression.
-	 * @param matches the number of matches expected to be found. {@code 0} matches means that one or more
-	 * matches are expected to be found
-	 * @param scroll {@code true} if scrolling should be performed
-	 * @return {@code true} if regex string is found a given number of times and {@code false} if the regex string
-	 * is not found
-	 *
-	 */
-
-	public boolean searchForTextWithTimeout(String regex, int matches, boolean scroll) {
-		long now = System.currentTimeMillis();
-		final long endTime = now + TIMEOUT;
-		while (!searchFor(TextView.class, regex, matches, scroll) && now < endTime) {
-			now = System.currentTimeMillis();
-		}
-		if(now < endTime)
-			return true;
-		else
-			return false;
-	}
-
-
-	/**
 	 * Searches for a {@code View} with the given regex string and returns {@code true} if the
 	 * searched {@code Button} is found a given number of times. Will automatically scroll when needed.
 	 *
@@ -103,14 +77,15 @@ public class Searcher {
 	 * @param regex the text to search for. The parameter <strong>will</strong> be interpreted as a regular expression.
 	 * @param matches the number of matches expected to be found. {@code 0} matches means that one or more
 	 * matches are expected to be found
+	 * @param scroll whether scrolling should be performed
 	 * @return {@code true} if a {@code View} of the specified class with the given text is found a given number of
 	 * times, and {@code false} if it is not found
 	 *
 	 */
-	public boolean searchWithTimeoutFor(Class<? extends TextView> viewClass, String regex, int matches) {
+	public boolean searchWithTimeoutFor(Class<? extends TextView> viewClass, String regex, int matches, boolean scroll) {
 		long now = System.currentTimeMillis();
 		final long endTime = now + TIMEOUT;
-		while (!searchFor(viewClass, regex, matches, true) && now < endTime) {
+		while (!searchFor(viewClass, regex, matches, scroll) && now < endTime) {
 			now = System.currentTimeMillis();
 		}
 		if(now < endTime)
