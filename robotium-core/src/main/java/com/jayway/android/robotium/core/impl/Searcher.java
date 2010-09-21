@@ -57,29 +57,16 @@ public class Searcher {
     public boolean searchEditText(String search) {
         long now = System.currentTimeMillis();
         final long endTime = now + TIMEOUT;
-        while (!searchForEditText(search) && now < endTime)
-        {
+
+		while (!searchForEditText(search, true) && now < endTime) {
 			sleeper.sleep();
 			now = System.currentTimeMillis();
         }
-        return searchForEditText(search);
-    }
-	
-    /**
-	 * Searches for a text string in the edit texts located in the current
-	 * activity.
-	 *
-	 * @param search the search string to be searched. The parameter <strong>will</strong> be interpreted as a regular expression.
-	 * @return true if an edit text with the given text is found or false if it is not found
-	 *
-	 */
-    
-	public boolean searchForEditText(String search) {
-		
+
 		return searchForEditText(search, true);
 	}
-	
-	
+
+
 	/**
 	 * Searches for a text string in the edit texts located in the current
 	 * activity.
@@ -107,34 +94,8 @@ public class Searcher {
 		else
 			return false;
 	}
-	
-	
-	/**
-	 * Searches for a {@link Button} with the given search string and returns true if at least one {@code Button}
-	 * is found with the expected text. Will automatically scroll when needed.
-	 *
-	 * @param search the string to be searched. The parameter <strong>will</strong> be interpreted as a regular expression.
-	 * @return {@code true} if a {@code Button} with the given text is found and {@code false} if it is not found
-	 *
-	 */
-	
-	public boolean searchButton(String search) {
-		return searchButton(search, 0);
-	}
-	
-	/**
-	 * Searches for a {@link ToggleButton} with the given search string and returns {@code true} if at least one {@code ToggleButton}
-	 * is found with the expected text. Will automatically scroll when needed.
-	 *
-	 * @param search the string to be searched. The parameter <strong>will</strong> be interpreted as a regular expression.
-	 * @return {@code true} if a {@code ToggleButton} with the given text is found and {@code false} if it is not found
-	 *
-	 */
-	
-	public boolean searchToggleButton(String search) {
-		return searchToggleButton(search, 0);
-	}
-	
+
+
 	/**
 	 * Searches for a {@link Button} with the given search string and returns {@code true} if the
 	 * searched {@code Button} is found a given number of times. Will automatically scroll when needed.
@@ -271,36 +232,7 @@ public class Searcher {
 		}
 		
 	}
-	
-	/**
-	 * Searches for a text string and returns {@code true} if at least one item
-	 * is found with the expected text. Will automatically scroll when needed.
-	 *
-	 * @param search the string to be searched. The parameter <strong>will</strong> be interpreted as a regular expression.
-	 * @return {@code true} if the search string is found and {@code false} if it is not found
-	 *
-	 */
-	
-	public boolean searchText(String search) {
-		return searchText(search, 0);
-	}
-	
-	/**
-	 * Searches for a text string and returns {@code true} if the searched text is found a given
-	 * number of times. Will automatically scroll when needed.
-	 *
-	 * @param search the string to be searched. The parameter <strong>will</strong> be interpreted as a regular expression.
-	 * @param matches the number of matches expected to be found. {@code 0} matches means that one or more
-	 * matches are expected to be found
-	 * @return {@code true} if search string is found a given number of times and {@code false} if the search string
-	 * is not found
-	 *  
-	 */
-	
-	public boolean searchText(String search, int matches) {
-		return searchText(search, matches, true);
-	}
-	
+
 	/**
 	 * Searches for a text string and returns {@code true} if the searched text is found a given
 	 * number of times.

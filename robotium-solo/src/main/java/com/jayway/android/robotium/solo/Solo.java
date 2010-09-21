@@ -218,7 +218,7 @@ public class Solo {
 	 */
 	
 	public boolean searchButton(String search) {
-		boolean found = searcher.searchButton(search);
+		boolean found = searcher.searchButton(search, 0);
 		return found;
 	}
 	
@@ -232,7 +232,7 @@ public class Solo {
 	 */
 	
 	public boolean searchToggleButton(String search) {
-		boolean found = searcher.searchToggleButton(search);
+		boolean found = searcher.searchToggleButton(search, 0);
 		return found;
 	}
 	
@@ -282,7 +282,7 @@ public class Solo {
 	 */
 	
 	public boolean searchText(String search) {
-		boolean found = searcher.searchText(search);
+		boolean found = searcher.searchText(search, 0, true);
 		return found;
 	}
 	
@@ -299,7 +299,7 @@ public class Solo {
 	 */
 	
 	public boolean searchText(String search, int matches) {
-		boolean found = searcher.searchText(search, matches);
+		boolean found = searcher.searchText(search, matches, true);
 		return found;
 
 	}
