@@ -141,18 +141,25 @@ public class RobotiumUtils {
 	 * 
 	 */
 	
-	public boolean waitForText(String text, int matches, long timeout, boolean scroll)
-    {
-		long now = System.currentTimeMillis();
-        final long endTime = now + timeout;
+	public boolean waitForText(String text, int matches, long timeout, boolean scroll) {
+        final long endTime = System.currentTimeMillis() + timeout;
 
-		while (!searcher.searchFor(TextView.class, text, matches, scroll) && !searcher.searchForEditText(text, scroll) && now < endTime) {
-        	now = System.currentTimeMillis();	
+		while (true) {
+			final boolean timedOut = System.currentTimeMillis() > endTime;
+			if (timedOut){
+				return false;
+			}
+
+			final boolean foundAnyTextView = searcher.searchFor(TextView.class, text, matches, scroll);
+			if (foundAnyTextView){
+				return true;
+			}
+
+			final boolean foundAnyEditText = searcher.searchForEditText(text, scroll);
+			if (foundAnyEditText){
+				return true;
+			}
         }
-
-		final boolean timedOut = now > endTime;
-		return !timedOut;
-
     }
 	
 	/**
