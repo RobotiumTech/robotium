@@ -229,8 +229,8 @@ public class Clicker {
 		}catch(SecurityException e){
 			Assert.assertTrue("Can not open the menu!", false);
 		}
-		if(subMenu && (viewFetcher.getCurrentTextViews(null).size() > 5) && !robotiumUtils.waitForText(text, 1, 1500, false)){
-			for(TextView textView : viewFetcher.getCurrentTextViews(null)){
+		if(subMenu && (viewFetcher.getCurrentViews(TextView.class).size() > 5) && !robotiumUtils.waitForText(text, 1, 1500, false)){
+			for(TextView textView : viewFetcher.getCurrentViews(TextView.class)){
 				x = xy[0];
 				y = xy[1];
 				textView.getLocationOnScreen(xy);
@@ -260,7 +260,7 @@ public class Clicker {
 		Matcher matcher; 
 		robotiumUtils.waitForText(text, 0, TIMEOUT, scroll);
 		TextView textToClick = null;
-		ArrayList <TextView> textViewList = viewFetcher.getCurrentTextViews(null);
+		ArrayList <TextView> textViewList = viewFetcher.getCurrentViews(TextView.class);
 		if(match == 0)
 			match = 1;
 		for(TextView textView : textViewList){
@@ -388,7 +388,9 @@ public class Clicker {
 
 		ArrayList<TextView> textViews = null;
 		try{
-			textViews = viewFetcher.getCurrentTextViews(viewFetcher.getCurrentViews(ListView.class).get(index));
+			final ArrayList<ListView> currentLists = viewFetcher.getCurrentViews(ListView.class);
+			final ListView listView = currentLists.get(index);
+			textViews = viewFetcher.getCurrentViews(TextView.class, listView);
 		}catch(IndexOutOfBoundsException e){
 			Assert.assertTrue("Index is not valid!", false);
 		}

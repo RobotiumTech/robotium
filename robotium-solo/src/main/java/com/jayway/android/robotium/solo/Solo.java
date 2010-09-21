@@ -1028,8 +1028,7 @@ public class Solo {
 	 */
 
 	public ArrayList<TextView> getCurrentTextViews(View parent) {
-		return ensureArrayListOrNull(viewFetcher.getCurrentTextViews(parent));
-		
+		return ensureArrayListOrNull(viewFetcher.getCurrentViews(TextView.class, parent));
 	}
 	
 	/**

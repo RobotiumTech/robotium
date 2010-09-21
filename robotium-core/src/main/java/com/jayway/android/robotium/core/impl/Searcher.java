@@ -343,7 +343,7 @@ public class Searcher {
 		inst.waitForIdleSync();
 		Pattern p = Pattern.compile(search);
 		Matcher matcher;
-		ArrayList<TextView> textViewList = viewFetcher.getCurrentTextViews(null);
+		ArrayList<TextView> textViewList = viewFetcher.getCurrentViews(TextView.class);
 		if(matches == 0)
 			matches = 1;
 		for(TextView textView : textViewList){

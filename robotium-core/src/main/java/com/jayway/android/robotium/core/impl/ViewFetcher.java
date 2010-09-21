@@ -9,7 +9,6 @@ import android.app.Activity;
 import android.app.Instrumentation;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 /**
  * This class contains view methods. Examples are getViews(),
@@ -171,36 +170,6 @@ public class ViewFetcher {
 
 
 	/**
-	 * Returns a {@code List} of the {@code TextView}s contained in the current
-	 * {@code Activity} or {@code View}.
-	 *
-	 * @param parent the parent {@code View} from which the {@code TextView}s should be returned. {@code null} if
-	 * all {@code TextView}s from the current {@code Activity} should be returned
-	 *
-	 * @return a {@code List} of the {@code TextView}s contained in the current
-	 * {@code Activity} or {@code View}
-	 *
-	 */
-
-	public ArrayList<TextView> getCurrentTextViews(View parent) {		
-		final List<View> viewList;
-		if(parent == null) {
-			viewList = getViews();
-		}else{
-			viewList = getViews(parent);
-		}
-		ArrayList<TextView> textViewList = new ArrayList<TextView>();
-		for(View view : viewList){
-			if (view instanceof android.widget.TextView) {
-				textViewList.add((TextView) view);
-			}
-			
-		}
-		return textViewList;	
-	}
-
-
-	/**
 	 * Returns a {@code List} of {@code View}s of the specified {@code Class} located in the current
 	 * {@code Activity}.
 	 *
@@ -208,8 +177,19 @@ public class ViewFetcher {
 	 * @return a {@code List} of {@code View}s of the specified {@code Class} located in the current {@code Activity}
 	 */
 	public <T extends View> ArrayList<T> getCurrentViews(Class<T> classToFilterBy) {
+		return getCurrentViews(classToFilterBy, null);
+	}
+
+	/**
+	 * Returns a {@code List} of {@code View}s of the specified {@code Class} located under the specified {@code parent}.
+	 *
+	 * @param classToFilterBy return all instances of this class, e.g. {@code Button.class} or {@code GridView.class}
+	 * @param parent the parent {@code View} for where to start the traversal
+	 * @return a {@code List} of {@code View}s of the specified {@code Class} located under the specified {@code parent}
+	 */
+	public <T extends View> ArrayList<T> getCurrentViews(Class<T> classToFilterBy, View parent) {
 		ArrayList<T> filteredViews = new ArrayList<T>();
-		List<View> allViews = getViews();
+		List<View> allViews = getViews(parent);
 		for(View view : allViews){
 			if (view != null && classToFilterBy.isAssignableFrom(view.getClass())) {
 				filteredViews.add(classToFilterBy.cast(view));
