@@ -11,7 +11,7 @@ import android.widget.TextView;
 import android.widget.ToggleButton;
 
 /**
- * This class contains various search methods. Examples are: searchEditText(),
+ * This class contains various search methods. Examples are: searchForEditTextWithTimeout(),
  * searchText(), searchButton().
  * 
  * @author Renas Reda, renas.reda@jayway.com
@@ -54,7 +54,7 @@ public class Searcher {
 	 *
 	 */
     
-    public boolean searchEditText(String search) {
+    public boolean searchForEditTextWithTimeout(String search) {
         long now = System.currentTimeMillis();
         final long endTime = now + TIMEOUT;
 
