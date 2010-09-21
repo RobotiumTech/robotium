@@ -504,7 +504,7 @@ public class Solo {
 	 */
 	
 	public void clickOnImageButton(int index) {
-		clicker.clickOnImageButton(index);
+		clicker.clickOn(ImageButton.class, index);
 	}
 	
 	/**
@@ -696,7 +696,7 @@ public class Solo {
 	 */
 	
 	public void clickOnButton(int index) {
-		clicker.clickOnButton(index);
+		clicker.clickOn(Button.class, index);
 	}
 	
 	/**
@@ -707,7 +707,7 @@ public class Solo {
 	 */
 	
 	public void clickOnRadioButton(int index) {
-		clicker.clickOnRadioButton(index);
+		clicker.clickOn(RadioButton.class, index);
 	}
 	
 	/**
@@ -718,7 +718,7 @@ public class Solo {
 	 */
 	
 	public void clickOnCheckBox(int index) {
-		clicker.clickOnCheckBox(index);
+		clicker.clickOn(CheckBox.class, index);
 	}
 	
 	/**
@@ -729,7 +729,7 @@ public class Solo {
 	 */
 	
 	public void clickOnEditText(int index) {
-		clicker.clickOnEditText(index);
+		clicker.clickOn(EditText.class, index);
 	}
 
 	/**
@@ -862,7 +862,7 @@ public class Solo {
 	 */
 	
 	public void clickOnImage(int index) {
-		clicker.clickOnImage(index);
+		clicker.clickOn(ImageView.class, index);
 	}
 	
 	/**

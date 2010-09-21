@@ -54,8 +54,8 @@ public class TextEnterer{
     			}
     		}
 			if (!focused && viewFetcher.getCurrentViews(EditText.class).size() > 0) {
-    			clicker.clickOnEditText(index);
-    			try{
+				clicker.clickOn(EditText.class, index);
+				try{
     				inst.sendStringSync(text);
     				inst.sendKeyDownUpSync(KeyEvent.KEYCODE_ENTER);
     				inst.sendKeyDownUpSync(KeyEvent.KEYCODE_ENTER);
@@ -65,8 +65,8 @@ public class TextEnterer{
 
     		} else if (focused && viewFetcher.getCurrentViews(EditText.class).size() >1)
     		{
-    			clicker.clickOnEditText(index);
-    			try{
+				clicker.clickOn(EditText.class, index);
+				try{
     				inst.sendStringSync(text);
     			}catch(SecurityException e){
     				Assert.assertTrue("Text can not be entered!", false);

@@ -380,19 +380,6 @@ public class Clicker {
 			countMatches = 0;
 		}
 	}
-	
-	
-	
-	/**
-	 * This method is used to click on a button with a specific index.
-	 *
-	 * @param index the index number of the button
-	 *
-	 */
-	
-	public void clickOnButton(int index) {
-		clickOn(Button.class, index);
-	}
 
 
 	/**
@@ -439,62 +426,7 @@ public class Clicker {
 		}
 	}
 
-	
-	/**
-	 * This method is used to click on an image with a certain index.
-	 *
-	 * @param index the index of the image to be clicked
-	 *
-	 */
-	
-	public void clickOnImage(int index) {
-		clickOn(ImageView.class, index);
-	}
-	
-	/**
-	 * This method is used to click on an image button with a certain index.
-	 *
-	 * @param index the index of the image button to be clicked
-	 *
-	 */
-	
-	public void clickOnImageButton(int index) {
-		clickOn(ImageButton.class, index);
-	}
-	
-	/**
-	 * This method is used to click on a radio button with a certain index.
-	 *
-	 * @param index the index of the radio button to be clicked
-	 *
-	 */
-	
-	public void clickOnRadioButton(int index) {
-		clickOn(RadioButton.class, index);
-	}
-	
-	/**
-	 * This method is used to click on a check box with a certain index.
-	 *
-	 * @param index the index of the check box to be clicked
-	 *
-	 */
-	
-	public void clickOnCheckBox(int index) {
-		clickOn(CheckBox.class, index);
-	}
-	
-	/**
-	 * Clicks on an {@link android.widget.EditText} with a certain index.
-	 *
-	 * @param index the index of the {@code EditText} to be clicked. 0 if only one is available
-	 *
-	 */
-	
-	public void clickOnEditText(int index) {
-		clickOn(EditText.class, index);
-	}
-	
+
 	/**
 	 * Simulates pressing the hardware back key.
 	 * 
