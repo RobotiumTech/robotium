@@ -188,48 +188,7 @@ public class Clicker {
 		}
 		inst.sendKeyDownUpSync(KeyEvent.KEYCODE_ENTER);
 	}
-	
-	/**
-	 * Long clicks on a specific {@link TextView}. Will automatically scroll when needed. {@link #clickOnText} can then be
-	 * used to click on the context menu items that appear after the long click.
-	 *
-	 * @param text the text that should be clicked on. The parameter <strong>will</strong> be interpreted as a regular expression.
-	 *
-	 */
-	
-	public void clickLongOnText(String text)
-	{
-		clickOnText(text, true, 1, true);
-	}
-	
-	/**
-	 * Long clicks on a specific {@link TextView}. Will automatically scroll when needed. {@link #clickOnText} can then be
-	 * used to click on the context menu items that appear after the long click.
-	 *
-	 * @param text the text that should be clicked on. The parameter <strong>will</strong> be interpreted as a regular expression.
-	 *
-	 */
-	
-	public void clickLongOnText(String text, int matches)
-	{
-		clickOnText(text, true, matches, true);
-	}
-	
-	/**
-	 * Long clicks on a specific {@link TextView}. {@link #clickOnText} can then be
-	 * used to click on the context menu items that appear after the long click.
-	 *
-	 * @param text the text that should be clicked on. The parameter <strong>will</strong> be interpreted as a regular expression.
-	 * @param match the match that should be clicked on 
-	 * @param scroll true if scrolling should be performed
-	 *
-	 */
-	
-	public void clickLongOnText(String text, int match, boolean scroll)
-	{
-		clickOnText(text, true, match, scroll);
-	}
-	
+
 	/**
 	 * Clicks on a menu item with a given text
 	 * @param text the menu text that should be clicked on. The parameter <strong>will</strong> be interpreted as a regular expression.

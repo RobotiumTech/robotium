@@ -644,7 +644,7 @@ public class Solo {
 	
 	public void clickLongOnText(String text)
 	{
-		clicker.clickLongOnText(text);
+		clicker.clickOnText(text, true, 1, true);
 	}
 	
 	/**
@@ -658,7 +658,7 @@ public class Solo {
 	
 	public void clickLongOnText(String text, int match)
 	{
-		clicker.clickLongOnText(text, match);
+		clicker.clickOnText(text, true, match, true);
 	}
 	
 	/**
@@ -673,7 +673,7 @@ public class Solo {
 	
 	public void clickLongOnText(String text, int match, boolean scroll)
 	{
-		clicker.clickLongOnText(text, match, scroll);
+		clicker.clickOnText(text, true, match, scroll);
 	}
 	
 	/**
