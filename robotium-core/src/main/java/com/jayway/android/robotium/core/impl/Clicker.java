@@ -16,7 +16,7 @@ import android.view.View;
 import android.view.ViewConfiguration;
 
 /**
- * This class contains various click methods. Examples are: clickOnButton(),
+ * This class contains various click methods. Examples are: clickOn(),
  * clickOnText(), clickOnScreen().
  * 
  * @author Renas Reda, renas.reda@jayway.com
@@ -409,7 +409,7 @@ public class Clicker {
 	 */
 	
 	public void clickOnButton(String nameRegex) {
-		clickOnButton(nameRegex, viewFetcher.getCurrentViews(Button.class), "Button");
+		clickOn(Button.class, nameRegex);
 	}
 
 	/**
@@ -420,37 +420,35 @@ public class Clicker {
 	 */
 
 	public void clickOnToggleButton(String nameRegex) {
-		clickOnButton(nameRegex, viewFetcher.getCurrentViews(ToggleButton.class), "ToggleButton");
+		clickOn(ToggleButton.class, nameRegex);
 	}
 
 	/**
-	 * Clicks on a {@link Button} with a given text.
+	 * Clicks on a {@code View} of a specific class, with a given text.
 	 *
-	 * @param nameRegex the name of the button presented to the user. The parameter <strong>will</strong> be interpreted as a regular expression.
-	 * @param buttons available buttons
-	 * @param buttonClassName simple class name of the button class in question, used in an internal Assert's message.
+	 * @param viewClass what kind of {@code View} to click, e.g. {@code Button.class} or {@code TextView.class}
+	 * @param nameRegex the name of the view presented to the user. The parameter <strong>will</strong> be interpreted as a regular expression.
 	 */
-	private void clickOnButton(String nameRegex, List<? extends Button> buttons, String buttonClassName) {
-		Pattern p = Pattern.compile(nameRegex);
-		Matcher matcher;
+	private <T extends TextView> void clickOn(Class<T> viewClass, String nameRegex) {
+		final List<T> views = viewFetcher.getCurrentViews(viewClass);
+		final Pattern pattern = Pattern.compile(nameRegex);
 		robotiumUtils.waitForText(nameRegex, 0, TIMEOUT, true);
-		Button buttonToClick = null;
-		for(Button button : buttons){
-			matcher = p.matcher(button.getText().toString());
-			if(matcher.matches()){
-				buttonToClick = button;
+		T viewToClick = null;
+		for(T view : views){
+			if(pattern.matcher(view.getText().toString()).matches()){
+				viewToClick = view;
 				break;
 			}
 		}
-		if (buttonToClick != null) {
-			clickOnScreen(buttonToClick);
+		if (viewToClick != null) {
+			clickOnScreen(viewToClick);
 		} else if (scroller.scrollDown()){
-			// TODO: This is probably a bug. Should it make different calls depending on what class we want to click on?
-			clickOnButton(nameRegex);
+			clickOn(viewClass, nameRegex);
 		}else {
-			for (int i = 0; i < buttons.size(); i++)
-				Log.d(LOG_TAG, nameRegex + " not found. Have found: " + buttons.get(i).getText());
-			Assert.assertTrue(buttonClassName + " with the text: " + nameRegex + " is not found!", false);
+			for (T view : views) {
+				Log.d(LOG_TAG, nameRegex + " not found. Have found: " + view.getText());
+			}
+			Assert.assertTrue(viewClass.getSimpleName() + " with the text: " + nameRegex + " is not found!", false);
 		}
 	}
 
