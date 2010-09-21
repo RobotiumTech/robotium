@@ -1,6 +1,8 @@
 package com.jayway.android.robotium.solo;
 
 import java.util.ArrayList;
+import java.util.List;
+
 import android.app.Activity;
 import android.app.Instrumentation;
 import android.content.pm.ActivityInfo;
@@ -112,9 +114,7 @@ public class Solo {
 	 */
 	
 	public ArrayList<View> getViews() {
-		ArrayList<View> viewList = viewFetcher.getViews();
-		return viewList;
-
+		return ensureArrayListOrNull(viewFetcher.getViews());
 	}
 	
 	/**
@@ -338,7 +338,7 @@ public class Solo {
 	
 	public ArrayList<Activity> getAllOpenedActivities()
 	{
-		return activitiyUtils.getAllOpenedActivities();
+		return ensureArrayListOrNull(activitiyUtils.getAllOpenedActivities());
 	}
 	
 	/**
@@ -743,7 +743,7 @@ public class Solo {
 	 */
 
 	public ArrayList<TextView> clickInList(int line) {
-		return clicker.clickInList(line);
+		return ensureArrayListOrNull(clicker.clickInList(line));
 	}
 
 	/**
@@ -757,7 +757,7 @@ public class Solo {
 	 */
 	
 	public ArrayList<TextView> clickInList(int line, int listIndex) {
-		return clicker.clickInList(line, listIndex);
+		return ensureArrayListOrNull(clicker.clickInList(line, listIndex));
 	}
 
 	 /**
@@ -876,8 +876,7 @@ public class Solo {
 	 */
 	
 	public ArrayList<ImageView> getCurrentImageViews() {
-		ArrayList<ImageView> imageViewList = viewFetcher.getCurrentViews(ImageView.class);
-		return imageViewList;
+		return ensureArrayListOrNull(viewFetcher.getCurrentViews(ImageView.class));
 	}
 	
 	/**
@@ -968,9 +967,7 @@ public class Solo {
 	 */
 	
 	public ArrayList<EditText> getCurrentEditTexts() {
-		ArrayList<EditText> editTextList = viewFetcher.getCurrentViews(EditText.class);
-		return editTextList;
-		
+		return ensureArrayListOrNull(viewFetcher.getCurrentViews(EditText.class));
 	}
 	
 	/**
@@ -983,8 +980,7 @@ public class Solo {
 	 */
 
 	public ArrayList<ListView> getCurrentListViews() {
-		ArrayList<ListView> listViewList = viewFetcher.getCurrentViews(ListView.class);
-		return listViewList;
+		return ensureArrayListOrNull(viewFetcher.getCurrentViews(ListView.class));
 	}
 
 	/**
@@ -997,7 +993,7 @@ public class Solo {
 	 */
 
     public ArrayList<ScrollView> getCurrentScrollViews() {
-		return viewFetcher.getCurrentViews(ScrollView.class);
+		return ensureArrayListOrNull(viewFetcher.getCurrentViews(ScrollView.class));
 	}
 
 	
@@ -1010,10 +1006,8 @@ public class Solo {
 	 *
 	 */
 	
-	public ArrayList<Spinner> getCurrentSpinners()
-	{
-		ArrayList<Spinner> spinnerList = viewFetcher.getCurrentViews(Spinner.class);
-		return spinnerList;
+	public ArrayList<Spinner> getCurrentSpinners() {
+		return ensureArrayListOrNull(viewFetcher.getCurrentViews(Spinner.class));
 	}
 	
 	/**
@@ -1029,8 +1023,7 @@ public class Solo {
 	 */
 
 	public ArrayList<TextView> getCurrentTextViews(View parent) {
-		ArrayList<TextView> textViewList = viewFetcher.getCurrentTextViews(parent);
-		return textViewList;
+		return ensureArrayListOrNull(viewFetcher.getCurrentTextViews(parent));
 		
 	}
 	
@@ -1044,8 +1037,7 @@ public class Solo {
 	 */
 	
 	public ArrayList<GridView> getCurrentGridViews() {
-		ArrayList<GridView> gridViewList = viewFetcher.getCurrentViews(GridView.class);
-		return gridViewList;
+		return ensureArrayListOrNull(viewFetcher.getCurrentViews(GridView.class));
 	}
 	
 	
@@ -1058,8 +1050,7 @@ public class Solo {
 	 */
 	
 	public ArrayList<Button> getCurrentButtons() {
-		ArrayList<Button> buttonList = viewFetcher.getCurrentViews(Button.class);
-		return buttonList;
+		return ensureArrayListOrNull(viewFetcher.getCurrentViews(Button.class));
 	}
 	
 	/**
@@ -1072,8 +1063,7 @@ public class Solo {
 	 */
 	
 	public ArrayList<ToggleButton> getCurrentToggleButtons() {
-		ArrayList<ToggleButton> toggleButtonList = viewFetcher.getCurrentViews(ToggleButton.class);
-		return toggleButtonList;
+		return ensureArrayListOrNull(viewFetcher.getCurrentViews(ToggleButton.class));
 	}
 	
 	/**
@@ -1086,7 +1076,7 @@ public class Solo {
 	 */
 	
 	public ArrayList<RadioButton> getCurrentRadioButtons() {
-		return viewFetcher.getCurrentViews(RadioButton.class);
+		return ensureArrayListOrNull(viewFetcher.getCurrentViews(RadioButton.class));
 	}
 	
 	/**
@@ -1098,9 +1088,8 @@ public class Solo {
 	 *
 	 */
 	
-	public ArrayList<CheckBox> getCurrentCheckBoxes()
-	{
-		return viewFetcher.getCurrentViews(CheckBox.class);
+	public ArrayList<CheckBox> getCurrentCheckBoxes() {
+		return ensureArrayListOrNull(viewFetcher.getCurrentViews(CheckBox.class));
 	}
 	
 	/**
@@ -1112,9 +1101,8 @@ public class Solo {
 	 *
 	 */
 	
-	public ArrayList<ImageButton> getCurrentImageButtons()
-	{
-		return viewFetcher.getCurrentViews(ImageButton.class);
+	public ArrayList<ImageButton> getCurrentImageButtons() {
+		return ensureArrayListOrNull(viewFetcher.getCurrentViews(ImageButton.class));
 	}
 	
 	/**
@@ -1242,6 +1230,28 @@ public class Solo {
 	public void finalize() throws Throwable {
 		activitiyUtils.finalize();
 	}
-	
+
+
+	/**
+	 * Converts any {@link List} into an {@link ArrayList} if necessary.
+	 *
+	 * This is used to keep the {@link Solo} API intact.
+	 *
+	 * @param list any {@code List} to be checked or converted into an {@code ArrayList}
+	 * @param <T> type of the list's elements
+	 * @return {@code null} if {@code list==null}, or an {@code ArrayList} with the same contents as the supplied {@code list}, or the same {@code list}
+	 * instance if it's already an {@code ArrayList}
+	 */
+	private <T> ArrayList<T> ensureArrayListOrNull(List<T> list){
+		if (list == null){
+			return null;
+		}else{
+			if (list instanceof ArrayList){
+				return (ArrayList<T>) list;
+			}else{
+				return new ArrayList<T>(list);
+			}
+		}
+	}
 	
 }
