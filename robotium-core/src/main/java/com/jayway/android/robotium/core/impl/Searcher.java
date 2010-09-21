@@ -85,8 +85,7 @@ public class Searcher {
 	public boolean searchForTextWithTimeout(String regex, int matches, boolean scroll) {
 		long now = System.currentTimeMillis();
 		final long endTime = now + TIMEOUT;
-		while (!searchForText(regex, matches, scroll) && now < endTime)
-		{
+		while (!searchFor(TextView.class, regex, matches, scroll) && now < endTime) {
 			now = System.currentTimeMillis();
 		}
 		if(now < endTime)
@@ -111,8 +110,7 @@ public class Searcher {
 	public boolean searchWithTimeoutFor(Class<? extends TextView> viewClass, String regex, int matches) {
 		long now = System.currentTimeMillis();
 		final long endTime = now + TIMEOUT;
-		while (!searchFor(viewClass, regex, matches) && now < endTime)
-		{
+		while (!searchFor(viewClass, regex, matches, true) && now < endTime) {
 			now = System.currentTimeMillis();
 		}
 		if(now < endTime)
@@ -159,11 +157,12 @@ public class Searcher {
 	 * @param regex the text to search for. The parameter <strong>will</strong> be interpreted as a regular expression.
 	 * @param matches the number of matches expected to be found. {@code 0} matches means that one or more
 	 * matches are expected to be found.
+	 * @param scroll whether scrolling should be performed
 	 * @return {@code true} if a view of the specified class with the given text is found a given number of times.
 	 * {@code false} if it is not found.
 	 *
 	 */
-	private <T extends TextView> boolean searchFor(Class<T> viewClass, String regex, int matches) {
+	public <T extends TextView> boolean searchFor(Class<T> viewClass, String regex, int matches, boolean scroll) {
 		sleeper.sleep();
 		inst.waitForIdleSync();
 		Pattern p = Pattern.compile(regex);
@@ -182,9 +181,9 @@ public class Searcher {
 			}
 		}
 
-		if (scroller.scroll(Scroller.Direction.DOWN))
+		if (scroll && scroller.scroll(Scroller.Direction.DOWN))
 		{
-			return searchFor(viewClass, regex, matches);
+			return searchFor(viewClass, regex, matches, scroll);
 		} else {
 			if (countMatches > 0)
 				Log.d(LOG_TAG, " There are only " + countMatches + " matches of " + regex);
@@ -193,49 +192,5 @@ public class Searcher {
 		}
 	}
 
-	
-	/**
-	 * Searches for a text string and returns true if the searched text is found a given
-	 * number of times
-	 * 
-	 * @param regex the text to search for. The parameter <strong>will</strong> be interpreted as a regular expression.
-	 * @param matches the number of matches expected to be found. 0 matches means that one or more 
-	 * matches are expected to be found
-	 * @param scroll true if scrolling should be performed
-	 * @return true if regex string is found a given number of times and false if the regex string
-	 * is not found
-	 *  
-	 */
-	
-	public boolean searchForText(String regex, int matches, boolean scroll) {
-		sleeper.sleep();
-		inst.waitForIdleSync();
-		Pattern p = Pattern.compile(regex);
-		Matcher matcher;
-		ArrayList<TextView> textViewList = viewFetcher.getCurrentViews(TextView.class);
-		if(matches == 0)
-			matches = 1;
-		for(TextView textView : textViewList){
-			matcher = p.matcher(textView.getText().toString());
-			if(matcher.find()){	
-				countMatches++;
-			}
-			if (countMatches == matches) {
-				countMatches=0;
-				return true;
-			}
-		}
 
-		if (scroll && scroller.scroll(Scroller.Direction.DOWN)) {
-			return searchForText(regex, matches, scroll);
-		} else {
-			if (countMatches > 0)
-				Log.d(LOG_TAG, " There are only " + countMatches + " matches of " + regex);
-			countMatches=0;
-			return false;
-		}
-		
-	}
-	
-	
 }

@@ -1,6 +1,8 @@
 package com.jayway.android.robotium.core.impl;
 
 import java.util.ArrayList;
+
+import android.widget.TextView;
 import junit.framework.Assert;
 import android.app.Instrumentation;
 import android.view.KeyEvent;
@@ -144,8 +146,7 @@ public class RobotiumUtils {
 		long now = System.currentTimeMillis();
         final long endTime = now + timeout;
 
-        while (!searcher.searchForText(text, matches, scroll) && !searcher.searchForEditText(text, scroll) && now < endTime)
-        {
+		while (!searcher.searchFor(TextView.class, text, matches, scroll) && !searcher.searchForEditText(text, scroll) && now < endTime) {
         	now = System.currentTimeMillis();	
         }    
         if (now > endTime)
