@@ -325,13 +325,12 @@ public class Clicker {
 	
 	
 	/**
-	 * Private method that is used to click on a specific text view displaying a certain
-	 * text.
+	 * Clicks on a specific {@link TextView} displaying a certain text.
 	 *
 	 * @param text the text that should be clicked on. The parameter <strong>will</strong> be interpreted as a regular expression.
-	 * @param longClick true if the click should be a long click 
-	 * @param match the match that should be clicked on 
-	 *
+	 * @param longClick {@code true} if the click should be a long click
+	 * @param match the regex match that should be clicked on
+	 * @param scroll whether to scroll to find the text
 	 */
 
 	private void clickOnText(String text, boolean longClick, int match, boolean scroll) {
