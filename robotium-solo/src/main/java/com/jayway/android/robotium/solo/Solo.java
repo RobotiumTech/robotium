@@ -373,7 +373,8 @@ public class Solo {
 	 * 
 	 */
 	
-	public void assertCurrentActivity(String message, Class<? extends Activity> expectedClass)
+	@SuppressWarnings("unchecked")
+	public void assertCurrentActivity(String message, Class expectedClass)
 	{
 		asserter.assertCurrentActivity(message, expectedClass);
 
@@ -403,8 +404,9 @@ public class Solo {
 	 * @param isNewInstance {@code true} if the expected {@code Activity} is a new instance of the {@code Activity}
 	 * 
 	 */
-	
-	public void assertCurrentActivity(String message, Class<? extends Activity> expectedClass,
+
+	@SuppressWarnings("unchecked")
+	public void assertCurrentActivity(String message, Class expectedClass,
 			boolean isNewInstance) {
 		asserter.assertCurrentActivity(message, expectedClass, isNewInstance);
 	}	
