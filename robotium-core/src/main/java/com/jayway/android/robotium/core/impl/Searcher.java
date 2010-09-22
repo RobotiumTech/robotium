@@ -67,6 +67,9 @@ public class Searcher {
         }
 
 		sleeper.sleep();
+
+		//TODO: why does it call searchFor again, and not just evaluate whether it has found a match?
+		//TODO: if this is not necessary, we can simply delegate to searchWithTimeoutFor(EditText.class, ....) and refactor away this entire method
 		return searchFor(EditText.class, regex, 1, true);
 	}
 
