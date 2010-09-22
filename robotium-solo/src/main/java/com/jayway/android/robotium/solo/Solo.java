@@ -115,7 +115,7 @@ public class Solo {
 	
 	public ArrayList<View> getViews() {
 		try {
-			return ensureArrayListOrNull(viewFetcher.getViews());
+			return ensureArrayListOrNull(viewFetcher.getViews(null));
 		} catch (Exception e) {
 			e.printStackTrace();
 			return null;

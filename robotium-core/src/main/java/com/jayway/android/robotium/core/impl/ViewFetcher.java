@@ -97,20 +97,8 @@ public class ViewFetcher {
 		else
 			return null;
 	}
-	
-	
-	/**
-	 * Returns a {@code List} of the {@code View}s located in the current
-	 * {@code Activity}.
-	 *
-	 * @return a {@code List} of the {@code View}s located in the current {@code Activity}
-	 *
-	 */
-	
-	public List<View> getViews() {
-		return getViews(null);
-	}
-	
+
+
 	/**
 	 * Extracts all {@code View}s located in the currently active {@code Activity}, recursively.
 	 *
@@ -118,7 +106,7 @@ public class ViewFetcher {
 	 * @return all {@code View}s located in the currently active {@code Activity}, never {@code null}
 	 */
 	
-	private List<View> getViews(View parent) {
+	public List<View> getViews(View parent) {
 		final List<View> views = new ArrayList<View>();
 		final View parentToUse;
 
