@@ -108,25 +108,31 @@ public class ViewFetcher {
 	 */
 	
 	public List<View> getViews() {
-		inst.waitForIdleSync();
-		final View decorView = getActiveDecorView();
-		return getViews(decorView);
+		return getViews(null);
 	}
 	
 	/**
 	 * Extracts all {@code View}s located in the currently active {@code Activity}, recursively.
 	 *
-	 * @param parent the {@code View} whose children should be returned
+	 * @param parent the {@code View} whose children should be returned, or {@code null} for all
 	 * @return all {@code View}s located in the currently active {@code Activity}, never {@code null}
 	 */
 	
 	private List<View> getViews(View parent) {
 		final List<View> views = new ArrayList<View>();
+		final View parentToUse;
 
-		views.add(parent);
+		if (parent == null){
+			inst.waitForIdleSync();
+			parentToUse = getActiveDecorView();
+		}else{
+			parentToUse = parent;
+		}
 
-		if (parent instanceof ViewGroup) {
-			addChildren(views, (ViewGroup) parent);
+		views.add(parentToUse);
+
+		if (parentToUse instanceof ViewGroup) {
+			addChildren(views, (ViewGroup) parentToUse);
 		}
 
 		return views;
