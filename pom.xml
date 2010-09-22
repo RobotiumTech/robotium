@@ -253,6 +253,7 @@
                                 <id>attach-sources</id>
                                 <goals>
                                     <goal>jar-no-fork</goal>
+                                    <goal>aggregate</goal>
                                 </goals>
                             </execution>
                         </executions>
