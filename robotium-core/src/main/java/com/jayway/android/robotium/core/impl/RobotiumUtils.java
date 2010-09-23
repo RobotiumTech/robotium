@@ -104,29 +104,29 @@ public class RobotiumUtils {
 	 * Waits for a text to be shown. Default timeout is 20 seconds. 
 	 * 
 	 * @param text the text that needs to be shown
-	 * @param matches the number of matches of text that must be shown. 0 means any number of matches
+	 * @param expectedMinimumNumberOfMatches the minimum number of matches of text that must be shown. {@code 0} means any number of matches
 	 * @return {@code true} if text is found and {@code false} if it is not found before the timeout
 	 * 
 	 */
 	
-	public boolean waitForText(String text, int matches) {
+	public boolean waitForText(String text, int expectedMinimumNumberOfMatches) {
 
-		return waitForText(text, matches, TIMEOUT, true);
+		return waitForText(text, expectedMinimumNumberOfMatches, TIMEOUT, true);
 	}
 	
 	 /**
 	 * Waits for a text to be shown.
 	 *
 	 * @param text the text that needs to be shown
-	 * @param matches the number of matches of text that must be shown. {@code 0} means any number of matches
+	 * @param expectedMinimumNumberOfMatches the minimum number of matches of text that must be shown. {@code 0} means any number of matches
 	 * @param timeout the the amount of time in milliseconds to wait
 	 * @return {@code true} if text is found and {@code false} if it is not found before the timeout
 	 * 
 	 */
 	
-	public boolean waitForText(String text, int matches, long timeout)
+	public boolean waitForText(String text, int expectedMinimumNumberOfMatches, long timeout)
 	{
-		return waitForText(text, matches, timeout, true);
+		return waitForText(text, expectedMinimumNumberOfMatches, timeout, true);
 	}
 
 	
@@ -134,14 +134,14 @@ public class RobotiumUtils {
 	 * Waits for a text to be shown.
 	 *
 	 * @param text the text that needs to be shown
-	 * @param matches the number of matches of text that must be shown. {@code 0} means any number of matches
+	 * @param expectedMinimumNumberOfMatches the minimum number of matches of text that must be shown. {@code 0} means any number of matches
 	 * @param timeout the the amount of time in milliseconds to wait
 	 * @param scroll {@code true} if scrolling should be performed
 	 * @return {@code true} if text is found and {@code false} if it is not found before the timeout
 	 * 
 	 */
 	
-	public boolean waitForText(String text, int matches, long timeout, boolean scroll) {
+	public boolean waitForText(String text, int expectedMinimumNumberOfMatches, long timeout, boolean scroll) {
         final long endTime = System.currentTimeMillis() + timeout;
 
 		while (true) {
@@ -152,7 +152,7 @@ public class RobotiumUtils {
 
 			sleeper.sleep();
 
-			final boolean foundAnyTextView = searcher.searchFor(TextView.class, text, matches, scroll);
+			final boolean foundAnyTextView = searcher.searchFor(TextView.class, text, expectedMinimumNumberOfMatches, scroll);
 			if (foundAnyTextView){
 				return true;
 			}

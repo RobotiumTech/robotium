@@ -46,19 +46,19 @@ public class Searcher {
 	 *
 	 * @param viewClass what kind of {@code View} to search for, e.g. {@code Button.class} or {@code TextView.class}
 	 * @param regex the text to search for. The parameter <strong>will</strong> be interpreted as a regular expression.
-	 * @param matches the number of matches expected to be found. {@code 0} matches means that one or more
+	 * @param expectedMinimumNumberOfMatches the minimum number of matches expected to be found. {@code 0} matches means that one or more
 	 * matches are expected to be found
 	 * @param scroll whether scrolling should be performed
 	 * @return {@code true} if a {@code View} of the specified class with the given text is found a given number of
 	 * times, and {@code false} if it is not found
 	 *
 	 */
-	public boolean searchWithTimeoutFor(Class<? extends TextView> viewClass, String regex, int matches, boolean scroll) {
+	public boolean searchWithTimeoutFor(Class<? extends TextView> viewClass, String regex, int expectedMinimumNumberOfMatches, boolean scroll) {
 		final long endTime = System.currentTimeMillis() + TIMEOUT;
 
 		while (System.currentTimeMillis() < endTime) {
 			sleeper.sleep();
-			final boolean foundAnyMatchingView = searchFor(viewClass, regex, matches, scroll);
+			final boolean foundAnyMatchingView = searchFor(viewClass, regex, expectedMinimumNumberOfMatches, scroll);
 			if (foundAnyMatchingView){
 				return true;
 			}
@@ -74,18 +74,18 @@ public class Searcher {
 	 *
 	 * @param viewClass what kind of {@code View} to search for, e.g. {@code Button.class} or {@code TextView.class}
 	 * @param regex the text to search for. The parameter <strong>will</strong> be interpreted as a regular expression.
-	 * @param expectedNumberOfMatches the number of matches expected to be found. {@code 0} matches means that one or more
+	 * @param expectedMinimumNumberOfMatches the minimum number of matches expected to be found. {@code 0} matches means that one or more
 	 * matches are expected to be found.
 	 * @param scroll whether scrolling should be performed
 	 * @return {@code true} if a view of the specified class with the given text is found a given number of times.
 	 * {@code false} if it is not found.
 	 *
 	 */
-	public <T extends TextView> boolean searchFor(Class<T> viewClass, String regex, int expectedNumberOfMatches, boolean scroll) {
+	public <T extends TextView> boolean searchFor(Class<T> viewClass, String regex, int expectedMinimumNumberOfMatches, boolean scroll) {
 		inst.waitForIdleSync();
 
-		if(expectedNumberOfMatches == 0) {
-			expectedNumberOfMatches = 1;
+		if(expectedMinimumNumberOfMatches == 0) {
+			expectedMinimumNumberOfMatches = 1;
 		}
 		int matchesFound = 0;
 
@@ -97,14 +97,14 @@ public class Searcher {
 			if (matcher.find()){
 				matchesFound++;
 			}
-			if (matchesFound == expectedNumberOfMatches) {
+			if (matchesFound == expectedMinimumNumberOfMatches) {
 				return true;
 			}
 		}
 
 		if (scroll && scroller.scroll(Scroller.Direction.DOWN)) {
 			sleeper.sleep();
-			return searchFor(viewClass, regex, expectedNumberOfMatches, scroll);
+			return searchFor(viewClass, regex, expectedMinimumNumberOfMatches, scroll);
 		} else {
 			if (matchesFound > 0) {
 				Log.d(LOG_TAG, " There are only " + matchesFound + " matches of " + regex);

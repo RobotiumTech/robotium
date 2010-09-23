@@ -165,31 +165,29 @@ public class Solo {
 	 * Waits for a text to be shown. 
 	 * 
 	 * @param text the text that needs to be shown
-	 * @param matches the number of matches of text that must be shown. {@code 0} means any number of matches
+	 * @param expectedMinimumNumberOfMatches the minimum number of matches of text that must be shown. {@code 0} means any number of matches
 	 * @param timeout the the amount of time in milliseconds to wait 
 	 * @return {@code true} if text is found and {@code false} if it is not found before the timeout
 	 * 
 	 */
 	
-	public boolean waitForText(String text, int matches, long timeout)
-    {
-       return robotiumUtils.waitForText(text, matches, timeout);
+	public boolean waitForText(String text, int expectedMinimumNumberOfMatches, long timeout) {
+       return robotiumUtils.waitForText(text, expectedMinimumNumberOfMatches, timeout);
     }
 	
 	 /**
 	 * Waits for a text to be shown. 
 	 * 
 	 * @param text the text that needs to be shown
-	 * @param matches the number of matches of text that must be shown. {@code 0} means any number of matches
+	 * @param expectedMinimumNumberOfMatches the minimum number of matches of text that must be shown. {@code 0} means any number of matches
 	 * @param timeout the the amount of time in milliseconds to wait
 	 * @param scroll {@code true} if scrolling should be performed
 	 * @return {@code true} if text is found and {@code false} if it is not found before the timeout
 	 * 
 	 */
 	
-	public boolean waitForText(String text, int matches, long timeout, boolean scroll)
-    {
-		return robotiumUtils.waitForText(text, matches, timeout, scroll);
+	public boolean waitForText(String text, int expectedMinimumNumberOfMatches, long timeout, boolean scroll) {
+		return robotiumUtils.waitForText(text, expectedMinimumNumberOfMatches, timeout, scroll);
     }
 	
 	
@@ -241,15 +239,15 @@ public class Solo {
 	 * searched {@code Button} is found a given number of times. Will automatically scroll when needed.
 	 * 
 	 * @param regex the text to search for. The parameter <strong>will</strong> be interpreted as a regular expression.
-	 * @param matches the number of matches expected to be found. {@code 0} matches means that one or more
+	 * @param expectedMinimumNumberOfMatches the minimum number of matches expected to be found. {@code 0} matches means that one or more
 	 * matches are expected to be found
 	 * @return {@code true} if a {@code Button} with the given text is found a given number of times and {@code false}
 	 * if it is not found
 	 *  
 	 */
 	
-	public boolean searchButton(String regex, int matches) {
-		boolean found = searcher.searchWithTimeoutFor(Button.class, regex, matches, true);
+	public boolean searchButton(String regex, int expectedMinimumNumberOfMatches) {
+		boolean found = searcher.searchWithTimeoutFor(Button.class, regex, expectedMinimumNumberOfMatches, true);
 		return found;
 	}
 	
@@ -258,15 +256,15 @@ public class Solo {
 	 * searched {@code ToggleButton} is found a given number of times. Will automatically scroll when needed.
 	 * 
 	 * @param regex the text to search for. The parameter <strong>will</strong> be interpreted as a regular expression.
-	 * @param matches the number of matches expected to be found. {@code 0} matches means that one or more
+	 * @param expectedMinimumNumberOfMatches the minimum number of matches expected to be found. {@code 0} matches means that one or more
 	 * matches are expected to be found
 	 * @return {@code true} if a {@code ToggleButton} with the given text is found a given number of times and {@code false}
 	 * if it is not found
 	 *  
 	 */
 	
-	public boolean searchToggleButton(String regex, int matches) {
-		boolean found = searcher.searchWithTimeoutFor(ToggleButton.class, regex, matches, true);
+	public boolean searchToggleButton(String regex, int expectedMinimumNumberOfMatches) {
+		boolean found = searcher.searchWithTimeoutFor(ToggleButton.class, regex, expectedMinimumNumberOfMatches, true);
 		return found;
 	}
 	
@@ -289,15 +287,15 @@ public class Solo {
 	 * number of times. Will automatically scroll when needed. 
 	 * 
 	 * @param regex the text to search for. The parameter <strong>will</strong> be interpreted as a regular expression.
-	 * @param matches the number of matches expected to be found. {@code 0} matches means that one or more
+	 * @param expectedMinimumNumberOfMatches the minimum number of matches expected to be found. {@code 0} matches means that one or more
 	 * matches are expected to be found
 	 * @return {@code true} if regex string is found a given number of times and {@code false} if the regex string
 	 * is not found
 	 *  
 	 */
 	
-	public boolean searchText(String regex, int matches) {
-		boolean found = searcher.searchWithTimeoutFor(TextView.class, regex, matches, true);
+	public boolean searchText(String regex, int expectedMinimumNumberOfMatches) {
+		boolean found = searcher.searchWithTimeoutFor(TextView.class, regex, expectedMinimumNumberOfMatches, true);
 		return found;
 	}
 	
@@ -306,7 +304,7 @@ public class Solo {
 	 * number of times.
 	 * 
 	 * @param regex the text to search for. The parameter <strong>will</strong> be interpreted as a regular expression.
-	 * @param matches the number of matches expected to be found. {@code 0} matches means that one or more
+	 * @param expectedMinimumNumberOfMatches the minimum number of matches expected to be found. {@code 0} matches means that one or more
 	 * matches are expected to be found
 	 * @param scroll {@code true} if scrolling should be performed
 	 * @return {@code true} if regex string is found a given number of times and {@code false} if the regex string
@@ -314,8 +312,8 @@ public class Solo {
 	 *  
 	 */
 	
-	public boolean searchText(String regex, int matches, boolean scroll) {
-		return searcher.searchWithTimeoutFor(TextView.class, regex, matches, scroll);
+	public boolean searchText(String regex, int expectedMinimumNumberOfMatches, boolean scroll) {
+		return searcher.searchWithTimeoutFor(TextView.class, regex, expectedMinimumNumberOfMatches, scroll);
 	}
 
 	/**
