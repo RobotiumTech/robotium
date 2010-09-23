@@ -250,16 +250,16 @@ public class Clicker {
 	/**
 	 * Clicks on a specific {@link TextView} displaying a certain text.
 	 *
-	 * @param text the text that should be clicked on. The parameter <strong>will</strong> be interpreted as a regular expression.
+	 * @param regex the text that should be clicked on. The parameter <strong>will</strong> be interpreted as a regular expression.
 	 * @param longClick {@code true} if the click should be a long click
 	 * @param match the regex match that should be clicked on
-	 * @param scroll whether to scroll to find the text
+	 * @param scroll whether to scroll to find the regex
 	 */
 
-	public void clickOnText(String text, boolean longClick, int match, boolean scroll) {
-		Pattern p = Pattern.compile(text);
+	public void clickOnText(String regex, boolean longClick, int match, boolean scroll) {
+		Pattern p = Pattern.compile(regex);
 		Matcher matcher; 
-		robotiumUtils.waitForText(text, 0, TIMEOUT, scroll);
+		robotiumUtils.waitForText(regex, 0, TIMEOUT, scroll);
 		TextView textToClick = null;
 		ArrayList <TextView> textViewList = viewFetcher.getCurrentViews(TextView.class);
 		if(match == 0)
@@ -278,14 +278,14 @@ public class Clicker {
 		if (textToClick != null) {
 			clickOnScreen(textToClick, longClick);
 		} else if (scroll && scroller.scroll(Scroller.Direction.DOWN)) {
-			clickOnText(text, longClick, match, scroll);
+			clickOnText(regex, longClick, match, scroll);
 		} else {
 			if (countMatches > 0)
-				Assert.assertTrue("There are only " + countMatches + " matches of " + text, false);
+				Assert.assertTrue("There are only " + countMatches + " matches of " + regex, false);
 			else {
 				for (int i = 0; i < textViewList.size(); i++)
-					Log.d(LOG_TAG, text + " not found. Have found: " + textViewList.get(i).getText());
-				Assert.assertTrue("The text: " + text + " is not found!", false);
+					Log.d(LOG_TAG, regex + " not found. Have found: " + textViewList.get(i).getText());
+				Assert.assertTrue("The regex: " + regex + " is not found!", false);
 			}
 			countMatches = 0;
 		}
