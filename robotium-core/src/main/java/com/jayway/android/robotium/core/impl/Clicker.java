@@ -262,11 +262,12 @@ public class Clicker {
 		robotiumUtils.waitForText(regex, 0, TIMEOUT, scroll);
 		TextView textToClick = null;
 		ArrayList <TextView> textViewList = viewFetcher.getCurrentViews(TextView.class);
-		if(match == 0)
+		if (match == 0) {
 			match = 1;
-		for(TextView textView : textViewList){
+		}
+		for (TextView textView : textViewList){
 			matcher = p.matcher(textView.getText().toString());
-			if(matcher.matches()){	
+			if (matcher.matches()){
 				countMatches++;
 			}
 			if (countMatches == match) {
@@ -283,8 +284,9 @@ public class Clicker {
 			if (countMatches > 0)
 				Assert.assertTrue("There are only " + countMatches + " matches of " + regex, false);
 			else {
-				for (int i = 0; i < textViewList.size(); i++)
-					Log.d(LOG_TAG, regex + " not found. Have found: " + textViewList.get(i).getText());
+				for (TextView textView : textViewList) {
+					Log.d(LOG_TAG, regex + " not found. Have found: " + textView.getText());
+				}
 				Assert.assertTrue("The regex: " + regex + " is not found!", false);
 			}
 			countMatches = 0;
