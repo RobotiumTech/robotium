@@ -5,7 +5,6 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import android.app.Instrumentation;
 import android.util.Log;
-import android.widget.EditText;
 import android.widget.TextView;
 
 /**
@@ -39,24 +38,6 @@ public class Searcher {
         this.inst = inst;
         this.sleeper = sleeper;
     }
-	
-
-
-
-
-	
-	/**
-	 * Searches for a text string in the {@link EditText}s located in the current
-	 * {@code Activity}. Will automatically scroll when needed.
-	 *
-	 * @param regex the text to search for. The parameter <strong>will</strong> be interpreted as a regular expression.
-	 * @return {@code true} if an {@code EditText} with the given text is found or {@code false} if it is not found
-	 *
-	 */
-    
-    public boolean searchForEditTextWithTimeout(String regex) {
-        return searchWithTimeoutFor(EditText.class, regex, 1, true);
-	}
 
 
 	/**

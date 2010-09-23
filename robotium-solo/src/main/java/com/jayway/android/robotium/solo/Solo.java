@@ -203,7 +203,7 @@ public class Solo {
 	 */
 	
 	public boolean searchEditText(String search) {
-		boolean found = searcher.searchForEditTextWithTimeout(search);
+		boolean found = searcher.searchWithTimeoutFor(EditText.class, search, 1, true);
 		return found;
 	}
 	
