@@ -55,19 +55,7 @@ public class Searcher {
 	 */
     
     public boolean searchForEditTextWithTimeout(String regex) {
-        long now = System.currentTimeMillis();
-        final long endTime = now + TIMEOUT;
-
-		boolean shouldContinue = true;
-		while (shouldContinue) {
-			sleeper.sleep();
-			shouldContinue = !searchFor(EditText.class, regex, 1, true) && now < endTime;
-			now = System.currentTimeMillis();
-        }
-
-		//TODO: why does it call searchFor again, and not just evaluate whether it has found a match?
-		//TODO: if this is not necessary, we can simply delegate to searchWithTimeoutFor(EditText.class, ....) and refactor away this entire method
-		return searchFor(EditText.class, regex, 1, true);
+        return searchWithTimeoutFor(EditText.class, regex, 1, true);
 	}
 
 
