@@ -637,7 +637,7 @@ public class Solo {
 	
 	
 	/**
-	 * Long clicks on a specific {@link TextView}. Will automatically scroll when needed. {@link #clickOnText(String)} can then be
+	 * Long clicks on a specific {@link View}. Will automatically scroll when needed. {@link #clickOnText(String)} can then be
 	 * used to click on the context menu items that appear after the long click.
 	 *
 	 * @param text the text that should be clicked on. The parameter will be interpreted as a regular expression.
@@ -650,7 +650,7 @@ public class Solo {
 	}
 	
 	/**
-	 * Long clicks on a specific {@link TextView}. Will automatically scroll when needed. {@link #clickOnText(String)} can then be
+	 * Long clicks on a specific {@link View}. Will automatically scroll when needed. {@link #clickOnText(String)} can then be
 	 * used to click on the context menu items that appear after the long click.
 	 *
 	 * @param text the text that should be clicked on. The parameter will be interpreted as a regular expression.
