@@ -58,7 +58,6 @@ public class TextEnterer{
 				try{
     				inst.sendStringSync(text);
     				inst.sendKeyDownUpSync(KeyEvent.KEYCODE_ENTER);
-    				inst.sendKeyDownUpSync(KeyEvent.KEYCODE_ENTER);
     			}catch(SecurityException e){
     				Assert.assertTrue("Text can not be entered!", false);	
     			}
