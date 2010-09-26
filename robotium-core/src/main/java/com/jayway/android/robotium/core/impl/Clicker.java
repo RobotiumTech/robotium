@@ -287,7 +287,7 @@ public class Clicker {
 				for (TextView textView : textViewList) {
 					Log.d(LOG_TAG, regex + " not found. Have found: " + textView.getText());
 				}
-				Assert.assertTrue("The regex: " + regex + " is not found!", false);
+				Assert.assertTrue("The text: " + regex + " is not found!", false);
 			}
 			countMatches = 0;
 		}
