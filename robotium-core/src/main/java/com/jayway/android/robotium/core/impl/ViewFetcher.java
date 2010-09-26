@@ -3,12 +3,12 @@ package com.jayway.android.robotium.core.impl;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
-
 import junit.framework.Assert;
 import android.app.Activity;
 import android.app.Instrumentation;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 /**
  * This class contains view methods. Examples are getViews(),
@@ -79,13 +79,17 @@ public class ViewFetcher {
 	
 	public View getActiveDecorView()
 	{
-		View [] views = getWindowDecorViews();
-		Activity activity = activityUtils.getCurrentActivity(false);
+		final View [] views = getWindowDecorViews();
+		final Activity activity = activityUtils.getCurrentActivity(false);
 		if(views !=null && views.length > 0)
 		{
 			int length = views.length;
 			for(int i = length - 1; i >= 0; i--){
-				if(activity.hasWindowFocus() && activity.getWindow().getDecorView().equals(views[i])){
+			
+				if(activity.hasWindowFocus() && getCurrentViews(TextView.class,(ViewGroup) views[i]).size()==1) {
+					return views[i];
+				}	
+				else if(activity.hasWindowFocus() && activity.getWindow().getDecorView().equals(views[i])){
 					return views[i];
 				}
 				else if(!activity.hasWindowFocus() && !activity.getWindow().getDecorView().equals(views[i])){ 
