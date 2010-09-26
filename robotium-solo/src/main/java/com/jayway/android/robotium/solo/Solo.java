@@ -487,9 +487,9 @@ public class Solo {
 	
 	
 	/**
-	 * Clicks on a button with a given text. Will automatically scroll when needed. 
+	 * Clicks on a {@link Button} with a given text. Will automatically scroll when needed. 
 	 *
-	 * @param name the name of the button presented to the user. The parameter <strong>will</strong> be interpreted as a regular expression.
+	 * @param name the name of the {@code Button} presented to the user. The parameter will be interpreted as a regular expression.
 	 *
 	 */
 	
@@ -499,9 +499,9 @@ public class Solo {
 	}
 	
 	/**
-	 * Clicks on an image button with a certain index.
+	 * Clicks on an {@link ImageButton} with a certain index.
 	 *
-	 * @param index the index of the image button to be clicked. 0 if only one is available
+	 * @param index the index of the {@code ImageButton} to be clicked. 0 if only one is available
 	 *
 	 */
 	
@@ -510,9 +510,9 @@ public class Solo {
 	}
 	
 	/**
-	 * Clicks on a toggle button with a given text.
+	 * Clicks on a {@link ToggleButton} with a given text.
 	 * 
-	 * @param name the name of the toggle button presented to the user. The parameter <strong>will</strong> be interpreted as a regular expression.
+	 * @param name the name of the {@code ToggleButton} presented to the user. The parameter will be interpreted as a regular expression.
 	 * 
 	 */
 
@@ -522,7 +522,7 @@ public class Solo {
 	
 	/**
 	 * Clicks on a menu item with a given text.
-	 * @param text the menu text that should be clicked on. The parameter <strong>will</strong> be interpreted as a regular expression.
+	 * @param text the menu text that should be clicked on. The parameter will be interpreted as a regular expression.
 	 *
 	 */
 	
@@ -534,7 +534,7 @@ public class Solo {
 	/**
 	 * Clicks on a menu item with a given text.
 	 * 
-	 * @param text the menu text that should be clicked on. The parameter <strong>will</strong> be interpreted as a regular expression.
+	 * @param text the menu text that should be clicked on. The parameter will be interpreted as a regular expression.
 	 * @param subMenu true if the menu item could be located in a sub menu
 	 * 
 	 */
@@ -549,7 +549,7 @@ public class Solo {
 	 * first row, Index {@code 3} is the first item in the second row and
 	 * index {@code 5} is the first item in the third row.
 	 * 
-	 * @param index the index of the {@code MenuItem} to be pressed
+	 * @param index the index of the menu item to be pressed
 	 * 
 	 */
 	
@@ -575,7 +575,7 @@ public class Solo {
 	/**
 	 * Clicks on a specific {@link View}.
 	 *
-	 * @param view the view that should be clicked
+	 * @param view the {@code View} that should be clicked
 	 *
 	 */
 	
@@ -599,10 +599,10 @@ public class Solo {
 	}
 	
 	/**
-	 * Finds and clicks a view displaying a certain
+	 * Clicks on a {@link View} displaying a certain
 	 * text. Will automatically scroll when needed. 
 	 *
-	 * @param text the text that should be clicked on. The parameter <strong>will</strong> be interpreted as a regular expression.
+	 * @param text the text that should be clicked on. The parameter will be interpreted as a regular expression.
 	 *
 	 */
 	
@@ -611,9 +611,9 @@ public class Solo {
 	}
 	
 	/**
-	 * Finds and clicks a view displaying a certain text. Will automatically scroll when needed.
+	 * Clicks on a {@link View} displaying a certain text. Will automatically scroll when needed.
 	 *
-	 * @param text the text that should be clicked on. The parameter <strong>will</strong> be interpreted as a regular expression.
+	 * @param text the text that should be clicked on. The parameter will be interpreted as a regular expression.
 	 * @param match the match that should be clicked on 
 	 *
 	 */
@@ -623,9 +623,9 @@ public class Solo {
 	}
 	
 	/**
-	 * Finds and clicks a view displaying a certain text.
+	 * Clicks on a {@link View} displaying a certain text.
 	 *
-	 * @param text the text that should be clicked on. The parameter <strong>will</strong> be interpreted as a regular expression.
+	 * @param text the text that should be clicked on. The parameter will be interpreted as a regular expression.
 	 * @param match the match that should be clicked on 
 	 * @param scroll true if scrolling should be performed
 	 *
@@ -640,7 +640,7 @@ public class Solo {
 	 * Long clicks on a specific {@link TextView}. Will automatically scroll when needed. {@link #clickOnText(String)} can then be
 	 * used to click on the context menu items that appear after the long click.
 	 *
-	 * @param text the text that should be clicked on. The parameter <strong>will</strong> be interpreted as a regular expression.
+	 * @param text the text that should be clicked on. The parameter will be interpreted as a regular expression.
 	 *
 	 */
 	
@@ -653,7 +653,7 @@ public class Solo {
 	 * Long clicks on a specific {@link TextView}. Will automatically scroll when needed. {@link #clickOnText(String)} can then be
 	 * used to click on the context menu items that appear after the long click.
 	 *
-	 * @param text the text that should be clicked on. The parameter <strong>will</strong> be interpreted as a regular expression.
+	 * @param text the text that should be clicked on. The parameter will be interpreted as a regular expression.
 	 * @param match the match that should be clicked on 
 	 *
 	 */
@@ -664,10 +664,10 @@ public class Solo {
 	}
 	
 	/**
-	 * Long clicks on a specific {@link TextView}. {@link #clickOnText(String)} can then be
+	 * Long clicks on a specific {@link View}. {@link #clickOnText(String)} can then be
 	 * used to click on the context menu items that appear after the long click.
 	 *
-	 * @param text the text that should be clicked on. The parameter <strong>will</strong> be interpreted as a regular expression.
+	 * @param text the text that should be clicked on. The parameter will be interpreted as a regular expression
 	 * @param match the match that should be clicked on 
 	 * @param scroll true if scrolling should be performed
 	 *
@@ -679,10 +679,10 @@ public class Solo {
 	}
 	
 	/**
-	 * Long clicks on a specific {@link TextView} and then selects
+	 * Long clicks on a specific {@link View} and then selects
 	 * an item from the context menu that appears. Will automatically scroll when needed. 
 	 *
-	 * @param text the text to be clicked on. The parameter <strong>will</strong> be interpreted as a regular expression.
+	 * @param text the text to be clicked on. The parameter will be interpreted as a regular expression
 	 * @param index the index of the menu item to be pressed. 0 if only one is available
 	 *
 	 */
@@ -692,9 +692,9 @@ public class Solo {
 	}
 	
 	/**
-	 * Clicks on a button with a certain index.
+	 * Clicks on a {@link Button} with a certain index.
 	 *
-	 * @param index the index number of the button. 0 if only one is available
+	 * @param index the index number of the {@code Button}. 0 if only one is available
 	 *
 	 */
 	
@@ -703,9 +703,9 @@ public class Solo {
 	}
 	
 	/**
-	 * Clicks on a radio button with a certain index.
+	 * Clicks on a {@link RadioButton} with a certain index.
 	 *
-	 * @param index the index of the radio button to be clicked. 0 if only one is available
+	 * @param index the index of the {@code RadioButton} to be clicked. 0 if only one is available
 	 *
 	 */
 	
@@ -714,9 +714,9 @@ public class Solo {
 	}
 	
 	/**
-	 * Clicks on a check box with a certain index.
+	 * Clicks on a {@link CheckBox} with a certain index.
 	 *
-	 * @param index the index of the check box to be clicked. 0 if only one is available
+	 * @param index the index of the {@code CheckBox} to be clicked. 0 if only one is available
 	 *
 	 */
 	
