@@ -150,8 +150,8 @@ public class Solo {
     /**
 	 * Waits for a text to be shown. Default timeout is 20 seconds. 
 	 * 
-	 * @param text the text that needs to be shown
-	 * @return {@code true} if text is found and {@code false} if it is not found before the timeout
+	 * @param text the text that is expected to be shown
+	 * @return {@code true} if text is shown and {@code false} if it is not shown before the timeout
 	 * 
 	 */
 	
@@ -165,29 +165,29 @@ public class Solo {
 	 * Waits for a text to be shown. 
 	 * 
 	 * @param text the text that needs to be shown
-	 * @param expectedMinimumNumberOfMatches the minimum number of matches of text that must be shown. {@code 0} means any number of matches
+	 * @param minimumNumberOfMatches the minimum number of text matches that are expected to be shown. {@code 0} means any number of matches
 	 * @param timeout the the amount of time in milliseconds to wait 
-	 * @return {@code true} if text is found and {@code false} if it is not found before the timeout
+	 * @return {@code true} if text is shown and {@code false} if it is not shown before the timeout
 	 * 
 	 */
 	
-	public boolean waitForText(String text, int expectedMinimumNumberOfMatches, long timeout) {
-       return robotiumUtils.waitForText(text, expectedMinimumNumberOfMatches, timeout);
+	public boolean waitForText(String text, int minimumNumberOfMatches, long timeout) {
+       return robotiumUtils.waitForText(text, minimumNumberOfMatches, timeout);
     }
 	
 	 /**
 	 * Waits for a text to be shown. 
 	 * 
 	 * @param text the text that needs to be shown
-	 * @param expectedMinimumNumberOfMatches the minimum number of matches of text that must be shown. {@code 0} means any number of matches
+	 * @param minimumNumberOfMatches the minimum number of text matches that are expected to be shown. {@code 0} means any number of matches
 	 * @param timeout the the amount of time in milliseconds to wait
 	 * @param scroll {@code true} if scrolling should be performed
-	 * @return {@code true} if text is found and {@code false} if it is not found before the timeout
+	 * @return {@code true} if text is shown and {@code false} if it is not shown before the timeout
 	 * 
 	 */
 	
-	public boolean waitForText(String text, int expectedMinimumNumberOfMatches, long timeout, boolean scroll) {
-		return robotiumUtils.waitForText(text, expectedMinimumNumberOfMatches, timeout, scroll);
+	public boolean waitForText(String text, int minimumNumberOfMatches, long timeout, boolean scroll) {
+		return robotiumUtils.waitForText(text, minimumNumberOfMatches, timeout, scroll);
     }
 	
 	
