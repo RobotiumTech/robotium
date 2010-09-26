@@ -165,7 +165,7 @@ public class Solo {
 	 * Waits for a text to be shown. 
 	 * 
 	 * @param text the text that needs to be shown
-	 * @param minimumNumberOfMatches the minimum number of text matches that are expected to be shown. {@code 0} means any number of matches
+	 * @param minimumNumberOfMatches the minimum number of matches that are expected to be shown. {@code 0} means any number of matches
 	 * @param timeout the the amount of time in milliseconds to wait 
 	 * @return {@code true} if text is shown and {@code false} if it is not shown before the timeout
 	 * 
@@ -179,7 +179,7 @@ public class Solo {
 	 * Waits for a text to be shown. 
 	 * 
 	 * @param text the text that needs to be shown
-	 * @param minimumNumberOfMatches the minimum number of text matches that are expected to be shown. {@code 0} means any number of matches
+	 * @param minimumNumberOfMatches the minimum number of matches that are expected to be shown. {@code 0} means any number of matches
 	 * @param timeout the the amount of time in milliseconds to wait
 	 * @param scroll {@code true} if scrolling should be performed
 	 * @return {@code true} if text is shown and {@code false} if it is not shown before the timeout
