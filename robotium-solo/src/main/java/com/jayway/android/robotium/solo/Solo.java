@@ -278,7 +278,7 @@ public class Solo {
 	 */
 	
 	public boolean searchText(String text) {
-		boolean found = searcher.searchWithTimeoutFor(TextView.class, search, 0, true);
+		boolean found = searcher.searchWithTimeoutFor(TextView.class, text, 0, true);
 		return found;
 	}
 	
