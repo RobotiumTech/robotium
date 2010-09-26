@@ -961,6 +961,17 @@ public class Solo {
 		return viewFetcher.getView(Button.class, text);
 	}
 	
+	/**
+	 * Returns an {@link EditText} which shows a given text
+	 * @param text the text that is shown
+	 * @return the {@code EditText} that shows the given text
+	 */
+	
+	public EditText getEditText(String text)
+	{
+		return viewFetcher.getView(EditText.class, text);
+	}
+	
 	
 	/**
 	 * Returns the number of buttons located in the current
