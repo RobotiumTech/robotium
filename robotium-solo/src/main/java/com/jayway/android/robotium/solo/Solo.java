@@ -419,24 +419,24 @@ public class Solo {
 	 * 
 	 */
 	
-	public void assertNotLowMemory()
+	public void assertMemoryNotLow()
 	{
-		asserter.assertNotLowMemory();
+		asserter.assertMemoryNotLow();
 	}
 	
 	
 	/**
 	 * Incorrectly named method.
 	 *
-	 * @deprecated use {@link #assertNotLowMemory()} instead.
+	 * @deprecated use {@link #assertMemoryNotLow()} instead.
 	 *
 	 */
 
 	public void assertLowMemory()
 	{
-		assertNotLowMemory();
+		asserter.assertMemoryNotLow();
 	}
-
+	
 
 	/**
 	 * Waits for a {@link android.app.Dialog} to close.
