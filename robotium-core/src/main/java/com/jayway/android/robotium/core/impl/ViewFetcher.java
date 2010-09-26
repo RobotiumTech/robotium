@@ -165,6 +165,27 @@ public class ViewFetcher {
 		}
 		return view;
 	}
+	
+	/**
+	 * Returns a {@code View} that shows a certain text, from the list of current {@code View}s of the specified type.
+	 *
+	 * @param classToFilterBy which {@code View}s to choose from
+	 * @param text the text that the view shows
+	 * @return a {@code View} showing a certain text, from the list of current {@code View}s of the specified type
+	 */
+	
+	public <T extends TextView> T getView(Class<T> classToFilterBy, String text) {
+		ArrayList<T> views = getCurrentViews(classToFilterBy);
+		T viewToReturn = null;
+		for(T view: views){
+			if(view.getText().equals(text))
+				viewToReturn = view;
+		}
+		if(viewToReturn == null)
+		Assert.assertTrue("No " + classToFilterBy.getSimpleName() + " with text " + text + " is found", false);
+		
+		return viewToReturn;
+	}
 
 
 	/**
