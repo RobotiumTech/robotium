@@ -972,22 +972,6 @@ public class Solo {
 		return viewFetcher.getView(EditText.class, text);
 	}
 	
-	
-	/**
-	 * Returns the number of buttons located in the current
-	 * activity.
-	 *
-	 * @return the number of buttons in the current activity
-	 * @deprecated use {@link #getCurrentButtons()}<code>.size()</code> instead.
-	 *
-	 */
-	
-	public int getCurrenButtonsCount() {
-		int number = viewFetcher.getCurrentViews(Button.class).size();
-		return number;
-	}
-	
-	
 	/**
 	 * Returns a {@code List} of the {@code EditText}s contained in the current
 	 * {@code Activity}.
@@ -1026,7 +1010,6 @@ public class Solo {
     public ArrayList<ScrollView> getCurrentScrollViews() {
 		return ensureArrayListOrNull(viewFetcher.getCurrentViews(ScrollView.class));
 	}
-
 	
 	/**
 	 * Returns a {@code List} of the {@code Spinner}s (drop-down menus) contained in the current
