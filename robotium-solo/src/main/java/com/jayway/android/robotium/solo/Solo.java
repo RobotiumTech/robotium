@@ -356,7 +356,7 @@ public class Solo {
 	}
 	
 	/**
-	 * Asserts that an expected {@link Activity} is currently active one.
+	 * Asserts that the expected {@link Activity} is the currently active one.
 	 * 
 	 * @param message the message that should be displayed if the assert fails
 	 * @param name the name of the {@code Activity} that is expected to be active e.g. {@code "MyActivity"}
@@ -369,7 +369,7 @@ public class Solo {
 	}
 	
 	/**
-	 * Asserts that an expected {@link Activity} is currently active one.
+	 * Asserts that the expected {@link Activity} is the currently active one.
 	 * 
 	 * @param message the message that should be displayed if the assert fails
 	 * @param expectedClass the {@code Class} object that is expected to be active e.g. {@code MyActivity.class}
@@ -384,7 +384,7 @@ public class Solo {
 	}
 	
 	/**
-	 * Asserts that an expected {@link Activity} is currently active one, with the possibility to
+	 * Asserts that the expected {@link Activity} is the currently active one, with the possibility to
 	 * verify that the expected {@code Activity} is a new instance of the {@code Activity}.
 	 * 
 	 * @param message the message that should be displayed if the assert fails
@@ -399,7 +399,7 @@ public class Solo {
 	}
 	
 	/**
-	 * Asserts that an expected {@link Activity} is currently active one, with the possibility to
+	 * Asserts that the expected {@link Activity} is the currently active one, with the possibility to
 	 * verify that the expected {@code Activity} is a new instance of the {@code Activity}.
 	 * 
 	 * @param message the message that should be displayed if the assert fails
