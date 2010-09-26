@@ -195,76 +195,76 @@ public class Solo {
 	 * Searches for a text string in the {@link EditText}s located in the current
 	 * {@code Activity}. Will automatically scroll when needed.
 	 *
-	 * @param search the search string to be searched
+	 * @param text the text to search for
 	 * @return {@code true} if an {@code EditText} with the given text is found or {@code false} if it is not found
 	 *
 	 */
 	
-	public boolean searchEditText(String search) {
-		boolean found = searcher.searchWithTimeoutFor(EditText.class, search, 1, true);
+	public boolean searchEditText(String text) {
+		boolean found = searcher.searchWithTimeoutFor(EditText.class, text, 1, true);
 		return found;
 	}
 	
 	
 	/**
-	 * Searches for a {@link Button} with the given regex string and returns true if at least one {@code Button}
-	 * is found with the expected text. Will automatically scroll when needed. 
+	 * Searches for a {@link Button} with the given text string and returns true if at least one {@code Button}
+	 * is found. Will automatically scroll when needed. 
 	 *
-	 * @param regex the text to search for. The parameter <strong>will</strong> be interpreted as a regular expression.
+	 * @param text the text to search for. The parameter will be interpreted as a regular expression
 	 * @return {@code true} if a {@code Button} with the given text is found and {@code false} if it is not found
 	 *
 	 */
 	
-	public boolean searchButton(String regex) {
-		boolean found = searcher.searchWithTimeoutFor(Button.class, regex, 0, true);
+	public boolean searchButton(String text) {
+		boolean found = searcher.searchWithTimeoutFor(Button.class, text, 0, true);
 		return found;
 	}
 	
 	/**
-	 * Searches for a {@link ToggleButton} with the given regex string and returns {@code true} if at least one {@code ToggleButton}
-	 * is found with the expected text. Will automatically scroll when needed. 
+	 * Searches for a {@link ToggleButton} with the given text string and returns {@code true} if at least one {@code ToggleButton}
+	 * is found. Will automatically scroll when needed. 
 	 *
-	 * @param regex the text to search for. The parameter <strong>will</strong> be interpreted as a regular expression.
+	 * @param text the text to search for. The parameter will be interpreted as a regular expression
 	 * @return {@code true} if a {@code ToggleButton} with the given text is found and {@code false} if it is not found
 	 *
 	 */
 	
-	public boolean searchToggleButton(String regex) {
-		boolean found = searcher.searchWithTimeoutFor(ToggleButton.class, regex, 0, true);
+	public boolean searchToggleButton(String text) {
+		boolean found = searcher.searchWithTimeoutFor(ToggleButton.class, text, 0, true);
 		return found;
 	}
 	
 	/**
-	 * Searches for a {@link Button} with the given regex string and returns {@code true} if the
+	 * Searches for a {@link Button} with the given text string and returns {@code true} if the
 	 * searched {@code Button} is found a given number of times. Will automatically scroll when needed.
 	 * 
-	 * @param regex the text to search for. The parameter <strong>will</strong> be interpreted as a regular expression.
-	 * @param expectedMinimumNumberOfMatches the minimum number of matches expected to be found. {@code 0} matches means that one or more
+	 * @param text the text to search for. The parameter will be interpreted as a regular expression
+	 * @param minimumNumberOfMatches the minimum number of matches expected to be found. {@code 0} matches means that one or more
 	 * matches are expected to be found
 	 * @return {@code true} if a {@code Button} with the given text is found a given number of times and {@code false}
 	 * if it is not found
 	 *  
 	 */
 	
-	public boolean searchButton(String regex, int expectedMinimumNumberOfMatches) {
-		boolean found = searcher.searchWithTimeoutFor(Button.class, regex, expectedMinimumNumberOfMatches, true);
+	public boolean searchButton(String text, int minimumNumberOfMatches) {
+		boolean found = searcher.searchWithTimeoutFor(Button.class, text, minimumNumberOfMatches, true);
 		return found;
 	}
 	
 	/**
-	 * Searches for a {@link ToggleButton} with the given regex string and returns {@code true} if the
+	 * Searches for a {@link ToggleButton} with the given text string and returns {@code true} if the
 	 * searched {@code ToggleButton} is found a given number of times. Will automatically scroll when needed.
 	 * 
-	 * @param regex the text to search for. The parameter <strong>will</strong> be interpreted as a regular expression.
-	 * @param expectedMinimumNumberOfMatches the minimum number of matches expected to be found. {@code 0} matches means that one or more
+	 * @param text the text to search for. The parameter will be interpreted as a regular expression
+	 * @param minimumNumberOfMatches the minimum number of matches expected to be found. {@code 0} matches means that one or more
 	 * matches are expected to be found
 	 * @return {@code true} if a {@code ToggleButton} with the given text is found a given number of times and {@code false}
 	 * if it is not found
 	 *  
 	 */
 	
-	public boolean searchToggleButton(String regex, int expectedMinimumNumberOfMatches) {
-		boolean found = searcher.searchWithTimeoutFor(ToggleButton.class, regex, expectedMinimumNumberOfMatches, true);
+	public boolean searchToggleButton(String text, int minimumNumberOfMatches) {
+		boolean found = searcher.searchWithTimeoutFor(ToggleButton.class, text, minimumNumberOfMatches, true);
 		return found;
 	}
 	
@@ -272,13 +272,13 @@ public class Solo {
 	 * Searches for a text string and returns {@code true} if at least one item
 	 * is found with the expected text. Will automatically scroll when needed. 
 	 *
-	 * @param regex the text to search for. The parameter <strong>will</strong> be interpreted as a regular expression.
-	 * @return {@code true} if the regex string is found and {@code false} if it is not found
+	 * @param text the text to search for. The parameter will be interpreted as a regular expression
+	 * @return {@code true} if the search string is found and {@code false} if it is not found
 	 *
 	 */
 	
-	public boolean searchText(String regex) {
-		boolean found = searcher.searchWithTimeoutFor(TextView.class, regex, 0, true);
+	public boolean searchText(String text) {
+		boolean found = searcher.searchWithTimeoutFor(TextView.class, search, 0, true);
 		return found;
 	}
 	
@@ -286,16 +286,16 @@ public class Solo {
 	 * Searches for a text string and returns {@code true} if the searched text is found a given
 	 * number of times. Will automatically scroll when needed. 
 	 * 
-	 * @param regex the text to search for. The parameter <strong>will</strong> be interpreted as a regular expression.
-	 * @param expectedMinimumNumberOfMatches the minimum number of matches expected to be found. {@code 0} matches means that one or more
+	 * @param text the text to search for. The parameter will be interpreted as a regular expression
+	 * @param minimumNumberOfMatches the minimum number of matches expected to be found. {@code 0} matches means that one or more
 	 * matches are expected to be found
-	 * @return {@code true} if regex string is found a given number of times and {@code false} if the regex string
+	 * @return {@code true} if text string is found a given number of times and {@code false} if the text string
 	 * is not found
 	 *  
 	 */
 	
-	public boolean searchText(String regex, int expectedMinimumNumberOfMatches) {
-		boolean found = searcher.searchWithTimeoutFor(TextView.class, regex, expectedMinimumNumberOfMatches, true);
+	public boolean searchText(String text, int minimumNumberOfMatches) {
+		boolean found = searcher.searchWithTimeoutFor(TextView.class, text, minimumNumberOfMatches, true);
 		return found;
 	}
 	
@@ -303,17 +303,17 @@ public class Solo {
 	 * Searches for a text string and returns {@code true} if the searched text is found a given
 	 * number of times.
 	 * 
-	 * @param regex the text to search for. The parameter <strong>will</strong> be interpreted as a regular expression.
-	 * @param expectedMinimumNumberOfMatches the minimum number of matches expected to be found. {@code 0} matches means that one or more
+	 * @param text the text to search for. The parameter will be interpreted as a regular expression.
+	 * @param minimumNumberOfMatches the minimum number of matches expected to be found. {@code 0} matches means that one or more
 	 * matches are expected to be found
 	 * @param scroll {@code true} if scrolling should be performed
-	 * @return {@code true} if regex string is found a given number of times and {@code false} if the regex string
+	 * @return {@code true} if text string is found a given number of times and {@code false} if the text string
 	 * is not found
 	 *  
 	 */
 	
-	public boolean searchText(String regex, int expectedMinimumNumberOfMatches, boolean scroll) {
-		return searcher.searchWithTimeoutFor(TextView.class, regex, expectedMinimumNumberOfMatches, scroll);
+	public boolean searchText(String text, int minimumNumberOfMatches, boolean scroll) {
+		return searcher.searchWithTimeoutFor(TextView.class, text, minimumNumberOfMatches, scroll);
 	}
 
 	/**
