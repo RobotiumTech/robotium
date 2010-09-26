@@ -950,6 +950,17 @@ public class Solo {
 		return viewFetcher.getView(TextView.class, text);
 	}
 	
+	/**
+	 * Returns a {@link Button} which shows a given text
+	 * @param text the text that is shown
+	 * @return the {@code Button} that shows the given text
+	 */
+	
+	public Button getButton(String text)
+	{
+		return viewFetcher.getView(Button.class, text);
+	}
+	
 	
 	/**
 	 * Returns the number of buttons located in the current
