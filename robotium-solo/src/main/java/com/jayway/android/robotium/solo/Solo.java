@@ -80,6 +80,7 @@ public class Solo {
 	public final static int ENTER = 6;
 	public final static int MENU = 7;
 	public final static int DELETE = 8;
+	public final static int CALL = 9;
 
 
 	/**
@@ -1176,6 +1177,9 @@ public class Solo {
             case DELETE:
                 robotiumUtils.sendKeyCode(KeyEvent.KEYCODE_DEL);
                 break;
+            case CALL:
+            	robotiumUtils.sendKeyCode(KeyEvent.KEYCODE_CALL);
+            	break;
             default:
                 break;
         }
