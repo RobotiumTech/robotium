@@ -49,8 +49,8 @@ public class Presser{
 	 */
 	
 	public void pressMenuItem(int index) {
-		inst.waitForIdleSync();
 		sleeper.sleep();
+		inst.waitForIdleSync();
 		try{
 			inst.sendKeyDownUpSync(KeyEvent.KEYCODE_MENU);
 			sleeper.sleepMini();
@@ -97,8 +97,8 @@ public class Presser{
 	
 	public void pressSpinnerItem(int spinnerIndex, int itemIndex)
 	{
-		inst.waitForIdleSync();
 		sleeper.sleep();
+		inst.waitForIdleSync();
 		clicker.clickOnScreen(viewFetcher.getCurrentViews(Spinner.class).get(spinnerIndex));
 		try{
 			inst.sendKeyDownUpSync(KeyEvent.KEYCODE_DPAD_DOWN);
