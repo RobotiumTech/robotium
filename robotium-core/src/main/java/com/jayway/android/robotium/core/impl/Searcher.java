@@ -84,23 +84,34 @@ public class Searcher {
      */
     public <T extends TextView> boolean searchFor(Class<T> viewClass, String regex, int expectedMinimumNumberOfMatches, boolean scroll) {
         List<T> views = viewFetcher.getCurrentViews(viewClass);
-        return searchFor(views, regex, expectedMinimumNumberOfMatches, scroll);
+        final boolean found = searchFor(views, regex, expectedMinimumNumberOfMatches);
+        if (found){
+            return true;
+        }else{
+            if (scroll && scroller.scroll(Scroller.Direction.DOWN)) {
+                sleeper.sleep();
+                return searchFor(viewClass, regex, expectedMinimumNumberOfMatches, scroll);
+            } else {
+                return false;
+            }
+        }
+
     }
 
 	/**
 	 * Searches for a {@code View} with the given regex string and returns {@code true} if the
-	 * searched {@code View} is found a given number of times
+	 * searched {@code View} is found a given number of times. Will not scroll, because the caller needs to find new
+     * {@code View}s to evaluate after scrolling, and call this method again.
 	 *
 	 * @param views which views to search
 	 * @param regex the text to search for. The parameter <strong>will</strong> be interpreted as a regular expression.
 	 * @param expectedMinimumNumberOfMatches the minimum number of matches expected to be found. {@code 0} matches means that one or more
 	 * matches are expected to be found.
-	 * @param scroll whether scrolling should be performed
 	 * @return {@code true} if a view of the specified class with the given text is found a given number of times.
 	 * {@code false} if it is not found.
 	 *
 	 */
-	public <T extends TextView> boolean searchFor(Collection<T> views, String regex, int expectedMinimumNumberOfMatches, boolean scroll) {
+	public <T extends TextView> boolean searchFor(Collection<T> views, String regex, int expectedMinimumNumberOfMatches) {
 		inst.waitForIdleSync();
 
 		if(expectedMinimumNumberOfMatches == 0) {
@@ -119,15 +130,10 @@ public class Searcher {
 			}
 		}
 
-		if (scroll && scroller.scroll(Scroller.Direction.DOWN)) {
-			sleeper.sleep();
-			return searchFor(views, regex, expectedMinimumNumberOfMatches, scroll);
-		} else {
-			if (matchesFound > 0) {
-				Log.d(LOG_TAG, " There are only " + matchesFound + " matches of " + regex);
-			}
-			return false;
-		}
+        if (matchesFound > 0) {
+            Log.d(LOG_TAG, " There are only " + matchesFound + " matches of " + regex);
+        }
+        return false;
 	}
 
 
