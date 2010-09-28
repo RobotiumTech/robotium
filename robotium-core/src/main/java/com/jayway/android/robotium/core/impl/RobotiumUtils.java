@@ -156,11 +156,6 @@ public class RobotiumUtils {
 			if (foundAnyTextView){
 				return true;
 			}
-
-			final boolean foundAnyEditText = searcher.searchFor(EditText.class, text, 1, scroll);
-			if (foundAnyEditText){
-				return true;
-			}
         }
     }
 	
