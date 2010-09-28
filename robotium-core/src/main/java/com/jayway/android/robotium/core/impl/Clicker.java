@@ -382,12 +382,14 @@ public class Clicker {
 		long now = System.currentTimeMillis();
 		final long endTime = now + CLICKTIMEOUT;
 		int size = viewFetcher.getCurrentViews(ListView.class).size();
-		while((size > 0 && size <index+1) && now < endTime)
-		{
+		while((size < index+1) && now < endTime){
 			sleeper.sleep();
+            now = System.currentTimeMillis();
+            size = viewFetcher.getCurrentViews(ListView.class).size();
 		}
-		if (now > endTime)
-			Assert.assertTrue("No ListView with index " + index + " is available", false);
+		if (size < index+1) {
+            Assert.assertTrue("No ListView with index " + index + " is available", false);
+        }
 
 		ArrayList<TextView> textViews = null;
 		try{
