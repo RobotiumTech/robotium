@@ -24,8 +24,9 @@ import com.jayway.android.robotium.core.impl.*;
 
 /**
  * This class contains all the methods that the sub-classes have. It supports test
- * cases that span over multiple activities. It supports regular expressions and 
- * will automatically scroll when needed.
+ * cases that span over multiple activities. 
+ * 
+ * Robotium has full support for Activities, Dialogs, Toasts, Menus and Context Menus. 
  * 
  * When writing tests there is no need to plan for or expect new activities in the test case. 
  * All is handled automatically by Robotium-Solo. Robotium-Solo can be used in conjunction with
@@ -140,7 +141,7 @@ public class Solo {
 	/**
      * Clears the value of an {@link EditText}.
      * 
-     * @param index the index of the {@code EditText} that should be cleared. 0 if only one is available.
+     * @param index the index of the {@code EditText} that should be cleared. 0 if only one is available
 	 *
      */
 	
@@ -442,7 +443,7 @@ public class Solo {
 	 * Waits for a {@link android.app.Dialog} to close.
 	 * 
 	 * @param timeout the amount of time in milliseconds to wait
-	 * @return {@code true} if the {@code Dialog} is closed before the timeout and {@code false} if it is not closed.
+	 * @return {@code true} if the {@code Dialog} is closed before the timeout and {@code false} if it is not closed
 	 * 
 	 */
 
@@ -489,7 +490,7 @@ public class Solo {
 	/**
 	 * Clicks on a {@link Button} with a given text. Will automatically scroll when needed. 
 	 *
-	 * @param name the name of the {@code Button} presented to the user. The parameter will be interpreted as a regular expression.
+	 * @param name the name of the {@code Button} presented to the user. The parameter will be interpreted as a regular expression
 	 *
 	 */
 	
@@ -512,7 +513,7 @@ public class Solo {
 	/**
 	 * Clicks on a {@link ToggleButton} with a given text.
 	 * 
-	 * @param name the name of the {@code ToggleButton} presented to the user. The parameter will be interpreted as a regular expression.
+	 * @param name the name of the {@code ToggleButton} presented to the user. The parameter will be interpreted as a regular expression
 	 * 
 	 */
 
@@ -522,7 +523,7 @@ public class Solo {
 	
 	/**
 	 * Clicks on a menu item with a given text.
-	 * @param text the menu text that should be clicked on. The parameter will be interpreted as a regular expression.
+	 * @param text the menu text that should be clicked on. The parameter will be interpreted as a regular expression
 	 *
 	 */
 	
@@ -534,7 +535,7 @@ public class Solo {
 	/**
 	 * Clicks on a menu item with a given text.
 	 * 
-	 * @param text the menu text that should be clicked on. The parameter will be interpreted as a regular expression.
+	 * @param text the menu text that should be clicked on. The parameter will be interpreted as a regular expression
 	 * @param subMenu true if the menu item could be located in a sub menu
 	 * 
 	 */
@@ -561,7 +562,7 @@ public class Solo {
 	 * Presses on a {@link Spinner} (drop-down menu) item.
 	 * 
 	 * @param spinnerIndex the index of the {@code Spinner} menu to be used
-	 * @param itemIndex the index of the {@code Spinner} item to be pressed relative to the currently selected item.
+	 * @param itemIndex the index of the {@code Spinner} item to be pressed relative to the currently selected item
 	 * A Negative number moves up on the {@code Spinner}, positive moves down
 	 * 
 	 */
@@ -602,7 +603,7 @@ public class Solo {
 	 * Clicks on a {@link View} displaying a certain
 	 * text. Will automatically scroll when needed. 
 	 *
-	 * @param text the text that should be clicked on. The parameter will be interpreted as a regular expression.
+	 * @param text the text that should be clicked on. The parameter will be interpreted as a regular expression
 	 *
 	 */
 	
@@ -613,7 +614,7 @@ public class Solo {
 	/**
 	 * Clicks on a {@link View} displaying a certain text. Will automatically scroll when needed.
 	 *
-	 * @param text the text that should be clicked on. The parameter will be interpreted as a regular expression.
+	 * @param text the text that should be clicked on. The parameter will be interpreted as a regular expression
 	 * @param match the match that should be clicked on 
 	 *
 	 */
@@ -625,7 +626,7 @@ public class Solo {
 	/**
 	 * Clicks on a {@link View} displaying a certain text.
 	 *
-	 * @param text the text that should be clicked on. The parameter will be interpreted as a regular expression.
+	 * @param text the text that should be clicked on. The parameter will be interpreted as a regular expression
 	 * @param match the match that should be clicked on 
 	 * @param scroll true if scrolling should be performed
 	 *
@@ -640,7 +641,7 @@ public class Solo {
 	 * Long clicks on a specific {@link View}. Will automatically scroll when needed. {@link #clickOnText(String)} can then be
 	 * used to click on the context menu items that appear after the long click.
 	 *
-	 * @param text the text that should be clicked on. The parameter will be interpreted as a regular expression.
+	 * @param text the text that should be clicked on. The parameter will be interpreted as a regular expression
 	 *
 	 */
 	
@@ -653,7 +654,7 @@ public class Solo {
 	 * Long clicks on a specific {@link View}. Will automatically scroll when needed. {@link #clickOnText(String)} can then be
 	 * used to click on the context menu items that appear after the long click.
 	 *
-	 * @param text the text that should be clicked on. The parameter will be interpreted as a regular expression.
+	 * @param text the text that should be clicked on. The parameter will be interpreted as a regular expression
 	 * @param match the match that should be clicked on 
 	 *
 	 */
