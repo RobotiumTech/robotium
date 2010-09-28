@@ -856,9 +856,9 @@ public class Solo {
 	}
 	
 	/**
-	 * Clicks on an image with a certain index.
+	 * Clicks on an {@link ImageView} with a certain index.
 	 *
-	 * @param index the index of the image to be clicked. 0 if only one is available
+	 * @param index the index of the {@link ImageView} to be clicked. 0 if only one is available
 	 *
 	 */
 	
