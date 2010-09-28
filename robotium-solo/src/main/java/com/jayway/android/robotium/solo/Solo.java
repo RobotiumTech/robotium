@@ -332,9 +332,9 @@ public class Solo {
 	}
 	
 	/**
-	 * Returns a {@code List} of all the opened/active activities.
+	 * Returns an {@code ArrayList} of all the opened/active activities.
 	 * 
-	 * @return a {@code List} of all the opened/active activities
+	 * @return an {@code ArrayList} of all the opened/active activities
 	 *
 	 */
 	
