@@ -136,9 +136,13 @@ public class Clicker {
 	 */
 
 	public void clickOnScreen(View view, boolean longClick) {
+		if(view == null)
+			Assert.assertTrue("View can not be clicked!", false);
+		
 		int[] xy = new int[2];
 		long now = System.currentTimeMillis();
 		final long endTime = now + CLICKTIMEOUT;
+		
 		while ((!view.isShown() || view.isLayoutRequested()) && now < endTime) {
 			sleeper.sleep();
 			now = System.currentTimeMillis();
