@@ -1057,10 +1057,10 @@ public class Solo {
 	
 	
 	/**
-	 * Returns a {@code List} of the {@code Button}s located in the current
+	 * Returns an {@code ArrayList} of the {@code Button}s located in the current
 	 * {@code Activity}.
 	 *
-	 * @return a {@code List} of the {@code Button}s located in the current {@code Activity}
+	 * @return an {@code ArrayList} of the {@code Button}s located in the current {@code Activity}
 	 * 
 	 */
 	
