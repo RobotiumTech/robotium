@@ -736,11 +736,11 @@ public class Solo {
 	}
 
 	/**
-	 * Clicks on a certain list line and returns the {@link TextView}s that
+	 * Clicks on a certain list line and returns an {@code ArrayList} of the {@link TextView}s that
 	 * the list line is showing. Will use the first list it finds.
 	 * 
 	 * @param line the line that should be clicked
-	 * @return a {@code List} of the {@code TextView}s located in the list line
+	 * @return an {@code ArrayList} of the {@code TextView}s located in the list line
 	 *
 	 */
 
