@@ -21,7 +21,7 @@
     <scm>
         <url>http://github.com/jayway/robotium/tree/${scm.branch}</url>
         <connection>scm:git:git://github.com/jayway/robotium.git</connection>
-        <developerConnection>scm:git:git://git@github.com/jayway/robotium.git</developerConnection>
+        <developerConnection>scm:git:ssh://git@github.com/jayway/robotium.git</developerConnection>
     </scm>
     <issueManagement>
         <system>Google Code Issue Tracking</system>
