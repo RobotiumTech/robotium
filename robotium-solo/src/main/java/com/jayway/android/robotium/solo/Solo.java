@@ -1014,10 +1014,10 @@ public class Solo {
 	}
 	
 	/**
-	 * Returns a {@code List} of the {@code Spinner}s (drop-down menus) contained in the current
+	 * Returns a {@code ArrayList} of the {@code Spinner}s (drop-down menus) contained in the current
 	 * {@code Activity}.
 	 *
-	 * @return a {@code List} of the {@code Spinner}s (drop-down menus) contained in the current
+	 * @return a {@code ArrayList} of the {@code Spinner}s (drop-down menus) contained in the current
 	 * {@code Activity}
 	 *
 	 */
