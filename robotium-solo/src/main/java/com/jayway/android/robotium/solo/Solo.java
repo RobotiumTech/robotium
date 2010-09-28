@@ -769,7 +769,7 @@ public class Solo {
 	 * This method was copied from {@code TouchUtils.java} in the Android Open Source Project, and modified here.
 	 *
 	 * @param fromX X coordinate of the initial touch, in screen coordinates
-	 * @param toX Xcoordinate of the drag destination, in screen coordinates
+	 * @param toX X coordinate of the drag destination, in screen coordinates
 	 * @param fromY X coordinate of the initial touch, in screen coordinates
 	 * @param toY Y coordinate of the drag destination, in screen coordinates
 	 * @param stepCount How many move steps to include in the drag
@@ -967,7 +967,7 @@ public class Solo {
 	/**
 	 * Returns an {@link EditText} which shows a given text
 	 * @param text the text that is shown
-	 * @return the {@code EditText} that shows the given text
+	 * @return the {@code EditText} which shows the given text
 	 */
 	
 	public EditText getEditText(String text)
@@ -1274,6 +1274,8 @@ public class Solo {
 	 * @return {@code null} if {@code list==null}, or an {@code ArrayList} with the same contents as the supplied {@code list}, or the same {@code list}
 	 * instance if it's already an {@code ArrayList}
 	 */
+	
+	@SuppressWarnings("unchecked")
 	private <T> ArrayList<T> ensureArrayListOrNull(List<T> list){
 		if (list == null){
 			return null;
