@@ -1014,10 +1014,10 @@ public class Solo {
 	}
 	
 	/**
-	 * Returns a {@code ArrayList} of the {@code Spinner}s (drop-down menus) contained in the current
+	 * Returns an {@code ArrayList} of the {@code Spinner}s (drop-down menus) contained in the current
 	 * {@code Activity}.
 	 *
-	 * @return a {@code ArrayList} of the {@code Spinner}s (drop-down menus) contained in the current
+	 * @return an {@code ArrayList} of the {@code Spinner}s (drop-down menus) contained in the current
 	 * {@code Activity}
 	 *
 	 */
@@ -1027,13 +1027,13 @@ public class Solo {
 	}
 	
 	/**
-	 * Returns a {@code List} of the {@code TextView}s contained in the current
+	 * Returns an {@code ArrayList} of the {@code TextView}s contained in the current
 	 * {@code Activity} or {@code View}.
 	 *
 	 * @param parent the parent {@code View} from which the {@code TextView}s should be returned. {@code null} if
 	 * all {@code TextView}s from the current {@code Activity} should be returned
 	 *
-	 * @return a {@code List} of the {@code TextView}s contained in the current
+	 * @return an {@code ArrayList} of the {@code TextView}s contained in the current
 	 * {@code Activity} or {@code View}
 	 *
 	 */
