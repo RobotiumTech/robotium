@@ -750,11 +750,11 @@ public class Solo {
 
 	/**
 	 * Clicks on a certain list line on a specified list and 
-	 * returns the {@link TextView}s that the list line is showing.
+	 * returns an {@code ArrayList} of the {@link TextView}s that the list line is showing.
 	 * 
 	 * @param line the line that should be clicked
 	 * @param listIndex the index of the list. 1 if two lists are available
-	 * @return a {@code List} of the {@code TextView}s located in the list line
+	 * @return an {@code ArrayList} of the {@code TextView}s located in the list line
 	 *
 	 */
 	
