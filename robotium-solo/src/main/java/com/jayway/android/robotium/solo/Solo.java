@@ -988,10 +988,10 @@ public class Solo {
 	}
 	
 	/**
-	 * Returns a {@code List} of the {@code ListView}s contained in the current
+	 * Returns an {@code ArrayList} of the {@code ListView}s contained in the current
 	 * {@code Activity}.
 	 *
-	 * @return a {@code List} of the {@code ListView}s contained in the current
+	 * @return an {@code ArrayList} of the {@code ListView}s contained in the current
 	 * {@code Activity}
 	 * 
 	 */
