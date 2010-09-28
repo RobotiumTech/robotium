@@ -388,7 +388,7 @@ public class Solo {
 	 * verify that the expected {@code Activity} is a new instance of the {@code Activity}.
 	 * 
 	 * @param message the message that should be displayed if the assert fails
-	 * @param name the name of the activity that is expected to be active e.g. "MyActivity"
+	 * @param name the name of the activity that is expected to be active e.g. {@code "MyActivity"}
 	 * @param isNewInstance {@code true} if the expected {@code Activity} is a new instance of the {@code Activity}
 	 * 
 	 */
