@@ -101,6 +101,17 @@ public class ViewFetcher {
 		else
 			return null;
 	}
+	
+	/**
+	 * Returns a {@code View} with a given id. 
+	 * @param id the R.id of the {@code View} to be returned 
+	 * @return a {@code View} with a given id
+	 */
+	
+	public View getView(int id){
+		final Activity activity = activityUtils.getCurrentActivity(false);
+		return activity.findViewById(id);
+	}
 
 
 	/**

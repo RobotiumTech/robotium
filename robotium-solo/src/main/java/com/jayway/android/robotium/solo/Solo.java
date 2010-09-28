@@ -976,6 +976,16 @@ public class Solo {
 	}
 	
 	/**
+	 * Returns a {@code View} with a given id. 
+	 * @param id the R.id of the {@code View} to be returned 
+	 * @return a {@code View} with a given id
+	 */
+	
+	public View getView(int id){
+		return viewFetcher.getView(id);
+	}
+	
+	/**
 	 * Returns an {@code ArrayList} of the {@code EditText}s contained in the current
 	 * {@code Activity}.
 	 *
