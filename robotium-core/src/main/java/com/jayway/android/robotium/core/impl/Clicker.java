@@ -385,18 +385,21 @@ public class Clicker {
 		sleeper.sleep();
 		long now = System.currentTimeMillis();
 		final long endTime = now + CLICKTIMEOUT;
-		int size = viewFetcher.getCurrentViews(ListView.class).size();
-		while((size > 0 && size <index+1) && now < endTime)
-		{
+        ArrayList<ListView> listViews = viewFetcher.getCurrentViews(ListView.class);
+        int size = listViews.size();
+		while((size < index+1) && now < endTime){
 			sleeper.sleep();
+            now = System.currentTimeMillis();
+            listViews = viewFetcher.getCurrentViews(ListView.class);
+            size = listViews.size();
 		}
-		if (now > endTime)
-			Assert.assertTrue("No ListView with index " + index + " is available", false);
+		if (size < index+1) {
+            Assert.assertTrue("No ListView with index " + index + " is available", false);
+        }
 
 		ArrayList<TextView> textViews = null;
 		try{
-			final ArrayList<ListView> currentLists = viewFetcher.getCurrentViews(ListView.class);
-			final ListView listView = currentLists.get(index);
+            final ListView listView = listViews.get(index);
 			textViews = viewFetcher.getCurrentViews(TextView.class, listView);
 		}catch(IndexOutOfBoundsException e){
 			Assert.assertTrue("Index is not valid!", false);

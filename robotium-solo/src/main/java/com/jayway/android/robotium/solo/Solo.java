@@ -101,7 +101,7 @@ public class Solo {
         this.dialogUtils = new DialogUtils(viewFetcher, sleeper);
         this.scroller = new Scroller(inst, activitiyUtils, viewFetcher);
         this.searcher = new Searcher(viewFetcher, scroller, inst, sleeper);
-        this.robotiumUtils = new RobotiumUtils(activitiyUtils, searcher, viewFetcher, inst, sleeper);
+        this.robotiumUtils = new RobotiumUtils(activitiyUtils, searcher, viewFetcher, inst, sleeper, scroller);
         this.clicker = new Clicker(activitiyUtils, viewFetcher, scroller,robotiumUtils, inst, sleeper);
         this.presser = new Presser(viewFetcher, clicker, inst, sleeper);
         this.textEnterer = new TextEnterer(viewFetcher, robotiumUtils, clicker, inst);
@@ -975,6 +975,22 @@ public class Solo {
 		return viewFetcher.getView(EditText.class, text);
 	}
 	
+	
+	/**
+	 * Returns the number of buttons located in the current
+	 * activity.
+	 *
+	 * @return the number of buttons in the current activity
+	 * @deprecated use {@link #getCurrentButtons()}<code>.size()</code> instead.
+	 *
+	 */
+	
+	public int getCurrenButtonsCount() {
+		int number = viewFetcher.getCurrentViews(Button.class).size();
+		return number;
+	}
+	
+	
 	/**
 	 * Returns a {@code View} with a given id. 
 	 * @param id the R.id of the {@code View} to be returned 
@@ -1023,6 +1039,7 @@ public class Solo {
     public ArrayList<ScrollView> getCurrentScrollViews() {
 		return ensureArrayListOrNull(viewFetcher.getCurrentViews(ScrollView.class));
 	}
+
 	
 	/**
 	 * Returns an {@code ArrayList} of the {@code Spinner}s (drop-down menus) contained in the current

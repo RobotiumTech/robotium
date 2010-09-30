@@ -19,8 +19,9 @@ public class RobotiumUtils {
 	private final Instrumentation inst;
 	private final Sleeper sleeper;
 	private final int TIMEOUT = 20000;
+    private final Scroller scroller;
 
-	/**
+    /**
 	 * Constructs this object.
 	 * 
 	 * @param activityUtils the {@code ActivityUtils} instance.
@@ -28,15 +29,17 @@ public class RobotiumUtils {
      * @param viewFetcher the {@code ViewFetcher} instance.
      * @param inst the {@code Instrumentation} instance.
      * @param sleeper the {@code Sleeper} instance.
+     * @param scroller the {@code Scroller} instance.
      */
 	
 	public RobotiumUtils(ActivityUtils activityUtils, Searcher searcher,
-                         ViewFetcher viewFetcher, Instrumentation inst, Sleeper sleeper) {
+                         ViewFetcher viewFetcher, Instrumentation inst, Sleeper sleeper, Scroller scroller) {
 		this.activityUtils = activityUtils;
 		this.searcher = searcher;
 		this.viewFetcher = viewFetcher;
 		this.inst = inst;
         this.sleeper = sleeper;
+        this.scroller = scroller;
     }
 	
 	
@@ -154,11 +157,6 @@ public class RobotiumUtils {
 
 			final boolean foundAnyTextView = searcher.searchFor(TextView.class, text, expectedMinimumNumberOfMatches, scroll);
 			if (foundAnyTextView){
-				return true;
-			}
-
-			final boolean foundAnyEditText = searcher.searchFor(EditText.class, text, 1, scroll);
-			if (foundAnyEditText){
 				return true;
 			}
         }
