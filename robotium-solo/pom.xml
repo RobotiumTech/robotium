@@ -12,11 +12,6 @@
     </parent>
 	<dependencies>
 		<dependency>
-			<groupId>com.jayway.android.robotium</groupId>
-			<artifactId>robotium-core</artifactId>
-            <version>1.8.0-beta-3-SNAPSHOT</version>
-		</dependency>
-		<dependency>
 			<groupId>com.google.android</groupId>
 			<artifactId>android</artifactId>
 		</dependency>
