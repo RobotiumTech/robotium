@@ -11,7 +11,7 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.RadioButton;
 
-public class RobotiumUtils {
+class RobotiumUtils {
 	
 	private final ViewFetcher viewFetcher;
 	private final Searcher searcher;

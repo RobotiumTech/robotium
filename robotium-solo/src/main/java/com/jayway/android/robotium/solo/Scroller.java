@@ -14,7 +14,7 @@ import android.widget.ScrollView;
 * 
 */
 
-public class Scroller {
+class Scroller {
 	
     public enum Direction {UP, DOWN}
     public enum Side {LEFT, RIGHT}

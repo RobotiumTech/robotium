@@ -23,7 +23,7 @@ import android.view.ViewConfiguration;
  * 
  */
 
-public class Clicker {
+class Clicker {
 	
 	private final String LOG_TAG = "Robotium";
 	private final ActivityUtils activityUtils;

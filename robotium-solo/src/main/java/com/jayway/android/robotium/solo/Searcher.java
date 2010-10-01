@@ -16,7 +16,7 @@ import android.widget.TextView;
  * 
  */
 
-public class Searcher {
+class Searcher {
 	
 	private final ViewFetcher viewFetcher;
 	private final Scroller scroller;

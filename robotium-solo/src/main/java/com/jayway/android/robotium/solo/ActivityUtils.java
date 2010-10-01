@@ -17,7 +17,7 @@ import android.view.KeyEvent;
  * 
  */
 
-public class ActivityUtils {
+class ActivityUtils {
 	
 	private final Instrumentation inst;
 	private ActivityMonitor activityMonitor;

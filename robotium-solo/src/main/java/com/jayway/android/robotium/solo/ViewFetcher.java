@@ -18,7 +18,7 @@ import android.widget.TextView;
  * 
  */
 
-public class ViewFetcher {
+class ViewFetcher {
 	
 	private final Instrumentation inst;
 	private final ActivityUtils activityUtils;

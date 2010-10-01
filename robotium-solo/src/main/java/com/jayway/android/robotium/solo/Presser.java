@@ -13,7 +13,7 @@ import android.view.KeyEvent;
  * 
  */
 
-public class Presser{
+class Presser{
 
 	private final ViewFetcher viewFetcher;
 	private final Clicker clicker;
