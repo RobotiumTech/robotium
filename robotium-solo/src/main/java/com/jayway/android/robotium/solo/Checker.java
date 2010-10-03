@@ -41,7 +41,7 @@ class Checker {
 	{
 		ArrayList<T> list = viewFetcher.getCurrentViews(expectedClass);
 		if(index < 0 || index > list.size()-1)
-			Assert.assertTrue("No " + expectedClass.getSimpleName() + "with index " + index + " is found", false);
+			Assert.assertTrue("No " + expectedClass.getSimpleName() + " with index " + index + " is found", false);
 		return (list.get(index)).isChecked();
 	}
 	
