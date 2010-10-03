@@ -683,7 +683,7 @@ public class Solo {
 	 * an item from the context menu that appears. Will automatically scroll when needed. 
 	 *
 	 * @param text the text to be clicked on. The parameter will be interpreted as a regular expression
-	 * @param index the index of the menu item to be pressed. 0 if only one is available
+	 * @param index the index of the menu item to be pressed. {@code 0} if only one is available
 	 *
 	 */
 	
@@ -694,7 +694,7 @@ public class Solo {
 	/**
 	 * Clicks on a {@link Button} with a given index.
 	 *
-	 * @param index the index number of the {@code Button}. 0 if only one is available
+	 * @param index the index number of the {@code Button}. {@code 0} if only one is available
 	 *
 	 */
 	
@@ -705,7 +705,7 @@ public class Solo {
 	/**
 	 * Clicks on a {@link RadioButton} with a given index.
 	 *
-	 * @param index the index of the {@code RadioButton} to be clicked. 0 if only one is available
+	 * @param index the index of the {@code RadioButton} to be clicked. {@code 0} if only one is available
 	 *
 	 */
 	
@@ -716,7 +716,7 @@ public class Solo {
 	/**
 	 * Clicks on a {@link CheckBox} with a given index.
 	 *
-	 * @param index the index of the {@code CheckBox} to be clicked. 0 if only one is available
+	 * @param index the index of the {@code CheckBox} to be clicked. {@code 0} if only one is available
 	 *
 	 */
 	
@@ -727,7 +727,7 @@ public class Solo {
 	/**
 	 * Clicks on an {@link EditText} with a given index.
 	 *
-	 * @param index the index of the {@code EditText} to be clicked. 0 if only one is available
+	 * @param index the index of the {@code EditText} to be clicked. {@code 0} if only one is available
 	 *
 	 */
 	
@@ -846,7 +846,7 @@ public class Solo {
 	/**
 	 * Enters text into an {@link EditText} with a given index.
 	 *
-	 * @param index the index of the text field. 0 if only one is available
+	 * @param index the index of the text field. {@code 0} if only one is available
 	 * @param text the text string that is to be entered into the text field
 	 *
 	 */
@@ -858,7 +858,7 @@ public class Solo {
 	/**
 	 * Clicks on an {@link ImageView} with a given index.
 	 *
-	 * @param index the index of the {@link ImageView} to be clicked. 0 if only one is available
+	 * @param index the index of the {@link ImageView} to be clicked. {@code 0} if only one is available
 	 *
 	 */
 	
@@ -882,7 +882,7 @@ public class Solo {
 	/**
 	 * Returns an {@code EditText} with a given index.
 	 *
-	 * @param index the index of the {@code EditText}. 0 if only one is available
+	 * @param index the index of the {@code EditText}. {@code 0} if only one is available
 	 * @return the {@code EditText} with a specified index or {@code null} if index is invalid
 	 *
 	 */
@@ -895,7 +895,7 @@ public class Solo {
 	/**
 	 * Returns a {@code Button} with a given index.
 	 *
-	 * @param index the index of the {@code Button}. 0 if only one is available
+	 * @param index the index of the {@code Button}. {@code 0} if only one is available
 	 * @return the {@code Button} with a specified index or {@code null} if index is invalid
 	 *
 	 */
@@ -908,7 +908,7 @@ public class Solo {
 	/**
 	 * Returns a {@code TextView} with a given index.
 	 *
-	 * @param index the index of the {@code TextView}. 0 if only one is available
+	 * @param index the index of the {@code TextView}. {@code 0} if only one is available
 	 * @return the {@code TextView} with a specified index or {@code null} if index is invalid
 	 *
 	 */
@@ -920,7 +920,7 @@ public class Solo {
 	/**
 	 * Returns an {@code ImageView} with a given index.
 	 *
-	 * @param index the index of the {@code ImageView}. 0 if only one is available
+	 * @param index the index of the {@code ImageView}. {@code 0} if only one is available
 	 * @return the {@code ImageView} with a specified index or {@code null} if index is invalid
 	 *
 	 */
@@ -932,7 +932,7 @@ public class Solo {
 	/**
 	 * Returns an {@code ImageButton} with a given index.
 	 *
-	 * @param index the index of the {@code ImageButton}. 0 if only one is available
+	 * @param index the index of the {@code ImageButton}. {@code 0} if only one is available
 	 * @return the {@code ImageButton} with a specified index or {@code null} if index is invalid
 	 *
 	 */
@@ -1239,7 +1239,7 @@ public class Solo {
 	
 	/**
 	 * Checks if a given text is selected in a given {@link Spinner} 
-	 * @param spinnerIndex the index of the spinner to check. 0 if only one spinner is available
+	 * @param spinnerIndex the index of the spinner to check. {@code 0} if only one spinner is available
 	 * @param text the text that is expected to be selected
 	 * @return true if the given text is selected in the given {@code Spinner} and false if it is not
 	 */
