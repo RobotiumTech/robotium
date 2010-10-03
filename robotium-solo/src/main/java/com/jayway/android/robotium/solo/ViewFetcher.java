@@ -143,10 +143,10 @@ class ViewFetcher {
 
 	/**
 	 * Adds all children of {@code viewGroup} (recursively) into {@code views}.
-	 * @param views a {@code List} of {@code View}s
+	 * @param views an {@code ArrayList} of {@code View}s
 	 * @param viewGroup the {@code ViewGroup} to extract children from
 	 */
-	private void addChildren(List<View> views, ViewGroup viewGroup) {
+	private void addChildren(ArrayList<View> views, ViewGroup viewGroup) {
 		for (int i = 0; i < viewGroup.getChildCount(); i++) {
 			final View child = viewGroup.getChildAt(i);
 
@@ -200,22 +200,22 @@ class ViewFetcher {
 
 
 	/**
-	 * Returns a {@code List} of {@code View}s of the specified {@code Class} located in the current
+	 * Returns a {@code ArrayList} of {@code View}s of the specified {@code Class} located in the current
 	 * {@code Activity}.
 	 *
 	 * @param classToFilterBy return all instances of this class, e.g. {@code Button.class} or {@code GridView.class}
-	 * @return a {@code List} of {@code View}s of the specified {@code Class} located in the current {@code Activity}
+	 * @return a {@code ArrayList} of {@code View}s of the specified {@code Class} located in the current {@code Activity}
 	 */
 	public <T extends View> ArrayList<T> getCurrentViews(Class<T> classToFilterBy) {
 		return getCurrentViews(classToFilterBy, null);
 	}
 
 	/**
-	 * Returns a {@code List} of {@code View}s of the specified {@code Class} located under the specified {@code parent}.
+	 * Returns an {@code ArrayList} of {@code View}s of the specified {@code Class} located under the specified {@code parent}.
 	 *
 	 * @param classToFilterBy return all instances of this class, e.g. {@code Button.class} or {@code GridView.class}
 	 * @param parent the parent {@code View} for where to start the traversal
-	 * @return a {@code List} of {@code View}s of the specified {@code Class} located under the specified {@code parent}
+	 * @return a {@code ArrayList} of {@code View}s of the specified {@code Class} located under the specified {@code parent}
 	 */
 	public <T extends View> ArrayList<T> getCurrentViews(Class<T> classToFilterBy, View parent) {
 		ArrayList<T> filteredViews = new ArrayList<T>();
