@@ -33,6 +33,7 @@ class Searcher {
      * @param inst the {@code Instrumentation} instance.
      * @param sleeper the {@code Sleeper} instance.
      */
+	
     public Searcher(ViewFetcher viewFetcher, Scroller scroller, Instrumentation inst, Sleeper sleeper) {
         this.viewFetcher = viewFetcher;
         this.scroller = scroller;
@@ -54,6 +55,7 @@ class Searcher {
 	 * times, and {@code false} if it is not found
 	 *
 	 */
+	
 	public boolean searchWithTimeoutFor(Class<? extends TextView> viewClass, String regex, int expectedMinimumNumberOfMatches, boolean scroll) {
 		final long endTime = System.currentTimeMillis() + TIMEOUT;
 
@@ -82,6 +84,7 @@ class Searcher {
      * {@code false} if it is not found.
      *
      */
+	
     public <T extends TextView> boolean searchFor(final Class<T> viewClass, final String regex, final int expectedMinimumNumberOfMatches, final boolean scroll) {
         final Callable<Collection<T>> viewFetcherCallback = new Callable<Collection<T>>() {
             public Collection<T> call() throws Exception {
@@ -112,6 +115,7 @@ class Searcher {
 	 *
      * @throws Exception not really, it's just the signature of {@code Callable}
      */
+	
 	public <T extends TextView> boolean searchFor(Callable<Collection<T>> viewFetcherCallback, String regex, int expectedMinimumNumberOfMatches, boolean scroll) throws Exception {
 
 		if(expectedMinimumNumberOfMatches == 0) {

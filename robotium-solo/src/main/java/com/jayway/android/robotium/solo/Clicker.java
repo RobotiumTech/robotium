@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
 import android.widget.*;
 import junit.framework.Assert;
 import android.app.Instrumentation;
@@ -60,7 +59,7 @@ class Clicker {
     }
 	
 	/**
-	 * Clicks on a specific coordinate on the screen
+	 * Clicks on a given coordinate on the screen
 	 *
 	 * @param x the x coordinate
 	 * @param y the y coordinate
@@ -83,7 +82,7 @@ class Clicker {
 	}
 	
 	/**
-	 * Long clicks a specific coordinate on the screen
+	 * Long clicks a given coordinate on the screen
 	 *
 	 * @param x the x coordinate
 	 * @param y the y coordinate
@@ -117,7 +116,7 @@ class Clicker {
 	
 	
 	/**
-	 * Clicks on a specific {@link View}.
+	 * Clicks on a given {@link View}.
 	 *
 	 * @param view the view that should be clicked
 	 *
@@ -128,7 +127,7 @@ class Clicker {
 	}
 	
 	/**
-	 * Private method used to click on a specific view.
+	 * Private method used to click on a given view.
 	 *
 	 * @param view the view that should be clicked
 	 * @param longClick true if the click should be a long click
@@ -137,7 +136,7 @@ class Clicker {
 
 	public void clickOnScreen(View view, boolean longClick) {
 		if(view == null)
-			Assert.assertTrue("View can not be clicked!", false);
+			Assert.assertTrue("View is null and can not be clicked!", false);
 		
 		int[] xy = new int[2];
 		long now = System.currentTimeMillis();
@@ -148,7 +147,7 @@ class Clicker {
 			now = System.currentTimeMillis();
 		}
 		if(!view.isShown())
-			Assert.assertTrue("View can not be clicked!", false);
+			Assert.assertTrue("View is not shown and can therefore not be clicked!", false);
 		view.getLocationOnScreen(xy);
 
 		while (xy[1] + 10> activityUtils.getCurrentActivity().getWindowManager()
@@ -252,7 +251,7 @@ class Clicker {
 	
 	
 	/**
-	 * Clicks on a specific {@link TextView} displaying a certain text.
+	 * Clicks on a specific {@link TextView} displaying a given text.
 	 *
 	 * @param regex the text that should be clicked on. The parameter <strong>will</strong> be interpreted as a regular expression.
 	 * @param longClick {@code true} if the click should be a long click
@@ -396,7 +395,7 @@ class Clicker {
             size = listViews.size();
 		}
 		if (size < index+1) {
-            Assert.assertTrue("No ListView with index " + index + " is available", false);
+            Assert.assertTrue("No ListView with index " + index + " is available!", false);
         }
 
 		ArrayList<TextView> textViews = null;

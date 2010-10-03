@@ -173,7 +173,7 @@ class ViewFetcher {
 		try{
 			view = views.get(index);
 		}catch (IndexOutOfBoundsException e){
-			Assert.assertTrue("No " + classToFilterBy.getSimpleName() + " with index " + index + " is found", false);
+			Assert.assertTrue("No " + classToFilterBy.getSimpleName() + " with index " + index + " is found!", false);
 		}
 		return view;
 	}
@@ -194,7 +194,7 @@ class ViewFetcher {
 				viewToReturn = view;
 		}
 		if(viewToReturn == null)
-		Assert.assertTrue("No " + classToFilterBy.getSimpleName() + " with text " + text + " is found", false);
+		Assert.assertTrue("No " + classToFilterBy.getSimpleName() + " with text " + text + " is found!", false);
 		
 		return viewToReturn;
 	}

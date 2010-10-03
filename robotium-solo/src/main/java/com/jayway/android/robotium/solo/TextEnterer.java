@@ -81,9 +81,7 @@ class TextEnterer{
     		}
     	} catch (IndexOutOfBoundsException e) {
     		Assert.assertTrue("Index is not valid!", false);
-    	} catch (NullPointerException e) {
-    		Assert.assertTrue("NullPointerException!", false);
-    	}
+    	} catch (NullPointerException ignored) {}
 
     }
 

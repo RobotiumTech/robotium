@@ -462,7 +462,7 @@ public class Solo {
 	}
 	
 	/**
-	 * Clicks on a specific coordinate on the screen.
+	 * Clicks on a given coordinate on the screen.
 	 *
 	 * @param x the x coordinate
 	 * @param y the y coordinate
@@ -474,7 +474,7 @@ public class Solo {
 		clicker.clickOnScreen(x, y);
 	}
 	/**
-	 * Long clicks a specific coordinate on the screen.
+	 * Long clicks a given coordinate on the screen.
 	 *
 	 * @param x the x coordinate
 	 * @param y the y coordinate
@@ -573,7 +573,7 @@ public class Solo {
     
 	
 	/**
-	 * Clicks on a specific {@link View}.
+	 * Clicks on a given {@link View}.
 	 *
 	 * @param view the {@code View} that should be clicked
 	 *
@@ -586,7 +586,7 @@ public class Solo {
 	
 	
 	/**
-	 * Long clicks on a specific {@link View}.
+	 * Long clicks on a given {@link View}.
 	 *
 	 * @param view the view that should be long clicked
 	 *
@@ -637,7 +637,7 @@ public class Solo {
 	
 	
 	/**
-	 * Long clicks on a specific {@link View}. Will automatically scroll when needed. {@link #clickOnText(String)} can then be
+	 * Long clicks on a given {@link View}. Will automatically scroll when needed. {@link #clickOnText(String)} can then be
 	 * used to click on the context menu items that appear after the long click.
 	 *
 	 * @param text the text that should be clicked on. The parameter will be interpreted as a regular expression
@@ -650,7 +650,7 @@ public class Solo {
 	}
 	
 	/**
-	 * Long clicks on a specific {@link View}. Will automatically scroll when needed. {@link #clickOnText(String)} can then be
+	 * Long clicks on a given {@link View}. Will automatically scroll when needed. {@link #clickOnText(String)} can then be
 	 * used to click on the context menu items that appear after the long click.
 	 *
 	 * @param text the text that should be clicked on. The parameter will be interpreted as a regular expression
@@ -664,7 +664,7 @@ public class Solo {
 	}
 	
 	/**
-	 * Long clicks on a specific {@link View}. {@link #clickOnText(String)} can then be
+	 * Long clicks on a given {@link View}. {@link #clickOnText(String)} can then be
 	 * used to click on the context menu items that appear after the long click.
 	 *
 	 * @param text the text that should be clicked on. The parameter will be interpreted as a regular expression
@@ -679,7 +679,7 @@ public class Solo {
 	}
 	
 	/**
-	 * Long clicks on a specific {@link View} and then selects
+	 * Long clicks on a given {@link View} and then selects
 	 * an item from the context menu that appears. Will automatically scroll when needed. 
 	 *
 	 * @param text the text to be clicked on. The parameter will be interpreted as a regular expression
@@ -763,7 +763,7 @@ public class Solo {
 	}
 
 	 /**
-	 * Simulate touching a specific location and dragging to a new location.
+	 * Simulate touching a given location and dragging it to a new location.
 	 *
 	 * This method was copied from {@code TouchUtils.java} in the Android Open Source Project, and modified here.
 	 *
