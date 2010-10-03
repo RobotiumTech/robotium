@@ -7,9 +7,8 @@ import junit.framework.Assert;
 import android.app.Instrumentation;
 import android.view.KeyEvent;
 import android.view.View;
-import android.widget.CheckBox;
 import android.widget.EditText;
-import android.widget.RadioButton;
+
 
 class RobotiumUtils {
 	
@@ -159,36 +158,6 @@ class RobotiumUtils {
 			}
         }
     }
-	
-	/**
-	 * Checks if a {@link RadioButton} with a given index is checked.
-	 *
-	 * @param index of the {@code RadioButton} to check. {@code 0} if only one is available
-	 * @return {@code true} if {@code RadioButton} is checked and {@code false} if it is not checked
-	 */
-	
-	public boolean isRadioButtonChecked(int index)
-	{
-		ArrayList<RadioButton> radioButtonList = viewFetcher.getCurrentViews(RadioButton.class);
-		if(index < 0 || index > radioButtonList.size()-1)
-			Assert.assertTrue("No radio button with index " + index + " is found", false);
-		return radioButtonList.get(index).isChecked();
-	}
-	
-	/**
-	 * Checks if a {@link CheckBox} with a given index is checked.
-	 *
-	 * @param index of the {@code CheckBox} to check. {@code 0} if only one is available
-	 * @return {@code true} if {@code CheckBox} is checked and {@code false} if it is not checked
-	 */
-	
-	public boolean isCheckBoxChecked(int index)
-	{
-		ArrayList<CheckBox> checkBoxList = viewFetcher.getCurrentViews(CheckBox.class);
-		if(index < 0 || index > checkBoxList.size()-1)
-			Assert.assertTrue("No checkbox with index " + index + " is found", false);
-		return checkBoxList.get(index).isChecked();
-	}
 	
 	/**
 	 * Tells Robotium to send a key code: Right, Left, Up, Down, Enter or other.

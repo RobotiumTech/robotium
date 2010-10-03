@@ -60,6 +60,7 @@ public class Solo {
 
 	private final Asserter asserter;
 	private final ViewFetcher viewFetcher;
+	private final Checker checker;
 	private final Clicker clicker;
 	private final Presser presser;
 	private final Searcher searcher;
@@ -94,6 +95,7 @@ public class Solo {
         this.sleeper = new Sleeper();
         this.activitiyUtils = new ActivityUtils(inst, activity, sleeper);
         this.viewFetcher = new ViewFetcher(inst, activitiyUtils);
+        this.checker = new Checker(viewFetcher);
         this.asserter = new Asserter(activitiyUtils, sleeper);
         this.dialogUtils = new DialogUtils(viewFetcher, sleeper);
         this.scroller = new Scroller(inst, activitiyUtils, viewFetcher);
@@ -1155,7 +1157,20 @@ public class Solo {
 	
 	public boolean isRadioButtonChecked(int index)
 	{
-		return robotiumUtils.isRadioButtonChecked(index);
+		return checker.isButtonChecked(RadioButton.class, index);
+	}
+	
+	/**
+	 * Checks if a {@link RadioButton} with a given text is checked.
+	 *
+	 * @param text the text that the {@code RadioButton} shows
+	 * @return {@code true} if a {@code RadioButton} with the given text is checked and {@code false} if it is not checked
+	 *
+	 */
+	
+	public boolean isRadioButtonChecked(String text)
+	{
+		return checker.isButtonChecked(RadioButton.class, text);
 	}
 	
 	/**
@@ -1168,9 +1183,45 @@ public class Solo {
 	
 	public boolean isCheckBoxChecked(int index)
 	{
-		return robotiumUtils.isCheckBoxChecked(index);
+		return checker.isButtonChecked(CheckBox.class, index);
 	}
 	
+	/**
+	 * Checks if a {@link CheckBox} with a given text is checked.
+	 *
+	 * @param text the text that the {@code CheckBox} shows
+	 * @return {@code true} if a {@code CheckBox} with the given text is checked and {@code false} if it is not checked
+	 *
+	 */
+	
+	public boolean isCheckBoxChecked(String text)
+	{
+		return checker.isButtonChecked(CheckBox.class, text);
+	}
+	
+	/**
+	 * Checks if a given text is selected in any {@link Spinner} located on the current screen.
+	 * @param text the text that is expected to be selected
+	 * @return {@code true} if the given text is selected in any {@code Spinner} and false if it is not
+	 * 
+	 */
+	
+	public boolean isSpinnerTextSelected(String text)
+	{
+		return checker.isSpinnerTextSelected(text);
+	}
+	
+	/**
+	 * Checks if a given text is selected in a given {@link Spinner} 
+	 * @param spinnerIndex the index of the spinner to check. 0 if only one spinner is available
+	 * @param text the text that is expected to be selected
+	 * @return true if the given text is selected in the given {@code Spinner} and false if it is not
+	 */
+	
+	public boolean isSpinnerTextSelected(int spinnerIndex, String text)
+	{
+		return checker.isSpinnerTextSelected(spinnerIndex, text);
+	}
 
 	/**
 	 * Tells Robotium to send a key: Right, Left, Up, Down, Enter, Menu, Delete, Call and End Call.

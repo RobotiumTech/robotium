@@ -381,6 +381,8 @@ class Clicker {
 	 */
 	
 	public ArrayList<TextView> clickInList(int line, int index) {	
+		if(line == 0)
+			line = 1;
 		robotiumUtils.waitForIdle();
 		sleeper.sleep();
 		long now = System.currentTimeMillis();
