@@ -208,7 +208,7 @@ class Clicker {
 		}catch(SecurityException e){
 			Assert.assertTrue("Can not open the menu!", false);
 		}
-		clickOnText(text, false, 1, true);
+		clickOnText(text, false, 1, false);
 	}
 	
 	/**
@@ -246,7 +246,7 @@ class Clicker {
 		if(textMore != null)
 			clickOnScreen(textMore);
 
-		clickOnText(text, false, 1, true);
+		clickOnText(text, false, 1, false);
 	}
 	
 	
