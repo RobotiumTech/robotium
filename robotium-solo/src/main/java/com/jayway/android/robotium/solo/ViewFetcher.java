@@ -121,8 +121,8 @@ class ViewFetcher {
 	 * @return all {@code View}s located in the currently active {@code Activity}, never {@code null}
 	 */
 	
-	public List<View> getViews(View parent) {
-		final List<View> views = new ArrayList<View>();
+	public ArrayList<View> getViews(View parent) {
+		final ArrayList<View> views = new ArrayList<View>();
 		final View parentToUse;
 
 		if (parent == null){

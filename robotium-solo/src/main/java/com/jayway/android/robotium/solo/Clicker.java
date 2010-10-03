@@ -377,7 +377,7 @@ class Clicker {
 	 * 
 	 * @param line the line that should be clicked
 	 * @param index the index of the list. E.g. Index 1 if two lists are available
-	 * @return a {@code List} of the {@code TextView}s located in the list line
+	 * @return an {@code ArrayList} of the {@code TextView}s located in the list line
 	 */
 	
 	public ArrayList<TextView> clickInList(int line, int index) {	
