@@ -27,6 +27,7 @@ class TextEnterer{
      * @param clicker the {@code Clicker} instance.
      * @param inst the {@code Instrumentation} instance.
      */
+	
     public TextEnterer(ViewFetcher viewFetcher, RobotiumUtils robotiumUtils, Clicker clicker, Instrumentation inst) {
         this.viewFetcher = viewFetcher;
         this.robotiumUtils = robotiumUtils;

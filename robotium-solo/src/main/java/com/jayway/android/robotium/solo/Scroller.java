@@ -18,7 +18,6 @@ class Scroller {
 	
     public enum Direction {UP, DOWN}
     public enum Side {LEFT, RIGHT}
-
 	private final Instrumentation inst;
 	private final ActivityUtils activityUtils;
 	private final ViewFetcher viewFetcher;

@@ -37,7 +37,7 @@ class Checker {
 	 * @return {@code true} if {@code CompoundButton} is checked and {@code false} if it is not checked
 	 */
 	
-	public  <T extends CompoundButton> boolean isButtonChecked(Class<T> expectedClass, int index)
+	public <T extends CompoundButton> boolean isButtonChecked(Class<T> expectedClass, int index)
 	{
 		ArrayList<T> list = viewFetcher.getCurrentViews(expectedClass);
 		if(index < 0 || index > list.size()-1)
@@ -53,7 +53,7 @@ class Checker {
 	 * @return {@code true} if {@code CompoundButton} is checked and {@code false} if it is not checked
 	 */
 	
-	public  <T extends CompoundButton> boolean isButtonChecked(Class<T> expectedClass, String text)
+	public <T extends CompoundButton> boolean isButtonChecked(Class<T> expectedClass, String text)
 	{
 		ArrayList<T> list = viewFetcher.getCurrentViews(expectedClass);
 		for(T button : list){

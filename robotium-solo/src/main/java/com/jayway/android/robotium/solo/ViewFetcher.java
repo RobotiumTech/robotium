@@ -26,8 +26,8 @@ class ViewFetcher {
     /**
      * Constructs this object.
      *
-     * @param inst the {@code Instrumentation} instance.
-	 * @param activityUtils the {@code ActivityUtils} instance.
+     * @param inst the {@code Instrumentation} instance
+	 * @param activityUtils the {@code ActivityUtils} instance
      */
 	
     public ViewFetcher(Instrumentation inst, ActivityUtils activityUtils) {
@@ -41,7 +41,6 @@ class ViewFetcher {
 	 *
 	 * @param view the {@code View} whose top parent is requested
 	 * @return the top parent {@code View}
-	 *
 	 */
 	
 	public View getTopParent(View view) {
@@ -146,6 +145,7 @@ class ViewFetcher {
 	 * @param views an {@code ArrayList} of {@code View}s
 	 * @param viewGroup the {@code ViewGroup} to extract children from
 	 */
+	
 	private void addChildren(ArrayList<View> views, ViewGroup viewGroup) {
 		for (int i = 0; i < viewGroup.getChildCount(); i++) {
 			final View child = viewGroup.getChildAt(i);
@@ -166,6 +166,7 @@ class ViewFetcher {
 	 * @param index choose among all instances of this type, e.g. {@code Button.class} or {@code EditText.class}
 	 * @return a {@code View} with a certain index, from the list of current {@code View}s of the specified type
 	 */
+	
 	public <T extends View> T getView(Class<T> classToFilterBy, int index) {
 		ArrayList<T> views = getCurrentViews(classToFilterBy);
 		T view = null;
@@ -200,12 +201,13 @@ class ViewFetcher {
 
 
 	/**
-	 * Returns a {@code ArrayList} of {@code View}s of the specified {@code Class} located in the current
+	 * Returns an {@code ArrayList} of {@code View}s of the specified {@code Class} located in the current
 	 * {@code Activity}.
 	 *
 	 * @param classToFilterBy return all instances of this class, e.g. {@code Button.class} or {@code GridView.class}
-	 * @return a {@code ArrayList} of {@code View}s of the specified {@code Class} located in the current {@code Activity}
+	 * @return an {@code ArrayList} of {@code View}s of the specified {@code Class} located in the current {@code Activity}
 	 */
+	
 	public <T extends View> ArrayList<T> getCurrentViews(Class<T> classToFilterBy) {
 		return getCurrentViews(classToFilterBy, null);
 	}
@@ -215,8 +217,9 @@ class ViewFetcher {
 	 *
 	 * @param classToFilterBy return all instances of this class, e.g. {@code Button.class} or {@code GridView.class}
 	 * @param parent the parent {@code View} for where to start the traversal
-	 * @return a {@code ArrayList} of {@code View}s of the specified {@code Class} located under the specified {@code parent}
+	 * @return an {@code ArrayList} of {@code View}s of the specified {@code Class} located under the specified {@code parent}
 	 */
+	
 	public <T extends View> ArrayList<T> getCurrentViews(Class<T> classToFilterBy, View parent) {
 		ArrayList<T> filteredViews = new ArrayList<T>();
 		List<View> allViews = getViews(parent);
