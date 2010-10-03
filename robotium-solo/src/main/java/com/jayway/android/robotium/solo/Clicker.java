@@ -31,6 +31,7 @@ class Clicker {
 	private final Instrumentation inst;
 	private final RobotiumUtils robotiumUtils;
 	private final Sleeper sleeper;
+	private final Waiter waiter;
 	private int countMatches=0;
 	private final int TIMEOUT = 10000;
 	private final int CLICKTIMEOUT = 5000;	
@@ -45,10 +46,11 @@ class Clicker {
      * @param robotiumUtils the {@code RobotiumUtils} instance.
      * @param inst the {@code android.app.Instrumentation} instance.
      * @param sleeper the {@code Sleeper} instance
+     * @param waiter the {@code Waiter} instance
      */
 
 	public Clicker(ActivityUtils ativityUtils, ViewFetcher viewFetcher,
-                   Scroller scroller, RobotiumUtils robotiumUtils, Instrumentation inst, Sleeper sleeper) {
+                   Scroller scroller, RobotiumUtils robotiumUtils, Instrumentation inst, Sleeper sleeper, Waiter waiter) {
 
 		this.activityUtils = ativityUtils;
 		this.viewFetcher = viewFetcher;
@@ -56,6 +58,7 @@ class Clicker {
 		this.robotiumUtils = robotiumUtils;
 		this.inst = inst;
         this.sleeper = sleeper;
+        this.waiter = waiter;
     }
 	
 	/**
@@ -233,7 +236,7 @@ class Clicker {
 		}catch(SecurityException e){
 			Assert.assertTrue("Can not open the menu!", false);
 		}
-		if(subMenu && (viewFetcher.getCurrentViews(TextView.class).size() > 5) && !robotiumUtils.waitForText(text, 1, 1500, false)){
+		if(subMenu && (viewFetcher.getCurrentViews(TextView.class).size() > 5) && !waiter.waitForText(text, 1, 1500, false)){
 			for(TextView textView : viewFetcher.getCurrentViews(TextView.class)){
 				x = xy[0];
 				y = xy[1];
@@ -262,7 +265,7 @@ class Clicker {
 	public void clickOnText(String regex, boolean longClick, int match, boolean scroll) {
 		Pattern p = Pattern.compile(regex);
 		Matcher matcher; 
-		robotiumUtils.waitForText(regex, 0, TIMEOUT, scroll);
+		waiter.waitForText(regex, 0, TIMEOUT, scroll);
 		TextView textToClick = null;
 		ArrayList <TextView> textViewList = viewFetcher.getCurrentViews(TextView.class);
 		if (match == 0) {
@@ -306,7 +309,7 @@ class Clicker {
 	public <T extends TextView> void clickOn(Class<T> viewClass, String nameRegex) {
 		final List<T> views = viewFetcher.getCurrentViews(viewClass);
 		final Pattern pattern = Pattern.compile(nameRegex);
-		robotiumUtils.waitForText(nameRegex, 0, TIMEOUT, true);
+		waiter.waitForText(nameRegex, 0, TIMEOUT, true);
 		T viewToClick = null;
 		for(T view : views){
 			if(pattern.matcher(view.getText().toString()).matches()){
@@ -333,7 +336,7 @@ class Clicker {
 	 * @param index the index of the {@code View} to be clicked, within {@code View}s of the specified class
 	 */
 	public <T extends View> void clickOn(Class<T> viewClass, int index) {
-		robotiumUtils.waitForIdle();
+		waiter.waitForIdle();
 		try {
 			clickOnScreen(viewFetcher.getCurrentViews(viewClass).get(index));
 		} catch (IndexOutOfBoundsException e) {
@@ -341,22 +344,6 @@ class Clicker {
 		}
 	}
 
-
-	/**
-	 * Simulates pressing the hardware back key.
-	 * 
-	 */
-	
-	public void goBack() {
-		sleeper.sleep();
-		inst.waitForIdleSync();
-		try {
-			inst.sendKeyDownUpSync(KeyEvent.KEYCODE_BACK);
-			sleeper.sleep();
-		} catch (Throwable e) {}
-	}
-	
-	
 	
 	/**
 	 * Clicks on a certain list line and returns the {@link TextView}s that
@@ -382,7 +369,7 @@ class Clicker {
 	public ArrayList<TextView> clickInList(int line, int index) {	
 		if(line == 0)
 			line = 1;
-		robotiumUtils.waitForIdle();
+		waiter.waitForIdle();
 		sleeper.sleep();
 		long now = System.currentTimeMillis();
 		final long endTime = now + CLICKTIMEOUT;

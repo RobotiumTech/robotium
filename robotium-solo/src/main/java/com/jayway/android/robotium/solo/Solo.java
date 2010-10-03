@@ -70,6 +70,7 @@ public class Solo {
 	private final Scroller scroller;
 	private final RobotiumUtils robotiumUtils;
 	private final Sleeper sleeper;
+	private final Waiter waiter;
 	public final static int LANDSCAPE = ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE;   // 0
 	public final static int PORTRAIT = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT;     // 1
 	public final static int RIGHT = 2;
@@ -100,10 +101,11 @@ public class Solo {
         this.dialogUtils = new DialogUtils(viewFetcher, sleeper);
         this.scroller = new Scroller(inst, activitiyUtils, viewFetcher);
         this.searcher = new Searcher(viewFetcher, scroller, inst, sleeper);
-        this.robotiumUtils = new RobotiumUtils(activitiyUtils, searcher, viewFetcher, inst, sleeper);
-        this.clicker = new Clicker(activitiyUtils, viewFetcher, scroller,robotiumUtils, inst, sleeper);
+        this.waiter = new Waiter(viewFetcher, searcher, sleeper);
+        this.robotiumUtils = new RobotiumUtils(activitiyUtils, searcher, viewFetcher, inst, sleeper, waiter);
+        this.clicker = new Clicker(activitiyUtils, viewFetcher, scroller,robotiumUtils, inst, sleeper, waiter);
         this.presser = new Presser(viewFetcher, clicker, inst, sleeper);
-        this.textEnterer = new TextEnterer(viewFetcher, robotiumUtils, clicker, inst);
+        this.textEnterer = new TextEnterer(viewFetcher, waiter, clicker, inst);
 
 	}
 
@@ -159,7 +161,7 @@ public class Solo {
 	
 	public boolean waitForText(String text) {
 
-		return robotiumUtils.waitForText(text);
+		return waiter.waitForText(text);
 	}
 
 	
@@ -174,7 +176,7 @@ public class Solo {
 	 */
 	
 	public boolean waitForText(String text, int minimumNumberOfMatches, long timeout) {
-       return robotiumUtils.waitForText(text, minimumNumberOfMatches, timeout);
+       return waiter.waitForText(text, minimumNumberOfMatches, timeout);
     }
 	
 	 /**
@@ -189,7 +191,7 @@ public class Solo {
 	 */
 	
 	public boolean waitForText(String text, int minimumNumberOfMatches, long timeout, boolean scroll) {
-		return robotiumUtils.waitForText(text, minimumNumberOfMatches, timeout, scroll);
+		return waiter.waitForText(text, minimumNumberOfMatches, timeout, scroll);
     }
 	
 	
@@ -458,7 +460,7 @@ public class Solo {
 	
 	public void goBack()
 	{
-		clicker.goBack();
+		robotiumUtils.goBack();
 	}
 	
 	/**
@@ -470,7 +472,7 @@ public class Solo {
 	 */
 	
 	public void clickOnScreen(float x, float y) {
-		robotiumUtils.waitForIdle();
+		waiter.waitForIdle();
 		clicker.clickOnScreen(x, y);
 	}
 	/**
@@ -580,7 +582,7 @@ public class Solo {
 	 */
 	
 	public void clickOnView(View view) {
-		robotiumUtils.waitForIdle();
+		waiter.waitForIdle();
 		clicker.clickOnScreen(view);
 	}
 	
@@ -593,7 +595,7 @@ public class Solo {
 	 */
 	
 	public void clickLongOnView(View view) {
-		robotiumUtils.waitForIdle();
+		waiter.waitForIdle();
 		clicker.clickOnScreen(view, true);
 
 	}

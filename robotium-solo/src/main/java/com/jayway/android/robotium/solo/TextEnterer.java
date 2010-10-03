@@ -15,7 +15,7 @@ import android.view.KeyEvent;
 class TextEnterer{
 	
 	private final ViewFetcher viewFetcher;
-	private final RobotiumUtils robotiumUtils;
+	private final Waiter waiter;
 	private final Clicker clicker;
 	private final Instrumentation inst;
 
@@ -23,14 +23,14 @@ class TextEnterer{
      * Constructs this object.
      *
      * @param viewFetcher the {@code ViewFetcher} instance.
-     * @param robotiumUtils the {@code RobotiumUtils} instance.
+     * @param waiter the {@code Waiter} instance.
      * @param clicker the {@code Clicker} instance.
      * @param inst the {@code Instrumentation} instance.
      */
 	
-    public TextEnterer(ViewFetcher viewFetcher, RobotiumUtils robotiumUtils, Clicker clicker, Instrumentation inst) {
+    public TextEnterer(ViewFetcher viewFetcher, Waiter waiter, Clicker clicker, Instrumentation inst) {
         this.viewFetcher = viewFetcher;
-        this.robotiumUtils = robotiumUtils;
+        this.waiter = waiter;
         this.clicker = clicker;
         this.inst = inst;
     }
@@ -45,7 +45,7 @@ class TextEnterer{
 	 */
 	
     public void enterText(int index, String text) {
-    	robotiumUtils.waitForIdle();
+    	waiter.waitForIdle();
     	Boolean focused = false;
     	try {
 			if (viewFetcher.getCurrentViews(EditText.class).size() > 0) {
