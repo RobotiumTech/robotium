@@ -1,7 +1,6 @@
 package com.jayway.android.robotium.solo;
 
 import java.util.ArrayList;
-
 import junit.framework.Assert;
 import android.widget.CompoundButton;
 import android.widget.Spinner;
