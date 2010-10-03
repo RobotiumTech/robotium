@@ -1187,6 +1187,32 @@ public class Solo {
 	}
 	
 	/**
+	 * Checks if a {@link ToggleButton} with a given text is checked.
+	 *
+	 * @param text the text that the {@code ToggleButton} shows
+	 * @return {@code true} if a {@code ToggleButton} with the given text is checked and {@code false} if it is not checked
+	 *
+	 */
+	
+	public boolean isToggleButtonChecked(String text)
+	{
+		return checker.isButtonChecked(ToggleButton.class, text);
+	}
+	
+	/**
+	 * Checks if a {@link ToggleButton} with a given index is checked.
+	 * 
+	 * @param index of the {@code ToggleButton} to check. {@code 0} if only one is available
+	 * @return {@code true} if {@code ToggleButton} is checked and {@code false} if it is not checked
+	 * 
+	 */
+	
+	public boolean isToggleButtonChecked(int index)
+	{
+		return checker.isButtonChecked(ToggleButton.class, index);
+	}
+	
+	/**
 	 * Checks if a {@link CheckBox} with a given text is checked.
 	 *
 	 * @param text the text that the {@code CheckBox} shows
