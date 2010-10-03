@@ -100,7 +100,7 @@ public class Solo {
         this.dialogUtils = new DialogUtils(viewFetcher, sleeper);
         this.scroller = new Scroller(inst, activitiyUtils, viewFetcher);
         this.searcher = new Searcher(viewFetcher, scroller, inst, sleeper);
-        this.robotiumUtils = new RobotiumUtils(activitiyUtils, searcher, viewFetcher, inst, sleeper, scroller);
+        this.robotiumUtils = new RobotiumUtils(activitiyUtils, searcher, viewFetcher, inst, sleeper);
         this.clicker = new Clicker(activitiyUtils, viewFetcher, scroller,robotiumUtils, inst, sleeper);
         this.presser = new Presser(viewFetcher, clicker, inst, sleeper);
         this.textEnterer = new TextEnterer(viewFetcher, robotiumUtils, clicker, inst);

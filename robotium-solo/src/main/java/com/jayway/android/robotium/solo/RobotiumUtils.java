@@ -19,7 +19,6 @@ class RobotiumUtils {
 	private final Instrumentation inst;
 	private final Sleeper sleeper;
 	private final int TIMEOUT = 20000;
-    private final Scroller scroller;
 
     /**
 	 * Constructs this object.
@@ -33,13 +32,12 @@ class RobotiumUtils {
      */
 	
 	public RobotiumUtils(ActivityUtils activityUtils, Searcher searcher,
-                         ViewFetcher viewFetcher, Instrumentation inst, Sleeper sleeper, Scroller scroller) {
+                         ViewFetcher viewFetcher, Instrumentation inst, Sleeper sleeper) {
 		this.activityUtils = activityUtils;
 		this.searcher = searcher;
 		this.viewFetcher = viewFetcher;
 		this.inst = inst;
         this.sleeper = sleeper;
-        this.scroller = scroller;
     }
 	
 	
