@@ -499,7 +499,7 @@ public class Solo {
 	}
 	
 	/**
-	 * Clicks on an {@link ImageButton} with a certain index.
+	 * Clicks on an {@link ImageButton} with a given index.
 	 *
 	 * @param index the index of the {@code ImageButton} to be clicked. 0 if only one is available
 	 *
@@ -545,7 +545,7 @@ public class Solo {
 	}
 	
 	/**
-	 * Presses a {@link android.view.MenuItem} with a certain index. Index {@code 0} is the first item in the
+	 * Presses a {@link android.view.MenuItem} with a given index. Index {@code 0} is the first item in the
 	 * first row, Index {@code 3} is the first item in the second row and
 	 * index {@code 5} is the first item in the third row.
 	 * 
@@ -599,7 +599,7 @@ public class Solo {
 	}
 	
 	/**
-	 * Clicks on a {@link View} displaying a certain
+	 * Clicks on a {@link View} displaying a given
 	 * text. Will automatically scroll when needed. 
 	 *
 	 * @param text the text that should be clicked on. The parameter will be interpreted as a regular expression
@@ -611,7 +611,7 @@ public class Solo {
 	}
 	
 	/**
-	 * Clicks on a {@link View} displaying a certain text. Will automatically scroll when needed.
+	 * Clicks on a {@link View} displaying a given text. Will automatically scroll when needed.
 	 *
 	 * @param text the text that should be clicked on. The parameter will be interpreted as a regular expression
 	 * @param match the match that should be clicked on 
@@ -623,7 +623,7 @@ public class Solo {
 	}
 	
 	/**
-	 * Clicks on a {@link View} displaying a certain text.
+	 * Clicks on a {@link View} displaying a given text.
 	 *
 	 * @param text the text that should be clicked on. The parameter will be interpreted as a regular expression
 	 * @param match the match that should be clicked on 
@@ -692,7 +692,7 @@ public class Solo {
 	}
 	
 	/**
-	 * Clicks on a {@link Button} with a certain index.
+	 * Clicks on a {@link Button} with a given index.
 	 *
 	 * @param index the index number of the {@code Button}. 0 if only one is available
 	 *
@@ -703,7 +703,7 @@ public class Solo {
 	}
 	
 	/**
-	 * Clicks on a {@link RadioButton} with a certain index.
+	 * Clicks on a {@link RadioButton} with a given index.
 	 *
 	 * @param index the index of the {@code RadioButton} to be clicked. 0 if only one is available
 	 *
@@ -714,7 +714,7 @@ public class Solo {
 	}
 	
 	/**
-	 * Clicks on a {@link CheckBox} with a certain index.
+	 * Clicks on a {@link CheckBox} with a given index.
 	 *
 	 * @param index the index of the {@code CheckBox} to be clicked. 0 if only one is available
 	 *
@@ -725,7 +725,7 @@ public class Solo {
 	}
 	
 	/**
-	 * Clicks on an {@link EditText} with a certain index.
+	 * Clicks on an {@link EditText} with a given index.
 	 *
 	 * @param index the index of the {@code EditText} to be clicked. 0 if only one is available
 	 *
@@ -736,7 +736,7 @@ public class Solo {
 	}
 
 	/**
-	 * Clicks on a certain list line and returns an {@code ArrayList} of the {@link TextView}s that
+	 * Clicks on a given list line and returns an {@code ArrayList} of the {@link TextView}s that
 	 * the list line is showing. Will use the first list it finds.
 	 * 
 	 * @param line the line that should be clicked
@@ -749,7 +749,7 @@ public class Solo {
 	}
 
 	/**
-	 * Clicks on a certain list line on a specified list and 
+	 * Clicks on a given list line on a specified list and 
 	 * returns an {@code ArrayList} of the {@link TextView}s that the list line is showing.
 	 * 
 	 * @param line the line that should be clicked
@@ -844,7 +844,7 @@ public class Solo {
 	}
 	
 	/**
-	 * Enters text into an {@link EditText} with a certain index.
+	 * Enters text into an {@link EditText} with a given index.
 	 *
 	 * @param index the index of the text field. 0 if only one is available
 	 * @param text the text string that is to be entered into the text field
@@ -856,7 +856,7 @@ public class Solo {
 	}
 	
 	/**
-	 * Clicks on an {@link ImageView} with a certain index.
+	 * Clicks on an {@link ImageView} with a given index.
 	 *
 	 * @param index the index of the {@link ImageView} to be clicked. 0 if only one is available
 	 *
@@ -880,7 +880,7 @@ public class Solo {
 	}
 	
 	/**
-	 * Returns an {@code EditText} with a certain index.
+	 * Returns an {@code EditText} with a given index.
 	 *
 	 * @param index the index of the {@code EditText}. 0 if only one is available
 	 * @return the {@code EditText} with a specified index or {@code null} if index is invalid
@@ -893,7 +893,7 @@ public class Solo {
 	}
 	
 	/**
-	 * Returns a {@code Button} with a certain index.
+	 * Returns a {@code Button} with a given index.
 	 *
 	 * @param index the index of the {@code Button}. 0 if only one is available
 	 * @return the {@code Button} with a specified index or {@code null} if index is invalid
@@ -906,7 +906,7 @@ public class Solo {
 	}
 	
 	/**
-	 * Returns a {@code TextView} with a certain index.
+	 * Returns a {@code TextView} with a given index.
 	 *
 	 * @param index the index of the {@code TextView}. 0 if only one is available
 	 * @return the {@code TextView} with a specified index or {@code null} if index is invalid
@@ -918,7 +918,7 @@ public class Solo {
 	}
 	
 	/**
-	 * Returns an {@code ImageView} with a certain index.
+	 * Returns an {@code ImageView} with a given index.
 	 *
 	 * @param index the index of the {@code ImageView}. 0 if only one is available
 	 * @return the {@code ImageView} with a specified index or {@code null} if index is invalid
@@ -930,7 +930,7 @@ public class Solo {
 	}
 	
 	/**
-	 * Returns an {@code ImageButton} with a certain index.
+	 * Returns an {@code ImageButton} with a given index.
 	 *
 	 * @param index the index of the {@code ImageButton}. 0 if only one is available
 	 * @return the {@code ImageButton} with a specified index or {@code null} if index is invalid
