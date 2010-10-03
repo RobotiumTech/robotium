@@ -942,7 +942,8 @@ public class Solo {
 	}
 	
 	/**
-	 * Returns a {@link TextView} which shows a given text
+	 * Returns a {@link TextView} which shows a given text. 
+	 * 
 	 * @param text the text that is shown
 	 * @return the {@code TextView} that shows the given text
 	 */
@@ -953,7 +954,8 @@ public class Solo {
 	}
 	
 	/**
-	 * Returns a {@link Button} which shows a given text
+	 * Returns a {@link Button} which shows a given text.
+	 * 
 	 * @param text the text that is shown
 	 * @return the {@code Button} that shows the given text
 	 */
@@ -964,7 +966,8 @@ public class Solo {
 	}
 	
 	/**
-	 * Returns an {@link EditText} which shows a given text
+	 * Returns an {@link EditText} which shows a given text.
+	 * 
 	 * @param text the text that is shown
 	 * @return the {@code EditText} which shows the given text
 	 */
@@ -992,6 +995,7 @@ public class Solo {
 	
 	/**
 	 * Returns a {@code View} with a given id. 
+	 * 
 	 * @param id the R.id of the {@code View} to be returned 
 	 * @return a {@code View} with a given id
 	 */
