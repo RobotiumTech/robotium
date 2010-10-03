@@ -22,10 +22,10 @@ class TextEnterer{
     /**
      * Constructs this object.
      *
-     * @param viewFetcher the {@link ViewFetcher} instance.
-     * @param robotiumUtils the {@link RobotiumUtils} instance.
-     * @param clicker the {@link Clicker} instance.
-     * @param inst the {@link Instrumentation} instance.
+     * @param viewFetcher the {@code ViewFetcher} instance.
+     * @param robotiumUtils the {@code RobotiumUtils} instance.
+     * @param clicker the {@code Clicker} instance.
+     * @param inst the {@code Instrumentation} instance.
      */
     public TextEnterer(ViewFetcher viewFetcher, RobotiumUtils robotiumUtils, Clicker clicker, Instrumentation inst) {
         this.viewFetcher = viewFetcher;

@@ -26,8 +26,8 @@ class ViewFetcher {
     /**
      * Constructs this object.
      *
-     * @param inst the {@link Instrumentation} instance.
-	 * @param activityUtils the {@link ActivityUtils} instance.
+     * @param inst the {@code Instrumentation} instance.
+	 * @param activityUtils the {@code ActivityUtils} instance.
      */
 	
     public ViewFetcher(Instrumentation inst, ActivityUtils activityUtils) {
@@ -178,11 +178,11 @@ class ViewFetcher {
 	}
 	
 	/**
-	 * Returns a {@code View} that shows a certain text, from the list of current {@code View}s of the specified type.
+	 * Returns a {@code View} that shows a given text, from the list of current {@code View}s of the specified type.
 	 *
 	 * @param classToFilterBy which {@code View}s to choose from
 	 * @param text the text that the view shows
-	 * @return a {@code View} showing a certain text, from the list of current {@code View}s of the specified type
+	 * @return a {@code View} showing a given text, from the list of current {@code View}s of the specified type
 	 */
 	
 	public <T extends TextView> T getView(Class<T> classToFilterBy, String text) {

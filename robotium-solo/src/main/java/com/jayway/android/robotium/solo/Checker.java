@@ -21,7 +21,7 @@ class Checker {
 	/**
 	 * Constructs this object.
 	 * 
-	 * @param viewFetcher the {@link ViewFetcher} instance.
+	 * @param viewFetcher the {@code ViewFetcher} instance.
 	 */
 	
 	public Checker(ViewFetcher viewFetcher){

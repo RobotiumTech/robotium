@@ -40,11 +40,11 @@ class Clicker {
 	/**
 	 * Constructs this object.
 	 * 
-	 * @param ativityUtils the {@link ActivityUtils} instance.
-     * @param viewFetcher the {@link ViewFetcher} instance.
-     * @param scroller the {@link Scroller} instance.
-     * @param robotiumUtils the {@link RobotiumUtils} instance.
-     * @param inst the {@link android.app.Instrumentation} instance.
+	 * @param ativityUtils the {@code ActivityUtils} instance.
+     * @param viewFetcher the {@code ViewFetcher} instance.
+     * @param scroller the {@code Scroller} instance.
+     * @param robotiumUtils the {@code RobotiumUtils} instance.
+     * @param inst the {@code android.app.Instrumentation} instance.
      * @param sleeper the {@code Sleeper} instance
      */
 

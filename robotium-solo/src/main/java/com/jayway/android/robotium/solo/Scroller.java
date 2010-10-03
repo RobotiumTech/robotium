@@ -27,9 +27,9 @@ class Scroller {
     /**
      * Constructs this object.
      *
-     * @param inst the {@link Instrumentation} instance.
-     * @param activityUtils the {@link ActivityUtils} instance.
-     * @param viewFetcher the {@link ViewFetcher} instance.
+     * @param inst the {@code Instrumentation} instance.
+     * @param activityUtils the {@code ActivityUtils} instance.
+     * @param viewFetcher the {@code ViewFetcher} instance.
      */
 	
     public Scroller(Instrumentation inst, ActivityUtils activityUtils, ViewFetcher viewFetcher) {
