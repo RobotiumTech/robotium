@@ -18,6 +18,12 @@ class Checker {
 	
 	private final ViewFetcher viewFetcher;
 	
+	/**
+	 * Constructs this object.
+	 * 
+	 * @param viewFetcher the {@link ViewFetcher} instance.
+	 */
+	
 	public Checker(ViewFetcher viewFetcher){
 		this.viewFetcher = viewFetcher;
 	}
