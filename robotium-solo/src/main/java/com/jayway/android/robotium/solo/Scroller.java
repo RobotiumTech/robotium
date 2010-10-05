@@ -114,7 +114,7 @@ class Scroller {
 			if (viewFetcher.getCurrentViews(ScrollView.class).size() > 0) {
 				ScrollView scroll = viewFetcher.getCurrentViews(ScrollView.class).get(0);
 				scrollAmount = scroll.getScrollY();
-				drag(x, x, yStart, yEnd, 20);
+				drag(x, x, yStart, yEnd, 40);
 				if (scrollAmount == scroll.getScrollY()) {
 					scrollAmount = 0;
 					return false;
