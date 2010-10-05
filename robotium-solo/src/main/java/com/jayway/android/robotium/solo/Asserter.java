@@ -5,7 +5,7 @@ import android.app.Activity;
 import android.app.ActivityManager;
 
 /**
- * This class contains assertActivity() methods.
+ * This class contains assertActivity() methods and assertLowMemory().
  * 
  * @author Renas Reda, renas.reda@jayway.com
  *

@@ -2,8 +2,7 @@ package com.jayway.android.robotium.solo;
 
 
 /**
- * This class contains dialog related methods. Examples are:
- * getCurrentDialog(), getDialogList(), isDialogShown(), etc.
+ * This class contains the waitForDialogToClose() method.
  * 
  * @author Renas Reda, renas.reda@jayway.com
  * 
