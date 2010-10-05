@@ -33,33 +33,6 @@ class RobotiumUtils {
         this.sleeper = sleeper;
         this.waiter = waiter;
     }
-	
-	
-	 /**
-     * Clears the value of an edit text
-     * 
-     * @param index the index of the edit text that should be cleared
-     */
-	
-	public void clearEditText(int index)
-	{
-		waiter.waitForIdle();    
-		try{
-			final EditText	editText = viewFetcher.getCurrentViews(EditText.class).get(index);
-			if(editText != null){
-				activityUtils.getCurrentActivity().runOnUiThread(new Runnable()
-				{
-					public void run()
-					{
-						editText.setText("");
-					}
-				});
-			}
-		}catch(IndexOutOfBoundsException e){
-			Assert.assertTrue("No edit text with index " + index + " is found", false);
-		}
-	}
-    
    
 	
 	/**

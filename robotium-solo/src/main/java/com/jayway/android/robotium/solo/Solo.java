@@ -95,7 +95,7 @@ public class Solo {
 	public Solo(Instrumentation inst, Activity activity) {
         this.sleeper = new Sleeper();
         this.activitiyUtils = new ActivityUtils(inst, activity, sleeper);
-        this.viewFetcher = new ViewFetcher(inst, activitiyUtils);
+        this.viewFetcher = new ViewFetcher(inst, activitiyUtils, sleeper);
         this.checker = new Checker(viewFetcher);
         this.asserter = new Asserter(activitiyUtils, sleeper);
         this.dialogUtils = new DialogUtils(viewFetcher, sleeper);
@@ -105,7 +105,7 @@ public class Solo {
         this.robotiumUtils = new RobotiumUtils(activitiyUtils, searcher, viewFetcher, inst, sleeper, waiter);
         this.clicker = new Clicker(activitiyUtils, viewFetcher, scroller,robotiumUtils, inst, sleeper, waiter);
         this.presser = new Presser(viewFetcher, clicker, inst, sleeper);
-        this.textEnterer = new TextEnterer(viewFetcher, waiter, clicker, inst);
+        this.textEnterer = new TextEnterer(activitiyUtils,viewFetcher, waiter);
 
 	}
 
@@ -148,7 +148,7 @@ public class Solo {
 	
     public void clearEditText(int index)
     {
-       robotiumUtils.clearEditText(index);
+       textEnterer.setEditText(index, "");
     }
     
     /**
@@ -251,6 +251,11 @@ public class Solo {
 	 */
 	
 	public boolean searchButton(String text, int minimumNumberOfMatches) {
+		boolean found = searcher.searchWithTimeoutFor(Button.class, text, minimumNumberOfMatches, true);
+		return found;
+	}
+	
+	public boolean searchButton(String text, int minimumNumberOfMatches, boolean isShown) {
 		boolean found = searcher.searchWithTimeoutFor(Button.class, text, minimumNumberOfMatches, true);
 		return found;
 	}
@@ -854,7 +859,7 @@ public class Solo {
 	 */
 	
 	public void enterText(int index, String text) {
-		textEnterer.enterText(index, text);		
+		textEnterer.setEditText(index, text);		
 	}
 	
 	/**

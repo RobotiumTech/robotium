@@ -99,6 +99,7 @@ class Searcher {
         }
 
     }
+    
 
 	/**
 	 * Searches for a {@code View} with the given regex string and returns {@code true} if the

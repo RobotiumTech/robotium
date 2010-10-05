@@ -22,6 +22,7 @@ class ViewFetcher {
 	
 	private final Instrumentation inst;
 	private final ActivityUtils activityUtils;
+	private final Sleeper sleeper;
 	
     /**
      * Constructs this object.
@@ -30,9 +31,10 @@ class ViewFetcher {
 	 * @param activityUtils the {@code ActivityUtils} instance
      */
 	
-    public ViewFetcher(Instrumentation inst, ActivityUtils activityUtils) {
+    public ViewFetcher(Instrumentation inst, ActivityUtils activityUtils, Sleeper sleeper) {
         this.inst = inst;
         this.activityUtils = activityUtils;
+        this.sleeper = sleeper;
     }
 	
 	
@@ -168,6 +170,8 @@ class ViewFetcher {
 	 */
 	
 	public <T extends View> T getView(Class<T> classToFilterBy, int index) {
+		sleeper.sleep();
+		inst.waitForIdleSync();
 		ArrayList<T> views = getCurrentViews(classToFilterBy);
 		T view = null;
 		try{
@@ -187,10 +191,13 @@ class ViewFetcher {
 	 */
 	
 	public <T extends TextView> T getView(Class<T> classToFilterBy, String text) {
+		sleeper.sleep();
+		inst.waitForIdleSync();
 		ArrayList<T> views = getCurrentViews(classToFilterBy);
 		T viewToReturn = null;
+		int i = 0;
 		for(T view: views){
-			if(view.getText().equals(text))
+			if(view.getText().toString().equals(text))
 				viewToReturn = view;
 		}
 		if(viewToReturn == null)
