@@ -59,8 +59,10 @@ class TextEnterer{
     				{
     					if(text.equals(""))
     						editText.setText(text);
-    					else
+    					else{
     						editText.setText(previousText + text);
+    						editText.setCursorVisible(false);
+    					}
     				}
     			});
     		}
