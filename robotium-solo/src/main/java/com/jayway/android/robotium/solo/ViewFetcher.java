@@ -173,6 +173,7 @@ class ViewFetcher {
 		sleeper.sleep();
 		inst.waitForIdleSync();
 		ArrayList<T> views = getCurrentViews(classToFilterBy);
+		views=RobotiumUtils.removeInvisibleViews(views);
 		T view = null;
 		try{
 			view = views.get(index);

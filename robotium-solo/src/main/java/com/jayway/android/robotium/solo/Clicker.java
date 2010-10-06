@@ -338,7 +338,9 @@ class Clicker {
 	public <T extends View> void clickOn(Class<T> viewClass, int index) {
 		waiter.waitForIdle();
 		try {
-			clickOnScreen(viewFetcher.getCurrentViews(viewClass).get(index));
+			ArrayList<T> views=viewFetcher.getCurrentViews(viewClass);
+			views=RobotiumUtils.removeInvisibleViews(views);
+			clickOnScreen(views.get(index));
 		} catch (IndexOutOfBoundsException e) {
 			Assert.assertTrue("Index is not valid!", false);
 		}

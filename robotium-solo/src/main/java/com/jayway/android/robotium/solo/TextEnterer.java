@@ -35,24 +35,6 @@ class TextEnterer{
         this.waiter = waiter;
     }
 
-	/**
-	 * Removes invisible EditText Views
-	 * 
-	 * @param editTextViews
-	 *            ArrayList with instances of EditText that is being checked for
-	 *            invisible EditText objects.
-	 * @return Filtered ArrayList with no invisible elements.
-	 */
-	private ArrayList<EditText> removeInvisibleEditText(ArrayList<EditText> editTextViews) {
-		ArrayList<EditText> newEditTextViews = new ArrayList<EditText>(editTextViews.size());
-		for (EditText editText : editTextViews) {
-			if (editText != null && editText.getVisibility() != View.GONE
-					&& editText.getVisibility() != View.INVISIBLE) {
-				newEditTextViews.add(editText);
-			}
-		}
-		return newEditTextViews;
-	}
 
 	
 	 /**
@@ -68,7 +50,7 @@ class TextEnterer{
     	try{
     		ArrayList<EditText> editTextViews= viewFetcher.getCurrentViews(EditText.class);
     		// remove invisible edits from list prevents them to be indexed.
-    		editTextViews = removeInvisibleEditText(editTextViews);
+    		editTextViews = RobotiumUtils.removeInvisibleViews(editTextViews);
     		final EditText	editText = editTextViews.get(index);
     		if(editText != null){
     			final String previousText = editText.getText().toString();

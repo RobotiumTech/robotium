@@ -1,8 +1,11 @@
 package com.jayway.android.robotium.solo;
 
+import java.util.ArrayList;
+
 import junit.framework.Assert;
 import android.app.Instrumentation;
 import android.view.KeyEvent;
+import android.view.View;
 import android.widget.EditText;
 
 
@@ -67,7 +70,25 @@ class RobotiumUtils {
 		}
 	}
 
-
+	/**
+	 * Removes invisible Views
+	 * 
+	 * @param viewList ArrayList with Views that is being checked for invisible View objects.
+	 * @return Filtered ArrayList with no invisible elements.
+	 */
+	
+	public static <T extends View> ArrayList<T> removeInvisibleViews(ArrayList<T> viewList) {
+		ArrayList<T> tmpViewList = new ArrayList<T>(viewList.size());
+		for (T view : viewList) {
+			if (view != null && view.getVisibility() != View.GONE
+					&& view.getVisibility() != View.INVISIBLE) {
+				tmpViewList.add(view);
+			}
+		}
+		return tmpViewList;
+	}
+	
+	
 	
 
 }

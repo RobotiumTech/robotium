@@ -40,6 +40,7 @@ class Checker {
 	public <T extends CompoundButton> boolean isButtonChecked(Class<T> expectedClass, int index)
 	{
 		ArrayList<T> list = viewFetcher.getCurrentViews(expectedClass);
+		list=RobotiumUtils.removeInvisibleViews(list);
 		if(index < 0 || index > list.size()-1)
 			Assert.assertTrue("No " + expectedClass.getSimpleName() + " with index " + index + " is found", false);
 		return (list.get(index)).isChecked();
