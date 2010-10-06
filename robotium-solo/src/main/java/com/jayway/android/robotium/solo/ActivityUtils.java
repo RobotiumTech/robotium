@@ -83,7 +83,7 @@ class ActivityUtils {
 	{
 		if(activity.equals(getCurrentActivity()))
 			sleeper.sleep();
-		Activity activity = getCurrentActivity();
+		Activity activity = getCurrentActivity(false);
 		activity.setRequestedOrientation(orientation);	
 	}
 
@@ -206,7 +206,7 @@ class ActivityUtils {
 			for (int i = 0; i < activityList.size(); i++) {
 				activityList.get(i).finish();
 			}
-			getCurrentActivity().finish();
+			getCurrentActivity(false).finish();
 			activityList.clear();
 		
 		} catch (Exception ignored) {}

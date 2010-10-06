@@ -95,16 +95,16 @@ class Scroller {
 		if (direction == Direction.DOWN) {
 			yStart = (activityUtils.getCurrentActivity().getWindowManager()
 					.getDefaultDisplay().getHeight() - 20);
-			yEnd = ((activityUtils.getCurrentActivity().getWindowManager()
+			yEnd = ((activityUtils.getCurrentActivity(false).getWindowManager()
 					.getDefaultDisplay().getHeight() / 2));
 		} 
 		else {
 			yStart = ((activityUtils.getCurrentActivity().getWindowManager()
 					.getDefaultDisplay().getHeight() / 2));
-			yEnd = (activityUtils.getCurrentActivity().getWindowManager()
+			yEnd = (activityUtils.getCurrentActivity(false).getWindowManager()
 					.getDefaultDisplay().getHeight() - 20);
 		}
-		int x = activityUtils.getCurrentActivity().getWindowManager()
+		int x = activityUtils.getCurrentActivity(false).getWindowManager()
 				.getDefaultDisplay().getWidth() / 2;
 
 		if (viewFetcher.getCurrentViews(ListView.class).size() > 0) {
@@ -144,11 +144,11 @@ class Scroller {
 
 		while (xy[1] + 20 > activityUtils.getCurrentActivity()
 				.getWindowManager().getDefaultDisplay().getHeight()) {
-			int yStart = (activityUtils.getCurrentActivity().getWindowManager()
+			int yStart = (activityUtils.getCurrentActivity(false).getWindowManager()
 					.getDefaultDisplay().getHeight() - 20);
-			int yEnd = ((activityUtils.getCurrentActivity().getWindowManager()
+			int yEnd = ((activityUtils.getCurrentActivity(false).getWindowManager()
 					.getDefaultDisplay().getHeight() / 2));
-			int x = activityUtils.getCurrentActivity().getWindowManager()
+			int x = activityUtils.getCurrentActivity(false).getWindowManager()
 					.getDefaultDisplay().getWidth() / 2;
 			drag(x, x, yStart, yEnd, 40);
 			listView.getLocationOnScreen(xy);
@@ -163,7 +163,7 @@ class Scroller {
 			yStart = ((xy[1]) + 20);
 			yEnd = (xy[1] + listView.getHeight());
 		}
-		int x = activityUtils.getCurrentActivity().getWindowManager()
+		int x = activityUtils.getCurrentActivity(false).getWindowManager()
 				.getDefaultDisplay().getWidth() / 2;
 		
 		if (listView.getLastVisiblePosition() < listView.getCount()-1) {
@@ -187,7 +187,7 @@ class Scroller {
 	public void scrollToSide(Side side) {
 		int screenHeight = activityUtils.getCurrentActivity().getWindowManager().getDefaultDisplay()
 		.getHeight();
-		int screenWidth = activityUtils.getCurrentActivity().getWindowManager().getDefaultDisplay()
+		int screenWidth = activityUtils.getCurrentActivity(false).getWindowManager().getDefaultDisplay()
 		.getWidth();
 		float x = screenWidth / 2.0f;
 		float y = screenHeight / 2.0f;

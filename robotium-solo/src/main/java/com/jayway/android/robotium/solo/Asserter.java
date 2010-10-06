@@ -91,7 +91,7 @@ class Asserter {
 			boolean isNewInstance) {
 		boolean found = false;
 		assertCurrentActivity(message, expectedClass);
-		Activity activity = activityUtils.getCurrentActivity();
+		Activity activity = activityUtils.getCurrentActivity(false);
 		for (int i = 0; i < activityUtils.getAllOpenedActivities().size() - 1; i++) {
 			String instanceString = activityUtils.getAllOpenedActivities().get(i).toString();
 			if (instanceString.equals(activity.toString()))
