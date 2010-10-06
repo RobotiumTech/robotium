@@ -53,7 +53,7 @@ class TextEnterer{
     			if(!editText.isEnabled())
     				Assert.assertTrue("Edit text with index " + index + " is not enabled", false);
 
-    			activityUtils.getCurrentActivity().runOnUiThread(new Runnable()
+    			activityUtils.getCurrentActivity(false).runOnUiThread(new Runnable()
     			{
     				public void run()
     				{
