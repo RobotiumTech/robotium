@@ -1,7 +1,11 @@
 package com.jayway.android.robotium.solo;
 
-import android.widget.EditText;
+import java.util.ArrayList;
+
 import junit.framework.Assert;
+import android.opengl.Visibility;
+import android.view.View;
+import android.widget.EditText;
 
 
 /**
@@ -30,7 +34,25 @@ class TextEnterer{
         this.viewFetcher = viewFetcher;
         this.waiter = waiter;
     }
-    
+
+	/**
+	 * Removes invisible EditText Views
+	 * 
+	 * @param editTextViews
+	 *            ArrayList with instances of EditText that is being checked for
+	 *            invisible EditText objects.
+	 * @return Filtered ArrayList with no invisible elements.
+	 */
+	private ArrayList<EditText> removeInvisibleEditText(ArrayList<EditText> editTextViews) {
+		ArrayList<EditText> newEditTextViews = new ArrayList<EditText>(editTextViews.size());
+		for (EditText editText : editTextViews) {
+			if (editText != null && editText.getVisibility() != View.GONE
+					&& editText.getVisibility() != View.INVISIBLE) {
+				newEditTextViews.add(editText);
+			}
+		}
+		return newEditTextViews;
+	}
 
 	
 	 /**
@@ -44,7 +66,10 @@ class TextEnterer{
     {
     	waiter.waitForIdle();    
     	try{
-    		final EditText	editText = viewFetcher.getCurrentViews(EditText.class).get(index);
+    		ArrayList<EditText> editTextViews= viewFetcher.getCurrentViews(EditText.class);
+    		// remove invisible edits from list prevents them to be indexed.
+    		editTextViews = removeInvisibleEditText(editTextViews);
+    		final EditText	editText = editTextViews.get(index);
     		if(editText != null){
     			final String previousText = editText.getText().toString();
     			if(!editText.isEnabled())
