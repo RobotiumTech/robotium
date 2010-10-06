@@ -196,7 +196,6 @@ class ViewFetcher {
 		inst.waitForIdleSync();
 		ArrayList<T> views = getCurrentViews(classToFilterBy);
 		T viewToReturn = null;
-		int i = 0;
 		for(T view: views){
 			if(view.getText().toString().equals(text))
 				viewToReturn = view;

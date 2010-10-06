@@ -1,40 +1,27 @@
 package com.jayway.android.robotium.solo;
 
 import java.util.ArrayList;
-
 import junit.framework.Assert;
 import android.app.Instrumentation;
 import android.view.KeyEvent;
 import android.view.View;
-import android.widget.EditText;
 
 
 class RobotiumUtils {
 	
-	private final ViewFetcher viewFetcher;
-	private final ActivityUtils activityUtils;
 	private final Instrumentation inst;
 	private final Sleeper sleeper;
-	private final Waiter waiter;
 
     /**
 	 * Constructs this object.
 	 * 
-	 * @param activityUtils the {@code ActivityUtils} instance.
-     * @param searcher the {@code Searcher} instance.
-     * @param viewFetcher the {@code ViewFetcher} instance.
      * @param inst the {@code Instrumentation} instance.
      * @param sleeper the {@code Sleeper} instance.
-     * @param waiter the {@code Waiter} instance.
      */
 	
-	public RobotiumUtils(ActivityUtils activityUtils, Searcher searcher,
-                         ViewFetcher viewFetcher, Instrumentation inst, Sleeper sleeper, Waiter waiter) {
-		this.activityUtils = activityUtils;
-		this.viewFetcher = viewFetcher;
+	public RobotiumUtils(Instrumentation inst, Sleeper sleeper) {
 		this.inst = inst;
         this.sleeper = sleeper;
-        this.waiter = waiter;
     }
    
 	
@@ -71,10 +58,10 @@ class RobotiumUtils {
 	}
 
 	/**
-	 * Removes invisible Views
+	 * Removes invisible {@code View}s
 	 * 
-	 * @param viewList ArrayList with Views that is being checked for invisible View objects.
-	 * @return Filtered ArrayList with no invisible elements.
+	 * @param viewList an {@code ArrayList} with {@code View}s that is being checked for invisible {@code View}s.
+	 * @return a filtered {@code ArrayList} with no invisible {@code View}s.
 	 */
 	
 	public static <T extends View> ArrayList<T> removeInvisibleViews(ArrayList<T> viewList) {

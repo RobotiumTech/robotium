@@ -1,10 +1,7 @@
 package com.jayway.android.robotium.solo;
 
 import java.util.ArrayList;
-
 import junit.framework.Assert;
-import android.opengl.Visibility;
-import android.view.View;
 import android.widget.EditText;
 
 
@@ -49,7 +46,6 @@ class TextEnterer{
     	waiter.waitForIdle();    
     	try{
     		ArrayList<EditText> editTextViews= viewFetcher.getCurrentViews(EditText.class);
-    		// remove invisible edits from list prevents them to be indexed.
     		editTextViews = RobotiumUtils.removeInvisibleViews(editTextViews);
     		final EditText	editText = editTextViews.get(index);
     		if(editText != null){
