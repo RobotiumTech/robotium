@@ -56,12 +56,12 @@ class Searcher {
 	 *
 	 */
 	
-	public boolean searchWithTimeoutFor(Class<? extends TextView> viewClass, String regex, int expectedMinimumNumberOfMatches, boolean scroll) {
+	public boolean searchWithTimeoutFor(Class<? extends TextView> viewClass, String regex, int expectedMinimumNumberOfMatches, boolean scroll, boolean visible) {
 		final long endTime = System.currentTimeMillis() + TIMEOUT;
 
 		while (System.currentTimeMillis() < endTime) {
 			sleeper.sleep();
-			final boolean foundAnyMatchingView = searchFor(viewClass, regex, expectedMinimumNumberOfMatches, scroll);
+			final boolean foundAnyMatchingView = searchFor(viewClass, regex, expectedMinimumNumberOfMatches, scroll, visible);
 			if (foundAnyMatchingView){
 				return true;
 			}
@@ -85,10 +85,14 @@ class Searcher {
      *
      */
 	
-    public <T extends TextView> boolean searchFor(final Class<T> viewClass, final String regex, final int expectedMinimumNumberOfMatches, final boolean scroll) {
+    public <T extends TextView> boolean searchFor(final Class<T> viewClass, final String regex, final int expectedMinimumNumberOfMatches, final boolean scroll, final boolean visible) {
         final Callable<Collection<T>> viewFetcherCallback = new Callable<Collection<T>>() {
             public Collection<T> call() throws Exception {
                 inst.waitForIdleSync();
+                
+                if(visible)
+                return RobotiumUtils.removeInvisibleViews(viewFetcher.getCurrentViews(viewClass));
+                
                 return viewFetcher.getCurrentViews(viewClass);
             }
         };

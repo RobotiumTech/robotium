@@ -205,7 +205,7 @@ public class Solo {
 	 */
 	
 	public boolean searchEditText(String text) {
-		boolean found = searcher.searchWithTimeoutFor(EditText.class, text, 1, true);
+		boolean found = searcher.searchWithTimeoutFor(EditText.class, text, 1, true, false);
 		return found;
 	}
 	
@@ -220,7 +220,22 @@ public class Solo {
 	 */
 	
 	public boolean searchButton(String text) {
-		boolean found = searcher.searchWithTimeoutFor(Button.class, text, 0, true);
+		boolean found = searcher.searchWithTimeoutFor(Button.class, text, 0, true, false);
+		return found;
+	}
+	
+	/**
+	 * Searches for a {@link Button} with the given text string and returns true if at least one {@code Button}
+	 * is found. Will automatically scroll when needed. 
+	 *
+	 * @param text the text to search for. The parameter will be interpreted as a regular expression
+	 * @param visible {@code true} if only {@code Button}s visible on the screen should be searched
+	 * @return {@code true} if a {@code Button} with the given text is found and {@code false} if it is not found
+	 *
+	 */
+	
+	public boolean searchButton(String text, boolean visible) {
+		boolean found = searcher.searchWithTimeoutFor(Button.class, text, 0, true, visible);
 		return found;
 	}
 	
@@ -234,7 +249,7 @@ public class Solo {
 	 */
 	
 	public boolean searchToggleButton(String text) {
-		boolean found = searcher.searchWithTimeoutFor(ToggleButton.class, text, 0, true);
+		boolean found = searcher.searchWithTimeoutFor(ToggleButton.class, text, 0, true, false);
 		return found;
 	}
 	
@@ -251,12 +266,25 @@ public class Solo {
 	 */
 	
 	public boolean searchButton(String text, int minimumNumberOfMatches) {
-		boolean found = searcher.searchWithTimeoutFor(Button.class, text, minimumNumberOfMatches, true);
+		boolean found = searcher.searchWithTimeoutFor(Button.class, text, minimumNumberOfMatches, true, false);
 		return found;
 	}
 	
-	public boolean searchButton(String text, int minimumNumberOfMatches, boolean isShown) {
-		boolean found = searcher.searchWithTimeoutFor(Button.class, text, minimumNumberOfMatches, true);
+	/**
+	 * Searches for a {@link Button} with the given text string and returns {@code true} if the
+	 * searched {@code Button} is found a given number of times. Will automatically scroll when needed.
+	 * 
+	 * @param text the text to search for. The parameter will be interpreted as a regular expression
+	 * @param minimumNumberOfMatches the minimum number of matches expected to be found. {@code 0} matches means that one or more
+	 * matches are expected to be found
+	 * @param visible {@code true} if only {@code Button}s visible on the screen should be searched
+	 * @return {@code true} if a {@code Button} with the given text is found a given number of times and {@code false}
+	 * if it is not found
+	 *  
+	 */
+	
+	public boolean searchButton(String text, int minimumNumberOfMatches, boolean visible) {
+		boolean found = searcher.searchWithTimeoutFor(Button.class, text, minimumNumberOfMatches, true, visible);
 		return found;
 	}
 	
@@ -273,7 +301,7 @@ public class Solo {
 	 */
 	
 	public boolean searchToggleButton(String text, int minimumNumberOfMatches) {
-		boolean found = searcher.searchWithTimeoutFor(ToggleButton.class, text, minimumNumberOfMatches, true);
+		boolean found = searcher.searchWithTimeoutFor(ToggleButton.class, text, minimumNumberOfMatches, true, false);
 		return found;
 	}
 	
@@ -287,7 +315,22 @@ public class Solo {
 	 */
 	
 	public boolean searchText(String text) {
-		boolean found = searcher.searchWithTimeoutFor(TextView.class, text, 0, true);
+		boolean found = searcher.searchWithTimeoutFor(TextView.class, text, 0, true, false);
+		return found;
+	}
+	
+	/**
+	 * Searches for a text string and returns {@code true} if at least one item
+	 * is found with the expected text. Will automatically scroll when needed. 
+	 *
+	 * @param text the text to search for. The parameter will be interpreted as a regular expression
+	 * @param visible {@code true} if only texts visible on the screen should be searched
+	 * @return {@code true} if the search string is found and {@code false} if it is not found
+	 *
+	 */
+	
+	public boolean searchText(String text, boolean visible) {
+		boolean found = searcher.searchWithTimeoutFor(TextView.class, text, 0, true, visible);
 		return found;
 	}
 	
@@ -304,7 +347,7 @@ public class Solo {
 	 */
 	
 	public boolean searchText(String text, int minimumNumberOfMatches) {
-		boolean found = searcher.searchWithTimeoutFor(TextView.class, text, minimumNumberOfMatches, true);
+		boolean found = searcher.searchWithTimeoutFor(TextView.class, text, minimumNumberOfMatches, true, false);
 		return found;
 	}
 	
@@ -322,7 +365,25 @@ public class Solo {
 	 */
 	
 	public boolean searchText(String text, int minimumNumberOfMatches, boolean scroll) {
-		return searcher.searchWithTimeoutFor(TextView.class, text, minimumNumberOfMatches, scroll);
+		return searcher.searchWithTimeoutFor(TextView.class, text, minimumNumberOfMatches, scroll, false);
+	}
+	
+	/**
+	 * Searches for a text string and returns {@code true} if the searched text is found a given
+	 * number of times.
+	 * 
+	 * @param text the text to search for. The parameter will be interpreted as a regular expression.
+	 * @param minimumNumberOfMatches the minimum number of matches expected to be found. {@code 0} matches means that one or more
+	 * matches are expected to be found
+	 * @param scroll {@code true} if scrolling should be performed
+	 * @param visible {@code true} if only texts visible on the screen should be searched
+	 * @return {@code true} if text string is found a given number of times and {@code false} if the text string
+	 * is not found
+	 *  
+	 */
+	
+	public boolean searchText(String text, int minimumNumberOfMatches, boolean scroll, boolean visible) {
+		return searcher.searchWithTimeoutFor(TextView.class, text, minimumNumberOfMatches, scroll, visible);
 	}
 
 	/**

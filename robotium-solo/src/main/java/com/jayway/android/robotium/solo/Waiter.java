@@ -119,7 +119,7 @@ class Waiter {
 
 			sleeper.sleep();
 
-			final boolean foundAnyTextView = searcher.searchFor(TextView.class, text, expectedMinimumNumberOfMatches, scroll);
+			final boolean foundAnyTextView = searcher.searchFor(TextView.class, text, expectedMinimumNumberOfMatches, scroll, false);
 			if (foundAnyTextView){
 				return true;
 			}
