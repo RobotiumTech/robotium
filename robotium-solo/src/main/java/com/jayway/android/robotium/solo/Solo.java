@@ -43,10 +43,13 @@ import android.widget.ToggleButton;
  *
  * solo.clickOnText(&quot;Categories&quot;);
  * solo.clickOnText(&quot;Other&quot;);
+ * solo.clickInList(1);
+ * solo.scrollDown();
  * solo.clickOnButton(&quot;Edit&quot;);
- * solo.Text(&quot;Edit Window&quot;);
+ * solo.searchText(&quot;Edit Window&quot;);
  * solo.clickOnButton(&quot;Commit&quot;);
  * assertTrue(solo.searchText(&quot;Changes have been made successfully&quot;));
+ * solo.goBackToActivity("CategoriesActivity");
  * }
  *
  * </pre>
