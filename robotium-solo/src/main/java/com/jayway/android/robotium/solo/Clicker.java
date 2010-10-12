@@ -138,7 +138,7 @@ class Clicker {
 
 	public void clickOnScreen(View view, boolean longClick) {
 		if(view == null)
-			Assert.assertTrue("View is null and can not be clicked!", false);
+			Assert.assertTrue("View is null and can therefore not be clicked!", false);
 		
 		int[] xy = new int[2];
 		long now = System.currentTimeMillis();
