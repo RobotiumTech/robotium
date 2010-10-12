@@ -43,13 +43,10 @@ import android.widget.ToggleButton;
  *
  * solo.clickOnText(&quot;Categories&quot;);
  * solo.clickOnText(&quot;Other&quot;);
- * solo.clickInList(1);
- * solo.scrollDown();
  * solo.clickOnButton(&quot;Edit&quot;);
  * solo.searchText(&quot;Edit Window&quot;);
  * solo.clickOnButton(&quot;Commit&quot;);
  * assertTrue(solo.searchText(&quot;Changes have been made successfully&quot;));
- * solo.goBackToActivity("CategoriesActivity");
  * }
  *
  * </pre>
@@ -102,7 +99,7 @@ public class Solo {
         this.checker = new Checker(viewFetcher);
         this.asserter = new Asserter(activitiyUtils, sleeper);
         this.dialogUtils = new DialogUtils(viewFetcher, sleeper);
-        this.scroller = new Scroller(inst, activitiyUtils, viewFetcher);
+        this.scroller = new Scroller(inst, activitiyUtils, viewFetcher, sleeper);
         this.searcher = new Searcher(viewFetcher, scroller, inst, sleeper);
         this.waiter = new Waiter(viewFetcher, searcher, sleeper);
         this.robotiumUtils = new RobotiumUtils(inst, sleeper);
