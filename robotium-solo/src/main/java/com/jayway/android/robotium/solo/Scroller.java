@@ -194,9 +194,9 @@ class Scroller {
 		}
 		if (direction == Direction.DOWN) {
 			yStart = ((xy[1] + listView.getHeight()) - 20);
-			yEnd = (xy[1] + 20);
+			yEnd = (xy[1] + 30);
 		} else if(direction == Direction.UP){
-			yStart = ((xy[1]) + 20);
+			yStart = ((xy[1]) + 30);
 			yEnd = (xy[1] + listView.getHeight());
 		}
 		int x = activityUtils.getCurrentActivity(false).getWindowManager()
