@@ -110,10 +110,10 @@ public class Solo {
 	}
 
 	/**
-	 * Returns an {@code ArrayList} of the {@code View}s located in the current
+	 * Returns an {@code ArrayList} of the {@code View} objects located in the current
 	 * {@code Activity}.
 	 *
-	 * @return an {@code ArrayList} of the {@code View}s located in the current {@code Activity}
+	 * @return an {@code ArrayList} of the {@code View} objects located in the current {@code Activity}
 	 *
 	 */
 	
@@ -196,7 +196,7 @@ public class Solo {
 	
 	
 	/**
-	 * Searches for a text string in the {@link EditText}s located in the current
+	 * Searches for a text string in the {@link EditText} objects located in the current
 	 * {@code Activity}. Will automatically scroll when needed.
 	 *
 	 * @param text the text to search for
@@ -229,7 +229,7 @@ public class Solo {
 	 * is found. Will automatically scroll when needed. 
 	 *
 	 * @param text the text to search for. The parameter will be interpreted as a regular expression
-	 * @param onlyVisible {@code true} if only {@code Button}s visible on the screen should be searched
+	 * @param onlyVisible {@code true} if only {@code Button} visible on the screen should be searched
 	 * @return {@code true} if a {@code Button} with the given text is found and {@code false} if it is not found
 	 *
 	 */
@@ -277,7 +277,7 @@ public class Solo {
 	 * @param text the text to search for. The parameter will be interpreted as a regular expression
 	 * @param minimumNumberOfMatches the minimum number of matches expected to be found. {@code 0} matches means that one or more
 	 * matches are expected to be found
-	 * @param onlyVisible {@code true} if only {@code Button}s visible on the screen should be searched
+	 * @param onlyVisible {@code true} if only {@code Button} visible on the screen should be searched
 	 * @return {@code true} if a {@code Button} with the given text is found a given number of times and {@code false}
 	 * if it is not found
 	 *  
@@ -496,7 +496,7 @@ public class Solo {
 	/**
 	 * Incorrectly named method.
 	 *
-	 * @deprecated use {@link #assertMemoryNotLow()} instead.
+	 * @deprecated Use {@link #assertMemoryNotLow()} instead.
 	 *
 	 */
 
@@ -804,11 +804,11 @@ public class Solo {
 	}
 
 	/**
-	 * Clicks on a given list line and returns an {@code ArrayList} of the {@link TextView}s that
+	 * Clicks on a given list line and returns an {@code ArrayList} of the {@link TextView} objects that
 	 * the list line is showing. Will use the first list it finds.
 	 * 
 	 * @param line the line that should be clicked
-	 * @return an {@code ArrayList} of the {@code TextView}s located in the list line
+	 * @return an {@code ArrayList} of the {@code TextView} objects located in the list line
 	 *
 	 */
 
@@ -935,10 +935,10 @@ public class Solo {
 	}
 	
 	/**
-	 * Returns an {@code ArrayList} of the {@code ImageView}s contained in the current
+	 * Returns an {@code ArrayList} of the {@code ImageView} objects contained in the current
 	 * {@code Activity}.
 	 *
-	 * @return an {@code ArrayList} of the {@code ImageView}s contained in the current
+	 * @return an {@code ArrayList} of the {@code ImageView} objects contained in the current
 	 * {@code Activity}
 	 *
 	 */
@@ -1051,7 +1051,7 @@ public class Solo {
 	 * activity.
 	 *
 	 * @return the number of buttons in the current activity
-	 * @deprecated use {@link #getCurrentButtons()}<code>.size()</code> instead.
+	 * @deprecated Use {@link #getCurrentButtons()}<code>.size()</code> instead.
 	 *
 	 */
 	
@@ -1073,10 +1073,10 @@ public class Solo {
 	}
 	
 	/**
-	 * Returns an {@code ArrayList} of the {@code EditText}s contained in the current
+	 * Returns an {@code ArrayList} of the {@code EditText} objects contained in the current
 	 * {@code Activity}.
 	 *
-	 * @return an {@code ArrayList} of the {@code EditText}s contained in the current
+	 * @return an {@code ArrayList} of the {@code EditText} objects contained in the current
 	 * {@code Activity}
 	 *
 	 */
@@ -1086,10 +1086,10 @@ public class Solo {
 	}
 	
 	/**
-	 * Returns an {@code ArrayList} of the {@code ListView}s contained in the current
+	 * Returns an {@code ArrayList} of the {@code ListView} objects contained in the current
 	 * {@code Activity}.
 	 *
-	 * @return an {@code ArrayList} of the {@code ListView}s contained in the current
+	 * @return an {@code ArrayList} of the {@code ListView} objects contained in the current
 	 * {@code Activity}
 	 * 
 	 */
@@ -1099,10 +1099,10 @@ public class Solo {
 	}
 
 	/**
-	 * Returns an {@code ArrayList} of the {@code ScrollView}s contained in the current
+	 * Returns an {@code ArrayList} of the {@code ScrollView} objects contained in the current
 	 * {@code Activity}.
 	 *
-	 * @return an {@code ArrayList} of the {@code ScrollView}s contained in the current
+	 * @return an {@code ArrayList} of the {@code ScrollView} objects contained in the current
 	 * {@code Activity}
 	 *
 	 */
@@ -1113,10 +1113,10 @@ public class Solo {
 
 	
 	/**
-	 * Returns an {@code ArrayList} of the {@code Spinner}s (drop-down menus) contained in the current
+	 * Returns an {@code ArrayList} of the {@code Spinner} objects (drop-down menus) contained in the current
 	 * {@code Activity}.
 	 *
-	 * @return an {@code ArrayList} of the {@code Spinner}s (drop-down menus) contained in the current
+	 * @return an {@code ArrayList} of the {@code Spinner} objects (drop-down menus) contained in the current
 	 * {@code Activity}
 	 *
 	 */
@@ -1126,13 +1126,13 @@ public class Solo {
 	}
 	
 	/**
-	 * Returns an {@code ArrayList} of the {@code TextView}s contained in the current
+	 * Returns an {@code ArrayList} of the {@code TextView} objects contained in the current
 	 * {@code Activity} or {@code View}.
 	 *
-	 * @param parent the parent {@code View} from which the {@code TextView}s should be returned. {@code null} if
-	 * all {@code TextView}s from the current {@code Activity} should be returned
+	 * @param parent the parent {@code View} from which the {@code TextView} objects should be returned. {@code null} if
+	 * all {@code TextView} objects from the current {@code Activity} should be returned
 	 *
-	 * @return an {@code ArrayList} of the {@code TextView}s contained in the current
+	 * @return an {@code ArrayList} of the {@code TextView} objects contained in the current
 	 * {@code Activity} or {@code View}
 	 *
 	 */
@@ -1142,10 +1142,10 @@ public class Solo {
 	}
 	
 	/**
-	 * Returns an {@code ArrayList} of the {@code GridView}s contained in the current
+	 * Returns an {@code ArrayList} of the {@code GridView} objects contained in the current
 	 * {@code Activity}.
 	 *
-	 * @return an {@code ArrayList} of the {@code GridView}s contained in the current
+	 * @return an {@code ArrayList} of the {@code GridView} objects contained in the current
 	 * {@code Activity}
 	 *
 	 */
@@ -1156,10 +1156,10 @@ public class Solo {
 	
 	
 	/**
-	 * Returns an {@code ArrayList} of the {@code Button}s located in the current
+	 * Returns an {@code ArrayList} of the {@code Button} objects located in the current
 	 * {@code Activity}.
 	 *
-	 * @return an {@code ArrayList} of the {@code Button}s located in the current {@code Activity}
+	 * @return an {@code ArrayList} of the {@code Button} objects located in the current {@code Activity}
 	 * 
 	 */
 	
@@ -1168,10 +1168,10 @@ public class Solo {
 	}
 	
 	/**
-	 * Returns an {@code ArrayList} of the {@code ToggleButton}s contained in the current
+	 * Returns an {@code ArrayList} of the {@code ToggleButton} objects contained in the current
 	 * {@code Activity}.
 	 *
-	 * @return an {@code ArrayList} of the {@code ToggleButton}s contained in the current
+	 * @return an {@code ArrayList} of the {@code ToggleButton} objects contained in the current
 	 * {@code Activity}
 	 *
 	 */
@@ -1181,10 +1181,10 @@ public class Solo {
 	}
 	
 	/**
-	 * Returns an {@code ArrayList} of the {@code RadioButton}s contained in the current
+	 * Returns an {@code ArrayList} of the {@code RadioButton} objects contained in the current
 	 * {@code Activity}.
 	 *
-	 * @return an {@code ArrayList} of the {@code RadioButton}s contained in the current
+	 * @return an {@code ArrayList} of the {@code RadioButton} objects contained in the current
 	 * {@code Activity}
 	 *
 	 */
@@ -1194,10 +1194,10 @@ public class Solo {
 	}
 	
 	/**
-	 * Returns an {@code ArrayList} of the {@code CheckBox}es contained in the current
+	 * Returns an {@code ArrayList} of the {@code CheckBox} objects contained in the current
 	 * {@code Activity}.
 	 *
-	 * @return an {@code ArrayList} of the {@code CheckBox}es contained in the current
+	 * @return an {@code ArrayList} of the {@code CheckBox} objects contained in the current
 	 * {@code Activity}
 	 *
 	 */
@@ -1207,10 +1207,10 @@ public class Solo {
 	}
 	
 	/**
-	 * Returns an {@code ArrayList} of the {@code ImageButton}s contained in the current
+	 * Returns an {@code ArrayList} of the {@code ImageButton} objects contained in the current
 	 * {@code Activity}.
 	 *
-	 * @return an {@code ArrayList} of the {@code ImageButton}s contained in the current
+	 * @return an {@code ArrayList} of the {@code ImageButton} objects contained in the current
 	 * {@code Activity}
 	 *
 	 */
