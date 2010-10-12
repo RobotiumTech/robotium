@@ -33,7 +33,7 @@ class Waiter {
 
 	
 	 /**
-	 * Private method used instead of instrumentation.waitForIdleSync().
+	 * Used instead of instrumentation.waitForIdleSync().
 	 *
 	 */
    
