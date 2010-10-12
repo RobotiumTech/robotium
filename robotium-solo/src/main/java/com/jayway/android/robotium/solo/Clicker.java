@@ -156,7 +156,7 @@ class Clicker {
 				.getDefaultDisplay().getHeight() && scroller.scroll(Scroller.Direction.DOWN)) {
 			view.getLocationOnScreen(xy);
 		}
-		sleeper.sleep();
+		sleeper.sleepMini();
 		view.getLocationOnScreen(xy);
 		final int viewWidth = view.getWidth();
 		final int viewHeight = view.getHeight();
