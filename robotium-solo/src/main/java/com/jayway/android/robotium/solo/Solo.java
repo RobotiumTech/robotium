@@ -822,7 +822,7 @@ public class Solo {
 	 * 
 	 * @param line the line that should be clicked
 	 * @param listIndex the index of the list. 1 if two lists are available
-	 * @return an {@code ArrayList} of the {@code TextView}s located in the list line
+	 * @return an {@code ArrayList} of the {@code TextView} objects located in the list line
 	 *
 	 */
 	
@@ -1310,7 +1310,7 @@ public class Solo {
 	}
 	
 	/**
-	 * Checks if a given text is selected in a given {@link Spinner} 
+	 * Checks if a given text is selected in a given {@link Spinner}. 
 	 * @param spinnerIndex the index of the spinner to check. {@code 0} if only one spinner is available
 	 * @param text the text that is expected to be selected
 	 * @return true if the given text is selected in the given {@code Spinner} and false if it is not
