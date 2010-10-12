@@ -1,7 +1,6 @@
 package com.jayway.android.robotium.solo;
 
 import java.util.ArrayList;
-import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import android.widget.*;
@@ -150,7 +149,7 @@ class Clicker {
 			now = System.currentTimeMillis();
 		}
 		if(!view.isShown())
-			Assert.assertTrue("View is not shown and can therefore not be clicked!", false);
+			Assert.assertTrue("View is not visible and can therefore not be clicked!", false);
 		view.getLocationOnScreen(xy);
 
 		while (xy[1] + 10> activityUtils.getCurrentActivity().getWindowManager()
@@ -307,14 +306,15 @@ class Clicker {
 	 * @param nameRegex the name of the view presented to the user. The parameter <strong>will</strong> be interpreted as a regular expression.
 	 */
 	public <T extends TextView> void clickOn(Class<T> viewClass, String nameRegex) {
-		final List<T> views = viewFetcher.getCurrentViews(viewClass);
+		final ArrayList<T> views = viewFetcher.getCurrentViews(viewClass);
 		final Pattern pattern = Pattern.compile(nameRegex);
 		waiter.waitForText(nameRegex, 0, TIMEOUT, true);
 		T viewToClick = null;
 		for(T view : views){
 			if(pattern.matcher(view.getText().toString()).matches()){
 				viewToClick = view;
-				break;
+				if(viewToClick.isShown())
+					break;
 			}
 		}
 		if (viewToClick != null) {
