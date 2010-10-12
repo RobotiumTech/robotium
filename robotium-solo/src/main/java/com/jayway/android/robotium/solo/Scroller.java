@@ -1,8 +1,10 @@
 package com.jayway.android.robotium.solo;
 
+import java.util.ArrayList;
 import android.app.Instrumentation;
 import android.os.SystemClock;
 import android.view.MotionEvent;
+import android.view.View;
 import android.widget.ListView;
 import android.widget.ScrollView;
 
@@ -21,6 +23,7 @@ class Scroller {
 	private final Instrumentation inst;
 	private final ActivityUtils activityUtils;
 	private final ViewFetcher viewFetcher;
+	private final Sleeper sleeper;
    	private int scrollAmount = 0;
 
     /**
@@ -31,10 +34,11 @@ class Scroller {
      * @param viewFetcher the {@code ViewFetcher} instance.
      */
 	
-    public Scroller(Instrumentation inst, ActivityUtils activityUtils, ViewFetcher viewFetcher) {
+    public Scroller(Instrumentation inst, ActivityUtils activityUtils, ViewFetcher viewFetcher, Sleeper sleeper) {
         this.inst = inst;
         this.activityUtils = activityUtils;
         this.viewFetcher = viewFetcher;
+        this.sleeper = sleeper;
     }
 
 	
@@ -80,7 +84,71 @@ class Scroller {
 		} catch (SecurityException ignored) {}
 	}
 
+	
+	/**
+	 * Scrolls a ScrollView.
+	 * 
+	 * @param direction the direction to be scrolled
+	 * @return {@code true} if more scrolling can be done
+	 * 
+	 */
+	
+	private boolean scrollScrollView(Direction direction){
+		int yStart = 0;
+		int yEnd = 0;
+		int[] xy = new int[2];
+		int x = activityUtils.getCurrentActivity(false).getWindowManager()
+		.getDefaultDisplay().getWidth() / 2;
+		ScrollView scroll = viewFetcher.getCurrentViews(ScrollView.class).get(0);
+		scroll.getLocationOnScreen(xy);
+		
+		if (direction == Direction.DOWN) {
+			yStart = ((xy[1] + scroll.getHeight()) - 20);
+			yEnd = (xy[1] + 30);
+		}
+		else if (direction == Direction.UP){
+			yStart = (xy[1] + 20);
+			yEnd = ((xy[1] + scroll.getHeight()) - 30);
+		}
+		
+		scrollAmount = scroll.getScrollY();
+		drag(x, x,getDragablePosition(yStart, direction), yEnd, 40);
+		if (scrollAmount == scroll.getScrollY()) {
+			return false;
+		}
+		else
+			return true;
+	}
+	
+	/**
+	 * Returns a y position that will not register a click and is appropriate for dragging.
+	 * @param y the y position
+	 * @param direction the direction of the drag
+	 * @return the y position that will not register a click
+	 */
+	
+	private int getDragablePosition(int y, Direction direction){
+		ArrayList<View> touchItems = new ArrayList<View>();
+		int[] xyView = new int[2];
+		View decorView;
+		decorView = viewFetcher.getActiveDecorView();
+		if(decorView != null)
+			touchItems = decorView.getTouchables();
+		for(View view : touchItems){
+			view.getLocationOnScreen(xyView);
 
+			while(y > xyView[1] && y < (xyView[1] + view.getHeight())){
+				if(direction == Direction.DOWN){
+					y = y-5;
+				}
+				else{
+					y = y+5;
+				}
+			}
+		}
+		return y;
+	}
+	
 	/**
 	 * Scrolls up and down.
 	 * 
@@ -90,41 +158,16 @@ class Scroller {
 	 */
 	
 	public boolean scroll(Direction direction) {
-		int yStart;
-		int yEnd;
-		if (direction == Direction.DOWN) {
-			yStart = (activityUtils.getCurrentActivity().getWindowManager()
-					.getDefaultDisplay().getHeight() - 20);
-			yEnd = ((activityUtils.getCurrentActivity(false).getWindowManager()
-					.getDefaultDisplay().getHeight() / 2));
-		} 
-		else {
-			yStart = ((activityUtils.getCurrentActivity().getWindowManager()
-					.getDefaultDisplay().getHeight() / 2));
-			yEnd = (activityUtils.getCurrentActivity(false).getWindowManager()
-					.getDefaultDisplay().getHeight() - 20);
-		}
-		int x = activityUtils.getCurrentActivity(false).getWindowManager()
-				.getDefaultDisplay().getWidth() / 2;
-
+		sleeper.sleep();
+		inst.waitForIdleSync();
 		if (viewFetcher.getCurrentViews(ListView.class).size() > 0) {
 			return scrollList(0, direction);
 		} 
-		else {
-			if (viewFetcher.getCurrentViews(ScrollView.class).size() > 0) {
-				ScrollView scroll = viewFetcher.getCurrentViews(ScrollView.class).get(0);
-				scrollAmount = scroll.getScrollY();
-				drag(x, x, yStart, yEnd, 40);
-				if (scrollAmount == scroll.getScrollY()) {
-					scrollAmount = 0;
-					return false;
-				}
-				else
-					return true;
-			}
-			else
-				return false;
+
+		if (viewFetcher.getCurrentViews(ScrollView.class).size() > 0) {
+			return scrollScrollView(direction);
 		}
+			return false;
 
 	}
 
@@ -138,28 +181,21 @@ class Scroller {
 	 */
 	
 	public boolean scrollList(int listIndex, Direction direction) {
-		ListView listView = viewFetcher.getCurrentViews(ListView.class).get(listIndex);
+		int yStart = 0;
+		int yEnd = 0;
 		int[] xy = new int[2];
+		ListView listView = viewFetcher.getCurrentViews(ListView.class).get(listIndex);
 		listView.getLocationOnScreen(xy);
 
-		while (xy[1] + 20 > activityUtils.getCurrentActivity()
+		while (xy[1] + 20 > activityUtils.getCurrentActivity(false)
 				.getWindowManager().getDefaultDisplay().getHeight()) {
-			int yStart = (activityUtils.getCurrentActivity(false).getWindowManager()
-					.getDefaultDisplay().getHeight() - 20);
-			int yEnd = ((activityUtils.getCurrentActivity(false).getWindowManager()
-					.getDefaultDisplay().getHeight() / 2));
-			int x = activityUtils.getCurrentActivity(false).getWindowManager()
-					.getDefaultDisplay().getWidth() / 2;
-			drag(x, x, yStart, yEnd, 40);
+			scrollScrollView(direction);
 			listView.getLocationOnScreen(xy);
 		}
-		int yStart;
-		int yEnd;
 		if (direction == Direction.DOWN) {
 			yStart = ((xy[1] + listView.getHeight()) - 20);
 			yEnd = (xy[1] + 20);
-		} else {
-			
+		} else if(direction == Direction.UP){
 			yStart = ((xy[1]) + 20);
 			yEnd = (xy[1] + listView.getHeight());
 		}
