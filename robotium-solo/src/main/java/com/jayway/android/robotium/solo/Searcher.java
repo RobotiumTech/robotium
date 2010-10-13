@@ -51,17 +51,18 @@ class Searcher {
 	 * @param expectedMinimumNumberOfMatches the minimum number of matches expected to be found. {@code 0} matches means that one or more
 	 * matches are expected to be found
 	 * @param scroll whether scrolling should be performed
+	 * @param onlyVisible {@code true} if only texts visible on the screen should be searched
 	 * @return {@code true} if a {@code View} of the specified class with the given text is found a given number of
 	 * times, and {@code false} if it is not found
 	 *
 	 */
 	
-	public boolean searchWithTimeoutFor(Class<? extends TextView> viewClass, String regex, int expectedMinimumNumberOfMatches, boolean scroll, boolean visible) {
+	public boolean searchWithTimeoutFor(Class<? extends TextView> viewClass, String regex, int expectedMinimumNumberOfMatches, boolean scroll, boolean onlyVisible) {
 		final long endTime = System.currentTimeMillis() + TIMEOUT;
 
 		while (System.currentTimeMillis() < endTime) {
 			sleeper.sleep();
-			final boolean foundAnyMatchingView = searchFor(viewClass, regex, expectedMinimumNumberOfMatches, scroll, visible);
+			final boolean foundAnyMatchingView = searchFor(viewClass, regex, expectedMinimumNumberOfMatches, scroll, onlyVisible);
 			if (foundAnyMatchingView){
 				return true;
 			}
@@ -80,17 +81,18 @@ class Searcher {
      * @param expectedMinimumNumberOfMatches the minimum number of matches expected to be found. {@code 0} matches means that one or more
      * matches are expected to be found.
      * @param scroll whether scrolling should be performed
+     * @param onlyVisible {@code true} if only texts visible on the screen should be searched
      * @return {@code true} if a view of the specified class with the given text is found a given number of times.
      * {@code false} if it is not found.
      *
      */
 	
-    public <T extends TextView> boolean searchFor(final Class<T> viewClass, final String regex, final int expectedMinimumNumberOfMatches, final boolean scroll, final boolean visible) {
+    public <T extends TextView> boolean searchFor(final Class<T> viewClass, final String regex, final int expectedMinimumNumberOfMatches, final boolean scroll, final boolean onlyVisible) {
         final Callable<Collection<T>> viewFetcherCallback = new Callable<Collection<T>>() {
             public Collection<T> call() throws Exception {
                 inst.waitForIdleSync();
                 
-                if(visible)
+                if(onlyVisible)
                 return RobotiumUtils.removeInvisibleViews(viewFetcher.getCurrentViews(viewClass));
                 
                 return viewFetcher.getCurrentViews(viewClass);

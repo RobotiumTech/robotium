@@ -1311,14 +1311,14 @@ public class Solo {
 	
 	/**
 	 * Checks if a given text is selected in a given {@link Spinner}. 
-	 * @param spinnerIndex the index of the spinner to check. {@code 0} if only one spinner is available
+	 * @param index the index of the spinner to check. {@code 0} if only one spinner is available
 	 * @param text the text that is expected to be selected
 	 * @return true if the given text is selected in the given {@code Spinner} and false if it is not
 	 */
 	
-	public boolean isSpinnerTextSelected(int spinnerIndex, String text)
+	public boolean isSpinnerTextSelected(int index, String text)
 	{
-		return checker.isSpinnerTextSelected(spinnerIndex, text);
+		return checker.isSpinnerTextSelected(index, text);
 	}
 
 	/**
