@@ -64,7 +64,7 @@ public class Solo {
 	private final Clicker clicker;
 	private final Presser presser;
 	private final Searcher searcher;
-	private final ActivityUtils activitiyUtils;
+	private final ActivityUtils activityUtils;
 	private final DialogUtils dialogUtils;
 	private final TextEnterer textEnterer;
 	private final Scroller scroller;
@@ -94,18 +94,18 @@ public class Solo {
 	
 	public Solo(Instrumentation inst, Activity activity) {
         this.sleeper = new Sleeper();
-        this.activitiyUtils = new ActivityUtils(inst, activity, sleeper);
-        this.viewFetcher = new ViewFetcher(inst, activitiyUtils, sleeper);
+        this.activityUtils = new ActivityUtils(inst, activity, sleeper);
+        this.viewFetcher = new ViewFetcher(inst, activityUtils, sleeper);
         this.checker = new Checker(viewFetcher);
-        this.asserter = new Asserter(activitiyUtils, sleeper);
+        this.asserter = new Asserter(activityUtils, sleeper);
         this.dialogUtils = new DialogUtils(viewFetcher, sleeper);
-        this.scroller = new Scroller(inst, activitiyUtils, viewFetcher, sleeper);
+        this.scroller = new Scroller(inst, activityUtils, viewFetcher, sleeper);
         this.searcher = new Searcher(viewFetcher, scroller, inst, sleeper);
         this.waiter = new Waiter(viewFetcher, searcher, sleeper);
         this.robotiumUtils = new RobotiumUtils(inst, sleeper);
-        this.clicker = new Clicker(activitiyUtils, viewFetcher, scroller,robotiumUtils, inst, sleeper, waiter);
+        this.clicker = new Clicker(activityUtils, viewFetcher, scroller,robotiumUtils, inst, sleeper, waiter);
         this.presser = new Presser(viewFetcher, clicker, inst, sleeper);
-        this.textEnterer = new TextEnterer(activitiyUtils,viewFetcher, waiter);
+        this.textEnterer = new TextEnterer(activityUtils,viewFetcher, waiter);
 
 	}
 
@@ -396,7 +396,7 @@ public class Solo {
 	
 	public void setActivityOrientation(int orientation)
 	{
-		activitiyUtils.setActivityOrientation(orientation);
+		activityUtils.setActivityOrientation(orientation);
 	}
 	
 	/**
@@ -408,7 +408,7 @@ public class Solo {
 	
 	public ArrayList<Activity> getAllOpenedActivities()
 	{
-		return activitiyUtils.getAllOpenedActivities();
+		return activityUtils.getAllOpenedActivities();
 	}
 	
 	/**
@@ -419,7 +419,7 @@ public class Solo {
 	 */
 	
 	public Activity getCurrentActivity() {
-		Activity activity = activitiyUtils.getCurrentActivity();
+		Activity activity = activityUtils.getCurrentActivity();
 		return activity;
 	}
 	
@@ -1372,7 +1372,7 @@ public class Solo {
 	
 	public void goBackToActivity(String name)
 	{
-		activitiyUtils.goBackToActivity(name);
+		activityUtils.goBackToActivity(name);
 	}
 	
 	/**
@@ -1386,7 +1386,7 @@ public class Solo {
 	
 	public boolean waitForActivity(String name, int timeout)
 	{
-		return activitiyUtils.waitForActivity(name, timeout);
+		return activityUtils.waitForActivity(name, timeout);
 	}
 	
 	/**
@@ -1399,7 +1399,7 @@ public class Solo {
 	
 	public boolean waitForActivity(Class<? extends Activity> clazz, int timeout)
 	{
-		return activitiyUtils.waitForActivity(clazz, timeout);
+		return activityUtils.waitForActivity(clazz, timeout);
 	}
 	
 	/**
@@ -1413,7 +1413,7 @@ public class Solo {
 
 	public boolean waitForActivityWithTitle(String title, int timeout)
 	{
-		return activitiyUtils.waitForActivityWithTitle(title, timeout);
+		return activityUtils.waitForActivityWithTitle(title, timeout);
 	}
 
 	/**
@@ -1426,7 +1426,7 @@ public class Solo {
 	
 	public String getString(int resId)
 	{
-		return activitiyUtils.getString(resId);
+		return activityUtils.getString(resId);
 	}
 	
 
@@ -1450,7 +1450,7 @@ public class Solo {
 	 */
 	
 	public void finalize() throws Throwable {
-		activitiyUtils.finalize();
+		activityUtils.finalize();
 	}
 	
 }
