@@ -165,7 +165,27 @@ class ActivityUtils {
 		}
 		return now < endTime;
 	}
-	
+
+	/**
+	 * Waits for the given {@link Activity}.
+	 *
+	 * @param title the title of the {@code Activity} to wait for
+	 * @param timeout the amount of time in milliseconds to wait
+	 * @return {@code true} if {@code Activity} appears before the timeout and {@code false} if it does not
+	 *
+	 */
+
+	public boolean waitForActivityWithTitle(String title, int timeout)
+	{
+		long now = System.currentTimeMillis();
+        final long endTime = now + timeout;
+		while(!getCurrentActivity().getTitle().equals(title) && now < endTime)
+		{
+			now = System.currentTimeMillis();
+		}
+		return now < endTime;
+	}
+
 	/**
 	 * Returns to the given {@link Activity}.
 	 *
