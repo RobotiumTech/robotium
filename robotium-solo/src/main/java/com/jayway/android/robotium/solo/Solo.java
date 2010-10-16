@@ -1390,6 +1390,19 @@ public class Solo {
 	}
 	
 	/**
+	 * Waits for the given {@link Activity}.
+	 * 
+	 * @param clazz the class of the {@code Activity} to wait for
+	 * @param timeout the amount of time in milliseconds to wait
+	 * @return {@code true<} if {@code Activity} appears before the timeout and {@code false} if it does not
+	 */
+	
+	public boolean waitForActivity(Class<? extends Activity> clazz, int timeout)
+	{
+		return activitiyUtils.waitForActivity(clazz, timeout);
+	}
+	
+	/**
 	 * Returns a localized string.
 	 * 
 	 * @param resId the resource ID for the string

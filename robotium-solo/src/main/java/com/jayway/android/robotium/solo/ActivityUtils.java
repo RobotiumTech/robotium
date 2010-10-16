@@ -144,10 +144,26 @@ class ActivityUtils {
 		{	
 			now = System.currentTimeMillis();
 		}
-		if(now < endTime)
-			return true;
-		else
-			return false;
+		return now < endTime;
+	}
+	
+	/**
+	 * Waits for the given {@link Activity}.
+	 * 
+	 * @param clazz the class of the {@code Activity} to wait for
+	 * @param timeout the amount of time in milliseconds to wait
+	 * @return {@code true} if {@code Activity} appears before the timeout and [@code false} if it does not
+	 */
+	
+	public boolean waitForActivity(Class<? extends Activity> clazz, int timeout)
+	{
+		long now = System.currentTimeMillis();
+        final long endTime = now + timeout;
+		while(!getCurrentActivity().getClass().equals(clazz) && now < endTime)
+		{	
+			now = System.currentTimeMillis();
+		}
+		return now < endTime;
 	}
 	
 	/**
