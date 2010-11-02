@@ -262,8 +262,7 @@ class Clicker {
 	 */
 
 	public void clickOnText(String regex, boolean longClick, int match, boolean scroll) {
-		Pattern p = Pattern.compile(regex);
-		Matcher matcher; 
+		final Pattern pattern = Pattern.compile(regex);
 		waiter.waitForText(regex, 0, TIMEOUT, scroll);
 		TextView textToClick = null;
 		ArrayList <TextView> textViewList = viewFetcher.getCurrentViews(TextView.class);
@@ -271,8 +270,7 @@ class Clicker {
 			match = 1;
 		}
 		for (TextView textView : textViewList){
-			matcher = p.matcher(textView.getText().toString());
-			if (matcher.matches()){
+			if(pattern.matcher(textView.getText().toString()).matches()){
 				countMatches++;
 			}
 			if (countMatches == match) {
