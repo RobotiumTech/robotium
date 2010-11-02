@@ -306,9 +306,9 @@ class Clicker {
 	 * @param nameRegex the name of the view presented to the user. The parameter <strong>will</strong> be interpreted as a regular expression.
 	 */
 	public <T extends TextView> void clickOn(Class<T> viewClass, String nameRegex) {
-		final ArrayList<T> views = viewFetcher.getCurrentViews(viewClass);
 		final Pattern pattern = Pattern.compile(nameRegex);
 		waiter.waitForText(nameRegex, 0, TIMEOUT, true);
+		final ArrayList<T> views = viewFetcher.getCurrentViews(viewClass);
 		T viewToClick = null;
 		for(T view : views){
 			if(pattern.matcher(view.getText().toString()).matches()){
