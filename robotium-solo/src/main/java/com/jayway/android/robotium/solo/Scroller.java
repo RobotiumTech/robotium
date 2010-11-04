@@ -193,23 +193,23 @@ class Scroller {
 			listView.getLocationOnScreen(xy);
 		}
 		if (direction == Direction.DOWN) {
+			if (listView.getLastVisiblePosition() >= listView.getCount() - 1) {
+				return false;
+			}
 			yStart = ((xy[1] + listView.getHeight()) - 20);
 			yEnd = (xy[1] + 30);
-		} else if(direction == Direction.UP){
+		} else if (direction == Direction.UP) {
+			if (listView.getFirstVisiblePosition() < 0) {
+				return false;
+			}
 			yStart = ((xy[1]) + 30);
 			yEnd = (xy[1] + listView.getHeight());
 		}
 		int x = activityUtils.getCurrentActivity(false).getWindowManager()
 				.getDefaultDisplay().getWidth() / 2;
 		
-		if (listView.getLastVisiblePosition() < listView.getCount()-1) {
-			drag(x, x, yStart, yEnd, 40);
-			return true;
-
-		} else {
-			return false;
-		}
-
+		drag(x, x, yStart, yEnd, 40);
+		return true;
 	}
 	
 	
