@@ -120,6 +120,7 @@ class Scroller {
 			return true;
 	}
 	
+	
 	/**
 	 * Returns a y position that will not register a click and is appropriate for dragging.
 	 * @param y the y position
@@ -149,6 +150,7 @@ class Scroller {
 		return y;
 	}
 	
+	
 	/**
 	 * Scrolls up and down.
 	 * 
@@ -171,6 +173,7 @@ class Scroller {
 
 	}
 
+	
 	/**
 	 * Scrolls a list.
 	 * 
@@ -191,22 +194,40 @@ class Scroller {
 			listView.getLocationOnScreen(xy);
 		}
 		if (direction == Direction.DOWN) {
+			
+			scrollListToLine(listView, listView.getLastVisiblePosition());
+			
 			if (listView.getLastVisiblePosition() >= listView.getCount() - 1) {
 				return false;
 			}
 		} else if (direction == Direction.UP) {
-			if (listView.getFirstVisiblePosition() < 0) {
+			
+			final int lines = listView.getLastVisiblePosition()-listView.getFirstVisiblePosition();
+			final int lineToScrollTo = listView.getFirstVisiblePosition() - lines;
+			
+			scrollListToLine(listView, lineToScrollTo);
+				
+			if (listView.getFirstVisiblePosition() < 2) {
 				return false;
 			}
 		}
 		
+		return true;
+	}
+	
+	
+	/**
+	 * Scroll list to a given line
+	 * @param listView the listView to scroll
+	 * @param line the line to scroll to
+	 */
+	
+	private void scrollListToLine(final ListView listView, final int line){
 		activityUtils.getCurrentActivity(false).runOnUiThread(new Runnable(){
 			public void run(){
-				listView.setSelection(listView.getLastVisiblePosition());
+				listView.setSelection(line);
 			}
 		});
-	
-		return true;
 	}
 	
 	
