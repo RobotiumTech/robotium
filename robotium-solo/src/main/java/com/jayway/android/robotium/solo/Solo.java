@@ -1,6 +1,8 @@
 package com.jayway.android.robotium.solo;
 
 import java.util.ArrayList;
+
+import junit.framework.Assert;
 import android.app.Activity;
 import android.app.Instrumentation;
 import android.content.pm.ActivityInfo;
@@ -105,7 +107,7 @@ public class Solo {
         this.robotiumUtils = new RobotiumUtils(inst, sleeper);
         this.clicker = new Clicker(activitiyUtils, viewFetcher, scroller,robotiumUtils, inst, sleeper, waiter);
         this.presser = new Presser(viewFetcher, clicker, inst, sleeper);
-        this.textEnterer = new TextEnterer(activitiyUtils,viewFetcher, waiter);
+        this.textEnterer = new TextEnterer(activitiyUtils, waiter);
 
 	}
 
@@ -146,10 +148,29 @@ public class Solo {
 	 *
      */
 	
-    public void clearEditText(int index)
-    {
-       textEnterer.setEditText(index, "");
+    public void clearEditText(int index) {
+    	
+    	ArrayList<EditText> visibleEditTexts = RobotiumUtils.removeInvisibleViews(getCurrentEditTexts());
+
+    	if(index > visibleEditTexts.size()-1)
+    		Assert.assertTrue("EditText with index " + index + " is not available!", false);
+    	
+    	textEnterer.setEditText(visibleEditTexts.get(index), "");
     }
+    
+    /**
+     * Clears the value of an {@link EditText}.
+     * 
+     * @param editText the {@code EditText} that should be cleared
+	 *
+     */
+	
+    public void clearEditText(EditText editText) {
+    	textEnterer.setEditText(editText, "");	
+    }
+    
+	
+
     
     /**
 	 * Waits for a text to be shown. Default timeout is 20 seconds. 
@@ -914,13 +935,31 @@ public class Solo {
 	/**
 	 * Enters text into an {@link EditText} with a given index.
 	 *
-	 * @param index the index of the text field. {@code 0} if only one is available
-	 * @param text the text string that is to be entered into the text field
+	 * @param index the index of the {@code EditText}. {@code 0} if only one is available
+	 * @param text the text string to enter into the {@code EditText} field
 	 *
 	 */
 	
 	public void enterText(int index, String text) {
-		textEnterer.setEditText(index, text);		
+		
+		ArrayList<EditText> visibleEditTexts = RobotiumUtils.removeInvisibleViews(getCurrentEditTexts());
+		
+		if(index > visibleEditTexts.size()-1)
+			Assert.assertTrue("EditText with index " + index + " is not available!", false);
+		
+		textEnterer.setEditText(visibleEditTexts.get(index), text);		
+	}
+	
+	/**
+	 * Enters text into a given {@link EditText}.
+	 *
+	 * @param editText the {@code EditText} to enter text into
+	 * @param text the text string to enter into the {@code EditText} field
+	 *
+	 */
+	
+	public void enterText(EditText editText, String text) {
+		textEnterer.setEditText(editText, text);		
 	}
 	
 	/**
