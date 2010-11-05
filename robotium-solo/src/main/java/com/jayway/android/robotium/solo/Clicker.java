@@ -410,8 +410,9 @@ class Clicker {
 				} catch (IndexOutOfBoundsException e) {textViewGroup.add(textViews.get(i));}
 			}
 		}
-		if (textViewGroup.size() != 0)
-			clickOnScreen(textViewGroup.get(0));
+		if (textViewGroup.size() != 0){
+				clickOnScreen(textViewGroup.get(textViewGroup.size()-1));
+		}
 		return textViewGroup;
 	}
 }
