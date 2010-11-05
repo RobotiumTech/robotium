@@ -1,7 +1,6 @@
 package com.jayway.android.robotium.solo;
 
 import java.util.ArrayList;
-import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import android.widget.*;
 import junit.framework.Assert;
