@@ -187,7 +187,7 @@ class Scroller {
 		int[] xy = new int[2];
 		final ListView listView = viewFetcher.getCurrentViews(ListView.class).get(listIndex);
 		listView.getLocationOnScreen(xy);
-
+	
 		while (xy[1] + 20 > activityUtils.getCurrentActivity(false)
 				.getWindowManager().getDefaultDisplay().getHeight()) {
 			scrollScrollView(direction);
@@ -195,29 +195,32 @@ class Scroller {
 		}
 		if (direction == Direction.DOWN) {
 			
-			scrollListToLine(listView, listView.getLastVisiblePosition());
-			
-			if (listView.getLastVisiblePosition() >= listView.getCount() - 1) {
+			if (listView.getLastVisiblePosition() >= listView.getCount() - 1) 
 				return false;
-			}
+			
+			scrollListToLine(listView, listView.getLastVisiblePosition()+1);
+			sleeper.sleep();
+			
 		} else if (direction == Direction.UP) {
 			
-			final int lines = listView.getLastVisiblePosition()-listView.getFirstVisiblePosition();
-			final int lineToScrollTo = listView.getFirstVisiblePosition() - lines;
+			if (listView.getFirstVisiblePosition() < 2) 
+				return false;
+			
+			final int lines = (listView.getLastVisiblePosition()+1)-(listView.getFirstVisiblePosition());
+			int lineToScrollTo = listView.getFirstVisiblePosition() - lines;
+			if(lineToScrollTo < 0)
+				lineToScrollTo=0;
 			
 			scrollListToLine(listView, lineToScrollTo);
-				
-			if (listView.getFirstVisiblePosition() < 2) {
-				return false;
-			}
-		}
+			sleeper.sleep();
 		
+		}	
 		return true;
 	}
 	
 	
 	/**
-	 * Scroll list to a given line
+	 * Scroll the list to a given line
 	 * @param listView the listView to scroll
 	 * @param line the line to scroll to
 	 */

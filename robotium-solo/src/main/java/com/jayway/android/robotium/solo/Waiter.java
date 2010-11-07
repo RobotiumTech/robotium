@@ -16,8 +16,11 @@ class Waiter {
 	
 	private final ViewFetcher viewFetcher;
 	private final int TIMEOUT = 20000;
+	private final int SMALLTIMEOUT = 10000;
 	private final Searcher searcher;
+	private final Scroller scroller;
 	private final Sleeper sleeper;
+	
 	
 	/**
 	 * Constructs this object.
@@ -25,10 +28,65 @@ class Waiter {
 	 * @param viewFetcher the {@code ViewFetcher} instance.
 	 */
 	
-	public Waiter(ViewFetcher viewFetcher, Searcher searcher, Sleeper sleeper){
+	public Waiter(ViewFetcher viewFetcher, Searcher searcher, Scroller scroller, Sleeper sleeper){
 		this.viewFetcher = viewFetcher;
 		this.searcher = searcher;
+		this.scroller = scroller;
 		this.sleeper = sleeper;
+	}
+	
+	/**
+	 * Waits for a view to be shown.
+	 * 
+	 * @param viewClass the {@code View} class to wait for
+	 * @param minimumNumberOfMatches the minimum number of matches that are expected to be shown. {@code 0} means any number of matches
+	 * @param timeout the amount of time in milliseconds to wait
+	 * @return {@code true} if view is shown and {@code false} if it is not shown before the timeout
+	 */
+	
+	public <T extends View> boolean waitForView(final Class<T> viewClass, final int index){
+		return waitForView(viewClass, index, SMALLTIMEOUT, true);
+	}
+	
+	/**
+	 * Waits for a view to be shown.
+	 * 
+	 * @param viewClass the {@code View} class to wait for
+	 * @param minimumNumberOfMatches the minimum number of matches that are expected to be shown. {@code 0} means any number of matches
+	 * @param timeout the amount of time in milliseconds to wait
+	 * @param scroll {@code true} if scrolling should be performed
+	 * @return {@code true} if view is shown and {@code false} if it is not shown before the timeout
+	 */
+	
+	public <T extends View> boolean waitForView(final Class<T> viewClass, final int index, final int timeOut, final boolean scroll){
+		sleeper.sleep();
+		ArrayList<T> typeList = new ArrayList<T>();
+		final long endTime = System.currentTimeMillis() + timeOut;
+
+		while (System.currentTimeMillis() < endTime) {
+			typeList = viewFetcher.getCurrentViews(viewClass);
+			typeList = RobotiumUtils.removeInvisibleViews(typeList);
+
+			MatchCounter.addMatchesToCount(typeList.size());
+
+			if(MatchCounter.getTotalCount() > 0 && index < MatchCounter.getTotalCount()){
+				MatchCounter.resetCount();
+				return true;
+			}
+
+			if(index == 0 && MatchCounter.getTotalCount() > 0){
+				MatchCounter.resetCount();
+				return true;
+			}
+
+			sleeper.sleep();
+			if(scroll)
+				scroller.scroll(Scroller.Direction.DOWN);
+			else
+				MatchCounter.resetCount();
+		}
+		MatchCounter.resetCount();
+		return false;
 	}
 
 	
@@ -96,7 +154,6 @@ class Waiter {
 		return waitForText(text, expectedMinimumNumberOfMatches, timeout, true);
 	}
 
-	
 	 /**
 	 * Waits for a text to be shown.
 	 *
@@ -109,6 +166,22 @@ class Waiter {
 	 */
 	
 	public boolean waitForText(String text, int expectedMinimumNumberOfMatches, long timeout, boolean scroll) {
+		return waitForText(text, expectedMinimumNumberOfMatches, timeout, scroll, false);	
+	}
+
+	 /**
+	 * Waits for a text to be shown.
+	 *
+	 * @param text the text that needs to be shown
+	 * @param expectedMinimumNumberOfMatches the minimum number of matches of text that must be shown. {@code 0} means any number of matches
+	 * @param timeout the the amount of time in milliseconds to wait
+	 * @param scroll {@code true} if scrolling should be performed
+	 * @param onlyVisible {@code true} if only visible text views should be waited for
+	 * @return {@code true} if text is found and {@code false} if it is not found before the timeout
+	 * 
+	 */
+	
+	public boolean waitForText(String text, int expectedMinimumNumberOfMatches, long timeout, boolean scroll, boolean onlyVisible) {
         final long endTime = System.currentTimeMillis() + timeout;
 
 		while (true) {
@@ -119,7 +192,7 @@ class Waiter {
 
 			sleeper.sleep();
 
-			final boolean foundAnyTextView = searcher.searchFor(TextView.class, text, expectedMinimumNumberOfMatches, scroll, false);
+			final boolean foundAnyTextView = searcher.searchFor(TextView.class, text, expectedMinimumNumberOfMatches, scroll, onlyVisible);
 			if (foundAnyTextView){
 				return true;
 			}

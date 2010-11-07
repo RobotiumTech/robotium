@@ -128,17 +128,16 @@ class Searcher {
 		if(expectedMinimumNumberOfMatches == 0) {
 			expectedMinimumNumberOfMatches = 1;
 		}
-		int matchesFound = 0;
-
 		final Pattern pattern = Pattern.compile(regex);
 
         final Collection<T> views = viewFetcherCallback.call();
         for(T view : views){
 			final Matcher matcher = pattern.matcher(view.getText().toString());
 			if (matcher.find()){
-				matchesFound++;
+				MatchCounter.addMatchToCount();
 			}
-			if (matchesFound == expectedMinimumNumberOfMatches) {
+			if (MatchCounter.getTotalCount() == expectedMinimumNumberOfMatches) {
+				MatchCounter.resetCount();
 				return true;
 			}
 		}
@@ -147,12 +146,15 @@ class Searcher {
             sleeper.sleep();
             return searchFor(viewFetcherCallback, regex, expectedMinimumNumberOfMatches, scroll);
         } else {
-            if (matchesFound > 0) {
-                Log.d(LOG_TAG, " There are only " + matchesFound + " matches of " + regex);
+            if (MatchCounter.getTotalCount() > 0) {
+                Log.d(LOG_TAG, " There are only " + MatchCounter.getTotalCount() + " matches of " + regex);
             }
+            MatchCounter.resetCount();
             return false;
         }
 	}
+	
+	
 
 
 }

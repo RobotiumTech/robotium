@@ -17,15 +17,17 @@ import android.widget.TextView;
 class Checker {
 	
 	private final ViewFetcher viewFetcher;
-	
+	private final Waiter waiter;
+
 	/**
 	 * Constructs this object.
 	 * 
 	 * @param viewFetcher the {@code ViewFetcher} instance.
 	 */
 	
-	public Checker(ViewFetcher viewFetcher){
+	public Checker(ViewFetcher viewFetcher, Waiter waiter){
 		this.viewFetcher = viewFetcher;
+		this.waiter = waiter;
 	}
 
 	
@@ -39,6 +41,7 @@ class Checker {
 	
 	public <T extends CompoundButton> boolean isButtonChecked(Class<T> expectedClass, int index)
 	{
+		waiter.waitForView(expectedClass, index);
 		ArrayList<T> list = viewFetcher.getCurrentViews(expectedClass);
 		list=RobotiumUtils.removeInvisibleViews(list);
 		if(index < 0 || index > list.size()-1)
@@ -56,6 +59,7 @@ class Checker {
 	
 	public <T extends CompoundButton> boolean isButtonChecked(Class<T> expectedClass, String text)
 	{
+		waiter.waitForView(expectedClass, 0);
 		ArrayList<T> list = viewFetcher.getCurrentViews(expectedClass);
 		for(T button : list){
 			if(button.getText().equals(text) && button.isChecked())
@@ -74,6 +78,7 @@ class Checker {
 	
 	public boolean isSpinnerTextSelected(String text)
 	{
+		waiter.waitForView(Spinner.class, 0);
 		ArrayList<Spinner> spinnerList = viewFetcher.getCurrentViews(Spinner.class);
 		for(int i = 0; i < spinnerList.size(); i++){
 			if(isSpinnerTextSelected(i, text))
@@ -91,6 +96,7 @@ class Checker {
 	
 	public boolean isSpinnerTextSelected(int spinnerIndex, String text)
 	{
+		waiter.waitForView(Spinner.class, spinnerIndex);
 		ArrayList<Spinner> spinnerList = viewFetcher.getCurrentViews(Spinner.class);
 		if(spinnerList.size() < spinnerIndex+1)
 			Assert.assertTrue("No spinner with index " + spinnerIndex + " is found! ", false);	

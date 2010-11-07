@@ -97,12 +97,12 @@ public class Solo {
         this.sleeper = new Sleeper();
         this.activitiyUtils = new ActivityUtils(inst, activity, sleeper);
         this.viewFetcher = new ViewFetcher(inst, activitiyUtils, sleeper);
-        this.checker = new Checker(viewFetcher);
         this.asserter = new Asserter(activitiyUtils, sleeper);
         this.dialogUtils = new DialogUtils(viewFetcher, sleeper);
         this.scroller = new Scroller(inst, activitiyUtils, viewFetcher, sleeper);
         this.searcher = new Searcher(viewFetcher, scroller, inst, sleeper);
-        this.waiter = new Waiter(viewFetcher, searcher, sleeper);
+        this.waiter = new Waiter(viewFetcher, searcher,scroller, sleeper);
+        this.checker = new Checker(viewFetcher, waiter);
         this.robotiumUtils = new RobotiumUtils(inst, sleeper);
         this.clicker = new Clicker(activitiyUtils, viewFetcher, scroller,robotiumUtils, inst, sleeper, waiter);
         this.presser = new Presser(viewFetcher, clicker, inst, sleeper);
@@ -213,6 +213,43 @@ public class Solo {
 	public boolean waitForText(String text, int minimumNumberOfMatches, long timeout, boolean scroll) {
 		return waiter.waitForText(text, minimumNumberOfMatches, timeout, scroll);
     }
+	
+	/**
+	 * Waits for a view to be shown.
+	 * 
+	 * @param viewClass the {@code View} class to wait for
+	 * @param minimumNumberOfMatches the minimum number of matches that are expected to be shown. {@code 0} means any number of matches
+	 * @param timeout the amount of time in milliseconds to wait
+	 * @return {@code true} if view is shown and {@code false} if it is not shown before the timeout
+	 */
+	
+	public <T extends View> boolean waitForView(final Class<T> viewClass, final int minimumNumberOfMatches, final int timeout){
+		int index = minimumNumberOfMatches-1;
+		
+		if(index < 1)
+			index = 0;
+		
+		return waiter.waitForView(viewClass, index, timeout, true);
+	}
+	
+	/**
+	 * Waits for a view to be shown.
+	 * 
+	 * @param viewClass the {@code View} class to wait for
+	 * @param minimumNumberOfMatches the minimum number of matches that are expected to be shown. {@code 0} means any number of matches
+	 * @param timeout the amount of time in milliseconds to wait
+	 * @param scroll {@code true} if scrolling should be performed
+	 * @return {@code true} if view is shown and {@code false} if it is not shown before the timeout
+	 */
+	
+	public <T extends View> boolean waitForView(final Class<T> viewClass, final int minimumNumberOfMatches, final int timeout,final boolean scroll){
+		int index = minimumNumberOfMatches-1;
+
+		if(index < 1)
+			index = 0;
+
+		return waiter.waitForView(viewClass, index, timeout, scroll);
+	}
 	
 	
 	/**

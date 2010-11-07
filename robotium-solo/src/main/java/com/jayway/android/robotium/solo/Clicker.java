@@ -262,9 +262,10 @@ class Clicker {
 
 	public void clickOnText(String regex, boolean longClick, int match, boolean scroll) {
 		final Pattern pattern = Pattern.compile(regex);
-		waiter.waitForText(regex, 0, TIMEOUT, scroll);
+		waiter.waitForText(regex, 0, TIMEOUT, scroll, true);
 		TextView textToClick = null;
 		ArrayList <TextView> textViewList = viewFetcher.getCurrentViews(TextView.class);
+		textViewList = RobotiumUtils.removeInvisibleViews(textViewList);
 		if (match == 0) {
 			match = 1;
 		}
@@ -304,8 +305,9 @@ class Clicker {
 	 */
 	public <T extends TextView> void clickOn(Class<T> viewClass, String nameRegex) {
 		final Pattern pattern = Pattern.compile(nameRegex);
-		waiter.waitForText(nameRegex, 0, TIMEOUT, true);
-		final ArrayList<T> views = viewFetcher.getCurrentViews(viewClass);
+		waiter.waitForText(nameRegex, 0, TIMEOUT, true, true);
+		ArrayList<T> views = viewFetcher.getCurrentViews(viewClass);
+		views = RobotiumUtils.removeInvisibleViews(views);
 		T viewToClick = null;
 		for(T view : views){
 			if(pattern.matcher(view.getText().toString()).matches()){
@@ -333,7 +335,7 @@ class Clicker {
 	 * @param index the index of the {@code View} to be clicked, within {@code View}s of the specified class
 	 */
 	public <T extends View> void clickOn(Class<T> viewClass, int index) {
-		waiter.waitForIdle();
+		waiter.waitForView(viewClass, index);
 		try {
 			ArrayList<T> views=viewFetcher.getCurrentViews(viewClass);
 			views=RobotiumUtils.removeInvisibleViews(views);
@@ -368,25 +370,15 @@ class Clicker {
 	public ArrayList<TextView> clickInList(int line, int index) {	
 		if(line == 0)
 			line = 1;
-		waiter.waitForIdle();
-		sleeper.sleep();
-		long now = System.currentTimeMillis();
-		final long endTime = now + CLICKTIMEOUT;
-        ArrayList<ListView> listViews = viewFetcher.getCurrentViews(ListView.class);
-        int size = listViews.size();
-		while((size < index+1) && now < endTime){
-			sleeper.sleep();
-            now = System.currentTimeMillis();
-            listViews = viewFetcher.getCurrentViews(ListView.class);
-            size = listViews.size();
-		}
-		if (size < index+1) {
+		boolean foundList = waiter.waitForView(ListView.class, index, 10000, true);
+		
+		if (!foundList) {
             Assert.assertTrue("No ListView with index " + index + " is available!", false);
         }
 
 		ArrayList<TextView> textViews = null;
 		try{
-            final ListView listView = listViews.get(index);
+            final ListView listView = viewFetcher.getCurrentViews(ListView.class).get(index);
 			textViews = viewFetcher.getCurrentViews(TextView.class, listView);
 		}catch(IndexOutOfBoundsException e){
 			Assert.assertTrue("Index is not valid!", false);

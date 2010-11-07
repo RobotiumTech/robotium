@@ -38,7 +38,7 @@ class TextEnterer{
 	
     public void setEditText(final EditText editText, final String text)
     {
-    	waiter.waitForIdle();    
+    	waiter.waitForView(EditText.class, 0);
     		if(editText != null){
     			final String previousText = editText.getText().toString();
     			if(!editText.isEnabled())
