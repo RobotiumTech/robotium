@@ -48,6 +48,7 @@ class TextEnterer{
     			{
     				public void run()
     				{
+    					editText.setInputType(0); 
     					if(text.equals(""))
     						editText.setText(text);
     					else{
