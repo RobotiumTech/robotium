@@ -199,7 +199,6 @@ class Scroller {
 				return false;
 			
 			scrollListToLine(listView, listView.getLastVisiblePosition()+1);
-			sleeper.sleep();
 			
 		} else if (direction == Direction.UP) {
 			
@@ -212,9 +211,8 @@ class Scroller {
 				lineToScrollTo=0;
 			
 			scrollListToLine(listView, lineToScrollTo);
-			sleeper.sleep();
-		
 		}	
+		sleeper.sleep();
 		return true;
 	}
 	
