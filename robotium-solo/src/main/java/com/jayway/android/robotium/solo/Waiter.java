@@ -68,7 +68,7 @@ class Waiter {
 			typeList = RobotiumUtils.removeInvisibleViews(typeList);
 
 			MatchCounter.addMatchesToCount(typeList.size());
-
+			
 			if(MatchCounter.getTotalCount() > 0 && index < MatchCounter.getTotalCount()){
 				MatchCounter.resetCount();
 				return true;
@@ -80,10 +80,8 @@ class Waiter {
 			}
 
 			sleeper.sleep();
-			if(scroll)
-				scroller.scroll(Scroller.Direction.DOWN);
-			else
-				MatchCounter.resetCount();
+			if(scroll && !scroller.scroll(Scroller.Direction.DOWN))
+				MatchCounter.resetCount();				
 		}
 		MatchCounter.resetCount();
 		return false;
