@@ -368,8 +368,9 @@ class Clicker {
 	 */
 	
 	public ArrayList<TextView> clickInList(int line, int index) {	
-		if(line == 0)
+		if(line < 1)
 			line = 1;
+		
 		boolean foundList = waiter.waitForView(ListView.class, index);
 		
 		if (!foundList) {
@@ -380,6 +381,7 @@ class Clicker {
 		try{
             final ListView listView = viewFetcher.getCurrentViews(ListView.class).get(index);
 			textViews = viewFetcher.getCurrentViews(TextView.class, listView);
+			textViews = RobotiumUtils.removeInvisibleViews(textViews);
 		}catch(IndexOutOfBoundsException e){
 			Assert.assertTrue("Index is not valid!", false);
 		}
