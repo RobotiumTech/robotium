@@ -370,7 +370,7 @@ class Clicker {
 	public ArrayList<TextView> clickInList(int line, int index) {	
 		if(line == 0)
 			line = 1;
-		boolean foundList = waiter.waitForView(ListView.class, index, 10000, true);
+		boolean foundList = waiter.waitForView(ListView.class, index);
 		
 		if (!foundList) {
             Assert.assertTrue("No ListView with index " + index + " is available!", false);
