@@ -32,6 +32,7 @@ class Scroller {
      * @param inst the {@code Instrumentation} instance.
      * @param activityUtils the {@code ActivityUtils} instance.
      * @param viewFetcher the {@code ViewFetcher} instance.
+     * @param sleeper the {@code Sleeper} instance
      */
 	
     public Scroller(Instrumentation inst, ActivityUtils activityUtils, ViewFetcher viewFetcher, Sleeper sleeper) {

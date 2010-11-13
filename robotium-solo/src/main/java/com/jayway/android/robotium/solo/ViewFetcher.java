@@ -29,6 +29,7 @@ class ViewFetcher {
      *
      * @param inst the {@code Instrumentation} instance
 	 * @param activityUtils the {@code ActivityUtils} instance
+     * @param sleeper the {@code Sleeper} instance
      */
 	
     public ViewFetcher(Instrumentation inst, ActivityUtils activityUtils, Sleeper sleeper) {

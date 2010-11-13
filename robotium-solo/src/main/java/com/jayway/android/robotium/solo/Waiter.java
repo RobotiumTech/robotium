@@ -26,6 +26,9 @@ class Waiter {
 	 * Constructs this object.
 	 * 
 	 * @param viewFetcher the {@code ViewFetcher} instance.
+	 * @param searcher the {@code Searcher} instance.
+	 * @param scroller the {@code Scroller} instance.
+	 * @param sleeper the {@code Sleeper} instance.
 	 */
 	
 	public Waiter(ViewFetcher viewFetcher, Searcher searcher, Scroller scroller, Sleeper sleeper){
