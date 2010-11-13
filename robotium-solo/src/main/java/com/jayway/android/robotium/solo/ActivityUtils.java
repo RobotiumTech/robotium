@@ -201,10 +201,11 @@ class ActivityUtils {
 	
 	public void finalize() throws Throwable {
 		try {
-			for (int i = 0; i < activityList.size(); i++) {
+			for (int i = activityList.size()-1; i >= 0; i--) {
 				activityList.get(i).finish();
+				sleeper.sleep(100);
 			}
-			getCurrentActivity(false).finish();
+			getCurrentActivity().finish();
 			activityList.clear();
 		
 		} catch (Exception ignored) {}
