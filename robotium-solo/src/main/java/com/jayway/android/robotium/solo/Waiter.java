@@ -72,6 +72,7 @@ class Waiter {
 			typeList = RobotiumUtils.removeInvisibleViews(typeList);
 
 			MatchCounter.addMatchesToCount(typeList.size());
+			typeList=null;
 			
 			if(MatchCounter.getTotalCount() > 0 && index < MatchCounter.getTotalCount()){
 				MatchCounter.resetCount();
