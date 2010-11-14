@@ -150,6 +150,7 @@ public class Solo {
      */
 	
     public void clearEditText(int index) {
+    	waiter.waitForView(EditText.class, index);
     	
     	ArrayList<EditText> visibleEditTexts = RobotiumUtils.removeInvisibleViews(getCurrentEditTexts());
 
@@ -167,6 +168,8 @@ public class Solo {
      */
 	
     public void clearEditText(EditText editText) {
+    	waiter.waitForView(EditText.class, 0);
+    	
     	textEnterer.setEditText(editText, "");	
     }
     
@@ -916,6 +919,7 @@ public class Solo {
 	 */
 	
 	public boolean scrollDown() {
+		waiter.waitForViews(ListView.class, ScrollView.class);
 		return scroller.scroll(Scroller.Direction.DOWN);
 	}
 	
@@ -929,6 +933,7 @@ public class Solo {
 	 */
 	
 	public boolean scrollUp(){
+		waiter.waitForViews(ListView.class, ScrollView.class);
 		return scroller.scroll(Scroller.Direction.UP);
 	}
 	
@@ -979,6 +984,7 @@ public class Solo {
 	 */
 	
 	public void enterText(int index, String text) {
+		waiter.waitForView(EditText.class, index);
 		
 		ArrayList<EditText> visibleEditTexts = RobotiumUtils.removeInvisibleViews(getCurrentEditTexts());
 		
@@ -997,6 +1003,8 @@ public class Solo {
 	 */
 	
 	public void enterText(EditText editText, String text) {
+		waiter.waitForView(EditText.class, 0);
+		
 		textEnterer.setEditText(editText, text);		
 	}
 	
@@ -1374,6 +1382,9 @@ public class Solo {
 		return checker.isButtonChecked(CheckBox.class, text);
 	}
 	
+	
+	
+	
 	/**
 	 * Checks if the given text is checked
 	 * @param text the text that {@code CheckedTextView} or {@code CompoundButton} shows
@@ -1381,7 +1392,7 @@ public class Solo {
 	 */
 	
 	public boolean isTextChecked(String text){
-		waiter.waitForIdle();
+		waiter.waitForViews(CheckedTextView.class, CompoundButton.class);
 		
 		if(viewFetcher.getCurrentViews(CheckedTextView.class).size() > 0 && checker.isCheckedTextChecked(text))
 			return true;

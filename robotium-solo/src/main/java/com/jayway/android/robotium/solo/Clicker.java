@@ -341,7 +341,7 @@ class Clicker {
 			views=RobotiumUtils.removeInvisibleViews(views);
 			clickOnScreen(views.get(index));
 		} catch (IndexOutOfBoundsException e) {
-			Assert.assertTrue("Index is not valid!", false);
+			Assert.assertTrue("There is no " + viewClass.getSimpleName() + " with index " + index, false);
 		}
 	}
 

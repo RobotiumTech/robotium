@@ -17,6 +17,7 @@ class Waiter {
 	private final ViewFetcher viewFetcher;
 	private final int TIMEOUT = 20000;
 	private final int SMALLTIMEOUT = 10000;
+	private final int MINITIMEOUT = 300;
 	private final Searcher searcher;
 	private final Scroller scroller;
 	private final Sleeper sleeper;
@@ -62,11 +63,11 @@ class Waiter {
 	 */
 	
 	public <T extends View> boolean waitForView(final Class<T> viewClass, final int index, final int timeOut, final boolean scroll){
-		sleeper.sleep();
 		ArrayList<T> typeList = new ArrayList<T>();
 		final long endTime = System.currentTimeMillis() + timeOut;
 
 		while (System.currentTimeMillis() < endTime) {
+			sleeper.sleepMini();
 			typeList = viewFetcher.getCurrentViews(viewClass);
 			typeList = RobotiumUtils.removeInvisibleViews(typeList);
 
@@ -82,11 +83,34 @@ class Waiter {
 				return true;
 			}
 
-			sleeper.sleep();
 			if(scroll && !scroller.scroll(Scroller.Direction.DOWN))
 				MatchCounter.resetCount();				
 		}
 		MatchCounter.resetCount();
+		return false;
+	}
+	
+	/**
+	 * Waits for two views to be shown
+	 * 
+	 * @param viewClass the first {@code View} class to wait for 
+	 * @param viewClass2 the second {@code View} class to wait for
+	 * @return {@code true} if any of the views are shown and {@code false} if none of the views are shown before the timeout
+	 */
+	
+	public <T extends View> boolean waitForViews(final Class<T> viewClass, final Class<? extends View> viewClass2){
+		final long endTime = System.currentTimeMillis() + SMALLTIMEOUT;
+
+		while (System.currentTimeMillis() < endTime) {
+
+			if(waitForView(viewClass, 0, MINITIMEOUT, true)){
+					return true;
+			}
+
+			if(waitForView(viewClass2, 0, MINITIMEOUT, true)){
+					return true;
+			}
+		}
 		return false;
 	}
 

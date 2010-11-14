@@ -161,8 +161,7 @@ class Scroller {
 	 */
 	
 	public boolean scroll(Direction direction) {
-		sleeper.sleep();
-		inst.waitForIdleSync();
+		
 		if (viewFetcher.getCurrentViews(ListView.class).size() > 0) {
 			return scrollList(0, direction);
 		} 
