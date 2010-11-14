@@ -74,6 +74,7 @@ public class Solo {
 	private final RobotiumUtils robotiumUtils;
 	private final Sleeper sleeper;
 	private final Waiter waiter;
+	private final Instrumentation inst;
 	public final static int LANDSCAPE = ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE;   // 0
 	public final static int PORTRAIT = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT;     // 1
 	public final static int RIGHT = 2;
@@ -96,6 +97,7 @@ public class Solo {
 	 */
 	
 	public Solo(Instrumentation inst, Activity activity) {
+		this.inst = inst;
         this.sleeper = new Sleeper();
         this.activitiyUtils = new ActivityUtils(inst, activity, sleeper);
         this.viewFetcher = new ViewFetcher(inst, activitiyUtils, sleeper);
@@ -600,7 +602,9 @@ public class Solo {
 	 */
 	
 	public void clickOnScreen(float x, float y) {
-		waiter.waitForIdle();
+		sleeper.sleep();
+		inst.waitForIdleSync();
+		
 		clicker.clickOnScreen(x, y);
 	}
 	/**
