@@ -1390,9 +1390,10 @@ public class Solo {
 	
 	
 	/**
-	 * Checks if the given text is checked
-	 * @param text the text that {@code CheckedTextView} or {@code CompoundButton} shows
-	 * @return {@code true} if the given text is checked and false if not
+	 * Checks if the given text is checked.
+	 *
+	 * @param text the text that the {@code CheckedTextView} or {@code CompoundButton} objects show
+	 * @return {@code true} if the given text is checked and {@code false} if it is not checked
 	 */
 	
 	public boolean isTextChecked(String text){
@@ -1409,6 +1410,7 @@ public class Solo {
 	
 	/**
 	 * Checks if a given text is selected in any {@link Spinner} located on the current screen.
+	 *
 	 * @param text the text that is expected to be selected
 	 * @return {@code true} if the given text is selected in any {@code Spinner} and false if it is not
 	 * 
@@ -1421,6 +1423,7 @@ public class Solo {
 	
 	/**
 	 * Checks if a given text is selected in a given {@link Spinner}. 
+	 *
 	 * @param index the index of the spinner to check. {@code 0} if only one spinner is available
 	 * @param text the text that is expected to be selected
 	 * @return true if the given text is selected in the given {@code Spinner} and false if it is not
