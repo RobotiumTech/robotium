@@ -270,7 +270,7 @@ class Clicker {
 			match = 1;
 		}
 		for (TextView textView : textViewList){
-			if(pattern.matcher(textView.getText().toString()).matches()){
+			if(pattern.matcher(textView.getText().toString()).find()){
 				countMatches++;
 			}
 			if (countMatches == match) {

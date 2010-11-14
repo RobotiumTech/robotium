@@ -125,7 +125,7 @@ class Searcher {
 	
 	public <T extends TextView> boolean searchFor(Callable<Collection<T>> viewFetcherCallback, String regex, int expectedMinimumNumberOfMatches, boolean scroll) throws Exception {
 
-		if(expectedMinimumNumberOfMatches == 0) {
+		if(expectedMinimumNumberOfMatches < 1) {
 			expectedMinimumNumberOfMatches = 1;
 		}
 		final Pattern pattern = Pattern.compile(regex);
@@ -133,9 +133,11 @@ class Searcher {
         final Collection<T> views = viewFetcherCallback.call();
         for(T view : views){
 			final Matcher matcher = pattern.matcher(view.getText().toString());
+
 			if (matcher.find()){
 				MatchCounter.addMatchToCount();
 			}
+
 			if (MatchCounter.getTotalCount() == expectedMinimumNumberOfMatches) {
 				MatchCounter.resetCount();
 				return true;

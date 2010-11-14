@@ -2,6 +2,7 @@ package com.jayway.android.robotium.solo;
 
 import java.util.ArrayList;
 import junit.framework.Assert;
+import android.widget.CheckedTextView;
 import android.widget.CompoundButton;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -64,6 +65,25 @@ class Checker {
 		ArrayList<T> list = viewFetcher.getCurrentViews(expectedClass);
 		for(T button : list){
 			if(button.getText().equals(text) && button.isChecked())
+				return true;
+		}
+		return false;
+	}
+	
+	/**
+	 * Checks if a {@link CheckedTextView} with a given text is checked.
+	 *
+	 * @param checkedTextView the {@code CheckedTextView} object
+	 * @param text the text that is expected to be checked
+	 * @return {@code true} if {@code CheckedTextView} is checked and {@code false} if it is not checked
+	 */
+	
+	public boolean isCheckedTextChecked(String text)
+	{
+		waiter.waitForText(text, 0, 10000, true, true);
+		ArrayList<CheckedTextView> list = viewFetcher.getCurrentViews(CheckedTextView.class);
+		for(CheckedTextView checkedText : list){
+			if(checkedText.getText().equals(text) && checkedText.isChecked())
 				return true;
 		}
 		return false;

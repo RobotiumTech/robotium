@@ -9,6 +9,8 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.CheckedTextView;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.ImageButton;
@@ -1370,6 +1372,24 @@ public class Solo {
 	public boolean isCheckBoxChecked(String text)
 	{
 		return checker.isButtonChecked(CheckBox.class, text);
+	}
+	
+	/**
+	 * Checks if the given text is checked
+	 * @param text the text that {@code CheckedTextView} or {@code CompoundButton} shows
+	 * @return {@code true} if the given text is checked and false if not
+	 */
+	
+	public boolean isTextChecked(String text){
+		waiter.waitForIdle();
+		
+		if(viewFetcher.getCurrentViews(CheckedTextView.class).size() > 0 && checker.isCheckedTextChecked(text))
+			return true;
+		
+		if(viewFetcher.getCurrentViews(CompoundButton.class).size() > 0 && checker.isButtonChecked(CompoundButton.class, text))
+			return true;
+		
+		return false;
 	}
 	
 	/**
