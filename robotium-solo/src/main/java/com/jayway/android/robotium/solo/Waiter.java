@@ -85,7 +85,10 @@ class Waiter {
 			}
 
 			if(scroll && !scroller.scroll(Scroller.Direction.DOWN))
-				MatchCounter.resetCount();				
+				MatchCounter.resetCount();			
+			
+			if(!scroll)
+				MatchCounter.resetCount();	
 		}
 		MatchCounter.resetCount();
 		return false;
