@@ -147,8 +147,6 @@ class Clicker {
 			sleeper.sleep();
 			now = System.currentTimeMillis();
 		}
-		if(!view.isShown())
-			Assert.assertTrue("View is not visible and can therefore not be clicked!", false);
 		view.getLocationOnScreen(xy);
 
 		while (xy[1] + 10> activityUtils.getCurrentActivity().getWindowManager()
@@ -161,7 +159,7 @@ class Clicker {
 		final int viewHeight = view.getHeight();
 		final float x = xy[0] + (viewWidth / 2.0f);
 		final float y = xy[1] + (viewHeight / 2.0f);
-
+		
 		if (longClick)
 			clickLongOnScreen(x, y);
 		else

@@ -714,7 +714,7 @@ public class Solo {
 	 */
 	
 	public void clickOnView(View view) {
-		waiter.waitForIdle();
+		waiter.waitForClickableItems();
 		clicker.clickOnScreen(view);
 	}
 	
@@ -727,7 +727,7 @@ public class Solo {
 	 */
 	
 	public void clickLongOnView(View view) {
-		waiter.waitForIdle();
+		waiter.waitForClickableItems();
 		clicker.clickOnScreen(view, true);
 
 	}

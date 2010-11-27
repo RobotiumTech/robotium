@@ -85,7 +85,7 @@ class Waiter {
 			}
 
 			if(scroll && !scroller.scroll(Scroller.Direction.DOWN))
-				MatchCounter.resetCount();			
+				MatchCounter.resetCount();	
 			
 			if(!scroll)
 				MatchCounter.resetCount();	
@@ -119,27 +119,39 @@ class Waiter {
 	}
 
 	
-	 /**
+	/**
 	 * Used instead of instrumentation.waitForIdleSync().
 	 *
 	 */
    
-    public void waitForIdle() {
+    public void waitForClickableItems() {
 		sleeper.sleep();
 		long startTime = System.currentTimeMillis();
 		long timeout = 10000;
 		long endTime = startTime + timeout;
-		View decorView;
-		ArrayList<View> touchItems = new ArrayList<View>();
 		while (System.currentTimeMillis() <= endTime) {
-			decorView = viewFetcher.getActiveDecorView();
-			if(decorView != null)
-			touchItems = decorView.getTouchables();
-			if (touchItems.size() > 0)  
+			if (clickableItemsExist())  
 				break;
 			sleeper.sleep();
 		}
 	}
+    
+    /**
+     * Checks if any of the views currently shown are clickable
+     * 
+     * @return true if clickable views exist
+     */
+    
+    private boolean clickableItemsExist(){
+    	ArrayList<View> clickableItems = new ArrayList<View>();
+    	clickableItems.addAll(viewFetcher.getViewsFromDecorViews());
+    	for(View view : clickableItems){
+    		if(view.getTouchables().size() > 0)
+    			return true;
+    	}
+    	return false;
+    		
+    }
     
     /**
 	 * Waits for a text to be shown. Default timeout is 20 seconds.

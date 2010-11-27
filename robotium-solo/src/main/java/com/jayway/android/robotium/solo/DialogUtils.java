@@ -36,27 +36,26 @@ class DialogUtils {
 
 	public boolean waitForDialogToClose(long timeout) {
 		sleeper.sleepMini();
-		int elements = viewFetcher.getWindowDecorViews().length;
+		int elementsBefore = viewFetcher.getWindowDecorViews().length;
 		long now = System.currentTimeMillis();
 		final long endTime = now + timeout;
+		int elementsNow;
 		while (now < endTime) {
-			if(elements < viewFetcher.getWindowDecorViews().length){
-				elements = viewFetcher.getWindowDecorViews().length;
+			elementsNow = viewFetcher.getWindowDecorViews().length;
+			if(elementsBefore < elementsNow){
+				elementsBefore = elementsNow;
 			}
-			if(elements > viewFetcher.getWindowDecorViews().length)
+			if(elementsBefore > elementsNow)
 				break;
-			
-			if(!viewFetcher.getActiveDecorView().isEnabled())
-				break;
-			
+
 			sleeper.sleepMini();
 			now = System.currentTimeMillis();
 		}
-		
-		 if (now > endTime)
-	        	return false;
-	        
-	       return true;
+
+		if (now > endTime)
+			return false;
+
+		return true;
 	}
 
 

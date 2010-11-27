@@ -130,13 +130,10 @@ class Scroller {
 	 */
 	
 	private int getDragablePosition(int y, Direction direction){
-		ArrayList<View> touchItems = new ArrayList<View>();
+		ArrayList<View> clickItems = new ArrayList<View>();
 		int[] xyView = new int[2];
-		View decorView;
-		decorView = viewFetcher.getActiveDecorView();
-		if(decorView != null)
-			touchItems = decorView.getTouchables();
-		for(View view : touchItems){
+		clickItems = getClickableItems();
+		for(View view : clickItems){
 			view.getLocationOnScreen(xyView);
 
 			while(y > xyView[1] && y < (xyView[1] + view.getHeight())){
@@ -149,6 +146,26 @@ class Scroller {
 			}
 		}
 		return y;
+	}
+	
+	/**
+	 * Returns an ArrayList of views that are clickable
+	 * 
+	 * @return ArrayList of clickable views 
+	 */
+	
+	private ArrayList<View> getClickableItems(){
+		
+		final ArrayList<View> views = new ArrayList<View>();
+		final ArrayList<View> clickItems = new ArrayList<View>();
+		views.addAll(viewFetcher.getViewsFromDecorViews());
+		for(View view : views){
+			if(view.isClickable())
+				clickItems.add(view);
+		}
+		return clickItems;
+		
+		
 	}
 	
 	

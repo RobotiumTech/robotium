@@ -74,35 +74,29 @@ class ViewFetcher {
 	}
 	
 	/**
-	 * Returns the active DecorView. 
+	 * Returns the views from the shown DecorViews. 
 	 * 
 	 * @return DecorView
 	 */
 	
-	public View getActiveDecorView()
+	public ArrayList<View> getViewsFromDecorViews()
 	{
 		final View [] views = getWindowDecorViews();
-		final Activity activity = activityUtils.getCurrentActivity(false);
+		final ArrayList<View> viewsInDecorViews = new ArrayList<View>();
 		if(views !=null && views.length > 0)
 		{
 			int length = views.length;
 			for(int i = length - 1; i >= 0; i--){
-			
-				if(activity.hasWindowFocus() && getCurrentViews(TextView.class,(ViewGroup) views[i]).size()==1) {
-					return views[i];
-				}	
-				else if(activity.hasWindowFocus() && activity.getWindow().getDecorView().equals(views[i])){
-					return views[i];
-				}
-				else if(!activity.hasWindowFocus() && !activity.getWindow().getDecorView().equals(views[i])){ 
-					return views[i];
-				}
+				try{
+					if(views[i].isShown())
+						addChildren(viewsInDecorViews,(ViewGroup) views[i]);
+				}catch(ClassCastException ignored){}
+
 			}
-			return views[views.length-1];
 		}
-		else
-			return null;
+		return viewsInDecorViews;
 	}
+		
 	
 	/**
 	 * Returns a {@code View} with a given id. 
@@ -129,16 +123,17 @@ class ViewFetcher {
 
 		if (parent == null){
 			inst.waitForIdleSync();
-			parentToUse = getActiveDecorView();
+			return getViewsFromDecorViews();
 		}else{
 			parentToUse = parent;
+			
+			views.add(parentToUse);
+
+			if (parentToUse instanceof ViewGroup) {
+				addChildren(views, (ViewGroup) parentToUse);
+			}
 		}
 
-		views.add(parentToUse);
-
-		if (parentToUse instanceof ViewGroup) {
-			addChildren(views, (ViewGroup) parentToUse);
-		}
 
 		return views;
 	}
