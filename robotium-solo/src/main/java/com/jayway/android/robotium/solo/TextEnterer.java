@@ -49,6 +49,7 @@ class TextEnterer{
     				public void run()
     				{
     					editText.setInputType(0); 
+    					editText.performClick();
     					if(text.equals(""))
     						editText.setText(text);
     					else{
