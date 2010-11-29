@@ -1,6 +1,7 @@
 package com.jayway.android.robotium.solo;
 
 import java.util.ArrayList;
+import junit.framework.Assert;
 import android.app.Instrumentation;
 import android.os.SystemClock;
 import android.view.MotionEvent;
@@ -94,13 +95,13 @@ class Scroller {
 	 * 
 	 */
 	
-	private boolean scrollScrollView(Direction direction){
+	private boolean scrollScrollView(Direction direction, ArrayList<ScrollView> scrollViews){
 		int yStart = 0;
 		int yEnd = 0;
 		int[] xy = new int[2];
 		int x = activityUtils.getCurrentActivity(false).getWindowManager()
 		.getDefaultDisplay().getWidth() / 2;
-		ScrollView scroll = viewFetcher.getCurrentViews(ScrollView.class).get(0);
+		ScrollView scroll = getView(ScrollView.class, scrollViews, 0);
 		scroll.getLocationOnScreen(xy);
 		
 		if (direction == Direction.DOWN) {
@@ -120,6 +121,7 @@ class Scroller {
 		else
 			return true;
 	}
+
 	
 	
 	/**
@@ -156,9 +158,9 @@ class Scroller {
 	
 	private ArrayList<View> getClickableItems(){
 		
-		final ArrayList<View> views = new ArrayList<View>();
+		final ArrayList<View> views = viewFetcher.getViews(null);
 		final ArrayList<View> clickItems = new ArrayList<View>();
-		views.addAll(viewFetcher.getViewsFromDecorViews());
+		
 		for(View view : views){
 			if(view.isClickable())
 				clickItems.add(view);
@@ -176,17 +178,22 @@ class Scroller {
 	 * @return {@code true} if more scrolling can be done
 	 * 
 	 */
-	
+
 	public boolean scroll(Direction direction) {
-		
-		if (viewFetcher.getCurrentViews(ListView.class).size() > 0) {
-			return scrollList(0, direction);
+
+		ArrayList<View> viewList = viewFetcher.getViews(null);
+		ArrayList<ListView> listViews = RobotiumUtils.filterViews(ListView.class, viewList);
+
+		if (listViews.size() > 0) {
+			return scrollList(0, direction, listViews);
 		} 
 
-		if (viewFetcher.getCurrentViews(ScrollView.class).size() > 0) {
-			return scrollScrollView(direction);
+		ArrayList<ScrollView> scrollViews = RobotiumUtils.filterViews(ScrollView.class, viewList);
+
+		if (scrollViews.size() > 0) {
+			return scrollScrollView(direction, scrollViews);
 		}
-			return false;
+		return false;
 
 	}
 
@@ -200,14 +207,15 @@ class Scroller {
 	 * 
 	 */
 	
-	public boolean scrollList(int listIndex, Direction direction) {
+	public boolean scrollList(int listIndex, Direction direction, ArrayList<ListView> listViews) {
 		int[] xy = new int[2];
-		final ListView listView = viewFetcher.getCurrentViews(ListView.class).get(listIndex);
+		final ListView listView = getView(ListView.class, listViews, listIndex);
+		
 		listView.getLocationOnScreen(xy);
 	
 		while (xy[1] + 20 > activityUtils.getCurrentActivity(false)
 				.getWindowManager().getDefaultDisplay().getHeight()) {
-			scrollScrollView(direction);
+			scrollScrollView(direction, null);
 			listView.getLocationOnScreen(xy);
 		}
 		if (direction == Direction.DOWN) {
@@ -231,6 +239,19 @@ class Scroller {
 		}	
 		sleeper.sleep();
 		return true;
+	}
+	
+	private final <T extends View> T getView(Class<T> classToFilterBy, ArrayList<T> views, int index){
+		T viewToReturn = null;
+		if(views == null){
+			views = viewFetcher.getCurrentViews(classToFilterBy);
+		}
+		try{
+			viewToReturn = views.get(index);
+		}catch(IndexOutOfBoundsException e){
+			Assert.assertTrue("No " + classToFilterBy.getSimpleName() + " with index " + index + " is found!", false);
+		}
+		return viewToReturn;
 	}
 	
 	

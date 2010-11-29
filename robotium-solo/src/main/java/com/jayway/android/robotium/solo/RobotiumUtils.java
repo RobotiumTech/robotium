@@ -75,6 +75,25 @@ class RobotiumUtils {
 		return tmpViewList;
 	}
 	
+	/**
+	 * Filters views
+	 * 
+	 * @param classToFilterBy the class to filter
+	 * @param viewList the ArrayList to filter form
+	 * @return an ArrayList with filtered views
+	 */
+	
+	public static <T extends View> ArrayList<T> filterViews(Class<T> classToFilterBy, ArrayList<View> viewList) {
+        ArrayList<T> filteredViews = new ArrayList<T>(viewList.size());
+        for (View view : viewList) {
+            if (view != null && classToFilterBy.isAssignableFrom(view.getClass())) {
+                filteredViews.add(classToFilterBy.cast(view));
+            }
+        }
+        return filteredViews;
+    }
+
+	
 	
 	
 

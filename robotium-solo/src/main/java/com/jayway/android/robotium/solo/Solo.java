@@ -950,7 +950,7 @@ public class Solo {
 	 */
 	
 	public boolean scrollDownList(int listIndex) {
-		return scroller.scrollList(listIndex, Scroller.Direction.DOWN);
+		return scroller.scrollList(listIndex, Scroller.Direction.DOWN, null);
 	}
 	
 	/**
@@ -962,7 +962,7 @@ public class Solo {
 	 */
 	
 	public boolean scrollUpList(int listIndex) {
-		return scroller.scrollList(listIndex, Scroller.Direction.UP);
+		return scroller.scrollList(listIndex, Scroller.Direction.UP, null);
 	}
 	
 	/**
