@@ -556,19 +556,6 @@ public class Solo {
 		asserter.assertMemoryNotLow();
 	}
 	
-	
-	/**
-	 * Incorrectly named method.
-	 *
-	 * @deprecated Use {@link #assertMemoryNotLow()} instead.
-	 *
-	 */
-
-	public void assertLowMemory()
-	{
-		asserter.assertMemoryNotLow();
-	}
-	
 
 	/**
 	 * Waits for a {@link android.app.Dialog} to close.
@@ -1132,21 +1119,6 @@ public class Solo {
 	public EditText getEditText(String text)
 	{
 		return viewFetcher.getView(EditText.class, text);
-	}
-	
-	
-	/**
-	 * Returns the number of buttons located in the current
-	 * activity.
-	 *
-	 * @return the number of buttons in the current activity
-	 * @deprecated Use {@link #getCurrentButtons()}<code>.size()</code> instead.
-	 *
-	 */
-	
-	public int getCurrenButtonsCount() {
-		int number = viewFetcher.getCurrentViews(Button.class).size();
-		return number;
 	}
 	
 	
