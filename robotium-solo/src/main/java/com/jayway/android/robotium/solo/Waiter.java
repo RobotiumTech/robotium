@@ -83,7 +83,6 @@ class Waiter {
 		final long endTime = System.currentTimeMillis() + timeout;
 
 		while (System.currentTimeMillis() < endTime) {
-			sleeper.sleepMini();
 			typeList = viewFetcher.getCurrentViews(viewClass);
 			typeList = RobotiumUtils.removeInvisibleViews(typeList);
 
@@ -105,6 +104,7 @@ class Waiter {
 
 			if(!scroll)
 				matchCounter.resetCount();	
+                sleeper.sleepMini();
 		}
 		matchCounter.resetCount();
 		return false;

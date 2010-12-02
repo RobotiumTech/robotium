@@ -11,7 +11,7 @@ import android.app.ActivityManager;
  *
  */
 
-class Asserter {
+public class Asserter implements IAsserter {
 	private final ActivityUtils activityUtils;
     private final Sleeper sleeper;
 
@@ -28,13 +28,9 @@ class Asserter {
         this.sleeper = sleeper;
     }
 
-    /**
-     * Asserts that an expected {@link Activity} is currently active one.
-     *
-     * @param message the message that should be displayed if the assert fails
-     * @param name the name of the {@code Activity} that is expected to be active e.g. {@code "MyActivity"}
-     *
-     */
+    /* (non-Javadoc)
+	 * @see com.jayway.android.robotium.solo.IAsserter#assertCurrentActivity(java.lang.String, java.lang.String)
+	 */
 
 	public void assertCurrentActivity(String message, String name)
 	{
@@ -60,14 +56,8 @@ class Asserter {
 	
 	}
 	
-	/**
-	 * Asserts that an expected {@link Activity} is currently active one, with the possibility to
-	 * verify that the expected {@code Activity} is a new instance of the {@code Activity}.
-	 * 
-	 * @param message the message that should be displayed if the assert fails
-	 * @param name the name of the {@code Activity} that is expected to be active e.g. {@code "MyActivity"}
-	 * @param isNewInstance {@code true} if the expected {@code Activity} is a new instance of the {@code Activity}
-	 * 
+	/* (non-Javadoc)
+	 * @see com.jayway.android.robotium.solo.IAsserter#assertCurrentActivity(java.lang.String, java.lang.String, boolean)
 	 */
 	
 	public void assertCurrentActivity(String message, String name, boolean isNewInstance)
@@ -100,9 +90,8 @@ class Asserter {
 			Assert.assertNotSame(message + ", isNewInstance: actual and ", isNewInstance, found);
 	}
 	
-	/**
-	 * Asserts that the available memory in the system is not low.
-	 * 
+	/* (non-Javadoc)
+	 * @see com.jayway.android.robotium.solo.IAsserter#assertMemoryNotLow()
 	 */
 	
 	public void assertMemoryNotLow()
