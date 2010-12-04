@@ -23,7 +23,6 @@ class Searcher {
 	private final Instrumentation inst;
 	private final Sleeper sleeper;
 	private final int TIMEOUT = 5000;
-	private final int LONGTIMEOUT = 400000;
 	private final String LOG_TAG = "Robotium";
 
 	/**
@@ -130,10 +129,8 @@ class Searcher {
 			expectedMinimumNumberOfMatches = 1;
 		}
 		final Pattern pattern = Pattern.compile(regex);
-		final long endTime = System.currentTimeMillis() + LONGTIMEOUT;		
 		Collection<T> views;
-		while (System.currentTimeMillis() < endTime) {
-			
+		while (true) {	
 			views = viewFetcherCallback.call();
 			for(TextView view : views){
 				final Matcher matcher = pattern.matcher(view.getText().toString());
@@ -156,7 +153,6 @@ class Searcher {
 			}
 			sleeper.sleep(1000);
 		}
-		return false;
 	}
 	
 	/**
