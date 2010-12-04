@@ -74,7 +74,7 @@ class ViewFetcher {
 	}
 	
 	/**
-	 * Returns the views from the shown DecorViews. 
+	 * Returns views from the shown DecorViews. 
 	 * 
 	 * @return DecorView
 	 */
@@ -89,9 +89,9 @@ class ViewFetcher {
 			for(int i = length - 1; i >= 0; i--){
 				try{
 					if(views[i].isShown())
-						addChildren(viewsInDecorViews,(ViewGroup) views[i]);
-				}catch(ClassCastException ignored){}
-
+						addChildren(viewsInDecorViews,(ViewGroup) views[i]);}
+				catch (NullPointerException ignored) {}
+				catch (ClassCastException ignored){}
 			}
 		}
 		return viewsInDecorViews;

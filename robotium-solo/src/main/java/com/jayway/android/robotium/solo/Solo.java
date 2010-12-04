@@ -11,6 +11,7 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CheckedTextView;
 import android.widget.CompoundButton;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.ImageButton;
@@ -20,6 +21,7 @@ import android.widget.ScrollView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.ListView;
+import android.widget.TimePicker;
 import android.widget.ToggleButton;
 
 /**
@@ -74,6 +76,7 @@ public class Solo {
 	private final RobotiumUtils robotiumUtils;
 	private final Sleeper sleeper;
 	private final Waiter waiter;
+	private final Setter setter;
 	private final Instrumentation inst;
 	public final static int LANDSCAPE = ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE;   // 0
 	public final static int PORTRAIT = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT;     // 1
@@ -100,6 +103,7 @@ public class Solo {
 		this.inst = inst;
         this.sleeper = new Sleeper();
         this.activitiyUtils = new ActivityUtils(inst, activity, sleeper);
+        this.setter = new Setter(activitiyUtils);
         this.viewFetcher = new ViewFetcher(inst, activitiyUtils, sleeper);
         this.asserter = new Asserter(activitiyUtils, sleeper);
         this.dialogUtils = new DialogUtils(viewFetcher, sleeper);
@@ -1008,6 +1012,80 @@ public class Solo {
         }
 	}
 	
+	
+	/**
+	 * Sets the date in a  {@link DatePicker} with a given index.
+	 *
+	 * @param index the index of the {@code DatePicker}. {@code 0} if only one is available
+	 * @param year the year e.g. 2011
+	 * @param monthOfYear the month e.g. 03
+	 * @param dayOfMonth the day e.g. 10
+	 *
+	 */
+	
+	public void setDatePicker(int index, int year, int monthOfYear, int dayOfMonth) {
+		waiter.waitForView(DatePicker.class, index);
+		
+		ArrayList<DatePicker> visibleDatePickers = RobotiumUtils.removeInvisibleViews(getCurrentDatePickers());
+		
+		if(index > visibleDatePickers.size()-1)
+			Assert.assertTrue("DatePicker with index " + index + " is not available!", false);
+		
+		setter.setDatePicker(visibleDatePickers.get(index), year, monthOfYear, dayOfMonth);
+	}
+	
+	/**
+	 * Sets the date in a given {@link DatePicker}.
+	 *
+	 * @param datePicker the {@code DatePicker} object.
+	 * @param year the year e.g. 2011
+	 * @param monthOfYear the month e.g. 03
+	 * @param dayOfMonth the day e.g. 10
+	 *
+	 */
+	
+	public void setDatePicker(DatePicker datePicker, int year, int monthOfYear, int dayOfMonth) {
+		waiter.waitForView(DatePicker.class, 0);
+		
+		setter.setDatePicker(datePicker, year, monthOfYear, dayOfMonth);
+	}
+	
+	/**
+	 * Sets the time in a {@link TimePicker} with a given index.
+	 *
+	 * @param index the index of the {@code TimePicker}. {@code 0} if only one is available
+	 * @param hour the hour e.g. 15
+	 * @param minute the minute e.g. 30
+	 *
+	 */
+	
+	public void setTimePicker(int index, int hour, int minute) {
+		waiter.waitForView(TimePicker.class, index);
+		
+		ArrayList<TimePicker> visibleTimePickers = RobotiumUtils.removeInvisibleViews(getCurrentTimePickers());
+		
+		if(index > visibleTimePickers.size()-1)
+			Assert.assertTrue("TimePicker with index " + index + " is not available!", false);
+		
+		setter.setTimePicker(visibleTimePickers.get(index), hour, minute);
+	}
+	
+	/**
+	 * Sets the time in a given {@link TimePicker}.
+	 *
+	 * @param timePicker the {@code TimePicker} object.
+	 * @param hour the hour e.g. 15
+	 * @param minute the minute e.g. 30
+	 *
+	 */
+	
+	public void setTimePicker(TimePicker timePicker, int hour, int minute) {
+		waiter.waitForView(TimePicker.class, 0);
+		
+		setter.setTimePicker(timePicker, hour, minute);
+	}
+	
+	
 	/**
 	 * Enters text into an {@link EditText} with a given index.
 	 *
@@ -1320,6 +1398,32 @@ public class Solo {
 	
 	public ArrayList<ImageButton> getCurrentImageButtons() {
 		return viewFetcher.getCurrentViews(ImageButton.class);
+	}
+	
+	/**
+	 * Returns an {@code ArrayList} of the {@code DatePicker} objects contained in the current
+	 * {@code Activity}.
+	 *
+	 * @return an {@code ArrayList} of the {@code DatePicker} objects contained in the current
+	 * {@code Activity}
+	 *
+	 */
+	
+	public ArrayList<DatePicker> getCurrentDatePickers() {
+		return viewFetcher.getCurrentViews(DatePicker.class);
+	}
+	
+	/**
+	 * Returns an {@code ArrayList} of the {@code TimePicker} objects contained in the current
+	 * {@code Activity}.
+	 *
+	 * @return an {@code ArrayList} of the {@code TimePicker} objects contained in the current
+	 * {@code Activity}
+	 *
+	 */
+	
+	public ArrayList<TimePicker> getCurrentTimePickers() {
+		return viewFetcher.getCurrentViews(TimePicker.class);
 	}
 	
 	/**
