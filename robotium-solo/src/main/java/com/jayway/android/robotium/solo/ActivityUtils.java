@@ -146,6 +146,7 @@ class ActivityUtils {
 		}
 		if(now < endTime)
 			return true;
+		
 		else
 			return false;
 	}
@@ -206,6 +207,7 @@ class ActivityUtils {
 				sleeper.sleep(100);
 			}
 			getCurrentActivity().finish();
+			inst.sendKeyDownUpSync(KeyEvent.KEYCODE_BACK);
 			activityList.clear();
 		
 		} catch (Exception ignored) {}

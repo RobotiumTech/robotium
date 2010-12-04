@@ -32,7 +32,6 @@ class Clicker {
 	private final Waiter waiter;
 	private int countMatches=0;
 	private final int TIMEOUT = 10000;
-	private final int CLICKTIMEOUT = 5000;	
 
 
 	/**
@@ -144,19 +143,13 @@ class Clicker {
 	public void clickOnScreen(View view, boolean longClick, int time) {
 		if(view == null)
 			Assert.assertTrue("View is null and can therefore not be clicked!", false);
-
+		
 		int[] xy = new int[2];
-		long now = System.currentTimeMillis();
-		final long endTime = now + CLICKTIMEOUT;
-
-		while ((!view.isShown() || view.isLayoutRequested()) && now < endTime) {
-			sleeper.sleep();
-			now = System.currentTimeMillis();
-		}
 		view.getLocationOnScreen(xy);
 
-		while (xy[1] + 10> activityUtils.getCurrentActivity().getWindowManager()
+		while (xy[1] + 10> activityUtils.getCurrentActivity(false).getWindowManager()
 				.getDefaultDisplay().getHeight() && scroller.scroll(Scroller.Direction.DOWN)) {
+			sleeper.sleep();
 			view.getLocationOnScreen(xy);
 		}
 		sleeper.sleepMini();
