@@ -76,7 +76,7 @@ class ViewFetcher {
 	/**
 	 * Returns views from the shown DecorViews. 
 	 * 
-	 * @return DecorView
+	 * @return all the views contained in the DecorViews
 	 */
 	
 	public ArrayList<View> getViewsFromDecorViews()
