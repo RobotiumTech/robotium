@@ -136,6 +136,23 @@ public class Solo {
 	}
 	
 	/**
+	 * Returns an {@code ArrayList} of the {@code View} objects contained in the parent view
+	 *
+	 * @param parent the parent view from which to return the views
+	 * @return an {@code ArrayList} of the {@code View} objects contained in the given {@code View}
+	 *
+	 */
+	
+	public ArrayList<View> getViews(View parent) {
+		try {
+			return viewFetcher.getViews(parent);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+	
+	/**
 	 * Returns the absolute top parent {@code View} in for a given {@code View}.
 	 *
 	 * @param view the {@code View} whose top parent is requested
