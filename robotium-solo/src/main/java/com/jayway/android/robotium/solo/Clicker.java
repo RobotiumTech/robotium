@@ -21,7 +21,7 @@ import android.view.ViewConfiguration;
  */
 
 class Clicker {
-	
+
 	private final String LOG_TAG = "Robotium";
 	private final ActivityUtils activityUtils;
 	private final ViewFetcher viewFetcher;
@@ -39,26 +39,26 @@ class Clicker {
 	 * Constructs this object.
 	 * 
 	 * @param ativityUtils the {@code ActivityUtils} instance.
-     * @param viewFetcher the {@code ViewFetcher} instance.
-     * @param scroller the {@code Scroller} instance.
-     * @param robotiumUtils the {@code RobotiumUtils} instance.
-     * @param inst the {@code android.app.Instrumentation} instance.
-     * @param sleeper the {@code Sleeper} instance
-     * @param waiter the {@code Waiter} instance
-     */
+	 * @param viewFetcher the {@code ViewFetcher} instance.
+	 * @param scroller the {@code Scroller} instance.
+	 * @param robotiumUtils the {@code RobotiumUtils} instance.
+	 * @param inst the {@code android.app.Instrumentation} instance.
+	 * @param sleeper the {@code Sleeper} instance
+	 * @param waiter the {@code Waiter} instance
+	 */
 
 	public Clicker(ActivityUtils ativityUtils, ViewFetcher viewFetcher,
-                   Scroller scroller, RobotiumUtils robotiumUtils, Instrumentation inst, Sleeper sleeper, Waiter waiter) {
+			Scroller scroller, RobotiumUtils robotiumUtils, Instrumentation inst, Sleeper sleeper, Waiter waiter) {
 
 		this.activityUtils = ativityUtils;
 		this.viewFetcher = viewFetcher;
 		this.scroller = scroller;
 		this.robotiumUtils = robotiumUtils;
 		this.inst = inst;
-        this.sleeper = sleeper;
-        this.waiter = waiter;
-    }
-	
+		this.sleeper = sleeper;
+		this.waiter = waiter;
+	}
+
 	/**
 	 * Clicks on a given coordinate on the screen
 	 *
@@ -66,7 +66,7 @@ class Clicker {
 	 * @param y the y coordinate
 	 *
 	 */
-	
+
 	public void clickOnScreen(float x, float y) {
 		long downTime = SystemClock.uptimeMillis();
 		long eventTime = SystemClock.uptimeMillis();
@@ -81,68 +81,74 @@ class Clicker {
 			Assert.assertTrue("Click can not be completed! Something is in the way e.g. the keyboard.", false);
 		}
 	}
-	
+
 	/**
 	 * Long clicks a given coordinate on the screen
 	 *
 	 * @param x the x coordinate
 	 * @param y the y coordinate
+	 * @param time the amount of time to long click
 	 *
 	 */
-	
-	public void clickLongOnScreen(float x, float y) {
+
+	public void clickLongOnScreen(float x, float y, int time) {
 		long downTime = SystemClock.uptimeMillis();
-        long eventTime = SystemClock.uptimeMillis();
-        MotionEvent event = MotionEvent.obtain(downTime, eventTime, MotionEvent.ACTION_DOWN, x, y, 0);
-        try{
-        	inst.sendPointerSync(event);
-        }catch(SecurityException e){
-        	Assert.assertTrue("Click can not be completed! Something is in the way e.g. the keyboard.", false);
-        }
-        inst.waitForIdleSync();
-        eventTime = SystemClock.uptimeMillis();
-        event = MotionEvent.obtain(downTime, eventTime, MotionEvent.ACTION_MOVE, 
-                x + ViewConfiguration.getTouchSlop() / 2,
-                y + ViewConfiguration.getTouchSlop() / 2, 0);
-        inst.sendPointerSync(event);
-        inst.waitForIdleSync();
-        sleeper.sleep((int)(ViewConfiguration.getLongPressTimeout() * 1.5f));
-        eventTime = SystemClock.uptimeMillis();
-        event = MotionEvent.obtain(downTime, eventTime, MotionEvent.ACTION_UP, x, y, 0);
-        inst.sendPointerSync(event);
-        inst.waitForIdleSync();
+		long eventTime = SystemClock.uptimeMillis();
+		MotionEvent event = MotionEvent.obtain(downTime, eventTime, MotionEvent.ACTION_DOWN, x, y, 0);
+		try{
+			inst.sendPointerSync(event);
+		}catch(SecurityException e){
+			Assert.assertTrue("Click can not be completed! Something is in the way e.g. the keyboard.", false);
+		}
+		inst.waitForIdleSync();
+		eventTime = SystemClock.uptimeMillis();
+		event = MotionEvent.obtain(downTime, eventTime, MotionEvent.ACTION_MOVE, 
+				x + ViewConfiguration.getTouchSlop() / 2,
+				y + ViewConfiguration.getTouchSlop() / 2, 0);
+		inst.sendPointerSync(event);
+		inst.waitForIdleSync();
+		if(time > 0)
+			sleeper.sleep(time);
+		else
+			sleeper.sleep((int)(ViewConfiguration.getLongPressTimeout() * 1.5f));
+
+		eventTime = SystemClock.uptimeMillis();
+		event = MotionEvent.obtain(downTime, eventTime, MotionEvent.ACTION_UP, x, y, 0);
+		inst.sendPointerSync(event);
+		inst.waitForIdleSync();
 		sleeper.sleep();
 
 	}
-	
-	
+
+
 	/**
 	 * Clicks on a given {@link View}.
 	 *
 	 * @param view the view that should be clicked
 	 *
 	 */
-	
+
 	public void clickOnScreen(View view) {
-		clickOnScreen(view, false);
+		clickOnScreen(view, false, 0);
 	}
-	
+
 	/**
 	 * Private method used to click on a given view.
 	 *
 	 * @param view the view that should be clicked
 	 * @param longClick true if the click should be a long click
+	 * @param time the amount of time to long click
 	 *
 	 */
 
-	public void clickOnScreen(View view, boolean longClick) {
+	public void clickOnScreen(View view, boolean longClick, int time) {
 		if(view == null)
 			Assert.assertTrue("View is null and can therefore not be clicked!", false);
-		
+
 		int[] xy = new int[2];
 		long now = System.currentTimeMillis();
 		final long endTime = now + CLICKTIMEOUT;
-		
+
 		while ((!view.isShown() || view.isLayoutRequested()) && now < endTime) {
 			sleeper.sleep();
 			now = System.currentTimeMillis();
@@ -159,9 +165,9 @@ class Clicker {
 		final int viewHeight = view.getHeight();
 		final float x = xy[0] + (viewWidth / 2.0f);
 		final float y = xy[1] + (viewHeight / 2.0f);
-		
+
 		if (longClick)
-			clickLongOnScreen(x, y);
+			clickLongOnScreen(x, y, time);
 		else
 			clickOnScreen(x, y);
 	}
@@ -175,10 +181,10 @@ class Clicker {
 	 * @param index the index of the menu item that should be pressed
 	 *
 	 */
-	
+
 	public void clickLongOnTextAndPress(String text, int index)
 	{
-		clickOnText(text, true, 0, true);
+		clickOnText(text, true, 0, true, 0);
 		try{
 			inst.sendKeyDownUpSync(KeyEvent.KEYCODE_DPAD_DOWN);
 		}catch(SecurityException e){
@@ -197,7 +203,7 @@ class Clicker {
 	 * @param text the menu text that should be clicked on. The parameter <strong>will</strong> be interpreted as a regular expression.
 	 * 
 	 */
-	
+
 	public void clickOnMenuItem(String text)
 	{	
 		sleeper.sleep();
@@ -207,9 +213,9 @@ class Clicker {
 		}catch(SecurityException e){
 			Assert.assertTrue("Can not open the menu!", false);
 		}
-		clickOnText(text, false, 1, false);
+		clickOnText(text, false, 1, false, 0);
 	}
-	
+
 	/**
 	 * Clicks on a menu item with a given text
 	 * 
@@ -217,7 +223,7 @@ class Clicker {
 	 * @param subMenu true if the menu item could be located in a sub menu
 	 * 
 	 */
-	
+
 	public void clickOnMenuItem(String text, boolean subMenu)
 	{
 		sleeper.sleep();
@@ -226,9 +232,9 @@ class Clicker {
 		int [] xy = new int[2];
 		int x = 0;
 		int y = 0;
-		
+
 		try{
-		robotiumUtils.sendKeyCode(KeyEvent.KEYCODE_MENU);
+			robotiumUtils.sendKeyCode(KeyEvent.KEYCODE_MENU);
 		}catch(SecurityException e){
 			Assert.assertTrue("Can not open the menu!", false);
 		}
@@ -239,16 +245,16 @@ class Clicker {
 				textView.getLocationOnScreen(xy);
 
 				if(xy[0] > x || xy[1] > y)
-						textMore = textView;
-				}
+					textMore = textView;
+			}
 		}
 		if(textMore != null)
 			clickOnScreen(textMore);
 
-		clickOnText(text, false, 1, false);
+		clickOnText(text, false, 1, false, 0);
 	}
-	
-	
+
+
 	/**
 	 * Clicks on a specific {@link TextView} displaying a given text.
 	 *
@@ -256,9 +262,10 @@ class Clicker {
 	 * @param longClick {@code true} if the click should be a long click
 	 * @param match the regex match that should be clicked on
 	 * @param scroll whether to scroll to find the regex
+	 * @param time the amount of time to long click
 	 */
 
-	public void clickOnText(String regex, boolean longClick, int match, boolean scroll) {
+	public void clickOnText(String regex, boolean longClick, int match, boolean scroll, int time) {
 		final Pattern pattern = Pattern.compile(regex);
 		waiter.waitForText(regex, 0, TIMEOUT, scroll, true);
 		TextView textToClick = null;
@@ -278,9 +285,9 @@ class Clicker {
 			}
 		}
 		if (textToClick != null) {
-			clickOnScreen(textToClick, longClick);
+			clickOnScreen(textToClick, longClick, time);
 		} else if (scroll && scroller.scroll(Scroller.Direction.DOWN)) {
-			clickOnText(regex, longClick, match, scroll);
+			clickOnText(regex, longClick, match, scroll, time);
 		} else {
 			if (countMatches > 0)
 				Assert.assertTrue("There are only " + countMatches + " matches of " + regex, false);
@@ -343,7 +350,7 @@ class Clicker {
 		}
 	}
 
-	
+
 	/**
 	 * Clicks on a certain list line and returns the {@link TextView}s that
 	 * the list line is showing. Will use the first list it finds.
@@ -355,7 +362,7 @@ class Clicker {
 	public ArrayList<TextView> clickInList(int line) {
 		return clickInList(line, 0);
 	}
-	
+
 	/**
 	 * Clicks on a certain list line on a specified List and
 	 * returns the {@link TextView}s that the list line is showing.
@@ -364,20 +371,20 @@ class Clicker {
 	 * @param index the index of the list. E.g. Index 1 if two lists are available
 	 * @return an {@code ArrayList} of the {@code TextView}s located in the list line
 	 */
-	
+
 	public ArrayList<TextView> clickInList(int line, int index) {	
 		if(line < 1)
 			line = 1;
-		
+
 		boolean foundList = waiter.waitForView(ListView.class, index);
-		
+
 		if (!foundList) {
-            Assert.assertTrue("No ListView with index " + index + " is available!", false);
-        }
+			Assert.assertTrue("No ListView with index " + index + " is available!", false);
+		}
 
 		ArrayList<TextView> textViews = null;
 		try{
-            final ListView listView = viewFetcher.getCurrentViews(ListView.class).get(index);
+			final ListView listView = viewFetcher.getCurrentViews(ListView.class).get(index);
 			textViews = viewFetcher.getCurrentViews(TextView.class, listView);
 			textViews = RobotiumUtils.removeInvisibleViews(textViews);
 		}catch(IndexOutOfBoundsException e){
@@ -403,7 +410,7 @@ class Clicker {
 			}
 		}
 		if (textViewGroup.size() != 0){
-				clickOnScreen(textViewGroup.get(textViewGroup.size()-1));
+			clickOnScreen(textViewGroup.get(textViewGroup.size()-1));
 		}
 		return textViewGroup;
 	}

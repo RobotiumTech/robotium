@@ -603,7 +603,20 @@ public class Solo {
 	 */
 	
 	public void clickLongOnScreen(float x, float y) {
-		clicker.clickLongOnScreen(x, y);
+		clicker.clickLongOnScreen(x, y, 0);
+	}
+	
+	/**
+	 * Long clicks a given coordinate on the screen for a given amount of time.
+	 *
+	 * @param x the x coordinate
+	 * @param y the y coordinate
+	 * @param time the amount of time to long click
+	 *
+	 */
+	
+	public void clickLongOnScreen(float x, float y, int time) {
+		clicker.clickLongOnScreen(x, y, time);
 	}
 	
 	
@@ -715,7 +728,21 @@ public class Solo {
 	
 	public void clickLongOnView(View view) {
 		waiter.waitForClickableItems();
-		clicker.clickOnScreen(view, true);
+		clicker.clickOnScreen(view, true, 0);
+
+	}
+	
+	/**
+	 * Long clicks on a given {@link View} for a given amount of time.
+	 *
+	 * @param view the view that should be long clicked
+	 * @param time the amount of time to long click
+	 *
+	 */
+	
+	public void clickLongOnView(View view, int time) {
+		waiter.waitForClickableItems();
+		clicker.clickOnScreen(view, true, time);
 
 	}
 	
@@ -728,7 +755,7 @@ public class Solo {
 	 */
 	
 	public void clickOnText(String text) {
-		clicker.clickOnText(text, false, 1, true);
+		clicker.clickOnText(text, false, 1, true, 0);
 	}
 	
 	/**
@@ -740,7 +767,7 @@ public class Solo {
 	 */
 	
 	public void clickOnText(String text, int match) {
-		clicker.clickOnText(text, false, match, true);
+		clicker.clickOnText(text, false, match, true, 0);
 	}
 	
 	/**
@@ -753,7 +780,7 @@ public class Solo {
 	 */
 	
 	public void clickOnText(String text, int match, boolean scroll) {
-		clicker.clickOnText(text, false, match, scroll);
+		clicker.clickOnText(text, false, match, scroll, 0);
 	}
 	
 	
@@ -767,7 +794,7 @@ public class Solo {
 	
 	public void clickLongOnText(String text)
 	{
-		clicker.clickOnText(text, true, 1, true);
+		clicker.clickOnText(text, true, 1, true, 0);
 	}
 	
 	/**
@@ -781,7 +808,7 @@ public class Solo {
 	
 	public void clickLongOnText(String text, int match)
 	{
-		clicker.clickOnText(text, true, match, true);
+		clicker.clickOnText(text, true, match, true, 0);
 	}
 	
 	/**
@@ -796,7 +823,22 @@ public class Solo {
 	
 	public void clickLongOnText(String text, int match, boolean scroll)
 	{
-		clicker.clickOnText(text, true, match, scroll);
+		clicker.clickOnText(text, true, match, scroll, 0);
+	}
+	
+	/**
+	 * Long clicks on a given {@link View}. {@link #clickOnText(String)} can then be
+	 * used to click on the context menu items that appear after the long click.
+	 *
+	 * @param text the text that should be clicked on. The parameter will be interpreted as a regular expression
+	 * @param match the match that should be clicked on 
+	 * @param scroll true if scrolling should be performed
+	 * @param time the amount of time to long click 
+	 */
+	
+	public void clickLongOnText(String text, int match, int time)
+	{
+		clicker.clickOnText(text, true, match, true, time);
 	}
 	
 	/**
