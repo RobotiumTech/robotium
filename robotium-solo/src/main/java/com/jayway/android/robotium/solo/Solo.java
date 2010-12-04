@@ -16,6 +16,7 @@ import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.RadioButton;
 import android.widget.ScrollView;
 import android.widget.Spinner;
@@ -1095,12 +1096,47 @@ public class Solo {
 	 * @param minute the minute e.g. 30
 	 *
 	 */
-	
+
 	public void setTimePicker(TimePicker timePicker, int hour, int minute) {
 		waiter.waitForView(TimePicker.class, 0);
-		
+
 		setter.setTimePicker(timePicker, hour, minute);
 	}
+	
+	/**
+	 * Sets the progress of a {@link ProgressBar} with a given index. Examples are SeekBar and RatingBar.
+	 * @param index the index of the {@code ProgressBar}
+	 * @param progress the progress that the {@code ProgressBar} should be set to
+	 * 
+	 */
+
+	public void setProgressBar(int index, int progress){
+
+		waiter.waitForView(ProgressBar.class, index);
+
+		ArrayList<ProgressBar> visibleProgressBars = RobotiumUtils.removeInvisibleViews(getCurrentProgressBars());
+
+		if(index > visibleProgressBars.size()-1)
+			Assert.assertTrue("ProgressBar with index " + index + " is not available!", false);
+
+
+		setter.setProgressBar(visibleProgressBars.get(index), progress);
+	}
+
+	/**
+	 * Sets the progress of a given {@link ProgressBar}. Examples are SeekBar and RatingBar.
+	 * @param progressBar the {@code ProgressBar}
+	 * @param progress the progress that the {@code ProgressBar} should be set to
+	 * 
+	 */
+
+	public void setProgressBar(ProgressBar progressBar, int progress){
+
+		waiter.waitForView(ProgressBar.class, 0);
+
+		setter.setProgressBar(progressBar, progress);
+	}
+
 	
 	
 	/**
@@ -1441,6 +1477,19 @@ public class Solo {
 	
 	public ArrayList<TimePicker> getCurrentTimePickers() {
 		return viewFetcher.getCurrentViews(TimePicker.class);
+	}
+	
+	/**
+	 * Returns an {@code ArrayList} of the {@code ProgressBar} objects contained in the current
+	 * {@code Activity}.
+	 *
+	 * @return an {@code ArrayList} of the {@code ProgressBar} objects contained in the current
+	 * {@code Activity}
+	 *
+	 */
+	
+	public ArrayList<ProgressBar> getCurrentProgressBars() {
+		return viewFetcher.getCurrentViews(ProgressBar.class);
 	}
 	
 	/**

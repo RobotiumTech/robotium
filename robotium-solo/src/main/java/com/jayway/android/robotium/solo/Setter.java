@@ -1,6 +1,7 @@
 package com.jayway.android.robotium.solo;
 
 import android.widget.DatePicker;
+import android.widget.ProgressBar;
 import android.widget.TimePicker;
 
 
@@ -75,6 +76,29 @@ class Setter{
 					try{
 					timePicker.setCurrentHour(hour);
 					timePicker.setCurrentMinute(minute);
+					}catch (Exception ignored){}
+				}
+			});
+		}
+	}
+	
+	/**
+	 * Sets the progress of a given {@link ProgressBar}. Examples are SeekBar and RatingBar.
+	 * @param progressBar the {@code ProgressBar}
+	 * @param progress the progress that the {@code ProgressBar} should be set to
+	 * 
+	 */
+	
+	public void setProgressBar(final ProgressBar progressBar,final int progress) {
+
+		if(progressBar != null){
+
+			activityUtils.getCurrentActivity(false).runOnUiThread(new Runnable()
+			{
+				public void run()
+				{
+					try{
+					progressBar.setProgress(progress);
 					}catch (Exception ignored){}
 				}
 			});
