@@ -151,7 +151,7 @@ class Searcher {
 				logMatchesFound(regex);
 				return false;
 			}
-			sleeper.sleep(1000);
+			sleeper.sleep();
 		}
 	}
 	
