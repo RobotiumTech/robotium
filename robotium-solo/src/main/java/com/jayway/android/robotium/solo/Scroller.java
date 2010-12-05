@@ -121,7 +121,6 @@ class Scroller {
 		else
 			return true;
 	}
-
 	
 	
 	/**
@@ -288,6 +287,30 @@ class Scroller {
 			drag(0, x, y, y, 40);
 		else if (side == Side.RIGHT)
 			drag(x, 0, y, y, 40);
+	}
+	
+	/**
+	 * Scrolls just enough to make a half-visible view clickable. Used by clickOnScreen().
+	 * @param view the view to click
+	 * @return y the new y coordinate after the minor scroll has been performed
+	 * 
+	 */
+	
+	public float scrollToClick(View view){
+
+		int x = activityUtils.getCurrentActivity(false).getWindowManager()
+		.getDefaultDisplay().getWidth() / 2;
+		int[] xy = new int[2];
+		view.getLocationOnScreen(xy);
+		final int viewHeight = view.getHeight();
+		float y = xy[1] + (viewHeight / 2.0f);
+		drag(x, x, xy[1], xy[1]-viewHeight, 15);
+		sleeper.sleepMini();
+		
+		view.getLocationOnScreen(xy);
+		y = xy[1] + (viewHeight / 2.0f);
+		return y;
+
 	}
 	
 
