@@ -854,7 +854,6 @@ public class Solo {
 	 *
 	 * @param text the text that should be clicked on. The parameter will be interpreted as a regular expression
 	 * @param match the match that should be clicked on 
-	 * @param scroll true if scrolling should be performed
 	 * @param time the amount of time to long click 
 	 */
 	
@@ -1105,6 +1104,7 @@ public class Solo {
 	
 	/**
 	 * Sets the progress of a {@link ProgressBar} with a given index. Examples are SeekBar and RatingBar.
+	 *
 	 * @param index the index of the {@code ProgressBar}
 	 * @param progress the progress that the {@code ProgressBar} should be set to
 	 * 
@@ -1125,6 +1125,7 @@ public class Solo {
 
 	/**
 	 * Sets the progress of a given {@link ProgressBar}. Examples are SeekBar and RatingBar.
+	 *
 	 * @param progressBar the {@code ProgressBar}
 	 * @param progress the progress that the {@code ProgressBar} should be set to
 	 * 
