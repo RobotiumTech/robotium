@@ -142,25 +142,48 @@ class Clicker {
 
 	public void clickOnScreen(View view, boolean longClick, int time) {
 		if(view == null)
-			Assert.assertTrue("View is null and can therefore not be clicked!", false);		
+			Assert.assertTrue("View is null and can therefore not be clicked!", false);
 		int[] xy = new int[2];
 
-		sleeper.sleepMini();
 		view.getLocationOnScreen(xy);
-		
+
 		final int viewWidth = view.getWidth();
 		final int viewHeight = view.getHeight();
 		final float x = xy[0] + (viewWidth / 2.0f);
 		float y = xy[1] + (viewHeight / 2.0f);
-		
-		if(xy[1] + viewHeight + 20 > activityUtils.getCurrentActivity(false).getWindowManager()
-				.getDefaultDisplay().getHeight())
-		y =	scroller.scrollToClick(view);
+
+		if(xy[1] + viewHeight > getScrollListWindowHeight(view)){
+			y = scroller.scrollToClick(view);
+		}
 
 		if (longClick)
 			clickLongOnScreen(x, y, time);
 		else
 			clickOnScreen(x, y);
+	}
+
+	/**
+	 * Returns the height of the scroll or list view parent
+	 * @param view the view who's parents height should be returned
+	 * @return the height of the scroll or list view parent
+	 */
+
+	public float getScrollListWindowHeight(View view) {
+
+		final int[] xyParent = new int[2];
+		final View parent = viewFetcher.getScrollOrListParent(view);
+		final float windowHeight;
+		if(parent == null){
+			windowHeight = activityUtils.getCurrentActivity(false).getWindowManager()
+			.getDefaultDisplay().getHeight();
+		}
+		else{
+			parent.getLocationOnScreen(xyParent);
+			windowHeight = xyParent[1] + parent.getHeight();
+		}
+
+		return windowHeight;
+
 	}
 
 

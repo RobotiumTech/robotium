@@ -19,66 +19,85 @@ import android.widget.TextView;
  */
 
 class ViewFetcher {
-	
+
 	private final Instrumentation inst;
 	private final ActivityUtils activityUtils;
 	private final Sleeper sleeper;
-	
-    /**
-     * Constructs this object.
-     *
-     * @param inst the {@code Instrumentation} instance
+
+	/**
+	 * Constructs this object.
+	 *
+	 * @param inst the {@code Instrumentation} instance
 	 * @param activityUtils the {@code ActivityUtils} instance
-     * @param sleeper the {@code Sleeper} instance
-     */
-	
-    public ViewFetcher(Instrumentation inst, ActivityUtils activityUtils, Sleeper sleeper) {
-        this.inst = inst;
-        this.activityUtils = activityUtils;
-        this.sleeper = sleeper;
-    }
-	
-	
+	 * @param sleeper the {@code Sleeper} instance
+	 */
+
+	public ViewFetcher(Instrumentation inst, ActivityUtils activityUtils, Sleeper sleeper) {
+		this.inst = inst;
+		this.activityUtils = activityUtils;
+		this.sleeper = sleeper;
+	}
+
+
 	/**
 	 * Returns the absolute top parent {@code View} in for a given {@code View}.
 	 *
 	 * @param view the {@code View} whose top parent is requested
 	 * @return the top parent {@code View}
 	 */
-	
+
 	public View getTopParent(View view) {
 		if (view.getParent() != null
-			&& !view.getParent().getClass().getName().equals("android.view.ViewRoot")) {
+				&& !view.getParent().getClass().getName().equals("android.view.ViewRoot")) {
 			return getTopParent((View) view.getParent());
 		} else {
 			return view;
 		}
 	}
-	
+
 	/**
 	 * Returns the list item parent. It is used by clickInList().
 	 * 
 	 * @param view the view who's parent is requested
 	 * @return the parent of the view
 	 */
-	
+
 	public View getListItemParent(View view)
 	{
 		if (view.getParent() != null
-			&& !(view.getParent() instanceof android.widget.ListView)) {
+				&& !(view.getParent() instanceof android.widget.ListView)) {
 			return getListItemParent((View) view.getParent());
 		} else {
 			return view;
 		}
-		
+
 	}
-	
+
+	/**
+	 * Returns the scroll or list parent view
+	 * @param view the view who's parent should be returned
+	 * @return the parent scroll view, list view or null
+	 */
+
+	public View getScrollOrListParent(View view) {
+
+		if (!(view instanceof android.widget.ListView) && !(view instanceof android.widget.ScrollView)) {
+			try{
+				return getScrollOrListParent((View) view.getParent());
+			}catch(Exception e){
+				return null;
+			}
+		} else {
+			return view;
+		}
+	}
+
 	/**
 	 * Returns views from the shown DecorViews. 
 	 * 
 	 * @return all the views contained in the DecorViews
 	 */
-	
+
 	public ArrayList<View> getViewsFromDecorViews()
 	{
 		final View [] views = getWindowDecorViews();
@@ -96,14 +115,14 @@ class ViewFetcher {
 		}
 		return viewsInDecorViews;
 	}
-		
-	
+
+
 	/**
 	 * Returns a {@code View} with a given id. 
 	 * @param id the R.id of the {@code View} to be returned 
 	 * @return a {@code View} with a given id
 	 */
-	
+
 	public View getView(int id){
 		final Activity activity = activityUtils.getCurrentActivity(false);
 		return activity.findViewById(id);
@@ -116,7 +135,7 @@ class ViewFetcher {
 	 * @param parent the {@code View} whose children should be returned, or {@code null} for all
 	 * @return all {@code View}s located in the currently active {@code Activity}, never {@code null}
 	 */
-	
+
 	public ArrayList<View> getViews(View parent) {
 		final ArrayList<View> views = new ArrayList<View>();
 		final View parentToUse;
@@ -126,7 +145,7 @@ class ViewFetcher {
 			return getViewsFromDecorViews();
 		}else{
 			parentToUse = parent;
-			
+
 			views.add(parentToUse);
 
 			if (parentToUse instanceof ViewGroup) {
@@ -143,7 +162,7 @@ class ViewFetcher {
 	 * @param views an {@code ArrayList} of {@code View}s
 	 * @param viewGroup the {@code ViewGroup} to extract children from
 	 */
-	
+
 	private void addChildren(ArrayList<View> views, ViewGroup viewGroup) {
 		for (int i = 0; i < viewGroup.getChildCount(); i++) {
 			final View child = viewGroup.getChildAt(i);
@@ -164,7 +183,7 @@ class ViewFetcher {
 	 * @param index choose among all instances of this type, e.g. {@code Button.class} or {@code EditText.class}
 	 * @return a {@code View} with a certain index, from the list of current {@code View}s of the specified type
 	 */
-	
+
 	public <T extends View> T getView(Class<T> classToFilterBy, int index) {
 		sleeper.sleep();
 		inst.waitForIdleSync();
@@ -178,7 +197,7 @@ class ViewFetcher {
 		}
 		return view;
 	}
-	
+
 	/**
 	 * Returns a {@code View} that shows a given text, from the list of current {@code View}s of the specified type.
 	 *
@@ -186,7 +205,7 @@ class ViewFetcher {
 	 * @param text the text that the view shows
 	 * @return a {@code View} showing a given text, from the list of current {@code View}s of the specified type
 	 */
-	
+
 	public <T extends TextView> T getView(Class<T> classToFilterBy, String text) {
 		sleeper.sleep();
 		inst.waitForIdleSync();
@@ -197,8 +216,8 @@ class ViewFetcher {
 				viewToReturn = view;
 		}
 		if(viewToReturn == null)
-		Assert.assertTrue("No " + classToFilterBy.getSimpleName() + " with text " + text + " is found!", false);
-		
+			Assert.assertTrue("No " + classToFilterBy.getSimpleName() + " with text " + text + " is found!", false);
+
 		return viewToReturn;
 	}
 
@@ -210,7 +229,7 @@ class ViewFetcher {
 	 * @param classToFilterBy return all instances of this class, e.g. {@code Button.class} or {@code GridView.class}
 	 * @return an {@code ArrayList} of {@code View}s of the specified {@code Class} located in the current {@code Activity}
 	 */
-	
+
 	public <T extends View> ArrayList<T> getCurrentViews(Class<T> classToFilterBy) {
 		return getCurrentViews(classToFilterBy, null);
 	}
@@ -222,7 +241,7 @@ class ViewFetcher {
 	 * @param parent the parent {@code View} for where to start the traversal
 	 * @return an {@code ArrayList} of {@code View}s of the specified {@code Class} located under the specified {@code parent}
 	 */
-	
+
 	public <T extends View> ArrayList<T> getCurrentViews(Class<T> classToFilterBy, View parent) {
 		ArrayList<T> filteredViews = new ArrayList<T>();
 		List<View> allViews = getViews(parent);
@@ -238,23 +257,23 @@ class ViewFetcher {
 	static{
 		try {
 			windowManager = Class.forName("android.view.WindowManagerImpl");
-			
+
 		} catch (ClassNotFoundException e) {
 			throw new RuntimeException(e);
 		} catch (SecurityException e) {
 			e.printStackTrace();
 		} 
 	}
-	
+
 	/**
 	 * Returns the WindorDecorViews shown on the screen
 	 * @return the WindorDecorViews shown on the screen
 	 * 
 	 */
-	
+
 	public View[] getWindowDecorViews()
 	{
-		
+
 		Field viewsField;
 		Field instanceField;
 		try {
@@ -275,6 +294,6 @@ class ViewFetcher {
 		} 
 		return null;
 	}
-	
-	
+
+
 }
