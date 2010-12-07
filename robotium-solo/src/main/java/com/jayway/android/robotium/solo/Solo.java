@@ -81,13 +81,13 @@ public class Solo {
 	private final Instrumentation inst;
 	public final static int LANDSCAPE = ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE;   // 0
 	public final static int PORTRAIT = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT;     // 1
-	public final static int RIGHT = 2;
-	public final static int LEFT = 3;
-	public final static int UP = 4;
-	public final static int DOWN = 5;
-	public final static int ENTER = 6;
-	public final static int MENU = 7;
-	public final static int DELETE = 8;
+	public final static int RIGHT = KeyEvent.KEYCODE_DPAD_RIGHT;
+	public final static int LEFT = KeyEvent.KEYCODE_DPAD_LEFT;
+	public final static int UP = KeyEvent.KEYCODE_DPAD_UP;
+	public final static int DOWN = KeyEvent.KEYCODE_DPAD_DOWN;
+	public final static int ENTER = KeyEvent.KEYCODE_ENTER;
+	public final static int MENU = KeyEvent.KEYCODE_MENU;
+	public final static int DELETE = KeyEvent.KEYCODE_DEL;
 
 
 	/**
