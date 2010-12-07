@@ -110,8 +110,7 @@ class ViewFetcher {
 				try{
 					if(views[i].isShown())
 						addChildren(viewsInDecorViews,(ViewGroup) views[i]);}
-				catch (NullPointerException ignored) {}
-				catch (ClassCastException ignored){}
+				catch (Exception ignored) {}
 			}
 		}
 		return viewsInDecorViews;
