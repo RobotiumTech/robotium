@@ -100,6 +100,7 @@ class ViewFetcher {
 
 	public ArrayList<View> getViewsFromDecorViews()
 	{
+		activityUtils.getCurrentActivity(false);
 		final View [] views = getWindowDecorViews();
 		final ArrayList<View> viewsInDecorViews = new ArrayList<View>();
 		if(views !=null && views.length > 0)
