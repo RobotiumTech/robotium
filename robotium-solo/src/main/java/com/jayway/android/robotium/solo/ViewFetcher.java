@@ -167,12 +167,54 @@ class ViewFetcher {
 		for (int i = 0; i < viewGroup.getChildCount(); i++) {
 			final View child = viewGroup.getChildAt(i);
 
-			views.add(child);
+			if(isViewFullyShown(child))
+				views.add(child);
 
 			if (child instanceof ViewGroup) {
 				addChildren(views, (ViewGroup) child);
 			}
 		}
+	}
+	
+	/**
+	 * Returns true if the view is fully shown
+	 * @param view the view to check
+	 * @return true if the view is fully shown
+	 */
+
+	public boolean isViewFullyShown(View view){
+		final int[] xy = new int[2];
+		final int viewHeight = view.getHeight();
+		view.getLocationOnScreen(xy);
+
+		if(xy[1] + viewHeight > getScrollListWindowHeight(view))
+			return false;
+
+		return true;
+	}
+
+	/**
+	 * Returns the height of the scroll or list view parent
+	 * @param view the view who's parents height should be returned
+	 * @return the height of the scroll or list view parent
+	 */
+
+	public float getScrollListWindowHeight(View view) {
+
+		final int[] xyParent = new int[2];
+		final View parent = getScrollOrListParent(view);
+		final float windowHeight;
+		if(parent == null){
+			windowHeight = activityUtils.getCurrentActivity(false).getWindowManager()
+			.getDefaultDisplay().getHeight();
+		}
+		else{
+			parent.getLocationOnScreen(xyParent);
+			windowHeight = xyParent[1] + parent.getHeight();
+		}
+
+		return windowHeight;
+
 	}
 
 

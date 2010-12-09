@@ -1,7 +1,6 @@
 package com.jayway.android.robotium.solo;
 
 import java.util.ArrayList;
-import junit.framework.Assert;
 import android.app.Instrumentation;
 import android.os.SystemClock;
 import android.view.MotionEvent;
@@ -208,28 +207,32 @@ class Scroller {
 
 	public boolean scrollList(int listIndex, Direction direction, ArrayList<ListView> listViews) {
 		int[] xy = new int[2];
-		final ListView listView = getView(ListView.class, listViews, listIndex);
+		ListView listView = getView(ListView.class, listViews, listIndex);
 
 		listView.getLocationOnScreen(xy);
 
-		while (xy[1] + 20 > activityUtils.getCurrentActivity(false)
-				.getWindowManager().getDefaultDisplay().getHeight()) {
-			scrollScrollView(direction, null);
-			listView.getLocationOnScreen(xy);
+		while (listView ==null && scrollScrollView(direction, null)) {
+			sleeper.sleep();
+			listView = getView(ListView.class, listViews, listIndex);
 		}
+
 		if (direction == Direction.DOWN) {
 
-			if (listView.getLastVisiblePosition() >= listView.getCount() - 1) 
+			if (listView.getLastVisiblePosition() >= listView.getCount()-1) {
+				scrollListToLine(listView, listView.getLastVisiblePosition());
 				return false;
+			}
 
-			scrollListToLine(listView, listView.getLastVisiblePosition()+1);
+			scrollListToLine(listView, listView.getLastVisiblePosition());
 
 		} else if (direction == Direction.UP) {
 
-			if (listView.getFirstVisiblePosition() < 2) 
+			if (listView.getFirstVisiblePosition() < 2) {
+				scrollListToLine(listView, 0);
 				return false;
+			}
 
-			final int lines = (listView.getLastVisiblePosition()+1)-(listView.getFirstVisiblePosition());
+			final int lines = listView.getLastVisiblePosition() - listView.getFirstVisiblePosition();
 			int lineToScrollTo = listView.getFirstVisiblePosition() - lines;
 			if(lineToScrollTo < 0)
 				lineToScrollTo=0;
@@ -240,6 +243,15 @@ class Scroller {
 		return true;
 	}
 
+	/**
+	 * Returns a view.
+	 * 
+	 * @param classToFilterBy the class to filter by
+	 * @param views the list with views
+	 * @param index the index of the view
+	 * @return the view with a given index
+	 */
+	
 	private final <T extends View> T getView(Class<T> classToFilterBy, ArrayList<T> views, int index){
 		T viewToReturn = null;
 		if(views == null){
@@ -247,9 +259,8 @@ class Scroller {
 		}
 		try{
 			viewToReturn = views.get(index);
-		}catch(IndexOutOfBoundsException e){
-			Assert.assertTrue("No " + classToFilterBy.getSimpleName() + " with index " + index + " is found!", false);
-		}
+		}catch(Exception ignored){}
+		
 		return viewToReturn;
 	}
 
@@ -288,40 +299,5 @@ class Scroller {
 		else if (side == Side.RIGHT)
 			drag(x, 0, y, y, 40);
 	}
-
-	/**
-	 * Scrolls just enough to make a half-visible view clickable. Used by clickOnScreen().
-	 * @param view the view to click
-	 * @return y the new y coordinate after the minor scroll has been performed
-	 * 
-	 */
-
-	public float scrollToClick(View view){
-
-		final int[] xy = new int[2];
-		view.getLocationOnScreen(xy);
-
-		final float viewHeight = view.getHeight();
-		final float viewWidth = view.getWidth();
-		final float x = xy[0] + (viewWidth/2);
-
-		View parent = viewFetcher.getScrollOrListParent(view);
-
-		if(parent == null || parent instanceof android.widget.ScrollView)
-			drag(x, x, xy[1], xy[1]-viewHeight, 2);
-
-		if(parent instanceof android.widget.ListView){
-			final ListView listView = (ListView) parent;
-			int line = listView.getFirstVisiblePosition() + 1;
-			scrollListToLine(listView, line);
-		}
-
-		sleeper.sleepMini();
-		view.getLocationOnScreen(xy);
-		final float y = xy[1] + (viewHeight / 2.0f);
-		return y;
-
-	}
-
 
 }

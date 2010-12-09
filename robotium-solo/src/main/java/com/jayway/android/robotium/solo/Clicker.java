@@ -23,7 +23,6 @@ import android.view.ViewConfiguration;
 class Clicker {
 
 	private final String LOG_TAG = "Robotium";
-	private final ActivityUtils activityUtils;
 	private final ViewFetcher viewFetcher;
 	private final Scroller scroller;
 	private final Instrumentation inst;
@@ -37,7 +36,6 @@ class Clicker {
 	/**
 	 * Constructs this object.
 	 * 
-	 * @param ativityUtils the {@code ActivityUtils} instance.
 	 * @param viewFetcher the {@code ViewFetcher} instance.
 	 * @param scroller the {@code Scroller} instance.
 	 * @param robotiumUtils the {@code RobotiumUtils} instance.
@@ -46,10 +44,9 @@ class Clicker {
 	 * @param waiter the {@code Waiter} instance
 	 */
 
-	public Clicker(ActivityUtils ativityUtils, ViewFetcher viewFetcher,
+	public Clicker(ViewFetcher viewFetcher,
 			Scroller scroller, RobotiumUtils robotiumUtils, Instrumentation inst, Sleeper sleeper, Waiter waiter) {
 
-		this.activityUtils = ativityUtils;
 		this.viewFetcher = viewFetcher;
 		this.scroller = scroller;
 		this.robotiumUtils = robotiumUtils;
@@ -152,38 +149,10 @@ class Clicker {
 		final float x = xy[0] + (viewWidth / 2.0f);
 		float y = xy[1] + (viewHeight / 2.0f);
 
-		if(xy[1] + viewHeight > getScrollListWindowHeight(view)){
-			y = scroller.scrollToClick(view);
-		}
-
 		if (longClick)
 			clickLongOnScreen(x, y, time);
 		else
 			clickOnScreen(x, y);
-	}
-
-	/**
-	 * Returns the height of the scroll or list view parent
-	 * @param view the view who's parents height should be returned
-	 * @return the height of the scroll or list view parent
-	 */
-
-	public float getScrollListWindowHeight(View view) {
-
-		final int[] xyParent = new int[2];
-		final View parent = viewFetcher.getScrollOrListParent(view);
-		final float windowHeight;
-		if(parent == null){
-			windowHeight = activityUtils.getCurrentActivity(false).getWindowManager()
-			.getDefaultDisplay().getHeight();
-		}
-		else{
-			parent.getLocationOnScreen(xyParent);
-			windowHeight = xyParent[1] + parent.getHeight();
-		}
-
-		return windowHeight;
-
 	}
 
 
