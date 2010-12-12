@@ -76,7 +76,6 @@ class Scroller {
 			try {
 				inst.sendPointerSync(event);
 			} catch (SecurityException ignored) {}
-			inst.waitForIdleSync();
 		}
 		eventTime = SystemClock.uptimeMillis();
 		event = MotionEvent.obtain(downTime, eventTime, MotionEvent.ACTION_UP,toX, toY, 0);
