@@ -100,20 +100,99 @@ class ViewFetcher {
 
 	public ArrayList<View> getViewsFromDecorViews()
 	{
-		activityUtils.getCurrentActivity(false);
+		Activity activity = activityUtils.getCurrentActivity(false);
 		final View [] views = getWindowDecorViews();
 		final ArrayList<View> viewsInDecorViews = new ArrayList<View>();
+		final View [] nonDecorViews = getNonDecorViews(views);
 		if(views !=null && views.length > 0)
 		{
-			int length = views.length;
-			for(int i = length - 1; i >= 0; i--){
+			if(!activity.hasWindowFocus()){
+				for(View view : views){
+					if(!activity.getWindow().getDecorView().equals(view)){
+						try{
+							addChildren(viewsInDecorViews,(ViewGroup) view);
+						}
+						catch (Exception ignored) {}
+					}
+				}
+			}
+			else{
+				for(View view : nonDecorViews){
+					try{
+						addChildren(viewsInDecorViews,(ViewGroup) view);
+					}
+					catch (Exception ignored) {}
+				}	
 				try{
-					if(views[i].isShown())
-						addChildren(viewsInDecorViews,(ViewGroup) views[i]);}
+					addChildren(viewsInDecorViews,(ViewGroup) getRecentDecorView(views));
+				}
 				catch (Exception ignored) {}
 			}
 		}
 		return viewsInDecorViews;
+	}
+	
+	/**
+	 * Returns the most recent DecorView
+	 * 
+	 * @param views the views to check
+	 * @return the most recent DecorView
+	 * 
+	 */
+	
+	private final View getRecentDecorView(View [] views){
+		final View [] decorViews = new View[views.length];
+		int i = 0;
+		
+		for(View view : views){
+			if(view.getClass().getName().equals("com.android.internal.policy.impl.PhoneWindow$DecorView"))
+			{
+				decorViews[i] = view;
+				i++;
+			}	
+		}
+		return getRecentContainer(decorViews);
+	}
+	
+	/**
+	 * Returns the most recent view container
+	 * 
+	 * @param views the views to check
+	 * @return the most recent view container
+	 * 
+	 */
+	
+	private final View getRecentContainer(View [] views){
+		View container = null;
+		long drawingTime = 0;
+		for(View view : views){
+			if(view !=null && view.isShown() && view.getDrawingTime() > drawingTime){
+				container = view;
+				drawingTime = view.getDrawingTime();
+			}
+		}
+		return container;
+	}
+	
+	/**
+	 * Returns all views that are non DecorViews
+	 * 
+	 * @param views the views to check
+	 * @return the non DecorViews
+	 */
+	
+	private final View[] getNonDecorViews(View [] views){
+		final View [] decorViews = new View[views.length];
+		int i = 0;
+		
+		for(View view : views){
+			if(!(view.getClass().getName().equals("com.android.internal.policy.impl.PhoneWindow$DecorView")))
+			{
+				decorViews[i] = view;
+				i++;
+			}
+		}
+		return decorViews;
 	}
 
 
