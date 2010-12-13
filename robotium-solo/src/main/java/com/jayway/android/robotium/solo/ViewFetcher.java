@@ -140,7 +140,7 @@ class ViewFetcher {
 	 * 
 	 */
 	
-	private final View getRecentDecorView(View [] views){
+	public final View getRecentDecorView(View [] views){
 		final View [] decorViews = new View[views.length];
 		int i = 0;
 		

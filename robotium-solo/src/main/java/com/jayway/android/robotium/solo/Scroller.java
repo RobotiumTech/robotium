@@ -128,11 +128,21 @@ class Scroller {
 	 * @return the y position that will not register a click
 	 */
 
+	/**
+	 * Returns a y position that will not register a click and is appropriate for dragging.
+	 * @param y the y position
+	 * @param direction the direction of the drag
+	 * @return the y position that will not register a click
+	 */
+	
 	private int getDragablePosition(int y, Direction direction){
-		ArrayList<View> clickItems = new ArrayList<View>();
+		ArrayList<View> touchItems = new ArrayList<View>();
 		int[] xyView = new int[2];
-		clickItems = getClickableItems();
-		for(View view : clickItems){
+		final View [] views = viewFetcher.getWindowDecorViews();
+		final View decorView = viewFetcher.getRecentDecorView(views);
+		if(decorView != null)
+			touchItems = decorView.getTouchables();
+		for(View view : touchItems){
 			view.getLocationOnScreen(xyView);
 
 			while(y > xyView[1] && y < (xyView[1] + view.getHeight())){
@@ -146,27 +156,6 @@ class Scroller {
 		}
 		return y;
 	}
-
-	/**
-	 * Returns an ArrayList of views that are clickable
-	 * 
-	 * @return ArrayList of clickable views 
-	 */
-
-	private ArrayList<View> getClickableItems(){
-
-		final ArrayList<View> views = viewFetcher.getViews(null);
-		final ArrayList<View> clickItems = new ArrayList<View>();
-
-		for(View view : views){
-			if(view.isClickable())
-				clickItems.add(view);
-		}
-		return clickItems;
-
-
-	}
-
 
 	/**
 	 * Scrolls up and down.
