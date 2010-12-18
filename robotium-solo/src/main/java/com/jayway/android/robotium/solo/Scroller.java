@@ -1,6 +1,7 @@
 package com.jayway.android.robotium.solo;
 
 import java.util.ArrayList;
+import junit.framework.Assert;
 import android.app.Instrumentation;
 import android.os.SystemClock;
 import android.view.MotionEvent;
@@ -99,7 +100,7 @@ class Scroller {
 		int[] xy = new int[2];
 		int x = activityUtils.getCurrentActivity(false).getWindowManager()
 		.getDefaultDisplay().getWidth() / 2;
-		ScrollView scroll = getView(ScrollView.class, scrollViews, 0);
+		ScrollView scroll = viewFetcher.getView(ScrollView.class, scrollViews, 0);
 		scroll.getLocationOnScreen(xy);
 
 		if (direction == Direction.DOWN) {
@@ -166,7 +167,7 @@ class Scroller {
 	 */
 
 	public boolean scroll(Direction direction) {
-
+		
 		ArrayList<View> viewList = viewFetcher.getViews(null);
 		ArrayList<ListView> listViews = RobotiumUtils.filterViews(ListView.class, viewList);
 
@@ -195,17 +196,20 @@ class Scroller {
 
 	public boolean scrollList(int listIndex, Direction direction, ArrayList<ListView> listViews) {
 		int[] xy = new int[2];
-		ListView listView = getView(ListView.class, listViews, listIndex);
-
-		listView.getLocationOnScreen(xy);
+		ListView listView = viewFetcher.getView(ListView.class, listViews, listIndex);
 
 		while (listView ==null && scrollScrollView(direction, null)) {
 			sleeper.sleep();
-			listView = getView(ListView.class, listViews, listIndex);
+			listView = viewFetcher.getView(ListView.class, listViews, listIndex);
 		}
-
+		
+		if(listView ==null)
+			Assert.assertTrue("No ListView with index " + listIndex + " is found!", false);
+		
+		listView.getLocationOnScreen(xy);
+		
 		if (direction == Direction.DOWN) {
-
+			
 			if (listView.getLastVisiblePosition() >= listView.getCount()-1) {
 				scrollListToLine(listView, listView.getLastVisiblePosition());
 				return false;
@@ -229,27 +233,6 @@ class Scroller {
 		}	
 		sleeper.sleep();
 		return true;
-	}
-
-	/**
-	 * Returns a view.
-	 * 
-	 * @param classToFilterBy the class to filter by
-	 * @param views the list with views
-	 * @param index the index of the view
-	 * @return the view with a given index
-	 */
-	
-	private final <T extends View> T getView(Class<T> classToFilterBy, ArrayList<T> views, int index){
-		T viewToReturn = null;
-		if(views == null){
-			views = viewFetcher.getCurrentViews(classToFilterBy);
-		}
-		try{
-			viewToReturn = views.get(index);
-		}catch(Exception ignored){}
-		
-		return viewToReturn;
 	}
 
 

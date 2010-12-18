@@ -366,13 +366,13 @@ class Clicker {
 		}
 
 		ArrayList<TextView> textViews = null;
-		try{
-			final ListView listView = viewFetcher.getCurrentViews(ListView.class).get(index);
-			textViews = viewFetcher.getCurrentViews(TextView.class, listView);
-			textViews = RobotiumUtils.removeInvisibleViews(textViews);
-		}catch(IndexOutOfBoundsException e){
-			Assert.assertTrue("Index is not valid!", false);
-		}
+		final ListView listView = viewFetcher.getView(ListView.class, null, index);
+		if(listView == null)
+			Assert.assertTrue("ListView is null!", false);
+
+		textViews = viewFetcher.getCurrentViews(TextView.class, listView);
+		textViews = RobotiumUtils.removeInvisibleViews(textViews);
+
 		ArrayList<TextView> textViewGroup = new ArrayList<TextView>();
 		int myLine = 0;
 		if(textViews !=null ){
