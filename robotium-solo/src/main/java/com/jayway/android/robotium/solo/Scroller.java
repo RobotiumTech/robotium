@@ -168,7 +168,7 @@ class Scroller {
 
 	public boolean scroll(Direction direction) {
 		
-		ArrayList<View> viewList = viewFetcher.getViews(null);
+		ArrayList<View> viewList = viewFetcher.getViews(null, true);
 		ArrayList<ListView> listViews = RobotiumUtils.filterViews(ListView.class, viewList);
 
 		if (listViews.size() > 0) {

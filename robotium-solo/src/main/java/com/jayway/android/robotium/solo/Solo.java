@@ -118,16 +118,16 @@ public class Solo {
 	}
 
 	/**
-	 * Returns an {@code ArrayList} of the {@code View} objects located in the current
-	 * {@code Activity}.
+	 * Returns an {@code ArrayList} of all the {@code View} objects located in the focused 
+	 * window e.g. an {@code Activity} or a {@code Dialog}.
 	 *
-	 * @return an {@code ArrayList} of the {@code View} objects located in the current {@code Activity}
+	 * @return an {@code ArrayList} of the {@code View} objects located in the focused window
 	 *
 	 */
 	
 	public ArrayList<View> getViews() {
 		try {
-			return viewFetcher.getViews(null);
+			return viewFetcher.getViews(null, false);
 		} catch (Exception e) {
 			e.printStackTrace();
 			return null;
@@ -144,7 +144,7 @@ public class Solo {
 	
 	public ArrayList<View> getViews(View parent) {
 		try {
-			return viewFetcher.getViews(parent);
+			return viewFetcher.getViews(parent, false);
 		} catch (Exception e) {
 			e.printStackTrace();
 			return null;
@@ -1290,6 +1290,19 @@ public class Solo {
 	
 	public View getView(int id){
 		return viewFetcher.getView(id);
+	}
+	
+	/**
+	 * Returns an {@code ArrayList} of the {@code View} objects currently shown in the focused 
+	 * window e.g. an {@code Activity} or a {@code Dialog}.
+	 *
+	 * @return an {@code ArrayList} of the {@code View} objects currently shown in the
+	 * focused window
+	 *
+	 */
+	
+	public ArrayList<View> getCurrentViews() {
+		return viewFetcher.getViews(null, true);
 	}
 	
 	/**

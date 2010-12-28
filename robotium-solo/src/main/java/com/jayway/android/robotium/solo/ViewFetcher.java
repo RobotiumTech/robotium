@@ -95,10 +95,11 @@ class ViewFetcher {
 	/**
 	 * Returns views from the shown DecorViews. 
 	 * 
+	 * @param onlyFullyVisible if only fully visible views should be returned
 	 * @return all the views contained in the DecorViews
 	 */
 
-	public ArrayList<View> getAllViews()
+	public ArrayList<View> getAllViews(boolean onlyFullyVisible)
 	{
 		Activity activity = activityUtils.getCurrentActivity(false);
 		final View [] views = getWindowDecorViews();
@@ -110,7 +111,7 @@ class ViewFetcher {
 				for(View view : views){
 					if(!activity.getWindow().getDecorView().equals(view)){
 						try{
-							addChildren(allViews,(ViewGroup) view);
+							addChildren(allViews,(ViewGroup) view, onlyFullyVisible);
 						}
 						catch (Exception ignored) {}
 					}
@@ -119,12 +120,12 @@ class ViewFetcher {
 			else{
 				for(View view : nonDecorViews){
 					try{
-						addChildren(allViews,(ViewGroup) view);
+						addChildren(allViews,(ViewGroup) view, onlyFullyVisible);
 					}
 					catch (Exception ignored) {}
 				}	
 				try{
-					addChildren(allViews,(ViewGroup) getRecentDecorView(views));
+					addChildren(allViews,(ViewGroup) getRecentDecorView(views), onlyFullyVisible);
 				}
 				catch (Exception ignored) {}
 			}
@@ -212,23 +213,24 @@ class ViewFetcher {
 	 * Extracts all {@code View}s located in the currently active {@code Activity}, recursively.
 	 *
 	 * @param parent the {@code View} whose children should be returned, or {@code null} for all
+	 * @param onlyFullyVisible if only fully visible views should be returned
 	 * @return all {@code View}s located in the currently active {@code Activity}, never {@code null}
 	 */
 
-	public ArrayList<View> getViews(View parent) {
+	public ArrayList<View> getViews(View parent, boolean onlyFullyVisible) {
 		final ArrayList<View> views = new ArrayList<View>();
 		final View parentToUse;
 
 		if (parent == null){
 			inst.waitForIdleSync();
-			return getAllViews();
+			return getAllViews(onlyFullyVisible);
 		}else{
 			parentToUse = parent;
 
 			views.add(parentToUse);
 
 			if (parentToUse instanceof ViewGroup) {
-				addChildren(views, (ViewGroup) parentToUse);
+				addChildren(views, (ViewGroup) parentToUse, onlyFullyVisible);
 			}
 		}
 
@@ -242,15 +244,15 @@ class ViewFetcher {
 	 * @param viewGroup the {@code ViewGroup} to extract children from
 	 */
 
-	private void addChildren(ArrayList<View> views, ViewGroup viewGroup) {
+	private void addChildren(ArrayList<View> views, ViewGroup viewGroup, boolean onlyFullyVisible) {
 		for (int i = 0; i < viewGroup.getChildCount(); i++) {
 			final View child = viewGroup.getChildAt(i);
 
-			if(isViewFullyShown(child))
+			if(onlyFullyVisible && isViewFullyShown(child))
 				views.add(child);
 
 			if (child instanceof ViewGroup) {
-				addChildren(views, (ViewGroup) child);
+				addChildren(views, (ViewGroup) child, onlyFullyVisible);
 			}
 		}
 	}
@@ -396,7 +398,7 @@ class ViewFetcher {
 
 	public <T extends View> ArrayList<T> getCurrentViews(Class<T> classToFilterBy, View parent) {
 		ArrayList<T> filteredViews = new ArrayList<T>();
-		List<View> allViews = getViews(parent);
+		List<View> allViews = getViews(parent, true);
 		for(View view : allViews){
 			if (view != null && classToFilterBy.isAssignableFrom(view.getClass())) {
 				filteredViews.add(classToFilterBy.cast(view));
