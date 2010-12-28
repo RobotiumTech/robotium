@@ -1664,6 +1664,7 @@ public class Solo {
                 robotiumUtils.sendKeyCode(KeyEvent.KEYCODE_DEL);
                 break;
             default:
+            	robotiumUtils.sendKeyCode(key);
                 break;
         }
     }
