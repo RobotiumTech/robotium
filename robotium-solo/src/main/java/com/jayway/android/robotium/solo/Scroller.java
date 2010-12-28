@@ -121,14 +121,7 @@ class Scroller {
 			return true;
 	}
 
-
-	/**
-	 * Returns a y position that will not register a click and is appropriate for dragging.
-	 * @param y the y position
-	 * @param direction the direction of the drag
-	 * @return the y position that will not register a click
-	 */
-
+	
 	/**
 	 * Returns a y position that will not register a click and is appropriate for dragging.
 	 * @param y the y position
