@@ -98,11 +98,11 @@ class ViewFetcher {
 	 * @return all the views contained in the DecorViews
 	 */
 
-	public ArrayList<View> getViewsFromDecorViews()
+	public ArrayList<View> getAllViews()
 	{
 		Activity activity = activityUtils.getCurrentActivity(false);
 		final View [] views = getWindowDecorViews();
-		final ArrayList<View> viewsInDecorViews = new ArrayList<View>();
+		final ArrayList<View> allViews = new ArrayList<View>();
 		final View [] nonDecorViews = getNonDecorViews(views);
 		if(views !=null && views.length > 0)
 		{
@@ -110,7 +110,7 @@ class ViewFetcher {
 				for(View view : views){
 					if(!activity.getWindow().getDecorView().equals(view)){
 						try{
-							addChildren(viewsInDecorViews,(ViewGroup) view);
+							addChildren(allViews,(ViewGroup) view);
 						}
 						catch (Exception ignored) {}
 					}
@@ -119,17 +119,17 @@ class ViewFetcher {
 			else{
 				for(View view : nonDecorViews){
 					try{
-						addChildren(viewsInDecorViews,(ViewGroup) view);
+						addChildren(allViews,(ViewGroup) view);
 					}
 					catch (Exception ignored) {}
 				}	
 				try{
-					addChildren(viewsInDecorViews,(ViewGroup) getRecentDecorView(views));
+					addChildren(allViews,(ViewGroup) getRecentDecorView(views));
 				}
 				catch (Exception ignored) {}
 			}
 		}
-		return viewsInDecorViews;
+		return allViews;
 	}
 	
 	/**
@@ -221,7 +221,7 @@ class ViewFetcher {
 
 		if (parent == null){
 			inst.waitForIdleSync();
-			return getViewsFromDecorViews();
+			return getAllViews();
 		}else{
 			parentToUse = parent;
 

@@ -144,7 +144,7 @@ class Waiter {
 
 	private boolean clickableItemsExist(){
 		ArrayList<View> clickableItems = new ArrayList<View>();
-		clickableItems.addAll(viewFetcher.getViewsFromDecorViews());
+		clickableItems.addAll(viewFetcher.getAllViews());
 		for(View view : clickableItems){
 			if(view.getTouchables().size() > 0)
 				return true;
