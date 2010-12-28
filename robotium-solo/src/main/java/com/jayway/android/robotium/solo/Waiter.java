@@ -56,15 +56,15 @@ class Waiter {
 	 * Waits for a view to be shown.
 	 * 
 	 * @param viewClass the {@code View} class to wait for
-	 * @param minimumNumberOfMatches the minimum number of matches that are expected to be shown. {@code 0} means any number of matches
+	 * @param index the index of the view that is expected to be shown. 
 	 * @param timeout the amount of time in milliseconds to wait
 	 * @param scroll {@code true} if scrolling should be performed
 	 * @return {@code true} if view is shown and {@code false} if it is not shown before the timeout
 	 */
 
-	public <T extends View> boolean waitForView(final Class<T> viewClass, final int index, final int timeOut, final boolean scroll){
+	public <T extends View> boolean waitForView(final Class<T> viewClass, final int index, final int timeout, final boolean scroll){
 		ArrayList<T> typeList = new ArrayList<T>();
-		final long endTime = System.currentTimeMillis() + timeOut;
+		final long endTime = System.currentTimeMillis() + timeout;
 
 		while (System.currentTimeMillis() < endTime) {
 			sleeper.sleepMini();

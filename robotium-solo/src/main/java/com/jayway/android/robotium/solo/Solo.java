@@ -242,6 +242,17 @@ public class Solo {
     }
 	
 	/**
+	 * Waits for a view to be shown. Default timeout is 20 seconds. 
+	 * 
+	 * @param viewClass the {@code View} class to wait for
+	 */
+	
+	public <T extends View> boolean waitForView(final Class<T> viewClass){
+		
+		return waiter.waitForView(viewClass, 0, 20000, true);
+	}
+	
+	/**
 	 * Waits for a view to be shown.
 	 * 
 	 * @param viewClass the {@code View} class to wait for
