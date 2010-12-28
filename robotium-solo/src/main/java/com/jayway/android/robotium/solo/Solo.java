@@ -1183,19 +1183,6 @@ public class Solo {
 	}
 	
 	/**
-	 * Returns an {@code ArrayList} of the {@code ImageView} objects contained in the current
-	 * {@code Activity}.
-	 *
-	 * @return an {@code ArrayList} of the {@code ImageView} objects contained in the current
-	 * {@code Activity}
-	 *
-	 */
-	
-	public ArrayList<ImageView> getCurrentImageViews() {
-		return viewFetcher.getCurrentViews(ImageView.class);
-	}
-	
-	/**
 	 * Returns an {@code EditText} with a given index.
 	 *
 	 * @param index the index of the {@code EditText}. {@code 0} if only one is available
@@ -1306,11 +1293,25 @@ public class Solo {
 	}
 	
 	/**
-	 * Returns an {@code ArrayList} of the {@code EditText} objects contained in the current
-	 * {@code Activity}.
+	 * Returns an {@code ArrayList} of the {@code ImageView} objects currently shown in the focused 
+	 * window e.g. an {@code Activity} or a {@code Dialog}.
 	 *
-	 * @return an {@code ArrayList} of the {@code EditText} objects contained in the current
-	 * {@code Activity}
+	 * @return an {@code ArrayList} of the {@code ImageView} objects currently shown in the
+	 * focused window
+	 *
+	 */
+	
+	public ArrayList<ImageView> getCurrentImageViews() {
+		return viewFetcher.getCurrentViews(ImageView.class);
+	}
+	
+	
+	/**
+	 * Returns an {@code ArrayList} of the {@code EditText} objects currently shown in the focused 
+	 * window e.g. an {@code Activity} or a {@code Dialog}.
+	 *
+	 * @return an {@code ArrayList} of the {@code EditText} objects currently shown in the
+	 * focused window
 	 *
 	 */
 	
@@ -1319,11 +1320,11 @@ public class Solo {
 	}
 	
 	/**
-	 * Returns an {@code ArrayList} of the {@code ListView} objects contained in the current
-	 * {@code Activity}.
+	 * Returns an {@code ArrayList} of the {@code ListView} objects currently shown in the focused 
+	 * window e.g. an {@code Activity} or a {@code Dialog}.
 	 *
-	 * @return an {@code ArrayList} of the {@code ListView} objects contained in the current
-	 * {@code Activity}
+	 * @return an {@code ArrayList} of the {@code ListView}  objects currently shown in the
+	 * focused window
 	 * 
 	 */
 
@@ -1332,11 +1333,11 @@ public class Solo {
 	}
 
 	/**
-	 * Returns an {@code ArrayList} of the {@code ScrollView} objects contained in the current
-	 * {@code Activity}.
+	 * Returns an {@code ArrayList} of the {@code ScrollView} objects currently shown in the focused 
+	 * window e.g. an {@code Activity} or a {@code Dialog}.
 	 *
-	 * @return an {@code ArrayList} of the {@code ScrollView} objects contained in the current
-	 * {@code Activity}
+	 * @return an {@code ArrayList} of the {@code ScrollView} objects currently shown in the
+	 * focused window
 	 *
 	 */
 
@@ -1346,11 +1347,11 @@ public class Solo {
 
 	
 	/**
-	 * Returns an {@code ArrayList} of the {@code Spinner} objects (drop-down menus) contained in the current
-	 * {@code Activity}.
+	 * Returns an {@code ArrayList} of the {@code Spinner} objects (drop-down menus) currently shown in the focused 
+	 * window e.g. an {@code Activity} or a {@code Dialog}.
 	 *
-	 * @return an {@code ArrayList} of the {@code Spinner} objects (drop-down menus) contained in the current
-	 * {@code Activity}
+	 * @return an {@code ArrayList} of the {@code Spinner} objects (drop-down menus) currently shown in the
+	 * focused window
 	 *
 	 */
 	
@@ -1359,14 +1360,14 @@ public class Solo {
 	}
 	
 	/**
-	 * Returns an {@code ArrayList} of the {@code TextView} objects contained in the current
-	 * {@code Activity} or {@code View}.
+	 * Returns an {@code ArrayList} of the {@code TextView} objects currently shown in the focused 
+	 * window or {@code View}.
 	 *
 	 * @param parent the parent {@code View} from which the {@code TextView} objects should be returned. {@code null} if
-	 * all {@code TextView} objects from the current {@code Activity} should be returned
+	 * all {@code TextView} objects from the currently focused window e.g. {@code Activity} should be returned
 	 *
-	 * @return an {@code ArrayList} of the {@code TextView} objects contained in the current
-	 * {@code Activity} or {@code View}
+	 * @return an {@code ArrayList} of the {@code TextView} objects currently shown in the
+	 * focused window
 	 *
 	 */
 
@@ -1375,11 +1376,11 @@ public class Solo {
 	}
 	
 	/**
-	 * Returns an {@code ArrayList} of the {@code GridView} objects contained in the current
-	 * {@code Activity}.
+	 * Returns an {@code ArrayList} of the {@code GridView} objects currently shown in the focused 
+	 * window e.g. an {@code Activity} or a {@code Dialog}.
 	 *
-	 * @return an {@code ArrayList} of the {@code GridView} objects contained in the current
-	 * {@code Activity}
+	 * @return an {@code ArrayList} of the {@code GridView} objects currently shown in the
+	 * focused window
 	 *
 	 */
 	
@@ -1389,10 +1390,11 @@ public class Solo {
 	
 	
 	/**
-	 * Returns an {@code ArrayList} of the {@code Button} objects located in the current
-	 * {@code Activity}.
+	 * Returns an {@code ArrayList} of the {@code Button} objects currently shown in the focused 
+	 * window e.g. an {@code Activity} or a {@code Dialog}.
 	 *
-	 * @return an {@code ArrayList} of the {@code Button} objects located in the current {@code Activity}
+	 * @return an {@code ArrayList} of the {@code Button} objects currently shown in the
+	 * focused window
 	 * 
 	 */
 	
@@ -1401,11 +1403,11 @@ public class Solo {
 	}
 	
 	/**
-	 * Returns an {@code ArrayList} of the {@code ToggleButton} objects contained in the current
-	 * {@code Activity}.
+	 * Returns an {@code ArrayList} of the {@code ToggleButton} objects currently shown in the focused 
+	 * window e.g. an {@code Activity} or an {@code Dialog}.
 	 *
-	 * @return an {@code ArrayList} of the {@code ToggleButton} objects contained in the current
-	 * {@code Activity}
+	 * @return an {@code ArrayList} of the {@code ToggleButton} objects currently shown in the
+	 * focused window
 	 *
 	 */
 	
@@ -1414,11 +1416,11 @@ public class Solo {
 	}
 	
 	/**
-	 * Returns an {@code ArrayList} of the {@code RadioButton} objects contained in the current
-	 * {@code Activity}.
+	 * Returns an {@code ArrayList} of the {@code RadioButton} objects currently shown in the focused 
+	 * window e.g. an {@code Activity} or a {@code Dialog}.
 	 *
-	 * @return an {@code ArrayList} of the {@code RadioButton} objects contained in the current
-	 * {@code Activity}
+	 * @return an {@code ArrayList} of the {@code RadioButton} objects currently shown in the
+	 * focused window
 	 *
 	 */
 	
@@ -1427,11 +1429,11 @@ public class Solo {
 	}
 	
 	/**
-	 * Returns an {@code ArrayList} of the {@code CheckBox} objects contained in the current
-	 * {@code Activity}.
+	 * Returns an {@code ArrayList} of the {@code CheckBox} objects currently shown in the focused 
+	 * window e.g. an {@code Activity} or a {@code Dialog}.
 	 *
-	 * @return an {@code ArrayList} of the {@code CheckBox} objects contained in the current
-	 * {@code Activity}
+	 * @return an {@code ArrayList} of the {@code CheckBox} objects currently shown in the
+	 * focused window
 	 *
 	 */
 	
@@ -1440,11 +1442,11 @@ public class Solo {
 	}
 	
 	/**
-	 * Returns an {@code ArrayList} of the {@code ImageButton} objects contained in the current
-	 * {@code Activity}.
+	 * Returns an {@code ArrayList} of the {@code ImageButton} objects currently shown in the focused 
+	 * window e.g. an {@code Activity} or a {@code Dialog}.
 	 *
-	 * @return an {@code ArrayList} of the {@code ImageButton} objects contained in the current
-	 * {@code Activity}
+	 * @return an {@code ArrayList} of the {@code ImageButton} objects currently shown in the
+	 * focused window
 	 *
 	 */
 	
@@ -1453,11 +1455,11 @@ public class Solo {
 	}
 	
 	/**
-	 * Returns an {@code ArrayList} of the {@code DatePicker} objects contained in the current
-	 * {@code Activity}.
+	 * Returns an {@code ArrayList} of the {@code DatePicker} objects currently shown in the focused 
+	 * window e.g. an {@code Activity} or a {@code Dialog}.
 	 *
-	 * @return an {@code ArrayList} of the {@code DatePicker} objects contained in the current
-	 * {@code Activity}
+	 * @return an {@code ArrayList} of the {@code DatePicker} objects currently shown in the
+	 * focused window
 	 *
 	 */
 	
@@ -1466,11 +1468,11 @@ public class Solo {
 	}
 	
 	/**
-	 * Returns an {@code ArrayList} of the {@code TimePicker} objects contained in the current
-	 * {@code Activity}.
+	 * Returns an {@code ArrayList} of the {@code TimePicker} objects currently shown in the focused 
+	 * window e.g. an {@code Activity} or a {@code Dialog}.
 	 *
-	 * @return an {@code ArrayList} of the {@code TimePicker} objects contained in the current
-	 * {@code Activity}
+	 * @return an {@code ArrayList} of the {@code TimePicker} objects currently shown in the
+	 * focused window
 	 *
 	 */
 	
@@ -1479,11 +1481,11 @@ public class Solo {
 	}
 	
 	/**
-	 * Returns an {@code ArrayList} of the {@code ProgressBar} objects contained in the current
-	 * {@code Activity}.
+	 * Returns an {@code ArrayList} of the {@code ProgressBar} objects currently shown in the focused 
+	 * window e.g. an {@code Activity} or a {@code Dialog}.
 	 *
-	 * @return an {@code ArrayList} of the {@code ProgressBar} objects contained in the current
-	 * {@code Activity}
+	 * @return an {@code ArrayList} of the {@code ProgressBar} objects currently shown in the
+	 * focused window
 	 *
 	 */
 	
