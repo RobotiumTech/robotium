@@ -234,7 +234,7 @@ class Clicker {
 		if(textMore != null)
 			clickOnScreen(textMore);
 
-		clickOnText(text, false, 1, false, 0);
+		clickOnText(text, false, 1, true, 0);
 	}
 
 
