@@ -250,6 +250,9 @@ class ViewFetcher {
 
 			if(onlyFullyVisible && isViewFullyShown(child))
 				views.add(child);
+			
+			else if(!onlyFullyVisible)
+				views.add(child);
 
 			if (child instanceof ViewGroup) {
 				addChildren(views, (ViewGroup) child, onlyFullyVisible);
