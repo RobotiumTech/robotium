@@ -712,7 +712,7 @@ public class Solo {
 	/**
 	 * Presses a {@link android.view.MenuItem} with a given index. Index {@code 0} is the first item in the
 	 * first row, Index {@code 3} is the first item in the second row and
-	 * index {@code 5} is the first item in the third row.
+	 * index {@code 6} is the first item in the third row.
 	 * 
 	 * @param index the index of the menu item to be pressed
 	 * 
