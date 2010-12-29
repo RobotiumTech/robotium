@@ -723,6 +723,20 @@ public class Solo {
 	}
 	
 	/**
+	 * Presses a {@link android.view.MenuItem} with a given index. Supports three rows with a given amount
+	 * of items. If itemsPerRow equals 5 then index 0 is the first item in the first row, 
+	 * index 5 is the first item in the second row and index 10 is the first item in the third row.
+	 * 
+	 * @param index the index of the {@code MenuItem} to be pressed
+	 * @param itemsPerRow the amount of menu items there are per row.   
+	 * 
+	 */
+	
+	public void pressMenuItem(int index, int itemsPerRow) {	
+		presser.pressMenuItem(index, itemsPerRow);
+	}
+	
+	/**
 	 * Presses on a {@link Spinner} (drop-down menu) item.
 	 * 
 	 * @param spinnerIndex the index of the {@code Spinner} menu to be used

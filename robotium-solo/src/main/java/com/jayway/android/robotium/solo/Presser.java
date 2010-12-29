@@ -48,7 +48,25 @@ class Presser{
 	 * 
 	 */
 	
-	public void pressMenuItem(int index) {
+	public void pressMenuItem(int index){
+		pressMenuItem(index, 3);
+	}
+	
+	/**
+	 * Presses a {@link android.view.MenuItem} with a given index. Supports three rows with a given amount
+	 * of items. If itemsPerRow equals 5 then index 0 is the first item in the first row, 
+	 * index 5 is the first item in the second row and index 10 is the first item in the third row.
+	 * 
+	 * @param index the index of the {@code MenuItem} to be pressed
+	 * @param itemsPerRow the amount of menu items there are per row.   
+	 * 
+	 */
+	
+	public void pressMenuItem(int index, int itemsPerRow) {	
+		int[] row = new int[4];
+		for(int i = 1; i <=3; i++)
+			row[i] = itemsPerRow*i;
+
 		sleeper.sleep();
 		inst.waitForIdleSync();
 		try{
@@ -59,23 +77,23 @@ class Presser{
 		}catch(SecurityException e){
 			Assert.assertTrue("Can not press the menu!", false);
 		}
-		if (index < 3) {
+		if (index < row[1]) {
 			for (int i = 0; i < index; i++) {
 				sleeper.sleepMini();
 				inst.sendKeyDownUpSync(KeyEvent.KEYCODE_DPAD_RIGHT);
 			}
-		} else if (index >= 3 && index < 5) {
+		} else if (index >= row[1] && index < row[2]) {
 			inst.sendKeyDownUpSync(KeyEvent.KEYCODE_DPAD_DOWN);	
 
-			for (int i = 3; i < index; i++) {
+			for (int i = row[1]; i < index; i++) {
 				sleeper.sleepMini();
 				inst.sendKeyDownUpSync(KeyEvent.KEYCODE_DPAD_RIGHT);
 			}
-		} else if (index >= 5) {
+		} else if (index >= row[2]) {
 			inst.sendKeyDownUpSync(KeyEvent.KEYCODE_DPAD_DOWN);	
 			inst.sendKeyDownUpSync(KeyEvent.KEYCODE_DPAD_DOWN);	
 
-			for (int i = 5; i < index; i++) {
+			for (int i = row[2]; i < index; i++) {
 				sleeper.sleepMini();
 				inst.sendKeyDownUpSync(KeyEvent.KEYCODE_DPAD_RIGHT);
 			}
