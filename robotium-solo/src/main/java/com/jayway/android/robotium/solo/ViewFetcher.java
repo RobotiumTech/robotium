@@ -262,16 +262,33 @@ class ViewFetcher {
 	
 	/**
 	 * Returns true if the view is fully shown
+	 * 
 	 * @param view the view to check
 	 * @return true if the view is fully shown
 	 */
 
-	public boolean isViewFullyShown(View view){
-		final int[] xy = new int[2];
-		final int viewHeight = view.getHeight();
-		view.getLocationOnScreen(xy);
+	public final boolean isViewFullyShown(View view){
+		final int[] xyView = new int[2];
+		final int[] xyParent = new int[2];
 
-		if(xy[1] + viewHeight > getScrollListWindowHeight(view))
+		if(view == null)
+			return false;
+
+		final int viewHeight = view.getHeight();
+		final View parent = getScrollOrListParent(view);
+		view.getLocationOnScreen(xyView);
+
+		if(parent == null){
+			xyParent[1] = 0;
+		}
+		else{
+			parent.getLocationOnScreen(xyParent);
+		}
+
+		if(xyView[1] + (viewHeight/(1.5)) > getScrollListWindowHeight(view))
+			return false;
+
+		else if(xyView[1] + (view.getHeight()/2) < xyParent[1])
 			return false;
 
 		return true;

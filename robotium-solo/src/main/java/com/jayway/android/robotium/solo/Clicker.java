@@ -29,7 +29,7 @@ class Clicker {
 	private final RobotiumUtils robotiumUtils;
 	private final Sleeper sleeper;
 	private final Waiter waiter;
-	private int countMatches=0;
+	private final MatchCounter matchCounter;
 	private final int TIMEOUT = 10000;
 
 
@@ -53,6 +53,7 @@ class Clicker {
 		this.inst = inst;
 		this.sleeper = sleeper;
 		this.waiter = waiter;
+		matchCounter = new MatchCounter();
 	}
 
 	/**
@@ -259,10 +260,10 @@ class Clicker {
 		}
 		for (TextView textView : textViewList){
 			if(pattern.matcher(textView.getText().toString()).find()){
-				countMatches++;
+				matchCounter.addMatchToCount();
 			}
-			if (countMatches == match) {
-				countMatches = 0;
+			if (matchCounter.getTotalCount() == match) {
+				matchCounter.resetCount();
 				textToClick = textView;
 				break;
 			}
@@ -272,15 +273,15 @@ class Clicker {
 		} else if (scroll && scroller.scroll(Scroller.DOWN)) {
 			clickOnText(regex, longClick, match, scroll, time);
 		} else {
-			if (countMatches > 0)
-				Assert.assertTrue("There are only " + countMatches + " matches of " + regex, false);
+			if (matchCounter.getTotalCount() > 0)
+				Assert.assertTrue("There are only " + matchCounter.getTotalCount() + " matches of " + regex, false);
 			else {
 				for (TextView textView : textViewList) {
 					Log.d(LOG_TAG, regex + " not found. Have found: " + textView.getText());
 				}
 				Assert.assertTrue("The text: " + regex + " is not found!", false);
 			}
-			countMatches = 0;
+			matchCounter.resetCount();
 		}
 	}
 

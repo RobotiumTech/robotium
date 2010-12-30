@@ -1,7 +1,5 @@
 package com.jayway.android.robotium.solo;
 
-
-
 /**
  * This class contains methods for counting matches, retrieving the count and reseting the counter. 
  * 
@@ -11,14 +9,24 @@ package com.jayway.android.robotium.solo;
 
 class MatchCounter {
 	
-	private static int totalAmountOfMatches = 0;
+	private int totalAmountOfMatches;
+	
+	/**
+	 * Constructs this object.
+	 * 
+	 */
+	
+	public MatchCounter(){
+		totalAmountOfMatches = 0;
+	}
 
    
 	/**
 	 * Resets the counter.
+	 * 
 	 */
 	
-	public static void resetCount(){
+	public void resetCount(){
 			totalAmountOfMatches = 0;
 	}
 	
@@ -27,7 +35,7 @@ class MatchCounter {
 	 * 
 	 */
 	
-	public static void addMatchToCount(){
+	public void addMatchToCount(){
 		totalAmountOfMatches++;
 	}
 	
@@ -35,9 +43,10 @@ class MatchCounter {
 	 * Adds number to the counter.
 	 * 
 	 * @param numberOfMatches the number to add to the counter
+	 * 
 	 */
 	
-	public static void addMatchesToCount(int numberOfMatches){
+	public void addMatchesToCount(int numberOfMatches){
 		
 		totalAmountOfMatches += numberOfMatches;
 		
@@ -45,10 +54,12 @@ class MatchCounter {
 	
 	/**
 	 * Returns the total count.
+	 * 
 	 * @return the total count
+	 * 
 	 */
 	
-	public static int getTotalCount(){
+	public int getTotalCount(){
 		return totalAmountOfMatches;
 	}
 	

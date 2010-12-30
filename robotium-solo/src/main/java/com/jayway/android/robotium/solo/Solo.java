@@ -996,7 +996,7 @@ public class Solo {
 	 */
 	
 	public boolean scrollDown() {
-		waiter.waitForViews(ListView.class, ScrollView.class, false);
+		waiter.waitForViews(ListView.class, ScrollView.class);
 		return scroller.scroll(Scroller.DOWN);
 	}
 	
@@ -1010,7 +1010,7 @@ public class Solo {
 	 */
 	
 	public boolean scrollUp(){
-		waiter.waitForViews(ListView.class, ScrollView.class, false);
+		waiter.waitForViews(ListView.class, ScrollView.class);
 		return scroller.scroll(Scroller.UP);
 	}
 	
@@ -1620,7 +1620,7 @@ public class Solo {
 	 */
 	
 	public boolean isTextChecked(String text){
-		waiter.waitForViews(CheckedTextView.class, CompoundButton.class, true);
+		waiter.waitForViews(CheckedTextView.class, CompoundButton.class);
 		
 		if(viewFetcher.getCurrentViews(CheckedTextView.class).size() > 0 && checker.isCheckedTextChecked(text))
 			return true;

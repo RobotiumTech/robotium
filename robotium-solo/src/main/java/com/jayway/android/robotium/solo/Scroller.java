@@ -157,7 +157,6 @@ class Scroller {
 			return scrollScrollView(direction, scrollViews);
 		}
 		return false;
-
 	}
 
 

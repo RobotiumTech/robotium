@@ -21,6 +21,7 @@ class Waiter {
 	private final Searcher searcher;
 	private final Scroller scroller;
 	private final Sleeper sleeper;
+	private final MatchCounter matchCounter;
 
 
 	/**
@@ -37,6 +38,7 @@ class Waiter {
 		this.searcher = searcher;
 		this.scroller = scroller;
 		this.sleeper = sleeper;
+		matchCounter = new MatchCounter();
 	}
 
 	/**
@@ -71,26 +73,26 @@ class Waiter {
 			typeList = viewFetcher.getCurrentViews(viewClass);
 			typeList = RobotiumUtils.removeInvisibleViews(typeList);
 
-			MatchCounter.addMatchesToCount(typeList.size());
+			matchCounter.addMatchesToCount(typeList.size());
 			typeList=null;
 
-			if(MatchCounter.getTotalCount() > 0 && index < MatchCounter.getTotalCount()){
-				MatchCounter.resetCount();
+			if(matchCounter.getTotalCount() > 0 && index < matchCounter.getTotalCount()){
+				matchCounter.resetCount();
 				return true;
 			}
 
-			if(index == 0 && MatchCounter.getTotalCount() > 0){
-				MatchCounter.resetCount();
+			if(index == 0 && matchCounter.getTotalCount() > 0){
+				matchCounter.resetCount();
 				return true;
 			}
 
 			if(scroll && !scroller.scroll(Scroller.DOWN))
-				MatchCounter.resetCount();	
+				matchCounter.resetCount();	
 
 			if(!scroll)
-				MatchCounter.resetCount();	
+				matchCounter.resetCount();	
 		}
-		MatchCounter.resetCount();
+		matchCounter.resetCount();
 		return false;
 	}
 
@@ -99,22 +101,22 @@ class Waiter {
 	 * 
 	 * @param viewClass the first {@code View} class to wait for 
 	 * @param viewClass2 the second {@code View} class to wait for
-	 * @param scroll true if scrolling should be performed
 	 * @return {@code true} if any of the views are shown and {@code false} if none of the views are shown before the timeout
 	 */
 
-	public <T extends View> boolean waitForViews(final Class<T> viewClass, final Class<? extends View> viewClass2, boolean scroll){
+	public <T extends View> boolean waitForViews(final Class<T> viewClass, final Class<? extends View> viewClass2){
 		final long endTime = System.currentTimeMillis() + SMALLTIMEOUT;
 
 		while (System.currentTimeMillis() < endTime) {
 
-			if(waitForView(viewClass, 0, MINITIMEOUT, scroll)){
+			if(waitForView(viewClass, 0, MINITIMEOUT, false)){
 				return true;
 			}
 
-			if(waitForView(viewClass2, 0, MINITIMEOUT, scroll)){
+			if(waitForView(viewClass2, 0, MINITIMEOUT, false)){
 				return true;
 			}
+			scroller.scroll(Scroller.DOWN);
 		}
 		return false;
 	}

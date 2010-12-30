@@ -22,6 +22,7 @@ class Searcher {
 	private final Scroller scroller;
 	private final Instrumentation inst;
 	private final Sleeper sleeper;
+	private final MatchCounter matchCounter;
 	private final int TIMEOUT = 5000;
 	private final String LOG_TAG = "Robotium";
 
@@ -39,6 +40,7 @@ class Searcher {
 		this.scroller = scroller;
 		this.inst = inst;
 		this.sleeper = sleeper;
+		matchCounter = new MatchCounter();
 	}
 
 
@@ -136,10 +138,10 @@ class Searcher {
 				final Matcher matcher = pattern.matcher(view.getText().toString());
 				
 				if (matcher.find()){
-					MatchCounter.addMatchToCount();
+					matchCounter.addMatchToCount();
 				}
-				if (MatchCounter.getTotalCount() == expectedMinimumNumberOfMatches) {
-					MatchCounter.resetCount();
+				if (matchCounter.getTotalCount() == expectedMinimumNumberOfMatches) {
+					matchCounter.resetCount();
 					return true;
 				}
 			}
@@ -162,10 +164,10 @@ class Searcher {
 	 */
 	
 	private void logMatchesFound(String regex){
-		if (MatchCounter.getTotalCount() > 0) {
-			Log.d(LOG_TAG, " There are only " + MatchCounter.getTotalCount() + " matches of " + regex);
+		if (matchCounter.getTotalCount() > 0) {
+			Log.d(LOG_TAG, " There are only " + matchCounter.getTotalCount() + " matches of " + regex);
 		}
-		MatchCounter.resetCount();
+		matchCounter.resetCount();
 	}
 
 
