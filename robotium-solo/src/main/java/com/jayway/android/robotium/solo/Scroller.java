@@ -98,21 +98,19 @@ class Scroller {
 	 */
 
 	private boolean scrollScrollView(int direction, ArrayList<ScrollView> scrollViews){
-		int[] xy = new int[2];
 		ScrollView scroll = viewFetcher.getView(ScrollView.class, scrollViews, 0);
-		scroll.getLocationOnScreen(xy);
 		int height = scroll.getHeight();
-		int to = 0;
+		int scrollTo = 0;
 
 		if (direction == DOWN) {
-			to = (height);
+			scrollTo = (height);
 		}
 
 		else if (direction == UP) {
-			to = (-height);
+			scrollTo = (-height);
 		}
 		scrollAmount = scroll.getScrollY();
-		scrollScrollViewTo(scroll,0, to);
+		scrollScrollViewTo(scroll,0, scrollTo);
 		if (scrollAmount == scroll.getScrollY()) {
 			return false;
 		}
@@ -120,6 +118,7 @@ class Scroller {
 			return true;
 		}
 	}
+	
 	
 	/**
 	 * Scroll the list to a given line
@@ -135,8 +134,6 @@ class Scroller {
 		});
 	}
 
-
-	
 
 	/**
 	 * Scrolls up and down.
@@ -213,7 +210,6 @@ class Scroller {
 		sleeper.sleep();
 		return true;
 	}
-	
 	
 
 	/**
