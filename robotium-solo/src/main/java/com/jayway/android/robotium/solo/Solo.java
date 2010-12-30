@@ -113,7 +113,7 @@ public class Solo {
         this.robotiumUtils = new RobotiumUtils(inst, sleeper);
         this.clicker = new Clicker(viewFetcher, scroller,robotiumUtils, inst, sleeper, waiter);
         this.presser = new Presser(viewFetcher, clicker, inst, sleeper);
-        this.textEnterer = new TextEnterer(activitiyUtils, waiter);
+        this.textEnterer = new TextEnterer(inst, waiter);
 
 	}
 
@@ -996,8 +996,8 @@ public class Solo {
 	 */
 	
 	public boolean scrollDown() {
-		waiter.waitForViews(ListView.class, ScrollView.class);
-		return scroller.scroll(Scroller.Direction.DOWN);
+		waiter.waitForViews(ListView.class, ScrollView.class, false);
+		return scroller.scroll(Scroller.DOWN);
 	}
 	
 
@@ -1010,8 +1010,8 @@ public class Solo {
 	 */
 	
 	public boolean scrollUp(){
-		waiter.waitForViews(ListView.class, ScrollView.class);
-		return scroller.scroll(Scroller.Direction.UP);
+		waiter.waitForViews(ListView.class, ScrollView.class, false);
+		return scroller.scroll(Scroller.UP);
 	}
 	
 	/**
@@ -1023,7 +1023,7 @@ public class Solo {
 	 */
 	
 	public boolean scrollDownList(int listIndex) {
-		return scroller.scrollList(listIndex, Scroller.Direction.DOWN, null);
+		return scroller.scrollList(listIndex, Scroller.DOWN, null);
 	}
 	
 	/**
@@ -1035,7 +1035,7 @@ public class Solo {
 	 */
 	
 	public boolean scrollUpList(int listIndex) {
-		return scroller.scrollList(listIndex, Scroller.Direction.UP, null);
+		return scroller.scrollList(listIndex, Scroller.UP, null);
 	}
 	
 	/**
@@ -1620,7 +1620,7 @@ public class Solo {
 	 */
 	
 	public boolean isTextChecked(String text){
-		waiter.waitForViews(CheckedTextView.class, CompoundButton.class);
+		waiter.waitForViews(CheckedTextView.class, CompoundButton.class, true);
 		
 		if(viewFetcher.getCurrentViews(CheckedTextView.class).size() > 0 && checker.isCheckedTextChecked(text))
 			return true;

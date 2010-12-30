@@ -1,6 +1,7 @@
 package com.jayway.android.robotium.solo;
 
 import junit.framework.Assert;
+import android.app.Instrumentation;
 import android.widget.EditText;
 
 
@@ -13,7 +14,7 @@ import android.widget.EditText;
 
 class TextEnterer{
 	
-	private final ActivityUtils activityUtils;
+	private final Instrumentation inst;
 	private final Waiter waiter;
 	
     /**
@@ -23,8 +24,8 @@ class TextEnterer{
      * @param waiter the {@code Waiter} instance
      */
 	
-    public TextEnterer(ActivityUtils activityUtils, Waiter waiter) {
-        this.activityUtils = activityUtils;
+    public TextEnterer(Instrumentation inst, Waiter waiter) {
+        this.inst = inst;
         this.waiter = waiter;
     }
 
@@ -39,27 +40,27 @@ class TextEnterer{
     public void setEditText(final EditText editText, final String text)
     {
     	waiter.waitForView(EditText.class, 0);
-    		if(editText != null){
-    			final String previousText = editText.getText().toString();
-    			if(!editText.isEnabled())
-    				Assert.assertTrue("Edit text is not enabled!", false);
+    	if(editText != null){
+    		final String previousText = editText.getText().toString();
+    		if(!editText.isEnabled())
+    			Assert.assertTrue("Edit text is not enabled!", false);
 
-    			activityUtils.getCurrentActivity(false).runOnUiThread(new Runnable()
+    		inst.runOnMainSync(new Runnable()
+    		{
+    			public void run()
     			{
-    				public void run()
-    				{
-    					editText.setInputType(0); 
-    					editText.performClick();
-    					if(text.equals(""))
-    						editText.setText(text);
-    					else{
-    						editText.setText(previousText + text);
-    						editText.setCursorVisible(false);
-    					}
+    				editText.setInputType(0); 
+    				editText.performClick();
+    				if(text.equals(""))
+    					editText.setText(text);
+    				else{
+    					editText.setText(previousText + text);
+    					editText.setCursorVisible(false);
     				}
-    			});
-    		}
+    			}
+    		});
     	}
+    }
    
 
 	

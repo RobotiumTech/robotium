@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.ListView;
 import android.widget.ScrollView;
 
+
 /**
  * This class contains scroll methods. Examples are scrollDown(), scrollUpList(),
  * scrollToSide().
@@ -20,6 +21,8 @@ import android.widget.ScrollView;
 class Scroller {
 
 	public enum Direction {UP, DOWN}
+	public static final int DOWN = 0;
+	public static final int UP = 1;
 	public enum Side {LEFT, RIGHT}
 	private final Instrumentation inst;
 	private final ActivityUtils activityUtils;
@@ -94,62 +97,46 @@ class Scroller {
 	 * 
 	 */
 
-	private boolean scrollScrollView(Direction direction, ArrayList<ScrollView> scrollViews){
-		int yStart = 0;
-		int yEnd = 0;
+	private boolean scrollScrollView(int direction, ArrayList<ScrollView> scrollViews){
 		int[] xy = new int[2];
-		int x = activityUtils.getCurrentActivity(false).getWindowManager()
-		.getDefaultDisplay().getWidth() / 2;
 		ScrollView scroll = viewFetcher.getView(ScrollView.class, scrollViews, 0);
 		scroll.getLocationOnScreen(xy);
+		int height = scroll.getHeight();
+		int to = 0;
 
-		if (direction == Direction.DOWN) {
-			yStart = ((xy[1] + scroll.getHeight()) - 20);
-			yEnd = (xy[1] + 30);
-		}
-		else if (direction == Direction.UP){
-			yStart = (xy[1] + 20);
-			yEnd = ((xy[1] + scroll.getHeight()) - 30);
+		if (direction == DOWN) {
+			to = (height);
 		}
 
+		else if (direction == UP) {
+			to = (-height);
+		}
 		scrollAmount = scroll.getScrollY();
-		drag(x, x,getDragablePosition(yStart, direction), yEnd, 40);
+		scrollScrollViewTo(scroll,0, to);
 		if (scrollAmount == scroll.getScrollY()) {
 			return false;
 		}
-		else
+		else{
 			return true;
+		}
 	}
-
 	
 	/**
-	 * Returns a y position that will not register a click and is appropriate for dragging.
-	 * @param y the y position
-	 * @param direction the direction of the drag
-	 * @return the y position that will not register a click
+	 * Scroll the list to a given line
+	 * @param listView the listView to scroll
+	 * @param line the line to scroll to
 	 */
-	
-	private int getDragablePosition(int y, Direction direction){
-		ArrayList<View> touchItems = new ArrayList<View>();
-		int[] xyView = new int[2];
-		final View [] views = viewFetcher.getWindowDecorViews();
-		final View decorView = viewFetcher.getRecentDecorView(views);
-		if(decorView != null)
-			touchItems = decorView.getTouchables();
-		for(View view : touchItems){
-			view.getLocationOnScreen(xyView);
 
-			while(y > xyView[1] && y < (xyView[1] + view.getHeight())){
-				if(direction == Direction.DOWN){
-					y = y-5;
-				}
-				else{
-					y = y+5;
-				}
+	private void scrollScrollViewTo(final ScrollView scrollView, final int x, final int y){
+		inst.runOnMainSync(new Runnable(){
+			public void run(){
+				scrollView.scrollBy(x, y);
 			}
-		}
-		return y;
+		});
 	}
+
+
+	
 
 	/**
 	 * Scrolls up and down.
@@ -159,8 +146,7 @@ class Scroller {
 	 * 
 	 */
 
-	public boolean scroll(Direction direction) {
-		
+	public boolean scroll(int direction) {
 		ArrayList<View> viewList = viewFetcher.getViews(null, true);
 		ArrayList<ListView> listViews = RobotiumUtils.filterViews(ListView.class, viewList);
 
@@ -187,7 +173,7 @@ class Scroller {
 	 * 
 	 */
 
-	public boolean scrollList(int listIndex, Direction direction, ArrayList<ListView> listViews) {
+	public boolean scrollList(int listIndex, int direction, ArrayList<ListView> listViews) {
 		int[] xy = new int[2];
 		ListView listView = viewFetcher.getView(ListView.class, listViews, listIndex);
 
@@ -201,7 +187,7 @@ class Scroller {
 		
 		listView.getLocationOnScreen(xy);
 		
-		if (direction == Direction.DOWN) {
+		if (direction == DOWN) {
 			
 			if (listView.getLastVisiblePosition() >= listView.getCount()-1) {
 				scrollListToLine(listView, listView.getLastVisiblePosition());
@@ -210,7 +196,7 @@ class Scroller {
 
 			scrollListToLine(listView, listView.getLastVisiblePosition());
 
-		} else if (direction == Direction.UP) {
+		} else if (direction == UP) {
 
 			if (listView.getFirstVisiblePosition() < 2) {
 				scrollListToLine(listView, 0);
@@ -227,7 +213,8 @@ class Scroller {
 		sleeper.sleep();
 		return true;
 	}
-
+	
+	
 
 	/**
 	 * Scroll the list to a given line
@@ -236,7 +223,7 @@ class Scroller {
 	 */
 
 	private void scrollListToLine(final ListView listView, final int line){
-		activityUtils.getCurrentActivity(false).runOnUiThread(new Runnable(){
+		inst.runOnMainSync(new Runnable(){
 			public void run(){
 				listView.setSelection(line);
 			}

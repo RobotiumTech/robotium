@@ -269,7 +269,7 @@ class Clicker {
 		}
 		if (textToClick != null) {
 			clickOnScreen(textToClick, longClick, time);
-		} else if (scroll && scroller.scroll(Scroller.Direction.DOWN)) {
+		} else if (scroll && scroller.scroll(Scroller.DOWN)) {
 			clickOnText(regex, longClick, match, scroll, time);
 		} else {
 			if (countMatches > 0)
@@ -306,7 +306,7 @@ class Clicker {
 		}
 		if (viewToClick != null) {
 			clickOnScreen(viewToClick);
-		} else if (scroller.scroll(Scroller.Direction.DOWN)){
+		} else if (scroller.scroll(Scroller.DOWN)){
 			clickOn(viewClass, nameRegex);
 		}else {
 			for (T view : views) {

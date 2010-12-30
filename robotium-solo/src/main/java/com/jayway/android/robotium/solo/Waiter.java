@@ -84,7 +84,7 @@ class Waiter {
 				return true;
 			}
 
-			if(scroll && !scroller.scroll(Scroller.Direction.DOWN))
+			if(scroll && !scroller.scroll(Scroller.DOWN))
 				MatchCounter.resetCount();	
 
 			if(!scroll)
@@ -99,19 +99,20 @@ class Waiter {
 	 * 
 	 * @param viewClass the first {@code View} class to wait for 
 	 * @param viewClass2 the second {@code View} class to wait for
+	 * @param scroll true if scrolling should be performed
 	 * @return {@code true} if any of the views are shown and {@code false} if none of the views are shown before the timeout
 	 */
 
-	public <T extends View> boolean waitForViews(final Class<T> viewClass, final Class<? extends View> viewClass2){
+	public <T extends View> boolean waitForViews(final Class<T> viewClass, final Class<? extends View> viewClass2, boolean scroll){
 		final long endTime = System.currentTimeMillis() + SMALLTIMEOUT;
 
 		while (System.currentTimeMillis() < endTime) {
 
-			if(waitForView(viewClass, 0, MINITIMEOUT, true)){
+			if(waitForView(viewClass, 0, MINITIMEOUT, scroll)){
 				return true;
 			}
 
-			if(waitForView(viewClass2, 0, MINITIMEOUT, true)){
+			if(waitForView(viewClass2, 0, MINITIMEOUT, scroll)){
 				return true;
 			}
 		}

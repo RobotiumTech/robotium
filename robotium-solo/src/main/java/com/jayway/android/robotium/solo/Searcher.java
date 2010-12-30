@@ -143,7 +143,7 @@ class Searcher {
 					return true;
 				}
 			}
-			if(scroll && !scroller.scroll(Scroller.Direction.DOWN)){
+			if(scroll && !scroller.scroll(Scroller.DOWN)){
 				logMatchesFound(regex);
 				return false;
 			}
