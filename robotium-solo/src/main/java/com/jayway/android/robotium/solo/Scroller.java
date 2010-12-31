@@ -100,6 +100,7 @@ class Scroller {
 	private boolean scrollScrollView(int direction, ArrayList<ScrollView> scrollViews){
 		ScrollView scroll = viewFetcher.getView(ScrollView.class, scrollViews, 0);
 		int height = scroll.getHeight();
+		height--;
 		int scrollTo = 0;
 
 		if (direction == DOWN) {

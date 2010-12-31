@@ -30,6 +30,7 @@ class ViewFetcher {
 	 * @param inst the {@code Instrumentation} instance
 	 * @param activityUtils the {@code ActivityUtils} instance
 	 * @param sleeper the {@code Sleeper} instance
+	 * 
 	 */
 
 	public ViewFetcher(Instrumentation inst, ActivityUtils activityUtils, Sleeper sleeper) {
@@ -44,6 +45,7 @@ class ViewFetcher {
 	 *
 	 * @param view the {@code View} whose top parent is requested
 	 * @return the top parent {@code View}
+	 * 
 	 */
 
 	public View getTopParent(View view) {
@@ -60,6 +62,7 @@ class ViewFetcher {
 	 * 
 	 * @param view the view who's parent is requested
 	 * @return the parent of the view
+	 * 
 	 */
 
 	public View getListItemParent(View view)
@@ -75,8 +78,10 @@ class ViewFetcher {
 
 	/**
 	 * Returns the scroll or list parent view
+	 * 
 	 * @param view the view who's parent should be returned
 	 * @return the parent scroll view, list view or null
+	 * 
 	 */
 
 	public View getScrollOrListParent(View view) {
@@ -95,11 +100,12 @@ class ViewFetcher {
 	/**
 	 * Returns views from the shown DecorViews. 
 	 * 
-	 * @param onlyFullyVisible if only fully visible views should be returned
+	 * @param onlySufficientlyVisible if only sufficiently visible views should be returned
 	 * @return all the views contained in the DecorViews
+	 * 
 	 */
 
-	public ArrayList<View> getAllViews(boolean onlyFullyVisible)
+	public ArrayList<View> getAllViews(boolean onlySufficientlyVisible)
 	{
 		Activity activity = activityUtils.getCurrentActivity(false);
 		final View [] views = getWindowDecorViews();
@@ -111,7 +117,7 @@ class ViewFetcher {
 				for(View view : views){
 					if(!activity.getWindow().getDecorView().equals(view)){
 						try{
-							addChildren(allViews,(ViewGroup) view, onlyFullyVisible);
+							addChildren(allViews,(ViewGroup) view, onlySufficientlyVisible);
 						}
 						catch (Exception ignored) {}
 					}
@@ -120,12 +126,12 @@ class ViewFetcher {
 			else{
 				for(View view : nonDecorViews){
 					try{
-						addChildren(allViews,(ViewGroup) view, onlyFullyVisible);
+						addChildren(allViews,(ViewGroup) view, onlySufficientlyVisible);
 					}
 					catch (Exception ignored) {}
 				}	
 				try{
-					addChildren(allViews,(ViewGroup) getRecentDecorView(views), onlyFullyVisible);
+					addChildren(allViews,(ViewGroup) getRecentDecorView(views), onlySufficientlyVisible);
 				}
 				catch (Exception ignored) {}
 			}
@@ -213,24 +219,25 @@ class ViewFetcher {
 	 * Extracts all {@code View}s located in the currently active {@code Activity}, recursively.
 	 *
 	 * @param parent the {@code View} whose children should be returned, or {@code null} for all
-	 * @param onlyFullyVisible if only fully visible views should be returned
+	 * @param onlySufficientlyVisible if only sufficiently visible views should be returned
 	 * @return all {@code View}s located in the currently active {@code Activity}, never {@code null}
+	 * 
 	 */
 
-	public ArrayList<View> getViews(View parent, boolean onlyFullyVisible) {
+	public ArrayList<View> getViews(View parent, boolean onlySufficientlyVisible) {
 		final ArrayList<View> views = new ArrayList<View>();
 		final View parentToUse;
 
 		if (parent == null){
 			inst.waitForIdleSync();
-			return getAllViews(onlyFullyVisible);
+			return getAllViews(onlySufficientlyVisible);
 		}else{
 			parentToUse = parent;
 
 			views.add(parentToUse);
 
 			if (parentToUse instanceof ViewGroup) {
-				addChildren(views, (ViewGroup) parentToUse, onlyFullyVisible);
+				addChildren(views, (ViewGroup) parentToUse, onlySufficientlyVisible);
 			}
 		}
 
@@ -240,41 +247,45 @@ class ViewFetcher {
 
 	/**
 	 * Adds all children of {@code viewGroup} (recursively) into {@code views}.
+	 * 
 	 * @param views an {@code ArrayList} of {@code View}s
 	 * @param viewGroup the {@code ViewGroup} to extract children from
+	 * @param onlySufficientlyVisible if only sufficiently visible views should be returned
+	 * 
 	 */
 
-	private void addChildren(ArrayList<View> views, ViewGroup viewGroup, boolean onlyFullyVisible) {
+	private void addChildren(ArrayList<View> views, ViewGroup viewGroup, boolean onlySufficientlyVisible) {
 		for (int i = 0; i < viewGroup.getChildCount(); i++) {
 			final View child = viewGroup.getChildAt(i);
 
-			if(onlyFullyVisible && isViewFullyShown(child))
+			if(onlySufficientlyVisible && isViewSufficientlyShown(child))
 				views.add(child);
 			
-			else if(!onlyFullyVisible)
+			else if(!onlySufficientlyVisible)
 				views.add(child);
 
 			if (child instanceof ViewGroup) {
-				addChildren(views, (ViewGroup) child, onlyFullyVisible);
+				addChildren(views, (ViewGroup) child, onlySufficientlyVisible);
 			}
 		}
 	}
 	
 	/**
-	 * Returns true if the view is fully shown
+	 * Returns true if the view is sufficiently shown
 	 * 
 	 * @param view the view to check
-	 * @return true if the view is fully shown
+	 * @return true if the view is sufficiently shown
+	 *
 	 */
 
-	public final boolean isViewFullyShown(View view){
+	public final boolean isViewSufficientlyShown(View view){
 		final int[] xyView = new int[2];
 		final int[] xyParent = new int[2];
 
 		if(view == null)
 			return false;
 
-		final int viewHeight = view.getHeight();
+		final float viewHeight = view.getHeight();
 		final View parent = getScrollOrListParent(view);
 		view.getLocationOnScreen(xyView);
 
@@ -284,13 +295,13 @@ class ViewFetcher {
 		else{
 			parent.getLocationOnScreen(xyParent);
 		}
-
-		if(xyView[1] + (viewHeight/(1.5)) > getScrollListWindowHeight(view))
+		
+		if(xyView[1] + (viewHeight/2.0f) > getScrollListWindowHeight(view))
 			return false;
 
-		else if(xyView[1] + (view.getHeight()/2) < xyParent[1])
+		else if(xyView[1] + (viewHeight/2.0f) < xyParent[1])
 			return false;
-
+	
 		return true;
 	}
 
