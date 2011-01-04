@@ -357,45 +357,41 @@ class Clicker {
 	 */
 
 	public ArrayList<TextView> clickInList(int line, int index) {	
-		if(line < 1)
-			line = 1;
+		line--;
+		if(line < 0)
+			line = 0;
 
 		boolean foundList = waiter.waitForView(ListView.class, index);
-
-		if (!foundList) {
+		if (!foundList) 
 			Assert.assertTrue("No ListView with index " + index + " is available!", false);
-		}
 
-		ArrayList<TextView> textViews = null;
+		ArrayList<View> views = new ArrayList<View>();
 		final ListView listView = viewFetcher.getView(ListView.class, null, index);
 		if(listView == null)
 			Assert.assertTrue("ListView is null!", false);
 
-		textViews = viewFetcher.getCurrentViews(TextView.class, listView);
-		textViews = RobotiumUtils.removeInvisibleViews(textViews);
-
-		ArrayList<TextView> textViewGroup = new ArrayList<TextView>();
-		int myLine = 0;
-		if(textViews !=null ){
-			for (int i = 0; i < textViews.size(); i++) {
-				View view = viewFetcher.getListItemParent(textViews.get(i));
-				try {
-					if (view.equals(viewFetcher.getListItemParent(textViews.get(i + 1)))) {
-						textViewGroup.add(textViews.get(i));
-					} else {
-						textViewGroup.add(textViews.get(i));
-						myLine++;
-						if (myLine == line)
-							break;
-						else
-							textViewGroup.clear();
-					}
-				} catch (IndexOutOfBoundsException e) {textViewGroup.add(textViews.get(i));}
+		View view = listView.getChildAt(line);
+		if(view != null){
+			views = viewFetcher.getViews(view, true);
+			views = RobotiumUtils.removeInvisibleViews(views);
+			clickOnScreen(getClickableView(views));
+		}
+		return RobotiumUtils.filterViews(TextView.class, views);
+	}
+	
+	/**
+	 * Returns a clickable view
+	 * @param views the list of views
+	 * @return a clickable view located in a given list
+	 * 
+	 */
+	
+	private View getClickableView(ArrayList<View> views){
+		for(View view : views){
+			if(view.isClickable()){
+				return view;
 			}
 		}
-		if (textViewGroup.size() != 0){
-			clickOnScreen(textViewGroup.get(textViewGroup.size()-1));
-		}
-		return textViewGroup;
+		return views.get(views.size()-1);
 	}
 }
