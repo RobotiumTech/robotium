@@ -374,24 +374,8 @@ class Clicker {
 		if(view != null){
 			views = viewFetcher.getViews(view, true);
 			views = RobotiumUtils.removeInvisibleViews(views);
-			clickOnScreen(getClickableView(views));
+			clickOnScreen(view);
 		}
 		return RobotiumUtils.filterViews(TextView.class, views);
-	}
-	
-	/**
-	 * Returns a clickable view
-	 * @param views the list of views
-	 * @return a clickable view located in a given list
-	 * 
-	 */
-	
-	private View getClickableView(ArrayList<View> views){
-		for(View view : views){
-			if(view.isClickable()){
-				return view;
-			}
-		}
-		return views.get(views.size()-1);
 	}
 }
