@@ -795,7 +795,7 @@ public class Solo {
 	 * Clicks on a {@link View} displaying a given
 	 * text. Will automatically scroll when needed. 
 	 *
-	 * @param text the text that should be clicked on. The parameter will be interpreted as a regular expression
+	 * @param text the text that should be clicked. The parameter will be interpreted as a regular expression
 	 *
 	 */
 	
@@ -806,8 +806,8 @@ public class Solo {
 	/**
 	 * Clicks on a {@link View} displaying a given text. Will automatically scroll when needed.
 	 *
-	 * @param text the text that should be clicked on. The parameter will be interpreted as a regular expression
-	 * @param match the match that should be clicked on 
+	 * @param text the text that should be clicked. The parameter will be interpreted as a regular expression
+	 * @param match the match of the text that should be clicked
 	 *
 	 */
 	
@@ -819,7 +819,7 @@ public class Solo {
 	 * Clicks on a {@link View} displaying a given text.
 	 *
 	 * @param text the text that should be clicked on. The parameter will be interpreted as a regular expression
-	 * @param match the match that should be clicked on 
+	 * @param match the match of the text that should be clicked
 	 * @param scroll true if scrolling should be performed
 	 *
 	 */
@@ -833,7 +833,7 @@ public class Solo {
 	 * Long clicks on a given {@link View}. Will automatically scroll when needed. {@link #clickOnText(String)} can then be
 	 * used to click on the context menu items that appear after the long click.
 	 *
-	 * @param text the text that should be clicked on. The parameter will be interpreted as a regular expression
+	 * @param text the text that should be clicked. The parameter will be interpreted as a regular expression
 	 *
 	 */
 	
@@ -846,8 +846,8 @@ public class Solo {
 	 * Long clicks on a given {@link View}. Will automatically scroll when needed. {@link #clickOnText(String)} can then be
 	 * used to click on the context menu items that appear after the long click.
 	 *
-	 * @param text the text that should be clicked on. The parameter will be interpreted as a regular expression
-	 * @param match the match that should be clicked on 
+	 * @param text the text that should be clicked. The parameter will be interpreted as a regular expression
+	 * @param match the match of the text that should be clicked 
 	 *
 	 */
 	
@@ -860,8 +860,8 @@ public class Solo {
 	 * Long clicks on a given {@link View}. {@link #clickOnText(String)} can then be
 	 * used to click on the context menu items that appear after the long click.
 	 *
-	 * @param text the text that should be clicked on. The parameter will be interpreted as a regular expression
-	 * @param match the match that should be clicked on 
+	 * @param text the text that should be clicked. The parameter will be interpreted as a regular expression
+	 * @param match the match of the text that should be clicked
 	 * @param scroll true if scrolling should be performed
 	 *
 	 */
@@ -875,8 +875,8 @@ public class Solo {
 	 * Long clicks on a given {@link View}. {@link #clickOnText(String)} can then be
 	 * used to click on the context menu items that appear after the long click.
 	 *
-	 * @param text the text that should be clicked on. The parameter will be interpreted as a regular expression
-	 * @param match the match that should be clicked on 
+	 * @param text the text that should be clicked. The parameter will be interpreted as a regular expression
+	 * @param match the match of the text that should be clicked 
 	 * @param time the amount of time to long click 
 	 */
 	
@@ -889,7 +889,7 @@ public class Solo {
 	 * Long clicks on a given {@link View} and then selects
 	 * an item from the context menu that appears. Will automatically scroll when needed. 
 	 *
-	 * @param text the text to be clicked on. The parameter will be interpreted as a regular expression
+	 * @param text the text to be clicked. The parameter will be interpreted as a regular expression
 	 * @param index the index of the menu item to be pressed. {@code 0} if only one is available
 	 *
 	 */
@@ -901,7 +901,7 @@ public class Solo {
 	/**
 	 * Clicks on a {@link Button} with a given index.
 	 *
-	 * @param index the index number of the {@code Button}. {@code 0} if only one is available
+	 * @param index the index of the {@code Button} to be clicked. {@code 0} if only one is available
 	 *
 	 */
 	
