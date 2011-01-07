@@ -93,8 +93,8 @@ public class Solo {
 	/**
 	 * Constructor that takes in the instrumentation and the start activity.
 	 *
-	 * @param inst the {@link Instrumentation} instance.
-	 * @param activity {@link Activity} the start activity
+	 * @param inst the {@link Instrumentation} instance
+	 * @param activity the start {@link Activity} 
 	 *
 	 */
 	
@@ -118,10 +118,10 @@ public class Solo {
 	}
 
 	/**
-	 * Returns an {@code ArrayList} of all the {@code View} objects located in the focused 
-	 * window e.g. an {@code Activity} or a {@code Dialog}.
+	 * Returns an ArrayList of all the View objects located in the focused 
+	 * Activity or Dialog.
 	 *
-	 * @return an {@code ArrayList} of the {@code View} objects located in the focused window
+	 * @return an {@code ArrayList} of the {@link View} objects located in the focused window
 	 *
 	 */
 	
@@ -135,10 +135,10 @@ public class Solo {
 	}
 	
 	/**
-	 * Returns an {@code ArrayList} of the {@code View} objects contained in the parent view
+	 * Returns an ArrayList of the View objects contained in the parent View
 	 *
 	 * @param parent the parent view from which to return the views
-	 * @return an {@code ArrayList} of the {@code View} objects contained in the given {@code View}
+	 * @return an {@code ArrayList} of the {@link View} objects contained in the given {@code View}
 	 *
 	 */
 	
@@ -152,10 +152,10 @@ public class Solo {
 	}
 	
 	/**
-	 * Returns the absolute top parent {@code View} for a given {@code View}.
+	 * Returns the absolute top parent View for a given View.
 	 *
-	 * @param view the {@code View} whose top parent is requested
-	 * @return the top parent {@code View}
+	 * @param view the {@link View} whose top parent is requested
+	 * @return the top parent {@link View}
 	 *
 	 */
 	
@@ -165,9 +165,9 @@ public class Solo {
 	}
 	
 	/**
-     * Clears the value of an {@link EditText}.
+     * Clears the value of an EditText.
      * 
-     * @param index the index of the {@code EditText} that should be cleared. 0 if only one is available
+     * @param index the index of the {@link EditText} that should be cleared. 0 if only one is available
 	 *
      */
 	
@@ -183,9 +183,9 @@ public class Solo {
     }
     
     /**
-     * Clears the value of an {@link EditText}.
+     * Clears the value of an EditText.
      * 
-     * @param editText the {@code EditText} that should be cleared
+     * @param editText the {@link EditText} that should be cleared
 	 *
      */
 	
@@ -242,9 +242,9 @@ public class Solo {
     }
 	
 	/**
-	 * Waits for a view to be shown. Default timeout is 20 seconds. 
+	 * Waits for a View to be shown. Default timeout is 20 seconds. 
 	 * 
-	 * @param viewClass the {@code View} class to wait for
+	 * @param viewClass the {@link View} class to wait for
 	 */
 	
 	public <T extends View> boolean waitForView(final Class<T> viewClass){
@@ -253,9 +253,9 @@ public class Solo {
 	}
 	
 	/**
-	 * Waits for a view to be shown.
+	 * Waits for a View to be shown.
 	 * 
-	 * @param viewClass the {@code View} class to wait for
+	 * @param viewClass the {@link View} class to wait for
 	 * @param minimumNumberOfMatches the minimum number of matches that are expected to be shown. {@code 0} means any number of matches
 	 * @param timeout the amount of time in milliseconds to wait
 	 * @return {@code true} if view is shown and {@code false} if it is not shown before the timeout
@@ -271,13 +271,13 @@ public class Solo {
 	}
 	
 	/**
-	 * Waits for a view to be shown.
+	 * Waits for a View to be shown.
 	 * 
-	 * @param viewClass the {@code View} class to wait for
+	 * @param viewClass the {@link View} class to wait for
 	 * @param minimumNumberOfMatches the minimum number of matches that are expected to be shown. {@code 0} means any number of matches
 	 * @param timeout the amount of time in milliseconds to wait
 	 * @param scroll {@code true} if scrolling should be performed
-	 * @return {@code true} if view is shown and {@code false} if it is not shown before the timeout
+	 * @return {@code true} if the {@link View} is shown and {@code false} if it is not shown before the timeout
 	 */
 	
 	public <T extends View> boolean waitForView(final Class<T> viewClass, final int minimumNumberOfMatches, final int timeout,final boolean scroll){
@@ -291,11 +291,11 @@ public class Solo {
 	
 	
 	/**
-	 * Searches for a text string in the {@link EditText} objects located in the current
+	 * Searches for a text string in the EditText objects located in the current
 	 * {@code Activity}. Will automatically scroll when needed.
 	 *
 	 * @param text the text to search for
-	 * @return {@code true} if an {@code EditText} with the given text is found or {@code false} if it is not found
+	 * @return {@code true} if an {@link EditText} with the given text is found or {@code false} if it is not found
 	 *
 	 */
 	
@@ -306,11 +306,11 @@ public class Solo {
 	
 	
 	/**
-	 * Searches for a {@link Button} with the given text string and returns true if at least one {@code Button}
+	 * Searches for a Button with the given text string and returns true if at least one Button
 	 * is found. Will automatically scroll when needed. 
 	 *
 	 * @param text the text to search for. The parameter will be interpreted as a regular expression
-	 * @return {@code true} if a {@code Button} with the given text is found and {@code false} if it is not found
+	 * @return {@code true} if a {@link Button} with the given text is found and {@code false} if it is not found
 	 *
 	 */
 	
@@ -320,12 +320,12 @@ public class Solo {
 	}
 	
 	/**
-	 * Searches for a {@link Button} with the given text string and returns true if at least one {@code Button}
+	 * Searches for a Button with the given text string and returns true if at least one Button
 	 * is found. Will automatically scroll when needed. 
 	 *
 	 * @param text the text to search for. The parameter will be interpreted as a regular expression
-	 * @param onlyVisible {@code true} if only {@code Button} visible on the screen should be searched
-	 * @return {@code true} if a {@code Button} with the given text is found and {@code false} if it is not found
+	 * @param onlyVisible {@code true} if only {@link Button} visible on the screen should be searched
+	 * @return {@code true} if a {@link Button} with the given text is found and {@code false} if it is not found
 	 *
 	 */
 	
@@ -335,11 +335,11 @@ public class Solo {
 	}
 	
 	/**
-	 * Searches for a {@link ToggleButton} with the given text string and returns {@code true} if at least one {@code ToggleButton}
+	 * Searches for a ToggleButton with the given text string and returns {@code true} if at least one ToggleButton
 	 * is found. Will automatically scroll when needed. 
 	 *
 	 * @param text the text to search for. The parameter will be interpreted as a regular expression
-	 * @return {@code true} if a {@code ToggleButton} with the given text is found and {@code false} if it is not found
+	 * @return {@code true} if a {@link ToggleButton} with the given text is found and {@code false} if it is not found
 	 *
 	 */
 	
@@ -349,13 +349,13 @@ public class Solo {
 	}
 	
 	/**
-	 * Searches for a {@link Button} with the given text string and returns {@code true} if the
-	 * searched {@code Button} is found a given number of times. Will automatically scroll when needed.
+	 * Searches for a Button with the given text string and returns {@code true} if the
+	 * searched Button is found a given number of times. Will automatically scroll when needed.
 	 * 
 	 * @param text the text to search for. The parameter will be interpreted as a regular expression
 	 * @param minimumNumberOfMatches the minimum number of matches expected to be found. {@code 0} matches means that one or more
 	 * matches are expected to be found
-	 * @return {@code true} if a {@code Button} with the given text is found a given number of times and {@code false}
+	 * @return {@code true} if a {@link Button} with the given text is found a given number of times and {@code false}
 	 * if it is not found
 	 *  
 	 */
@@ -366,14 +366,14 @@ public class Solo {
 	}
 	
 	/**
-	 * Searches for a {@link Button} with the given text string and returns {@code true} if the
-	 * searched {@code Button} is found a given number of times. Will automatically scroll when needed.
+	 * Searches for a Button with the given text string and returns {@code true} if the
+	 * searched Button is found a given number of times. Will automatically scroll when needed.
 	 * 
 	 * @param text the text to search for. The parameter will be interpreted as a regular expression
 	 * @param minimumNumberOfMatches the minimum number of matches expected to be found. {@code 0} matches means that one or more
 	 * matches are expected to be found
-	 * @param onlyVisible {@code true} if only {@code Button} visible on the screen should be searched
-	 * @return {@code true} if a {@code Button} with the given text is found a given number of times and {@code false}
+	 * @param onlyVisible {@code true} if only {@link Button} visible on the screen should be searched
+	 * @return {@code true} if a {@link Button} with the given text is found a given number of times and {@code false}
 	 * if it is not found
 	 *  
 	 */
@@ -384,13 +384,13 @@ public class Solo {
 	}
 	
 	/**
-	 * Searches for a {@link ToggleButton} with the given text string and returns {@code true} if the
-	 * searched {@code ToggleButton} is found a given number of times. Will automatically scroll when needed.
+	 * Searches for a ToggleButton with the given text string and returns {@code true} if the
+	 * searched ToggleButton is found a given number of times. Will automatically scroll when needed.
 	 * 
 	 * @param text the text to search for. The parameter will be interpreted as a regular expression
 	 * @param minimumNumberOfMatches the minimum number of matches expected to be found. {@code 0} matches means that one or more
 	 * matches are expected to be found
-	 * @return {@code true} if a {@code ToggleButton} with the given text is found a given number of times and {@code false}
+	 * @return {@code true} if a {@link ToggleButton} with the given text is found a given number of times and {@code false}
 	 * if it is not found
 	 *  
 	 */
@@ -495,9 +495,9 @@ public class Solo {
 	}
 	
 	/**
-	 * Returns an {@code ArrayList} of all the opened/active activities.
+	 * Returns an ArrayList of all the opened/active activities.
 	 * 
-	 * @return an {@code ArrayList} of all the opened/active activities
+	 * @return an ArrayList of all the opened/active activities
 	 *
 	 */
 	
@@ -507,9 +507,9 @@ public class Solo {
 	}
 	
 	/**
-	 * Returns the current {@code Activity}.
+	 * Returns the current Activity.
 	 *
-	 * @return the current {@code Activity}
+	 * @return the current Activity
 	 *
 	 */
 	
@@ -519,10 +519,10 @@ public class Solo {
 	}
 	
 	/**
-	 * Asserts that the expected {@link Activity} is the currently active one.
+	 * Asserts that the expected Activity is the currently active one.
 	 * 
 	 * @param message the message that should be displayed if the assert fails
-	 * @param name the name of the {@code Activity} that is expected to be active e.g. {@code "MyActivity"}
+	 * @param name the name of the {@link Activity} that is expected to be active e.g. {@code "MyActivity"}
 	 * 
 	 */
 	
@@ -532,7 +532,7 @@ public class Solo {
 	}
 	
 	/**
-	 * Asserts that the expected {@link Activity} is the currently active one.
+	 * Asserts that the expected Activity is the currently active one.
 	 * 
 	 * @param message the message that should be displayed if the assert fails
 	 * @param expectedClass the {@code Class} object that is expected to be active e.g. {@code MyActivity.class}
@@ -547,12 +547,12 @@ public class Solo {
 	}
 	
 	/**
-	 * Asserts that the expected {@link Activity} is the currently active one, with the possibility to
-	 * verify that the expected {@code Activity} is a new instance of the {@code Activity}.
+	 * Asserts that the expected Activity is the currently active one, with the possibility to
+	 * verify that the expected Activity is a new instance of the Activity.
 	 * 
 	 * @param message the message that should be displayed if the assert fails
 	 * @param name the name of the activity that is expected to be active e.g. {@code "MyActivity"}
-	 * @param isNewInstance {@code true} if the expected {@code Activity} is a new instance of the {@code Activity}
+	 * @param isNewInstance {@code true} if the expected {@link Activity} is a new instance of the {@link Activity}
 	 * 
 	 */
 	
@@ -562,12 +562,12 @@ public class Solo {
 	}
 	
 	/**
-	 * Asserts that the expected {@link Activity} is the currently active one, with the possibility to
-	 * verify that the expected {@code Activity} is a new instance of the {@code Activity}.
+	 * Asserts that the expected Activity is the currently active one, with the possibility to
+	 * verify that the expected Activity is a new instance of the Activity.
 	 * 
 	 * @param message the message that should be displayed if the assert fails
 	 * @param expectedClass the {@code Class} object that is expected to be active e.g. {@code MyActivity.class}
-	 * @param isNewInstance {@code true} if the expected {@code Activity} is a new instance of the {@code Activity}
+	 * @param isNewInstance {@code true} if the expected {@link Activity} is a new instance of the {@link Activity}
 	 * 
 	 */
 
@@ -589,10 +589,10 @@ public class Solo {
 	
 
 	/**
-	 * Waits for an {@link android.app.Dialog} to close.
+	 * Waits for a Dialog to close.
 	 * 
 	 * @param timeout the amount of time in milliseconds to wait
-	 * @return {@code true} if the {@code Dialog} is closed before the timeout and {@code false} if it is not closed
+	 * @return {@code true} if the {@link android.app.Dialog} is closed before the timeout and {@code false} if it is not closed
 	 * 
 	 */
 
@@ -652,9 +652,9 @@ public class Solo {
 	
 	
 	/**
-	 * Clicks on a {@link Button} with a given text. Will automatically scroll when needed. 
+	 * Clicks on a Button with a given text. Will automatically scroll when needed. 
 	 *
-	 * @param name the name of the {@code Button} presented to the user. The parameter will be interpreted as a regular expression
+	 * @param name the name of the {@link Button} presented to the user. The parameter will be interpreted as a regular expression
 	 *
 	 */
 	
@@ -664,9 +664,9 @@ public class Solo {
 	}
 	
 	/**
-	 * Clicks on an {@link ImageButton} with a given index.
+	 * Clicks on an ImageButton with a given index.
 	 *
-	 * @param index the index of the {@code ImageButton} to be clicked. 0 if only one is available
+	 * @param index the index of the {@link ImageButton} to be clicked. 0 if only one is available
 	 *
 	 */
 	
@@ -675,9 +675,9 @@ public class Solo {
 	}
 	
 	/**
-	 * Clicks on a {@link ToggleButton} with a given text.
+	 * Clicks on a ToggleButton with a given text.
 	 * 
-	 * @param name the name of the {@code ToggleButton} presented to the user. The parameter will be interpreted as a regular expression
+	 * @param name the name of the {@link ToggleButton} presented to the user. The parameter will be interpreted as a regular expression
 	 * 
 	 */
 
@@ -686,7 +686,7 @@ public class Solo {
 	}
 	
 	/**
-	 * Clicks on a menu item with a given text.
+	 * Clicks on a MenuItem with a given text.
 	 * @param text the menu text that should be clicked on. The parameter will be interpreted as a regular expression
 	 *
 	 */
@@ -697,7 +697,7 @@ public class Solo {
 	}
 	
 	/**
-	 * Clicks on a menu item with a given text.
+	 * Clicks on a MenuItem with a given text.
 	 * 
 	 * @param text the menu text that should be clicked on. The parameter will be interpreted as a regular expression
 	 * @param subMenu true if the menu item could be located in a sub menu
@@ -710,11 +710,11 @@ public class Solo {
 	}
 	
 	/**
-	 * Presses an {@link android.view.MenuItem} with a given index. Index {@code 0} is the first item in the
+	 * Presses a MenuItem with a given index. Index {@code 0} is the first item in the
 	 * first row, Index {@code 3} is the first item in the second row and
 	 * index {@code 6} is the first item in the third row.
 	 * 
-	 * @param index the index of the menu item to be pressed
+	 * @param index the index of the {@link android.view.MenuItem} to be pressed
 	 * 
 	 */
 	
@@ -723,11 +723,11 @@ public class Solo {
 	}
 	
 	/**
-	 * Presses an {@link android.view.MenuItem} with a given index. Supports three rows with a given amount
+	 * Presses a MenuItem with a given index. Supports three rows with a given amount
 	 * of items. If itemsPerRow equals 5 then index 0 is the first item in the first row, 
 	 * index 5 is the first item in the second row and index 10 is the first item in the third row.
 	 * 
-	 * @param index the index of the {@code MenuItem} to be pressed
+	 * @param index the index of the {@link android.view.MenuItem} to be pressed
 	 * @param itemsPerRow the amount of menu items there are per row.   
 	 * 
 	 */
@@ -737,11 +737,11 @@ public class Solo {
 	}
 	
 	/**
-	 * Presses on a {@link Spinner} (drop-down menu) item.
+	 * Presses on a Spinner (drop-down menu) item.
 	 * 
-	 * @param spinnerIndex the index of the {@code Spinner} menu to be used
-	 * @param itemIndex the index of the {@code Spinner} item to be pressed relative to the currently selected item
-	 * A Negative number moves up on the {@code Spinner}, positive moves down
+	 * @param spinnerIndex the index of the {@link Spinner} menu to be used
+	 * @param itemIndex the index of the {@link Spinner} item to be pressed relative to the currently selected item
+	 * A Negative number moves up on the {@link Spinner}, positive moves down
 	 * 
 	 */
 	
@@ -752,9 +752,9 @@ public class Solo {
     
 	
 	/**
-	 * Clicks on a given {@link View}.
+	 * Clicks on a given View.
 	 *
-	 * @param view the {@code View} that should be clicked
+	 * @param view the {@link View} that should be clicked
 	 *
 	 */
 	
@@ -765,9 +765,9 @@ public class Solo {
 	
 	
 	/**
-	 * Long clicks on a given {@link View}.
+	 * Long clicks on a given View.
 	 *
-	 * @param view the view that should be long clicked
+	 * @param view the {@link View} that should be long clicked
 	 *
 	 */
 	
@@ -778,9 +778,9 @@ public class Solo {
 	}
 	
 	/**
-	 * Long clicks on a given {@link View} for a given amount of time.
+	 * Long clicks on a given View for a given amount of time.
 	 *
-	 * @param view the view that should be long clicked
+	 * @param view the {@link View} that should be long clicked
 	 * @param time the amount of time to long click
 	 *
 	 */
@@ -792,7 +792,7 @@ public class Solo {
 	}
 	
 	/**
-	 * Clicks on a {@link View} displaying a given
+	 * Clicks on a View displaying a given
 	 * text. Will automatically scroll when needed. 
 	 *
 	 * @param text the text that should be clicked. The parameter will be interpreted as a regular expression
@@ -804,7 +804,7 @@ public class Solo {
 	}
 	
 	/**
-	 * Clicks on a {@link View} displaying a given text. Will automatically scroll when needed.
+	 * Clicks on a View displaying a given text. Will automatically scroll when needed.
 	 *
 	 * @param text the text that should be clicked. The parameter will be interpreted as a regular expression
 	 * @param match the match of the text that should be clicked
@@ -816,7 +816,7 @@ public class Solo {
 	}
 	
 	/**
-	 * Clicks on a {@link View} displaying a given text.
+	 * Clicks on a View displaying a given text.
 	 *
 	 * @param text the text that should be clicked on. The parameter will be interpreted as a regular expression
 	 * @param match the match of the text that should be clicked
@@ -830,7 +830,7 @@ public class Solo {
 	
 	
 	/**
-	 * Long clicks on a given {@link View}. Will automatically scroll when needed. {@link #clickOnText(String)} can then be
+	 * Long clicks on a given View. Will automatically scroll when needed. {@link #clickOnText(String)} can then be
 	 * used to click on the context menu items that appear after the long click.
 	 *
 	 * @param text the text that should be clicked. The parameter will be interpreted as a regular expression
@@ -843,7 +843,7 @@ public class Solo {
 	}
 	
 	/**
-	 * Long clicks on a given {@link View}. Will automatically scroll when needed. {@link #clickOnText(String)} can then be
+	 * Long clicks on a given View. Will automatically scroll when needed. {@link #clickOnText(String)} can then be
 	 * used to click on the context menu items that appear after the long click.
 	 *
 	 * @param text the text that should be clicked. The parameter will be interpreted as a regular expression
@@ -857,7 +857,7 @@ public class Solo {
 	}
 	
 	/**
-	 * Long clicks on a given {@link View}. {@link #clickOnText(String)} can then be
+	 * Long clicks on a given View. {@link #clickOnText(String)} can then be
 	 * used to click on the context menu items that appear after the long click.
 	 *
 	 * @param text the text that should be clicked. The parameter will be interpreted as a regular expression
@@ -872,7 +872,7 @@ public class Solo {
 	}
 	
 	/**
-	 * Long clicks on a given {@link View}. {@link #clickOnText(String)} can then be
+	 * Long clicks on a given View. {@link #clickOnText(String)} can then be
 	 * used to click on the context menu items that appear after the long click.
 	 *
 	 * @param text the text that should be clicked. The parameter will be interpreted as a regular expression
@@ -886,7 +886,7 @@ public class Solo {
 	}
 	
 	/**
-	 * Long clicks on a given {@link View} and then selects
+	 * Long clicks on a given View and then selects
 	 * an item from the context menu that appears. Will automatically scroll when needed. 
 	 *
 	 * @param text the text to be clicked. The parameter will be interpreted as a regular expression
@@ -899,9 +899,9 @@ public class Solo {
 	}
 	
 	/**
-	 * Clicks on a {@link Button} with a given index.
+	 * Clicks on a Button with a given index.
 	 *
-	 * @param index the index of the {@code Button} to be clicked. {@code 0} if only one is available
+	 * @param index the index of the {@link Button} to be clicked. {@code 0} if only one is available
 	 *
 	 */
 	
@@ -910,9 +910,9 @@ public class Solo {
 	}
 	
 	/**
-	 * Clicks on a {@link RadioButton} with a given index.
+	 * Clicks on a RadioButton with a given index.
 	 *
-	 * @param index the index of the {@code RadioButton} to be clicked. {@code 0} if only one is available
+	 * @param index the index of the {@link RadioButton} to be clicked. {@code 0} if only one is available
 	 *
 	 */
 	
@@ -921,9 +921,9 @@ public class Solo {
 	}
 	
 	/**
-	 * Clicks on a {@link CheckBox} with a given index.
+	 * Clicks on a CheckBox with a given index.
 	 *
-	 * @param index the index of the {@code CheckBox} to be clicked. {@code 0} if only one is available
+	 * @param index the index of the {@link CheckBox} to be clicked. {@code 0} if only one is available
 	 *
 	 */
 	
@@ -932,9 +932,9 @@ public class Solo {
 	}
 	
 	/**
-	 * Clicks on an {@link EditText} with a given index.
+	 * Clicks on an EditText with a given index.
 	 *
-	 * @param index the index of the {@code EditText} to be clicked. {@code 0} if only one is available
+	 * @param index the index of the {@link EditText} to be clicked. {@code 0} if only one is available
 	 *
 	 */
 	
@@ -943,11 +943,11 @@ public class Solo {
 	}
 
 	/**
-	 * Clicks on a given list line and returns an {@code ArrayList} of the {@link TextView} objects that
+	 * Clicks on a given list line and returns an ArrayList of the TextView objects that
 	 * the list line is showing. Will use the first list it finds.
 	 * 
 	 * @param line the line that should be clicked
-	 * @return an {@code ArrayList} of the {@code TextView} objects located in the list line
+	 * @return an {@code ArrayList} of the {@link TextView} objects located in the list line
 	 *
 	 */
 
@@ -957,11 +957,11 @@ public class Solo {
 
 	/**
 	 * Clicks on a given list line on a specified list and 
-	 * returns an {@code ArrayList} of the {@link TextView}s that the list line is showing.
+	 * returns an ArrayList of the TextView objects that the list line is showing.
 	 * 
 	 * @param line the line that should be clicked
 	 * @param index the index of the list. 1 if two lists are available
-	 * @return an {@code ArrayList} of the {@code TextView} objects located in the list line
+	 * @return an {@code ArrayList} of the {@link TextView} objects located in the list line
 	 *
 	 */
 	
@@ -1015,7 +1015,7 @@ public class Solo {
 	}
 	
 	/**
-	 * Scrolls down a list with a given {@code index}.
+	 * Scrolls down a list with a given index.
 	 * 
 	 * @param index the {@link ListView} to be scrolled. {@code 0} if only one list is available
 	 * @return {@code true} if more scrolling can be done
@@ -1027,7 +1027,7 @@ public class Solo {
 	}
 	
 	/**
-	 * Scrolls up a list with a given {@code index}.
+	 * Scrolls up a list with a given index.
 	 * 
 	 * @param index the {@link ListView} to be scrolled. {@code 0} if only one list is available
 	 * @return {@code true} if more scrolling can be done
@@ -1054,9 +1054,9 @@ public class Solo {
 	
 	
 	/**
-	 * Sets the date in a  {@link DatePicker} with a given index.
+	 * Sets the date in a DatePicker with a given index.
 	 *
-	 * @param index the index of the {@code DatePicker}. {@code 0} if only one is available
+	 * @param index the index of the {@link DatePicker}. {@code 0} if only one is available
 	 * @param year the year e.g. 2011
 	 * @param monthOfYear the month e.g. 03
 	 * @param dayOfMonth the day e.g. 10
@@ -1075,9 +1075,9 @@ public class Solo {
 	}
 	
 	/**
-	 * Sets the date in a given {@link DatePicker}.
+	 * Sets the date in a given DatePicker.
 	 *
-	 * @param datePicker the {@code DatePicker} object.
+	 * @param datePicker the {@link DatePicker} object.
 	 * @param year the year e.g. 2011
 	 * @param monthOfYear the month e.g. 03
 	 * @param dayOfMonth the day e.g. 10
@@ -1091,9 +1091,9 @@ public class Solo {
 	}
 	
 	/**
-	 * Sets the time in a {@link TimePicker} with a given index.
+	 * Sets the time in a TimePicker with a given index.
 	 *
-	 * @param index the index of the {@code TimePicker}. {@code 0} if only one is available
+	 * @param index the index of the {@link TimePicker}. {@code 0} if only one is available
 	 * @param hour the hour e.g. 15
 	 * @param minute the minute e.g. 30
 	 *
@@ -1111,9 +1111,9 @@ public class Solo {
 	}
 	
 	/**
-	 * Sets the time in a given {@link TimePicker}.
+	 * Sets the time in a given TimePicker.
 	 *
-	 * @param timePicker the {@code TimePicker} object.
+	 * @param timePicker the {@link TimePicker} object.
 	 * @param hour the hour e.g. 15
 	 * @param minute the minute e.g. 30
 	 *
@@ -1126,10 +1126,10 @@ public class Solo {
 	}
 	
 	/**
-	 * Sets the progress of a {@link ProgressBar} with a given index. Examples are SeekBar and RatingBar.
+	 * Sets the progress of a ProgressBar with a given index. Examples are SeekBar and RatingBar.
 	 *
-	 * @param index the index of the {@code ProgressBar}
-	 * @param progress the progress that the {@code ProgressBar} should be set to
+	 * @param index the index of the {@link ProgressBar}
+	 * @param progress the progress that the {@link ProgressBar} should be set to
 	 * 
 	 */
 
@@ -1147,10 +1147,10 @@ public class Solo {
 	}
 
 	/**
-	 * Sets the progress of a given {@link ProgressBar}. Examples are SeekBar and RatingBar.
+	 * Sets the progress of a given ProgressBar. Examples are SeekBar and RatingBar.
 	 *
-	 * @param progressBar the {@code ProgressBar}
-	 * @param progress the progress that the {@code ProgressBar} should be set to
+	 * @param progressBar the {@link ProgressBar}
+	 * @param progress the progress that the {@link ProgressBar} should be set to
 	 * 
 	 */
 
@@ -1164,10 +1164,10 @@ public class Solo {
 	
 	
 	/**
-	 * Enters text into an {@link EditText} with a given index.
+	 * Enters text into an EditText with a given index.
 	 *
-	 * @param index the index of the {@code EditText}. {@code 0} if only one is available
-	 * @param text the text string to enter into the {@code EditText} field
+	 * @param index the index of the {@link EditText}. {@code 0} if only one is available
+	 * @param text the text string to enter into the {@link EditText} field
 	 *
 	 */
 	
@@ -1183,10 +1183,10 @@ public class Solo {
 	}
 	
 	/**
-	 * Enters text into a given {@link EditText}.
+	 * Enters text into a given EditText.
 	 *
-	 * @param editText the {@code EditText} to enter text into
-	 * @param text the text string to enter into the {@code EditText} field
+	 * @param editText the {@link EditText} to enter text into
+	 * @param text the text string to enter into the {@link EditText} field
 	 *
 	 */
 	
@@ -1197,7 +1197,7 @@ public class Solo {
 	}
 	
 	/**
-	 * Clicks on an {@link ImageView} with a given index.
+	 * Clicks on an ImageView with a given index.
 	 *
 	 * @param index the index of the {@link ImageView} to be clicked. {@code 0} if only one is available
 	 *
@@ -1208,10 +1208,10 @@ public class Solo {
 	}
 	
 	/**
-	 * Returns an {@code EditText} with a given index.
+	 * Returns an EditText with a given index.
 	 *
-	 * @param index the index of the {@code EditText}. {@code 0} if only one is available
-	 * @return the {@code EditText} with a specified index or {@code null} if index is invalid
+	 * @param index the index of the {@link EditText}. {@code 0} if only one is available
+	 * @return the {@link EditText} with a specified index or {@code null} if index is invalid
 	 *
 	 */
 	
@@ -1221,10 +1221,10 @@ public class Solo {
 	}
 	
 	/**
-	 * Returns a {@code Button} with a given index.
+	 * Returns a Button with a given index.
 	 *
-	 * @param index the index of the {@code Button}. {@code 0} if only one is available
-	 * @return the {@code Button} with a specified index or {@code null} if index is invalid
+	 * @param index the index of the {@link Button}. {@code 0} if only one is available
+	 * @return the {@link Button} with a specified index or {@code null} if index is invalid
 	 *
 	 */
 	
@@ -1234,10 +1234,10 @@ public class Solo {
 	}
 	
 	/**
-	 * Returns a {@code TextView} with a given index.
+	 * Returns a TextView with a given index.
 	 *
-	 * @param index the index of the {@code TextView}. {@code 0} if only one is available
-	 * @return the {@code TextView} with a specified index or {@code null} if index is invalid
+	 * @param index the index of the {@link TextView}. {@code 0} if only one is available
+	 * @return the {@link TextView} with a specified index or {@code null} if index is invalid
 	 *
 	 */
 	
@@ -1246,10 +1246,10 @@ public class Solo {
 	}
 	
 	/**
-	 * Returns an {@code ImageView} with a given index.
+	 * Returns an ImageView with a given index.
 	 *
-	 * @param index the index of the {@code ImageView}. {@code 0} if only one is available
-	 * @return the {@code ImageView} with a specified index or {@code null} if index is invalid
+	 * @param index the index of the {@link ImageView}. {@code 0} if only one is available
+	 * @return the {@link ImageView} with a specified index or {@code null} if index is invalid
 	 *
 	 */
 	
@@ -1258,10 +1258,10 @@ public class Solo {
 	}
 	
 	/**
-	 * Returns an {@code ImageButton} with a given index.
+	 * Returns an ImageButton with a given index.
 	 *
-	 * @param index the index of the {@code ImageButton}. {@code 0} if only one is available
-	 * @return the {@code ImageButton} with a specified index or {@code null} if index is invalid
+	 * @param index the index of the {@link ImageButton}. {@code 0} if only one is available
+	 * @return the {@link ImageButton} with a specified index or {@code null} if index is invalid
 	 *
 	 */
 	
@@ -1270,10 +1270,10 @@ public class Solo {
 	}
 	
 	/**
-	 * Returns a {@link TextView} which shows a given text. 
+	 * Returns a TextView which shows a given text. 
 	 * 
 	 * @param text the text that is shown
-	 * @return the {@code TextView} that shows the given text
+	 * @return the {@link TextView} that shows the given text
 	 */
 	
 	public TextView getText(String text)
@@ -1282,10 +1282,10 @@ public class Solo {
 	}
 	
 	/**
-	 * Returns a {@link Button} which shows a given text.
+	 * Returns a Button which shows a given text.
 	 * 
 	 * @param text the text that is shown
-	 * @return the {@code Button} that shows the given text
+	 * @return the {@link Button} that shows the given text
 	 */
 	
 	public Button getButton(String text)
@@ -1294,10 +1294,10 @@ public class Solo {
 	}
 	
 	/**
-	 * Returns an {@link EditText} which shows a given text.
+	 * Returns an EditText which shows a given text.
 	 * 
 	 * @param text the text that is shown
-	 * @return the {@code EditText} which shows the given text
+	 * @return the {@link EditText} which shows the given text
 	 */
 	
 	public EditText getEditText(String text)
@@ -1307,10 +1307,10 @@ public class Solo {
 	
 	
 	/**
-	 * Returns a {@code View} with a given id. 
+	 * Returns a View with a given id. 
 	 * 
-	 * @param id the R.id of the {@code View} to be returned 
-	 * @return a {@code View} with a given id
+	 * @param id the R.id of the {@link View} to be returned 
+	 * @return a {@link View} with a given id
 	 */
 	
 	public View getView(int id){
@@ -1318,10 +1318,10 @@ public class Solo {
 	}
 	
 	/**
-	 * Returns an {@code ArrayList} of the {@code View} objects currently shown in the focused 
-	 * window e.g. an {@code Activity} or a {@code Dialog}.
+	 * Returns an ArrayList of the View objects currently shown in the focused 
+	 * Activity or Dialog.
 	 *
-	 * @return an {@code ArrayList} of the {@code View} objects currently shown in the
+	 * @return an {@code ArrayList} of the {@link View} objects currently shown in the
 	 * focused window
 	 *
 	 */
@@ -1331,10 +1331,10 @@ public class Solo {
 	}
 	
 	/**
-	 * Returns an {@code ArrayList} of the {@code ImageView} objects currently shown in the focused 
-	 * window e.g. an {@code Activity} or a {@code Dialog}.
+	 * Returns an ArrayList of the ImageView objects currently shown in the focused 
+	 * Activity or Dialog.
 	 *
-	 * @return an {@code ArrayList} of the {@code ImageView} objects currently shown in the
+	 * @return an {@code ArrayList} of the {@link ImageView} objects currently shown in the
 	 * focused window
 	 *
 	 */
@@ -1345,10 +1345,10 @@ public class Solo {
 	
 	
 	/**
-	 * Returns an {@code ArrayList} of the {@code EditText} objects currently shown in the focused 
-	 * window e.g. an {@code Activity} or a {@code Dialog}.
+	 * Returns an ArrayList of the EditText objects currently shown in the focused 
+	 * Activity or Dialog.
 	 *
-	 * @return an {@code ArrayList} of the {@code EditText} objects currently shown in the
+	 * @return an {@code ArrayList} of the {@link EditText} objects currently shown in the
 	 * focused window
 	 *
 	 */
@@ -1358,10 +1358,10 @@ public class Solo {
 	}
 	
 	/**
-	 * Returns an {@code ArrayList} of the {@code ListView} objects currently shown in the focused 
-	 * window e.g. an {@code Activity} or a {@code Dialog}.
+	 * Returns an ArrayList of the ListView objects currently shown in the focused 
+	 * Activity or Dialog.
 	 *
-	 * @return an {@code ArrayList} of the {@code ListView}  objects currently shown in the
+	 * @return an {@code ArrayList} of the {@link ListView}  objects currently shown in the
 	 * focused window
 	 * 
 	 */
@@ -1371,10 +1371,10 @@ public class Solo {
 	}
 
 	/**
-	 * Returns an {@code ArrayList} of the {@code ScrollView} objects currently shown in the focused 
-	 * window e.g. an {@code Activity} or a {@code Dialog}.
+	 * Returns an ArrayList of the ScrollView objects currently shown in the focused 
+	 * Activity or Dialog.
 	 *
-	 * @return an {@code ArrayList} of the {@code ScrollView} objects currently shown in the
+	 * @return an {@code ArrayList} of the {@link ScrollView} objects currently shown in the
 	 * focused window
 	 *
 	 */
@@ -1385,10 +1385,10 @@ public class Solo {
 
 	
 	/**
-	 * Returns an {@code ArrayList} of the {@code Spinner} objects (drop-down menus) currently shown in the focused 
-	 * window e.g. an {@code Activity} or a {@code Dialog}.
+	 * Returns an ArrayList of the Spinner objects (drop-down menus) currently shown in the focused 
+	 * Activity or Dialog.
 	 *
-	 * @return an {@code ArrayList} of the {@code Spinner} objects (drop-down menus) currently shown in the
+	 * @return an {@code ArrayList} of the {@link Spinner} objects (drop-down menus) currently shown in the
 	 * focused window
 	 *
 	 */
@@ -1398,13 +1398,13 @@ public class Solo {
 	}
 	
 	/**
-	 * Returns an {@code ArrayList} of the {@code TextView} objects currently shown in the focused 
-	 * window or {@code View}.
+	 * Returns an ArrayList of the TextView objects currently shown in the focused 
+	 * Activity or Dialog.
 	 *
-	 * @param parent the parent {@code View} from which the {@code TextView} objects should be returned. {@code null} if
-	 * all {@code TextView} objects from the currently focused window e.g. {@code Activity} should be returned
+	 * @param parent the parent {@link View} from which the {@link TextView} objects should be returned. {@code null} if
+	 * all TextView objects from the currently focused window e.g. Activity should be returned
 	 *
-	 * @return an {@code ArrayList} of the {@code TextView} objects currently shown in the
+	 * @return an {@code ArrayList} of the {@link TextView} objects currently shown in the
 	 * focused window
 	 *
 	 */
@@ -1414,10 +1414,10 @@ public class Solo {
 	}
 	
 	/**
-	 * Returns an {@code ArrayList} of the {@code GridView} objects currently shown in the focused 
-	 * window e.g. an {@code Activity} or a {@code Dialog}.
+	 * Returns an ArrayList of the GridView objects currently shown in the focused 
+	 * Activity or Dialog.
 	 *
-	 * @return an {@code ArrayList} of the {@code GridView} objects currently shown in the
+	 * @return an {@code ArrayList} of the {@link GridView} objects currently shown in the
 	 * focused window
 	 *
 	 */
@@ -1428,10 +1428,10 @@ public class Solo {
 	
 	
 	/**
-	 * Returns an {@code ArrayList} of the {@code Button} objects currently shown in the focused 
-	 * window e.g. an {@code Activity} or a {@code Dialog}.
+	 * Returns an ArrayList of the Button objects currently shown in the focused 
+	 * Activity or Dialog.
 	 *
-	 * @return an {@code ArrayList} of the {@code Button} objects currently shown in the
+	 * @return an {@code ArrayList} of the {@link Button} objects currently shown in the
 	 * focused window
 	 * 
 	 */
@@ -1441,10 +1441,10 @@ public class Solo {
 	}
 	
 	/**
-	 * Returns an {@code ArrayList} of the {@code ToggleButton} objects currently shown in the focused 
-	 * window e.g. an {@code Activity} or an {@code Dialog}.
+	 * Returns an ArrayList of the ToggleButton objects currently shown in the focused 
+	 * Activity or Dialog.
 	 *
-	 * @return an {@code ArrayList} of the {@code ToggleButton} objects currently shown in the
+	 * @return an {@code ArrayList} of the {@link ToggleButton} objects currently shown in the
 	 * focused window
 	 *
 	 */
@@ -1454,10 +1454,10 @@ public class Solo {
 	}
 	
 	/**
-	 * Returns an {@code ArrayList} of the {@code RadioButton} objects currently shown in the focused 
-	 * window e.g. an {@code Activity} or a {@code Dialog}.
+	 * Returns an ArrayList of the RadioButton objects currently shown in the focused 
+	 * Activity or Dialog.
 	 *
-	 * @return an {@code ArrayList} of the {@code RadioButton} objects currently shown in the
+	 * @return an {@code ArrayList} of the {@link RadioButton} objects currently shown in the
 	 * focused window
 	 *
 	 */
@@ -1467,10 +1467,10 @@ public class Solo {
 	}
 	
 	/**
-	 * Returns an {@code ArrayList} of the {@code CheckBox} objects currently shown in the focused 
-	 * window e.g. an {@code Activity} or a {@code Dialog}.
+	 * Returns an ArrayList of the CheckBox objects currently shown in the focused 
+	 * Activity or Dialog.
 	 *
-	 * @return an {@code ArrayList} of the {@code CheckBox} objects currently shown in the
+	 * @return an {@code ArrayList} of the {@link CheckBox} objects currently shown in the
 	 * focused window
 	 *
 	 */
@@ -1480,10 +1480,10 @@ public class Solo {
 	}
 	
 	/**
-	 * Returns an {@code ArrayList} of the {@code ImageButton} objects currently shown in the focused 
-	 * window e.g. an {@code Activity} or a {@code Dialog}.
+	 * Returns an ArrayList of the ImageButton objects currently shown in the focused 
+	 * Activity or Dialog.
 	 *
-	 * @return an {@code ArrayList} of the {@code ImageButton} objects currently shown in the
+	 * @return an {@code ArrayList} of the {@link ImageButton} objects currently shown in the
 	 * focused window
 	 *
 	 */
@@ -1493,10 +1493,10 @@ public class Solo {
 	}
 	
 	/**
-	 * Returns an {@code ArrayList} of the {@code DatePicker} objects currently shown in the focused 
-	 * window e.g. an {@code Activity} or a {@code Dialog}.
+	 * Returns an ArrayList of the DatePicker objects currently shown in the focused 
+	 * Activity or Dialog.
 	 *
-	 * @return an {@code ArrayList} of the {@code DatePicker} objects currently shown in the
+	 * @return an {@code ArrayList} of the {@link DatePicker} objects currently shown in the
 	 * focused window
 	 *
 	 */
@@ -1506,10 +1506,10 @@ public class Solo {
 	}
 	
 	/**
-	 * Returns an {@code ArrayList} of the {@code TimePicker} objects currently shown in the focused 
-	 * window e.g. an {@code Activity} or a {@code Dialog}.
+	 * Returns an ArrayList of the TimePicker objects currently shown in the focused 
+	 * Activity or Dialog.
 	 *
-	 * @return an {@code ArrayList} of the {@code TimePicker} objects currently shown in the
+	 * @return an {@code ArrayList} of the {@link TimePicker} objects currently shown in the
 	 * focused window
 	 *
 	 */
@@ -1519,10 +1519,10 @@ public class Solo {
 	}
 	
 	/**
-	 * Returns an {@code ArrayList} of the {@code ProgressBar} objects currently shown in the focused 
-	 * window e.g. an {@code Activity} or a {@code Dialog}.
+	 * Returns an ArrayList of the ProgressBar objects currently shown in the focused 
+	 * Activity or Dialog.
 	 *
-	 * @return an {@code ArrayList} of the {@code ProgressBar} objects currently shown in the
+	 * @return an {@code ArrayList} of the {@link ProgressBar} objects currently shown in the
 	 * focused window
 	 *
 	 */
@@ -1532,10 +1532,10 @@ public class Solo {
 	}
 	
 	/**
-	 * Checks if a {@link RadioButton} with a given index is checked.
+	 * Checks if a RadioButton with a given index is checked.
 	 *
-	 * @param index of the {@code RadioButton} to check. {@code 0} if only one is available
-	 * @return {@code true} if {@code RadioButton} is checked and {@code false} if it is not checked
+	 * @param index of the {@link RadioButton} to check. {@code 0} if only one is available
+	 * @return {@code true} if {@link RadioButton} is checked and {@code false} if it is not checked
 	 * 
 	 */
 	
@@ -1545,10 +1545,10 @@ public class Solo {
 	}
 	
 	/**
-	 * Checks if a {@link RadioButton} with a given text is checked.
+	 * Checks if a RadioButton with a given text is checked.
 	 *
-	 * @param text the text that the {@code RadioButton} shows
-	 * @return {@code true} if a {@code RadioButton} with the given text is checked and {@code false} if it is not checked
+	 * @param text the text that the {@link RadioButton} shows
+	 * @return {@code true} if a {@link RadioButton} with the given text is checked and {@code false} if it is not checked
 	 *
 	 */
 	
@@ -1558,10 +1558,10 @@ public class Solo {
 	}
 	
 	/**
-	 * Checks if a {@link CheckBox} with a given index is checked.
+	 * Checks if a CheckBox with a given index is checked.
 	 * 
-	 * @param index of the {@code CheckBox} to check. {@code 0} if only one is available
-	 * @return {@code true} if {@code CheckBox} is checked and {@code false} if it is not checked
+	 * @param index of the {@link CheckBox} to check. {@code 0} if only one is available
+	 * @return {@code true} if {@link CheckBox} is checked and {@code false} if it is not checked
 	 * 
 	 */
 	
@@ -1571,10 +1571,10 @@ public class Solo {
 	}
 	
 	/**
-	 * Checks if a {@link ToggleButton} with a given text is checked.
+	 * Checks if a ToggleButton with a given text is checked.
 	 *
-	 * @param text the text that the {@code ToggleButton} shows
-	 * @return {@code true} if a {@code ToggleButton} with the given text is checked and {@code false} if it is not checked
+	 * @param text the text that the {@link ToggleButton} shows
+	 * @return {@code true} if a {@link ToggleButton} with the given text is checked and {@code false} if it is not checked
 	 *
 	 */
 	
@@ -1584,10 +1584,10 @@ public class Solo {
 	}
 	
 	/**
-	 * Checks if a {@link ToggleButton} with a given index is checked.
+	 * Checks if a ToggleButton with a given index is checked.
 	 * 
-	 * @param index of the {@code ToggleButton} to check. {@code 0} if only one is available
-	 * @return {@code true} if {@code ToggleButton} is checked and {@code false} if it is not checked
+	 * @param index of the {@link ToggleButton} to check. {@code 0} if only one is available
+	 * @return {@code true} if {@link ToggleButton} is checked and {@code false} if it is not checked
 	 * 
 	 */
 	
@@ -1597,10 +1597,10 @@ public class Solo {
 	}
 	
 	/**
-	 * Checks if a {@link CheckBox} with a given text is checked.
+	 * Checks if a CheckBox with a given text is checked.
 	 *
-	 * @param text the text that the {@code CheckBox} shows
-	 * @return {@code true} if a {@code CheckBox} with the given text is checked and {@code false} if it is not checked
+	 * @param text the text that the {@link CheckBox} shows
+	 * @return {@code true} if a {@link CheckBox} with the given text is checked and {@code false} if it is not checked
 	 *
 	 */
 	
@@ -1615,7 +1615,7 @@ public class Solo {
 	/**
 	 * Checks if the given text is checked.
 	 *
-	 * @param text the text that the {@code CheckedTextView} or {@code CompoundButton} objects show
+	 * @param text the text that the {@link CheckedTextView} or {@link CompoundButton} objects show
 	 * @return {@code true} if the given text is checked and {@code false} if it is not checked
 	 */
 	
@@ -1632,10 +1632,10 @@ public class Solo {
 	}
 	
 	/**
-	 * Checks if a given text is selected in any {@link Spinner} located on the current screen.
+	 * Checks if a given text is selected in any Spinner located in the current screen.
 	 *
 	 * @param text the text that is expected to be selected
-	 * @return {@code true} if the given text is selected in any {@code Spinner} and false if it is not
+	 * @return {@code true} if the given text is selected in any {@link Spinner} and false if it is not
 	 * 
 	 */
 	
@@ -1645,11 +1645,11 @@ public class Solo {
 	}
 	
 	/**
-	 * Checks if a given text is selected in a given {@link Spinner}. 
+	 * Checks if a given text is selected in a given Spinner. 
 	 *
 	 * @param index the index of the spinner to check. {@code 0} if only one spinner is available
 	 * @param text the text that is expected to be selected
-	 * @return true if the given text is selected in the given {@code Spinner} and false if it is not
+	 * @return true if the given text is selected in the given {@link Spinner} and false if it is not
 	 */
 	
 	public boolean isSpinnerTextSelected(int index, String text)
@@ -1658,9 +1658,10 @@ public class Solo {
 	}
 
 	/**
-	 * Sends a key: Right, Left, Up, Down, Enter, Menu, Delete, Call or End Call.
+	 * Sends a key: Right, Left, Up, Down, Enter, Menu or Delete.
 	 * 
-	 * @param key the key to be sent. Use {@code Solo.}{@link #RIGHT}, {@link #LEFT}, {@link #UP}, {@link #DOWN}, {@link #ENTER}, {@link #MENU}, {@link #DELETE}, {@link #CALL}, {@link #ENDCALL}
+	 * @param key the key to be sent. Use {@code Solo.}{@link #RIGHT}, {@link #LEFT}, {@link #UP}, {@link #DOWN}, 
+	 * {@link #ENTER}, {@link #MENU}, {@link #DELETE}
 	 * 
 	 */
 	
@@ -1695,9 +1696,9 @@ public class Solo {
     }
 	
 	/**
-	 * Returns to the given {@link Activity}.
+	 * Returns to the given Activity.
 	 *
-	 * @param name the name of the {@code Activity} to return to, e.g. {@code "MyActivity"}
+	 * @param name the name of the {@link Activity} to return to, e.g. {@code "MyActivity"}
 	 *
 	 */
 	
@@ -1707,11 +1708,11 @@ public class Solo {
 	}
 	
 	/**
-	 * Waits for the given {@link Activity}.
+	 * Waits for the given Activity.
 	 *
-	 * @param name the name of the {@code Activity} to wait for e.g. {@code "MyActivity"}
+	 * @param name the name of the {@link Activity} to wait for e.g. {@code "MyActivity"}
 	 * @param timeout the amount of time in milliseconds to wait
-	 * @return {@code true} if {@code Activity} appears before the timeout and {@code false} if it does not
+	 * @return {@code true} if {@link Activity} appears before the timeout and {@code false} if it does not
 	 * 
 	 */
 	
