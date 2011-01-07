@@ -152,7 +152,7 @@ public class Solo {
 	}
 	
 	/**
-	 * Returns the absolute top parent {@code View} in for a given {@code View}.
+	 * Returns the absolute top parent {@code View} for a given {@code View}.
 	 *
 	 * @param view the {@code View} whose top parent is requested
 	 * @return the top parent {@code View}
@@ -201,7 +201,7 @@ public class Solo {
     /**
 	 * Waits for a text to be shown. Default timeout is 20 seconds. 
 	 * 
-	 * @param text the text that is expected to be shown
+	 * @param text the text to wait for
 	 * @return {@code true} if text is shown and {@code false} if it is not shown before the timeout
 	 * 
 	 */
@@ -215,7 +215,7 @@ public class Solo {
 	 /**
 	 * Waits for a text to be shown. 
 	 * 
-	 * @param text the text that needs to be shown
+	 * @param text the text to wait for
 	 * @param minimumNumberOfMatches the minimum number of matches that are expected to be shown. {@code 0} means any number of matches
 	 * @param timeout the the amount of time in milliseconds to wait 
 	 * @return {@code true} if text is shown and {@code false} if it is not shown before the timeout
@@ -229,7 +229,7 @@ public class Solo {
 	 /**
 	 * Waits for a text to be shown. 
 	 * 
-	 * @param text the text that needs to be shown
+	 * @param text the text to wait for
 	 * @param minimumNumberOfMatches the minimum number of matches that are expected to be shown. {@code 0} means any number of matches
 	 * @param timeout the the amount of time in milliseconds to wait
 	 * @param scroll {@code true} if scrolling should be performed
@@ -589,7 +589,7 @@ public class Solo {
 	
 
 	/**
-	 * Waits for a {@link android.app.Dialog} to close.
+	 * Waits for an {@link android.app.Dialog} to close.
 	 * 
 	 * @param timeout the amount of time in milliseconds to wait
 	 * @return {@code true} if the {@code Dialog} is closed before the timeout and {@code false} if it is not closed
@@ -710,7 +710,7 @@ public class Solo {
 	}
 	
 	/**
-	 * Presses a {@link android.view.MenuItem} with a given index. Index {@code 0} is the first item in the
+	 * Presses an {@link android.view.MenuItem} with a given index. Index {@code 0} is the first item in the
 	 * first row, Index {@code 3} is the first item in the second row and
 	 * index {@code 6} is the first item in the third row.
 	 * 
@@ -723,7 +723,7 @@ public class Solo {
 	}
 	
 	/**
-	 * Presses a {@link android.view.MenuItem} with a given index. Supports three rows with a given amount
+	 * Presses an {@link android.view.MenuItem} with a given index. Supports three rows with a given amount
 	 * of items. If itemsPerRow equals 5 then index 0 is the first item in the first row, 
 	 * index 5 is the first item in the second row and index 10 is the first item in the third row.
 	 * 
@@ -960,13 +960,13 @@ public class Solo {
 	 * returns an {@code ArrayList} of the {@link TextView}s that the list line is showing.
 	 * 
 	 * @param line the line that should be clicked
-	 * @param listIndex the index of the list. 1 if two lists are available
+	 * @param index the index of the list. 1 if two lists are available
 	 * @return an {@code ArrayList} of the {@code TextView} objects located in the list line
 	 *
 	 */
 	
-	public ArrayList<TextView> clickInList(int line, int listIndex) {
-		return clicker.clickInList(line, listIndex);
+	public ArrayList<TextView> clickInList(int line, int index) {
+		return clicker.clickInList(line, index);
 	}
 
 	 /**
@@ -1015,27 +1015,27 @@ public class Solo {
 	}
 	
 	/**
-	 * Scrolls down a list with a given {@code listIndex}.
+	 * Scrolls down a list with a given {@code index}.
 	 * 
-	 * @param listIndex the {@link ListView} to be scrolled. {@code 0} if only one list is available
+	 * @param index the {@link ListView} to be scrolled. {@code 0} if only one list is available
 	 * @return {@code true} if more scrolling can be done
 	 * 
 	 */
 	
-	public boolean scrollDownList(int listIndex) {
-		return scroller.scrollList(listIndex, Scroller.DOWN, null);
+	public boolean scrollDownList(int index) {
+		return scroller.scrollList(index, Scroller.DOWN, null);
 	}
 	
 	/**
-	 * Scrolls up a list with a given {@code listIndex}.
+	 * Scrolls up a list with a given {@code index}.
 	 * 
-	 * @param listIndex the {@link ListView} to be scrolled. {@code 0} if only one list is available
+	 * @param index the {@link ListView} to be scrolled. {@code 0} if only one list is available
 	 * @return {@code true} if more scrolling can be done
 	 * 
 	 */
 	
-	public boolean scrollUpList(int listIndex) {
-		return scroller.scrollList(listIndex, Scroller.UP, null);
+	public boolean scrollUpList(int index) {
+		return scroller.scrollList(index, Scroller.UP, null);
 	}
 	
 	/**
@@ -1658,7 +1658,7 @@ public class Solo {
 	}
 
 	/**
-	 * Tells Robotium to send a key: Right, Left, Up, Down, Enter, Menu, Delete, Call or End Call.
+	 * Sends a key: Right, Left, Up, Down, Enter, Menu, Delete, Call or End Call.
 	 * 
 	 * @param key the key to be sent. Use {@code Solo.}{@link #RIGHT}, {@link #LEFT}, {@link #UP}, {@link #DOWN}, {@link #ENTER}, {@link #MENU}, {@link #DELETE}, {@link #CALL}, {@link #ENDCALL}
 	 * 
