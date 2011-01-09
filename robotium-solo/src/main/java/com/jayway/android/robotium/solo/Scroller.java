@@ -28,7 +28,7 @@ class Scroller {
 	private final ActivityUtils activityUtils;
 	private final ViewFetcher viewFetcher;
 	private final Sleeper sleeper;
-	private int scrollAmount = 0;
+	
 
 	/**
 	 * Constructs this object.
@@ -98,8 +98,10 @@ class Scroller {
 	 */
 
 	private boolean scrollScrollView(int direction, ArrayList<ScrollView> scrollViews){
-		ScrollView scroll = viewFetcher.getView(ScrollView.class, scrollViews, 0);
-		if(scroll !=null){
+		final ScrollView scroll = viewFetcher.getView(ScrollView.class, scrollViews, 0);
+		int scrollAmount = 0;
+		
+		if(scroll != null){
 			int height = scroll.getHeight();
 			height--;
 			int scrollTo = 0;
@@ -148,14 +150,14 @@ class Scroller {
 	 */
 
 	public boolean scroll(int direction) {
-		ArrayList<View> viewList = viewFetcher.getViews(null, true);
-		ArrayList<ListView> listViews = RobotiumUtils.filterViews(ListView.class, viewList);
+		final ArrayList<View> viewList = viewFetcher.getViews(null, true);
+		final ArrayList<ListView> listViews = RobotiumUtils.filterViews(ListView.class, viewList);
 
 		if (listViews.size() > 0) {
 			return scrollList(0, direction, listViews);
 		} 
 
-		ArrayList<ScrollView> scrollViews = RobotiumUtils.filterViews(ScrollView.class, viewList);
+		final ArrayList<ScrollView> scrollViews = RobotiumUtils.filterViews(ScrollView.class, viewList);
 
 		if (scrollViews.size() > 0) {
 			return scrollScrollView(direction, scrollViews);
@@ -175,14 +177,9 @@ class Scroller {
 
 	public boolean scrollList(int listIndex, int direction, ArrayList<ListView> listViews) {
 		int[] xy = new int[2];
-		ListView listView = viewFetcher.getView(ListView.class, listViews, listIndex);
+		final ListView listView = viewFetcher.getView(ListView.class, listViews, listIndex);
 
-		while (listView ==null && scrollScrollView(direction, null)) {
-			sleeper.sleep();
-			listView = viewFetcher.getView(ListView.class, listViews, listIndex);
-		}
-		
-		if(listView ==null)
+		if(listView == null)
 			Assert.assertTrue("No ListView with index " + listIndex + " is found!", false);
 		
 		listView.getLocationOnScreen(xy);
@@ -206,7 +203,7 @@ class Scroller {
 			final int lines = listView.getLastVisiblePosition() - listView.getFirstVisiblePosition();
 			int lineToScrollTo = listView.getFirstVisiblePosition() - lines;
 			if(lineToScrollTo < 0)
-				lineToScrollTo=0;
+				lineToScrollTo = 0;
 
 			scrollListToLine(listView, lineToScrollTo);
 		}	
