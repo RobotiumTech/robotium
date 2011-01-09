@@ -135,7 +135,7 @@ public class Solo {
 	}
 	
 	/**
-	 * Returns an ArrayList of the View objects contained in the parent View
+	 * Returns an ArrayList of the View objects contained in the parent View.
 	 *
 	 * @param parent the parent view from which to return the views
 	 * @return an {@code ArrayList} of the {@link View} objects contained in the given {@code View}
@@ -291,8 +291,7 @@ public class Solo {
 	
 	
 	/**
-	 * Searches for a text string in the EditText objects located in the current
-	 * {@code Activity}. Will automatically scroll when needed.
+	 * Searches for a text string in the EditText objects currently shown and returns true if found. Will automatically scroll when needed.
 	 *
 	 * @param text the text to search for
 	 * @return {@code true} if an {@link EditText} with the given text is found or {@code false} if it is not found
