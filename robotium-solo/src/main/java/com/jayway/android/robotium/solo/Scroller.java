@@ -99,25 +99,28 @@ class Scroller {
 
 	private boolean scrollScrollView(int direction, ArrayList<ScrollView> scrollViews){
 		ScrollView scroll = viewFetcher.getView(ScrollView.class, scrollViews, 0);
-		int height = scroll.getHeight();
-		height--;
-		int scrollTo = 0;
+		if(scroll !=null){
+			int height = scroll.getHeight();
+			height--;
+			int scrollTo = 0;
 
-		if (direction == DOWN) {
-			scrollTo = (height);
-		}
+			if (direction == DOWN) {
+				scrollTo = (height);
+			}
 
-		else if (direction == UP) {
-			scrollTo = (-height);
+			else if (direction == UP) {
+				scrollTo = (-height);
+			}
+			scrollAmount = scroll.getScrollY();
+			scrollScrollViewTo(scroll,0, scrollTo);
+			if (scrollAmount == scroll.getScrollY()) {
+				return false;
+			}
+			else{
+				return true;
+			}
 		}
-		scrollAmount = scroll.getScrollY();
-		scrollScrollViewTo(scroll,0, scrollTo);
-		if (scrollAmount == scroll.getScrollY()) {
-			return false;
-		}
-		else{
-			return true;
-		}
+		return false;
 	}
 	
 	
