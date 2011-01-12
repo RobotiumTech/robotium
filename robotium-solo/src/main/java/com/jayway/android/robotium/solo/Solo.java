@@ -965,8 +965,48 @@ public class Solo {
 	 */
 	
 	public ArrayList<TextView> clickInList(int line, int index) {
-		return clicker.clickInList(line, index);
+		return clicker.clickInList(line, index, false, 0);
 	}
+	
+	/**
+	 * Long clicks on a given list line and returns an ArrayList of the TextView objects that
+	 * the list line is showing. Will use the first list it finds.
+	 * 
+	 * @param line the line that should be clicked
+	 * @return an {@code ArrayList} of the {@link TextView} objects located in the list line
+	 *
+	 */
+	public ArrayList<TextView> clickLongInList(int line){
+		return clicker.clickInList(line, 0, true, 0);
+	}
+	
+	/**
+	 * Long clicks on a given list line on a specified list and 
+	 * returns an ArrayList of the TextView objects that the list line is showing.
+	 * 
+	 * @param line the line that should be clicked
+	 * @param index the index of the list. 1 if two lists are available
+	 * @return an {@code ArrayList} of the {@link TextView} objects located in the list line
+	 *
+	 */
+	public ArrayList<TextView> clickLongInList(int line, int index){
+		return clicker.clickInList(line, index, true, 0);
+	}
+	
+	/**
+	 * Long clicks on a given list line on a specified list and 
+	 * returns an ArrayList of the TextView objects that the list line is showing.
+	 * 
+	 * @param line the line that should be clicked
+	 * @param index the index of the list. 1 if two lists are available
+	 * @param time the amount of time to long click
+	 * @return an {@code ArrayList} of the {@link TextView} objects located in the list line
+	 *
+	 */
+	public ArrayList<TextView> clickLongInList(int line, int index, int time){
+		return clicker.clickInList(line, index, true, time);
+	}
+	
 
 	 /**
 	 * Simulate touching a given location and dragging it to a new location.

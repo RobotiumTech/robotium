@@ -344,7 +344,7 @@ class Clicker {
 	 */
 
 	public ArrayList<TextView> clickInList(int line) {
-		return clickInList(line, 0);
+		return clickInList(line, 0, false, 0);
 	}
 
 	/**
@@ -356,7 +356,7 @@ class Clicker {
 	 * @return an {@code ArrayList} of the {@code TextView}s located in the list line
 	 */
 
-	public ArrayList<TextView> clickInList(int line, int index) {	
+	public ArrayList<TextView> clickInList(int line, int index, boolean longClick, int time) {	
 		line--;
 		if(line < 0)
 			line = 0;
@@ -374,8 +374,9 @@ class Clicker {
 		if(view != null){
 			views = viewFetcher.getViews(view, true);
 			views = RobotiumUtils.removeInvisibleViews(views);
-			clickOnScreen(view);
+			clickOnScreen(view, longClick, time);
 		}
 		return RobotiumUtils.filterViews(TextView.class, views);
 	}
+
 }
