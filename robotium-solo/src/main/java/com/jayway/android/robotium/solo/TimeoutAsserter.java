@@ -26,7 +26,7 @@ public class TimeoutAsserter implements IAsserter {
     }
 
 	public TimeoutAsserter(ActivityUtils activityUtils, Sleeper sleeper) {
-        this (activityUtils, sleeper, 5000);
+        this (activityUtils, sleeper, 15000);
     }
 
     interface ITimeoutAssertion {
