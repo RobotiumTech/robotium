@@ -94,7 +94,8 @@ public class Solo {
 	 * Constructor that takes in the instrumentation and the start activity.
 	 *
 	 * @param inst the {@link Instrumentation} instance
-	 * @param activity the start {@link Activity} 
+	 * @param activity the start {@link Activity} or {@code null}
+	 * if no start activity is provided
 	 *
 	 */
 	
@@ -115,6 +116,17 @@ public class Solo {
         this.presser = new Presser(viewFetcher, clicker, inst, sleeper);
         this.textEnterer = new TextEnterer(inst, waiter);
 
+	}
+	
+	/**
+     * Constructor that takes in the instrumentation.
+     *
+     * @param inst the {@link Instrumentation} instance
+     *
+     */
+
+	public Solo(Instrumentation inst) {
+	   this(inst, null);
 	}
 
 	/**

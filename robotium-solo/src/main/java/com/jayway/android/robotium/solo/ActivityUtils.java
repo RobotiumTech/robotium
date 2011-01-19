@@ -97,34 +97,59 @@ class ActivityUtils {
 	}
 	
 	/**
+	 * Waits for an activity to be started if one is not provided
+	 * by the constructor.
+	 *
+	 */
+
+	private final void waitForActivityIfNotAvailable(){
+	    if(activity == null){
+	        if (activityMonitor != null) {
+	            while (activityMonitor.getLastActivity() == null){
+	                sleeper.sleepMini();
+	            }
+	        }
+	        else{
+	            sleeper.sleepMini();
+	            setupActivityMonitor();
+	            waitForActivityIfNotAvailable();
+	        }
+	    }
+	}
+
+	/**
 	 * Returns the current {@code Activity}.
 	 *
 	 * @param shouldSleepFirst whether to sleep a default pause first
 	 * @return the current {@code Activity}
-	 * 
+	 *
 	 */
-	
+
 	public Activity getCurrentActivity(boolean shouldSleepFirst) {
-		if(shouldSleepFirst){
-			sleeper.sleep();
-			inst.waitForIdleSync();
-		}
-		Boolean found = false;
-		if (activityMonitor != null) {
-			if (activityMonitor.getLastActivity() != null)
-				activity = activityMonitor.getLastActivity();
-		}
-		for(Activity storedActivity : activityList){
-			if (storedActivity.getClass().getName().equals(
-					activity.getClass().getName()))
-				found = true;
-		}
-		if (found)
-			return activity;
-		else {
-			activityList.add(activity);
-			return activity;
-		}
+	    if(shouldSleepFirst){
+	        sleeper.sleep();
+	        inst.waitForIdleSync();
+	    }
+
+	    waitForActivityIfNotAvailable();
+	    Boolean found = false;
+
+	    if (activityMonitor != null) {
+	        if (activityMonitor.getLastActivity() != null)
+	            activity = activityMonitor.getLastActivity();
+	    }
+
+	    for(Activity storedActivity : activityList){
+	        if (storedActivity.getClass().getName().equals(
+	                activity.getClass().getName()))
+	            found = true;
+	    }
+	    if (found)
+	        return activity;
+	    else {
+	        activityList.add(activity);
+	        return activity;
+	    }
 	}
 	
 	/**
