@@ -234,7 +234,9 @@ class ActivityUtils {
 			getCurrentActivity().finish();
 			inst.sendKeyDownUpSync(KeyEvent.KEYCODE_BACK);
 			activityList.clear();
-		
+			if (activityMonitor != null) {
+				inst.removeMonitor(activityMonitor);
+			}
 		} catch (Exception ignored) {}
 		super.finalize();
 	}
