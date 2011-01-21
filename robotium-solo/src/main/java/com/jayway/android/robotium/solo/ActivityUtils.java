@@ -227,13 +227,22 @@ class ActivityUtils {
 	
 	public void finalize() throws Throwable {
 		try {
+			// Finish all opened activities
 			for (int i = activityList.size()-1; i >= 0; i--) {
 				activityList.get(i).finish();
 				sleeper.sleep(100);
 			}
+
+			// Finish the initial activity, pressing Back for good measure
 			getCurrentActivity().finish();
-			inst.sendKeyDownUpSync(KeyEvent.KEYCODE_BACK);
+			try {
+				inst.sendKeyDownUpSync(KeyEvent.KEYCODE_BACK);
+			} catch (SecurityException ignored) {
+				// Guard against lack of INJECT_EVENT permission
+			}
 			activityList.clear();
+
+			// Remove the monitor added during startup
 			if (activityMonitor != null) {
 				inst.removeMonitor(activityMonitor);
 			}
