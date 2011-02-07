@@ -1,6 +1,9 @@
 package com.jayway.android.robotium.solo;
 
-import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.WeakHashMap;
+
 import junit.framework.Assert;
 import android.app.Activity;
 import android.app.Instrumentation;
@@ -23,7 +26,8 @@ class ActivityUtils {
 	private ActivityMonitor activityMonitor;
 	private Activity activity;
     private final Sleeper sleeper;
-	private ArrayList<Activity> activityList = new ArrayList<Activity>();
+	private WeakHashMap<String, Activity> activityList;
+	private HashSet<String> activityNameList;
 
 	/**
 	 * Constructor that takes in the instrumentation and the start activity.
@@ -38,6 +42,8 @@ class ActivityUtils {
 		this.inst = inst;
 		this.activity = activity;
         this.sleeper = sleeper;
+    	activityList = new WeakHashMap<String, Activity>();
+    	activityNameList = new HashSet<String>();
         setupActivityMonitor();
 	}
 	
@@ -48,9 +54,9 @@ class ActivityUtils {
 	 * 
 	 */
 	
-	public ArrayList<Activity> getAllOpenedActivities()
+	public Collection<Activity> getAllOpenedActivities()
 	{
-		return activityList;
+		return activityList.values();//Can contain null values. Also should not be changed.
 	}
 	
 	
@@ -132,22 +138,18 @@ class ActivityUtils {
 	    }
 
 	    waitForActivityIfNotAvailable();
-	    Boolean found = false;
 
 	    if (activityMonitor != null) {
 	        if (activityMonitor.getLastActivity() != null)
 	            activity = activityMonitor.getLastActivity();
 	    }
-
-	    for(Activity storedActivity : activityList){
-	        if (storedActivity.getClass().getName().equals(
-	                activity.getClass().getName()))
-	            found = true;
-	    }
-	    if (found)
+	    
+		activityNameList.add(activity.getClass().getSimpleName());
+	    Activity foundActivity = activityList.get(activity.getClass().getSimpleName());
+	    if (foundActivity != null)
 	        return activity;
 	    else {
-	        activityList.add(activity);
+	        activityList.put(activity.getClass().getSimpleName(), activity);
 	        return activity;
 	    }
 	}
@@ -185,12 +187,7 @@ class ActivityUtils {
 	
 	public void goBackToActivity(String name)
 	{
-		boolean found = false;
-		for(Activity activity : activityList){
-			if(activity.getClass().getSimpleName().equals(name))
-				found = true;
-		}
-		if(found){
+		if(activityNameList.contains(name)){
 			while(!getCurrentActivity().getClass().getSimpleName().equals(name))
 			{
 				try{
@@ -200,8 +197,14 @@ class ActivityUtils {
 			}
 		}
 		else{
-			for (int i = 0; i < activityList.size(); i++)
-				Log.d("Robotium", "Activity priorly opened: "+ activityList.get(i).getClass().getSimpleName());
+			for (String activityName: activityNameList){
+				Log.d("Robotium", "Activity priorly opened: "+ activityName);
+			}
+			for (Activity activity: activityList.values()){
+				if(activity != null){
+					Log.d("Robotium", "Activity priorly opened and still in memory: "+ activity.getClass().getSimpleName());
+				}
+			}
 			Assert.assertTrue("No Activity named " + name + " has been priorly opened", false);
 		}
 	}
@@ -228,9 +231,11 @@ class ActivityUtils {
 	public void finalize() throws Throwable {
 		try {
 			// Finish all opened activities
-			for (int i = activityList.size()-1; i >= 0; i--) {
-				activityList.get(i).finish();
-				sleeper.sleep(100);
+			for (Activity activity: activityList.values()){
+				if(activity != null){
+					activity.finish();
+					sleeper.sleep(100);
+				}
 			}
 
 			// Finish the initial activity, pressing Back for good measure
@@ -241,6 +246,9 @@ class ActivityUtils {
 				// Guard against lack of INJECT_EVENT permission
 			}
 			activityList.clear();
+			activityList = null;
+			activityNameList.clear();
+			activityNameList = null;
 
 			// Remove the monitor added during startup
 			if (activityMonitor != null) {

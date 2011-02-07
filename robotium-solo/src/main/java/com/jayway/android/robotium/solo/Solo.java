@@ -1,6 +1,8 @@
 package com.jayway.android.robotium.solo;
 
 import java.util.ArrayList;
+import java.util.Collection;
+
 import junit.framework.Assert;
 import android.app.Activity;
 import android.app.Instrumentation;
@@ -16,12 +18,12 @@ import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.RadioButton;
 import android.widget.ScrollView;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.ListView;
 import android.widget.TimePicker;
 import android.widget.ToggleButton;
 
@@ -508,11 +510,13 @@ public class Solo {
 	/**
 	 * Returns an ArrayList of all the opened/active activities.
 	 * 
+	 * Using this might create a memory leak.
+	 * 
 	 * @return an ArrayList of all the opened/active activities
 	 *
 	 */
 	
-	public ArrayList<Activity> getAllOpenedActivities()
+	public Collection<Activity> getAllOpenedActivities()
 	{
 		return activitiyUtils.getAllOpenedActivities();
 	}
