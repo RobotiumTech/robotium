@@ -111,11 +111,13 @@ class ViewFetcher {
 		final View [] views = getWindowDecorViews();
 		final ArrayList<View> allViews = new ArrayList<View>();
 		final View [] nonDecorViews = getNonDecorViews(views);
+		final View activityDecorView = activity.getWindow().getDecorView();
+		
 		if(views !=null && views.length > 0)
 		{
 			if(!activity.hasWindowFocus()){
 				for(View view : views){
-					if(!activity.getWindow().getDecorView().equals(view)){
+					if(view.isShown() && !view.equals(activityDecorView)){
 						try{
 							addChildren(allViews,(ViewGroup) view, onlySufficientlyVisible);
 						}
@@ -130,10 +132,14 @@ class ViewFetcher {
 					}
 					catch (Exception ignored) {}
 				}	
+				final View decorView = getRecentDecorView(views);
 				try{
-					addChildren(allViews,(ViewGroup) getRecentDecorView(views), onlySufficientlyVisible);
+					addChildren(allViews,(ViewGroup) decorView, onlySufficientlyVisible);
 				}
 				catch (Exception ignored) {}
+				
+				if(activityDecorView.isShown() && !activityDecorView.equals(decorView))
+					addChildren(allViews,(ViewGroup) activityDecorView, onlySufficientlyVisible);
 			}
 		}
 		return allViews;
@@ -257,7 +263,7 @@ class ViewFetcher {
 	private void addChildren(ArrayList<View> views, ViewGroup viewGroup, boolean onlySufficientlyVisible) {
 		for (int i = 0; i < viewGroup.getChildCount(); i++) {
 			final View child = viewGroup.getChildAt(i);
-
+	
 			if(onlySufficientlyVisible && isViewSufficientlyShown(child))
 				views.add(child);
 			
