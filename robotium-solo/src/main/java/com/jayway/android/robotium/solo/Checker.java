@@ -43,7 +43,7 @@ class Checker {
 	
 	public <T extends CompoundButton> boolean isButtonChecked(Class<T> expectedClass, int index)
 	{
-		waiter.waitForView(expectedClass, index);
+		waiter.waitForView(expectedClass, index, false);
 		ArrayList<T> list = viewFetcher.getCurrentViews(expectedClass);
 		list=RobotiumUtils.removeInvisibleViews(list);
 		if(index < 0 || index > list.size()-1)
@@ -117,7 +117,7 @@ class Checker {
 	
 	public boolean isSpinnerTextSelected(int spinnerIndex, String text)
 	{
-		waiter.waitForView(Spinner.class, spinnerIndex);
+		waiter.waitForView(Spinner.class, spinnerIndex, false);
 		ArrayList<Spinner> spinnerList = viewFetcher.getCurrentViews(Spinner.class);
 		if(spinnerList.size() < spinnerIndex+1)
 			Assert.assertTrue("No spinner with index " + spinnerIndex + " is found! ", false);	

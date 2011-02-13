@@ -53,6 +53,20 @@ class Waiter {
 	public <T extends View> boolean waitForView(final Class<T> viewClass, final int index){
 		return waitForView(viewClass, index, SMALLTIMEOUT, true);
 	}
+	
+	/**
+	 * Waits for a view to be shown.
+	 * 
+	 * @param viewClass the {@code View} class to wait for
+	 * @param minimumNumberOfMatches the minimum number of matches that are expected to be shown. {@code 0} means any number of matches
+	 * @param timeout the amount of time in milliseconds to wait
+	 * @param scroll true if scrolling should be performed
+	 * @return {@code true} if view is shown and {@code false} if it is not shown before the timeout
+	 */
+
+	public <T extends View> boolean waitForView(final Class<T> viewClass, final int index, final boolean scroll){
+		return waitForView(viewClass, index, SMALLTIMEOUT, scroll);
+	}
 
 	/**
 	 * Waits for a view to be shown.

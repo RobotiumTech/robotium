@@ -324,7 +324,7 @@ class Clicker {
 	 * @param index the index of the {@code View} to be clicked, within {@code View}s of the specified class
 	 */
 	public <T extends View> void clickOn(Class<T> viewClass, int index) {
-		waiter.waitForView(viewClass, index);
+		waiter.waitForView(viewClass, index, false);
 		try {
 			ArrayList<T> views=viewFetcher.getCurrentViews(viewClass);
 			views=RobotiumUtils.removeInvisibleViews(views);
@@ -366,7 +366,7 @@ class Clicker {
 			Assert.assertTrue("No ListView with index " + index + " is available!", false);
 
 		ArrayList<View> views = new ArrayList<View>();
-		final ListView listView = viewFetcher.getView(ListView.class, null, index);
+		final ListView listView = viewFetcher.getView(ListView.class, null, 0);
 		if(listView == null)
 			Assert.assertTrue("ListView is null!", false);
 

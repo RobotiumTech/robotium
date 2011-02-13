@@ -86,7 +86,7 @@ class ViewFetcher {
 
 	public View getScrollOrListParent(View view) {
 
-		if (!(view instanceof android.widget.ListView) && !(view instanceof android.widget.ScrollView)) {
+		if (!(view instanceof android.widget.AbsListView) && !(view instanceof android.widget.ScrollView)) {
 			try{
 				return getScrollOrListParent((View) view.getParent());
 			}catch(Exception e){

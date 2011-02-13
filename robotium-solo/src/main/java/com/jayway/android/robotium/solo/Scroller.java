@@ -6,6 +6,8 @@ import android.app.Instrumentation;
 import android.os.SystemClock;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.AbsListView;
+import android.widget.GridView;
 import android.widget.ListView;
 import android.widget.ScrollView;
 
@@ -154,7 +156,13 @@ class Scroller {
 		final ArrayList<ListView> listViews = RobotiumUtils.filterViews(ListView.class, viewList);
 
 		if (listViews.size() > 0) {
-			return scrollList(0, direction, listViews);
+			return scrollList(ListView.class, 0, direction, listViews);
+		} 
+		
+		final ArrayList<GridView> gridViews = RobotiumUtils.filterViews(GridView.class, viewList);
+
+		if (gridViews.size() > 0) {
+			return scrollList(GridView.class, 0, direction, gridViews);
 		} 
 
 		final ArrayList<ScrollView> scrollViews = RobotiumUtils.filterViews(ScrollView.class, viewList);
@@ -165,7 +173,6 @@ class Scroller {
 		return false;
 	}
 
-
 	/**
 	 * Scrolls a list.
 	 * 
@@ -175,14 +182,11 @@ class Scroller {
 	 * 
 	 */
 
-	public boolean scrollList(int listIndex, int direction, ArrayList<ListView> listViews) {
-		int[] xy = new int[2];
-		final ListView listView = viewFetcher.getView(ListView.class, listViews, listIndex);
+	public <T extends AbsListView> boolean scrollList(Class<T> classToFilterBy, int listIndex, int direction, ArrayList<T> listViews) {
+		final T listView = viewFetcher.getView(classToFilterBy, listViews, listIndex);
 
 		if(listView == null)
 			Assert.assertTrue("No ListView with index " + listIndex + " is found!", false);
-
-		listView.getLocationOnScreen(xy);
 
 		if (direction == DOWN) {
 			if (listView.getLastVisiblePosition() >= listView.getCount()-1) {
@@ -224,10 +228,17 @@ class Scroller {
 	 * @param line the line to scroll to
 	 */
 
-	private void scrollListToLine(final ListView listView, final int line){
+	private <T extends AbsListView> void scrollListToLine(final T view, final int line){
+		
+		final int lineToMoveTo;
+		if(view instanceof GridView)
+			lineToMoveTo = line+1;
+		else
+			lineToMoveTo = line;
+	
 		inst.runOnMainSync(new Runnable(){
 			public void run(){
-				listView.setSelection(line);
+				view.setSelection(lineToMoveTo);
 			}
 		});
 	}
