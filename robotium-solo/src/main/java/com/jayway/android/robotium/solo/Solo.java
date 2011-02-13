@@ -185,7 +185,7 @@ public class Solo {
      */
 	
     public void clearEditText(int index) {
-    	waiter.waitForView(EditText.class, index, false);
+    	waiter.waitForView(EditText.class, index);
     	
     	ArrayList<EditText> visibleEditTexts = RobotiumUtils.removeInvisibleViews(getCurrentEditTexts());
 
@@ -1118,7 +1118,7 @@ public class Solo {
 	 */
 	
 	public void setDatePicker(int index, int year, int monthOfYear, int dayOfMonth) {
-		waiter.waitForView(DatePicker.class, index, false);
+		waiter.waitForView(DatePicker.class, index);
 		
 		ArrayList<DatePicker> visibleDatePickers = RobotiumUtils.removeInvisibleViews(getCurrentDatePickers());
 		
@@ -1154,7 +1154,7 @@ public class Solo {
 	 */
 	
 	public void setTimePicker(int index, int hour, int minute) {
-		waiter.waitForView(TimePicker.class, index, false);
+		waiter.waitForView(TimePicker.class, index);
 		
 		ArrayList<TimePicker> visibleTimePickers = RobotiumUtils.removeInvisibleViews(getCurrentTimePickers());
 		
@@ -1189,7 +1189,7 @@ public class Solo {
 
 	public void setProgressBar(int index, int progress){
 
-		waiter.waitForView(ProgressBar.class, index, false);
+		waiter.waitForView(ProgressBar.class, index);
 
 		ArrayList<ProgressBar> visibleProgressBars = RobotiumUtils.removeInvisibleViews(getCurrentProgressBars());
 
@@ -1226,7 +1226,7 @@ public class Solo {
 	 */
 	
 	public void enterText(int index, String text) {
-		waiter.waitForView(EditText.class, index, false);
+		waiter.waitForView(EditText.class, index);
 		
 		ArrayList<EditText> visibleEditTexts = RobotiumUtils.removeInvisibleViews(getCurrentEditTexts());
 		
