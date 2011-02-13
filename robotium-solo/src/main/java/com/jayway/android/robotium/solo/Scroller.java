@@ -181,20 +181,22 @@ class Scroller {
 
 		if(listView == null)
 			Assert.assertTrue("No ListView with index " + listIndex + " is found!", false);
-		
+
 		listView.getLocationOnScreen(xy);
-		
+
 		if (direction == DOWN) {
-			
 			if (listView.getLastVisiblePosition() >= listView.getCount()-1) {
 				scrollListToLine(listView, listView.getLastVisiblePosition());
 				return false;
 			}
-
-			scrollListToLine(listView, listView.getLastVisiblePosition());
+			
+			if(listView.getFirstVisiblePosition() != listView.getLastVisiblePosition())
+				scrollListToLine(listView, listView.getLastVisiblePosition());
+	
+			else
+				scrollListToLine(listView, listView.getFirstVisiblePosition()+1);
 
 		} else if (direction == UP) {
-
 			if (listView.getFirstVisiblePosition() < 2) {
 				scrollListToLine(listView, 0);
 				return false;
@@ -202,6 +204,10 @@ class Scroller {
 
 			final int lines = listView.getLastVisiblePosition() - listView.getFirstVisiblePosition();
 			int lineToScrollTo = listView.getFirstVisiblePosition() - lines;
+
+			if(lineToScrollTo == listView.getLastVisiblePosition())
+				lineToScrollTo--;
+			
 			if(lineToScrollTo < 0)
 				lineToScrollTo = 0;
 
