@@ -1249,7 +1249,7 @@ public class Solo {
 
 	public void setSlidingDrawer(SlidingDrawer slidingDrawer, int status){
 
-		waiter.waitForView(ProgressBar.class, 0);
+		waiter.waitForView(SlidingDrawer.class, 0);
 
 		setter.setSlidingDrawer(slidingDrawer, status);
 	}
