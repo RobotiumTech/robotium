@@ -20,6 +20,7 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.RadioButton;
 import android.widget.ScrollView;
+import android.widget.SlidingDrawer;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.ListView;
@@ -89,6 +90,8 @@ public class Solo {
 	public final static int ENTER = KeyEvent.KEYCODE_ENTER;
 	public final static int MENU = KeyEvent.KEYCODE_MENU;
 	public final static int DELETE = KeyEvent.KEYCODE_DEL;
+	public final static int CLOSED = 0;
+	public final static int OPENED = 1;
 
 
 	/**
@@ -1214,6 +1217,42 @@ public class Solo {
 
 		setter.setProgressBar(progressBar, progress);
 	}
+	
+	/**
+	 * Sets the status of a SlidingDrawer with a given index. Examples are Solo.CLOSED and Solo.OPENED.
+	 *
+	 * @param index the index of the {@link SlidingDrawer}
+	 * @param status the status that the {@link SlidingDrawer} should be set to
+	 * 
+	 */
+
+	public void setSlidingDrawer(int index, int status){
+
+		waiter.waitForView(SlidingDrawer.class, index);
+
+		ArrayList<SlidingDrawer> visibleSlidingDrawers = RobotiumUtils.removeInvisibleViews(getCurrentSlidingDrawers());
+
+		if(index > visibleSlidingDrawers.size()-1)
+			Assert.assertTrue("SlidingDrawer with index " + index + " is not available!", false);
+
+
+		setter.setSlidingDrawer(visibleSlidingDrawers.get(index), status);
+	}
+
+	/**
+	 * Sets the status of a given SlidingDrawer. Examples are Solo.CLOSED and Solo.OPENED.
+	 *
+	 * @param slidingDrawer the {@link SlidingDrawer}
+	 * @param status the status that the {@link SlidingDrawer} should be set to
+	 * 
+	 */
+
+	public void setSlidingDrawer(SlidingDrawer slidingDrawer, int status){
+
+		waiter.waitForView(ProgressBar.class, 0);
+
+		setter.setSlidingDrawer(slidingDrawer, status);
+	}
 
 	
 	
@@ -1570,6 +1609,19 @@ public class Solo {
 	
 	public ArrayList<TimePicker> getCurrentTimePickers() {
 		return viewFetcher.getCurrentViews(TimePicker.class);
+	}
+	
+	/**
+	 * Returns an ArrayList of the SlidingDrawer objects currently shown in the focused 
+	 * Activity or Dialog.
+	 *
+	 * @return an {@code ArrayList} of the {@link SlidingDrawer} objects currently shown in the
+	 * focused window
+	 *
+	 */
+	
+	public ArrayList<SlidingDrawer> getCurrentSlidingDrawers() {
+		return viewFetcher.getCurrentViews(SlidingDrawer.class);
 	}
 	
 	/**
