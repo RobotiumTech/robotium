@@ -75,7 +75,7 @@ class Clicker {
 			inst.sendPointerSync(event);
 			inst.sendPointerSync(event2);
 		}catch(SecurityException e){
-			Assert.assertTrue("Click can not be completed! Something is in the way e.g. the keyboard.", false);
+			Assert.assertTrue("Click can not be completed!", false);
 		}
 	}
 
