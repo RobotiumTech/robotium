@@ -80,7 +80,7 @@ public class Solo {
 	private final Sleeper sleeper;
 	private final Waiter waiter;
 	private final Setter setter;
-	private final Instrumentation inst;
+	private final Instrumentation instrumentation;
 	public final static int LANDSCAPE = ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE;   // 0
 	public final static int PORTRAIT = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT;     // 1
 	public final static int RIGHT = KeyEvent.KEYCODE_DPAD_RIGHT;
@@ -97,40 +97,39 @@ public class Solo {
 	/**
 	 * Constructor that takes in the instrumentation and the start activity.
 	 *
-	 * @param inst the {@link Instrumentation} instance
+	 * @param instrumentation the {@link Instrumentation} instance
 	 * @param activity the start {@link Activity} or {@code null}
 	 * if no start activity is provided
 	 *
 	 */
 	
-	public Solo(Instrumentation inst, Activity activity) {
-		this.inst = inst;
+	public Solo(Instrumentation instrumentation, Activity activity) {
+		this.instrumentation = instrumentation;
         this.sleeper = new Sleeper();
-        this.activitiyUtils = new ActivityUtils(inst, activity, sleeper);
+        this.activitiyUtils = new ActivityUtils(instrumentation, activity, sleeper);
         this.setter = new Setter(activitiyUtils);
-        this.viewFetcher = new ViewFetcher(inst, activitiyUtils, sleeper);
+        this.viewFetcher = new ViewFetcher(instrumentation, activitiyUtils, sleeper);
         this.asserter = new Asserter(activitiyUtils, sleeper);
         this.dialogUtils = new DialogUtils(viewFetcher, sleeper);
-        this.scroller = new Scroller(inst, activitiyUtils, viewFetcher, sleeper);
-        this.searcher = new Searcher(viewFetcher, scroller, inst, sleeper);
+        this.scroller = new Scroller(instrumentation, activitiyUtils, viewFetcher, sleeper);
+        this.searcher = new Searcher(viewFetcher, scroller, instrumentation, sleeper);
         this.waiter = new Waiter(viewFetcher, searcher,scroller, sleeper);
         this.checker = new Checker(viewFetcher, waiter);
-        this.robotiumUtils = new RobotiumUtils(inst, sleeper);
-        this.clicker = new Clicker(viewFetcher, scroller,robotiumUtils, inst, sleeper, waiter);
-        this.presser = new Presser(viewFetcher, clicker, inst, sleeper);
-        this.textEnterer = new TextEnterer(inst, waiter);
-
+        this.robotiumUtils = new RobotiumUtils(instrumentation, sleeper);
+        this.clicker = new Clicker(viewFetcher, scroller,robotiumUtils, instrumentation, sleeper, waiter);
+        this.presser = new Presser(viewFetcher, clicker, instrumentation, sleeper);
+        this.textEnterer = new TextEnterer(instrumentation, waiter);
 	}
 	
 	/**
      * Constructor that takes in the instrumentation.
      *
-     * @param inst the {@link Instrumentation} instance
+     * @param instrumentation the {@link Instrumentation} instance
      *
      */
 
-	public Solo(Instrumentation inst) {
-	   this(inst, null);
+	public Solo(Instrumentation instrumentation) {
+	   this(instrumentation, null);
 	}
 
 	/**
@@ -636,7 +635,7 @@ public class Solo {
 	
 	public void clickOnScreen(float x, float y) {
 		sleeper.sleep();
-		inst.waitForIdleSync();
+		instrumentation.waitForIdleSync();
 		
 		clicker.clickOnScreen(x, y);
 	}
