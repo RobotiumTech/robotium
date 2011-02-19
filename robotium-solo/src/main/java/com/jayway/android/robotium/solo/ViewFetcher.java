@@ -220,7 +220,8 @@ class ViewFetcher {
 	 * 
 	 */
 
-	public ArrayList<View> getViews(View parent, boolean onlySufficientlyVisible) {
+	public ArrayList<View> getViews(View parent, boolean onlySufficientlyVisible) { 
+		activityUtils.getCurrentActivity(false);
 		final ArrayList<View> views = new ArrayList<View>();
 		final View parentToUse;
 
@@ -308,7 +309,6 @@ class ViewFetcher {
 	 */
 
 	public float getScrollListWindowHeight(View view) {
-
 		final int[] xyParent = new int[2];
 		final View parent = getScrollOrListParent(view);
 		final float windowHeight;
