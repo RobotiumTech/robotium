@@ -194,7 +194,6 @@ class Clicker {
 		inst.waitForIdleSync();
 		try{
 			robotiumUtils.sendKeyCode(KeyEvent.KEYCODE_MENU);
-			sleeper.sleepMini();
 		}catch(SecurityException e){
 			Assert.assertTrue("Can not open the menu!", false);
 		}
@@ -220,7 +219,6 @@ class Clicker {
 
 		try{
 			robotiumUtils.sendKeyCode(KeyEvent.KEYCODE_MENU);
-			sleeper.sleepMini();
 		}catch(SecurityException e){
 			Assert.assertTrue("Can not open the menu!", false);
 		}

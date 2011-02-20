@@ -23,6 +23,7 @@ class ViewFetcher {
 	private final Instrumentation inst;
 	private final ActivityUtils activityUtils;
 	private final Sleeper sleeper;
+	private View view;
 
 	/**
 	 * Constructs this object.
@@ -111,7 +112,7 @@ class ViewFetcher {
 	        final View[] nonDecorViews = getNonDecorViews(views);
 
 	        if (views != null && views.length > 0) {
-	            View view;
+	           
 	            for(int i = 0; i < nonDecorViews.length; i++){
 	                view = nonDecorViews[i];
 	                try {
@@ -139,7 +140,6 @@ class ViewFetcher {
 	 public final View getRecentDecorView(View[] views) {
 		 final View[] decorViews = new View[views.length];
 		 int i = 0;
-		 View view;
 
 		 for (int j = 0; j < views.length; j++) {
 			 view = views[j];
@@ -163,7 +163,6 @@ class ViewFetcher {
 	 private final View getRecentContainer(View[] views) {
 		 View container = null;
 		 long drawingTime = 0;
-		 View view;
 
 		 for(int i = 0; i < views.length; i++){
 			 view = views[i];
@@ -185,8 +184,7 @@ class ViewFetcher {
 	 private final View[] getNonDecorViews(View[] views) {
 		 final View[] decorViews = new View[views.length];
 		 int i = 0;
-		 View view;
-
+		 
 		 for (int j = 0; j < views.length; j++) {
 			 view = views[j];
 			 if (!(view.getClass().getName()
@@ -253,16 +251,16 @@ class ViewFetcher {
 
 	private void addChildren(ArrayList<View> views, ViewGroup viewGroup, boolean onlySufficientlyVisible) {
 		for (int i = 0; i < viewGroup.getChildCount(); i++) {
-			final View child = viewGroup.getChildAt(i);
+			view = viewGroup.getChildAt(i);
 	
-			if(onlySufficientlyVisible && isViewSufficientlyShown(child))
-				views.add(child);
+			if(onlySufficientlyVisible && isViewSufficientlyShown(view))
+				views.add(view);
 			
 			else if(!onlySufficientlyVisible)
-				views.add(child);
+				views.add(view);
 
-			if (child instanceof ViewGroup) {
-				addChildren(views, (ViewGroup) child, onlySufficientlyVisible);
+			if (view instanceof ViewGroup) {
+				addChildren(views, (ViewGroup) view, onlySufficientlyVisible);
 			}
 		}
 	}
