@@ -21,7 +21,7 @@ class ActivityUtils {
 	
 	private final Instrumentation inst;
 	private ActivityMonitor activityMonitor;
-	private Activity activity, storedActivity;;
+	private Activity activity;
     private final Sleeper sleeper;
 	private ArrayList<Activity> activityList = new ArrayList<Activity>();
 
@@ -138,7 +138,7 @@ class ActivityUtils {
 	        if (activityMonitor.getLastActivity() != null)
 	            activity = activityMonitor.getLastActivity();
 	    }
-	    
+	    Activity storedActivity;
 	    for(int i = 0; i < activityList.size(); i++){
 	    	storedActivity = activityList.get(i);
 	        if (storedActivity.getClass().getName().equals(
