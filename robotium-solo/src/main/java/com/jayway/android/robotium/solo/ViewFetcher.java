@@ -1,3 +1,4 @@
+
 package com.jayway.android.robotium.solo;
 
 import java.lang.reflect.Field;
@@ -13,9 +14,9 @@ import android.widget.TextView;
 /**
  * This class contains view methods. Examples are getViews(),
  * getCurrentTextViews(), getCurrentImageViews().
- * 
+ *
  * @author Renas Reda, renas.reda@jayway.com
- * 
+ *
  */
 
 class ViewFetcher {
@@ -23,7 +24,6 @@ class ViewFetcher {
 	private final Instrumentation inst;
 	private final ActivityUtils activityUtils;
 	private final Sleeper sleeper;
-	private View view;
 
 	/**
 	 * Constructs this object.
@@ -31,7 +31,7 @@ class ViewFetcher {
 	 * @param inst the {@code Instrumentation} instance
 	 * @param activityUtils the {@code ActivityUtils} instance
 	 * @param sleeper the {@code Sleeper} instance
-	 * 
+	 *
 	 */
 
 	public ViewFetcher(Instrumentation inst, ActivityUtils activityUtils, Sleeper sleeper) {
@@ -46,7 +46,7 @@ class ViewFetcher {
 	 *
 	 * @param view the {@code View} whose top parent is requested
 	 * @return the top parent {@code View}
-	 * 
+	 *
 	 */
 
 	public View getTopParent(View view) {
@@ -60,10 +60,10 @@ class ViewFetcher {
 
 	/**
 	 * Returns the list item parent. It is used by clickInList().
-	 * 
+	 *
 	 * @param view the view who's parent is requested
 	 * @return the parent of the view
-	 * 
+	 *
 	 */
 
 	public View getListItemParent(View view)
@@ -79,67 +79,69 @@ class ViewFetcher {
 
 	/**
 	 * Returns the scroll or list parent view
-	 * 
+	 *
 	 * @param view the view who's parent should be returned
 	 * @return the parent scroll view, list view or null
-	 * 
+	 *
 	 */
 
 	public View getScrollOrListParent(View view) {
 
-		if (!(view instanceof android.widget.AbsListView) && !(view instanceof android.widget.ScrollView)) {
-			try{
-				return getScrollOrListParent((View) view.getParent());
-			}catch(Exception e){
-				return null;
-			}
-		} else {
-			return view;
-		}
+	    if (!(view instanceof android.widget.AbsListView) && !(view instanceof android.widget.ScrollView)) {
+	        try{
+	            return getScrollOrListParent((View) view.getParent());
+	        }catch(Exception e){
+	            return null;
+	        }
+	    } else {
+	        return view;
+	    }
 	}
 
 	/**
-	 * Returns views from the shown DecorViews. 
-	 * 
+	 * Returns views from the shown DecorViews.
+	 *
 	 * @param onlySufficientlyVisible if only sufficiently visible views should be returned
 	 * @return all the views contained in the DecorViews
-	 * 
+	 *
 	 */
 
-	 public ArrayList<View> getAllViews(boolean onlySufficientlyVisible) {
-	        final View[] views = getWindowDecorViews();
-	        final ArrayList<View> allViews = new ArrayList<View>();
-	        final View[] nonDecorViews = getNonDecorViews(views);
+	public ArrayList<View> getAllViews(boolean onlySufficientlyVisible) {
+	    final View[] views = getWindowDecorViews();
+	    final ArrayList<View> allViews = new ArrayList<View>();
+	    final View[] nonDecorViews = getNonDecorViews(views);
 
-	        if (views != null && views.length > 0) {
-	           
-	            for(int i = 0; i < nonDecorViews.length; i++){
-	                view = nonDecorViews[i];
-	                try {
-	                    addChildren(allViews, (ViewGroup)view, onlySufficientlyVisible);
-	                } catch (Exception ignored) {
-	                }
-	            }
-	            view = getRecentDecorView(views);
+
+	    if (views != null && views.length > 0) {
+	        View view;
+	        for(int i = 0; i < nonDecorViews.length; i++){
+	            view = nonDecorViews[i];
 	            try {
 	                addChildren(allViews, (ViewGroup)view, onlySufficientlyVisible);
 	            } catch (Exception ignored) {
 	            }
 	        }
-	        return allViews;
+	        view = getRecentDecorView(views);
+	        try {
+	            addChildren(allViews, (ViewGroup)view, onlySufficientlyVisible);
+	        } catch (Exception ignored) {
+	        }
 	    }
-	
+	    return allViews;
+	}
+
 	/**
 	 * Returns the most recent DecorView
-	 * 
+	 *
 	 * @param views the views to check
 	 * @return the most recent DecorView
-	 * 
+	 *
 	 */
-	
+
 	 public final View getRecentDecorView(View[] views) {
 		 final View[] decorViews = new View[views.length];
 		 int i = 0;
+		 View view;
 
 		 for (int j = 0; j < views.length; j++) {
 			 view = views[j];
@@ -151,18 +153,19 @@ class ViewFetcher {
 		 }
 		 return getRecentContainer(decorViews);
 	 }
-	
+
 	/**
 	 * Returns the most recent view container
-	 * 
+	 *
 	 * @param views the views to check
 	 * @return the most recent view container
-	 * 
+	 *
 	 */
-	
+
 	 private final View getRecentContainer(View[] views) {
 		 View container = null;
 		 long drawingTime = 0;
+		 View view;
 
 		 for(int i = 0; i < views.length; i++){
 			 view = views[i];
@@ -176,15 +179,16 @@ class ViewFetcher {
 
 	/**
 	 * Returns all views that are non DecorViews
-	 * 
+	 *
 	 * @param views the views to check
 	 * @return the non DecorViews
 	 */
-	
+
 	 private final View[] getNonDecorViews(View[] views) {
 		 final View[] decorViews = new View[views.length];
 		 int i = 0;
-		 
+		 View view;
+
 		 for (int j = 0; j < views.length; j++) {
 			 view = views[j];
 			 if (!(view.getClass().getName()
@@ -198,8 +202,8 @@ class ViewFetcher {
 
 
 	/**
-	 * Returns a {@code View} with a given id. 
-	 * @param id the R.id of the {@code View} to be returned 
+	 * Returns a {@code View} with a given id.
+	 * @param id the R.id of the {@code View} to be returned
 	 * @return a {@code View} with a given id
 	 */
 
@@ -215,10 +219,10 @@ class ViewFetcher {
 	 * @param parent the {@code View} whose children should be returned, or {@code null} for all
 	 * @param onlySufficientlyVisible if only sufficiently visible views should be returned
 	 * @return all {@code View}s located in the currently active {@code Activity}, never {@code null}
-	 * 
+	 *
 	 */
 
-	public ArrayList<View> getViews(View parent, boolean onlySufficientlyVisible) { 
+	public ArrayList<View> getViews(View parent, boolean onlySufficientlyVisible) {
 		activityUtils.getCurrentActivity(false);
 		final ArrayList<View> views = new ArrayList<View>();
 		final View parentToUse;
@@ -242,32 +246,32 @@ class ViewFetcher {
 
 	/**
 	 * Adds all children of {@code viewGroup} (recursively) into {@code views}.
-	 * 
+	 *
 	 * @param views an {@code ArrayList} of {@code View}s
 	 * @param viewGroup the {@code ViewGroup} to extract children from
 	 * @param onlySufficientlyVisible if only sufficiently visible views should be returned
-	 * 
+	 *
 	 */
 
 	private void addChildren(ArrayList<View> views, ViewGroup viewGroup, boolean onlySufficientlyVisible) {
 		for (int i = 0; i < viewGroup.getChildCount(); i++) {
-			view = viewGroup.getChildAt(i);
-	
-			if(onlySufficientlyVisible && isViewSufficientlyShown(view))
-				views.add(view);
-			
-			else if(!onlySufficientlyVisible)
-				views.add(view);
+			final View child = viewGroup.getChildAt(i);
 
-			if (view instanceof ViewGroup) {
-				addChildren(views, (ViewGroup) view, onlySufficientlyVisible);
+			if(onlySufficientlyVisible && isViewSufficientlyShown(child))
+				views.add(child);
+
+			else if(!onlySufficientlyVisible)
+				views.add(child);
+
+			if (child instanceof ViewGroup) {
+				addChildren(views, (ViewGroup) child, onlySufficientlyVisible);
 			}
 		}
 	}
-	
+
 	/**
 	 * Returns true if the view is sufficiently shown
-	 * 
+	 *
 	 * @param view the view to check
 	 * @return true if the view is sufficiently shown
 	 *
@@ -290,13 +294,13 @@ class ViewFetcher {
 		else{
 			parent.getLocationOnScreen(xyParent);
 		}
-		
+
 		if(xyView[1] + (viewHeight/2.0f) > getScrollListWindowHeight(view))
 			return false;
 
 		else if(xyView[1] + (viewHeight/2.0f) < xyParent[1])
 			return false;
-	
+
 		return true;
 	}
 
@@ -368,23 +372,23 @@ class ViewFetcher {
 
 		return viewToReturn;
 	}
-	
+
 	/**
 	 * Returns a view.
-	 * 
+	 *
 	 * @param classToFilterBy the class to filter by
 	 * @param views the list with views
 	 * @param index the index of the view
 	 * @return the view with a given index
 	 */
-	
+
 	public final <T extends View> T getView(Class<T> classToFilterBy, ArrayList<T> views, int index){
 		T viewToReturn = null;
 		long drawingTime = 0;
 		if(views == null){
 			views = getCurrentViews(classToFilterBy);
 		}
-		if(index < 1){	
+		if(index < 1){
 			for(T view : views){
 				if(view.getDrawingTime() > drawingTime){
 					drawingTime = view.getDrawingTime();
@@ -441,13 +445,13 @@ class ViewFetcher {
 			throw new RuntimeException(e);
 		} catch (SecurityException e) {
 			e.printStackTrace();
-		} 
+		}
 	}
 
 	/**
 	 * Returns the WindorDecorViews shown on the screen
 	 * @return the WindorDecorViews shown on the screen
-	 * 
+	 *
 	 */
 
 	public View[] getWindowDecorViews()
@@ -470,7 +474,7 @@ class ViewFetcher {
 			e.printStackTrace();
 		} catch (IllegalAccessException e) {
 			e.printStackTrace();
-		} 
+		}
 		return null;
 	}
 
