@@ -122,7 +122,7 @@ class Checker {
 		if(spinnerList.size() < spinnerIndex+1)
 			Assert.assertTrue("No spinner with index " + spinnerIndex + " is found! ", false);	
 		Spinner spinner = spinnerList.get(spinnerIndex);
-		TextView textView = (TextView) spinner.getChildAt(0);
+		TextView textView = (TextView) spinner.getChildAt(spinner.getSelectedItemPosition());
 		if(textView.getText().equals(text))
 			return true;
 		else
