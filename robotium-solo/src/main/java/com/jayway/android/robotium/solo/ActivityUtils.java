@@ -79,9 +79,7 @@ class ActivityUtils {
 	
 	public void setActivityOrientation(int orientation)
 	{
-		if(activity.equals(getCurrentActivity()))
-			sleeper.sleep();
-		Activity activity = getCurrentActivity(false);
+		Activity activity = getCurrentActivity();
 		activity.setRequestedOrientation(orientation);	
 	}
 
@@ -217,6 +215,7 @@ class ActivityUtils {
 	
 	public String getString(int resId)
 	{
+		Activity activity = getCurrentActivity(false);
 		return activity.getString(resId);
 	}
 	
