@@ -69,6 +69,16 @@ class ActivityUtils {
 			e.printStackTrace();
 		}
 	}
+	
+	/**
+	 * Returns the ActivityMonitor used by Robotium.
+	 * 
+	 * @return the ActivityMonitor used by Robotium
+	 */
+	
+	public ActivityMonitor getActivityMonitor(){
+		return activityMonitor;
+	}
 
 	/**
 	 * Sets the Orientation (Landscape/Portrait) for the current activity.

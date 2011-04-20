@@ -131,6 +131,16 @@ public class Solo {
 	public Solo(Instrumentation instrumentation) {
 	   this(instrumentation, null);
 	}
+	
+	/**
+	 * Returns the ActivityMonitor used by Robotium.
+	 * 
+	 * @return the ActivityMonitor used by Robotium
+	 */
+	
+	public ActivityMonitor getActivityMonitor(){
+		return activitiyUtils.getActivityMonitor();
+	}
 
 	/**
 	 * Returns an ArrayList of all the View objects located in the focused 
