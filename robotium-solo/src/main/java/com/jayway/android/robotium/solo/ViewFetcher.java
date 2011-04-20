@@ -390,7 +390,7 @@ class ViewFetcher {
 		}
 		if(index < 1){
 			for(T view : views){
-				if(view.getDrawingTime() > drawingTime){
+				if(view.getDrawingTime() > drawingTime && view.getHeight() > 0){
 					drawingTime = view.getDrawingTime();
 					viewToReturn = view;
 				}
