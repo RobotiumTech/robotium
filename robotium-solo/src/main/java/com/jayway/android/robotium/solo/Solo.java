@@ -1423,56 +1423,39 @@ public class Solo {
 	}
 	
 	/**
-	 * Returns an ArrayList of the given View type currently shown in the focused
-	 * Activity or Dialog.
-	 *
-	 * @return an {@code ArrayList} of the {@link View} objects currently shown in the
-	 * focused window
-	 *
-	 */
-
-	public <T extends View> ArrayList<T> getCurrentViews(Class<T> classToFilterBy) {
-		return viewFetcher.getCurrentViews(classToFilterBy);
-	}
-
-	/**
-	 * Returns an ArrayList of the ImageView objects currently shown in the focused
+	 * Returns an ArrayList of the ImageView objects currently shown in the focused 
 	 * Activity or Dialog.
 	 *
 	 * @return an {@code ArrayList} of the {@link ImageView} objects currently shown in the
 	 * focused window
-	 * @deprecated Please use {@code getCurrentViews(ImageView.class))}
-	 *
 	 *
 	 */
-
+	
 	public ArrayList<ImageView> getCurrentImageViews() {
 		return viewFetcher.getCurrentViews(ImageView.class);
 	}
-
-
+	
+	
 	/**
-	 * Returns an ArrayList of the EditText objects currently shown in the focused
+	 * Returns an ArrayList of the EditText objects currently shown in the focused 
 	 * Activity or Dialog.
 	 *
 	 * @return an {@code ArrayList} of the {@link EditText} objects currently shown in the
 	 * focused window
-	 * @deprecated Please use {@code getCurrentViews(EditText.class))}
 	 *
 	 */
-
+	
 	public ArrayList<EditText> getCurrentEditTexts() {
 		return viewFetcher.getCurrentViews(EditText.class);
 	}
-
+	
 	/**
-	 * Returns an ArrayList of the ListView objects currently shown in the focused
+	 * Returns an ArrayList of the ListView objects currently shown in the focused 
 	 * Activity or Dialog.
 	 *
 	 * @return an {@code ArrayList} of the {@link ListView}  objects currently shown in the
 	 * focused window
-	 * @deprecated Please use {@code getCurrentViews(ListView.class))}
-	 *
+	 * 
 	 */
 
 	public ArrayList<ListView> getCurrentListViews() {
@@ -1480,12 +1463,11 @@ public class Solo {
 	}
 
 	/**
-	 * Returns an ArrayList of the ScrollView objects currently shown in the focused
+	 * Returns an ArrayList of the ScrollView objects currently shown in the focused 
 	 * Activity or Dialog.
 	 *
 	 * @return an {@code ArrayList} of the {@link ScrollView} objects currently shown in the
 	 * focused window
-	 * @deprecated Please use {@code getCurrentViews(ScrollView.class))}
 	 *
 	 */
 
@@ -1493,23 +1475,22 @@ public class Solo {
 		return viewFetcher.getCurrentViews(ScrollView.class);
 	}
 
-
+	
 	/**
-	 * Returns an ArrayList of the Spinner objects (drop-down menus) currently shown in the focused
+	 * Returns an ArrayList of the Spinner objects (drop-down menus) currently shown in the focused 
 	 * Activity or Dialog.
 	 *
 	 * @return an {@code ArrayList} of the {@link Spinner} objects (drop-down menus) currently shown in the
 	 * focused window
-	 * @deprecated Please use {@code getCurrentViews(Spinner.class))}
 	 *
 	 */
-
+	
 	public ArrayList<Spinner> getCurrentSpinners() {
 		return viewFetcher.getCurrentViews(Spinner.class);
 	}
-
+	
 	/**
-	 * Returns an ArrayList of the TextView objects currently shown in the focused
+	 * Returns an ArrayList of the TextView objects currently shown in the focused 
 	 * Activity or Dialog.
 	 *
 	 * @param parent the parent {@link View} from which the {@link TextView} objects should be returned. {@code null} if
@@ -1517,155 +1498,143 @@ public class Solo {
 	 *
 	 * @return an {@code ArrayList} of the {@link TextView} objects currently shown in the
 	 * focused window
-	 * @deprecated Please use {@code getCurrentViews(TextView.class))}
 	 *
 	 */
 
 	public ArrayList<TextView> getCurrentTextViews(View parent) {
 		return viewFetcher.getCurrentViews(TextView.class, parent);
 	}
-
+	
 	/**
-	 * Returns an ArrayList of the GridView objects currently shown in the focused
+	 * Returns an ArrayList of the GridView objects currently shown in the focused 
 	 * Activity or Dialog.
 	 *
 	 * @return an {@code ArrayList} of the {@link GridView} objects currently shown in the
 	 * focused window
-	 * @deprecated Please use {@code getCurrentViews(GridView.class))}
 	 *
 	 */
-
+	
 	public ArrayList<GridView> getCurrentGridViews() {
 		return viewFetcher.getCurrentViews(GridView.class);
 	}
-
-
+	
+	
 	/**
-	 * Returns an ArrayList of the Button objects currently shown in the focused
+	 * Returns an ArrayList of the Button objects currently shown in the focused 
 	 * Activity or Dialog.
 	 *
 	 * @return an {@code ArrayList} of the {@link Button} objects currently shown in the
 	 * focused window
-	 * @deprecated Please use {@code getCurrentViews(Button.class))}
-	 *
+	 * 
 	 */
-
+	
 	public ArrayList<Button> getCurrentButtons() {
 		return viewFetcher.getCurrentViews(Button.class);
 	}
-
+	
 	/**
-	 * Returns an ArrayList of the ToggleButton objects currently shown in the focused
+	 * Returns an ArrayList of the ToggleButton objects currently shown in the focused 
 	 * Activity or Dialog.
 	 *
 	 * @return an {@code ArrayList} of the {@link ToggleButton} objects currently shown in the
 	 * focused window
-	 * @deprecated Please use {@code getCurrentViews(ToggleButton.class))}
 	 *
 	 */
-
+	
 	public ArrayList<ToggleButton> getCurrentToggleButtons() {
 		return viewFetcher.getCurrentViews(ToggleButton.class);
 	}
-
+	
 	/**
-	 * Returns an ArrayList of the RadioButton objects currently shown in the focused
+	 * Returns an ArrayList of the RadioButton objects currently shown in the focused 
 	 * Activity or Dialog.
 	 *
 	 * @return an {@code ArrayList} of the {@link RadioButton} objects currently shown in the
 	 * focused window
-	 * @deprecated Please use {@code getCurrentViews(RadioButton.class))}
 	 *
 	 */
-
+	
 	public ArrayList<RadioButton> getCurrentRadioButtons() {
 		return viewFetcher.getCurrentViews(RadioButton.class);
 	}
-
+	
 	/**
-	 * Returns an ArrayList of the CheckBox objects currently shown in the focused
+	 * Returns an ArrayList of the CheckBox objects currently shown in the focused 
 	 * Activity or Dialog.
 	 *
 	 * @return an {@code ArrayList} of the {@link CheckBox} objects currently shown in the
 	 * focused window
-	 * @deprecated Please use {@code getCurrentViews(CheckBox.class))}
 	 *
 	 */
-
+	
 	public ArrayList<CheckBox> getCurrentCheckBoxes() {
 		return viewFetcher.getCurrentViews(CheckBox.class);
 	}
-
+	
 	/**
-	 * Returns an ArrayList of the ImageButton objects currently shown in the focused
+	 * Returns an ArrayList of the ImageButton objects currently shown in the focused 
 	 * Activity or Dialog.
 	 *
 	 * @return an {@code ArrayList} of the {@link ImageButton} objects currently shown in the
 	 * focused window
-	 * @deprecated Please use {@code getCurrentViews(ImageButton.class))}
 	 *
 	 */
-
+	
 	public ArrayList<ImageButton> getCurrentImageButtons() {
 		return viewFetcher.getCurrentViews(ImageButton.class);
 	}
-
+	
 	/**
-	 * Returns an ArrayList of the DatePicker objects currently shown in the focused
+	 * Returns an ArrayList of the DatePicker objects currently shown in the focused 
 	 * Activity or Dialog.
 	 *
 	 * @return an {@code ArrayList} of the {@link DatePicker} objects currently shown in the
 	 * focused window
-	 * @deprecated Please use {@code getCurrentViews(DatePicker.class))}
 	 *
 	 */
-
+	
 	public ArrayList<DatePicker> getCurrentDatePickers() {
 		return viewFetcher.getCurrentViews(DatePicker.class);
 	}
-
+	
 	/**
-	 * Returns an ArrayList of the TimePicker objects currently shown in the focused
+	 * Returns an ArrayList of the TimePicker objects currently shown in the focused 
 	 * Activity or Dialog.
 	 *
 	 * @return an {@code ArrayList} of the {@link TimePicker} objects currently shown in the
 	 * focused window
-	 * @deprecated Please use {@code getCurrentViews(TimePicker.class))}
 	 *
 	 */
-
+	
 	public ArrayList<TimePicker> getCurrentTimePickers() {
 		return viewFetcher.getCurrentViews(TimePicker.class);
 	}
-
+	
 	/**
-	 * Returns an ArrayList of the SlidingDrawer objects currently shown in the focused
+	 * Returns an ArrayList of the SlidingDrawer objects currently shown in the focused 
 	 * Activity or Dialog.
 	 *
 	 * @return an {@code ArrayList} of the {@link SlidingDrawer} objects currently shown in the
 	 * focused window
-	 * @deprecated Please use {@code getCurrentViews(SlidingDrawer.class))}
 	 *
 	 */
-
+	
 	public ArrayList<SlidingDrawer> getCurrentSlidingDrawers() {
 		return viewFetcher.getCurrentViews(SlidingDrawer.class);
 	}
-
+	
 	/**
-	 * Returns an ArrayList of the ProgressBar objects currently shown in the focused
+	 * Returns an ArrayList of the ProgressBar objects currently shown in the focused 
 	 * Activity or Dialog.
 	 *
 	 * @return an {@code ArrayList} of the {@link ProgressBar} objects currently shown in the
 	 * focused window
-	 * @deprecated Please use {@code getCurrentViews(ProgressBar.class))}
 	 *
 	 */
-
+	
 	public ArrayList<ProgressBar> getCurrentProgressBars() {
 		return viewFetcher.getCurrentViews(ProgressBar.class);
 	}
-
 	
 	/**
 	 * Checks if a RadioButton with a given index is checked.
