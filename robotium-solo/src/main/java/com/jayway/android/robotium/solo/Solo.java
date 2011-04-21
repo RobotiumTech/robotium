@@ -26,6 +26,7 @@ import android.widget.TextView;
 import android.widget.ListView;
 import android.widget.TimePicker;
 import android.widget.ToggleButton;
+import android.app.Instrumentation.ActivityMonitor;
 
 /**
  * This class contains all the methods that the sub-classes have. It supports test
