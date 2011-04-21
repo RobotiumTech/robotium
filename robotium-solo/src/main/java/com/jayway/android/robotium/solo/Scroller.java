@@ -186,7 +186,7 @@ class Scroller {
 		final T listView = viewFetcher.getView(classToFilterBy, listViews, listIndex);
 
 		if(listView == null)
-			Assert.assertTrue("No ListView with index " + listIndex + " is found!", false);
+			return false;
 
 		if (direction == DOWN) {
 			if (listView.getLastVisiblePosition() >= listView.getCount()-1) {
