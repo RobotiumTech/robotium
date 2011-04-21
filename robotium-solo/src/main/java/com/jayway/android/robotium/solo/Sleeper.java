@@ -2,8 +2,8 @@ package com.jayway.android.robotium.solo;
 
 class Sleeper {
 
-	private final int PAUSE = 20;
-	private final int MINIPAUSE = 5;
+	private final int PAUSE = 100;
+	private final int MINIPAUSE = 50;
 
 	/**
 	 * Sleeps the current thread for a default pause length.
