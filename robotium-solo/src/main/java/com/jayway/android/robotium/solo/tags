@@ -1,0 +1,341 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+!_TAG_PROGRAM_VERSION	5.8	//
+ActivityUtils	ActivityUtils.java	/^	public ActivityUtils(Instrumentation inst, Activity activity, Sleeper sleeper) {$/;"	m	class:ActivityUtils
+ActivityUtils	ActivityUtils.java	/^class ActivityUtils {$/;"	c
+Asserter	Asserter.java	/^	public Asserter(ActivityUtils activityUtils, Sleeper sleeper) {$/;"	m	class:Asserter
+Asserter	Asserter.java	/^public class Asserter implements IAsserter {$/;"	c
+CALL	Solo.java	/^	public final static int CALL = 9;$/;"	f	class:Solo
+CLICKTIMEOUT	Clicker.java	/^	private final int CLICKTIMEOUT = 5000;	$/;"	f	class:Clicker	file:
+Checker	Checker.java	/^	public Checker(ViewFetcher viewFetcher, Waiter waiter){$/;"	m	class:Checker
+Checker	Checker.java	/^class Checker {$/;"	c
+Clicker	Clicker.java	/^	public Clicker(ActivityUtils ativityUtils, ViewFetcher viewFetcher,$/;"	m	class:Clicker
+Clicker	Clicker.java	/^class Clicker {$/;"	c
+DELETE	Solo.java	/^	public final static int DELETE = 8;$/;"	f	class:Solo
+DOWN	Scroller.java	/^    public enum Direction {UP, DOWN}$/;"	e	enum:Scroller.Direction	file:
+DOWN	Solo.java	/^	public final static int DOWN = 5;$/;"	f	class:Solo
+DialogUtils	DialogUtils.java	/^	public DialogUtils(ViewFetcher viewFetcher, Sleeper sleeper) {$/;"	m	class:DialogUtils
+DialogUtils	DialogUtils.java	/^class DialogUtils {$/;"	c
+Direction	Scroller.java	/^    public enum Direction {UP, DOWN}$/;"	g	class:Scroller
+ENDCALL	Solo.java	/^	public final static int ENDCALL = 10;$/;"	f	class:Solo
+ENTER	Solo.java	/^	public final static int ENTER = 6;$/;"	f	class:Solo
+IAsserter	IAsserter.java	/^public interface IAsserter {$/;"	i
+ITimeoutAssertion	TimeoutAsserter.java	/^    interface ITimeoutAssertion {$/;"	i	class:TimeoutAsserter
+LANDSCAPE	Solo.java	/^	public final static int LANDSCAPE = ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE;   \/\/ 0$/;"	f	class:Solo
+LEFT	Scroller.java	/^    public enum Side {LEFT, RIGHT}$/;"	e	enum:Scroller.Side	file:
+LEFT	Solo.java	/^	public final static int LEFT = 3;$/;"	f	class:Solo
+LOG_TAG	Clicker.java	/^	private final String LOG_TAG = "Robotium";$/;"	f	class:Clicker	file:
+LOG_TAG	Searcher.java	/^	private final String LOG_TAG = "Robotium";$/;"	f	class:Searcher	file:
+LONGTIMEOUT	Searcher.java	/^	private final int LONGTIMEOUT = 400000;$/;"	f	class:Searcher	file:
+MENU	Solo.java	/^	public final static int MENU = 7;$/;"	f	class:Solo
+MINIPAUSE	Sleeper.java	/^	private final int MINIPAUSE = 50;$/;"	f	class:Sleeper	file:
+MINITIMEOUT	Waiter.java	/^	private final int MINITIMEOUT = 300;$/;"	f	class:Waiter	file:
+MatchCounter	MatchCounter.java	/^class MatchCounter {$/;"	c
+PAUSE	Sleeper.java	/^	private final int PAUSE = 100;$/;"	f	class:Sleeper	file:
+PORTRAIT	Solo.java	/^	public final static int PORTRAIT = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT;     \/\/ 1$/;"	f	class:Solo
+Presser	Presser.java	/^	public Presser(ViewFetcher viewFetcher,$/;"	m	class:Presser
+Presser	Presser.java	/^class Presser{$/;"	c
+RIGHT	Scroller.java	/^    public enum Side {LEFT, RIGHT}$/;"	e	enum:Scroller.Side	file:
+RIGHT	Solo.java	/^	public final static int RIGHT = 2;$/;"	f	class:Solo
+RobotiumUtils	RobotiumUtils.java	/^	public RobotiumUtils(Instrumentation inst, Sleeper sleeper) {$/;"	m	class:RobotiumUtils
+RobotiumUtils	RobotiumUtils.java	/^class RobotiumUtils {$/;"	c
+SMALLTIMEOUT	Waiter.java	/^	private final int SMALLTIMEOUT = 10000;$/;"	f	class:Waiter	file:
+Scroller	Scroller.java	/^    public Scroller(Instrumentation inst, ActivityUtils activityUtils, ViewFetcher viewFetcher, Sleeper sleeper) {$/;"	m	class:Scroller
+Scroller	Scroller.java	/^class Scroller {$/;"	c
+Searcher	Searcher.java	/^	public Searcher(ViewFetcher viewFetcher, Scroller scroller, Instrumentation inst, Sleeper sleeper) {$/;"	m	class:Searcher
+Searcher	Searcher.java	/^class Searcher {$/;"	c
+Side	Scroller.java	/^    public enum Side {LEFT, RIGHT}$/;"	g	class:Scroller
+Sleeper	Sleeper.java	/^class Sleeper {$/;"	c
+Solo	Solo.java	/^	public Solo(Instrumentation inst, Activity activity) {$/;"	m	class:Solo
+Solo	Solo.java	/^	public Solo(Instrumentation inst, Activity activity, boolean useTimeout) {$/;"	m	class:Solo
+Solo	Solo.java	/^public class Solo {$/;"	c
+TIMEOUT	Clicker.java	/^	private final int TIMEOUT = 10000;$/;"	f	class:Clicker	file:
+TIMEOUT	Searcher.java	/^	private final int TIMEOUT = 5000;$/;"	f	class:Searcher	file:
+TIMEOUT	Waiter.java	/^	private final int TIMEOUT = 20000;$/;"	f	class:Waiter	file:
+TextEnterer	TextEnterer.java	/^    public TextEnterer(ActivityUtils activityUtils, Waiter waiter) {$/;"	m	class:TextEnterer
+TextEnterer	TextEnterer.java	/^class TextEnterer{$/;"	c
+TimeoutAsserter	TimeoutAsserter.java	/^	public TimeoutAsserter(ActivityUtils activityUtils, Sleeper sleeper) {$/;"	m	class:TimeoutAsserter
+TimeoutAsserter	TimeoutAsserter.java	/^	public TimeoutAsserter(ActivityUtils activityUtils, Sleeper sleeper, long timeout) {$/;"	m	class:TimeoutAsserter
+TimeoutAsserter	TimeoutAsserter.java	/^public class TimeoutAsserter implements IAsserter {$/;"	c
+UP	Scroller.java	/^    public enum Direction {UP, DOWN}$/;"	e	enum:Scroller.Direction	file:
+UP	Solo.java	/^	public final static int UP = 4;$/;"	f	class:Solo
+ViewFetcher	ViewFetcher.java	/^    public ViewFetcher(Instrumentation inst, ActivityUtils activityUtils, Sleeper sleeper) {$/;"	m	class:ViewFetcher
+ViewFetcher	ViewFetcher.java	/^class ViewFetcher {$/;"	c
+Waiter	Waiter.java	/^	public Waiter(ViewFetcher viewFetcher, Searcher searcher, Scroller scroller, Sleeper sleeper){$/;"	m	class:Waiter
+Waiter	Waiter.java	/^class Waiter {$/;"	c
+activity	ActivityUtils.java	/^	private Activity activity;$/;"	f	class:ActivityUtils	file:
+activityList	ActivityUtils.java	/^	private ArrayList<Activity> activityList = new ArrayList<Activity>();$/;"	f	class:ActivityUtils	file:
+activityMonitor	ActivityUtils.java	/^	private ActivityMonitor activityMonitor;$/;"	f	class:ActivityUtils	file:
+activityUtils	Asserter.java	/^	private final ActivityUtils activityUtils;$/;"	f	class:Asserter	file:
+activityUtils	Clicker.java	/^	private final ActivityUtils activityUtils;$/;"	f	class:Clicker	file:
+activityUtils	Scroller.java	/^	private final ActivityUtils activityUtils;$/;"	f	class:Scroller	file:
+activityUtils	Solo.java	/^	private final ActivityUtils activityUtils;$/;"	f	class:Solo	file:
+activityUtils	TextEnterer.java	/^	private final ActivityUtils activityUtils;$/;"	f	class:TextEnterer	file:
+activityUtils	TimeoutAsserter.java	/^	private final ActivityUtils activityUtils;$/;"	f	class:TimeoutAsserter	file:
+activityUtils	ViewFetcher.java	/^	private final ActivityUtils activityUtils;$/;"	f	class:ViewFetcher	file:
+addChildren	ViewFetcher.java	/^	private void addChildren(ArrayList<View> views, ViewGroup viewGroup) {$/;"	m	class:ViewFetcher	file:
+addMatchToCount	MatchCounter.java	/^	public static void addMatchToCount(){$/;"	m	class:MatchCounter
+addMatchesToCount	MatchCounter.java	/^	public static void addMatchesToCount(int numberOfMatches){$/;"	m	class:MatchCounter
+assertCurrentActivity	Asserter.java	/^	public void assertCurrentActivity(String message, Class<? extends Activity> expectedClass)$/;"	m	class:Asserter
+assertCurrentActivity	Asserter.java	/^	public void assertCurrentActivity(String message, Class<? extends Activity> expectedClass,$/;"	m	class:Asserter
+assertCurrentActivity	Asserter.java	/^	public void assertCurrentActivity(String message, String name)$/;"	m	class:Asserter
+assertCurrentActivity	Asserter.java	/^	public void assertCurrentActivity(String message, String name, boolean isNewInstance)$/;"	m	class:Asserter
+assertCurrentActivity	IAsserter.java	/^	public void assertCurrentActivity(String message, String name);$/;"	m	interface:IAsserter
+assertCurrentActivity	IAsserter.java	/^	public void assertCurrentActivity(String message, String name,$/;"	m	interface:IAsserter
+assertCurrentActivity	IAsserter.java	/^	public void assertCurrentActivity(String message,$/;"	m	interface:IAsserter
+assertCurrentActivity	Solo.java	/^	public void assertCurrentActivity(String message, Class expectedClass)$/;"	m	class:Solo
+assertCurrentActivity	Solo.java	/^	public void assertCurrentActivity(String message, Class expectedClass,$/;"	m	class:Solo
+assertCurrentActivity	Solo.java	/^	public void assertCurrentActivity(String message, String name)$/;"	m	class:Solo
+assertCurrentActivity	Solo.java	/^	public void assertCurrentActivity(String message, String name, boolean isNewInstance)$/;"	m	class:Solo
+assertCurrentActivity	TimeoutAsserter.java	/^	public void assertCurrentActivity(String message, String name, boolean isNewInstance)$/;"	m	class:TimeoutAsserter
+assertCurrentActivity	TimeoutAsserter.java	/^	public void assertCurrentActivity(final String message, final Class<? extends Activity> expectedClass)$/;"	m	class:TimeoutAsserter
+assertCurrentActivity	TimeoutAsserter.java	/^	public void assertCurrentActivity(final String message, final Class<? extends Activity> expectedClass, final boolean expectingNewInstance) {$/;"	m	class:TimeoutAsserter
+assertCurrentActivity	TimeoutAsserter.java	/^	public void assertCurrentActivity(final String message, final String name)$/;"	m	class:TimeoutAsserter
+assertLowMemory	Solo.java	/^	public void assertLowMemory()$/;"	m	class:Solo
+assertMemoryNotLow	Asserter.java	/^	public void assertMemoryNotLow()$/;"	m	class:Asserter
+assertMemoryNotLow	IAsserter.java	/^	public void assertMemoryNotLow();$/;"	m	interface:IAsserter
+assertMemoryNotLow	Solo.java	/^	public void assertMemoryNotLow()$/;"	m	class:Solo
+assertMemoryNotLow	TimeoutAsserter.java	/^	public void assertMemoryNotLow()$/;"	m	class:TimeoutAsserter
+asserter	Solo.java	/^	private final IAsserter asserter;$/;"	f	class:Solo	file:
+checker	Solo.java	/^	private final Checker checker;$/;"	f	class:Solo	file:
+clearEditText	Solo.java	/^    public void clearEditText(EditText editText) {$/;"	m	class:Solo
+clearEditText	Solo.java	/^    public void clearEditText(int index) {$/;"	m	class:Solo
+clickInList	Clicker.java	/^	public ArrayList<TextView> clickInList(int line) {$/;"	m	class:Clicker
+clickInList	Clicker.java	/^	public ArrayList<TextView> clickInList(int line, int index) {	$/;"	m	class:Clicker
+clickInList	Solo.java	/^	public ArrayList<TextView> clickInList(int line) {$/;"	m	class:Solo
+clickInList	Solo.java	/^	public ArrayList<TextView> clickInList(int line, int listIndex) {$/;"	m	class:Solo
+clickLongOnScreen	Clicker.java	/^	public void clickLongOnScreen(float x, float y) {$/;"	m	class:Clicker
+clickLongOnScreen	Solo.java	/^	public void clickLongOnScreen(float x, float y) {$/;"	m	class:Solo
+clickLongOnText	Solo.java	/^	public void clickLongOnText(String text)$/;"	m	class:Solo
+clickLongOnText	Solo.java	/^	public void clickLongOnText(String text, int match)$/;"	m	class:Solo
+clickLongOnText	Solo.java	/^	public void clickLongOnText(String text, int match, boolean scroll)$/;"	m	class:Solo
+clickLongOnTextAndPress	Clicker.java	/^	public void clickLongOnTextAndPress(String text, int index)$/;"	m	class:Clicker
+clickLongOnTextAndPress	Solo.java	/^	public void clickLongOnTextAndPress(String text, int index) {$/;"	m	class:Solo
+clickLongOnView	Solo.java	/^	public void clickLongOnView(View view) {$/;"	m	class:Solo
+clickOn	Clicker.java	/^	public <T extends TextView> void clickOn(Class<T> viewClass, String nameRegex) {$/;"	m	class:Clicker
+clickOn	Clicker.java	/^	public <T extends View> void clickOn(Class<T> viewClass, int index) {$/;"	m	class:Clicker
+clickOnButton	Solo.java	/^	public void clickOnButton(String name) {$/;"	m	class:Solo
+clickOnButton	Solo.java	/^	public void clickOnButton(int index) {$/;"	m	class:Solo
+clickOnCheckBox	Solo.java	/^	public void clickOnCheckBox(int index) {$/;"	m	class:Solo
+clickOnEditText	Solo.java	/^	public void clickOnEditText(int index) {$/;"	m	class:Solo
+clickOnImage	Solo.java	/^	public void clickOnImage(int index) {$/;"	m	class:Solo
+clickOnImageButton	Solo.java	/^	public void clickOnImageButton(int index) {$/;"	m	class:Solo
+clickOnMenuItem	Clicker.java	/^	public void clickOnMenuItem(String text)$/;"	m	class:Clicker
+clickOnMenuItem	Clicker.java	/^	public void clickOnMenuItem(String text, boolean subMenu)$/;"	m	class:Clicker
+clickOnMenuItem	Solo.java	/^	public void clickOnMenuItem(String text)$/;"	m	class:Solo
+clickOnMenuItem	Solo.java	/^	public void clickOnMenuItem(String text, boolean subMenu)$/;"	m	class:Solo
+clickOnRadioButton	Solo.java	/^	public void clickOnRadioButton(int index) {$/;"	m	class:Solo
+clickOnScreen	Clicker.java	/^	public void clickOnScreen(View view) {$/;"	m	class:Clicker
+clickOnScreen	Clicker.java	/^	public void clickOnScreen(View view, boolean longClick) {$/;"	m	class:Clicker
+clickOnScreen	Clicker.java	/^	public void clickOnScreen(float x, float y) {$/;"	m	class:Clicker
+clickOnScreen	Solo.java	/^	public void clickOnScreen(float x, float y) {$/;"	m	class:Solo
+clickOnText	Clicker.java	/^	public void clickOnText(String regex, boolean longClick, int match, boolean scroll) {$/;"	m	class:Clicker
+clickOnText	Solo.java	/^	public void clickOnText(String text) {$/;"	m	class:Solo
+clickOnText	Solo.java	/^	public void clickOnText(String text, int match) {$/;"	m	class:Solo
+clickOnText	Solo.java	/^	public void clickOnText(String text, int match, boolean scroll) {$/;"	m	class:Solo
+clickOnToggleButton	Solo.java	/^	public void clickOnToggleButton(String name) {$/;"	m	class:Solo
+clickOnView	Solo.java	/^	public void clickOnView(View view) {$/;"	m	class:Solo
+clickableItemsExist	Waiter.java	/^    private boolean clickableItemsExist(){$/;"	m	class:Waiter	file:
+clicker	Presser.java	/^	private final Clicker clicker;$/;"	f	class:Presser	file:
+clicker	Solo.java	/^	private final Clicker clicker;$/;"	f	class:Solo	file:
+com.jayway.android.robotium.solo	ActivityUtils.java	/^package com.jayway.android.robotium.solo;$/;"	p
+com.jayway.android.robotium.solo	Asserter.java	/^package com.jayway.android.robotium.solo;$/;"	p
+com.jayway.android.robotium.solo	Checker.java	/^package com.jayway.android.robotium.solo;$/;"	p
+com.jayway.android.robotium.solo	Clicker.java	/^package com.jayway.android.robotium.solo;$/;"	p
+com.jayway.android.robotium.solo	DialogUtils.java	/^package com.jayway.android.robotium.solo;$/;"	p
+com.jayway.android.robotium.solo	IAsserter.java	/^package com.jayway.android.robotium.solo;$/;"	p
+com.jayway.android.robotium.solo	MatchCounter.java	/^package com.jayway.android.robotium.solo;$/;"	p
+com.jayway.android.robotium.solo	Presser.java	/^package com.jayway.android.robotium.solo;$/;"	p
+com.jayway.android.robotium.solo	RobotiumUtils.java	/^package com.jayway.android.robotium.solo;$/;"	p
+com.jayway.android.robotium.solo	Scroller.java	/^package com.jayway.android.robotium.solo;$/;"	p
+com.jayway.android.robotium.solo	Searcher.java	/^package com.jayway.android.robotium.solo;$/;"	p
+com.jayway.android.robotium.solo	Sleeper.java	/^package com.jayway.android.robotium.solo;$/;"	p
+com.jayway.android.robotium.solo	Solo.java	/^package com.jayway.android.robotium.solo;$/;"	p
+com.jayway.android.robotium.solo	TextEnterer.java	/^package com.jayway.android.robotium.solo;$/;"	p
+com.jayway.android.robotium.solo	TimeoutAsserter.java	/^package com.jayway.android.robotium.solo;$/;"	p
+com.jayway.android.robotium.solo	ViewFetcher.java	/^package com.jayway.android.robotium.solo;$/;"	p
+com.jayway.android.robotium.solo	Waiter.java	/^package com.jayway.android.robotium.solo;$/;"	p
+countMatches	Clicker.java	/^	private int countMatches=0;$/;"	f	class:Clicker	file:
+dialogUtils	Solo.java	/^	private final DialogUtils dialogUtils;$/;"	f	class:Solo	file:
+drag	Scroller.java	/^	public void drag(float fromX, float toX, float fromY, float toY,$/;"	m	class:Scroller
+drag	Solo.java	/^	public void drag(float fromX, float toX, float fromY, float toY,$/;"	m	class:Solo
+enterText	Solo.java	/^	public void enterText(EditText editText, String text) {$/;"	m	class:Solo
+enterText	Solo.java	/^	public void enterText(int index, String text) {$/;"	m	class:Solo
+filterViews	RobotiumUtils.java	/^	public static <T extends View> ArrayList<T> filterViews(Class<T> classToFilterBy, ArrayList<View> viewList) {$/;"	m	class:RobotiumUtils
+finalize	ActivityUtils.java	/^	public void finalize() throws Throwable {$/;"	m	class:ActivityUtils
+finalize	Solo.java	/^	public void finalize() throws Throwable {$/;"	m	class:Solo
+getAllOpenedActivities	ActivityUtils.java	/^	public ArrayList<Activity> getAllOpenedActivities()$/;"	m	class:ActivityUtils
+getAllOpenedActivities	Solo.java	/^	public ArrayList<Activity> getAllOpenedActivities()$/;"	m	class:Solo
+getButton	Solo.java	/^	public Button getButton(String text)$/;"	m	class:Solo
+getButton	Solo.java	/^	public Button getButton(int index) {$/;"	m	class:Solo
+getClickableItems	Scroller.java	/^	private ArrayList<View> getClickableItems(){$/;"	m	class:Scroller	file:
+getCurrenButtonsCount	Solo.java	/^	public int getCurrenButtonsCount() {$/;"	m	class:Solo
+getCurrentActivity	ActivityUtils.java	/^	public Activity getCurrentActivity() {$/;"	m	class:ActivityUtils
+getCurrentActivity	ActivityUtils.java	/^	public Activity getCurrentActivity(boolean shouldSleepFirst) {$/;"	m	class:ActivityUtils
+getCurrentActivity	Solo.java	/^	public Activity getCurrentActivity() {$/;"	m	class:Solo
+getCurrentButtons	Solo.java	/^	public ArrayList<Button> getCurrentButtons() {$/;"	m	class:Solo
+getCurrentCheckBoxes	Solo.java	/^	public ArrayList<CheckBox> getCurrentCheckBoxes() {$/;"	m	class:Solo
+getCurrentEditTexts	Solo.java	/^	public ArrayList<EditText> getCurrentEditTexts() {$/;"	m	class:Solo
+getCurrentGridViews	Solo.java	/^	public ArrayList<GridView> getCurrentGridViews() {$/;"	m	class:Solo
+getCurrentImageButtons	Solo.java	/^	public ArrayList<ImageButton> getCurrentImageButtons() {$/;"	m	class:Solo
+getCurrentImageViews	Solo.java	/^	public ArrayList<ImageView> getCurrentImageViews() {$/;"	m	class:Solo
+getCurrentListViews	Solo.java	/^	public ArrayList<ListView> getCurrentListViews() {$/;"	m	class:Solo
+getCurrentRadioButtons	Solo.java	/^	public ArrayList<RadioButton> getCurrentRadioButtons() {$/;"	m	class:Solo
+getCurrentScrollViews	Solo.java	/^    public ArrayList<ScrollView> getCurrentScrollViews() {$/;"	m	class:Solo
+getCurrentSpinners	Solo.java	/^	public ArrayList<Spinner> getCurrentSpinners() {$/;"	m	class:Solo
+getCurrentTextViews	Solo.java	/^	public ArrayList<TextView> getCurrentTextViews(View parent) {$/;"	m	class:Solo
+getCurrentToggleButtons	Solo.java	/^	public ArrayList<ToggleButton> getCurrentToggleButtons() {$/;"	m	class:Solo
+getCurrentViews	ViewFetcher.java	/^	public <T extends View> ArrayList<T> getCurrentViews(Class<T> classToFilterBy) {$/;"	m	class:ViewFetcher
+getCurrentViews	ViewFetcher.java	/^	public <T extends View> ArrayList<T> getCurrentViews(Class<T> classToFilterBy, View parent) {$/;"	m	class:ViewFetcher
+getDragablePosition	Scroller.java	/^	private int getDragablePosition(int y, Direction direction){$/;"	m	class:Scroller	file:
+getEditText	Solo.java	/^	public EditText getEditText(String text)$/;"	m	class:Solo
+getEditText	Solo.java	/^	public EditText getEditText(int index) {$/;"	m	class:Solo
+getImage	Solo.java	/^	public ImageView getImage(int index) {$/;"	m	class:Solo
+getImageButton	Solo.java	/^	public ImageButton getImageButton(int index) {$/;"	m	class:Solo
+getListItemParent	ViewFetcher.java	/^	public View getListItemParent(View view)$/;"	m	class:ViewFetcher
+getString	ActivityUtils.java	/^	public String getString(int resId)$/;"	m	class:ActivityUtils
+getString	Solo.java	/^	public String getString(int resId)$/;"	m	class:Solo
+getText	Solo.java	/^	public TextView getText(String text)$/;"	m	class:Solo
+getText	Solo.java	/^	public TextView getText(int index) {$/;"	m	class:Solo
+getTopParent	Solo.java	/^	public View getTopParent(View view) {$/;"	m	class:Solo
+getTopParent	ViewFetcher.java	/^	public View getTopParent(View view) {$/;"	m	class:ViewFetcher
+getTotalCount	MatchCounter.java	/^	public static int getTotalCount(){$/;"	m	class:MatchCounter
+getView	Scroller.java	/^	private final <T extends View> T getView(Class<T> classToFilterBy, ArrayList<T> views, int index){$/;"	m	class:Scroller	file:
+getView	Solo.java	/^	public View getView(int id){$/;"	m	class:Solo
+getView	ViewFetcher.java	/^	public <T extends TextView> T getView(Class<T> classToFilterBy, String text) {$/;"	m	class:ViewFetcher
+getView	ViewFetcher.java	/^	public <T extends View> T getView(Class<T> classToFilterBy, int index) {$/;"	m	class:ViewFetcher
+getView	ViewFetcher.java	/^	public View getView(int id){$/;"	m	class:ViewFetcher
+getViews	Solo.java	/^	public ArrayList<View> getViews() {$/;"	m	class:Solo
+getViews	ViewFetcher.java	/^	public ArrayList<View> getViews(View parent) {$/;"	m	class:ViewFetcher
+getViewsFromDecorViews	ViewFetcher.java	/^	public ArrayList<View> getViewsFromDecorViews()$/;"	m	class:ViewFetcher
+getWindowDecorViews	ViewFetcher.java	/^	public View[] getWindowDecorViews()$/;"	m	class:ViewFetcher
+goBack	RobotiumUtils.java	/^	public void goBack() {$/;"	m	class:RobotiumUtils
+goBack	Solo.java	/^	public void goBack()$/;"	m	class:Solo
+goBackToActivity	ActivityUtils.java	/^	public void goBackToActivity(String name)$/;"	m	class:ActivityUtils
+goBackToActivity	Solo.java	/^	public void goBackToActivity(String name)$/;"	m	class:Solo
+inst	ActivityUtils.java	/^	private final Instrumentation inst;$/;"	f	class:ActivityUtils	file:
+inst	Clicker.java	/^	private final Instrumentation inst;$/;"	f	class:Clicker	file:
+inst	Presser.java	/^	private final Instrumentation inst;$/;"	f	class:Presser	file:
+inst	RobotiumUtils.java	/^	private final Instrumentation inst;$/;"	f	class:RobotiumUtils	file:
+inst	Scroller.java	/^	private final Instrumentation inst;$/;"	f	class:Scroller	file:
+inst	Searcher.java	/^	private final Instrumentation inst;$/;"	f	class:Searcher	file:
+inst	Solo.java	/^	private final Instrumentation inst;$/;"	f	class:Solo	file:
+inst	ViewFetcher.java	/^	private final Instrumentation inst;$/;"	f	class:ViewFetcher	file:
+isButtonChecked	Checker.java	/^	public <T extends CompoundButton> boolean isButtonChecked(Class<T> expectedClass, String text)$/;"	m	class:Checker
+isButtonChecked	Checker.java	/^	public <T extends CompoundButton> boolean isButtonChecked(Class<T> expectedClass, int index)$/;"	m	class:Checker
+isCheckBoxChecked	Solo.java	/^	public boolean isCheckBoxChecked(String text)$/;"	m	class:Solo
+isCheckBoxChecked	Solo.java	/^	public boolean isCheckBoxChecked(int index)$/;"	m	class:Solo
+isCheckedTextChecked	Checker.java	/^	public boolean isCheckedTextChecked(String text)$/;"	m	class:Checker
+isRadioButtonChecked	Solo.java	/^	public boolean isRadioButtonChecked(String text)$/;"	m	class:Solo
+isRadioButtonChecked	Solo.java	/^	public boolean isRadioButtonChecked(int index)$/;"	m	class:Solo
+isSpinnerTextSelected	Checker.java	/^	public boolean isSpinnerTextSelected(String text)$/;"	m	class:Checker
+isSpinnerTextSelected	Checker.java	/^	public boolean isSpinnerTextSelected(int spinnerIndex, String text)$/;"	m	class:Checker
+isSpinnerTextSelected	Solo.java	/^	public boolean isSpinnerTextSelected(String text)$/;"	m	class:Solo
+isSpinnerTextSelected	Solo.java	/^	public boolean isSpinnerTextSelected(int index, String text)$/;"	m	class:Solo
+isSuccess	TimeoutAsserter.java	/^        boolean isSuccess(); $/;"	m	interface:TimeoutAsserter.ITimeoutAssertion
+isTextChecked	Solo.java	/^	public boolean isTextChecked(String text){$/;"	m	class:Solo
+isToggleButtonChecked	Solo.java	/^	public boolean isToggleButtonChecked(String text)$/;"	m	class:Solo
+isToggleButtonChecked	Solo.java	/^	public boolean isToggleButtonChecked(int index)$/;"	m	class:Solo
+logMatchesFound	Searcher.java	/^	private void logMatchesFound(String regex){$/;"	m	class:Searcher	file:
+makeAssertion	TimeoutAsserter.java	/^        void makeAssertion();$/;"	m	interface:TimeoutAsserter.ITimeoutAssertion
+pressMenuItem	Presser.java	/^	public void pressMenuItem(int index) {$/;"	m	class:Presser
+pressMenuItem	Solo.java	/^	public void pressMenuItem(int index) {	$/;"	m	class:Solo
+pressSpinnerItem	Presser.java	/^	public void pressSpinnerItem(int spinnerIndex, int itemIndex)$/;"	m	class:Presser
+pressSpinnerItem	Solo.java	/^	public void pressSpinnerItem(int spinnerIndex, int itemIndex)$/;"	m	class:Solo
+presser	Solo.java	/^	private final Presser presser;$/;"	f	class:Solo	file:
+removeInvisibleViews	RobotiumUtils.java	/^	public static <T extends View> ArrayList<T> removeInvisibleViews(ArrayList<T> viewList) {$/;"	m	class:RobotiumUtils
+resetCount	MatchCounter.java	/^	public static void resetCount(){$/;"	m	class:MatchCounter
+retryAssertion	TimeoutAsserter.java	/^    void retryAssertion(ITimeoutAssertion assertion) {$/;"	m	class:TimeoutAsserter
+robotiumUtils	Clicker.java	/^	private final RobotiumUtils robotiumUtils;$/;"	f	class:Clicker	file:
+robotiumUtils	Solo.java	/^	private final RobotiumUtils robotiumUtils;$/;"	f	class:Solo	file:
+scroll	Scroller.java	/^	public boolean scroll(Direction direction) {$/;"	m	class:Scroller
+scrollAmount	Scroller.java	/^   	private int scrollAmount = 0;$/;"	f	class:Scroller	file:
+scrollDown	Solo.java	/^	public boolean scrollDown() {$/;"	m	class:Solo
+scrollDownList	Solo.java	/^	public boolean scrollDownList(int listIndex) {$/;"	m	class:Solo
+scrollList	Scroller.java	/^	public boolean scrollList(int listIndex, Direction direction, ArrayList<ListView> listViews) {$/;"	m	class:Scroller
+scrollListToLine	Scroller.java	/^	private void scrollListToLine(final ListView listView, final int line){$/;"	m	class:Scroller	file:
+scrollScrollView	Scroller.java	/^	private boolean scrollScrollView(Direction direction, ArrayList<ScrollView> scrollViews){$/;"	m	class:Scroller	file:
+scrollToSide	Scroller.java	/^	public void scrollToSide(Side side) {$/;"	m	class:Scroller
+scrollToSide	Solo.java	/^	public void scrollToSide(int side) {$/;"	m	class:Solo
+scrollUp	Solo.java	/^	public boolean scrollUp(){$/;"	m	class:Solo
+scrollUpList	Solo.java	/^	public boolean scrollUpList(int listIndex) {$/;"	m	class:Solo
+scroller	Clicker.java	/^	private final Scroller scroller;$/;"	f	class:Clicker	file:
+scroller	Searcher.java	/^	private final Scroller scroller;$/;"	f	class:Searcher	file:
+scroller	Solo.java	/^	private final Scroller scroller;$/;"	f	class:Solo	file:
+scroller	Waiter.java	/^	private final Scroller scroller;$/;"	f	class:Waiter	file:
+searchButton	Solo.java	/^	public boolean searchButton(String text) {$/;"	m	class:Solo
+searchButton	Solo.java	/^	public boolean searchButton(String text, boolean onlyVisible) {$/;"	m	class:Solo
+searchButton	Solo.java	/^	public boolean searchButton(String text, int minimumNumberOfMatches) {$/;"	m	class:Solo
+searchButton	Solo.java	/^	public boolean searchButton(String text, int minimumNumberOfMatches, boolean onlyVisible) {$/;"	m	class:Solo
+searchEditText	Solo.java	/^	public boolean searchEditText(String text) {$/;"	m	class:Solo
+searchFor	Searcher.java	/^	public <T extends TextView> boolean searchFor(Callable<Collection<T>> viewFetcherCallback, String regex, int expectedMinimumNumberOfMatches, boolean scroll) throws Exception {$/;"	m	class:Searcher
+searchFor	Searcher.java	/^	public <T extends TextView> boolean searchFor(final Class<T> viewClass, final String regex, final int expectedMinimumNumberOfMatches, final boolean scroll, final boolean onlyVisible) {$/;"	m	class:Searcher
+searchText	Solo.java	/^	public boolean searchText(String text) {$/;"	m	class:Solo
+searchText	Solo.java	/^	public boolean searchText(String text, boolean onlyVisible) {$/;"	m	class:Solo
+searchText	Solo.java	/^	public boolean searchText(String text, int minimumNumberOfMatches) {$/;"	m	class:Solo
+searchText	Solo.java	/^	public boolean searchText(String text, int minimumNumberOfMatches, boolean scroll) {$/;"	m	class:Solo
+searchText	Solo.java	/^	public boolean searchText(String text, int minimumNumberOfMatches, boolean scroll, boolean onlyVisible) {$/;"	m	class:Solo
+searchToggleButton	Solo.java	/^	public boolean searchToggleButton(String text) {$/;"	m	class:Solo
+searchToggleButton	Solo.java	/^	public boolean searchToggleButton(String text, int minimumNumberOfMatches) {$/;"	m	class:Solo
+searchWithTimeoutFor	Searcher.java	/^	public boolean searchWithTimeoutFor(Class<? extends TextView> viewClass, String regex, int expectedMinimumNumberOfMatches, boolean scroll, boolean onlyVisible) {$/;"	m	class:Searcher
+searcher	Solo.java	/^	private final Searcher searcher;$/;"	f	class:Solo	file:
+searcher	Waiter.java	/^	private final Searcher searcher;$/;"	f	class:Waiter	file:
+sendKey	Solo.java	/^	public void sendKey(int key)$/;"	m	class:Solo
+sendKeyCode	RobotiumUtils.java	/^	public void sendKeyCode(int keycode)$/;"	m	class:RobotiumUtils
+setActivityOrientation	ActivityUtils.java	/^	public void setActivityOrientation(int orientation)$/;"	m	class:ActivityUtils
+setActivityOrientation	Solo.java	/^	public void setActivityOrientation(int orientation)$/;"	m	class:Solo
+setEditText	TextEnterer.java	/^    public void setEditText(final EditText editText, final String text)$/;"	m	class:TextEnterer
+setupActivityMonitor	ActivityUtils.java	/^	private void setupActivityMonitor() {$/;"	m	class:ActivityUtils	file:
+sleep	Sleeper.java	/^	public void sleep() {$/;"	m	class:Sleeper
+sleep	Sleeper.java	/^	public void sleep(int time) {$/;"	m	class:Sleeper
+sleep	Solo.java	/^	public void sleep(int time)$/;"	m	class:Solo
+sleepMini	Sleeper.java	/^	public void sleepMini() {$/;"	m	class:Sleeper
+sleeper	ActivityUtils.java	/^    private final Sleeper sleeper;$/;"	f	class:ActivityUtils	file:
+sleeper	Asserter.java	/^    private final Sleeper sleeper;$/;"	f	class:Asserter	file:
+sleeper	Clicker.java	/^	private final Sleeper sleeper;$/;"	f	class:Clicker	file:
+sleeper	DialogUtils.java	/^    private final Sleeper sleeper;$/;"	f	class:DialogUtils	file:
+sleeper	Presser.java	/^    private final Sleeper sleeper;$/;"	f	class:Presser	file:
+sleeper	RobotiumUtils.java	/^	private final Sleeper sleeper;$/;"	f	class:RobotiumUtils	file:
+sleeper	Scroller.java	/^	private final Sleeper sleeper;$/;"	f	class:Scroller	file:
+sleeper	Searcher.java	/^	private final Sleeper sleeper;$/;"	f	class:Searcher	file:
+sleeper	Solo.java	/^	private final Sleeper sleeper;$/;"	f	class:Solo	file:
+sleeper	TimeoutAsserter.java	/^    private final Sleeper sleeper;$/;"	f	class:TimeoutAsserter	file:
+sleeper	ViewFetcher.java	/^	private final Sleeper sleeper;$/;"	f	class:ViewFetcher	file:
+sleeper	Waiter.java	/^	private final Sleeper sleeper;$/;"	f	class:Waiter	file:
+textEnterer	Solo.java	/^	private final TextEnterer textEnterer;$/;"	f	class:Solo	file:
+timeout	TimeoutAsserter.java	/^    private final long timeout;$/;"	f	class:TimeoutAsserter	file:
+totalAmountOfMatches	MatchCounter.java	/^	private static int totalAmountOfMatches = 0;$/;"	f	class:MatchCounter	file:
+viewFetcher	Checker.java	/^	private final ViewFetcher viewFetcher;$/;"	f	class:Checker	file:
+viewFetcher	Clicker.java	/^	private final ViewFetcher viewFetcher;$/;"	f	class:Clicker	file:
+viewFetcher	DialogUtils.java	/^	private final ViewFetcher viewFetcher;$/;"	f	class:DialogUtils	file:
+viewFetcher	Presser.java	/^	private final ViewFetcher viewFetcher;$/;"	f	class:Presser	file:
+viewFetcher	Scroller.java	/^	private final ViewFetcher viewFetcher;$/;"	f	class:Scroller	file:
+viewFetcher	Searcher.java	/^	private final ViewFetcher viewFetcher;$/;"	f	class:Searcher	file:
+viewFetcher	Solo.java	/^	private final ViewFetcher viewFetcher;$/;"	f	class:Solo	file:
+viewFetcher	Waiter.java	/^	private final ViewFetcher viewFetcher;$/;"	f	class:Waiter	file:
+waitForActivity	ActivityUtils.java	/^	public boolean waitForActivity(String name, int timeout)$/;"	m	class:ActivityUtils
+waitForActivity	Solo.java	/^	public boolean waitForActivity(String name, int timeout)$/;"	m	class:Solo
+waitForClickableItems	Waiter.java	/^    public void waitForClickableItems() {$/;"	m	class:Waiter
+waitForDialogToClose	DialogUtils.java	/^	public boolean waitForDialogToClose(long timeout) {$/;"	m	class:DialogUtils
+waitForDialogToClose	Solo.java	/^	public boolean waitForDialogToClose(long timeout) {$/;"	m	class:Solo
+waitForText	Solo.java	/^	public boolean waitForText(String text) {$/;"	m	class:Solo
+waitForText	Solo.java	/^	public boolean waitForText(String text, int minimumNumberOfMatches, long timeout) {$/;"	m	class:Solo
+waitForText	Solo.java	/^	public boolean waitForText(String text, int minimumNumberOfMatches, long timeout, boolean scroll) {$/;"	m	class:Solo
+waitForText	Waiter.java	/^	public boolean waitForText(String text) {$/;"	m	class:Waiter
+waitForText	Waiter.java	/^	public boolean waitForText(String text, int expectedMinimumNumberOfMatches) {$/;"	m	class:Waiter
+waitForText	Waiter.java	/^	public boolean waitForText(String text, int expectedMinimumNumberOfMatches, long timeout)$/;"	m	class:Waiter
+waitForText	Waiter.java	/^	public boolean waitForText(String text, int expectedMinimumNumberOfMatches, long timeout, boolean scroll) {$/;"	m	class:Waiter
+waitForText	Waiter.java	/^	public boolean waitForText(String text, int expectedMinimumNumberOfMatches, long timeout, boolean scroll, boolean onlyVisible) {$/;"	m	class:Waiter
+waitForView	Solo.java	/^	public <T extends View> boolean waitForView(final Class<T> viewClass, final int minimumNumberOfMatches, final int timeout){$/;"	m	class:Solo
+waitForView	Solo.java	/^	public <T extends View> boolean waitForView(final Class<T> viewClass, final int minimumNumberOfMatches, final int timeout,final boolean scroll){$/;"	m	class:Solo
+waitForView	Waiter.java	/^	public <T extends View> boolean waitForView(final Class<T> viewClass, final int index){$/;"	m	class:Waiter
+waitForView	Waiter.java	/^	public <T extends View> boolean waitForView(final Class<T> viewClass, final int index, final int timeOut, final boolean scroll){$/;"	m	class:Waiter
+waitForViews	Waiter.java	/^	public <T extends View> boolean waitForViews(final Class<T> viewClass, final Class<? extends View> viewClass2){$/;"	m	class:Waiter
+waiter	Checker.java	/^	private final Waiter waiter;$/;"	f	class:Checker	file:
+waiter	Clicker.java	/^	private final Waiter waiter;$/;"	f	class:Clicker	file:
+waiter	Solo.java	/^	private final Waiter waiter;$/;"	f	class:Solo	file:
+waiter	TextEnterer.java	/^	private final Waiter waiter;$/;"	f	class:TextEnterer	file:
+windowManager	ViewFetcher.java	/^	private static Class<?> windowManager;$/;"	f	class:ViewFetcher	file:
