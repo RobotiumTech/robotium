@@ -13,22 +13,22 @@ import android.app.ActivityManager;
 
 class Asserter {
 	private final ActivityUtils activityUtils;
-    private final Sleeper sleeper;
+	private final Waiter waiter;
 
 	/**
 	 * Constructs this object.
 	 *
 	 * @param activityUtils the {@code ActivityUtils} instance.
-     * @param sleeper the {@code Sleeper} instance.
+     * @param waiter the {@code Waiter} instance.
 	 *
 	 */
-	
-	public Asserter(ActivityUtils activityUtils, Sleeper sleeper) {
+
+	public Asserter(ActivityUtils activityUtils, Waiter waiter) {
 		this.activityUtils = activityUtils;
-        this.sleeper = sleeper;
+		this.waiter = waiter;
     }
 
-    /**
+	/**
      * Asserts that an expected {@link Activity} is currently active one.
      *
      * @param message the message that should be displayed if the assert fails
@@ -38,26 +38,24 @@ class Asserter {
 
 	public void assertCurrentActivity(String message, String name)
 	{
-		sleeper.sleep();
-		Assert.assertEquals(message, name, activityUtils.getCurrentActivity()
-				.getClass().getSimpleName());
-		
+		Assert.assertTrue(message, waiter.waitForActivity(name));
+
 	}
-	
+
 	/**
      * Asserts that an expected {@link Activity} is currently active one.
      *
      * @param message the message that should be displayed if the assert fails
 	 * @param expectedClass the {@code Class} object that is expected to be active e.g. {@code MyActivity.class}
-	 * 
+	 *
 	 */
-	
+
 	public void assertCurrentActivity(String message, Class<? extends Activity> expectedClass)
 	{
-		sleeper.sleep();
+	    waiter.waitForActivity(expectedClass.getSimpleName());
 		Assert.assertEquals(message, expectedClass.getName(), activityUtils
 				.getCurrentActivity().getClass().getName());
-	
+
 	}
 	
 	/**

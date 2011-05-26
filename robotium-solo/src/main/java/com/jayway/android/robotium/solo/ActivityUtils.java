@@ -161,29 +161,6 @@ class ActivityUtils {
 	    }
 	}
 	
-	/**
-	 * Waits for the given {@link Activity}.
-	 *
-	 * @param name the name of the {@code Activity} to wait for e.g. {@code "MyActivity"}
-	 * @param timeout the amount of time in milliseconds to wait
-	 * @return {@code true} if {@code Activity} appears before the timeout and {@code false} if it does not
-	 * 
-	 */
-	
-	public boolean waitForActivity(String name, int timeout)
-	{
-        long now = System.currentTimeMillis();
-        final long endTime = now + timeout;
-		while(!getCurrentActivity().getClass().getSimpleName().equals(name) && now < endTime)
-		{	
-			now = System.currentTimeMillis();
-		}
-		if(now < endTime)
-			return true;
-		
-		else
-			return false;
-	}
 	
 	/**
 	 * Returns to the given {@link Activity}.

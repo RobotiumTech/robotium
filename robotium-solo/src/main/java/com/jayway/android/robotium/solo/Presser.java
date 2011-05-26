@@ -19,6 +19,8 @@ class Presser{
 	private final Clicker clicker;
 	private final Instrumentation inst;
     private final Sleeper sleeper;
+    private final Waiter waiter;
+    
 
     /**
      * Constructs this object.
@@ -27,15 +29,17 @@ class Presser{
      * @param clicker the {@code Clicker} instance.
      * @param inst the {@code Instrumentation} instance.
      * @param sleeper the {@code Sleeper} instance.
+     * @param waiter the {@code Waiter} instance.
      */
-	
+
 	public Presser(ViewFetcher viewFetcher,
-                   Clicker clicker, Instrumentation inst, Sleeper sleeper) {
+                   Clicker clicker, Instrumentation inst, Sleeper sleeper, Waiter waiter) {
 
 		this.viewFetcher = viewFetcher;
 		this.clicker = clicker;
 		this.inst = inst;
         this.sleeper = sleeper;
+        this.waiter = waiter;
     }
 
 	
@@ -110,13 +114,12 @@ class Presser{
 	 * @param spinnerIndex the index of the {@code Spinner} menu to be used
 	 * @param itemIndex the index of the {@code Spinner} item to be pressed relative to the currently selected item.
 	 * A Negative number moves up on the {@code Spinner}, positive moves down
-	 * 
+	 *
 	 */
-	
+
 	public void pressSpinnerItem(int spinnerIndex, int itemIndex)
 	{
-		sleeper.sleep();
-		inst.waitForIdleSync();
+		waiter.waitForView(Spinner.class, spinnerIndex, false);
 		clicker.clickOnScreen(viewFetcher.getCurrentViews(Spinner.class).get(spinnerIndex));
 		try{
 			inst.sendKeyDownUpSync(KeyEvent.KEYCODE_DPAD_DOWN);
@@ -143,6 +146,4 @@ class Presser{
 			inst.sendKeyDownUpSync(KeyEvent.KEYCODE_ENTER);
 		}catch(SecurityException ignored){}
 	}
-	
-
 }

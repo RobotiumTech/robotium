@@ -73,7 +73,7 @@ public class Solo {
 	private final Clicker clicker;
 	private final Presser presser;
 	private final Searcher searcher;
-	private final ActivityUtils activitiyUtils;
+	private final ActivityUtils activityUtils;
 	private final DialogUtils dialogUtils;
 	private final TextEnterer textEnterer;
 	private final Scroller scroller;
@@ -103,24 +103,25 @@ public class Solo {
 	 * if no start activity is provided
 	 *
 	 */
-	
+
 	public Solo(Instrumentation instrumentation, Activity activity) {
 		this.instrumentation = instrumentation;
         this.sleeper = new Sleeper();
-        this.activitiyUtils = new ActivityUtils(instrumentation, activity, sleeper);
-        this.setter = new Setter(activitiyUtils);
-        this.viewFetcher = new ViewFetcher(instrumentation, activitiyUtils, sleeper);
-        this.asserter = new Asserter(activitiyUtils, sleeper);
+        this.activityUtils = new ActivityUtils(instrumentation, activity, sleeper);
+        this.setter = new Setter(activityUtils);
+        this.viewFetcher = new ViewFetcher(instrumentation, activityUtils, sleeper);
         this.dialogUtils = new DialogUtils(viewFetcher, sleeper);
-        this.scroller = new Scroller(instrumentation, activitiyUtils, viewFetcher, sleeper);
+        this.scroller = new Scroller(instrumentation, activityUtils, viewFetcher, sleeper);
         this.searcher = new Searcher(viewFetcher, scroller, instrumentation, sleeper);
-        this.waiter = new Waiter(viewFetcher, searcher,scroller, sleeper);
+        this.waiter = new Waiter(activityUtils, viewFetcher, searcher,scroller, sleeper);
+        this.asserter = new Asserter(activityUtils, waiter);
         this.checker = new Checker(viewFetcher, waiter);
         this.robotiumUtils = new RobotiumUtils(instrumentation, sleeper);
         this.clicker = new Clicker(viewFetcher, scroller,robotiumUtils, instrumentation, sleeper, waiter);
-        this.presser = new Presser(viewFetcher, clicker, instrumentation, sleeper);
+        this.presser = new Presser(viewFetcher, clicker, instrumentation, sleeper, waiter);
         this.textEnterer = new TextEnterer(instrumentation, waiter);
 	}
+
 	
 	/**
      * Constructor that takes in the instrumentation.
@@ -140,7 +141,7 @@ public class Solo {
 	 */
 	
 	public ActivityMonitor getActivityMonitor(){
-		return activitiyUtils.getActivityMonitor();
+		return activityUtils.getActivityMonitor();
 	}
 
 	/**
@@ -516,7 +517,7 @@ public class Solo {
 	
 	public void setActivityOrientation(int orientation)
 	{
-		activitiyUtils.setActivityOrientation(orientation);
+		activityUtils.setActivityOrientation(orientation);
 	}
 	
 	/**
@@ -528,7 +529,7 @@ public class Solo {
 	
 	public ArrayList<Activity> getAllOpenedActivities()
 	{
-		return activitiyUtils.getAllOpenedActivities();
+		return activityUtils.getAllOpenedActivities();
 	}
 	
 	/**
@@ -539,7 +540,7 @@ public class Solo {
 	 */
 	
 	public Activity getCurrentActivity() {
-		Activity activity = activitiyUtils.getCurrentActivity();
+		Activity activity = activityUtils.getCurrentActivity();
 		return activity;
 	}
 	
@@ -1820,7 +1821,7 @@ public class Solo {
 	
 	public void goBackToActivity(String name)
 	{
-		activitiyUtils.goBackToActivity(name);
+		activityUtils.goBackToActivity(name);
 	}
 	
 	/**
@@ -1834,7 +1835,7 @@ public class Solo {
 	
 	public boolean waitForActivity(String name, int timeout)
 	{
-		return activitiyUtils.waitForActivity(name, timeout);
+		return waiter.waitForActivity(name, timeout);
 	}
 	
 	/**
@@ -1847,7 +1848,7 @@ public class Solo {
 	
 	public String getString(int resId)
 	{
-		return activitiyUtils.getString(resId);
+		return activityUtils.getString(resId);
 	}
 	
 
@@ -1871,7 +1872,7 @@ public class Solo {
 	 */
 	
 	public void finalize() throws Throwable {
-		activitiyUtils.finalize();
+		activityUtils.finalize();
 	}
 	
 }

@@ -13,7 +13,8 @@ import android.widget.TextView;
  */
 
 class Waiter {
-
+	
+	private final ActivityUtils activityUtils;
 	private final ViewFetcher viewFetcher;
 	private final int TIMEOUT = 20000;
 	private final int SMALLTIMEOUT = 10000;
@@ -26,20 +27,58 @@ class Waiter {
 
 	/**
 	 * Constructs this object.
-	 * 
-	 * @param viewFetcher the {@code ViewFetcher} instance.
-	 * @param searcher the {@code Searcher} instance.
-	 * @param scroller the {@code Scroller} instance.
-	 * @param sleeper the {@code Sleeper} instance.
+	 *
+	 * @param activityUtils the {@code ActivityUtils} instance
+	 * @param viewFetcher the {@code ViewFetcher} instance
+	 * @param searcher the {@code Searcher} instance
+	 * @param scroller the {@code Scroller} instance
+	 * @param sleeper the {@code Sleeper} instance
 	 */
 
-	public Waiter(ViewFetcher viewFetcher, Searcher searcher, Scroller scroller, Sleeper sleeper){
+	public Waiter(ActivityUtils activityUtils, ViewFetcher viewFetcher, Searcher searcher, Scroller scroller, Sleeper sleeper){
+		this.activityUtils = activityUtils;
 		this.viewFetcher = viewFetcher;
 		this.searcher = searcher;
 		this.scroller = scroller;
 		this.sleeper = sleeper;
 		matchCounter = new MatchCounter();
 	}
+	
+	/**
+     * Waits for the given {@link Activity}.
+     *
+     * @param name the name of the {@code Activity} to wait for e.g. {@code "MyActivity"}
+     * @return {@code true} if {@code Activity} appears before the timeout and {@code false} if it does not
+     *
+     */
+
+	public boolean waitForActivity(String name){
+	    return waitForActivity(name, SMALLTIMEOUT);
+	}
+
+	/**
+     * Waits for the given {@link Activity}.
+     *
+     * @param name the name of the {@code Activity} to wait for e.g. {@code "MyActivity"}
+     * @param timeout the amount of time in milliseconds to wait
+     * @return {@code true} if {@code Activity} appears before the timeout and {@code false} if it does not
+     *
+     */
+
+    public boolean waitForActivity(String name, int timeout)
+    {
+        long now = System.currentTimeMillis();
+        final long endTime = now + timeout;
+        while(!activityUtils.getCurrentActivity().getClass().getSimpleName().equals(name) && now < endTime)
+        {
+            now = System.currentTimeMillis();
+        }
+        if(now < endTime)
+            return true;
+
+        else
+            return false;
+    }
 
 	/**
 	 * Waits for a view to be shown.
