@@ -1090,7 +1090,7 @@ public class Solo {
 	
 	public boolean scrollDownList(int index) {
 		waiter.waitForView(ListView.class, index);
-		return scroller.scrollList(ListView.class, 0, Scroller.DOWN, null);
+		return scroller.scrollList(ListView.class, index, Scroller.DOWN, null);
 	}
 	
 	/**
@@ -1103,7 +1103,7 @@ public class Solo {
 	
 	public boolean scrollUpList(int index) {
 		waiter.waitForView(ListView.class, index);
-		return scroller.scrollList(ListView.class, 0, Scroller.UP, null);
+		return scroller.scrollList(ListView.class, index, Scroller.UP, null);
 	}
 	
 	/**
