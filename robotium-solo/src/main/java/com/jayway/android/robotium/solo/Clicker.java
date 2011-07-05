@@ -366,7 +366,7 @@ class Clicker {
 			Assert.assertTrue("No ListView with index " + index + " is available!", false);
 
 		ArrayList<View> views = new ArrayList<View>();
-		final ListView listView = viewFetcher.getView(ListView.class, null, 0);
+		final ListView listView = viewFetcher.getView(ListView.class, null, index);
 		if(listView == null)
 			Assert.assertTrue("ListView is null!", false);
 
