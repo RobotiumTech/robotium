@@ -1126,7 +1126,7 @@ public class Solo {
 	 *
 	 * @param index the index of the {@link DatePicker}. {@code 0} if only one is available
 	 * @param year the year e.g. 2011
-	 * @param monthOfYear the month e.g. 03
+	 * @param monthOfYear the month which is starting from zero e.g. 03
 	 * @param dayOfMonth the day e.g. 10
 	 *
 	 */

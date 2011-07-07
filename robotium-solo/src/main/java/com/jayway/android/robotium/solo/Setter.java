@@ -37,7 +37,7 @@ class Setter{
 	 *
 	 * @param datePicker the {@code DatePicker} object.
 	 * @param year the year e.g. 2011
-	 * @param monthOfYear the month e.g. 03
+	 * @param monthOfYear the month which is starting from zero e.g. 03
 	 * @param dayOfMonth the day e.g. 10
 	 *
 	 */
