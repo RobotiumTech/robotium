@@ -121,6 +121,7 @@ class Presser{
 	{
 		waiter.waitForView(Spinner.class, spinnerIndex, false);
 		clicker.clickOnScreen(viewFetcher.getCurrentViews(Spinner.class).get(spinnerIndex));
+		sleeper.sleepMini();
 		try{
 			inst.sendKeyDownUpSync(KeyEvent.KEYCODE_DPAD_DOWN);
 		}catch(SecurityException ignored){}
