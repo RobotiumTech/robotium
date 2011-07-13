@@ -82,6 +82,7 @@ public class Solo {
 	private final Waiter waiter;
 	private final Setter setter;
 	private final Instrumentation instrumentation;
+	private final int TIMEOUT = 20000;
 	public final static int LANDSCAPE = ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE;   // 0
 	public final static int PORTRAIT = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT;     // 1
 	public final static int RIGHT = KeyEvent.KEYCODE_DPAD_RIGHT;
@@ -276,7 +277,7 @@ public class Solo {
 	
 	public <T extends View> boolean waitForView(final Class<T> viewClass){
 		
-		return waiter.waitForView(viewClass, 0, 20000, true);
+		return waiter.waitForView(viewClass, 0, TIMEOUT, true);
 	}
 	
 	/**
@@ -1825,14 +1826,26 @@ public class Solo {
 	}
 	
 	/**
-	 * Waits for the given Activity.
+	 * Waits for the given {@link Activity}. Default timeout is 20 seconds. 
+	 *
+	 * @param name the name of the {@code Activity} to wait for e.g. {@code "MyActivity"}
+	 * @return {@code true} if {@code Activity} appears before the timeout and {@code false} if it does not
+	 *
+	 */
+
+	public boolean waitForActivity(String name){
+		return waiter.waitForActivity(name, TIMEOUT);
+	}
+
+	/**
+	 * Waits for the given Activity. 
 	 *
 	 * @param name the name of the {@link Activity} to wait for e.g. {@code "MyActivity"}
 	 * @param timeout the amount of time in milliseconds to wait
 	 * @return {@code true} if {@link Activity} appears before the timeout and {@code false} if it does not
 	 * 
 	 */
-	
+
 	public boolean waitForActivity(String name, int timeout)
 	{
 		return waiter.waitForActivity(name, timeout);
