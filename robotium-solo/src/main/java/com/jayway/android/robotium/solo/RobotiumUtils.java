@@ -67,8 +67,7 @@ class RobotiumUtils {
 	public static <T extends View> ArrayList<T> removeInvisibleViews(ArrayList<T> viewList) {
 		ArrayList<T> tmpViewList = new ArrayList<T>(viewList.size());
 		for (T view : viewList) {
-			if (view != null && view.getVisibility() != View.GONE
-					&& view.getVisibility() != View.INVISIBLE) {
+			if (view != null && view.isShown()) {
 				tmpViewList.add(view);
 			}
 		}
