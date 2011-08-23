@@ -201,16 +201,26 @@ class ViewFetcher {
 	 }
 
 
-	/**
-	 * Returns a {@code View} with a given id.
-	 * @param id the R.id of the {@code View} to be returned
-	 * @return a {@code View} with a given id
-	 */
+	 /**
+	  * Returns a {@code View} with a given id.
+	  * @param id the R.id of the {@code View} to be returned
+	  * @return a {@code View} with a given id
+	  */
 
-	public View getView(int id){
-		final Activity activity = activityUtils.getCurrentActivity(false);
-		return activity.findViewById(id);
-	}
+	 public View getView(int id){
+		 final Activity activity = activityUtils.getCurrentActivity(false);
+		 View view = activity.findViewById(id);
+		 if (view != null)
+			 return view;
+
+		 ArrayList<View> views = getViews(null, false);
+		 for (View v : views) {
+			 if (v.getId() == id) {
+				 return v;
+			 }
+		 }
+		 return null;
+	 }
 
 
 	/**
