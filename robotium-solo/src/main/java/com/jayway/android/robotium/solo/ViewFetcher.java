@@ -7,7 +7,6 @@ import java.util.List;
 import junit.framework.Assert;
 import android.app.Activity;
 import android.app.Instrumentation;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
