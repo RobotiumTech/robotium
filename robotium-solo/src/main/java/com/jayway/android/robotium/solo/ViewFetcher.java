@@ -7,6 +7,7 @@ import java.util.List;
 import junit.framework.Assert;
 import android.app.Activity;
 import android.app.Instrumentation;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -24,6 +25,7 @@ class ViewFetcher {
 	private final Instrumentation inst;
 	private final ActivityUtils activityUtils;
 	private final Sleeper sleeper;
+	private String windowManagerString;
 
 	/**
 	 * Constructs this object.
@@ -38,6 +40,7 @@ class ViewFetcher {
 		this.inst = inst;
 		this.activityUtils = activityUtils;
 		this.sleeper = sleeper;
+		setWindowManagerString();
 	}
 
 
@@ -471,7 +474,7 @@ class ViewFetcher {
 		Field instanceField;
 		try {
 			viewsField = windowManager.getDeclaredField("mViews");
-			instanceField = windowManager.getDeclaredField("mWindowManager");
+			instanceField = windowManager.getDeclaredField(windowManagerString);
 			viewsField.setAccessible(true);
 			instanceField.setAccessible(true);
 			Object instance = instanceField.get(null);
@@ -486,6 +489,15 @@ class ViewFetcher {
 			e.printStackTrace();
 		}
 		return null;
+	}
+	
+	private void setWindowManagerString(){
+
+		if(android.os.Build.VERSION.SDK_INT >= 13)
+			windowManagerString = "sWindowManager";
+
+		else
+			windowManagerString = "mWindowManager";
 	}
 
 
