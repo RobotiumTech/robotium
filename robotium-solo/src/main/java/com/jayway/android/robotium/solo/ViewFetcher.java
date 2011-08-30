@@ -367,13 +367,16 @@ class ViewFetcher {
 	 *
 	 * @param classToFilterBy which {@code View}s to choose from
 	 * @param text the text that the view shows
+	 * @param onlyVisible {@code true} if only visible texts on the screen should be returned
 	 * @return a {@code View} showing a given text, from the list of current {@code View}s of the specified type
 	 */
 
-	public <T extends TextView> T getView(Class<T> classToFilterBy, String text) {
+	public <T extends TextView> T getView(Class<T> classToFilterBy, String text, boolean onlyVisible) {
 		sleeper.sleep();
 		inst.waitForIdleSync();
 		ArrayList<T> views = getCurrentViews(classToFilterBy);
+		if(onlyVisible)
+			views =	RobotiumUtils.removeInvisibleViews(views);
 		T viewToReturn = null;
 		for(T view: views){
 			if(view.getText().toString().equals(text))

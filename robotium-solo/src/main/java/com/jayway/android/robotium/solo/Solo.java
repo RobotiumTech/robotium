@@ -1383,7 +1383,20 @@ public class Solo {
 	
 	public TextView getText(String text)
 	{
-		return viewFetcher.getView(TextView.class, text);
+		return viewFetcher.getView(TextView.class, text, false);
+	}
+	
+	/**
+	 * Returns a TextView which shows a given text. 
+	 * 
+	 * @param text the text that is shown
+	 * @param onlyVisible {@code true} if only visible texts on the screen should be returned
+	 * @return the {@link TextView} that shows the given text
+	 */
+	
+	public TextView getText(String text, boolean onlyVisible)
+	{
+		return viewFetcher.getView(TextView.class, text, onlyVisible);
 	}
 	
 	/**
@@ -1395,7 +1408,20 @@ public class Solo {
 	
 	public Button getButton(String text)
 	{
-		return viewFetcher.getView(Button.class, text);
+		return viewFetcher.getView(Button.class, text, false);
+	}
+	
+	/**
+	 * Returns a Button which shows a given text.
+	 * 
+	 * @param text the text that is shown
+	 * @param onlyVisible {@code true} if only visible buttons on the screen should be returned
+	 * @return the {@link Button} that shows the given text
+	 */
+	
+	public Button getButton(String text, boolean onlyVisible)
+	{
+		return viewFetcher.getView(Button.class, text, onlyVisible);
 	}
 	
 	/**
@@ -1407,7 +1433,20 @@ public class Solo {
 	
 	public EditText getEditText(String text)
 	{
-		return viewFetcher.getView(EditText.class, text);
+		return viewFetcher.getView(EditText.class, text, false);
+	}
+	
+	/**
+	 * Returns an EditText which shows a given text.
+	 * 
+	 * @param text the text that is shown
+	 * @param onlyVisible {@code true} if only visible EditTexts on the screen should be returned
+	 * @return the {@link EditText} which shows the given text
+	 */
+	
+	public EditText getEditText(String text, boolean onlyVisible)
+	{
+		return viewFetcher.getView(EditText.class, text, onlyVisible);
 	}
 	
 	
