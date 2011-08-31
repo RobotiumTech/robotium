@@ -1865,7 +1865,7 @@ public class Solo {
 	}
 	
 	/**
-	 * Waits for the given {@link Activity}. Default timeout is 20 seconds. 
+	 * Waits for the given Activity. Default timeout is 20 seconds. 
 	 *
 	 * @param name the name of the {@code Activity} to wait for e.g. {@code "MyActivity"}
 	 * @return {@code true} if {@code Activity} appears before the timeout and {@code false} if it does not
