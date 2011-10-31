@@ -1916,15 +1916,24 @@ public class Solo {
 		sleeper.sleep(time);
 	}
 	
+    /**
+	 *
+	 * Finalizes the solo object.
+	 *
+	 */    
 	
-	/**
+    public void finalize() throws Throwable {
+		activityUtils.finalize();
+	}
+    
+    /**
 	 *
 	 * All activites that have been active are finished.
 	 *
 	 */
 	
-	public void finalize() throws Throwable {
-		activityUtils.finalize();
+	public void finishOpenedActivities(){
+		activityUtils.finishOpenedActivities();
 	}
 	
 }
