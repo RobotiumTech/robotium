@@ -1,15 +1,11 @@
-
 package com.jayway.android.robotium.solo;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
-import junit.framework.Assert;
-import android.app.Activity;
 import android.app.Instrumentation;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 /**
  * This class contains view methods. Examples are getViews(),
@@ -23,7 +19,6 @@ class ViewFetcher {
 
 	private final Instrumentation inst;
 	private final ActivityUtils activityUtils;
-	private final Sleeper sleeper;
 	private String windowManagerString;
 
 	/**
@@ -35,10 +30,9 @@ class ViewFetcher {
 	 *
 	 */
 
-	public ViewFetcher(Instrumentation inst, ActivityUtils activityUtils, Sleeper sleeper) {
+	public ViewFetcher(Instrumentation inst, ActivityUtils activityUtils) {
 		this.inst = inst;
 		this.activityUtils = activityUtils;
-		this.sleeper = sleeper;
 		setWindowManagerString();
 	}
 
@@ -60,24 +54,6 @@ class ViewFetcher {
 		}
 	}
 
-	/**
-	 * Returns the list item parent. It is used by clickInList().
-	 *
-	 * @param view the view who's parent is requested
-	 * @return the parent of the view
-	 *
-	 */
-
-	public View getListItemParent(View view)
-	{
-		if (view.getParent() != null
-				&& !(view.getParent() instanceof android.widget.ListView)) {
-			return getListItemParent((View) view.getParent());
-		} else {
-			return view;
-		}
-
-	}
 
 	/**
 	 * Returns the scroll or list parent view
@@ -203,27 +179,6 @@ class ViewFetcher {
 	 }
 
 
-	 /**
-	  * Returns a {@code View} with a given id.
-	  * @param id the R.id of the {@code View} to be returned
-	  * @return a {@code View} with a given id
-	  */
-
-	 public View getView(int id){
-		 final Activity activity = activityUtils.getCurrentActivity(false);
-		 View view = activity.findViewById(id);
-		 if (view != null)
-			 return view;
-
-		 ArrayList<View> views = getViews(null, false);
-		 for (View v : views) {
-			 if (v.getId() == id) {
-				 return v;
-			 }
-		 }
-		 return null;
-	 }
-
 
 	/**
 	 * Extracts all {@code View}s located in the currently active {@code Activity}, recursively.
@@ -341,86 +296,6 @@ class ViewFetcher {
 
 
 	/**
-	 * Returns a {@code View} with a certain index, from the list of current {@code View}s of the specified type.
-	 *
-	 * @param classToFilterBy which {@code View}s to choose from
-	 * @param index choose among all instances of this type, e.g. {@code Button.class} or {@code EditText.class}
-	 * @return a {@code View} with a certain index, from the list of current {@code View}s of the specified type
-	 */
-
-	public <T extends View> T getView(Class<T> classToFilterBy, int index) {
-		sleeper.sleep();
-		inst.waitForIdleSync();
-		ArrayList<T> views = getCurrentViews(classToFilterBy);
-		views=RobotiumUtils.removeInvisibleViews(views);
-		T view = null;
-		try{
-			view = views.get(index);
-		}catch (IndexOutOfBoundsException e){
-			Assert.assertTrue("No " + classToFilterBy.getSimpleName() + " with index " + index + " is found!", false);
-		}
-		return view;
-	}
-
-	/**
-	 * Returns a {@code View} that shows a given text, from the list of current {@code View}s of the specified type.
-	 *
-	 * @param classToFilterBy which {@code View}s to choose from
-	 * @param text the text that the view shows
-	 * @param onlyVisible {@code true} if only visible texts on the screen should be returned
-	 * @return a {@code View} showing a given text, from the list of current {@code View}s of the specified type
-	 */
-
-	public <T extends TextView> T getView(Class<T> classToFilterBy, String text, boolean onlyVisible) {
-		sleeper.sleep();
-		inst.waitForIdleSync();
-		ArrayList<T> views = getCurrentViews(classToFilterBy);
-		if(onlyVisible)
-			views =	RobotiumUtils.removeInvisibleViews(views);
-		T viewToReturn = null;
-		for(T view: views){
-			if(view.getText().toString().equals(text))
-				viewToReturn = view;
-		}
-		if(viewToReturn == null)
-			Assert.assertTrue("No " + classToFilterBy.getSimpleName() + " with text " + text + " is found!", false);
-
-		return viewToReturn;
-	}
-
-	/**
-	 * Returns a view.
-	 *
-	 * @param classToFilterBy the class to filter by
-	 * @param views the list with views
-	 * @param index the index of the view
-	 * @return the view with a given index
-	 */
-
-	public final <T extends View> T getView(Class<T> classToFilterBy, ArrayList<T> views, int index){
-		T viewToReturn = null;
-		long drawingTime = 0;
-		if(views == null){
-			views = getCurrentViews(classToFilterBy);
-		}
-		if(index < 1){
-			for(T view : views){
-				if(view.getDrawingTime() > drawingTime && view.getHeight() > 0){
-					drawingTime = view.getDrawingTime();
-					viewToReturn = view;
-				}
-			}
-		}
-		else{
-			try{
-				viewToReturn = views.get(index);
-			}catch (Exception ignored) {}
-		}
-		return viewToReturn;
-	}
-
-
-	/**
 	 * Returns an {@code ArrayList} of {@code View}s of the specified {@code Class} located in the current
 	 * {@code Activity}.
 	 *
@@ -449,6 +324,37 @@ class ViewFetcher {
 			}
 		}
 		return filteredViews;
+	}
+	
+	 /**
+	 * Returns a view.
+	 *
+	 * @param classToFilterBy the class to filter by
+	 * @param views the list with views
+	 * @param index the index of the view
+	 * @return the view with a given index
+	 */
+
+	public final <T extends View> T getView(Class<T> classToFilterBy, ArrayList<T> views, int index){
+		T viewToReturn = null;
+		long drawingTime = 0;
+		if(views == null){
+			views = getCurrentViews(classToFilterBy);
+		}
+		if(index < 1){
+			for(T view : views){
+				if(view.getDrawingTime() > drawingTime && view.getHeight() > 0){
+					drawingTime = view.getDrawingTime();
+					viewToReturn = view;
+				}
+			}
+		}
+		else{
+			try{
+				viewToReturn = views.get(index);
+			}catch (Exception ignored) {}
+		}
+		return viewToReturn;
 	}
 
 	private static Class<?> windowManager;

@@ -208,9 +208,9 @@ class ActivityUtils {
 	
 	/**
 	 *
-	 * All activites that have been active are finished.
+	 * Finalizes the solo object.
 	 *
-	 */
+	 */  
 	
 	public void finalize() throws Throwable {
 		try {
@@ -222,6 +222,12 @@ class ActivityUtils {
 		super.finalize();
 	}
 	
+	/**
+	 *
+	 * All activites that have been opened are finished.
+	 *
+	 */
+	
 	public void finishOpenedActivities(){
 		// Finish all opened activities
 		for (int i = activityList.size()-1; i >= 0; i--) {
@@ -231,6 +237,7 @@ class ActivityUtils {
 
 		// Finish the initial activity, pressing Back for good measure
 		getCurrentActivity().finish();
+		sleeper.sleep(100);
 		try {
 			inst.sendKeyDownUpSync(KeyEvent.KEYCODE_BACK);
 		} catch (SecurityException ignored) {

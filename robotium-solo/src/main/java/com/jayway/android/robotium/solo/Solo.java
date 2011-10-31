@@ -81,6 +81,7 @@ public class Solo {
 	private final Sleeper sleeper;
 	private final Waiter waiter;
 	private final Setter setter;
+	private final Getter getter;
 	private final Instrumentation instrumentation;
 	private final int TIMEOUT = 20000;
 	public final static int LANDSCAPE = ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE;   // 0
@@ -110,11 +111,12 @@ public class Solo {
         this.sleeper = new Sleeper();
         this.activityUtils = new ActivityUtils(instrumentation, activity, sleeper);
         this.setter = new Setter(activityUtils);
-        this.viewFetcher = new ViewFetcher(instrumentation, activityUtils, sleeper);
+        this.viewFetcher = new ViewFetcher(instrumentation, activityUtils);
         this.dialogUtils = new DialogUtils(viewFetcher, sleeper);
         this.scroller = new Scroller(instrumentation, activityUtils, viewFetcher, sleeper);
         this.searcher = new Searcher(viewFetcher, scroller, instrumentation, sleeper);
         this.waiter = new Waiter(activityUtils, viewFetcher, searcher,scroller, sleeper);
+        this.getter = new Getter(activityUtils, viewFetcher, waiter);
         this.asserter = new Asserter(activityUtils, waiter);
         this.checker = new Checker(viewFetcher, waiter);
         this.robotiumUtils = new RobotiumUtils(instrumentation, sleeper);
@@ -1321,7 +1323,7 @@ public class Solo {
 	 */
 	
 	public EditText getEditText(int index) {
-		EditText editText = viewFetcher.getView(EditText.class, index);
+		EditText editText = getter.getView(EditText.class, index);
 		return editText;
 	}
 	
@@ -1334,7 +1336,7 @@ public class Solo {
 	 */
 	
 	public Button getButton(int index) {
-		Button button = viewFetcher.getView(Button.class, index);
+		Button button = getter.getView(Button.class, index);
 		return button;
 	}
 	
@@ -1347,7 +1349,7 @@ public class Solo {
 	 */
 	
 	public TextView getText(int index) {
-		return viewFetcher.getView(TextView.class, index);
+		return getter.getView(TextView.class, index);
 	}
 	
 	/**
@@ -1359,7 +1361,7 @@ public class Solo {
 	 */
 	
 	public ImageView getImage(int index) {
-		return viewFetcher.getView(ImageView.class, index);
+		return getter.getView(ImageView.class, index);
 	}
 	
 	/**
@@ -1371,7 +1373,7 @@ public class Solo {
 	 */
 	
 	public ImageButton getImageButton(int index) {
-		return viewFetcher.getView(ImageButton.class, index);
+		return getter.getView(ImageButton.class, index);
 	}
 	
 	/**
@@ -1383,7 +1385,7 @@ public class Solo {
 	
 	public TextView getText(String text)
 	{
-		return viewFetcher.getView(TextView.class, text, false);
+		return getter.getView(TextView.class, text, false);
 	}
 	
 	/**
@@ -1396,7 +1398,7 @@ public class Solo {
 	
 	public TextView getText(String text, boolean onlyVisible)
 	{
-		return viewFetcher.getView(TextView.class, text, onlyVisible);
+		return getter.getView(TextView.class, text, onlyVisible);
 	}
 	
 	/**
@@ -1408,7 +1410,7 @@ public class Solo {
 	
 	public Button getButton(String text)
 	{
-		return viewFetcher.getView(Button.class, text, false);
+		return getter.getView(Button.class, text, false);
 	}
 	
 	/**
@@ -1421,7 +1423,7 @@ public class Solo {
 	
 	public Button getButton(String text, boolean onlyVisible)
 	{
-		return viewFetcher.getView(Button.class, text, onlyVisible);
+		return getter.getView(Button.class, text, onlyVisible);
 	}
 	
 	/**
@@ -1433,7 +1435,7 @@ public class Solo {
 	
 	public EditText getEditText(String text)
 	{
-		return viewFetcher.getView(EditText.class, text, false);
+		return getter.getView(EditText.class, text, false);
 	}
 	
 	/**
@@ -1446,7 +1448,7 @@ public class Solo {
 	
 	public EditText getEditText(String text, boolean onlyVisible)
 	{
-		return viewFetcher.getView(EditText.class, text, onlyVisible);
+		return getter.getView(EditText.class, text, onlyVisible);
 	}
 	
 	
@@ -1458,7 +1460,7 @@ public class Solo {
 	 */
 	
 	public View getView(int id){
-		return viewFetcher.getView(id);
+		return getter.getView(id);
 	}
 	
 	/**
@@ -1928,7 +1930,7 @@ public class Solo {
     
     /**
 	 *
-	 * All activites that have been active are finished.
+	 * All activites that have been opened are finished.
 	 *
 	 */
 	
