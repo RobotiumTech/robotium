@@ -82,7 +82,6 @@ public class Solo {
 	private final Waiter waiter;
 	private final Setter setter;
 	private final Getter getter;
-	private final Instrumentation instrumentation;
 	private final int TIMEOUT = 20000;
 	public final static int LANDSCAPE = ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE;   // 0
 	public final static int PORTRAIT = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT;     // 1
@@ -107,10 +106,9 @@ public class Solo {
 	 */
 
 	public Solo(Instrumentation instrumentation, Activity activity) {
-		this.instrumentation = instrumentation;
         this.sleeper = new Sleeper();
         this.activityUtils = new ActivityUtils(instrumentation, activity, sleeper);
-        this.viewFetcher = new ViewFetcher(instrumentation, activityUtils);
+        this.viewFetcher = new ViewFetcher(activityUtils);
         this.dialogUtils = new DialogUtils(viewFetcher, sleeper);
         this.scroller = new Scroller(instrumentation, activityUtils, viewFetcher, sleeper);
         this.searcher = new Searcher(viewFetcher, scroller, instrumentation, sleeper);
@@ -642,8 +640,6 @@ public class Solo {
 	
 	public void clickOnScreen(float x, float y) {
 		sleeper.sleep();
-		instrumentation.waitForIdleSync();
-		
 		clicker.clickOnScreen(x, y);
 	}
 	/**

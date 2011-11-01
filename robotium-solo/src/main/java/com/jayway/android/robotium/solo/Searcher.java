@@ -93,7 +93,6 @@ class Searcher {
 		final Callable<Collection<T>> viewFetcherCallback = new Callable<Collection<T>>() {
 			public Collection<T> call() throws Exception {
 				sleeper.sleep();
-				inst.waitForIdleSync();
 
 				if(onlyVisible)
 					return RobotiumUtils.removeInvisibleViews(viewFetcher.getCurrentViews(viewClass));

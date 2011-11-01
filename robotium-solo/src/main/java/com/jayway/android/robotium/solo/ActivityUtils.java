@@ -136,7 +136,6 @@ class ActivityUtils {
 	public Activity getCurrentActivity(boolean shouldSleepFirst) {
 	    if(shouldSleepFirst){
 	        sleeper.sleep();
-	        inst.waitForIdleSync();
 	    }
 
 	    waitForActivityIfNotAvailable();

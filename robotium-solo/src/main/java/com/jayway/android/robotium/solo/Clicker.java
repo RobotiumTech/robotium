@@ -97,13 +97,11 @@ class Clicker {
 		}catch(SecurityException e){
 			Assert.assertTrue("Click can not be completed! Something is in the way e.g. the keyboard.", false);
 		}
-		inst.waitForIdleSync();
 		eventTime = SystemClock.uptimeMillis();
 		event = MotionEvent.obtain(downTime, eventTime, MotionEvent.ACTION_MOVE, 
 				x + ViewConfiguration.getTouchSlop() / 2,
 				y + ViewConfiguration.getTouchSlop() / 2, 0);
 		inst.sendPointerSync(event);
-		inst.waitForIdleSync();
 		if(time > 0)
 			sleeper.sleep(time);
 		else
@@ -112,7 +110,6 @@ class Clicker {
 		eventTime = SystemClock.uptimeMillis();
 		event = MotionEvent.obtain(downTime, eventTime, MotionEvent.ACTION_UP, x, y, 0);
 		inst.sendPointerSync(event);
-		inst.waitForIdleSync();
 		sleeper.sleep();
 
 	}
@@ -192,7 +189,6 @@ class Clicker {
 	public void clickOnMenuItem(String text)
 	{	
 		sleeper.sleep();
-		inst.waitForIdleSync();
 		try{
 			robotiumUtils.sendKeyCode(KeyEvent.KEYCODE_MENU);
 		}catch(SecurityException e){
@@ -212,7 +208,6 @@ class Clicker {
 	public void clickOnMenuItem(String text, boolean subMenu)
 	{
 		sleeper.sleep();
-		inst.waitForIdleSync();
 		TextView textMore = null;
 		int [] xy = new int[2];
 		int x = 0;

@@ -6,7 +6,7 @@ import android.widget.TextView;
 
 /**
  * This class contains various wait methods. Examples are: waitForText(),
- * waitForIdle().
+ * waitForView().
  * 
  * @author Renas Reda, renas.reda@jayway.com
  * 

@@ -32,7 +32,6 @@ class RobotiumUtils {
 	
 	public void goBack() {
 		sleeper.sleep();
-		inst.waitForIdleSync();
 		try {
 			inst.sendKeyDownUpSync(KeyEvent.KEYCODE_BACK);
 			sleeper.sleep();
@@ -49,7 +48,6 @@ class RobotiumUtils {
 	public void sendKeyCode(int keycode)
 	{
 		sleeper.sleep();
-		inst.waitForIdleSync();
 		try{
 			inst.sendCharacterSync(keycode);
 		}catch(SecurityException e){

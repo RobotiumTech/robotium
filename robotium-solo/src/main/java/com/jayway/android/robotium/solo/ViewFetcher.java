@@ -3,7 +3,6 @@ package com.jayway.android.robotium.solo;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
-import android.app.Instrumentation;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -17,21 +16,17 @@ import android.view.ViewGroup;
 
 class ViewFetcher {
 
-	private final Instrumentation inst;
 	private final ActivityUtils activityUtils;
 	private String windowManagerString;
 
 	/**
 	 * Constructs this object.
 	 *
-	 * @param inst the {@code Instrumentation} instance
 	 * @param activityUtils the {@code ActivityUtils} instance
-	 * @param sleeper the {@code Sleeper} instance
 	 *
 	 */
 
-	public ViewFetcher(Instrumentation inst, ActivityUtils activityUtils) {
-		this.inst = inst;
+	public ViewFetcher(ActivityUtils activityUtils) {
 		this.activityUtils = activityUtils;
 		setWindowManagerString();
 	}
@@ -195,7 +190,6 @@ class ViewFetcher {
 		final View parentToUse;
 
 		if (parent == null){
-			inst.waitForIdleSync();
 			return getAllViews(onlySufficientlyVisible);
 		}else{
 			parentToUse = parent;

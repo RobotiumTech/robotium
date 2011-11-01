@@ -72,7 +72,6 @@ class Presser{
 			row[i] = itemsPerRow*i;
 
 		sleeper.sleep();
-		inst.waitForIdleSync();
 		try{
 			inst.sendKeyDownUpSync(KeyEvent.KEYCODE_MENU);
 			sleeper.sleepMini();
