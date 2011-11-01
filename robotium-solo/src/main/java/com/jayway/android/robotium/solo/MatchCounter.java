@@ -10,6 +10,7 @@ package com.jayway.android.robotium.solo;
 class MatchCounter {
 	
 	private int totalAmountOfMatches;
+	private static int lastAmountOfMatches;
 	
 	/**
 	 * Constructs this object.
@@ -27,6 +28,7 @@ class MatchCounter {
 	 */
 	
 	public void resetCount(){
+			lastAmountOfMatches = totalAmountOfMatches;
 			totalAmountOfMatches = 0;
 	}
 	
@@ -61,6 +63,16 @@ class MatchCounter {
 	
 	public int getTotalCount(){
 		return totalAmountOfMatches;
+	}
+	
+	/**
+	 * Returns the last amount of matches
+	 * 
+	 * @return the last amount of matches
+	 */
+	
+	public static int getLastAmountOfMatches(){
+		return lastAmountOfMatches;
 	}
 	
 	

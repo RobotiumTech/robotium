@@ -125,7 +125,7 @@ class Waiter {
 			sleeper.sleepMini();
 			typeList = viewFetcher.getCurrentViews(viewClass);
 			typeList = RobotiumUtils.removeInvisibleViews(typeList);
-
+		
 			matchCounter.addMatchesToCount(typeList.size());
 			typeList=null;
 
@@ -148,6 +148,7 @@ class Waiter {
 		matchCounter.resetCount();
 		return false;
 	}
+	
 
 	/**
 	 * Waits for two views to be shown
@@ -174,40 +175,60 @@ class Waiter {
 		return false;
 	}
 
-
+	
 	/**
-	 * Used instead of instrumentation.waitForIdleSync().
-	 *
+	 * Waits for a certain view. Default timeout is 20 seconds.
+	 * 
+	 * @param view the view to wait for
+	 * 
+	 * @return {@code true} if view is shown and {@code false} if it is not shown before the timeout
 	 */
-
-	public void waitForClickableItems() {
-		sleeper.sleep();
+	
+	public boolean waitForView(View view){
+		return waitForView(view, 20000, true);
+	}
+	
+	/**
+	 * Waits for a certain view. 
+	 * 
+	 * @param view the view to wait for
+	 * @param timeout the amount of time in milliseconds to wait
+	 * 
+	 * @return {@code true} if view is shown and {@code false} if it is not shown before the timeout
+	 */
+	
+	public boolean waitForView(View view, int timeout){
+		return waitForView(view, timeout, true);
+	}
+	
+	/**
+	 * Waits for a certain view.
+	 * 
+	 * @param view the view to wait for
+	 * @param timeout the amount of time in milliseconds to wait
+	 * @param scroll {@code true} if scrolling should be performed
+	 * 
+	 * @return {@code true} if view is shown and {@code false} if it is not shown before the timeout
+	 */
+	
+	public boolean waitForView(View view, int timeout, boolean scroll){
+		ArrayList<View> views = new ArrayList<View>();
 		long startTime = System.currentTimeMillis();
-		long timeout = 10000;
 		long endTime = startTime + timeout;
 		while (System.currentTimeMillis() <= endTime) {
-			if (clickableItemsExist())  
-				break;
 			sleeper.sleep();
-		}
-	}
-
-	/**
-	 * Checks if any of the views currently shown are clickable
-	 * 
-	 * @return true if clickable views exist
-	 */
-
-	private boolean clickableItemsExist(){
-		ArrayList<View> clickableItems = new ArrayList<View>();
-		clickableItems.addAll(viewFetcher.getAllViews(true));
-		for(View view : clickableItems){
-			if(view.getTouchables().size() > 0)
-				return true;
+			views = viewFetcher.getAllViews(true);
+			for(View v : views){
+				if(v.equals(view)){
+					return true;
+				}
+			}
+			if(scroll)
+			scroller.scroll(Scroller.DOWN);		
 		}
 		return false;
-
 	}
+
 
 	/**
 	 * Waits for a text to be shown. Default timeout is 20 seconds.

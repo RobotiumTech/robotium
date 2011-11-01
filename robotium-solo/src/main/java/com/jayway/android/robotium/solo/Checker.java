@@ -43,12 +43,13 @@ class Checker {
 	
 	public <T extends CompoundButton> boolean isButtonChecked(Class<T> expectedClass, int index)
 	{
-		waiter.waitForView(expectedClass, index, false);
-		ArrayList<T> list = viewFetcher.getCurrentViews(expectedClass);
-		list=RobotiumUtils.removeInvisibleViews(list);
-		if(index < 0 || index > list.size()-1)
+		boolean found = waiter.waitForView(expectedClass, index);
+		
+		ArrayList<T> views = RobotiumUtils.removeInvisibleViews(viewFetcher.getCurrentViews(expectedClass));
+		
+		if(!found)
 			Assert.assertTrue("No " + expectedClass.getSimpleName() + " with index " + index + " is found", false);
-		return (list.get(index)).isChecked();
+		return (views.get(RobotiumUtils.getValidIndex(index, views))).isChecked();
 	}
 	
 	/**
@@ -61,7 +62,7 @@ class Checker {
 	
 	public <T extends CompoundButton> boolean isButtonChecked(Class<T> expectedClass, String text)
 	{
-		waiter.waitForView(expectedClass, 0);
+		waiter.waitForText(text, 0, 10000);
 		ArrayList<T> list = viewFetcher.getCurrentViews(expectedClass);
 		for(T button : list){
 			if(button.getText().equals(text) && button.isChecked())
@@ -80,7 +81,7 @@ class Checker {
 	
 	public boolean isCheckedTextChecked(String text)
 	{
-		waiter.waitForText(text, 0, 10000, true, true);
+		waiter.waitForText(text, 0, 10000);
 		ArrayList<CheckedTextView> list = viewFetcher.getCurrentViews(CheckedTextView.class);
 		for(CheckedTextView checkedText : list){
 			if(checkedText.getText().equals(text) && checkedText.isChecked())

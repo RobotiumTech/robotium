@@ -91,6 +91,21 @@ class RobotiumUtils {
         }
         return filteredViews;
     }
+	
+	/**
+	 * Returns a valid index based on the actions of waitForView
+	 * 
+	 * @param index the index of the view
+	 * @param views the views
+	 * @return a valid index based on the actions of waitForView
+	 */
+	
+	public static <T extends View> int getValidIndex(int index, ArrayList<T> views){
+		int totalMatches = MatchCounter.getLastAmountOfMatches();
+		ArrayList<T> timePickers = removeInvisibleViews(views);
+		int matches = totalMatches - timePickers.size();
+		return index - matches;
+	}
 
 	
 	

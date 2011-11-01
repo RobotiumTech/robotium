@@ -110,12 +110,12 @@ public class Solo {
 		this.instrumentation = instrumentation;
         this.sleeper = new Sleeper();
         this.activityUtils = new ActivityUtils(instrumentation, activity, sleeper);
-        this.setter = new Setter(activityUtils);
         this.viewFetcher = new ViewFetcher(instrumentation, activityUtils);
         this.dialogUtils = new DialogUtils(viewFetcher, sleeper);
         this.scroller = new Scroller(instrumentation, activityUtils, viewFetcher, sleeper);
         this.searcher = new Searcher(viewFetcher, scroller, instrumentation, sleeper);
         this.waiter = new Waiter(activityUtils, viewFetcher, searcher,scroller, sleeper);
+        this.setter = new Setter(activityUtils, waiter);
         this.getter = new Getter(activityUtils, viewFetcher, waiter);
         this.asserter = new Asserter(activityUtils, waiter);
         this.checker = new Checker(viewFetcher, waiter);
@@ -193,40 +193,7 @@ public class Solo {
 		View topParent = viewFetcher.getTopParent(view);
 		return topParent;
 	}
-	
-	/**
-     * Clears the value of an EditText.
-     * 
-     * @param index the index of the {@link EditText} that should be cleared. 0 if only one is available
-	 *
-     */
-	
-    public void clearEditText(int index) {
-    	waiter.waitForView(EditText.class, index);
-    	
-    	ArrayList<EditText> visibleEditTexts = RobotiumUtils.removeInvisibleViews(getCurrentEditTexts());
-
-    	if(index > visibleEditTexts.size()-1)
-    		Assert.assertTrue("EditText with index " + index + " is not available!", false);
-    	
-    	textEnterer.setEditText(visibleEditTexts.get(index), "");
-    }
-    
-    /**
-     * Clears the value of an EditText.
-     * 
-     * @param editText the {@link EditText} that should be cleared
-	 *
-     */
-	
-    public void clearEditText(EditText editText) {
-    	waiter.waitForView(EditText.class, 0);
-    	
-    	textEnterer.setEditText(editText, "");	
-    }
-    
-	
-
+  
     
     /**
 	 * Waits for a text to be shown. Default timeout is 20 seconds. 
@@ -237,7 +204,6 @@ public class Solo {
 	 */
 	
 	public boolean waitForText(String text) {
-
 		return waiter.waitForText(text);
 	}
 
@@ -272,7 +238,7 @@ public class Solo {
     }
 	
 	/**
-	 * Waits for a View to be shown. Default timeout is 20 seconds. 
+	 * Waits for a View of a certain class to be shown. Default timeout is 20 seconds. 
 	 * 
 	 * @param viewClass the {@link View} class to wait for
 	 */
@@ -283,7 +249,33 @@ public class Solo {
 	}
 	
 	/**
-	 * Waits for a View to be shown.
+	 * Waits for a View to be shown. Default timeout is 20 seconds. 
+	 * 
+	 * @param view the {@link View} object to wait for
+	 * 
+	 * @return {@code true} if view is shown and {@code false} if it is not shown before the timeout
+	 */
+	
+	public <T extends View> boolean waitForView(View view){
+		return waiter.waitForView(view);
+	}
+	
+	/**
+	 * Waits for a View to be shown. 
+	 * 
+	 * @param view the {@link View} object to wait for
+	 * @param timeout the amount of time in milliseconds to wait
+	 * @param scroll {@code true} if scrolling should be performed
+	 * 
+	 * @return {@code true} if view is shown and {@code false} if it is not shown before the timeout
+	 */
+	
+	public <T extends View> boolean waitForView(View view, int timeout, boolean scroll){
+		return waiter.waitForView(view, timeout, scroll);
+	}
+	
+	/**
+	 * Waits for a View of a certain class to be shown.
 	 * 
 	 * @param viewClass the {@link View} class to wait for
 	 * @param minimumNumberOfMatches the minimum number of matches that are expected to be shown. {@code 0} means any number of matches
@@ -301,7 +293,7 @@ public class Solo {
 	}
 	
 	/**
-	 * Waits for a View to be shown.
+	 * Waits for a View of a certain class to be shown.
 	 * 
 	 * @param viewClass the {@link View} class to wait for
 	 * @param minimumNumberOfMatches the minimum number of matches that are expected to be shown. {@code 0} means any number of matches
@@ -788,7 +780,6 @@ public class Solo {
 	 */
 	
 	public void clickOnView(View view) {
-		waiter.waitForClickableItems();
 		clicker.clickOnScreen(view);
 	}
 	
@@ -801,7 +792,6 @@ public class Solo {
 	 */
 	
 	public void clickLongOnView(View view) {
-		waiter.waitForClickableItems();
 		clicker.clickOnScreen(view, true, 0);
 
 	}
@@ -815,7 +805,6 @@ public class Solo {
 	 */
 	
 	public void clickLongOnView(View view, int time) {
-		waiter.waitForClickableItems();
 		clicker.clickOnScreen(view, true, time);
 
 	}
@@ -1135,14 +1124,14 @@ public class Solo {
 	 */
 	
 	public void setDatePicker(int index, int year, int monthOfYear, int dayOfMonth) {
-		waiter.waitForView(DatePicker.class, index);
-		
-		ArrayList<DatePicker> visibleDatePickers = RobotiumUtils.removeInvisibleViews(getCurrentDatePickers());
-		
-		if(index > visibleDatePickers.size()-1)
+		boolean found = waiter.waitForView(DatePicker.class, index);
+
+		if(!found)
 			Assert.assertTrue("DatePicker with index " + index + " is not available!", false);
 		
-		setter.setDatePicker(visibleDatePickers.get(index), year, monthOfYear, dayOfMonth);
+		ArrayList<DatePicker> datePickers = RobotiumUtils.removeInvisibleViews(viewFetcher.getCurrentViews(DatePicker.class));
+		
+		setDatePicker(datePickers.get(RobotiumUtils.getValidIndex(index, datePickers)), year, monthOfYear, dayOfMonth);
 	}
 	
 	/**
@@ -1156,8 +1145,6 @@ public class Solo {
 	 */
 	
 	public void setDatePicker(DatePicker datePicker, int year, int monthOfYear, int dayOfMonth) {
-		waiter.waitForView(DatePicker.class, 0);
-		
 		setter.setDatePicker(datePicker, year, monthOfYear, dayOfMonth);
 	}
 	
@@ -1170,15 +1157,15 @@ public class Solo {
 	 *
 	 */
 	
-	public void setTimePicker(int index, int hour, int minute) {
-		waiter.waitForView(TimePicker.class, index);
-		
-		ArrayList<TimePicker> visibleTimePickers = RobotiumUtils.removeInvisibleViews(getCurrentTimePickers());
-		
-		if(index > visibleTimePickers.size()-1)
+	public void setTimePicker(int index, int hour, int minute) {		
+		boolean found = waiter.waitForView(TimePicker.class, index);
+
+		if(!found)
 			Assert.assertTrue("TimePicker with index " + index + " is not available!", false);
-		
-		setter.setTimePicker(visibleTimePickers.get(index), hour, minute);
+
+		ArrayList<TimePicker> timePickers = RobotiumUtils.removeInvisibleViews(viewFetcher.getCurrentViews(TimePicker.class));
+
+		setTimePicker((TimePicker)timePickers.get(RobotiumUtils.getValidIndex(index, timePickers)), hour, minute);
 	}
 	
 	/**
@@ -1191,8 +1178,6 @@ public class Solo {
 	 */
 
 	public void setTimePicker(TimePicker timePicker, int hour, int minute) {
-		waiter.waitForView(TimePicker.class, 0);
-
 		setter.setTimePicker(timePicker, hour, minute);
 	}
 	
@@ -1205,16 +1190,14 @@ public class Solo {
 	 */
 
 	public void setProgressBar(int index, int progress){
-
-		waiter.waitForView(ProgressBar.class, index);
-
-		ArrayList<ProgressBar> visibleProgressBars = RobotiumUtils.removeInvisibleViews(getCurrentProgressBars());
-
-		if(index > visibleProgressBars.size()-1)
+		boolean found = waiter.waitForView(ProgressBar.class, index);
+		
+		if(!found)
 			Assert.assertTrue("ProgressBar with index " + index + " is not available!", false);
-
-
-		setter.setProgressBar(visibleProgressBars.get(index), progress);
+		
+		ArrayList<ProgressBar> progressBars = RobotiumUtils.removeInvisibleViews(viewFetcher.getCurrentViews(ProgressBar.class));
+		
+		setProgressBar(progressBars.get(RobotiumUtils.getValidIndex(index, progressBars)),progress);
 	}
 
 	/**
@@ -1226,9 +1209,6 @@ public class Solo {
 	 */
 
 	public void setProgressBar(ProgressBar progressBar, int progress){
-
-		waiter.waitForView(ProgressBar.class, 0);
-
 		setter.setProgressBar(progressBar, progress);
 	}
 	
@@ -1241,16 +1221,15 @@ public class Solo {
 	 */
 
 	public void setSlidingDrawer(int index, int status){
-
-		waiter.waitForView(SlidingDrawer.class, index);
-
-		ArrayList<SlidingDrawer> visibleSlidingDrawers = RobotiumUtils.removeInvisibleViews(getCurrentSlidingDrawers());
-
-		if(index > visibleSlidingDrawers.size()-1)
+		boolean found = waiter.waitForView(SlidingDrawer.class, index);
+		
+		if(!found)
 			Assert.assertTrue("SlidingDrawer with index " + index + " is not available!", false);
-
-
-		setter.setSlidingDrawer(visibleSlidingDrawers.get(index), status);
+		
+		ArrayList<SlidingDrawer> slidingDrawers = RobotiumUtils.removeInvisibleViews(viewFetcher.getCurrentViews(SlidingDrawer.class));
+		
+		setSlidingDrawer(slidingDrawers.get(RobotiumUtils.getValidIndex(index, slidingDrawers)),status);
+		
 	}
 
 	/**
@@ -1262,9 +1241,6 @@ public class Solo {
 	 */
 
 	public void setSlidingDrawer(SlidingDrawer slidingDrawer, int status){
-
-		waiter.waitForView(SlidingDrawer.class, 0);
-
 		setter.setSlidingDrawer(slidingDrawer, status);
 	}
 
@@ -1279,14 +1255,14 @@ public class Solo {
 	 */
 	
 	public void enterText(int index, String text) {
-		waiter.waitForView(EditText.class, index);
+		boolean found = waiter.waitForView(EditText.class, index);
 		
-		ArrayList<EditText> visibleEditTexts = RobotiumUtils.removeInvisibleViews(getCurrentEditTexts());
-		
-		if(index > visibleEditTexts.size()-1)
+		if(!found)
 			Assert.assertTrue("EditText with index " + index + " is not available!", false);
 		
-		textEnterer.setEditText(visibleEditTexts.get(index), text);		
+		ArrayList<EditText> editTexts = RobotiumUtils.removeInvisibleViews(viewFetcher.getCurrentViews(EditText.class));
+		
+		textEnterer.setEditText(editTexts.get(RobotiumUtils.getValidIndex(index, editTexts)), text);		
 	}
 	
 	/**
@@ -1298,10 +1274,37 @@ public class Solo {
 	 */
 	
 	public void enterText(EditText editText, String text) {
-		waiter.waitForView(EditText.class, 0);
-		
 		textEnterer.setEditText(editText, text);		
 	}
+	
+	/**
+     * Clears the value of an EditText.
+     * 
+     * @param index the index of the {@link EditText} that should be cleared. 0 if only one is available
+	 *
+     */
+	
+    public void clearEditText(int index) {
+    	boolean found = waiter.waitForView(EditText.class, index);
+		
+		if(!found)
+			Assert.assertTrue("EditText with index " + index + " is not available!", false);
+		
+		ArrayList<EditText> editTexts = RobotiumUtils.removeInvisibleViews(viewFetcher.getCurrentViews(EditText.class));
+		
+    	textEnterer.setEditText(editTexts.get(RobotiumUtils.getValidIndex(index, editTexts)), "");
+    }
+    
+    /**
+     * Clears the value of an EditText.
+     * 
+     * @param editText the {@link EditText} that should be cleared
+	 *
+     */
+	
+    public void clearEditText(EditText editText) {
+    	textEnterer.setEditText(editText, "");	
+    }
 	
 	/**
 	 * Clicks on an ImageView with a given index.
@@ -1767,9 +1770,6 @@ public class Solo {
 	{
 		return checker.isButtonChecked(CheckBox.class, text);
 	}
-	
-	
-	
 	
 	/**
 	 * Checks if the given text is checked.

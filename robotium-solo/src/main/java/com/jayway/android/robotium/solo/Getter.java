@@ -43,17 +43,19 @@ class Getter {
 	 * @param index choose among all instances of this type, e.g. {@code Button.class} or {@code EditText.class}
 	 * @return a {@code View} with a certain index, from the list of current {@code View}s of the specified type
 	 */
-
+	
 	public <T extends View> T getView(Class<T> classToFilterBy, int index) {
-		waiter.waitForView(classToFilterBy, index);
-		ArrayList<T> views = viewFetcher.getCurrentViews(classToFilterBy);
-		views=RobotiumUtils.removeInvisibleViews(views);
-		T view = null;
-		try{
-			view = views.get(index);
-		}catch (IndexOutOfBoundsException e){
+		boolean found = waiter.waitForView(classToFilterBy, index);
+		
+		if(!found)
 			Assert.assertTrue("No " + classToFilterBy.getSimpleName() + " with index " + index + " is found!", false);
-		}
+		
+		ArrayList<T> views = RobotiumUtils.removeInvisibleViews(viewFetcher.getCurrentViews(classToFilterBy));
+		T view = null;
+		
+		try{
+			view = views.get(RobotiumUtils.getValidIndex(index, views));
+		}catch (IndexOutOfBoundsException ignored){ }
 		return view;
 	}
 	
