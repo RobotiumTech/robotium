@@ -1,7 +1,6 @@
 package com.jayway.android.robotium.solo;
 
 import java.util.ArrayList;
-import junit.framework.Assert;
 import android.app.Activity;
 import android.app.Instrumentation;
 import android.content.pm.ActivityInfo;
@@ -1077,8 +1076,7 @@ public class Solo {
 	 */
 	
 	public boolean scrollDownList(int index) {
-		waiter.waitForView(ListView.class, index);
-		return scroller.scrollList(ListView.class, index, Scroller.DOWN, null);
+		return scroller.scrollList(ListView.class, waiter.waitForAndGetView(index, ListView.class), Scroller.DOWN, null);
 	}
 	
 	/**
@@ -1090,8 +1088,7 @@ public class Solo {
 	 */
 	
 	public boolean scrollUpList(int index) {
-		waiter.waitForView(ListView.class, index);
-		return scroller.scrollList(ListView.class, index, Scroller.UP, null);
+		return scroller.scrollList(ListView.class, waiter.waitForAndGetView(index, ListView.class), Scroller.UP, null);
 	}
 	
 	/**
@@ -1120,14 +1117,7 @@ public class Solo {
 	 */
 	
 	public void setDatePicker(int index, int year, int monthOfYear, int dayOfMonth) {
-		boolean found = waiter.waitForView(DatePicker.class, index);
-
-		if(!found)
-			Assert.assertTrue("DatePicker with index " + index + " is not available!", false);
-		
-		ArrayList<DatePicker> datePickers = RobotiumUtils.removeInvisibleViews(viewFetcher.getCurrentViews(DatePicker.class));
-		
-		setDatePicker(datePickers.get(RobotiumUtils.getValidIndex(index, datePickers)), year, monthOfYear, dayOfMonth);
+		setDatePicker(waiter.waitForAndGetView(index, DatePicker.class), year, monthOfYear, dayOfMonth);
 	}
 	
 	/**
@@ -1154,14 +1144,7 @@ public class Solo {
 	 */
 	
 	public void setTimePicker(int index, int hour, int minute) {		
-		boolean found = waiter.waitForView(TimePicker.class, index);
-
-		if(!found)
-			Assert.assertTrue("TimePicker with index " + index + " is not available!", false);
-
-		ArrayList<TimePicker> timePickers = RobotiumUtils.removeInvisibleViews(viewFetcher.getCurrentViews(TimePicker.class));
-
-		setTimePicker((TimePicker)timePickers.get(RobotiumUtils.getValidIndex(index, timePickers)), hour, minute);
+		setTimePicker(waiter.waitForAndGetView(index, TimePicker.class), hour, minute);
 	}
 	
 	/**
@@ -1186,14 +1169,7 @@ public class Solo {
 	 */
 
 	public void setProgressBar(int index, int progress){
-		boolean found = waiter.waitForView(ProgressBar.class, index);
-		
-		if(!found)
-			Assert.assertTrue("ProgressBar with index " + index + " is not available!", false);
-		
-		ArrayList<ProgressBar> progressBars = RobotiumUtils.removeInvisibleViews(viewFetcher.getCurrentViews(ProgressBar.class));
-		
-		setProgressBar(progressBars.get(RobotiumUtils.getValidIndex(index, progressBars)),progress);
+		setProgressBar(waiter.waitForAndGetView(index, ProgressBar.class),progress);
 	}
 
 	/**
@@ -1217,15 +1193,7 @@ public class Solo {
 	 */
 
 	public void setSlidingDrawer(int index, int status){
-		boolean found = waiter.waitForView(SlidingDrawer.class, index);
-		
-		if(!found)
-			Assert.assertTrue("SlidingDrawer with index " + index + " is not available!", false);
-		
-		ArrayList<SlidingDrawer> slidingDrawers = RobotiumUtils.removeInvisibleViews(viewFetcher.getCurrentViews(SlidingDrawer.class));
-		
-		setSlidingDrawer(slidingDrawers.get(RobotiumUtils.getValidIndex(index, slidingDrawers)),status);
-		
+		setSlidingDrawer(waiter.waitForAndGetView(index, SlidingDrawer.class),status);
 	}
 
 	/**
@@ -1249,16 +1217,9 @@ public class Solo {
 	 * @param text the text string to enter into the {@link EditText} field
 	 *
 	 */
-	
+
 	public void enterText(int index, String text) {
-		boolean found = waiter.waitForView(EditText.class, index);
-		
-		if(!found)
-			Assert.assertTrue("EditText with index " + index + " is not available!", false);
-		
-		ArrayList<EditText> editTexts = RobotiumUtils.removeInvisibleViews(viewFetcher.getCurrentViews(EditText.class));
-		
-		textEnterer.setEditText(editTexts.get(RobotiumUtils.getValidIndex(index, editTexts)), text);		
+		textEnterer.setEditText(waiter.waitForAndGetView(index, EditText.class), text);		
 	}
 	
 	/**
@@ -1274,22 +1235,15 @@ public class Solo {
 	}
 	
 	/**
-     * Clears the value of an EditText.
-     * 
-     * @param index the index of the {@link EditText} that should be cleared. 0 if only one is available
+	 * Clears the value of an EditText.
+	 * 
+	 * @param index the index of the {@link EditText} that should be cleared. 0 if only one is available
 	 *
-     */
-	
-    public void clearEditText(int index) {
-    	boolean found = waiter.waitForView(EditText.class, index);
-		
-		if(!found)
-			Assert.assertTrue("EditText with index " + index + " is not available!", false);
-		
-		ArrayList<EditText> editTexts = RobotiumUtils.removeInvisibleViews(viewFetcher.getCurrentViews(EditText.class));
-		
-    	textEnterer.setEditText(editTexts.get(RobotiumUtils.getValidIndex(index, editTexts)), "");
-    }
+	 */
+
+	public void clearEditText(int index) {
+		textEnterer.setEditText(waiter.waitForAndGetView(index, EditText.class), "");
+	}
     
     /**
      * Clears the value of an EditText.

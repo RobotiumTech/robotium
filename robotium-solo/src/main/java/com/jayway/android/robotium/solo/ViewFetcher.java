@@ -329,25 +329,18 @@ class ViewFetcher {
 	 * @return the view with a given index
 	 */
 
-	public final <T extends View> T getView(Class<T> classToFilterBy, ArrayList<T> views, int index){
+	public final <T extends View> T getView(Class<T> classToFilterBy, ArrayList<T> views){
 		T viewToReturn = null;
 		long drawingTime = 0;
 		if(views == null){
 			views = getCurrentViews(classToFilterBy);
 		}
-		if(index < 1){
 			for(T view : views){
 				if(view.getDrawingTime() > drawingTime && view.getHeight() > 0){
 					drawingTime = view.getDrawingTime();
 					viewToReturn = view;
 				}
 			}
-		}
-		else{
-			try{
-				viewToReturn = views.get(index);
-			}catch (Exception ignored) {}
-		}
 		return viewToReturn;
 	}
 

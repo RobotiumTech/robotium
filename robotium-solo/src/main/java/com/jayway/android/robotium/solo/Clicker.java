@@ -1,6 +1,8 @@
 package com.jayway.android.robotium.solo;
 
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.regex.Pattern;
 import android.widget.*;
 import junit.framework.Assert;
@@ -29,8 +31,8 @@ class Clicker {
 	private final RobotiumUtils robotiumUtils;
 	private final Sleeper sleeper;
 	private final Waiter waiter;
-	private final MatchCounter matchCounter;
 	private final int TIMEOUT = 10000;
+	Set<TextView> uniqueTextViews;
 
 
 	/**
@@ -53,7 +55,7 @@ class Clicker {
 		this.inst = inst;
 		this.sleeper = sleeper;
 		this.waiter = waiter;
-		matchCounter = new MatchCounter();
+		uniqueTextViews = new HashSet<TextView>();
 	}
 
 	/**
@@ -249,17 +251,17 @@ class Clicker {
 		final Pattern pattern = Pattern.compile(regex);
 		waiter.waitForText(regex, 0, TIMEOUT, scroll, true);
 		TextView textToClick = null;
-		ArrayList <TextView> textViewList = viewFetcher.getCurrentViews(TextView.class);
-		textViewList = RobotiumUtils.removeInvisibleViews(textViewList);
+		ArrayList <TextView> allTextViews = viewFetcher.getCurrentViews(TextView.class);
+		allTextViews = RobotiumUtils.removeInvisibleViews(allTextViews);
 		if (match == 0) {
 			match = 1;
 		}
-		for (TextView textView : textViewList){
+		for (TextView textView : allTextViews){
 			if(pattern.matcher(textView.getText().toString()).find()){
-				matchCounter.addMatchToCount();
+				uniqueTextViews.add(textView);
 			}
-			if (matchCounter.getTotalCount() == match) {
-				matchCounter.resetCount();
+			if (uniqueTextViews.size() == match) {
+				uniqueTextViews.clear();
 				textToClick = textView;
 				break;
 			}
@@ -269,15 +271,15 @@ class Clicker {
 		} else if (scroll && scroller.scroll(Scroller.DOWN)) {
 			clickOnText(regex, longClick, match, scroll, time);
 		} else {
-			if (matchCounter.getTotalCount() > 0)
-				Assert.assertTrue("There are only " + matchCounter.getTotalCount() + " matches of " + regex, false);
+			if (uniqueTextViews.size() > 0)
+				Assert.assertTrue("There are only " + uniqueTextViews.size() + " matches of " + regex, false);
 			else {
-				for (TextView textView : textViewList) {
+				for (TextView textView : allTextViews) {
 					Log.d(LOG_TAG, regex + " not found. Have found: " + textView.getText());
 				}
 				Assert.assertTrue("The text: " + regex + " is not found!", false);
 			}
-			matchCounter.resetCount();
+			uniqueTextViews.clear();
 		}
 	}
 
@@ -320,14 +322,7 @@ class Clicker {
 	 * @param index the index of the {@code View} to be clicked, within {@code View}s of the specified class
 	 */
 	public <T extends View> void clickOn(Class<T> viewClass, int index) {
-		waiter.waitForView(viewClass, index, false);
-		try {
-			ArrayList<T> views=viewFetcher.getCurrentViews(viewClass);
-			views=RobotiumUtils.removeInvisibleViews(views);
-			clickOnScreen(views.get(index));
-		} catch (IndexOutOfBoundsException e) {
-			Assert.assertTrue("There is no " + viewClass.getSimpleName() + " with index " + index, false);
-		}
+			clickOnScreen(waiter.waitForAndGetView(index, viewClass));
 	}
 
 
@@ -357,12 +352,8 @@ class Clicker {
 		if(line < 0)
 			line = 0;
 
-		boolean foundList = waiter.waitForView(ListView.class, index);
-		if (!foundList) 
-			Assert.assertTrue("No ListView with index " + index + " is available!", false);
-
 		ArrayList<View> views = new ArrayList<View>();
-		final ListView listView = viewFetcher.getView(ListView.class, null, index);
+		final ListView listView = waiter.waitForAndGetView(index, ListView.class);
 		if(listView == null)
 			Assert.assertTrue("ListView is null!", false);
 

@@ -99,7 +99,7 @@ class Scroller {
 	 */
 
 	private boolean scrollScrollView(int direction, ArrayList<ScrollView> scrollViews){
-		final ScrollView scroll = viewFetcher.getView(ScrollView.class, scrollViews, 0);
+		final ScrollView scroll = viewFetcher.getView(ScrollView.class, scrollViews);
 		int scrollAmount = 0;
 		
 		if(scroll != null){
@@ -155,13 +155,13 @@ class Scroller {
 		final ArrayList<ListView> listViews = RobotiumUtils.filterViews(ListView.class, viewList);
 
 		if (listViews.size() > 0) {
-			return scrollList(ListView.class, 0, direction, listViews);
+			return scrollList(ListView.class, null, direction, listViews);
 		} 
 		
 		final ArrayList<GridView> gridViews = RobotiumUtils.filterViews(GridView.class, viewList);
 
 		if (gridViews.size() > 0) {
-			return scrollList(GridView.class, 0, direction, gridViews);
+			return scrollList(GridView.class, null, direction, gridViews);
 		} 
 
 		final ArrayList<ScrollView> scrollViews = RobotiumUtils.filterViews(ScrollView.class, viewList);
@@ -181,8 +181,10 @@ class Scroller {
 	 * 
 	 */
 
-	public <T extends AbsListView> boolean scrollList(Class<T> classToFilterBy, int listIndex, int direction, ArrayList<T> listViews) {
-		final T listView = viewFetcher.getView(classToFilterBy, listViews, listIndex);
+	public <T extends AbsListView> boolean scrollList(Class<T> classToFilterBy, ListView listView, int direction, ArrayList<T> listViews) {
+		
+		if(listView == null)
+			listView = (ListView) viewFetcher.getView(classToFilterBy, listViews);
 
 		if(listView == null)
 			return false;

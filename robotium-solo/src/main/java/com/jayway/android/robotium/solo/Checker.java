@@ -1,7 +1,6 @@
 package com.jayway.android.robotium.solo;
 
 import java.util.ArrayList;
-import junit.framework.Assert;
 import android.widget.CheckedTextView;
 import android.widget.CompoundButton;
 import android.widget.Spinner;
@@ -43,13 +42,7 @@ class Checker {
 	
 	public <T extends CompoundButton> boolean isButtonChecked(Class<T> expectedClass, int index)
 	{
-		boolean found = waiter.waitForView(expectedClass, index);
-		
-		ArrayList<T> views = RobotiumUtils.removeInvisibleViews(viewFetcher.getCurrentViews(expectedClass));
-		
-		if(!found)
-			Assert.assertTrue("No " + expectedClass.getSimpleName() + " with index " + index + " is found", false);
-		return (views.get(RobotiumUtils.getValidIndex(index, views))).isChecked();
+		return (waiter.waitForAndGetView(index, expectedClass).isChecked());
 	}
 	
 	/**
@@ -118,18 +111,12 @@ class Checker {
 	
 	public boolean isSpinnerTextSelected(int spinnerIndex, String text)
 	{
-		waiter.waitForView(Spinner.class, spinnerIndex, false);
-		ArrayList<Spinner> spinnerList = viewFetcher.getCurrentViews(Spinner.class);
-		if(spinnerList.size() < spinnerIndex+1)
-			Assert.assertTrue("No spinner with index " + spinnerIndex + " is found! ", false);	
-		Spinner spinner = spinnerList.get(spinnerIndex);
+		Spinner spinner = waiter.waitForAndGetView(spinnerIndex, Spinner.class);
+		
 		TextView textView = (TextView) spinner.getChildAt(0);
 		if(textView.getText().equals(text))
 			return true;
 		else
 			return false;
 	}
-	
-	
-
 }

@@ -1,6 +1,9 @@
 package com.jayway.android.robotium.solo;
 
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
+import junit.framework.Assert;
 import android.view.View;
 import android.widget.TextView;
 
@@ -22,7 +25,7 @@ class Waiter {
 	private final Searcher searcher;
 	private final Scroller scroller;
 	private final Sleeper sleeper;
-	private final MatchCounter matchCounter;
+	private int numberOfUniqueViews;
 
 
 	/**
@@ -41,7 +44,6 @@ class Waiter {
 		this.searcher = searcher;
 		this.scroller = scroller;
 		this.sleeper = sleeper;
-		matchCounter = new MatchCounter();
 	}
 	
 	/**
@@ -118,34 +120,27 @@ class Waiter {
 	 */
 
 	public <T extends View> boolean waitForView(final Class<T> viewClass, final int index, final int timeout, final boolean scroll){
-		ArrayList<T> typeList = new ArrayList<T>();
+		ArrayList<T> allViews = new ArrayList<T>();
+		Set<T> uniqueViews = new HashSet<T>();
 		final long endTime = System.currentTimeMillis() + timeout;
 
 		while (System.currentTimeMillis() < endTime) {
 			sleeper.sleepMini();
-			typeList = viewFetcher.getCurrentViews(viewClass);
-			typeList = RobotiumUtils.removeInvisibleViews(typeList);
-		
-			matchCounter.addMatchesToCount(typeList.size());
-			typeList=null;
+			allViews = viewFetcher.getCurrentViews(viewClass);
+			allViews = RobotiumUtils.removeInvisibleViews(allViews);
 
-			if(matchCounter.getTotalCount() > 0 && index < matchCounter.getTotalCount()){
-				matchCounter.resetCount();
+			int uniqueViewsFound = (getNumberOfUniqueViews(uniqueViews, allViews));
+			allViews=null;
+
+			if(uniqueViewsFound > 0 && index < uniqueViewsFound)
 				return true;
-			}
 
-			if(index == 0 && matchCounter.getTotalCount() > 0){
-				matchCounter.resetCount();
+			if(index == 0 && uniqueViewsFound > 0)
 				return true;
-			}
 
-			if(scroll && !scroller.scroll(Scroller.DOWN))
-				matchCounter.resetCount();	
-
-			if(!scroll)
-				matchCounter.resetCount();	
+			if(scroll) 
+				scroller.scroll(Scroller.DOWN);
 		}
-		matchCounter.resetCount();
 		return false;
 	}
 	
@@ -316,6 +311,59 @@ class Waiter {
 				return true;
 			}
 		}
+	}
+	
+	/**
+	 * Waits for and returns a view
+	 * 
+	 * @param index the index of the view
+	 * @param classToFilterby the class to filter
+	 * @return view
+	 * 
+	 */
+
+	public <T extends View> T waitForAndGetView(int index, Class<T> classToFilterBy){
+		boolean found = waitForView(classToFilterBy, index);
+
+		if(!found)
+			Assert.assertTrue(classToFilterBy.getSimpleName() + " with index " + index + " is not available!", false);
+
+		ArrayList<T> views = RobotiumUtils.removeInvisibleViews(viewFetcher.getCurrentViews(classToFilterBy));
+
+		if(views.size() < getNumberOfUniqueViews()){
+			index = index - (getNumberOfUniqueViews() - views.size());
+		}
+
+		T view = views.get(index);
+		return view;
+	}
+	
+	/**
+	 * Returns the number of unique views 
+	 * 
+	 * @param uniqueViews the set of unique views
+	 * @param views the list of all views
+	 * @return number of unique views
+	 * 
+	 */
+	
+	public <T extends View> int getNumberOfUniqueViews(Set<T>uniqueViews, ArrayList<T> views){
+		for(int i = 0; i < views.size(); i++){
+			uniqueViews.add(views.get(i));
+		}
+		numberOfUniqueViews = uniqueViews.size();
+		return numberOfUniqueViews;
+	}
+	
+	/**
+	 * Returns the number of unique views
+	 * 
+	 * @return the number of unique views
+	 * 
+	 */
+	
+	public int getNumberOfUniqueViews(){
+		return numberOfUniqueViews;
 	}
 
 

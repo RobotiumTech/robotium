@@ -45,18 +45,7 @@ class Getter {
 	 */
 	
 	public <T extends View> T getView(Class<T> classToFilterBy, int index) {
-		boolean found = waiter.waitForView(classToFilterBy, index);
-		
-		if(!found)
-			Assert.assertTrue("No " + classToFilterBy.getSimpleName() + " with index " + index + " is found!", false);
-		
-		ArrayList<T> views = RobotiumUtils.removeInvisibleViews(viewFetcher.getCurrentViews(classToFilterBy));
-		T view = null;
-		
-		try{
-			view = views.get(RobotiumUtils.getValidIndex(index, views));
-		}catch (IndexOutOfBoundsException ignored){ }
-		return view;
+		return waiter.waitForAndGetView(index, classToFilterBy);
 	}
 	
 	/**

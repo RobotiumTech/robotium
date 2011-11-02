@@ -1,6 +1,8 @@
 package com.jayway.android.robotium.solo;
 
 import java.util.Collection;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.concurrent.Callable;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -20,11 +22,10 @@ class Searcher {
 
 	private final ViewFetcher viewFetcher;
 	private final Scroller scroller;
-	private final Instrumentation inst;
 	private final Sleeper sleeper;
-	private final MatchCounter matchCounter;
 	private final int TIMEOUT = 5000;
 	private final String LOG_TAG = "Robotium";
+	Set<TextView> uniqueTextViews;
 
 	/**
 	 * Constructs this object.
@@ -38,9 +39,8 @@ class Searcher {
 	public Searcher(ViewFetcher viewFetcher, Scroller scroller, Instrumentation inst, Sleeper sleeper) {
 		this.viewFetcher = viewFetcher;
 		this.scroller = scroller;
-		this.inst = inst;
 		this.sleeper = sleeper;
-		matchCounter = new MatchCounter();
+		uniqueTextViews = new HashSet<TextView>();
 	}
 
 
@@ -137,10 +137,10 @@ class Searcher {
 				final Matcher matcher = pattern.matcher(view.getText().toString());
 				
 				if (matcher.find()){
-					matchCounter.addMatchToCount();
+					uniqueTextViews.add(view);
 				}
-				if (matchCounter.getTotalCount() == expectedMinimumNumberOfMatches) {
-					matchCounter.resetCount();
+				if (uniqueTextViews.size() == expectedMinimumNumberOfMatches) {
+					uniqueTextViews.clear();
 					return true;
 				}
 			}
@@ -163,10 +163,10 @@ class Searcher {
 	 */
 	
 	private void logMatchesFound(String regex){
-		if (matchCounter.getTotalCount() > 0) {
-			Log.d(LOG_TAG, " There are only " + matchCounter.getTotalCount() + " matches of " + regex);
+		if (uniqueTextViews.size() > 0) {
+			Log.d(LOG_TAG, " There are only " + uniqueTextViews.size() + " matches of " + regex);
 		}
-		matchCounter.resetCount();
+		uniqueTextViews.clear();
 	}
 
 
