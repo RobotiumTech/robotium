@@ -82,6 +82,7 @@ public class Solo {
 	private final Setter setter;
 	private final Getter getter;
 	private final int TIMEOUT = 20000;
+	private final int SMALLTIMEOUT = 10000;
 	public final static int LANDSCAPE = ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE;   // 0
 	public final static int PORTRAIT = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT;     // 1
 	public final static int RIGHT = KeyEvent.KEYCODE_DPAD_RIGHT;
@@ -775,7 +776,7 @@ public class Solo {
 	 */
 	
 	public void clickOnView(View view) {
-		waiter.waitForView(view, 10000);
+		waiter.waitForView(view, SMALLTIMEOUT);
 		clicker.clickOnScreen(view);
 	}
 	
@@ -1132,7 +1133,7 @@ public class Solo {
 	 */
 	
 	public void setDatePicker(DatePicker datePicker, int year, int monthOfYear, int dayOfMonth) {
-		waiter.waitForView(datePicker, 10000);
+		waiter.waitForView(datePicker, SMALLTIMEOUT);
 		setter.setDatePicker(datePicker, year, monthOfYear, dayOfMonth);
 	}
 	
@@ -1159,7 +1160,7 @@ public class Solo {
 	 */
 
 	public void setTimePicker(TimePicker timePicker, int hour, int minute) {
-		waiter.waitForView(timePicker, 10000);
+		waiter.waitForView(timePicker, SMALLTIMEOUT);
 		setter.setTimePicker(timePicker, hour, minute);
 	}
 	
@@ -1184,7 +1185,7 @@ public class Solo {
 	 */
 
 	public void setProgressBar(ProgressBar progressBar, int progress){
-		waiter.waitForView(progressBar, 10000);
+		waiter.waitForView(progressBar, SMALLTIMEOUT);
 		setter.setProgressBar(progressBar, progress);
 	}
 	
@@ -1209,7 +1210,7 @@ public class Solo {
 	 */
 
 	public void setSlidingDrawer(SlidingDrawer slidingDrawer, int status){
-		waiter.waitForView(slidingDrawer, 10000);
+		waiter.waitForView(slidingDrawer, SMALLTIMEOUT);
 		setter.setSlidingDrawer(slidingDrawer, status);
 	}
 
@@ -1236,7 +1237,7 @@ public class Solo {
 	 */
 	
 	public void enterText(EditText editText, String text) {
-		waiter.waitForView(editText, 10000);
+		waiter.waitForView(editText, SMALLTIMEOUT);
 		textEnterer.setEditText(editText, text);		
 	}
 	
@@ -1259,7 +1260,7 @@ public class Solo {
      */
 	
     public void clearEditText(EditText editText) {
-    	waiter.waitForView(editText, 10000);
+    	waiter.waitForView(editText, SMALLTIMEOUT);
     	textEnterer.setEditText(editText, "");	
     }
 	
