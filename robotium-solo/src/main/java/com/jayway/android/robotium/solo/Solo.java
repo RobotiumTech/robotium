@@ -112,14 +112,14 @@ public class Solo {
         this.scroller = new Scroller(instrumentation, activityUtils, viewFetcher, sleeper);
         this.searcher = new Searcher(viewFetcher, scroller, instrumentation, sleeper);
         this.waiter = new Waiter(activityUtils, viewFetcher, searcher,scroller, sleeper);
-        this.setter = new Setter(activityUtils, waiter);
+        this.setter = new Setter(activityUtils);
         this.getter = new Getter(activityUtils, viewFetcher, waiter);
         this.asserter = new Asserter(activityUtils, waiter);
         this.checker = new Checker(viewFetcher, waiter);
         this.robotiumUtils = new RobotiumUtils(instrumentation, sleeper);
         this.clicker = new Clicker(viewFetcher, scroller,robotiumUtils, instrumentation, sleeper, waiter);
         this.presser = new Presser(viewFetcher, clicker, instrumentation, sleeper, waiter);
-        this.textEnterer = new TextEnterer(instrumentation, waiter);
+        this.textEnterer = new TextEnterer(instrumentation);
 	}
 
 	
@@ -775,6 +775,7 @@ public class Solo {
 	 */
 	
 	public void clickOnView(View view) {
+		waiter.waitForView(view, 10000);
 		clicker.clickOnScreen(view);
 	}
 	
@@ -1131,6 +1132,7 @@ public class Solo {
 	 */
 	
 	public void setDatePicker(DatePicker datePicker, int year, int monthOfYear, int dayOfMonth) {
+		waiter.waitForView(datePicker, 10000);
 		setter.setDatePicker(datePicker, year, monthOfYear, dayOfMonth);
 	}
 	
@@ -1157,6 +1159,7 @@ public class Solo {
 	 */
 
 	public void setTimePicker(TimePicker timePicker, int hour, int minute) {
+		waiter.waitForView(timePicker, 10000);
 		setter.setTimePicker(timePicker, hour, minute);
 	}
 	
@@ -1181,6 +1184,7 @@ public class Solo {
 	 */
 
 	public void setProgressBar(ProgressBar progressBar, int progress){
+		waiter.waitForView(progressBar, 10000);
 		setter.setProgressBar(progressBar, progress);
 	}
 	
@@ -1205,6 +1209,7 @@ public class Solo {
 	 */
 
 	public void setSlidingDrawer(SlidingDrawer slidingDrawer, int status){
+		waiter.waitForView(slidingDrawer, 10000);
 		setter.setSlidingDrawer(slidingDrawer, status);
 	}
 
@@ -1231,6 +1236,7 @@ public class Solo {
 	 */
 	
 	public void enterText(EditText editText, String text) {
+		waiter.waitForView(editText, 10000);
 		textEnterer.setEditText(editText, text);		
 	}
 	
@@ -1253,6 +1259,7 @@ public class Solo {
      */
 	
     public void clearEditText(EditText editText) {
+    	waiter.waitForView(editText, 10000);
     	textEnterer.setEditText(editText, "");	
     }
 	

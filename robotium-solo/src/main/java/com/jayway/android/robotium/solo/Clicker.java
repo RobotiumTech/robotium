@@ -138,7 +138,6 @@ class Clicker {
 	 */
 
 	public void clickOnScreen(View view, boolean longClick, int time) {
-		waiter.waitForView(view, 10000);
 		if(view == null)
 			Assert.assertTrue("View is null and can therefore not be clicked!", false);
 		int[] xy = new int[2];

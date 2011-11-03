@@ -15,18 +15,16 @@ import android.widget.EditText;
 class TextEnterer{
 	
 	private final Instrumentation inst;
-	private final Waiter waiter;
 	
     /**
      * Constructs this object.
      *
      * @param activityUtils the {@code ActivityUtils} instance
-     * @param waiter the {@code Waiter} instance
+     * 
      */
 	
-    public TextEnterer(Instrumentation inst, Waiter waiter) {
+    public TextEnterer(Instrumentation inst) {
         this.inst = inst;
-        this.waiter = waiter;
     }
 
 	
@@ -38,7 +36,6 @@ class TextEnterer{
     */
 	
     public void setEditText(final EditText editText, final String text) {
-    	waiter.waitForView(editText, 10000);
     	if(editText != null){
     		final String previousText = editText.getText().toString();
     		if(!editText.isEnabled())

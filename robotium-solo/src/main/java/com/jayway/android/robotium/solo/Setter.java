@@ -19,19 +19,15 @@ class Setter{
 	private final int CLOSED = 0;
 	private final int OPENED = 1;
 	private final ActivityUtils activityUtils;
-	private final Waiter waiter;
 
 	/**
 	 * Constructs this object.
 	 *
 	 * @param activityUtils the {@code ActivityUtils} instance.
-     * @param waiter the {@code Waiter} instance.
 	 */
 
-	public Setter(ActivityUtils activityUtils, Waiter waiter) {
-
+	public Setter(ActivityUtils activityUtils) {
 		this.activityUtils = activityUtils;
-		this.waiter = waiter;
 	}
 
 
@@ -46,7 +42,6 @@ class Setter{
 	 */
 
 	public void setDatePicker(final DatePicker datePicker, final int year, final int monthOfYear, final int dayOfMonth) {
-		waiter.waitForView(datePicker, 10000);
 		if(datePicker != null){
 
 			activityUtils.getCurrentActivity(false).runOnUiThread(new Runnable()
@@ -72,7 +67,6 @@ class Setter{
 	 */
 
 	public void setTimePicker(final TimePicker timePicker, final int hour, final int minute) {
-		waiter.waitForView(timePicker, 10000);
 		if(timePicker != null){
 
 			activityUtils.getCurrentActivity(false).runOnUiThread(new Runnable()
@@ -97,7 +91,6 @@ class Setter{
 	 */
 
 	public void setProgressBar(final ProgressBar progressBar,final int progress) {
-		waiter.waitForView(progressBar, 10000);
 		if(progressBar != null){
 
 			activityUtils.getCurrentActivity(false).runOnUiThread(new Runnable()
@@ -122,7 +115,6 @@ class Setter{
 	 */
 
 	public void setSlidingDrawer(final SlidingDrawer slidingDrawer, final int status){
-		waiter.waitForView(slidingDrawer, 10000);
 		if(slidingDrawer != null){
 
 			activityUtils.getCurrentActivity(false).runOnUiThread(new Runnable()
