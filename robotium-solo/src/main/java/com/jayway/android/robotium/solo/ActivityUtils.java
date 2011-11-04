@@ -230,13 +230,12 @@ class ActivityUtils {
 	public void finishOpenedActivities(){
 		// Finish all opened activities
 		for (int i = activityList.size()-1; i >= 0; i--) {
-			activityList.get(i).finish();
 			sleeper.sleep(100);
+			activityList.get(i).finish();
 		}
-
 		// Finish the initial activity, pressing Back for good measure
 		getCurrentActivity().finish();
-		sleeper.sleep(100);
+		sleeper.sleepMini();
 		try {
 			inst.sendKeyDownUpSync(KeyEvent.KEYCODE_BACK);
 		} catch (SecurityException ignored) {
