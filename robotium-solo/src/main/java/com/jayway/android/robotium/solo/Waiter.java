@@ -16,7 +16,7 @@ import android.widget.TextView;
  */
 
 class Waiter {
-	
+
 	private final ActivityUtils activityUtils;
 	private final ViewFetcher viewFetcher;
 	private final int TIMEOUT = 20000;
@@ -45,42 +45,42 @@ class Waiter {
 		this.scroller = scroller;
 		this.sleeper = sleeper;
 	}
-	
+
 	/**
-     * Waits for the given {@link Activity}.
-     *
-     * @param name the name of the {@code Activity} to wait for e.g. {@code "MyActivity"}
-     * @return {@code true} if {@code Activity} appears before the timeout and {@code false} if it does not
-     *
-     */
+	 * Waits for the given {@link Activity}.
+	 *
+	 * @param name the name of the {@code Activity} to wait for e.g. {@code "MyActivity"}
+	 * @return {@code true} if {@code Activity} appears before the timeout and {@code false} if it does not
+	 *
+	 */
 
 	public boolean waitForActivity(String name){
-	    return waitForActivity(name, SMALLTIMEOUT);
+		return waitForActivity(name, SMALLTIMEOUT);
 	}
 
 	/**
-     * Waits for the given {@link Activity}.
-     *
-     * @param name the name of the {@code Activity} to wait for e.g. {@code "MyActivity"}
-     * @param timeout the amount of time in milliseconds to wait
-     * @return {@code true} if {@code Activity} appears before the timeout and {@code false} if it does not
-     *
-     */
+	 * Waits for the given {@link Activity}.
+	 *
+	 * @param name the name of the {@code Activity} to wait for e.g. {@code "MyActivity"}
+	 * @param timeout the amount of time in milliseconds to wait
+	 * @return {@code true} if {@code Activity} appears before the timeout and {@code false} if it does not
+	 *
+	 */
 
-    public boolean waitForActivity(String name, int timeout)
-    {
-        long now = System.currentTimeMillis();
-        final long endTime = now + timeout;
-        while(!activityUtils.getCurrentActivity().getClass().getSimpleName().equals(name) && now < endTime)
-        {
-            now = System.currentTimeMillis();
-        }
-        if(now < endTime)
-            return true;
+	public boolean waitForActivity(String name, int timeout)
+	{
+		long now = System.currentTimeMillis();
+		final long endTime = now + timeout;
+		while(!activityUtils.getCurrentActivity().getClass().getSimpleName().equals(name) && now < endTime)
+		{
+			now = System.currentTimeMillis();
+		}
+		if(now < endTime)
+			return true;
 
-        else
-            return false;
-    }
+		else
+			return false;
+	}
 
 	/**
 	 * Waits for a view to be shown.
@@ -94,7 +94,7 @@ class Waiter {
 	public <T extends View> boolean waitForView(final Class<T> viewClass, final int index){
 		return waitForView(viewClass, index, SMALLTIMEOUT, true);
 	}
-	
+
 	/**
 	 * Waits for a view to be shown.
 	 * 
@@ -143,7 +143,7 @@ class Waiter {
 		}
 		return false;
 	}
-	
+
 
 	/**
 	 * Waits for two views to be shown
@@ -170,7 +170,7 @@ class Waiter {
 		return false;
 	}
 
-	
+
 	/**
 	 * Waits for a certain view. Default timeout is 20 seconds.
 	 * 
@@ -178,11 +178,11 @@ class Waiter {
 	 * 
 	 * @return {@code true} if view is shown and {@code false} if it is not shown before the timeout
 	 */
-	
+
 	public boolean waitForView(View view){
-		return waitForView(view, 20000, true);
+		return waitForView(view, TIMEOUT, true);
 	}
-	
+
 	/**
 	 * Waits for a certain view. 
 	 * 
@@ -191,11 +191,11 @@ class Waiter {
 	 * 
 	 * @return {@code true} if view is shown and {@code false} if it is not shown before the timeout
 	 */
-	
+
 	public boolean waitForView(View view, int timeout){
 		return waitForView(view, timeout, true);
 	}
-	
+
 	/**
 	 * Waits for a certain view.
 	 * 
@@ -205,7 +205,7 @@ class Waiter {
 	 * 
 	 * @return {@code true} if view is shown and {@code false} if it is not shown before the timeout
 	 */
-	
+
 	public boolean waitForView(View view, int timeout, boolean scroll){
 		ArrayList<View> views = new ArrayList<View>();
 		long startTime = System.currentTimeMillis();
@@ -219,9 +219,33 @@ class Waiter {
 				}
 			}
 			if(scroll)
-			scroller.scroll(Scroller.DOWN);		
+				scroller.scroll(Scroller.DOWN);		
 		}
 		return false;
+	}
+
+	/**
+	 * Waits for a certain view.
+	 * 
+	 * @param view the id of the view to wait for
+	 * 
+	 * @return {@code true} if view is shown and {@code false} if it is not shown before the timeout
+	 */
+
+	public View waitForView(int id){
+		ArrayList<View> views = new ArrayList<View>();
+		long startTime = System.currentTimeMillis();
+		long endTime = startTime + SMALLTIMEOUT;
+		while (System.currentTimeMillis() <= endTime) {
+			views = viewFetcher.getAllViews(false);
+			for (View v : views) {
+				if (v.getId() == id) {
+					return v;
+				}
+			}
+			sleeper.sleep();
+		}
+		return null;
 	}
 
 
@@ -312,7 +336,7 @@ class Waiter {
 			}
 		}
 	}
-	
+
 	/**
 	 * Waits for and returns a view
 	 * 
@@ -337,7 +361,7 @@ class Waiter {
 		T view = views.get(index);
 		return view;
 	}
-	
+
 	/**
 	 * Returns the number of unique views 
 	 * 
@@ -346,7 +370,7 @@ class Waiter {
 	 * @return number of unique views
 	 * 
 	 */
-	
+
 	public <T extends View> int getNumberOfUniqueViews(Set<T>uniqueViews, ArrayList<T> views){
 		for(int i = 0; i < views.size(); i++){
 			uniqueViews.add(views.get(i));
@@ -354,14 +378,14 @@ class Waiter {
 		numberOfUniqueViews = uniqueViews.size();
 		return numberOfUniqueViews;
 	}
-	
+
 	/**
 	 * Returns the number of unique views
 	 * 
 	 * @return the number of unique views
 	 * 
 	 */
-	
+
 	public int getNumberOfUniqueViews(){
 		return numberOfUniqueViews;
 	}

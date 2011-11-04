@@ -73,24 +73,20 @@ class Getter {
 		return viewToReturn;
 	}
 	
-	 /**
-	  * Returns a {@code View} with a given id.
-	  * @param id the R.id of the {@code View} to be returned
-	  * @return a {@code View} with a given id
-	  */
+	/**
+	 * Returns a {@code View} with a given id.
+	 * 
+	 * @param id the R.id of the {@code View} to be returned
+	 * @return a {@code View} with a given id
+	 */
 
-	 public View getView(int id){
-		 final Activity activity = activityUtils.getCurrentActivity(false);
-		 View view = activity.findViewById(id);
-		 if (view != null)
-			 return view;
+	public View getView(int id){
+		final Activity activity = activityUtils.getCurrentActivity(false);
 
-		 ArrayList<View> views = viewFetcher.getViews(null, false);
-		 for (View v : views) {
-			 if (v.getId() == id) {
-				 return v;
-			 }
-		 }
-		 return null;
-	 }
+		View view = activity.findViewById(id);
+		if (view != null)
+			return view;
+
+		return waiter.waitForView(id);
+	}
 }
