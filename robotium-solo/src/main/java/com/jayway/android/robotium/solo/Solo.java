@@ -236,6 +236,22 @@ public class Solo {
     }
 	
 	/**
+	 * Waits for a text to be shown. 
+	 * 
+	 * @param text the text to wait for
+	 * @param minimumNumberOfMatches the minimum number of matches that are expected to be shown. {@code 0} means any number of matches
+	 * @param timeout the the amount of time in milliseconds to wait
+	 * @param scroll {@code true} if scrolling should be performed
+	 * @param onlyVisible {@code true} if only visible text views should be waited for
+	 * @return {@code true} if text is shown and {@code false} if it is not shown before the timeout
+	 * 
+	 */
+	
+	public boolean waitForText(String text, int minimumNumberOfMatches, long timeout, boolean scroll, boolean onlyVisible) {
+		return waiter.waitForText(text, minimumNumberOfMatches, timeout, scroll, onlyVisible);
+    }
+	
+	/**
 	 * Waits for a View of a certain class to be shown. Default timeout is 20 seconds. 
 	 * 
 	 * @param viewClass the {@link View} class to wait for
@@ -1878,7 +1894,7 @@ public class Solo {
 	
     /**
 	 *
-	 * Finalizes the solo object.
+	 * Finalizes the solo object and removes the ActivityMonitor.
 	 *
 	 */    
 	
