@@ -131,14 +131,21 @@ class Searcher {
 		}
 		final Pattern pattern = Pattern.compile(regex);
 		Collection<T> views;
+		Matcher matcher;
 		while (true) {	
 			views = viewFetcherCallback.call();
 			for(TextView view : views){
-				final Matcher matcher = pattern.matcher(view.getText().toString());
-				
+				matcher = pattern.matcher(view.getText().toString());
+
 				if (matcher.find()){
 					uniqueTextViews.add(view);
 				}
+				if (view.getError() != null){
+					matcher = pattern.matcher(view.getError().toString());
+					if (matcher.find()){
+						uniqueTextViews.add(view);
+					}
+				}		
 				if (uniqueTextViews.size() == expectedMinimumNumberOfMatches) {
 					uniqueTextViews.clear();
 					return true;

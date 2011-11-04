@@ -125,7 +125,7 @@ class Waiter {
 		final long endTime = System.currentTimeMillis() + timeout;
 
 		while (System.currentTimeMillis() < endTime) {
-			sleeper.sleepMini();
+			sleeper.sleep();
 			allViews = viewFetcher.getCurrentViews(viewClass);
 			allViews = RobotiumUtils.removeInvisibleViews(allViews);
 
