@@ -75,7 +75,9 @@ class Clicker {
 				MotionEvent.ACTION_UP, x, y, 0);
 		try{
 			inst.sendPointerSync(event);
+			inst.waitForIdleSync();
 			inst.sendPointerSync(event2);
+			inst.waitForIdleSync();
 		}catch(SecurityException e){
 			Assert.assertTrue("Click can not be completed!", false);
 		}
@@ -99,11 +101,13 @@ class Clicker {
 		}catch(SecurityException e){
 			Assert.assertTrue("Click can not be completed! Something is in the way e.g. the keyboard.", false);
 		}
+		inst.waitForIdleSync();
 		eventTime = SystemClock.uptimeMillis();
 		event = MotionEvent.obtain(downTime, eventTime, MotionEvent.ACTION_MOVE, 
 				x + ViewConfiguration.getTouchSlop() / 2,
 				y + ViewConfiguration.getTouchSlop() / 2, 0);
 		inst.sendPointerSync(event);
+		inst.waitForIdleSync();
 		if(time > 0)
 			sleeper.sleep(time);
 		else
@@ -112,6 +116,7 @@ class Clicker {
 		eventTime = SystemClock.uptimeMillis();
 		event = MotionEvent.obtain(downTime, eventTime, MotionEvent.ACTION_UP, x, y, 0);
 		inst.sendPointerSync(event);
+		inst.waitForIdleSync();
 		sleeper.sleep();
 
 	}
