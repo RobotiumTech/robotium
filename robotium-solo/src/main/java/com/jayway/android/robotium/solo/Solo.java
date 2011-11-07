@@ -1896,7 +1896,7 @@ public class Solo {
 	 *
 	 * Finalizes the solo object and removes the ActivityMonitor.
 	 * 
-	 * @see finishOpenedActivities() to close the activities that have been active.
+	 * @see #finishOpenedActivities() finishOpenedActivities() to close the activities that have been active.
 	 *
 	 */    
 	
