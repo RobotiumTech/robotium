@@ -87,6 +87,7 @@ class RobotiumUtils {
                 filteredViews.add(classToFilterBy.cast(view));
             }
         }
+        viewList = null;
         return filteredViews;
     }
 }

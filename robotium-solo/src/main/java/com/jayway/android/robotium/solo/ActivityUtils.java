@@ -38,6 +38,7 @@ class ActivityUtils {
 		this.inst = inst;
 		this.activity = activity;
         this.sleeper = sleeper;
+        activityList = new ArrayList<Activity>();
         setupActivityMonitor();
 	}
 	

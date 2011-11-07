@@ -6,7 +6,6 @@ import java.util.Set;
 import java.util.concurrent.Callable;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import android.app.Instrumentation;
 import android.util.Log;
 import android.widget.TextView;
 
@@ -31,12 +30,11 @@ class Searcher {
 	 * Constructs this object.
 	 *
 	 * @param viewFetcher the {@code ViewFetcher} instance.
-	 * @param scroller the {@code Scroller} instance.
-	 * @param inst the {@code Instrumentation} instance.
+	 * @param scroller the {@code Scroller} instance
 	 * @param sleeper the {@code Sleeper} instance.
 	 */
 
-	public Searcher(ViewFetcher viewFetcher, Scroller scroller, Instrumentation inst, Sleeper sleeper) {
+	public Searcher(ViewFetcher viewFetcher, Scroller scroller, Sleeper sleeper) {
 		this.viewFetcher = viewFetcher;
 		this.scroller = scroller;
 		this.sleeper = sleeper;

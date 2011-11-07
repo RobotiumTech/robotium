@@ -200,8 +200,6 @@ class ViewFetcher {
 				addChildren(views, (ViewGroup) parentToUse, onlySufficientlyVisible);
 			}
 		}
-
-
 		return views;
 	}
 
@@ -273,7 +271,7 @@ class ViewFetcher {
 
 	public float getScrollListWindowHeight(View view) {
 		final int[] xyParent = new int[2];
-		final View parent = getScrollOrListParent(view);
+		View parent = getScrollOrListParent(view);
 		final float windowHeight;
 		if(parent == null){
 			windowHeight = activityUtils.getCurrentActivity(false).getWindowManager()
@@ -283,9 +281,8 @@ class ViewFetcher {
 			parent.getLocationOnScreen(xyParent);
 			windowHeight = xyParent[1] + parent.getHeight();
 		}
-
+		parent = null;
 		return windowHeight;
-
 	}
 
 
@@ -317,10 +314,11 @@ class ViewFetcher {
 				filteredViews.add(classToFilterBy.cast(view));
 			}
 		}
+		allViews = null;
 		return filteredViews;
 	}
 	
-	 /**
+	/**
 	 * Returns a view.
 	 *
 	 * @param classToFilterBy the class to filter by
@@ -335,12 +333,13 @@ class ViewFetcher {
 		if(views == null){
 			views = getCurrentViews(classToFilterBy);
 		}
-			for(T view : views){
-				if(view.getDrawingTime() > drawingTime && view.getHeight() > 0){
-					drawingTime = view.getDrawingTime();
-					viewToReturn = view;
-				}
+		for(T view : views){
+			if(view.getDrawingTime() > drawingTime && view.getHeight() > 0){
+				drawingTime = view.getDrawingTime();
+				viewToReturn = view;
 			}
+		}
+		views = null;
 		return viewToReturn;
 	}
 

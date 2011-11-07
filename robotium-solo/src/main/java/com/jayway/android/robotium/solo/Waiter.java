@@ -130,19 +130,19 @@ class Waiter {
 			allViews = RobotiumUtils.removeInvisibleViews(allViews);
 
 			int uniqueViewsFound = (getNumberOfUniqueViews(uniqueViews, allViews));
-			allViews=null;
 
 			if(uniqueViewsFound > 0 && index < uniqueViewsFound)
-				return true;
+				return setArrayToNullAndReturn(true, allViews);
 
 			if(index == 0 && uniqueViewsFound > 0)
-				return true;
+				return setArrayToNullAndReturn(true, allViews);
 
 			if(scroll) 
 				scroller.scroll(Scroller.DOWN);
 		}
-		return false;
+		return setArrayToNullAndReturn(false, allViews);
 	}
+	
 
 
 	/**
@@ -215,13 +215,27 @@ class Waiter {
 			views = viewFetcher.getAllViews(true);
 			for(View v : views){
 				if(v.equals(view)){
-					return true;
+					return setArrayToNullAndReturn(true, views);
 				}
 			}
 			if(scroll)
 				scroller.scroll(Scroller.DOWN);		
 		}
 		return false;
+	}
+	
+	/**
+	 * Sets the given array to null while returning desired boolean
+	 * 
+	 * @param booleanToReturn the desired boolean to return
+	 * @param views the array to null
+	 * 
+	 * @return the desired boolean
+	 */
+	
+	private static <T extends View> boolean setArrayToNullAndReturn(boolean booleanToReturn, ArrayList<T> views){
+		views = null;
+		return booleanToReturn;
 	}
 
 	/**
@@ -237,13 +251,14 @@ class Waiter {
 		long startTime = System.currentTimeMillis();
 		long endTime = startTime + SMALLTIMEOUT;
 		while (System.currentTimeMillis() <= endTime) {
+			sleeper.sleep();
 			views = viewFetcher.getAllViews(false);
 			for (View v : views) {
 				if (v.getId() == id) {
+					views = null;
 					return v;
 				}
 			}
-			sleeper.sleep();
 		}
 		return null;
 	}
@@ -258,7 +273,6 @@ class Waiter {
 	 */
 
 	public boolean waitForText(String text) {
-
 		return waitForText(text, 0, TIMEOUT, true);
 	}
 
@@ -358,7 +372,13 @@ class Waiter {
 			index = index - (getNumberOfUniqueViews() - views.size());
 		}
 
-		T view = views.get(index);
+		T view = null;
+		try{
+			view = views.get(index);
+		}catch (IndexOutOfBoundsException ignored) {
+			Assert.assertTrue(classToFilterBy.getSimpleName() + " with index " + index + " is not available!", false);
+		}
+		views = null;
 		return view;
 	}
 
