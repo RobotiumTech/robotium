@@ -233,7 +233,7 @@ class Waiter {
 	 * @return the desired boolean
 	 */
 	
-	private static <T extends View> boolean setArrayToNullAndReturn(boolean booleanToReturn, ArrayList<T> views){
+	private <T extends View> boolean setArrayToNullAndReturn(boolean booleanToReturn, ArrayList<T> views){
 		views = null;
 		return booleanToReturn;
 	}
