@@ -331,7 +331,7 @@ class ViewFetcher {
 		T viewToReturn = null;
 		long drawingTime = 0;
 		if(views == null){
-			views = getCurrentViews(classToFilterBy);
+			views = RobotiumUtils.removeInvisibleViews(getCurrentViews(classToFilterBy));
 		}
 		for(T view : views){
 			if(view.getDrawingTime() > drawingTime && view.getHeight() > 0){
