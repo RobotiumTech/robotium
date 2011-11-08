@@ -335,8 +335,7 @@ public class Solo {
 	 */
 	
 	public boolean searchEditText(String text) {
-		boolean found = searcher.searchWithTimeoutFor(EditText.class, text, 1, true, false);
-		return found;
+		return searcher.searchWithTimeoutFor(EditText.class, text, 1, true, false);
 	}
 	
 	
@@ -350,8 +349,7 @@ public class Solo {
 	 */
 	
 	public boolean searchButton(String text) {
-		boolean found = searcher.searchWithTimeoutFor(Button.class, text, 0, true, false);
-		return found;
+		return searcher.searchWithTimeoutFor(Button.class, text, 0, true, false);
 	}
 	
 	/**
@@ -365,8 +363,7 @@ public class Solo {
 	 */
 	
 	public boolean searchButton(String text, boolean onlyVisible) {
-		boolean found = searcher.searchWithTimeoutFor(Button.class, text, 0, true, onlyVisible);
-		return found;
+		return searcher.searchWithTimeoutFor(Button.class, text, 0, true, onlyVisible);
 	}
 	
 	/**
@@ -379,8 +376,7 @@ public class Solo {
 	 */
 	
 	public boolean searchToggleButton(String text) {
-		boolean found = searcher.searchWithTimeoutFor(ToggleButton.class, text, 0, true, false);
-		return found;
+		return searcher.searchWithTimeoutFor(ToggleButton.class, text, 0, true, false);
 	}
 	
 	/**
@@ -396,8 +392,7 @@ public class Solo {
 	 */
 	
 	public boolean searchButton(String text, int minimumNumberOfMatches) {
-		boolean found = searcher.searchWithTimeoutFor(Button.class, text, minimumNumberOfMatches, true, false);
-		return found;
+		return searcher.searchWithTimeoutFor(Button.class, text, minimumNumberOfMatches, true, false);
 	}
 	
 	/**
@@ -414,8 +409,7 @@ public class Solo {
 	 */
 	
 	public boolean searchButton(String text, int minimumNumberOfMatches, boolean onlyVisible) {
-		boolean found = searcher.searchWithTimeoutFor(Button.class, text, minimumNumberOfMatches, true, onlyVisible);
-		return found;
+		return searcher.searchWithTimeoutFor(Button.class, text, minimumNumberOfMatches, true, onlyVisible);
 	}
 	
 	/**
@@ -431,8 +425,7 @@ public class Solo {
 	 */
 	
 	public boolean searchToggleButton(String text, int minimumNumberOfMatches) {
-		boolean found = searcher.searchWithTimeoutFor(ToggleButton.class, text, minimumNumberOfMatches, true, false);
-		return found;
+		return searcher.searchWithTimeoutFor(ToggleButton.class, text, minimumNumberOfMatches, true, false);
 	}
 	
 	/**
@@ -445,8 +438,7 @@ public class Solo {
 	 */
 	
 	public boolean searchText(String text) {
-		boolean found = searcher.searchWithTimeoutFor(TextView.class, text, 0, true, false);
-		return found;
+		return searcher.searchWithTimeoutFor(TextView.class, text, 0, true, false);
 	}
 	
 	/**
@@ -460,8 +452,7 @@ public class Solo {
 	 */
 	
 	public boolean searchText(String text, boolean onlyVisible) {
-		boolean found = searcher.searchWithTimeoutFor(TextView.class, text, 0, true, onlyVisible);
-		return found;
+		return searcher.searchWithTimeoutFor(TextView.class, text, 0, true, onlyVisible);
 	}
 	
 	/**
@@ -477,8 +468,7 @@ public class Solo {
 	 */
 	
 	public boolean searchText(String text, int minimumNumberOfMatches) {
-		boolean found = searcher.searchWithTimeoutFor(TextView.class, text, minimumNumberOfMatches, true, false);
-		return found;
+		return searcher.searchWithTimeoutFor(TextView.class, text, minimumNumberOfMatches, true, false);
 	}
 	
 	/**
@@ -549,8 +539,7 @@ public class Solo {
 	 */
 	
 	public Activity getCurrentActivity() {
-		Activity activity = activityUtils.getCurrentActivity();
-		return activity;
+		return activityUtils.getCurrentActivity();
 	}
 	
 	/**
@@ -1300,8 +1289,7 @@ public class Solo {
 	 */
 	
 	public EditText getEditText(int index) {
-		EditText editText = getter.getView(EditText.class, index);
-		return editText;
+		return getter.getView(EditText.class, index);
 	}
 	
 	/**
@@ -1313,8 +1301,7 @@ public class Solo {
 	 */
 	
 	public Button getButton(int index) {
-		Button button = getter.getView(Button.class, index);
-		return button;
+		return getter.getView(Button.class, index);
 	}
 	
 	/**
