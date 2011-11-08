@@ -151,7 +151,7 @@ class Scroller {
 	 */
 
 	public boolean scroll(int direction) {
-		final ArrayList<View> viewList = viewFetcher.getViews(null, true);
+		final ArrayList<View> viewList = RobotiumUtils.removeInvisibleViews(viewFetcher.getViews(null, true));
 		final ArrayList<ListView> listViews = RobotiumUtils.filterViews(ListView.class, viewList);
 
 		if (listViews.size() > 0) {
