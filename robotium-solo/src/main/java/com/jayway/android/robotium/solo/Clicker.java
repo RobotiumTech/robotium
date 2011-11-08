@@ -272,7 +272,9 @@ class Clicker {
 		} else if (scroll && scroller.scroll(Scroller.DOWN)) {
 			clickOnText(regex, longClick, match, scroll, time);
 		} else {
-			if (uniqueTextViews.size() > 0)
+			int sizeOfUniqueTextViews = uniqueTextViews.size();
+			uniqueTextViews.clear();
+			if (sizeOfUniqueTextViews > 0)
 				Assert.assertTrue("There are only " + uniqueTextViews.size() + " matches of " + regex, false);
 			else {
 				for (TextView textView : allTextViews) {
@@ -280,7 +282,6 @@ class Clicker {
 				}
 				Assert.assertTrue("The text: " + regex + " is not found!", false);
 			}
-			uniqueTextViews.clear();
 		}
 	}
 
