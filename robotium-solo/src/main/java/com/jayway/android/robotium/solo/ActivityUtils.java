@@ -10,7 +10,7 @@ import android.util.Log;
 import android.view.KeyEvent;
 
 /**
- * This class contains activity related methods. Examples are:
+ * Contains activity related methods. Examples are:
  * getCurrentActivity(), getActivityList(), getAllOpenedActivities().
  * 
  * @author Renas Reda, renas.reda@jayway.com
@@ -23,10 +23,10 @@ class ActivityUtils {
 	private ActivityMonitor activityMonitor;
 	private Activity activity;
     private final Sleeper sleeper;
-	private ArrayList<Activity> activityList = new ArrayList<Activity>();
+	private ArrayList<Activity> activityList;
 
 	/**
-	 * Constructor that takes in the instrumentation and the start activity.
+	 * Constructs this object.
 	 *
 	 * @param inst the {@code Instrumentation} instance.
      * @param activity the start {@code Activity}

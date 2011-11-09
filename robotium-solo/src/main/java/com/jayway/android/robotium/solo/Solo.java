@@ -28,7 +28,7 @@ import android.widget.ToggleButton;
 import android.app.Instrumentation.ActivityMonitor;
 
 /**
- * This class contains all the methods that the sub-classes have. It supports test
+ * Contains all the methods that the sub-classes have. It supports test
  * cases that span over multiple activities. 
  * 
  * Robotium has full support for Activities, Dialogs, Toasts, Menus and Context Menus. 

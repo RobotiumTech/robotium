@@ -2,7 +2,7 @@ package com.jayway.android.robotium.solo;
 
 
 /**
- * This class contains the waitForDialogToClose() method.
+ * Contains the waitForDialogToClose() method.
  * 
  * @author Renas Reda, renas.reda@jayway.com
  * 

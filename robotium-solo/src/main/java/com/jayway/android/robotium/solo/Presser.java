@@ -6,7 +6,7 @@ import android.app.Instrumentation;
 import android.view.KeyEvent;
 
 /**
- * This class contains press methods. Examples are pressMenuItem(),
+ * Contains press methods. Examples are pressMenuItem(),
  * pressSpinnerItem().
  * 
  * @author Renas Reda, renas.reda@jayway.com

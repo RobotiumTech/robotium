@@ -7,7 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 /**
- * This class contains view methods. Examples are getViews(),
+ * Contains view methods. Examples are getViews(),
  * getCurrentTextViews(), getCurrentImageViews().
  *
  * @author Renas Reda, renas.reda@jayway.com

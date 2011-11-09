@@ -8,7 +8,7 @@ import android.view.View;
 import android.widget.TextView;
 
 /**
- * This class contains various wait methods. Examples are: waitForText(),
+ * Contains various wait methods. Examples are: waitForText(),
  * waitForView().
  * 
  * @author Renas Reda, renas.reda@jayway.com
@@ -375,7 +375,7 @@ class Waiter {
 		T view = null;
 		try{
 			view = views.get(index);
-		}catch (IndexOutOfBoundsException ignored) {
+		}catch (IndexOutOfBoundsException exception) {
 			Assert.assertTrue(classToFilterBy.getSimpleName() + " with index " + index + " is not available!", false);
 		}
 		views = null;

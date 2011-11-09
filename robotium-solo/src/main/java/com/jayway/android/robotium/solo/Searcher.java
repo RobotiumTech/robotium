@@ -10,7 +10,7 @@ import android.util.Log;
 import android.widget.TextView;
 
 /**
- * This class contains various search methods. Examples are: searchForEditTextWithTimeout(),
+ * Contains various search methods. Examples are: searchForEditTextWithTimeout(),
  * searchForTextWithTimeout(), searchForButtonWithTimeout().
  * 
  * @author Renas Reda, renas.reda@jayway.com

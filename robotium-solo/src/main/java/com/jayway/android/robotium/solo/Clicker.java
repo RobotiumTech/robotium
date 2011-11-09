@@ -15,7 +15,7 @@ import android.view.View;
 import android.view.ViewConfiguration;
 
 /**
- * This class contains various click methods. Examples are: clickOn(),
+ * Contains various click methods. Examples are: clickOn(),
  * clickOnText(), clickOnScreen().
  * 
  * @author Renas Reda, renas.reda@jayway.com
@@ -32,7 +32,7 @@ class Clicker {
 	private final Sleeper sleeper;
 	private final Waiter waiter;
 	private final int TIMEOUT = 10000;
-	private final int MINITIMEOUT = 50;
+	private final int MINISLEEP = 50;
 	Set<TextView> uniqueTextViews;
 
 
@@ -77,7 +77,7 @@ class Clicker {
 		try{
 			inst.sendPointerSync(event);
 			inst.sendPointerSync(event2);
-			sleeper.sleep(MINITIMEOUT);
+			sleeper.sleep(MINISLEEP);
 		}catch(SecurityException e){
 			Assert.assertTrue("Click can not be completed!", false);
 		}

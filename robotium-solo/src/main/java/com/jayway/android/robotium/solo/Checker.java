@@ -7,7 +7,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 /**
- * This class contains various check methods. Examples are: isButtonChecked(),
+ * Contains various check methods. Examples are: isButtonChecked(),
  * isSpinnerTextSelected.
  * 
  * @author Renas Reda, renas.reda@jayway.com

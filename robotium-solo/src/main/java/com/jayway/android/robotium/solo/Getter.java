@@ -8,8 +8,8 @@ import android.widget.TextView;
 
 
 /**
- * This class contains various get methods. Examples are: isButtonChecked(),
- * isSpinnerTextSelected.
+ * Contains various get methods. Examples are: getView(int id),
+ * getView(Class<T> classToFilterBy, int index).
  * 
  * @author Renas Reda, renas.reda@jayway.com
  * 

@@ -12,7 +12,7 @@ import android.widget.ScrollView;
 
 
 /**
- * This class contains scroll methods. Examples are scrollDown(), scrollUpList(),
+ * Contains scroll methods. Examples are scrollDown(), scrollUpList(),
  * scrollToSide().
  * 
  * @author Renas Reda, renas.reda@jayway.com

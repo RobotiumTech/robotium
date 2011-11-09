@@ -6,7 +6,7 @@ import android.widget.EditText;
 
 
 /**
- * This class contains a method to enter text into text fields.
+ * Contains setEditText() to enter text into text fields.
  * 
  * @author Renas Reda, renas.reda@jayway.com
  *
@@ -18,8 +18,8 @@ class TextEnterer{
 	
     /**
      * Constructs this object.
-     *
-     * @param activityUtils the {@code ActivityUtils} instance
+     * 
+     * @param inst the {@code Instrumentation} instance.
      * 
      */
 	
@@ -57,8 +57,4 @@ class TextEnterer{
     		});
     	}
     }
-   
-
-	
-	
 }
