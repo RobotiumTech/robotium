@@ -275,7 +275,7 @@ class Clicker {
 			int sizeOfUniqueTextViews = uniqueTextViews.size();
 			uniqueTextViews.clear();
 			if (sizeOfUniqueTextViews > 0)
-				Assert.assertTrue("There are only " + uniqueTextViews.size() + " matches of " + regex, false);
+				Assert.assertTrue("There are only " + sizeOfUniqueTextViews + " matches of " + regex, false);
 			else {
 				for (TextView textView : allTextViews) {
 					Log.d(LOG_TAG, regex + " not found. Have found: " + textView.getText());
