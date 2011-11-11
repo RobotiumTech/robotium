@@ -21,11 +21,9 @@ class Waiter {
 	private final ViewFetcher viewFetcher;
 	private final int TIMEOUT = 20000;
 	private final int SMALLTIMEOUT = 10000;
-	private final int MINITIMEOUT = 300;
 	private final Searcher searcher;
 	private final Scroller scroller;
 	private final Sleeper sleeper;
-	private int numberOfUniqueViews;
 
 
 	/**
@@ -87,26 +85,28 @@ class Waiter {
 	 * 
 	 * @param viewClass the {@code View} class to wait for
 	 * @param minimumNumberOfMatches the minimum number of matches that are expected to be shown. {@code 0} means any number of matches
-	 * @param timeout the amount of time in milliseconds to wait
 	 * @return {@code true} if view is shown and {@code false} if it is not shown before the timeout
 	 */
 
-	public <T extends View> boolean waitForView(final Class<T> viewClass, final int index){
-		return waitForView(viewClass, index, SMALLTIMEOUT, true);
-	}
+	public <T extends View> boolean waitForView(final Class<T> viewClass, final int index, boolean sleep, boolean scroll){
+		Set<T> uniqueViews = new HashSet<T>();
+		boolean foundMatchingView;
 
-	/**
-	 * Waits for a view to be shown.
-	 * 
-	 * @param viewClass the {@code View} class to wait for
-	 * @param minimumNumberOfMatches the minimum number of matches that are expected to be shown. {@code 0} means any number of matches
-	 * @param timeout the amount of time in milliseconds to wait
-	 * @param scroll true if scrolling should be performed
-	 * @return {@code true} if view is shown and {@code false} if it is not shown before the timeout
-	 */
+		while(true){
+			if(sleep)
+				sleeper.sleep();
 
-	public <T extends View> boolean waitForView(final Class<T> viewClass, final int index, final boolean scroll){
-		return waitForView(viewClass, index, SMALLTIMEOUT, scroll);
+			foundMatchingView = searcher.searchFor(uniqueViews, viewClass, index);
+
+			if(foundMatchingView)
+				return true;
+
+			if(scroll && !scroller.scroll(Scroller.DOWN))
+				return false;
+
+			if(!scroll)
+				return false;
+		}
 	}
 
 	/**
@@ -120,33 +120,26 @@ class Waiter {
 	 */
 
 	public <T extends View> boolean waitForView(final Class<T> viewClass, final int index, final int timeout, final boolean scroll){
-		ArrayList<T> allViews = new ArrayList<T>();
 		Set<T> uniqueViews = new HashSet<T>();
 		final long endTime = System.currentTimeMillis() + timeout;
+		boolean foundMatchingView;
 
 		while (System.currentTimeMillis() < endTime) {
 			sleeper.sleep();
-			allViews = viewFetcher.getCurrentViews(viewClass);
-			allViews = RobotiumUtils.removeInvisibleViews(allViews);
+			
+			foundMatchingView =  searcher.searchFor(uniqueViews, viewClass, index);
 
-			int uniqueViewsFound = (getNumberOfUniqueViews(uniqueViews, allViews));
-
-			if(uniqueViewsFound > 0 && index < uniqueViewsFound)
-				return setArrayToNullAndReturn(true, allViews);
-
-			if(index == 0 && uniqueViewsFound > 0)
-				return setArrayToNullAndReturn(true, allViews);
-
+			if(foundMatchingView)
+				return true;
+			
 			if(scroll) 
 				scroller.scroll(Scroller.DOWN);
 		}
-		return setArrayToNullAndReturn(false, allViews);
+		 return false;
 	}
-	
-
 
 	/**
-	 * Waits for two views to be shown
+	 * Waits for two views to be shown.
 	 * 
 	 * @param viewClass the first {@code View} class to wait for 
 	 * @param viewClass2 the second {@code View} class to wait for
@@ -158,14 +151,15 @@ class Waiter {
 
 		while (System.currentTimeMillis() < endTime) {
 
-			if(waitForView(viewClass, 0, MINITIMEOUT, false)){
+			if(waitForView(viewClass, 0, false, false)){
 				return true;
 			}
 
-			if(waitForView(viewClass2, 0, MINITIMEOUT, false)){
+			if(waitForView(viewClass2, 0, false, false)){
 				return true;
 			}
 			scroller.scroll(Scroller.DOWN);
+			sleeper.sleep();
 		}
 		return false;
 	}
@@ -207,42 +201,29 @@ class Waiter {
 	 */
 
 	public boolean waitForView(View view, int timeout, boolean scroll){
-		ArrayList<View> views = new ArrayList<View>();
 		long startTime = System.currentTimeMillis();
 		long endTime = startTime + timeout;
-		while (System.currentTimeMillis() <= endTime) {
+		
+		while (System.currentTimeMillis() < endTime) {
 			sleeper.sleep();
-			views = viewFetcher.getAllViews(true);
-			for(View v : views){
-				if(v.equals(view)){
-					return setArrayToNullAndReturn(true, views);
-				}
+	
+			final boolean foundAnyMatchingView = searcher.searchFor(view);
+			
+			if (foundAnyMatchingView){
+				return true;
 			}
-			if(scroll)
-				scroller.scroll(Scroller.DOWN);		
+			
+			if(scroll) 
+				scroller.scroll(Scroller.DOWN);
 		}
 		return false;
 	}
 	
-	/**
-	 * Sets the given array to null while returning desired boolean
-	 * 
-	 * @param booleanToReturn the desired boolean to return
-	 * @param views the array to null
-	 * 
-	 * @return the desired boolean
-	 */
-	
-	private <T extends View> boolean setArrayToNullAndReturn(boolean booleanToReturn, ArrayList<T> views){
-		views = null;
-		return booleanToReturn;
-	}
 
 	/**
 	 * Waits for a certain view.
 	 * 
 	 * @param view the id of the view to wait for
-	 * 
 	 * @return {@code true} if view is shown and {@code false} if it is not shown before the timeout
 	 */
 
@@ -361,15 +342,14 @@ class Waiter {
 	 */
 
 	public <T extends View> T waitForAndGetView(int index, Class<T> classToFilterBy){
-		boolean found = waitForView(classToFilterBy, index);
-
-		if(!found)
-			Assert.assertTrue(classToFilterBy.getSimpleName() + " with index " + index + " is not available!", false);
-
+		
+		long endTime = System.currentTimeMillis() + SMALLTIMEOUT;
+		while (System.currentTimeMillis() <= endTime && !waitForView(classToFilterBy, index, true, true));
+		
 		ArrayList<T> views = RobotiumUtils.removeInvisibleViews(viewFetcher.getCurrentViews(classToFilterBy));
 
-		if(views.size() < getNumberOfUniqueViews()){
-			index = index - (getNumberOfUniqueViews() - views.size());
+		if(views.size() < searcher.getNumberOfUniqueViews()){
+			index = index - (searcher.getNumberOfUniqueViews() - views.size());
 		}
 
 		T view = null;
@@ -382,33 +362,6 @@ class Waiter {
 		return view;
 	}
 
-	/**
-	 * Returns the number of unique views 
-	 * 
-	 * @param uniqueViews the set of unique views
-	 * @param views the list of all views
-	 * @return number of unique views
-	 * 
-	 */
-
-	public <T extends View> int getNumberOfUniqueViews(Set<T>uniqueViews, ArrayList<T> views){
-		for(int i = 0; i < views.size(); i++){
-			uniqueViews.add(views.get(i));
-		}
-		numberOfUniqueViews = uniqueViews.size();
-		return numberOfUniqueViews;
-	}
-
-	/**
-	 * Returns the number of unique views
-	 * 
-	 * @return the number of unique views
-	 * 
-	 */
-
-	public int getNumberOfUniqueViews(){
-		return numberOfUniqueViews;
-	}
 
 
 }

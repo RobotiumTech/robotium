@@ -15,7 +15,6 @@ import android.view.KeyEvent;
 
 class Presser{
 
-	private final ViewFetcher viewFetcher;
 	private final Clicker clicker;
 	private final Instrumentation inst;
     private final Sleeper sleeper;
@@ -32,10 +31,8 @@ class Presser{
      * @param waiter the {@code Waiter} instance.
      */
 
-	public Presser(ViewFetcher viewFetcher,
-                   Clicker clicker, Instrumentation inst, Sleeper sleeper, Waiter waiter) {
+	public Presser(Clicker clicker, Instrumentation inst, Sleeper sleeper, Waiter waiter) {
 
-		this.viewFetcher = viewFetcher;
 		this.clicker = clicker;
 		this.inst = inst;
         this.sleeper = sleeper;
@@ -117,9 +114,8 @@ class Presser{
 	 */
 
 	public void pressSpinnerItem(int spinnerIndex, int itemIndex)
-	{
-		waiter.waitForView(Spinner.class, spinnerIndex, false);
-		clicker.clickOnScreen(viewFetcher.getCurrentViews(Spinner.class).get(spinnerIndex));
+	{	
+		clicker.clickOnScreen(waiter.waitForAndGetView(spinnerIndex, Spinner.class));
 		sleeper.sleep();
 		try{
 			inst.sendKeyDownUpSync(KeyEvent.KEYCODE_DPAD_DOWN);

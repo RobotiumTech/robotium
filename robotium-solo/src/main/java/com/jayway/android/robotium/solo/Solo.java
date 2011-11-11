@@ -119,7 +119,7 @@ public class Solo {
         this.checker = new Checker(viewFetcher, waiter);
         this.robotiumUtils = new RobotiumUtils(instrumentation, sleeper);
         this.clicker = new Clicker(viewFetcher, scroller,robotiumUtils, instrumentation, sleeper, waiter);
-        this.presser = new Presser(viewFetcher, clicker, instrumentation, sleeper, waiter);
+        this.presser = new Presser(clicker, instrumentation, sleeper, waiter);
         this.textEnterer = new TextEnterer(instrumentation);
 	}
 
