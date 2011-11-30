@@ -181,42 +181,42 @@ class Scroller {
 	 * 
 	 */
 
-	public <T extends AbsListView> boolean scrollList(Class<T> classToFilterBy, ListView listView, int direction, ArrayList<T> listViews) {
+	public <T extends AbsListView> boolean scrollList(Class<T> classToFilterBy, T absListView, int direction, ArrayList<T> listViews) {
 		
-		if(listView == null)
-			listView = (ListView) viewFetcher.getView(classToFilterBy, listViews);
+		if(absListView == null)
+			absListView = (T) viewFetcher.getView(classToFilterBy, listViews);
 
-		if(listView == null)
+		if(absListView == null)
 			return false;
 
 		if (direction == DOWN) {
-			if (listView.getLastVisiblePosition() >= listView.getCount()-1) {
-				scrollListToLine(listView, listView.getLastVisiblePosition());
+			if (absListView.getLastVisiblePosition() >= absListView.getCount()-1) {
+				scrollListToLine(absListView, absListView.getLastVisiblePosition());
 				return false;
 			}
 			
-			if(listView.getFirstVisiblePosition() != listView.getLastVisiblePosition())
-				scrollListToLine(listView, listView.getLastVisiblePosition());
+			if(absListView.getFirstVisiblePosition() != absListView.getLastVisiblePosition())
+				scrollListToLine(absListView, absListView.getLastVisiblePosition());
 	
 			else
-				scrollListToLine(listView, listView.getFirstVisiblePosition()+1);
+				scrollListToLine(absListView, absListView.getFirstVisiblePosition()+1);
 
 		} else if (direction == UP) {
-			if (listView.getFirstVisiblePosition() < 2) {
-				scrollListToLine(listView, 0);
+			if (absListView.getFirstVisiblePosition() < 2) {
+				scrollListToLine(absListView, 0);
 				return false;
 			}
 
-			final int lines = listView.getLastVisiblePosition() - listView.getFirstVisiblePosition();
-			int lineToScrollTo = listView.getFirstVisiblePosition() - lines;
+			final int lines = absListView.getLastVisiblePosition() - absListView.getFirstVisiblePosition();
+			int lineToScrollTo = absListView.getFirstVisiblePosition() - lines;
 
-			if(lineToScrollTo == listView.getLastVisiblePosition())
+			if(lineToScrollTo == absListView.getLastVisiblePosition())
 				lineToScrollTo--;
 			
 			if(lineToScrollTo < 0)
 				lineToScrollTo = 0;
 
-			scrollListToLine(listView, lineToScrollTo);
+			scrollListToLine(absListView, lineToScrollTo);
 		}	
 		sleeper.sleep();
 		return true;
