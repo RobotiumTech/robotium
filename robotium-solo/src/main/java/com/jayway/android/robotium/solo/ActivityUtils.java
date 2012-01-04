@@ -232,17 +232,31 @@ class ActivityUtils {
 		// Finish all opened activities
 		for (int i = activityList.size()-1; i >= 0; i--) {
 			sleeper.sleep(100);
-			activityList.get(i).finish();
+			finishActivity(activityList.get(i));
 		}
 		// Finish the initial activity, pressing Back for good measure
-		getCurrentActivity().finish();
+		finishActivity(getCurrentActivity());
 		sleeper.sleepMini();
 		try {
 			inst.sendKeyDownUpSync(KeyEvent.KEYCODE_BACK);
-		} catch (SecurityException ignored) {
+		} catch (Throwable ignored) {
 			// Guard against lack of INJECT_EVENT permission
 		}
 		activityList.clear();
+	}
+	
+	/**
+	 * Finishes an activity
+	 * 
+	 * @param activity the activity to finish
+	 */
+	
+	private void finishActivity(Activity activity){
+		try{
+			activity.finish();
+		}catch(Throwable e){
+			e.printStackTrace();
+		}
 	}
 
 
