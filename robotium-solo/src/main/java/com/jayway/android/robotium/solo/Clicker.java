@@ -109,7 +109,7 @@ class Clicker {
 		if(time > 0)
 			sleeper.sleep(time);
 		else
-			sleeper.sleep((int)(ViewConfiguration.getLongPressTimeout() * 1.5f));
+			sleeper.sleep((int)(ViewConfiguration.getLongPressTimeout() * 2.5f));
 
 		eventTime = SystemClock.uptimeMillis();
 		event = MotionEvent.obtain(downTime, eventTime, MotionEvent.ACTION_UP, x, y, 0);
