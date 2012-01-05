@@ -18,51 +18,51 @@ import android.view.KeyEvent;
  */
 
 class ActivityUtils {
-	
+
 	private final Instrumentation inst;
 	private ActivityMonitor activityMonitor;
 	private Activity activity;
-    private final Sleeper sleeper;
+	private final Sleeper sleeper;
 	private ArrayList<Activity> activityList;
 
 	/**
 	 * Constructs this object.
 	 *
 	 * @param inst the {@code Instrumentation} instance.
-     * @param activity the start {@code Activity}
-     * @param sleeper the {@code Sleeper} instance
-     *
+	 * @param activity the start {@code Activity}
+	 * @param sleeper the {@code Sleeper} instance
+	 *
 	 */
-	
+
 	public ActivityUtils(Instrumentation inst, Activity activity, Sleeper sleeper) {
 		this.inst = inst;
 		this.activity = activity;
-        this.sleeper = sleeper;
-        activityList = new ArrayList<Activity>();
-        setupActivityMonitor();
+		this.sleeper = sleeper;
+		activityList = new ArrayList<Activity>();
+		setupActivityMonitor();
 	}
-	
+
 	/**
 	 * Returns a {@code List} of all the opened/active activities.
 	 * 
 	 * @return a {@code List} of all the opened/active activities
 	 * 
 	 */
-	
+
 	public ArrayList<Activity> getAllOpenedActivities()
 	{
 		return activityList;
 	}
-	
-	
+
+
 	/**
 	 * This is were the activityMonitor is set up. The monitor will keep check
 	 * for the currently active activity.
 	 *
 	 */
-	
+
 	private void setupActivityMonitor() {
-		
+
 		try {
 			IntentFilter filter = null;
 			activityMonitor = inst.addMonitor(filter, null, false);
@@ -70,13 +70,13 @@ class ActivityUtils {
 			e.printStackTrace();
 		}
 	}
-	
+
 	/**
 	 * Returns the ActivityMonitor used by Robotium.
 	 * 
 	 * @return the ActivityMonitor used by Robotium
 	 */
-	
+
 	public ActivityMonitor getActivityMonitor(){
 		return activityMonitor;
 	}
@@ -87,7 +87,7 @@ class ActivityUtils {
 	 * @param orientation An orientation constant such as {@link android.content.pm.ActivityInfo#SCREEN_ORIENTATION_LANDSCAPE} or {@link android.content.pm.ActivityInfo#SCREEN_ORIENTATION_PORTRAIT}.
 	 *  
 	 */
-	
+
 	public void setActivityOrientation(int orientation)
 	{
 		Activity activity = getCurrentActivity();
@@ -100,11 +100,11 @@ class ActivityUtils {
 	 * @return the current {@code Activity}
 	 *
 	 */
-	
+
 	public Activity getCurrentActivity() {
-	    return getCurrentActivity(true);
+		return getCurrentActivity(true);
 	}
-	
+
 	/**
 	 * Waits for an activity to be started if one is not provided
 	 * by the constructor.
@@ -112,18 +112,18 @@ class ActivityUtils {
 	 */
 
 	private final void waitForActivityIfNotAvailable(){
-	    if(activity == null){
-	        if (activityMonitor != null) {
-	            while (activityMonitor.getLastActivity() == null){
-	                sleeper.sleepMini();
-	            }
-	        }
-	        else{
-	            sleeper.sleepMini();
-	            setupActivityMonitor();
-	            waitForActivityIfNotAvailable();
-	        }
-	    }
+		if(activity == null){
+			if (activityMonitor != null) {
+				while (activityMonitor.getLastActivity() == null){
+					sleeper.sleepMini();
+				}
+			}
+			else{
+				sleeper.sleepMini();
+				setupActivityMonitor();
+				waitForActivityIfNotAvailable();
+			}
+		}
 	}
 
 	/**
@@ -135,63 +135,60 @@ class ActivityUtils {
 	 */
 
 	public Activity getCurrentActivity(boolean shouldSleepFirst) {
-	    if(shouldSleepFirst){
-	        sleeper.sleep();
-	    }
+		if(shouldSleepFirst){
+			sleeper.sleep();
+		}
 
-	    waitForActivityIfNotAvailable();
-	    Boolean found = false;
+		waitForActivityIfNotAvailable();
+		Boolean found = false;
 
-	    if (activityMonitor != null) {
-	        if (activityMonitor.getLastActivity() != null)
-	            activity = activityMonitor.getLastActivity();
-	    }
-	    Activity storedActivity;
-	    for(int i = 0; i < activityList.size(); i++){
-	    	storedActivity = activityList.get(i);
-	        if (storedActivity.getClass().getName().equals(
-	                activity.getClass().getName()))
-	            found = true;
-	    }
-	    if (found)
-	        return activity;
-	    else {
-	        activityList.add(activity);
-	        return activity;
-	    }
+		if (activityMonitor != null) {
+			if (activityMonitor.getLastActivity() != null)
+				activity = activityMonitor.getLastActivity();
+		}
+		Activity storedActivity;
+		for(int i = 0; i < activityList.size(); i++){
+			storedActivity = activityList.get(i);
+			if (storedActivity.equals(activity))
+				found = true;
+		}
+		if (found)
+			return activity;
+		else {
+			activityList.add(activity);
+			return activity;
+		}
 	}
-	
-	
+
+
 	/**
 	 * Returns to the given {@link Activity}.
 	 *
 	 * @param name the name of the {@code Activity} to return to, e.g. {@code "MyActivity"}
 	 * 
 	 */
-	
+
 	public void goBackToActivity(String name)
 	{
-		boolean found = false;
-		for(Activity activity : activityList){
-			if(activity.getClass().getSimpleName().equals(name))
+		sleeper.sleep();
+		boolean found = false;	
+		for(int i = activityList.size() - 1; i >= 0; i--){
+			if(activityList.get(i).getClass().getSimpleName().equals(name)){
 				found = true;
-		}
-		if(found){
-			while(!getCurrentActivity().getClass().getSimpleName().equals(name))
-			{
-				try{
-				inst.sendKeyDownUpSync(KeyEvent.KEYCODE_BACK);
-				}catch(SecurityException e){
-					Assert.assertTrue("Activity named " + name + " can not be returned to", false);}
+				break;
 			}
+			try{
+				inst.sendKeyDownUpSync(KeyEvent.KEYCODE_BACK);
+				sleeper.sleep();	
+			}catch(SecurityException ignored){}	
 		}
-		else{
+		if(!found){
 			for (int i = 0; i < activityList.size(); i++)
 				Log.d("Robotium", "Activity priorly opened: "+ activityList.get(i).getClass().getSimpleName());
 			Assert.assertTrue("No Activity named " + name + " has been priorly opened", false);
 		}
 	}
-	
+
 	/**
 	 * Returns a localized string
 	 * 
@@ -199,19 +196,19 @@ class ActivityUtils {
 	 * @return the localized string
 	 * 
 	 */
-	
+
 	public String getString(int resId)
 	{
 		Activity activity = getCurrentActivity(false);
 		return activity.getString(resId);
 	}
-	
+
 	/**
 	 *
 	 * Finalizes the solo object.
 	 *
 	 */  
-	
+
 	public void finalize() throws Throwable {
 		try {
 			// Remove the monitor added during startup
@@ -221,13 +218,13 @@ class ActivityUtils {
 		} catch (Exception ignored) {}
 		super.finalize();
 	}
-	
+
 	/**
 	 *
 	 * All activites that have been opened are finished.
 	 *
 	 */
-	
+
 	public void finishOpenedActivities(){
 		// Finish all opened activities
 		for (int i = activityList.size()-1; i >= 0; i--) {
@@ -244,13 +241,13 @@ class ActivityUtils {
 		}
 		activityList.clear();
 	}
-	
+
 	/**
 	 * Finishes an activity
 	 * 
 	 * @param activity the activity to finish
 	 */
-	
+
 	private void finishActivity(Activity activity){
 		try{
 			activity.finish();
