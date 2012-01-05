@@ -126,16 +126,16 @@ class Waiter {
 
 		while (System.currentTimeMillis() < endTime) {
 			sleeper.sleep();
-			
+
 			foundMatchingView =  searcher.searchFor(uniqueViews, viewClass, index);
 
 			if(foundMatchingView)
 				return true;
-			
+
 			if(scroll) 
 				scroller.scroll(Scroller.DOWN);
 		}
-		 return false;
+		return false;
 	}
 
 	/**
@@ -203,22 +203,22 @@ class Waiter {
 	public boolean waitForView(View view, int timeout, boolean scroll){
 		long startTime = System.currentTimeMillis();
 		long endTime = startTime + timeout;
-		
+
 		while (System.currentTimeMillis() < endTime) {
 			sleeper.sleep();
-	
+
 			final boolean foundAnyMatchingView = searcher.searchFor(view);
-			
+
 			if (foundAnyMatchingView){
 				return true;
 			}
-			
+
 			if(scroll) 
 				scroller.scroll(Scroller.DOWN);
 		}
 		return false;
 	}
-	
+
 
 	/**
 	 * Waits for a certain view.
@@ -342,14 +342,16 @@ class Waiter {
 	 */
 
 	public <T extends View> T waitForAndGetView(int index, Class<T> classToFilterBy){
-		
+
 		long endTime = System.currentTimeMillis() + SMALLTIMEOUT;
 		while (System.currentTimeMillis() <= endTime && !waitForView(classToFilterBy, index, true, true));
-		
+		int numberOfUniqueViews = searcher.getNumberOfUniqueViews();
 		ArrayList<T> views = RobotiumUtils.removeInvisibleViews(viewFetcher.getCurrentViews(classToFilterBy));
 
-		if(views.size() < searcher.getNumberOfUniqueViews()){
-			index = index - (searcher.getNumberOfUniqueViews() - views.size());
+		if(views.size() < numberOfUniqueViews){
+			int newIndex = index - (numberOfUniqueViews - views.size());
+			if(newIndex >= 0)
+				index = newIndex;
 		}
 
 		T view = null;
