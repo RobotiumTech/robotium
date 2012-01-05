@@ -138,21 +138,14 @@ class ActivityUtils {
 		if(shouldSleepFirst){
 			sleeper.sleep();
 		}
-
 		waitForActivityIfNotAvailable();
-		Boolean found = false;
 
 		if (activityMonitor != null) {
 			if (activityMonitor.getLastActivity() != null)
 				activity = activityMonitor.getLastActivity();
 		}
-		Activity storedActivity;
-		for(int i = 0; i < activityList.size(); i++){
-			storedActivity = activityList.get(i);
-			if (storedActivity.equals(activity))
-				found = true;
-		}
-		if (found)
+	
+		if (activityList.contains(activity))
 			return activity;
 		else {
 			activityList.add(activity);
