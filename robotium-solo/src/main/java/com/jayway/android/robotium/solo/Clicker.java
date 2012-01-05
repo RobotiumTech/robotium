@@ -32,7 +32,7 @@ class Clicker {
 	private final Sleeper sleeper;
 	private final Waiter waiter;
 	private final int TIMEOUT = 10000;
-	private final int MINISLEEP = 50;
+	private final int MINISLEEP = 100;
 	Set<TextView> uniqueTextViews;
 
 
