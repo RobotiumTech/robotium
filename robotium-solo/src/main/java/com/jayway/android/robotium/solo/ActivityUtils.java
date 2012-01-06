@@ -24,6 +24,7 @@ class ActivityUtils {
 	private Activity activity;
 	private final Sleeper sleeper;
 	private ArrayList<Activity> activityList;
+	private final String LOG_TAG = "Robotium";
 
 	/**
 	 * Constructs this object.
@@ -144,7 +145,7 @@ class ActivityUtils {
 			if (activityMonitor.getLastActivity() != null)
 				activity = activityMonitor.getLastActivity();
 		}
-	
+
 		if (activityList.contains(activity))
 			return activity;
 		else {
@@ -163,21 +164,24 @@ class ActivityUtils {
 
 	public void goBackToActivity(String name)
 	{
-		sleeper.sleep();
 		boolean found = false;	
-		for(int i = activityList.size() - 1; i >= 0; i--){
+		for(int i = 0; i < activityList.size(); i++){
 			if(activityList.get(i).getClass().getSimpleName().equals(name)){
 				found = true;
 				break;
 			}
-			try{
-				inst.sendKeyDownUpSync(KeyEvent.KEYCODE_BACK);
-				sleeper.sleep();	
-			}catch(SecurityException ignored){}	
 		}
-		if(!found){
+		if(found){
+			while(!getCurrentActivity().getClass().getSimpleName().equals(name))
+			{
+				try{
+					inst.sendKeyDownUpSync(KeyEvent.KEYCODE_BACK);	
+				}catch(SecurityException ignored){}	
+			}
+		}
+		else{
 			for (int i = 0; i < activityList.size(); i++)
-				Log.d("Robotium", "Activity priorly opened: "+ activityList.get(i).getClass().getSimpleName());
+				Log.d(LOG_TAG, "Activity priorly opened: "+ activityList.get(i).getClass().getSimpleName());
 			Assert.assertTrue("No Activity named " + name + " has been priorly opened", false);
 		}
 	}
