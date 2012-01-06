@@ -249,7 +249,6 @@ class Clicker {
 	 */
 
 	public void clickOnText(String regex, boolean longClick, int match, boolean scroll, int time) {
-		final Pattern pattern = Pattern.compile(regex);
 		waiter.waitForText(regex, 0, TIMEOUT, scroll, true);
 		TextView textToClick = null;
 		ArrayList <TextView> allTextViews = viewFetcher.getCurrentViews(TextView.class);
@@ -258,10 +257,7 @@ class Clicker {
 			match = 1;
 		}
 		for (TextView textView : allTextViews){
-			if(pattern.matcher(textView.getText().toString()).find()){
-				uniqueTextViews.add(textView);
-			}
-			if (uniqueTextViews.size() == match) {
+			if (RobotiumUtils.checkAndGetMatches(regex, textView, uniqueTextViews) == match) {
 				uniqueTextViews.clear();
 				textToClick = textView;
 				break;
@@ -324,7 +320,7 @@ class Clicker {
 	 * @param index the index of the {@code View} to be clicked, within {@code View}s of the specified class
 	 */
 	public <T extends View> void clickOn(Class<T> viewClass, int index) {
-			clickOnScreen(waiter.waitForAndGetView(index, viewClass));
+		clickOnScreen(waiter.waitForAndGetView(index, viewClass));
 	}
 
 

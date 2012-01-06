@@ -5,8 +5,6 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.concurrent.Callable;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
@@ -186,24 +184,11 @@ class Searcher {
 		if(expectedMinimumNumberOfMatches < 1) {
 			expectedMinimumNumberOfMatches = 1;
 		}
-		final Pattern pattern = Pattern.compile(regex);
 		Collection<T> views;
-		Matcher matcher;
 		while (true) {	
 			views = viewFetcherCallback.call();
 			for(TextView view : views){
-				matcher = pattern.matcher(view.getText().toString());
-
-				if (matcher.find()){
-					uniqueTextViews.add(view);
-				}
-				if (view.getError() != null){
-					matcher = pattern.matcher(view.getError().toString());
-					if (matcher.find()){
-						uniqueTextViews.add(view);
-					}
-				}		
-				if (uniqueTextViews.size() == expectedMinimumNumberOfMatches) {
+				if (RobotiumUtils.checkAndGetMatches(regex, view, uniqueTextViews) == expectedMinimumNumberOfMatches) {
 					uniqueTextViews.clear();
 					return true;
 				}

@@ -1,10 +1,14 @@
 package com.jayway.android.robotium.solo;
 
 import java.util.ArrayList;
+import java.util.Set;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import junit.framework.Assert;
 import android.app.Instrumentation;
 import android.view.KeyEvent;
 import android.view.View;
+import android.widget.TextView;
 
 
 class RobotiumUtils {
@@ -90,4 +94,34 @@ class RobotiumUtils {
         viewList = null;
         return filteredViews;
     }
+	
+	/**
+	 * Checks if a view matches a certain string and returns the amount of matches
+	 * 
+	 * @param regex the regex to match
+	 * @param view the view to check
+	 * @param uniqueTextViews set of views that have matched
+	 * @return amount of total matches
+	 */
+	
+	public static int checkAndGetMatches(String regex, TextView view, Set<TextView> uniqueTextViews){
+		final Pattern pattern = Pattern.compile(regex);
+		Matcher matcher = pattern.matcher(view.getText().toString());
+		if (matcher.find()){
+			uniqueTextViews.add(view);
+		}
+		if (view.getError() != null){
+			matcher = pattern.matcher(view.getError().toString());
+			if (matcher.find()){
+				uniqueTextViews.add(view);
+			}
+		}	
+		if (view.getHint() != null){
+			matcher = pattern.matcher(view.getHint().toString());
+			if (matcher.find()){
+				uniqueTextViews.add(view);
+			}
+		}	
+		return uniqueTextViews.size();		
+	}
 }
