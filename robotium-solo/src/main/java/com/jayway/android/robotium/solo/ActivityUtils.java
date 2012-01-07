@@ -26,6 +26,7 @@ class ActivityUtils {
 	private final Sleeper sleeper;
 	private LinkedHashSet<Activity> activityList;
 	private final String LOG_TAG = "Robotium";
+	private final int MINISLEEP = 100;
 
 	/**
 	 * Constructs this object.
@@ -223,13 +224,15 @@ class ActivityUtils {
 		ArrayList<Activity> activitiesOpened = getAllOpenedActivities();
 		// Finish all opened activities
 		for (int i = activitiesOpened.size()-1; i >= 0; i--) {
-			sleeper.sleep(100);
+			sleeper.sleep(MINISLEEP);
 			finishActivity(activitiesOpened.get(i));
 		}
 		// Finish the initial activity, pressing Back for good measure
 		finishActivity(getCurrentActivity());
 		sleeper.sleepMini();
 		try {
+			inst.sendKeyDownUpSync(KeyEvent.KEYCODE_BACK);
+			sleeper.sleep(MINISLEEP);
 			inst.sendKeyDownUpSync(KeyEvent.KEYCODE_BACK);
 		} catch (Throwable ignored) {
 			// Guard against lack of INJECT_EVENT permission
