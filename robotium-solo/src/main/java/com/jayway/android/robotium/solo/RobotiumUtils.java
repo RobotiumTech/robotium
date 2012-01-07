@@ -116,7 +116,7 @@ class RobotiumUtils {
 				uniqueTextViews.add(view);
 			}
 		}	
-		if (view.getHint() != null){
+		if (view.getText().toString().equals("") && view.getHint() != null){
 			matcher = pattern.matcher(view.getHint().toString());
 			if (matcher.find()){
 				uniqueTextViews.add(view);
