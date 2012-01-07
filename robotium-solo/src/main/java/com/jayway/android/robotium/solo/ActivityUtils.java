@@ -1,6 +1,7 @@
 package com.jayway.android.robotium.solo;
 
 import java.util.ArrayList;
+import java.util.LinkedHashSet;
 import junit.framework.Assert;
 import android.app.Activity;
 import android.app.Instrumentation;
@@ -23,7 +24,7 @@ class ActivityUtils {
 	private ActivityMonitor activityMonitor;
 	private Activity activity;
 	private final Sleeper sleeper;
-	private ArrayList<Activity> activityList;
+	private LinkedHashSet<Activity> activityList;
 	private final String LOG_TAG = "Robotium";
 
 	/**
@@ -39,7 +40,7 @@ class ActivityUtils {
 		this.inst = inst;
 		this.activity = activity;
 		this.sleeper = sleeper;
-		activityList = new ArrayList<Activity>();
+		activityList = new LinkedHashSet<Activity>();
 		setupActivityMonitor();
 	}
 
@@ -52,7 +53,7 @@ class ActivityUtils {
 
 	public ArrayList<Activity> getAllOpenedActivities()
 	{
-		return activityList;
+		return new ArrayList<Activity>(activityList);
 	}
 
 
@@ -145,13 +146,8 @@ class ActivityUtils {
 			if (activityMonitor.getLastActivity() != null)
 				activity = activityMonitor.getLastActivity();
 		}
-
-		if (activityList.contains(activity))
-			return activity;
-		else {
 			activityList.add(activity);
 			return activity;
-		}
 	}
 
 
@@ -164,9 +160,10 @@ class ActivityUtils {
 
 	public void goBackToActivity(String name)
 	{
+		ArrayList<Activity> activitiesOpened = getAllOpenedActivities();
 		boolean found = false;	
-		for(int i = 0; i < activityList.size(); i++){
-			if(activityList.get(i).getClass().getSimpleName().equals(name)){
+		for(int i = 0; i < activitiesOpened.size(); i++){
+			if(activitiesOpened.get(i).getClass().getSimpleName().equals(name)){
 				found = true;
 				break;
 			}
@@ -180,8 +177,8 @@ class ActivityUtils {
 			}
 		}
 		else{
-			for (int i = 0; i < activityList.size(); i++)
-				Log.d(LOG_TAG, "Activity priorly opened: "+ activityList.get(i).getClass().getSimpleName());
+			for (int i = 0; i < activitiesOpened.size(); i++)
+				Log.d(LOG_TAG, "Activity priorly opened: "+ activitiesOpened.get(i).getClass().getSimpleName());
 			Assert.assertTrue("No Activity named " + name + " has been priorly opened", false);
 		}
 	}
@@ -223,10 +220,11 @@ class ActivityUtils {
 	 */
 
 	public void finishOpenedActivities(){
+		ArrayList<Activity> activitiesOpened = getAllOpenedActivities();
 		// Finish all opened activities
-		for (int i = activityList.size()-1; i >= 0; i--) {
+		for (int i = activitiesOpened.size()-1; i >= 0; i--) {
 			sleeper.sleep(100);
-			finishActivity(activityList.get(i));
+			finishActivity(activitiesOpened.get(i));
 		}
 		// Finish the initial activity, pressing Back for good measure
 		finishActivity(getCurrentActivity());
