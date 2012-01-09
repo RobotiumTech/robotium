@@ -1422,9 +1422,21 @@ public class Solo {
 	 * @param id the R.id of the {@link View} to be returned 
 	 * @return a {@link View} with a given id
 	 */
-	
+
 	public View getView(int id){
 		return getter.getView(id);
+	}
+
+	/**
+	 * Returns a View of a given class and index. 
+	 * 
+	 * @param viewClass the class of the requested view
+	 * @param index the index of the {@link View}. {@code 0} if only one is available
+	 * @return a {@link View} with a given class and index
+	 */
+
+	public <T extends View> View getView(Class<T> viewClass, int index){
+		return waiter.waitForAndGetView(index, viewClass);
 	}
 	
 	/**
