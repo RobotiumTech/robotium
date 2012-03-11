@@ -120,7 +120,7 @@ public class Solo {
         this.robotiumUtils = new RobotiumUtils(instrumentation, sleeper);
         this.clicker = new Clicker(viewFetcher, scroller,robotiumUtils, instrumentation, sleeper, waiter);
         this.presser = new Presser(clicker, instrumentation, sleeper, waiter);
-        this.textEnterer = new TextEnterer(instrumentation);
+        this.textEnterer = new TextEnterer(instrumentation, clicker);
 	}
 
 	
@@ -1222,7 +1222,7 @@ public class Solo {
 	
 	
 	/**
-	 * Enters text into an EditText with a given index.
+	 * Enters text in an EditText with a given index.
 	 *
 	 * @param index the index of the {@link EditText}. {@code 0} if only one is available
 	 * @param text the text string to enter into the {@link EditText} field
@@ -1234,7 +1234,7 @@ public class Solo {
 	}
 	
 	/**
-	 * Enters text into a given EditText.
+	 * Enters text in a given EditText.
 	 *
 	 * @param editText the {@link EditText} to enter text into
 	 * @param text the text string to enter into the {@link EditText} field
@@ -1244,6 +1244,31 @@ public class Solo {
 	public void enterText(EditText editText, String text) {
 		waiter.waitForView(editText, SMALLTIMEOUT);
 		textEnterer.setEditText(editText, text);		
+	}
+	
+	/**
+	 * Types text in an EditText with a given index.
+	 *
+	 * @param index the index of the {@link EditText}. {@code 0} if only one is available
+	 * @param text the text string to type in the {@link EditText} field
+	 *
+	 */
+
+	public void typeText(int index, String text) {
+		textEnterer.typeText(waiter.waitForAndGetView(index, EditText.class), text);		
+	}
+	
+	/**
+	 * Types text in a given EditText.
+	 *
+	 * @param editText the {@link EditText} to type text into
+	 * @param text the text string to type in the {@link EditText} field
+	 *
+	 */
+	
+	public void typeText(EditText editText, String text) {
+		waiter.waitForView(editText, SMALLTIMEOUT);
+		textEnterer.typeText(editText, text);		
 	}
 	
 	/**
