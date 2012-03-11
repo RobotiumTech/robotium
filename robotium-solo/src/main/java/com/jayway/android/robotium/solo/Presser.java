@@ -24,7 +24,6 @@ class Presser{
     /**
      * Constructs this object.
      *
-     * @param viewFetcher the {@code ViewFetcher} instance.
      * @param clicker the {@code Clicker} instance.
      * @param inst the {@code Instrumentation} instance.
      * @param sleeper the {@code Sleeper} instance.
