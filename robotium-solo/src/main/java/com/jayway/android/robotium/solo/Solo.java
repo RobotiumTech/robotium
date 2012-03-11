@@ -1118,7 +1118,7 @@ public class Solo {
 	 *
 	 * @param index the index of the {@link DatePicker}. {@code 0} if only one is available
 	 * @param year the year e.g. 2011
-	 * @param monthOfYear the month which is starting from zero e.g. 03
+	 * @param monthOfYear the month which starts from zero e.g. 0 for January
 	 * @param dayOfMonth the day e.g. 10
 	 *
 	 */
@@ -1132,7 +1132,7 @@ public class Solo {
 	 *
 	 * @param datePicker the {@link DatePicker} object.
 	 * @param year the year e.g. 2011
-	 * @param monthOfYear the month e.g. 03
+	 * @param monthOfYear the month which starts from zero e.g. 03 for April
 	 * @param dayOfMonth the day e.g. 10
 	 *
 	 */
@@ -1261,7 +1261,7 @@ public class Solo {
 	/**
 	 * Types text in a given EditText.
 	 *
-	 * @param editText the {@link EditText} to type text into
+	 * @param editText the {@link EditText} to type text in
 	 * @param text the text string to type in the {@link EditText} field
 	 *
 	 */
