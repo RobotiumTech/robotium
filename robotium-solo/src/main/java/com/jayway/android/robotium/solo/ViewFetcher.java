@@ -328,12 +328,19 @@ class ViewFetcher {
 	 */
 
 	public final <T extends View> T getView(Class<T> classToFilterBy, ArrayList<T> views){
+		final int[] locationOnScreen = new int[2];
 		T viewToReturn = null;
 		long drawingTime = 0;
 		if(views == null){
 			views = RobotiumUtils.removeInvisibleViews(getCurrentViews(classToFilterBy));
 		}
 		for(T view : views){
+
+			view.getLocationOnScreen(locationOnScreen);
+
+			if (locationOnScreen[0] < 0 ) 
+				continue;
+
 			if(view.getDrawingTime() > drawingTime && view.getHeight() > 0){
 				drawingTime = view.getDrawingTime();
 				viewToReturn = view;
