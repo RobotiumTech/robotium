@@ -1929,13 +1929,21 @@ public class Solo {
 	}
     
     /**
-	 *
-	 * All activities that have been active are finished.
-	 *
-	 */
-	
-	public void finishOpenedActivities(){
-		activityUtils.finishOpenedActivities();
-	}
+     * All inactive activities are finished.
+     */
+
+    public void finishInactiveActivities() {
+    	activityUtils.finishInactiveActivities();
+    }
+
+    /**
+     *
+     * All activities that have been active are finished.
+     *
+     */
+
+    public void finishOpenedActivities(){
+    	activityUtils.finishOpenedActivities();
+    }
 	
 }

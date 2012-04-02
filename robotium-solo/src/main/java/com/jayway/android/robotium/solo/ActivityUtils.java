@@ -1,6 +1,7 @@
 package com.jayway.android.robotium.solo;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.LinkedHashSet;
 import junit.framework.Assert;
 import android.app.Activity;
@@ -238,6 +239,20 @@ class ActivityUtils {
 			// Guard against lack of INJECT_EVENT permission
 		}
 		activityList.clear();
+	}
+	
+	/**
+	 * All inactive activities are finished.
+	 */
+
+	public void finishInactiveActivities() {
+		for (Iterator<Activity> iter = activityList.iterator(); iter.hasNext();) {
+			Activity activity = iter.next();
+			if (activity != getCurrentActivity()) {
+				finishActivity(activity);
+				iter.remove();
+			}
+		}
 	}
 
 	/**
