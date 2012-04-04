@@ -5,6 +5,7 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.concurrent.Callable;
+import android.os.SystemClock;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
@@ -60,9 +61,9 @@ class Searcher {
 	 */
 
 	public boolean searchWithTimeoutFor(Class<? extends TextView> viewClass, String regex, int expectedMinimumNumberOfMatches, boolean scroll, boolean onlyVisible) {
-		final long endTime = System.currentTimeMillis() + TIMEOUT;
+		final long endTime = SystemClock.uptimeMillis() + TIMEOUT;
 
-		while (System.currentTimeMillis() < endTime) {
+		while (SystemClock.uptimeMillis() < endTime) {
 			sleeper.sleep();
 			final boolean foundAnyMatchingView = searchFor(viewClass, regex, expectedMinimumNumberOfMatches, scroll, onlyVisible);
 			if (foundAnyMatchingView){

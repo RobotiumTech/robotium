@@ -1,5 +1,7 @@
 package com.jayway.android.robotium.solo;
 
+import android.os.SystemClock;
+
 
 /**
  * Contains the waitForDialogToClose() method.
@@ -37,7 +39,7 @@ class DialogUtils {
 	public boolean waitForDialogToClose(long timeout) {
 		sleeper.sleepMini();
 		int elementsBefore = viewFetcher.getWindowDecorViews().length;
-		long now = System.currentTimeMillis();
+		long now = SystemClock.uptimeMillis();
 		final long endTime = now + timeout;
 		int elementsNow;
 		while (now < endTime) {
@@ -49,7 +51,7 @@ class DialogUtils {
 				break;
 
 			sleeper.sleepMini();
-			now = System.currentTimeMillis();
+			now = SystemClock.uptimeMillis();
 		}
 
 		if (now > endTime)

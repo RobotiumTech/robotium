@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 import junit.framework.Assert;
+import android.os.SystemClock;
 import android.view.View;
 import android.widget.TextView;
 
@@ -67,11 +68,11 @@ class Waiter {
 
 	public boolean waitForActivity(String name, int timeout)
 	{
-		long now = System.currentTimeMillis();
+		long now = SystemClock.uptimeMillis();
 		final long endTime = now + timeout;
 		while(!activityUtils.getCurrentActivity().getClass().getSimpleName().equals(name) && now < endTime)
 		{
-			now = System.currentTimeMillis();
+			now = SystemClock.uptimeMillis();
 		}
 		if(now < endTime)
 			return true;
@@ -121,10 +122,10 @@ class Waiter {
 
 	public <T extends View> boolean waitForView(final Class<T> viewClass, final int index, final int timeout, final boolean scroll){
 		Set<T> uniqueViews = new HashSet<T>();
-		final long endTime = System.currentTimeMillis() + timeout;
+		final long endTime = SystemClock.uptimeMillis() + timeout;
 		boolean foundMatchingView;
 
-		while (System.currentTimeMillis() < endTime) {
+		while (SystemClock.uptimeMillis() < endTime) {
 			sleeper.sleep();
 
 			foundMatchingView =  searcher.searchFor(uniqueViews, viewClass, index);
@@ -147,9 +148,9 @@ class Waiter {
 	 */
 
 	public <T extends View> boolean waitForViews(final Class<T> viewClass, final Class<? extends View> viewClass2){
-		final long endTime = System.currentTimeMillis() + SMALLTIMEOUT;
+		final long endTime = SystemClock.uptimeMillis() + SMALLTIMEOUT;
 
-		while (System.currentTimeMillis() < endTime) {
+		while (SystemClock.uptimeMillis() < endTime) {
 
 			if(waitForView(viewClass, 0, false, false)){
 				return true;
@@ -201,10 +202,10 @@ class Waiter {
 	 */
 
 	public boolean waitForView(View view, int timeout, boolean scroll){
-		long startTime = System.currentTimeMillis();
+		long startTime = SystemClock.uptimeMillis();
 		long endTime = startTime + timeout;
 
-		while (System.currentTimeMillis() < endTime) {
+		while (SystemClock.uptimeMillis() < endTime) {
 			sleeper.sleep();
 
 			final boolean foundAnyMatchingView = searcher.searchFor(view);
@@ -229,9 +230,9 @@ class Waiter {
 
 	public View waitForView(int id){
 		ArrayList<View> views = new ArrayList<View>();
-		long startTime = System.currentTimeMillis();
+		long startTime = SystemClock.uptimeMillis();
 		long endTime = startTime + SMALLTIMEOUT;
-		while (System.currentTimeMillis() <= endTime) {
+		while (SystemClock.uptimeMillis() <= endTime) {
 			sleeper.sleep();
 			views = viewFetcher.getAllViews(false);
 			for (View v : views) {
@@ -314,10 +315,10 @@ class Waiter {
 	 */
 
 	public boolean waitForText(String text, int expectedMinimumNumberOfMatches, long timeout, boolean scroll, boolean onlyVisible) {
-		final long endTime = System.currentTimeMillis() + timeout;
+		final long endTime = SystemClock.uptimeMillis() + timeout;
 
 		while (true) {
-			final boolean timedOut = System.currentTimeMillis() > endTime;
+			final boolean timedOut = SystemClock.uptimeMillis() > endTime;
 			if (timedOut){
 				return false;
 			}
@@ -343,8 +344,8 @@ class Waiter {
 
 	public <T extends View> T waitForAndGetView(int index, Class<T> classToFilterBy){
 
-		long endTime = System.currentTimeMillis() + SMALLTIMEOUT;
-		while (System.currentTimeMillis() <= endTime && !waitForView(classToFilterBy, index, true, true));
+		long endTime = SystemClock.uptimeMillis() + SMALLTIMEOUT;
+		while (SystemClock.uptimeMillis() <= endTime && !waitForView(classToFilterBy, index, true, true));
 		int numberOfUniqueViews = searcher.getNumberOfUniqueViews();
 		ArrayList<T> views = RobotiumUtils.removeInvisibleViews(viewFetcher.getCurrentViews(classToFilterBy));
 
