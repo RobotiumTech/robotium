@@ -185,7 +185,6 @@ class ViewFetcher {
 	 */
 
 	public ArrayList<View> getViews(View parent, boolean onlySufficientlyVisible) {
-		activityUtils.getCurrentActivity(false);
 		final ArrayList<View> views = new ArrayList<View>();
 		final View parentToUse;
 
