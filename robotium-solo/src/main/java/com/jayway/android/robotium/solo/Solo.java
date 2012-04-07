@@ -632,7 +632,7 @@ public class Solo {
 	
 	public void goBack()
 	{
-		robotiumUtils.goBack();
+		activityUtils.goBack();
 	}
 	
 	/**
@@ -1929,21 +1929,13 @@ public class Solo {
 	}
     
     /**
-     * All inactive activities are finished.
-     */
-
-    public void finishInactiveActivities() {
-    	activityUtils.finishInactiveActivities();
-    }
-
-    /**
-     *
-     * All activities that have been active are finished.
-     *
-     */
-
-    public void finishOpenedActivities(){
-    	activityUtils.finishOpenedActivities();
-    }
+	 *
+	 * All activities that have been active are finished.
+	 *
+	 */
+	
+	public void finishOpenedActivities(){
+		activityUtils.finishOpenedActivities();
+	}
 	
 }

@@ -1,8 +1,10 @@
 package com.jayway.android.robotium.solo;
 
 import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.LinkedHashSet;
+import java.util.List;
+import java.util.Stack;
+import java.util.Timer;
+import java.util.TimerTask;
 import junit.framework.Assert;
 import android.app.Activity;
 import android.app.Instrumentation;
@@ -25,9 +27,12 @@ class ActivityUtils {
 	private ActivityMonitor activityMonitor;
 	private Activity activity;
 	private final Sleeper sleeper;
-	private LinkedHashSet<Activity> activityList;
 	private final String LOG_TAG = "Robotium";
 	private final int MINISLEEP = 100;
+	private static final int ACTIVITYSYNCTIME = 50;
+	private Stack<Activity> activityStack;
+	private Timer activitySyncTimer;
+	private List<Activity> destroyedActivities;
 
 	/**
 	 * Constructs this object.
@@ -42,8 +47,11 @@ class ActivityUtils {
 		this.inst = inst;
 		this.activity = activity;
 		this.sleeper = sleeper;
-		activityList = new LinkedHashSet<Activity>();
+		activityStack = new Stack<Activity>();
+		activitySyncTimer = new Timer();
+		destroyedActivities=new ArrayList<Activity>();
 		setupActivityMonitor();
+		setupActivityStackListener();
 	}
 
 	/**
@@ -55,9 +63,8 @@ class ActivityUtils {
 
 	public ArrayList<Activity> getAllOpenedActivities()
 	{
-		return new ArrayList<Activity>(activityList);
+		return new ArrayList<Activity>(activityStack);
 	}
-
 
 	/**
 	 * This is were the activityMonitor is set up. The monitor will keep check
@@ -73,6 +80,29 @@ class ActivityUtils {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+	}
+
+	/**
+	 * This is were the activityStack listener is set up. The listener will keep track of the
+	 * opened activities and their positions.
+	 */
+
+	private void setupActivityStackListener() {
+		TimerTask activitySyncTimerTask = new TimerTask() {
+			@Override
+			public void run() {
+				if (activityMonitor != null)
+					if ((activityMonitor.getLastActivity() != null)
+							&& (!activityStack.contains(activityMonitor
+									.getLastActivity()))) {
+						if (!destroyedActivities.contains(activityMonitor
+								.getLastActivity()))
+							activityStack.push(activityMonitor
+									.getLastActivity());
+					}
+			}
+		};
+		activitySyncTimer.schedule(activitySyncTimerTask, 0, ACTIVITYSYNCTIME);
 	}
 
 	/**
@@ -143,15 +173,10 @@ class ActivityUtils {
 			sleeper.sleep();
 		}
 		waitForActivityIfNotAvailable();
-
-		if (activityMonitor != null) {
-			if (activityMonitor.getLastActivity() != null)
-				activity = activityMonitor.getLastActivity();
-		}
-			activityList.add(activity);
+		if(!activityStack.isEmpty())
+			activity=activityStack.peek();
 			return activity;
 	}
-
 
 	/**
 	 * Returns to the given {@link Activity}.
@@ -222,6 +247,8 @@ class ActivityUtils {
 	 */
 
 	public void finishOpenedActivities(){
+		// Stops the activityStack listener
+		activitySyncTimer.cancel();
 		ArrayList<Activity> activitiesOpened = getAllOpenedActivities();
 		// Finish all opened activities
 		for (int i = activitiesOpened.size()-1; i >= 0; i--) {
@@ -238,21 +265,7 @@ class ActivityUtils {
 		} catch (Throwable ignored) {
 			// Guard against lack of INJECT_EVENT permission
 		}
-		activityList.clear();
-	}
-	
-	/**
-	 * All inactive activities are finished.
-	 */
-
-	public void finishInactiveActivities() {
-		for (Iterator<Activity> iter = activityList.iterator(); iter.hasNext();) {
-			Activity activity = iter.next();
-			if (activity != getCurrentActivity()) {
-				finishActivity(activity);
-				iter.remove();
-			}
-		}
+		activityStack.clear();
 	}
 
 	/**
@@ -269,5 +282,22 @@ class ActivityUtils {
 		}
 	}
 
+	/**
+	 * Simulates pressing the hardware back key.
+	 *
+	 */
 
+	public void goBack() {
+		if(!activityStack.isEmpty()){
+			destroyedActivities.add(activityStack.pop());
+	    }
+		sleeper.sleep();
+		try {
+			inst.sendKeyDownUpSync(KeyEvent.KEYCODE_BACK);
+			sleeper.sleep();
+		} catch (Throwable e) {}
+		while(destroyedActivities.size()>2){
+			destroyedActivities.remove(0);
+		}
+	}
 }
