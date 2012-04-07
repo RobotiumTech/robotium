@@ -199,7 +199,7 @@ class ActivityUtils {
 			while(!getCurrentActivity().getClass().getSimpleName().equals(name))
 			{
 				try{
-					inst.sendKeyDownUpSync(KeyEvent.KEYCODE_BACK);	
+					goBack();
 				}catch(SecurityException ignored){}	
 			}
 		}
