@@ -28,21 +28,6 @@ class RobotiumUtils {
         this.sleeper = sleeper;
     }
    
-	
-	/**
-	 * Simulates pressing the hardware back key.
-	 * 
-	 */
-	
-	public void goBack() {
-		sleeper.sleep();
-		try {
-			inst.sendKeyDownUpSync(KeyEvent.KEYCODE_BACK);
-			sleeper.sleep();
-		} catch (Throwable e) {}
-	}
-	
-	
 	/**
 	 * Tells Robotium to send a key code: Right, Left, Up, Down, Enter or other.
 	 * @param keycode the key code to be sent. Use {@link KeyEvent#KEYCODE_ENTER}, {@link KeyEvent#KEYCODE_MENU}, {@link KeyEvent#KEYCODE_DEL}, {@link KeyEvent#KEYCODE_DPAD_RIGHT} and so on...
