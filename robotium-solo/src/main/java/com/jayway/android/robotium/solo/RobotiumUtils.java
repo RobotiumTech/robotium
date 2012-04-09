@@ -43,6 +43,19 @@ class RobotiumUtils {
 			Assert.assertTrue("Can not complete action!", false);
 		}
 	}
+	
+	/**
+	 * Simulates pressing the hardware back key.
+	 *
+	 */
+
+	public void goBack() {
+		sleeper.sleep();
+		try {
+			inst.sendKeyDownUpSync(KeyEvent.KEYCODE_BACK);
+			sleeper.sleep();
+		} catch (Throwable ignored) {}
+	}
 
 	/**
 	 * Removes invisible {@code View}s

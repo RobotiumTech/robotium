@@ -632,7 +632,7 @@ public class Solo {
 	
 	public void goBack()
 	{
-		activityUtils.goBack();
+		robotiumUtils.goBack();
 	}
 	
 	/**

@@ -290,17 +290,5 @@ class ActivityUtils {
 			e.printStackTrace();
 		}
 	}
-
-	/**
-	 * Simulates pressing the hardware back key.
-	 *
-	 */
-
-	public void goBack() {
-		sleeper.sleep();
-		try {
-			inst.sendKeyDownUpSync(KeyEvent.KEYCODE_BACK);
-			sleeper.sleep();
-		} catch (Throwable ignored) {}
-	}
+	
 }
