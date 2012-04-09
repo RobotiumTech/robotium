@@ -1927,6 +1927,14 @@ public class Solo {
     public void finalize() throws Throwable {
 		activityUtils.finalize();
 	}
+
+    /**
+     * All inactive activities are finished.
+     */
+
+    public void finishInactiveActivities(){
+    	activityUtils.finishInactiveActivities();  	 	
+    }
     
     /**
 	 *

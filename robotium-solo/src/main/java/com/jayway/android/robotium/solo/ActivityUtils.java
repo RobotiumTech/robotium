@@ -1,6 +1,7 @@
 package com.jayway.android.robotium.solo;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.Stack;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -247,6 +248,21 @@ class ActivityUtils {
 			}
 		} catch (Exception ignored) {}
 		super.finalize();
+	}
+	
+	/**
+	 * All inactive activities are finished.
+	 */
+
+	public void finishInactiveActivities() {
+		for (Iterator<Activity> iter = activityStack.iterator(); iter.hasNext();) {
+			Activity activity = iter.next();
+			if (activity != getCurrentActivity()) {
+				finishActivity(activity);
+				iter.remove();
+			}
+
+		}
 	}
 
 	/**
