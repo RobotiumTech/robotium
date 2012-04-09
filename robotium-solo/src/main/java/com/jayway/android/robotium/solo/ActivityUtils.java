@@ -1,7 +1,6 @@
 package com.jayway.android.robotium.solo;
 
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Stack;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -32,7 +31,6 @@ class ActivityUtils {
 	private static final int ACTIVITYSYNCTIME = 50;
 	private Stack<Activity> activityStack;
 	private Timer activitySyncTimer;
-	private List<Activity> destroyedActivities;
 
 	/**
 	 * Constructs this object.
@@ -47,11 +45,18 @@ class ActivityUtils {
 		this.inst = inst;
 		this.activity = activity;
 		this.sleeper = sleeper;
-		activityStack = new Stack<Activity>();
+		createStackAndPushStartActivity();
 		activitySyncTimer = new Timer();
-		destroyedActivities=new ArrayList<Activity>();
 		setupActivityMonitor();
 		setupActivityStackListener();
+	}
+	
+	/**
+	 * Creates a new activity stack and pushes the start activity 
+	 */
+	private void createStackAndPushStartActivity(){
+		activityStack = new Stack<Activity>();
+		activityStack.push(activity);
 	}
 
 	/**
@@ -91,15 +96,18 @@ class ActivityUtils {
 		TimerTask activitySyncTimerTask = new TimerTask() {
 			@Override
 			public void run() {
-				if (activityMonitor != null)
-					if ((activityMonitor.getLastActivity() != null)
-							&& (!activityStack.contains(activityMonitor
-									.getLastActivity()))) {
-						if (!destroyedActivities.contains(activityMonitor
-								.getLastActivity()))
-							activityStack.push(activityMonitor
-									.getLastActivity());
+				if (activityMonitor != null){
+					Activity activity = activityMonitor.getLastActivity();
+					if (activity != null){
+						if(activityStack.peek().equals(activity))
+							return;
+
+						if(!activity.isFinishing()){
+							activityStack.remove(activity);
+							activityStack.push(activity);
+						}
 					}
+				}
 			}
 		};
 		activitySyncTimer.schedule(activitySyncTimerTask, 0, ACTIVITYSYNCTIME);
@@ -173,8 +181,9 @@ class ActivityUtils {
 			sleeper.sleep();
 		}
 		waitForActivityIfNotAvailable();
-		if(!activityStack.isEmpty())
+		if(!activityStack.isEmpty()){
 			activity=activityStack.peek();
+		}
 			return activity;
 	}
 
@@ -199,7 +208,7 @@ class ActivityUtils {
 			while(!getCurrentActivity().getClass().getSimpleName().equals(name))
 			{
 				try{
-					goBack();
+					inst.sendKeyDownUpSync(KeyEvent.KEYCODE_BACK);
 				}catch(SecurityException ignored){}	
 			}
 		}
@@ -288,16 +297,10 @@ class ActivityUtils {
 	 */
 
 	public void goBack() {
-		if(!activityStack.isEmpty()){
-			destroyedActivities.add(activityStack.pop());
-	    }
 		sleeper.sleep();
 		try {
 			inst.sendKeyDownUpSync(KeyEvent.KEYCODE_BACK);
 			sleeper.sleep();
-		} catch (Throwable e) {}
-		while(destroyedActivities.size()>2){
-			destroyedActivities.remove(0);
-		}
+		} catch (Throwable ignored) {}
 	}
 }
