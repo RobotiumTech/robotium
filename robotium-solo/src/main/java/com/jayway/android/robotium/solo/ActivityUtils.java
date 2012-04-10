@@ -57,7 +57,8 @@ class ActivityUtils {
 	 */
 	private void createStackAndPushStartActivity(){
 		activityStack = new Stack<Activity>();
-		activityStack.push(activity);
+		if (activity != null)
+			activityStack.push(activity);
 	}
 
 	/**
