@@ -1916,6 +1916,17 @@ public class Solo {
 		sleeper.sleep(time);
 	}
 	
+	/**
+	 * Take screenshot in current state. Result screenshot will be placed in
+	 * sdcard in /test-screenshots dir
+	 *
+	 * @param name name for screenshot - without path and extensions 
+	 */
+	public void takeScreenshot(String name) {
+		waiter.waitForAnyView();
+		robotiumUtils.takeScreenshot(getViews().get(0), name);
+	}
+	
     /**
 	 *
 	 * Finalizes the solo object and removes the ActivityMonitor.

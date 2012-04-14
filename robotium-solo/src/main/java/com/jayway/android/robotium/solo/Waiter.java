@@ -82,6 +82,18 @@ class Waiter {
 	}
 
 	/**
+	 * Waits for any view to be shown. Needed for screenshot which require
+	 * first view to exist
+	 */
+	public void waitForAnyView() {
+		while(true){
+			if (viewFetcher.getViews(null, false).size() > 0) {
+				return;
+			}
+		}
+	}
+	
+	/**
 	 * Waits for a view to be shown.
 	 * 
 	 * @param viewClass the {@code View} class to wait for
