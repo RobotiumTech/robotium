@@ -151,6 +151,7 @@ class RobotiumUtils {
 					}
 					fos = new FileOutputStream(String.format("%s%s.jpg", path, name));
 					b.compress(Bitmap.CompressFormat.JPEG, 90, fos);
+				} catch (FileNotFoundException e) { //ignored - happend when user haven't permissions to sdk in manifest
 				} catch (IOException e) {
 					e.printStackTrace();
 				} finally {
