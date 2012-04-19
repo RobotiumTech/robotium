@@ -1919,8 +1919,11 @@ public class Solo {
 	/**
 	 * Take screenshot in current state. Result screenshot will be placed in
 	 * sdcard in /test-screenshots dir
+	 * 
+	 * Note that permission to your AndroidManifest.xml is needed to take screenshot:	 
+	 * <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 	 *
-	 * @param name name for screenshot - without path and extensions 
+	 * @param name name for screenshot - without path and extension
 	 */
 	public void takeScreenshot(String name) {
 		waiter.waitForAnyView();
