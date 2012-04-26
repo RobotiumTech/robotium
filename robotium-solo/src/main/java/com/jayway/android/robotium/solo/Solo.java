@@ -1490,6 +1490,22 @@ public class Solo {
 		return viewFetcher.getCurrentViews(ImageView.class);
 	}
 	
+	/**
+	 * Returns an ArrayList of the ImageView objects currently shown in the focused 
+	 * Activity or Dialog.
+	 * 
+	 * @param parent the parent {@link View} from which the {@link TextView} objects should be returned. {@code null} if
+	 * all TextView objects from the currently focused window e.g. Activity should be returned
+	 *
+	 * @return an {@code ArrayList} of the {@link ImageView} objects currently shown in the
+	 * focused window
+	 *
+	 */
+	
+	public ArrayList<ImageView> getCurrentImageViews(View parent) {
+		return viewFetcher.getCurrentViews(ImageView.class, parent);
+	}
+	
 	
 	/**
 	 * Returns an ArrayList of the EditText objects currently shown in the focused 
