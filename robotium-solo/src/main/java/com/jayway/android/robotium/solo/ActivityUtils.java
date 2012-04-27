@@ -1,5 +1,6 @@
 package com.jayway.android.robotium.solo;
 
+import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Stack;
@@ -30,7 +31,9 @@ class ActivityUtils {
 	private final String LOG_TAG = "Robotium";
 	private final int MINISLEEP = 100;
 	private static final int ACTIVITYSYNCTIME = 50;
-	private Stack<Activity> activityStack;
+	private Stack<WeakReference<Activity>> activityStack;
+	private WeakReference<Activity> weakActivityReference;
+	private Stack<String> activitiesStoredInActivityStack;
 	private Timer activitySyncTimer;
 
 	/**
@@ -48,6 +51,7 @@ class ActivityUtils {
 		this.sleeper = sleeper;
 		createStackAndPushStartActivity();
 		activitySyncTimer = new Timer();
+		activitiesStoredInActivityStack = new Stack<String>();
 		setupActivityMonitor();
 		setupActivityStackListener();
 	}
@@ -56,9 +60,11 @@ class ActivityUtils {
 	 * Creates a new activity stack and pushes the start activity 
 	 */
 	private void createStackAndPushStartActivity(){
-		activityStack = new Stack<Activity>();
-		if (activity != null)
-			activityStack.push(activity);
+		activityStack = new Stack<WeakReference<Activity>>();
+		if (activity != null){
+			WeakReference<Activity> weakReference = new WeakReference<Activity>(activity);
+			activityStack.push(weakReference);
+		}
 	}
 
 	/**
@@ -70,7 +76,15 @@ class ActivityUtils {
 
 	public ArrayList<Activity> getAllOpenedActivities()
 	{
-		return new ArrayList<Activity>(activityStack);
+		ArrayList<Activity> activities = new ArrayList<Activity>();
+		Iterator<WeakReference<Activity>> activityStackIterator = activityStack.iterator();
+
+		while(activityStackIterator.hasNext()){
+			Activity  activity = activityStackIterator.next().get();
+			if(activity!=null)
+				activities.add(activity);
+		}
+		return activities;
 	}
 
 	/**
@@ -101,18 +115,37 @@ class ActivityUtils {
 				if (activityMonitor != null){
 					Activity activity = activityMonitor.getLastActivity();
 					if (activity != null){
-						if(!activityStack.isEmpty() && activityStack.peek().equals(activity))
+						if(!activitiesStoredInActivityStack.isEmpty() && activitiesStoredInActivityStack.peek().equals(activity.toString()))
 							return;
 
 						if(!activity.isFinishing()){
-							activityStack.remove(activity);
-							activityStack.push(activity);
+							if(activitiesStoredInActivityStack.remove(activity.toString()))
+								removeActivityFromStack(activity);
+							
+							activitiesStoredInActivityStack.add(activity.toString());
+							weakActivityReference = new WeakReference<Activity>(activity);
+							activityStack.push(weakActivityReference);
 						}
 					}
 				}
 			}
 		};
 		activitySyncTimer.schedule(activitySyncTimerTask, 0, ACTIVITYSYNCTIME);
+	}
+	
+	/**
+	 * Removes a given activity from the activity stack
+	 * @param activity the activity to remove
+	 */
+	private void removeActivityFromStack(Activity activity){
+		
+		Iterator<WeakReference<Activity>> activityStackIterator = activityStack.iterator();
+		while(activityStackIterator.hasNext()){
+			Activity activityFromWeakReference = activityStackIterator.next().get();
+			if(activity!=null && activityFromWeakReference!=null && activityFromWeakReference.equals(activity)){
+				activityStackIterator.remove();
+			}
+		}
 	}
 
 	/**
@@ -184,7 +217,7 @@ class ActivityUtils {
 		}
 		waitForActivityIfNotAvailable();
 		if(!activityStack.isEmpty()){
-			activity=activityStack.peek();
+			activity=activityStack.peek().get();
 		}
 			return activity;
 	}
@@ -256,8 +289,8 @@ class ActivityUtils {
 	 */
 
 	public void finishInactiveActivities() {
-		for (Iterator<Activity> iter = activityStack.iterator(); iter.hasNext();) {
-			Activity activity = iter.next();
+		for (Iterator<WeakReference<Activity>> iter = activityStack.iterator(); iter.hasNext();) {
+			Activity activity = iter.next().get();
 			if (activity != getCurrentActivity()) {
 				finishActivity(activity);
 				iter.remove();
@@ -291,7 +324,16 @@ class ActivityUtils {
 		} catch (Throwable ignored) {
 			// Guard against lack of INJECT_EVENT permission
 		}
+		clearActivityStack();
+	}
+	
+	/**
+	 * Clears the activity stack
+	 */
+	
+	private void clearActivityStack(){
 		activityStack.clear();
+		activitiesStoredInActivityStack.clear();
 	}
 
 	/**
