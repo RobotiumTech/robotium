@@ -4,8 +4,6 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.regex.Pattern;
-
-import android.util.DisplayMetrics;
 import android.widget.*;
 import junit.framework.Assert;
 import android.app.Instrumentation;
@@ -31,7 +29,6 @@ class Clicker {
 	private final Scroller scroller;
 	private final Instrumentation inst;
 	private final RobotiumUtils robotiumUtils;
-    private final ActivityUtils activityUtils;
 	private final Sleeper sleeper;
 	private final Waiter waiter;
 	private final int TIMEOUT = 10000;
@@ -51,7 +48,7 @@ class Clicker {
 	 */
 
 	public Clicker(ViewFetcher viewFetcher,
-			Scroller scroller, RobotiumUtils robotiumUtils, Instrumentation inst, Sleeper sleeper, Waiter waiter, ActivityUtils activityUtils) {
+			Scroller scroller, RobotiumUtils robotiumUtils, Instrumentation inst, Sleeper sleeper, Waiter waiter) {
 
 		this.viewFetcher = viewFetcher;
 		this.scroller = scroller;
@@ -59,7 +56,6 @@ class Clicker {
 		this.inst = inst;
 		this.sleeper = sleeper;
 		this.waiter = waiter;
-        this.activityUtils = activityUtils;
 		uniqueTextViews = new HashSet<TextView>();
 	}
 
@@ -150,32 +146,10 @@ class Clicker {
 
 		view.getLocationOnScreen(xy);
 
-        // Get information about the current display
-        DisplayMetrics dm = new DisplayMetrics();
-        activityUtils.getCurrentActivity().getWindowManager().getDefaultDisplay().getMetrics(dm);
-
-        // this indicates the multiplier that we need to get the right coordinates
-        // android returns XY from getLocationOnScreen as it pertains to a 160dpi device(even on other devices)
-        float densityMultiplierX = dm.scaledDensity;
-        float densityMultiplierY = dm.scaledDensity;
-
-        // some systems have a noncompat height/width
-        // this happens on 3.X up devices such as tablets where the density is reported as 1.0, but everything is actually closer to 2.0
-        // we can use the values to calculate a more accurate multiplier(should work for odd densities such as 170 etc..)
-        try {
-            int noncompatHeightPixels = dm.getClass().getField("noncompatHeightPixels").getInt(dm);
-            int noncompatWidthPixels = dm.getClass().getField("noncompatWidthPixels").getInt(dm);
-
-            densityMultiplierX = (float)noncompatWidthPixels / (float)dm.widthPixels;
-            densityMultiplierY = (float)noncompatHeightPixels / (float)dm.heightPixels;
-        } catch (Exception e) {
-            // we can ignore this, it just means this version of Android doesn't support the fields
-        }
-
-		final float viewWidth = view.getWidth() * densityMultiplierX;
-		final float viewHeight = view.getHeight() * densityMultiplierY;
-		final float x = (xy[0] * densityMultiplierX) + (viewWidth / 2.0f);
-		float y = (xy[1] * densityMultiplierY) + (viewHeight / 2.0f);
+		final int viewWidth = view.getWidth();
+		final int viewHeight = view.getHeight();
+		final float x = xy[0] + (viewWidth / 2.0f);
+		float y = xy[1] + (viewHeight / 2.0f);
 
 		if (longClick)
 			clickLongOnScreen(x, y, time);
