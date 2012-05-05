@@ -93,12 +93,14 @@ class ViewFetcher {
 	                addChildren(allViews, (ViewGroup)view, onlySufficientlyVisible);
 	            } catch (Exception ignored) {
 	            }
+                     if(view != null) allViews.add(view);
 	        }
 	        view = getRecentDecorView(views);
 	        try {
 	            addChildren(allViews, (ViewGroup)view, onlySufficientlyVisible);
 	        } catch (Exception ignored) {
 	        }
+                 if(view != null) allViews.add(view);
 	    }
 	    return allViews;
 	}
