@@ -1932,6 +1932,20 @@ public class Solo {
 		sleeper.sleep(time);
 	}
 	
+	/**
+	 * Take screenshot in current state. Result screenshot will be placed in
+	 * sdcard in /test-screenshots dir
+	 * 
+	 * Note that permission to your AndroidManifest.xml is needed to take screenshot:	 
+	 * <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+	 *
+	 * @param name name for screenshot - without path and extension
+	 */
+	public void takeScreenshot(String name) {
+		waiter.waitForAnyView();
+		robotiumUtils.takeScreenshot(getViews().get(0), name);
+	}
+	
     /**
 	 *
 	 * Finalizes the solo object and removes the ActivityMonitor.

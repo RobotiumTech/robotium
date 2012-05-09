@@ -1,11 +1,17 @@
 package com.jayway.android.robotium.solo;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import junit.framework.Assert;
 import android.app.Instrumentation;
+import android.graphics.Bitmap;
+import android.os.Environment;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.TextView;
@@ -121,5 +127,45 @@ class RobotiumUtils {
 			}
 		}	
 		return uniqueTextViews.size();		
+	}
+	
+	/**
+	 * Take screenshot in current state
+	 * 
+	 * @param view view where screenshot should be taken
+	 * @param name name for screenshot - without path and extensions 
+	 */
+	public void takeScreenshot(final View view, final String name) {		
+		inst.runOnMainSync(new Runnable() {			
+			public void run() {
+				view.setDrawingCacheEnabled(true);
+				view.buildDrawingCache();
+				Bitmap b = view.getDrawingCache();
+				
+				FileOutputStream fos = null;
+				try {
+					String path = String.format("%s/%s/", Environment.getExternalStorageDirectory(), "test-screenshots");
+					File dir = new File(path);
+					if (!dir.exists()) {
+						dir.mkdirs();
+					}
+					fos = new FileOutputStream(String.format("%s%s.jpg", path, name));
+					b.compress(Bitmap.CompressFormat.JPEG, 90, fos);
+				} catch (FileNotFoundException e) { //ignored - happend when user haven't permissions to sdk in manifest
+				} catch (IOException e) {
+					e.printStackTrace();
+				} finally {
+					view.destroyDrawingCache();
+					
+					if (fos != null) {					
+						try {
+							fos.close();
+						} catch (IOException e) {						
+							e.printStackTrace();
+						}
+					}
+				}				
+			}
+		});		
 	}
 }
