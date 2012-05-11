@@ -1,6 +1,7 @@
 package com.jayway.android.robotium.solo;
 
 import java.util.ArrayList;
+import java.util.Map;
 import android.app.Activity;
 import android.app.Instrumentation;
 import android.content.pm.ActivityInfo;
@@ -94,6 +95,8 @@ public class Solo {
 	public final static int DELETE = KeyEvent.KEYCODE_DEL;
 	public final static int CLOSED = 0;
 	public final static int OPENED = 1;
+  public final static String VALUE_PAUSE = "value.pause";
+  public final static String VALUE_MINI_PAUSE = "value.minipause";
 
 
 	/**
@@ -123,7 +126,55 @@ public class Solo {
         this.textEnterer = new TextEnterer(instrumentation, clicker);
 	}
 
+	 /**
+   * Constructor that takes in the instrumentation, the start activity and a configuration map.
+   *
+   * @param instrumentation the {@link Instrumentation} instance
+   * @param activity the start {@link Activity} or {@code null}
+   * if no start activity is provided
+   * @param configurationsMap the configuration {@link Map}
+   *
+   */
 	
+	public Solo(Instrumentation instrumentation, Activity activity, Map<String, String> configurationsMap) {
+    this.sleeper = getSleeper(configurationsMap);
+    this.activityUtils = new ActivityUtils(instrumentation, activity, sleeper);
+    this.viewFetcher = new ViewFetcher(activityUtils);
+    this.dialogUtils = new DialogUtils(viewFetcher, sleeper);
+    this.scroller = new Scroller(instrumentation, activityUtils, viewFetcher, sleeper);
+    this.searcher = new Searcher(viewFetcher, scroller, sleeper);
+    this.waiter = new Waiter(activityUtils, viewFetcher, searcher, scroller, sleeper);
+    this.setter = new Setter(activityUtils);
+    this.getter = new Getter(activityUtils, viewFetcher, waiter);
+    this.asserter = new Asserter(activityUtils, waiter);
+    this.checker = new Checker(viewFetcher, waiter);
+    this.robotiumUtils = new RobotiumUtils(instrumentation, sleeper);
+    this.clicker = new Clicker(viewFetcher, scroller, robotiumUtils, instrumentation, sleeper, waiter);
+    this.presser = new Presser(clicker, instrumentation, sleeper, waiter);
+    this.textEnterer = new TextEnterer(instrumentation, clicker);
+  }
+
+	/**
+	 * get configurable sleeper
+	 * @param configurationsMap
+	 * @return the created sleeper
+	 */
+	
+  private Sleeper getSleeper(final Map<String, String> configurationsMap) {
+    if (configurationsMap != null) {
+      int pause = -1;
+      int miniPause = -1;
+      if (configurationsMap.containsKey(VALUE_PAUSE)) {
+        pause = Integer.parseInt(configurationsMap.get(VALUE_PAUSE));
+      }
+      if (configurationsMap.containsKey(VALUE_PAUSE)) {
+        miniPause = Integer.parseInt(configurationsMap.get(VALUE_MINI_PAUSE));
+      }
+      return new Sleeper(pause, miniPause);
+    }
+    return new Sleeper();
+  }
+  
 	/**
      * Constructor that takes in the instrumentation.
      *
@@ -505,6 +556,39 @@ public class Solo {
 	public boolean searchText(String text, int minimumNumberOfMatches, boolean scroll, boolean onlyVisible) {
 		return searcher.searchWithTimeoutFor(TextView.class, text, minimumNumberOfMatches, scroll, onlyVisible);
 	}
+	
+  /**
+   * Searches for a text string and returns {@code true} if the searched text is found without timeout.
+   * 
+   * @param text the text to search for. The parameter will be interpreted as a regular expression.
+   * @return {@code true} if text string is found and {@code false} if the text string
+   * is not found
+   *  
+   */
+
+	public boolean searchTextWithoutTimeout(String text) {
+    return searcher.searchFor(TextView.class, text, 1, true, true);
+  }
+
+  /**
+   * Searches for a text string and returns {@code true} if the searched text is found a given
+   * number of times.
+   * 
+   * @param text the text to search for. The parameter will be interpreted as a regular expression.
+   * @param minimumNumberOfMatches the minimum number of matches expected to be found. {@code 0} matches means that one or more
+   * matches are expected to be found
+   * @param scroll {@code true} if scrolling should be performed
+   * @param onlyVisible {@code true} if only texts visible on the screen should be searched
+   * @return {@code true} if text string is found a given number of times and {@code false} if the text string
+   * is not found
+   *  
+   */
+
+	public boolean searchTextWithoutTimeout(String text, int minimumNumberOfMatches, boolean scroll,
+    boolean onlyVisible) {
+    return searcher.searchFor(TextView.class, text, minimumNumberOfMatches, scroll, onlyVisible);
+  }
+
 
 	/**
 	 * Sets the Orientation (Landscape/Portrait) for the current activity.
