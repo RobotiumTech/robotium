@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.regex.PatternSyntaxException;
 import junit.framework.Assert;
 import android.app.Instrumentation;
 import android.view.KeyEvent;
@@ -103,7 +104,12 @@ class RobotiumUtils {
 	 */
 	
 	public static int checkAndGetMatches(String regex, TextView view, Set<TextView> uniqueTextViews){
-		final Pattern pattern = Pattern.compile(regex);
+		Pattern pattern = null;
+		try{
+			pattern = Pattern.compile(regex);
+		}catch(PatternSyntaxException e){
+			pattern = Pattern.compile(regex, Pattern.LITERAL);
+		}
 		Matcher matcher = pattern.matcher(view.getText().toString());
 		if (matcher.find()){
 			uniqueTextViews.add(view);
