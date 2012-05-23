@@ -66,23 +66,23 @@ import android.app.Instrumentation.ActivityMonitor;
 
 public class Solo {
 
-	private final Asserter asserter;
-	private final ViewFetcher viewFetcher;
-	private final Checker checker;
-	private final Clicker clicker;
-	private final Presser presser;
-	private final Searcher searcher;
-	private final ActivityUtils activityUtils;
-	private final DialogUtils dialogUtils;
-	private final TextEnterer textEnterer;
-	private final Scroller scroller;
-	private final RobotiumUtils robotiumUtils;
-	private final Sleeper sleeper;
-	private final Waiter waiter;
-	private final Setter setter;
-	private final Getter getter;
-	private final int TIMEOUT = 20000;
-	private final int SMALLTIMEOUT = 10000;
+	protected final Asserter asserter;
+	protected final ViewFetcher viewFetcher;
+	protected final Checker checker;
+	protected final Clicker clicker;
+	protected final Presser presser;
+	protected final Searcher searcher;
+	protected final ActivityUtils activityUtils;
+	protected final DialogUtils dialogUtils;
+	protected final TextEnterer textEnterer;
+	protected final Scroller scroller;
+	protected final RobotiumUtils robotiumUtils;
+	protected final Sleeper sleeper;
+	protected final Waiter waiter;
+	protected final Setter setter;
+	protected final Getter getter;
+	protected final int TIMEOUT = 20000;
+	protected final int SMALLTIMEOUT = 10000;
 	public final static int LANDSCAPE = ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE;   // 0
 	public final static int PORTRAIT = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT;     // 1
 	public final static int RIGHT = KeyEvent.KEYCODE_DPAD_RIGHT;
