@@ -1875,8 +1875,7 @@ public class Solo {
 	 *
 	 */
 	
-	public void goBackToActivity(String name)
-	{
+	public void goBackToActivity(String name)	{
 		activityUtils.goBackToActivity(name);
 	}
 	
@@ -1887,11 +1886,21 @@ public class Solo {
 	 * @return {@code true} if {@code Activity} appears before the timeout and {@code false} if it does not
 	 *
 	 */
-
 	public boolean waitForActivity(String name){
 		return waiter.waitForActivity(name, TIMEOUT);
 	}
-
+	
+  /**
+   * Waits for the given Activity. Default timeout is 20 seconds. 
+   *
+   * @param activityClass the {@link Class} of the {@code Activity} to wait for e.g. {@code "MyActivity.class"}
+   * @return {@code true} if {@code Activity} appears before the timeout and {@code false} if it does not
+   *
+   */
+  public boolean waitForActivity(Class<?> activityClass){
+    return waiter.waitForActivity(activityClass, TIMEOUT);
+  }
+  
 	/**
 	 * Waits for the given Activity. 
 	 *
@@ -1900,12 +1909,22 @@ public class Solo {
 	 * @return {@code true} if {@link Activity} appears before the timeout and {@code false} if it does not
 	 * 
 	 */
-
-	public boolean waitForActivity(String name, int timeout)
-	{
+	public boolean waitForActivity(String name, int timeout) {
 		return waiter.waitForActivity(name, timeout);
 	}
 	
+  /**
+   * Waits for the given Activity. 
+   *
+   * @param activityClass the {@link Class} of the {@link Activity} to wait for e.g. {@code "MyActivity"}
+   * @param timeout the amount of time in milliseconds to wait
+   * @return {@code true} if {@link Activity} appears before the timeout and {@code false} if it does not
+   * 
+   */
+  public boolean waitForActivity(Class<?> activityClass, int timeout) {
+    return waiter.waitForActivity(activityClass, timeout);
+  }
+  
 	/**
 	 * Returns a localized string.
 	 * 

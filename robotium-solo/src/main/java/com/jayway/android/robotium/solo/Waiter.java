@@ -52,8 +52,7 @@ class Waiter {
 	 * @return {@code true} if {@code Activity} appears before the timeout and {@code false} if it does not
 	 *
 	 */
-
-	public boolean waitForActivity(String name){
+	public boolean waitForActivity(String name) {
 		return waitForActivity(name, SMALLTIMEOUT);
 	}
 
@@ -65,21 +64,48 @@ class Waiter {
 	 * @return {@code true} if {@code Activity} appears before the timeout and {@code false} if it does not
 	 *
 	 */
-
-	public boolean waitForActivity(String name, int timeout)
-	{
+	public boolean waitForActivity(String name, int timeout) {
 		long now = SystemClock.uptimeMillis();
 		final long endTime = now + timeout;
-		while(!activityUtils.getCurrentActivity().getClass().getSimpleName().equals(name) && now < endTime)
-		{
+		while(!activityUtils.getCurrentActivity().getClass().getSimpleName().equals(name) && now < endTime)	{
 			now = SystemClock.uptimeMillis();
 		}
 		if(now < endTime)
 			return true;
 
-		else
-			return false;
+		return false;
 	}
+
+  /**
+   * Waits for the given {@link Activity}.
+   *
+   * @param clazz the {@link Class} of the {@code Activity} to wait for e.g. {@code "MyActivity.class"}
+   * @return {@code true} if {@code Activity} appears before the timeout and {@code false} if it does not
+   *
+   */
+  public boolean waitForActivity(Class<?> clazz) {
+    return waitForActivity(clazz, SMALLTIMEOUT);
+  }
+
+  /**
+   * Waits for the given {@link Activity}.
+   *
+   * @param clazz the {@link Class} of the {@code Activity} to wait for e.g. {@code "MyActivity.class"}
+   * @param timeout the amount of time in milliseconds to wait
+   * @return {@code true} if {@code Activity} appears before the timeout and {@code false} if it does not
+   *
+   */
+  public boolean waitForActivity(Class<?> clazz, int timeout) {
+    long now = SystemClock.uptimeMillis();
+    final long endTime = now + timeout;
+    while(!activityUtils.getCurrentActivity().getClass().equals(clazz) && now < endTime) {
+      now = SystemClock.uptimeMillis();
+    }
+    if(now < endTime)
+      return true;
+
+    return false;
+  }
 
 	/**
 	 * Waits for a view to be shown.
