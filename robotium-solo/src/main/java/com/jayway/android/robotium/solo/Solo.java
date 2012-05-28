@@ -63,7 +63,6 @@ import android.app.Instrumentation.ActivityMonitor;
  * @author Renas Reda, renas.reda@jayway.com
  *
  */
-
 public class Solo {
 
 	protected final Asserter asserter;
@@ -104,7 +103,6 @@ public class Solo {
 	 * if no start activity is provided
 	 *
 	 */
-
 	public Solo(Instrumentation instrumentation, Activity activity) {
         this.sleeper = new Sleeper();
         this.activityUtils = new ActivityUtils(instrumentation, activity, sleeper);
@@ -193,20 +191,18 @@ public class Solo {
 	}
   
     
-    /**
+  /**
 	 * Waits for a text to be shown. Default timeout is 20 seconds. 
 	 * 
 	 * @param text the text to wait for
 	 * @return {@code true} if text is shown and {@code false} if it is not shown before the timeout
 	 * 
 	 */
-	
 	public boolean waitForText(String text) {
 		return waiter.waitForText(text);
-	}
-
+	}	
 	
-	 /**
+	/**
 	 * Waits for a text to be shown. 
 	 * 
 	 * @param text the text to wait for
@@ -215,12 +211,11 @@ public class Solo {
 	 * @return {@code true} if text is shown and {@code false} if it is not shown before the timeout
 	 * 
 	 */
-	
 	public boolean waitForText(String text, int minimumNumberOfMatches, long timeout) {
-       return waiter.waitForText(text, minimumNumberOfMatches, timeout);
-    }
+	  return waiter.waitForText(text, minimumNumberOfMatches, timeout);
+  }
 	
-	 /**
+	/**
 	 * Waits for a text to be shown. 
 	 * 
 	 * @param text the text to wait for
@@ -230,10 +225,9 @@ public class Solo {
 	 * @return {@code true} if text is shown and {@code false} if it is not shown before the timeout
 	 * 
 	 */
-	
 	public boolean waitForText(String text, int minimumNumberOfMatches, long timeout, boolean scroll) {
 		return waiter.waitForText(text, minimumNumberOfMatches, timeout, scroll);
-    }
+  }
 	
 	/**
 	 * Waits for a text to be shown. 
@@ -249,7 +243,62 @@ public class Solo {
 	
 	public boolean waitForText(String text, int minimumNumberOfMatches, long timeout, boolean scroll, boolean onlyVisible) {
 		return waiter.waitForText(text, minimumNumberOfMatches, timeout, scroll, onlyVisible);
-    }
+  }
+	
+  /**
+   * Waits for a text to be shown. Default timeout is 20 seconds. 
+   * 
+   * @param resId the resource id of the text to wait for
+   * @return {@code true} if text is shown and {@code false} if it is not shown before the timeout
+   * 
+   */
+  public boolean waitForText(int resId) {
+    return waiter.waitForText(getString(resId));
+  }
+
+  /**
+   * Waits for a text to be shown. 
+   * 
+   * @param resId the resource id of the text to wait for
+   * @param minimumNumberOfMatches the minimum number of matches that are expected to be shown. {@code 0} means any number of matches
+   * @param timeout the the amount of time in milliseconds to wait 
+   * @return {@code true} if text is shown and {@code false} if it is not shown before the timeout
+   * 
+   */
+  public boolean waitForText(int resId, int minimumNumberOfMatches, long timeout) {
+    return waiter.waitForText(getString(resId), minimumNumberOfMatches, timeout);
+  }
+  
+  /**
+   * Waits for a text to be shown. 
+   * 
+   * @param resId the resource id of the text to wait for
+   * @param minimumNumberOfMatches the minimum number of matches that are expected to be shown. {@code 0} means any number of matches
+   * @param timeout the the amount of time in milliseconds to wait
+   * @param scroll {@code true} if scrolling should be performed
+   * @return {@code true} if text is shown and {@code false} if it is not shown before the timeout
+   * 
+   */
+  public boolean waitForText(int resId, int minimumNumberOfMatches, long timeout, boolean scroll) {
+    return waiter.waitForText(getString(resId), minimumNumberOfMatches, timeout, scroll);
+  }
+  
+  /**
+   * Waits for a text to be shown. 
+   * 
+   * @param text the text to wait for
+   * @param minimumNumberOfMatches the minimum number of matches that are expected to be shown. {@code 0} means any number of matches
+   * @param timeout the the amount of time in milliseconds to wait
+   * @param scroll {@code true} if scrolling should be performed
+   * @param onlyVisible {@code true} if only visible text views should be waited for
+   * @return {@code true} if text is shown and {@code false} if it is not shown before the timeout
+   * 
+   */
+  
+  public boolean waitForText(int resId, int minimumNumberOfMatches, long timeout, boolean scroll, boolean onlyVisible) {
+    return waiter.waitForText(getString(resId), minimumNumberOfMatches, timeout, scroll, onlyVisible);
+  }
+
 	
 	/**
 	 * Waits for a View of a certain class to be shown. Default timeout is 20 seconds. 
@@ -1875,8 +1924,7 @@ public class Solo {
 	 *
 	 */
 	
-	public void goBackToActivity(String name)
-	{
+	public void goBackToActivity(String name)	{
 		activityUtils.goBackToActivity(name);
 	}
 	
@@ -1887,11 +1935,21 @@ public class Solo {
 	 * @return {@code true} if {@code Activity} appears before the timeout and {@code false} if it does not
 	 *
 	 */
-
 	public boolean waitForActivity(String name){
 		return waiter.waitForActivity(name, TIMEOUT);
 	}
-
+	
+  /**
+   * Waits for the given Activity. Default timeout is 20 seconds. 
+   *
+   * @param activityClass the {@link Class} of the {@code Activity} to wait for e.g. {@code "MyActivity.class"}
+   * @return {@code true} if {@code Activity} appears before the timeout and {@code false} if it does not
+   *
+   */
+  public boolean waitForActivity(Class<?> activityClass){
+    return waiter.waitForActivity(activityClass, TIMEOUT);
+  }
+  
 	/**
 	 * Waits for the given Activity. 
 	 *
@@ -1900,12 +1958,22 @@ public class Solo {
 	 * @return {@code true} if {@link Activity} appears before the timeout and {@code false} if it does not
 	 * 
 	 */
-
-	public boolean waitForActivity(String name, int timeout)
-	{
+	public boolean waitForActivity(String name, int timeout) {
 		return waiter.waitForActivity(name, timeout);
 	}
 	
+  /**
+   * Waits for the given Activity. 
+   *
+   * @param activityClass the {@link Class} of the {@link Activity} to wait for e.g. {@code "MyActivity"}
+   * @param timeout the amount of time in milliseconds to wait
+   * @return {@code true} if {@link Activity} appears before the timeout and {@code false} if it does not
+   * 
+   */
+  public boolean waitForActivity(Class<?> activityClass, int timeout) {
+    return waiter.waitForActivity(activityClass, timeout);
+  }
+  
 	/**
 	 * Returns a localized string.
 	 * 
@@ -1913,9 +1981,7 @@ public class Solo {
 	 * @return the localized string
 	 *
 	 */
-	
-	public String getString(int resId)
-	{
+	public String getString(int resId) {
 		return activityUtils.getString(resId);
 	}
 	
