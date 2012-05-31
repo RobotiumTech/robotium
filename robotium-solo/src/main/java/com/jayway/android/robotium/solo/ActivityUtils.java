@@ -15,8 +15,8 @@ import android.util.Log;
 import android.view.KeyEvent;
 
 /**
- * Contains activity related methods. Examples are:
- * getCurrentActivity(), getActivityList(), getAllOpenedActivities().
+ * Contains activity related methods. Examples are: getCurrentActivity(),
+ * getActivityList(), getAllOpenedActivities().
  * 
  * @author Renas Reda, renas.reda@jayway.com
  * 
@@ -38,14 +38,18 @@ class ActivityUtils {
 
 	/**
 	 * Constructs this object.
-	 *
-	 * @param inst the {@code Instrumentation} instance.
-	 * @param activity the start {@code Activity}
-	 * @param sleeper the {@code Sleeper} instance
-	 *
+	 * 
+	 * @param inst
+	 *            the {@code Instrumentation} instance.
+	 * @param activity
+	 *            the start {@code Activity}
+	 * @param sleeper
+	 *            the {@code Sleeper} instance
+	 * 
 	 */
 
-	public ActivityUtils(Instrumentation inst, Activity activity, Sleeper sleeper) {
+	public ActivityUtils(Instrumentation inst, Activity activity,
+			Sleeper sleeper) {
 		this.inst = inst;
 		this.activity = activity;
 		this.sleeper = sleeper;
@@ -55,14 +59,15 @@ class ActivityUtils {
 		setupActivityMonitor();
 		setupActivityStackListener();
 	}
-	
+
 	/**
-	 * Creates a new activity stack and pushes the start activity 
+	 * Creates a new activity stack and pushes the start activity
 	 */
-	private void createStackAndPushStartActivity(){
+	private void createStackAndPushStartActivity() {
 		activityStack = new Stack<WeakReference<Activity>>();
-		if (activity != null){
-			WeakReference<Activity> weakReference = new WeakReference<Activity>(activity);
+		if (activity != null) {
+			WeakReference<Activity> weakReference = new WeakReference<Activity>(
+					activity);
 			activityStack.push(weakReference);
 		}
 	}
@@ -74,14 +79,14 @@ class ActivityUtils {
 	 * 
 	 */
 
-	public ArrayList<Activity> getAllOpenedActivities()
-	{
+	public ArrayList<Activity> getAllOpenedActivities() {
 		ArrayList<Activity> activities = new ArrayList<Activity>();
-		Iterator<WeakReference<Activity>> activityStackIterator = activityStack.iterator();
+		Iterator<WeakReference<Activity>> activityStackIterator = activityStack
+				.iterator();
 
-		while(activityStackIterator.hasNext()){
-			Activity  activity = activityStackIterator.next().get();
-			if(activity!=null)
+		while (activityStackIterator.hasNext()) {
+			Activity activity = activityStackIterator.next().get();
+			if (activity != null)
 				activities.add(activity);
 		}
 		return activities;
@@ -90,7 +95,7 @@ class ActivityUtils {
 	/**
 	 * This is were the activityMonitor is set up. The monitor will keep check
 	 * for the currently active activity.
-	 *
+	 * 
 	 */
 
 	private void setupActivityMonitor() {
@@ -104,26 +109,31 @@ class ActivityUtils {
 	}
 
 	/**
-	 * This is were the activityStack listener is set up. The listener will keep track of the
-	 * opened activities and their positions.
+	 * This is were the activityStack listener is set up. The listener will keep
+	 * track of the opened activities and their positions.
 	 */
 
 	private void setupActivityStackListener() {
 		TimerTask activitySyncTimerTask = new TimerTask() {
 			@Override
 			public void run() {
-				if (activityMonitor != null){
+				if (activityMonitor != null) {
 					Activity activity = activityMonitor.getLastActivity();
-					if (activity != null){
-						if(!activitiesStoredInActivityStack.isEmpty() && activitiesStoredInActivityStack.peek().equals(activity.toString()))
+					if (activity != null) {
+						if (!activitiesStoredInActivityStack.isEmpty()
+								&& activitiesStoredInActivityStack.peek()
+										.equals(activity.toString()))
 							return;
 
-						if(!activity.isFinishing()){
-							if(activitiesStoredInActivityStack.remove(activity.toString()))
+						if (!activity.isFinishing()) {
+							if (activitiesStoredInActivityStack.remove(activity
+									.toString()))
 								removeActivityFromStack(activity);
-							
-							activitiesStoredInActivityStack.add(activity.toString());
-							weakActivityReference = new WeakReference<Activity>(activity);
+
+							activitiesStoredInActivityStack.add(activity
+									.toString());
+							weakActivityReference = new WeakReference<Activity>(
+									activity);
 							activityStack.push(weakActivityReference);
 						}
 					}
@@ -132,17 +142,22 @@ class ActivityUtils {
 		};
 		activitySyncTimer.schedule(activitySyncTimerTask, 0, ACTIVITYSYNCTIME);
 	}
-	
+
 	/**
 	 * Removes a given activity from the activity stack
-	 * @param activity the activity to remove
+	 * 
+	 * @param activity
+	 *            the activity to remove
 	 */
-	private void removeActivityFromStack(Activity activity){
-		
-		Iterator<WeakReference<Activity>> activityStackIterator = activityStack.iterator();
-		while(activityStackIterator.hasNext()){
-			Activity activityFromWeakReference = activityStackIterator.next().get();
-			if(activity!=null && activityFromWeakReference!=null && activityFromWeakReference.equals(activity)){
+	private void removeActivityFromStack(Activity activity) {
+
+		Iterator<WeakReference<Activity>> activityStackIterator = activityStack
+				.iterator();
+		while (activityStackIterator.hasNext()) {
+			Activity activityFromWeakReference = activityStackIterator.next()
+					.get();
+			if (activity != null && activityFromWeakReference != null
+					&& activityFromWeakReference.equals(activity)) {
 				activityStackIterator.remove();
 			}
 		}
@@ -154,28 +169,33 @@ class ActivityUtils {
 	 * @return the ActivityMonitor used by Robotium
 	 */
 
-	public ActivityMonitor getActivityMonitor(){
+	public ActivityMonitor getActivityMonitor() {
 		return activityMonitor;
 	}
 
 	/**
 	 * Sets the Orientation (Landscape/Portrait) for the current activity.
 	 * 
-	 * @param orientation An orientation constant such as {@link android.content.pm.ActivityInfo#SCREEN_ORIENTATION_LANDSCAPE} or {@link android.content.pm.ActivityInfo#SCREEN_ORIENTATION_PORTRAIT}.
-	 *  
+	 * @param orientation
+	 *            An orientation constant such as
+	 *            {@link android.content.pm.ActivityInfo#SCREEN_ORIENTATION_LANDSCAPE}
+	 *            or
+	 *            {@link android.content.pm.ActivityInfo#SCREEN_ORIENTATION_PORTRAIT}
+	 *            .
+	 * 
 	 */
 
-	public void setActivityOrientation(int orientation)
-	{
+	public void setActivityOrientation(int orientation) {
 		Activity activity = getCurrentActivity();
-		activity.setRequestedOrientation(orientation);	
+		activity.setRequestedOrientation(orientation);
 	}
 
 	/**
-	 * Returns the current {@code Activity}, after sleeping a default pause length.
-	 *
+	 * Returns the current {@code Activity}, after sleeping a default pause
+	 * length.
+	 * 
 	 * @return the current {@code Activity}
-	 *
+	 * 
 	 */
 
 	public Activity getCurrentActivity() {
@@ -183,19 +203,18 @@ class ActivityUtils {
 	}
 
 	/**
-	 * Waits for an activity to be started if one is not provided
-	 * by the constructor.
-	 *
+	 * Waits for an activity to be started if one is not provided by the
+	 * constructor.
+	 * 
 	 */
 
-	private final void waitForActivityIfNotAvailable(){
-		if(activity == null){
+	private final void waitForActivityIfNotAvailable() {
+		if (activity == null) {
 			if (activityMonitor != null) {
-				while (activityMonitor.getLastActivity() == null){
+				while (activityMonitor.getLastActivity() == null) {
 					sleeper.sleepMini();
 				}
-			}
-			else{
+			} else {
 				sleeper.sleepMini();
 				setupActivityMonitor();
 				waitForActivityIfNotAvailable();
@@ -205,74 +224,78 @@ class ActivityUtils {
 
 	/**
 	 * Returns the current {@code Activity}.
-	 *
-	 * @param shouldSleepFirst whether to sleep a default pause first
+	 * 
+	 * @param shouldSleepFirst
+	 *            whether to sleep a default pause first
 	 * @return the current {@code Activity}
-	 *
+	 * 
 	 */
 
 	public Activity getCurrentActivity(boolean shouldSleepFirst) {
-		if(shouldSleepFirst){
+		if (shouldSleepFirst) {
 			sleeper.sleep();
 		}
 		waitForActivityIfNotAvailable();
-		if(!activityStack.isEmpty()){
-			activity=activityStack.peek().get();
+		if (!activityStack.isEmpty()) {
+			activity = activityStack.peek().get();
 		}
-			return activity;
+		return activity;
 	}
 
 	/**
 	 * Returns to the given {@link Activity}.
-	 *
-	 * @param name the name of the {@code Activity} to return to, e.g. {@code "MyActivity"}
+	 * 
+	 * @param name
+	 *            the name of the {@code Activity} to return to, e.g.
+	 *            {@code "MyActivity"}
 	 * 
 	 */
 
-	public void goBackToActivity(String name)
-	{
+	public void goBackToActivity(String name) {
 		ArrayList<Activity> activitiesOpened = getAllOpenedActivities();
-		boolean found = false;	
-		for(int i = 0; i < activitiesOpened.size(); i++){
-			if(activitiesOpened.get(i).getClass().getSimpleName().equals(name)){
+		boolean found = false;
+		for (int i = 0; i < activitiesOpened.size(); i++) {
+			if (activitiesOpened.get(i).getClass().getSimpleName().equals(name)) {
 				found = true;
 				break;
 			}
 		}
-		if(found){
-			while(!getCurrentActivity().getClass().getSimpleName().equals(name))
-			{
-				try{
+		if (found) {
+			while (!getCurrentActivity().getClass().getSimpleName()
+					.equals(name)) {
+				try {
 					inst.sendKeyDownUpSync(KeyEvent.KEYCODE_BACK);
-				}catch(SecurityException ignored){}	
+				} catch (SecurityException ignored) {
+				}
 			}
-		}
-		else{
+		} else {
 			for (int i = 0; i < activitiesOpened.size(); i++)
-				Log.d(LOG_TAG, "Activity priorly opened: "+ activitiesOpened.get(i).getClass().getSimpleName());
-			Assert.assertTrue("No Activity named " + name + " has been priorly opened", false);
+				Log.d(LOG_TAG, "Activity priorly opened: "
+						+ activitiesOpened.get(i).getClass().getSimpleName());
+			Assert.assertTrue("No Activity named " + name
+					+ " has been priorly opened", false);
 		}
 	}
 
 	/**
 	 * Returns a localized string
 	 * 
-	 * @param resId the resource ID for the string
+	 * @param resId
+	 *            the resource ID for the string
 	 * @return the localized string
 	 * 
 	 */
 
-	public String getString(int resId)
-	{
+	public String getString(int resId) {
 		Activity activity = getCurrentActivity(false);
 		return activity.getString(resId);
 	}
 
 	/**
-	 *
+	 * 
 	 * Finalizes the solo object.
-	 *
-	 */  
+	 * 
+	 */
 
 	public void finalize() throws Throwable {
 		try {
@@ -280,16 +303,18 @@ class ActivityUtils {
 			if (activityMonitor != null) {
 				inst.removeMonitor(activityMonitor);
 			}
-		} catch (Exception ignored) {}
+		} catch (Exception ignored) {
+		}
 		super.finalize();
 	}
-	
+
 	/**
 	 * All inactive activities are finished.
 	 */
 
 	public void finishInactiveActivities() {
-		for (Iterator<WeakReference<Activity>> iter = activityStack.iterator(); iter.hasNext();) {
+		for (Iterator<WeakReference<Activity>> iter = activityStack.iterator(); iter
+				.hasNext();) {
 			Activity activity = iter.next().get();
 			if (activity != getCurrentActivity()) {
 				finishActivity(activity);
@@ -300,17 +325,17 @@ class ActivityUtils {
 	}
 
 	/**
-	 *
+	 * 
 	 * All activites that have been opened are finished.
-	 *
+	 * 
 	 */
 
-	public void finishOpenedActivities(){
+	public void finishOpenedActivities() {
 		// Stops the activityStack listener
 		activitySyncTimer.cancel();
 		ArrayList<Activity> activitiesOpened = getAllOpenedActivities();
 		// Finish all opened activities
-		for (int i = activitiesOpened.size()-1; i >= 0; i--) {
+		for (int i = activitiesOpened.size() - 1; i >= 0; i--) {
 			sleeper.sleep(MINISLEEP);
 			finishActivity(activitiesOpened.get(i));
 		}
@@ -326,12 +351,12 @@ class ActivityUtils {
 		}
 		clearActivityStack();
 	}
-	
+
 	/**
 	 * Clears the activity stack
 	 */
-	
-	private void clearActivityStack(){
+
+	private void clearActivityStack() {
 		activityStack.clear();
 		activitiesStoredInActivityStack.clear();
 	}
@@ -339,15 +364,16 @@ class ActivityUtils {
 	/**
 	 * Finishes an activity
 	 * 
-	 * @param activity the activity to finish
+	 * @param activity
+	 *            the activity to finish
 	 */
 
-	private void finishActivity(Activity activity){
-		try{
+	private void finishActivity(Activity activity) {
+		try {
 			activity.finish();
-		}catch(Throwable e){
+		} catch (Throwable e) {
 			e.printStackTrace();
 		}
 	}
-	
+
 }
