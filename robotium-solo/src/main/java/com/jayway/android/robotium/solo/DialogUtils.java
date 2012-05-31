@@ -2,7 +2,6 @@ package com.jayway.android.robotium.solo;
 
 import android.os.SystemClock;
 
-
 /**
  * Contains the waitForDialogToClose() method.
  * 
@@ -11,29 +10,32 @@ import android.os.SystemClock;
  */
 
 class DialogUtils {
-	
+
 	private final ViewFetcher viewFetcher;
-    private final Sleeper sleeper;
+	private final Sleeper sleeper;
 
 	/**
 	 * Constructs this object.
 	 * 
-	 * @param viewFetcher the {@code ViewFetcher} instance.
-     * @param sleeper the {@code Sleeper} instance.
+	 * @param viewFetcher
+	 *            the {@code ViewFetcher} instance.
+	 * @param sleeper
+	 *            the {@code Sleeper} instance.
 	 * 
 	 */
 
 	public DialogUtils(ViewFetcher viewFetcher, Sleeper sleeper) {
 		this.viewFetcher = viewFetcher;
-        this.sleeper = sleeper;
-    }
-
+		this.sleeper = sleeper;
+	}
 
 	/**
 	 * Waits for a {@link android.app.Dialog} to close.
-	 *
-	 * @param timeout the amount of time in milliseconds to wait
-	 * @return {@code true} if the {@code Dialog} is closed before the timeout and {@code false} if it is not closed.
+	 * 
+	 * @param timeout
+	 *            the amount of time in milliseconds to wait
+	 * @return {@code true} if the {@code Dialog} is closed before the timeout
+	 *         and {@code false} if it is not closed.
 	 */
 
 	public boolean waitForDialogToClose(long timeout) {
@@ -44,10 +46,10 @@ class DialogUtils {
 		int elementsNow;
 		while (now < endTime) {
 			elementsNow = viewFetcher.getWindowDecorViews().length;
-			if(elementsBefore < elementsNow){
+			if (elementsBefore < elementsNow) {
 				elementsBefore = elementsNow;
 			}
-			if(elementsBefore > elementsNow)
+			if (elementsBefore > elementsNow)
 				break;
 
 			sleeper.sleepMini();
@@ -59,7 +61,5 @@ class DialogUtils {
 
 		return true;
 	}
-
-
 
 }
