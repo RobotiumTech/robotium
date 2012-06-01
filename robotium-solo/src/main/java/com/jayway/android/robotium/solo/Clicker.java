@@ -351,11 +351,17 @@ class Clicker {
 			line = 0;
 
 		ArrayList<View> views = new ArrayList<View>();
-		final ListView listView = waiter.waitForAndGetView(index, ListView.class);
-		if(listView == null)
+		final AbsListView absListView = waiter.waitForAndGetView(index, AbsListView.class);
+		if(absListView == null)
 			Assert.assertTrue("ListView is null!", false);
 
-		View view = listView.getChildAt(line);
+		int numberOfLines = absListView.getChildCount();
+
+		if(line > absListView.getChildCount()){
+			Assert.assertTrue("Can not click line number " + line + " as there are only " + numberOfLines + " lines available", false);
+		}
+		View view = absListView.getChildAt(line);
+
 		if(view != null){
 			views = viewFetcher.getViews(view, true);
 			views = RobotiumUtils.removeInvisibleViews(views);
