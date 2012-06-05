@@ -79,7 +79,7 @@ class RobotiumUtils {
 	 * Filters views
 	 * 
 	 * @param classToFilterBy the class to filter
-	 * @param viewList the ArrayList to filter form
+	 * @param viewList the ArrayList to filter from
 	 * @return an ArrayList with filtered views
 	 */
 	
@@ -94,6 +94,29 @@ class RobotiumUtils {
         return filteredViews;
     }
 	
+	/**
+	 * Filters all views not within the given set
+	 *
+	 * @param classSet contains all classes that are ok to pass the filter
+	 * @param viewList the ArrayList to filter form
+	 * @return an ArrayList with filtered views
+	 */
+	public static ArrayList<View> filterViewsToSet(Class<View> classSet[],
+			ArrayList<View> viewList) {
+		ArrayList<View> filteredViews = new ArrayList<View>(viewList.size());
+		for (View view : viewList) {
+			if (view == null)
+				continue;
+			for (Class<View> filter : classSet) {
+				if (filter.isAssignableFrom(view.getClass())) {
+					filteredViews.add(view);
+					break;
+				}
+			}
+		}
+		return filteredViews;
+	}
+
 	/**
 	 * Checks if a view matches a certain string and returns the amount of matches
 	 * 
