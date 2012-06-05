@@ -317,9 +317,8 @@ class ViewFetcher {
 		}
 		allViews = null;
 		return filteredViews;
-	}	
-	       
-	
+	}
+
 	/**
 	 * Returns an {@code ArrayList} of {@code View}s of the specified {@code Class} located under the specified {@code parent}.
 	 *
@@ -338,11 +337,10 @@ class ViewFetcher {
 				filteredViews.add(classToFilterBy.cast(view));
 			}
 		}
-		
+
 		return filteredViews;
 	}
 
-	
 	
 	/**
 	 * Tries to guess which view is the most likely to be interesting. Returns

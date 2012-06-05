@@ -96,11 +96,11 @@ class RobotiumUtils {
 	
 	/**
 	 * Filters all views not within the given set
-	 * 
+	 *
 	 * @param classSet contains all classes that are ok to pass the filter
 	 * @param viewList the ArrayList to filter form
 	 * @return an ArrayList with filtered views
-	 */	
+	 */
 	public static ArrayList<View> filterViewsToSet(Class<View> classSet[],
 			ArrayList<View> viewList) {
 		ArrayList<View> filteredViews = new ArrayList<View>(viewList.size());
@@ -116,9 +116,7 @@ class RobotiumUtils {
 		}
 		return filteredViews;
 	}
-		  
 
-	
 	/**
 	 * Checks if a view matches a certain string and returns the amount of matches
 	 * 

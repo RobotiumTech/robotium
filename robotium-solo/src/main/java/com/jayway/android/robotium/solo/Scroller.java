@@ -1,10 +1,8 @@
 package com.jayway.android.robotium.solo;
 
 import java.util.ArrayList;
-
 import android.app.Instrumentation;
 import android.os.SystemClock;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.AbsListView;
@@ -23,8 +21,6 @@ import android.widget.ScrollView;
 
 class Scroller {
 
-	private static final String TAG = "Robotium";
-	
 	public enum Direction {UP, DOWN}
 	public static final int DOWN = 0;
 	public static final int UP = 1;
@@ -104,12 +100,10 @@ class Scroller {
 
 	private boolean scrollScrollView(final ScrollView view, int direction){
 		
-		
 		if(view == null){
-			Log.e(TAG, "ScrollView was null");
 			return false;
 		}
-		
+
 		int height = view.getHeight();
 		height--;
 		int scrollTo = -1;
@@ -121,7 +115,7 @@ class Scroller {
 		else if (direction == UP) {
 			scrollTo = -height;
 		}
-		
+
 		int originalY = view.getScrollY();
 		final int scrollAmount = scrollTo;
 		inst.runOnMainSync(new Runnable(){
@@ -129,15 +123,15 @@ class Scroller {
 				view.scrollBy(0, scrollAmount);
 			}
 		});
-		
+
 		if (originalY == view.getScrollY()) {
 			return false;
 		}
 		else{
 			return true;
 		}
-		
-		
+
+
 	}
 
 
@@ -150,8 +144,6 @@ class Scroller {
 	 */
 
 	public boolean scroll(int direction) {
-
-		Log.d(TAG, "Scrolling " + (direction==DOWN ? "down" : "up"));
 		
 		final ArrayList<View> viewList = RobotiumUtils.
 				removeInvisibleViews(viewFetcher.getAllViews(true));
@@ -159,24 +151,20 @@ class Scroller {
 		ArrayList<View> views = RobotiumUtils.filterViewsToSet(new Class[] { ListView.class, 
 				ScrollView.class, GridView.class}, viewList);
 		View view = viewFetcher.getFreshestView(views);
-		
+
 		if (view == null)
 		{
-			Log.e(TAG, "No known scrollable view types were found");
 			return false;
 		}
-		
+
 		if (view instanceof AbsListView) {
-			Log.d(TAG, "Scrolling AbsListView");
 			return scrollList((AbsListView)view, direction);
 		}
-		
+
 		if (view instanceof ScrollView) {
-			Log.d(TAG, "Scrolling ScrollView");
 			return scrollScrollView((ScrollView)view, direction);
 		}
-		
-		Log.e(TAG, "A known scrollable view type was found, but was not identified");
+
 		return false;
 	}
 
@@ -192,7 +180,6 @@ class Scroller {
 	public <T extends AbsListView> boolean scrollList(T absListView, int direction) {
 		
 		if(absListView == null){
-			Log.e(TAG, "Passed null AbsListView");
 			return false;
 		}
 
