@@ -118,9 +118,9 @@ public class Solo {
         this.asserter = new Asserter(activityUtils, waiter);
         this.checker = new Checker(viewFetcher, waiter);
         this.robotiumUtils = new RobotiumUtils(instrumentation,activityUtils, sleeper);
-        this.clicker = new Clicker(viewFetcher, scroller,robotiumUtils, instrumentation, sleeper, waiter);
+        this.clicker = new Clicker(activityUtils, viewFetcher, scroller,robotiumUtils, instrumentation, sleeper, waiter);
         this.presser = new Presser(clicker, instrumentation, sleeper, waiter);
-        this.textEnterer = new TextEnterer(instrumentation, clicker);
+        this.textEnterer = new TextEnterer(instrumentation, activityUtils, clicker);
 	}
 
 	
@@ -1027,6 +1027,15 @@ public class Solo {
 		return clicker.clickInList(line, index, true, time);
 	}
 	
+	/**
+	 * Clicks on an ActionBar item with a given resource id.
+	 * 
+	 * @param resourceId the R.id of the ActionBar item
+	 */
+	public void clickOnActionBarItem(int resourceId){
+		clicker.clickOnActionBarItem(resourceId);
+	}
+	
 
 	 /**
 	 * Simulate touching a given location and dragging it to a new location.
@@ -1441,7 +1450,7 @@ public class Solo {
 	
 	
 	/**
-	 * Returns a View with a given id. 
+	 * Returns a View with a given resource id. 
 	 * 
 	 * @param id the R.id of the {@link View} to be returned 
 	 * @return a {@link View} with a given id
@@ -1908,7 +1917,7 @@ public class Solo {
 	/**
 	 * Returns a localized string.
 	 * 
-	 * @param resId the resource ID for the string
+	 * @param resId the resource id of the string
 	 * @return the localized string
 	 *
 	 */

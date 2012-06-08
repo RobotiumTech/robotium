@@ -25,6 +25,7 @@ import android.view.ViewConfiguration;
 class Clicker {
 
 	private final String LOG_TAG = "Robotium";
+	private final ActivityUtils activityUtils;
 	private final ViewFetcher viewFetcher;
 	private final Scroller scroller;
 	private final Instrumentation inst;
@@ -39,6 +40,7 @@ class Clicker {
 	/**
 	 * Constructs this object.
 	 * 
+	 * @param activityUtils the {@code ActivityUtils} instance.
 	 * @param viewFetcher the {@code ViewFetcher} instance.
 	 * @param scroller the {@code Scroller} instance.
 	 * @param robotiumUtils the {@code RobotiumUtils} instance.
@@ -47,9 +49,10 @@ class Clicker {
 	 * @param waiter the {@code Waiter} instance
 	 */
 
-	public Clicker(ViewFetcher viewFetcher,
+	public Clicker(ActivityUtils activityUtils, ViewFetcher viewFetcher,
 			Scroller scroller, RobotiumUtils robotiumUtils, Instrumentation inst, Sleeper sleeper, Waiter waiter) {
-
+		
+		this.activityUtils = activityUtils;
 		this.viewFetcher = viewFetcher;
 		this.scroller = scroller;
 		this.robotiumUtils = robotiumUtils;
@@ -235,6 +238,15 @@ class Clicker {
 			clickOnScreen(textMore);
 
 		clickOnText(text, false, 1, true, 0);
+	}
+
+	/**
+	 * Clicks on an ActionBar item with a given resource id
+	 * 
+	 * @param resourceId the R.id of the ActionBar item
+	 */
+	public void clickOnActionBarItem(int resourceId){
+		inst.invokeMenuActionSync(activityUtils.getCurrentActivity(), resourceId, 0);
 	}
 
 
