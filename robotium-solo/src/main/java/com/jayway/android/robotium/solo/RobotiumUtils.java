@@ -190,8 +190,8 @@ class RobotiumUtils {
 						fos.flush();
 						fos.close();
 					} catch (Exception e) {
-						e.printStackTrace();
 						Log.d("Robotium", "Can't save the screenshot! Requires write permission in application under test.");
+						e.printStackTrace();
 					}
 					view.destroyDrawingCache();
 				}
