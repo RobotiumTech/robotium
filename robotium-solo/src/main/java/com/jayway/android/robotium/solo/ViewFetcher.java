@@ -319,28 +319,6 @@ class ViewFetcher {
 		return filteredViews;
 	}
 
-	/**
-	 * Returns an {@code ArrayList} of {@code View}s of the specified {@code Class} located under the specified {@code parent}.
-	 *
-	 * @param classToFilterBy return all instances of this class, e.g. {@code Button.class} or {@code GridView.class}
-	 * @param parent the parent {@code View} for where to start the traversal
-	 * @param isOnscreen true if only views that are at least halfway on-screen should be returned
-	 * @return an {@code ArrayList} of {@code View}s of the specified {@code Class} located under the specified {@code parent}
-	 */
-	public <T extends View> ArrayList<T> getCurrentViews(
-			Class<T> classToFilterBy, View parent, boolean isOnscreen) {
-		ArrayList<T> filteredViews = new ArrayList<T>();
-		List<View> allViews = getViews(parent, isOnscreen);
-		for (View view : allViews) {
-			if (view != null
-					&& classToFilterBy.isAssignableFrom(view.getClass())) {
-				filteredViews.add(classToFilterBy.cast(view));
-			}
-		}
-
-		return filteredViews;
-	}
-
 	
 	/**
 	 * Tries to guess which view is the most likely to be interesting. Returns
