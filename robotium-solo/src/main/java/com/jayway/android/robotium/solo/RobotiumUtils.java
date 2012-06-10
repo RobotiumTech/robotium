@@ -163,10 +163,10 @@ class RobotiumUtils {
 	
 	/**
 	 * Takes a screenshot and saves it in "/sdcard/Robotium-Screenshots/". 
-	 * Requires write permission in application under test.
+	 * Requires write permission (android.permission.WRITE_EXTERNAL_STORAGE) in AndroidManifest.xml of the application under test.
 	 *
-	 * @param view the root view
 	 */
+
 	public void takeScreenshot(final View view) {
 		activityUtils.getCurrentActivity(false).runOnUiThread(new Runnable() {
 
@@ -181,7 +181,7 @@ class RobotiumUtils {
 					String fileName = sdf.format( new Date()).toString()+ ".jpg";
 					File directory = new File(Environment.getExternalStorageDirectory() + "/Robotium-Screenshots/");
 					directory.mkdir();
-					
+
 					File fileToSave = new File(directory,fileName);
 					try {
 						fos = new FileOutputStream(fileToSave);
