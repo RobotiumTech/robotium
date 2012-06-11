@@ -24,6 +24,7 @@ class RobotiumUtils {
 	private final Instrumentation inst;
 	private final Sleeper sleeper;
 	private final ActivityUtils activityUtils;
+	private final String LOG_TAG = "Robotium";
 
     /**
 	 * Constructs this object.
@@ -186,11 +187,11 @@ class RobotiumUtils {
 					try {
 						fos = new FileOutputStream(fileToSave);
 						if (b.compress(Bitmap.CompressFormat.JPEG, 100, fos) == false)
-							Assert.assertTrue("Compress/Write failed", false);
+							Log.d(LOG_TAG, "Compress/Write failed");
 						fos.flush();
 						fos.close();
 					} catch (Exception e) {
-						Log.d("Robotium", "Can't save the screenshot! Requires write permission in application under test.");
+						Log.d(LOG_TAG, "Can't save the screenshot! Requires write permission (android.permission.WRITE_EXTERNAL_STORAGE) in AndroidManifest.xml of the application under test.");
 						e.printStackTrace();
 					}
 					view.destroyDrawingCache();
