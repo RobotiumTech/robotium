@@ -1848,32 +1848,7 @@ public class Solo {
 	
 	public void sendKey(int key)
 	{
-        switch (key) {
-            case RIGHT:
-                robotiumUtils.sendKeyCode(KeyEvent.KEYCODE_DPAD_RIGHT);
-                break;
-            case LEFT:
-                robotiumUtils.sendKeyCode(KeyEvent.KEYCODE_DPAD_LEFT);
-                break;
-            case UP:
-                robotiumUtils.sendKeyCode(KeyEvent.KEYCODE_DPAD_UP);
-                break;
-            case DOWN:
-                robotiumUtils.sendKeyCode(KeyEvent.KEYCODE_DPAD_DOWN);
-                break;
-            case ENTER:
-                robotiumUtils.sendKeyCode(KeyEvent.KEYCODE_ENTER);
-                break;
-            case MENU:
-                robotiumUtils.sendKeyCode(KeyEvent.KEYCODE_MENU);
-                break;
-            case DELETE:
-                robotiumUtils.sendKeyCode(KeyEvent.KEYCODE_DEL);
-                break;
-            default:
-            	robotiumUtils.sendKeyCode(key);
-                break;
-        }
+		robotiumUtils.sendKeyCode(key);
     }
 	
 	/**
