@@ -1054,22 +1054,31 @@ public class Solo {
 					  int stepCount) {
 		scroller.drag(fromX, toX, fromY, toY, stepCount);
 	}
-	
+
 	/**
 	 * Scrolls down the screen.
 	 *
 	 * @return {@code true} if more scrolling can be done and {@code false} if it is at the end of
-	 * the screen 
+	 * the screen
 	 *
 	 */
-	
+
 	public boolean scrollDown() {
 		waiter.waitForViews(AbsListView.class, ScrollView.class);
 		return scroller.scroll(Scroller.DOWN);
 	}
-	
 
-	/**
+    /**
+     * Scrolls to the bottom of the screen.
+     */
+
+    public void scrollToBottom() {
+        waiter.waitForViews(AbsListView.class, ScrollView.class);
+        scroller.scroll(Scroller.DOWN, true);
+    }
+
+
+    /**
 	 * Scrolls up the screen.
 	 *
 	 * @return {@code true} if more scrolling can be done and {@code false} if it is at the top of
@@ -1079,11 +1088,20 @@ public class Solo {
 	
 	public boolean scrollUp(){
 		waiter.waitForViews(AbsListView.class, ScrollView.class);
-		return scroller.scroll(Scroller.UP);
+		return scroller.scroll(Scroller.UP, true);
 	}
-	
-	/**
-	 * Scrolls down a list with a given index.
+
+    /**
+    * Scrolls to the top of the screen.
+    */
+
+    public void scrollToTop() {
+        waiter.waitForViews(AbsListView.class, ScrollView.class);
+        scroller.scroll(Scroller.UP, true);
+    }
+
+    /**
+     * Scrolls down a list with a given index.
 	 * 
 	 * @param index the {@link ListView} to be scrolled. {@code 0} if only one list is available
 	 * @return {@code true} if more scrolling can be done
@@ -1091,8 +1109,20 @@ public class Solo {
 	 */
 	
 	public boolean scrollDownList(int index) {
-		return scroller.scrollList(waiter.waitForAndGetView(index, ListView.class), Scroller.DOWN);
+		return scroller.scrollList(waiter.waitForAndGetView(index, ListView.class), Scroller.DOWN, false);
 	}
+
+    /**
+     * Scrolls a list with a given index to the bottom.
+	 *
+	 * @param index the {@link ListView} to be scrolled. {@code 0} if only one list is available
+	 * @return {@code true} if more scrolling can be done
+	 *
+	 */
+
+    public boolean scrollListToBottom(int index) {
+        return scroller.scrollList(waiter.waitForAndGetView(index, ListView.class), Scroller.DOWN, true);
+    }
 	
 	/**
 	 * Scrolls up a list with a given index.
@@ -1103,9 +1133,21 @@ public class Solo {
 	 */
 	
 	public boolean scrollUpList(int index) {
-		return scroller.scrollList(waiter.waitForAndGetView(index, ListView.class), Scroller.UP);
+		return scroller.scrollList(waiter.waitForAndGetView(index, ListView.class), Scroller.UP, false);
 	}
 	
+    /**
+   	 * Scrolls a list with a given index to the top.
+   	 *
+   	 * @param index the {@link ListView} to be scrolled. {@code 0} if only one list is available
+   	 * @return {@code true} if more scrolling can be done
+   	 *
+   	 */
+
+   	public boolean scrollListToTop(int index) {
+   		return scroller.scrollList(waiter.waitForAndGetView(index, ListView.class), Scroller.UP, true);
+   	}
+
 	/**
 	 * Scrolls horizontally.
 	 *
