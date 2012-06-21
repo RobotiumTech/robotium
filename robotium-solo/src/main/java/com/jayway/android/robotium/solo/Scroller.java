@@ -130,20 +130,48 @@ class Scroller {
 		else{
 			return true;
 		}
-
-
 	}
+
+    /**
+   	 * Scrolls a ScrollView to top or bottom.
+   	 *
+   	 * @param direction the direction to be scrolled
+   	 *
+   	 */
+
+    private void scrollScrollViewAllTheWay(final ScrollView view, int direction) {
+        final int currentScrollX = view.getScrollX();
+        final int targetScrollY = (direction == UP) ? 0 : view.getMaxScrollAmount();
+        inst.runOnMainSync(new Runnable() {
+            public void run() {
+                view.scrollTo(currentScrollX, targetScrollY);
+            }
+        });
+    }
+
+    /**
+     * scrolls up or down.
+     *
+     * @param direction the direction in which to scroll
+     * @return {@code true} if more scrolling can be done
+     */
+
+    public boolean scroll(int direction) {
+        return scroll(direction, false);
+    }
 
 
 	/**
 	 * Scrolls up and down.
 	 * 
 	 * @param direction the direction in which to scroll
+     * @param allTheWay <code>true</code> if the view should be scrolled to the beginning or end,
+     *                  <code>false</code> to scroll one page up or down.
 	 * @return {@code true} if more scrolling can be done
 	 * 
 	 */
 
-	public boolean scroll(int direction) {
+	public boolean scroll(int direction, boolean allTheWay) {
 		
 		final ArrayList<View> viewList = RobotiumUtils.
 				removeInvisibleViews(viewFetcher.getAllViews(true));
@@ -158,11 +186,16 @@ class Scroller {
 		}
 
 		if (view instanceof AbsListView) {
-			return scrollList((AbsListView)view, direction);
+			return scrollList((AbsListView)view, direction, allTheWay);
 		}
 
 		if (view instanceof ScrollView) {
-			return scrollScrollView((ScrollView)view, direction);
+            if (allTheWay) {
+                scrollScrollViewAllTheWay((ScrollView) view, direction);
+                return false;
+            } else {
+			    return scrollScrollView((ScrollView)view, direction);
+            }
 		}
 
 		return false;
@@ -171,19 +204,25 @@ class Scroller {
 	/**
 	 * Scrolls a list.
 	 * 
-	 * @param listIndex the list to be scrolled
+	 * @param absListView the list to be scrolled
 	 * @param direction the direction to be scrolled
+     * @param allTheWay {@code true} to scroll the view all the way up or down, {@code false} to scroll one page up
+     *                              or down.
 	 * @return {@code true} if more scrolling can be done
 	 * 
 	 */
 
-	public <T extends AbsListView> boolean scrollList(T absListView, int direction) {
+	public <T extends AbsListView> boolean scrollList(T absListView, int direction, boolean allTheWay) {
 		
 		if(absListView == null){
 			return false;
 		}
 
 		if (direction == DOWN) {
+            if (allTheWay) {
+                scrollListToLine(absListView, absListView.getCount()-1);
+                return false;
+            }
 			if (absListView.getLastVisiblePosition() >= absListView.getCount()-1) {
 				scrollListToLine(absListView, absListView.getLastVisiblePosition());
 				return false;
@@ -196,7 +235,7 @@ class Scroller {
 				scrollListToLine(absListView, absListView.getFirstVisiblePosition()+1);
 
 		} else if (direction == UP) {
-			if (absListView.getFirstVisiblePosition() < 2) {
+			if (allTheWay || absListView.getFirstVisiblePosition() < 2) {
 				scrollListToLine(absListView, 0);
 				return false;
 			}
@@ -219,7 +258,7 @@ class Scroller {
 
 	/**
 	 * Scroll the list to a given line
-	 * @param listView the listView to scroll
+	 * @param view the {@link AbsListView} to scroll
 	 * @param line the line to scroll to
 	 */
 
