@@ -1088,7 +1088,7 @@ public class Solo {
 	
 	public boolean scrollUp(){
 		waiter.waitForViews(AbsListView.class, ScrollView.class);
-		return scroller.scroll(Scroller.UP, true);
+		return scroller.scroll(Scroller.UP);
 	}
 
     /**
