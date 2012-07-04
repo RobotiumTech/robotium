@@ -71,12 +71,14 @@ public class Solo {
 	protected final Checker checker;
 	protected final Clicker clicker;
 	protected final Presser presser;
+//	protected final Pincher pincher;
 	protected final Searcher searcher;
 	protected final ActivityUtils activityUtils;
 	protected final DialogUtils dialogUtils;
 	protected final TextEnterer textEnterer;
 	protected final Scroller scroller;
 	protected final RobotiumUtils robotiumUtils;
+	protected final MapViewUtils mapViewUtils;
 	protected final Sleeper sleeper;
 	protected final Waiter waiter;
 	protected final Setter setter;
@@ -121,6 +123,7 @@ public class Solo {
         this.clicker = new Clicker(activityUtils, viewFetcher, scroller,robotiumUtils, instrumentation, sleeper, waiter);
         this.presser = new Presser(clicker, instrumentation, sleeper, waiter);
         this.textEnterer = new TextEnterer(instrumentation, activityUtils, clicker);
+        this.mapViewUtils = new MapViewUtils(instrumentation, viewFetcher, sleeper);
 	}
 
 	
@@ -1162,6 +1165,28 @@ public class Solo {
         }
 	}
 	
+//	/**
+//	 * Sorry, doesn't work yet
+//	 * @param togetherOrApart - {@link Pincher#TOGETHER} or {@link Pincher#APART}
+//	 */
+//	public void pinch(int togetherOrApart) {
+//		switch( togetherOrApart ) {
+//		case Pincher.TOGETHER: pincher.pinch(Pincher.Direction.TOGETHER); break;
+//		case Pincher.APART: pincher.pinch(Pincher.Direction.APART); break;
+//		}
+//	}
+//	
+//	/**
+//	 * Sorry, doesn't work yet
+//	 * @param togetherOrApart - {@link Pincher#TOGETHER} or {@link Pincher#APART}
+//	 * @param view
+//	 */
+//	public void pinch(int togetherOrApart, View view) {
+//		switch( togetherOrApart ) {
+//		case Pincher.TOGETHER: pincher.pinch(Pincher.Direction.TOGETHER, view); break;
+//		case Pincher.APART: pincher.pinch(Pincher.Direction.APART, view); break;
+//		}
+//	}
 	
 	/**
 	 * Sets the date in a DatePicker with a given index.
