@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import android.app.Instrumentation;
+import android.os.SystemClock;
 import android.util.Log;
 import android.view.View;
 
@@ -93,26 +94,34 @@ public class MapViewUtils {
 	
 	/**
 	 * @param title
+	 * @param timeout in ms
 	 * @return true if the marker was found and tapped upon
 	 */
-	public boolean tapMarkerItem( String title ) {
+	public boolean tapMarkerItem( String title, long timeout ) {		
+		final long endTime = SystemClock.uptimeMillis() + timeout;
+		
 		MapView mapView = getMapView();
-		for( Overlay overlay : mapView.getOverlays() ) {
-			if( overlay instanceof ItemizedOverlay ) {
-				//Log.i("TapMarker", "Looking for " + title + " amongst markers on overlay " + overlay);
-				@SuppressWarnings("rawtypes")
-				ItemizedOverlay markerOverlay = ((ItemizedOverlay)overlay);
-				int noOfMarkers = markerOverlay.size();
-				for( int i = 0; i < noOfMarkers; i++ ) {
-					OverlayItem item = markerOverlay.getItem(i);
-					String itemTitle = item.getTitle();
-					//Log.i("TapMarker", "item title: " + itemTitle);
-					if( title.equals( itemTitle ) ) {
-						markerOverlay.onTap( item.getPoint(), mapView );
-						return true;
+		while( SystemClock.uptimeMillis() < endTime ) {
+			for( Overlay overlay : mapView.getOverlays() ) {
+				if( overlay instanceof ItemizedOverlay ) {
+					//Log.i("TapMarker", "Looking for " + title + " amongst markers on overlay " + overlay);
+					@SuppressWarnings("rawtypes")
+					ItemizedOverlay markerOverlay = ((ItemizedOverlay)overlay);
+					int noOfMarkers = markerOverlay.size();
+					for( int i = 0; i < noOfMarkers; i++ ) {
+						OverlayItem item = markerOverlay.getItem(i);
+						String itemTitle = item.getTitle();
+						//Log.i("TapMarker", "item title: " + itemTitle);
+						if( title.equals( itemTitle ) ) {
+							markerOverlay.onTap( item.getPoint(), mapView );
+							return true;
+						}
 					}
 				}
 			}
+			
+			Log.i("TapMarker", "Could not find marker '" + title + "', try again in a moment");
+			sleeper.sleep();
 		}
 		
 		return false;
