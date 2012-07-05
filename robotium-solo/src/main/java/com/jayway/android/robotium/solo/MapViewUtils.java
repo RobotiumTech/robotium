@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import android.app.Instrumentation;
+import android.util.Log;
 import android.view.View;
 
 import com.google.android.maps.GeoPoint;
@@ -88,5 +89,32 @@ public class MapViewUtils {
 		}
 		
 		return markers;
+	}
+	
+	/**
+	 * @param title
+	 * @return true if the marker was found and tapped upon
+	 */
+	public boolean tapMarkerItem( String title ) {
+		MapView mapView = getMapView();
+		for( Overlay overlay : mapView.getOverlays() ) {
+			if( overlay instanceof ItemizedOverlay ) {
+				//Log.i("TapMarker", "Looking for " + title + " amongst markers on overlay " + overlay);
+				@SuppressWarnings("rawtypes")
+				ItemizedOverlay markerOverlay = ((ItemizedOverlay)overlay);
+				int noOfMarkers = markerOverlay.size();
+				for( int i = 0; i < noOfMarkers; i++ ) {
+					OverlayItem item = markerOverlay.getItem(i);
+					String itemTitle = item.getTitle();
+					//Log.i("TapMarker", "item title: " + itemTitle);
+					if( title.equals( itemTitle ) ) {
+						markerOverlay.onTap( item.getPoint(), mapView );
+						return true;
+					}
+				}
+			}
+		}
+		
+		return false;
 	}
 }
