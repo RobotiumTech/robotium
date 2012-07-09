@@ -1,6 +1,8 @@
 package com.jayway.android.robotium.solo;
 
 import java.util.ArrayList;
+import java.util.List;
+
 import android.app.Activity;
 import android.app.Instrumentation;
 import android.content.pm.ActivityInfo;
@@ -2023,4 +2025,114 @@ public class Solo {
 		robotiumUtils.takeScreenshot(decorView);
 	}
 	
+	/**
+	 * @param lat
+	 * @param lon
+	 */
+	public void setMapCenter( double lat, double lon ) {
+		mapViewUtils.setCenter(lat, lon);
+	}
+	
+	/**
+	 * @return {lat,lon} 
+	 */
+	public double[] getMapCenter() {
+		return mapViewUtils.getMapCenter();
+	}
+	
+	/**
+	 * @param lat
+	 * @param lon
+	 */
+	public void panMapTo( double lat, double lon ) {
+		mapViewUtils.panTo(lat, lon);
+	}
+	
+	/**
+	 * @return true if it was possible to zoom in any further
+	 */
+	public boolean zoomInOnMap() {
+		return mapViewUtils.zoomIn();
+	}
+	
+	/**
+	 * @return true if it was possible to zoom out any further
+	 */
+	public boolean zoomOutOnMap() {
+		return mapViewUtils.zoomOut();
+	}
+	
+	/**
+	 * @param zoomLevel
+	 * @return
+	 */
+	public int setMapZoom( int zoomLevel ) {
+		return mapViewUtils.setZoom(zoomLevel);
+	}
+	
+	/** 
+	 * @return eg: eg: {"latitude":-33.123456, "longitude":151.123456, "title":"My Marker", "snippet":"More Info about my marker"}
+	 */
+	public List<String> getMapMarkerItems() {
+		return mapViewUtils.getMarkerItems();
+	}
+	
+	/** 
+	 * @return eg: eg: {"latitude":-33.123456, "longitude":151.123456, "title":"My Marker", "snippet":"More Info about my marker"}
+	 */
+	public String getMapMarkerItem( String title ) {
+		return mapViewUtils.getMarkerItem( title );
+	}
+	
+	/**
+	 * @param step - number of pixels to move down/across while searching for an empty peice of map
+	 * @return true if it was possible to tap on the map without tapping on a marker
+	 */
+	public boolean tapMapAwayFromMarkers( int step ) {
+		return mapViewUtils.tapAwayFromMarkerItems( step );
+	}
+	
+	/**
+	 * @return [top, right, bottom, left] in decimal degrees
+	 */
+	public List<String> getMapBounds() {
+		return mapViewUtils.getBounds();
+	}
+	
+	/**
+	 * @param title
+	 * @param timeout in ms
+	 * @return
+	 */
+	public boolean tapMapMarkerItem( String title, long timeout ) {
+		return mapViewUtils.tapMarkerItem( title, timeout );
+	}
+	
+//	public boolean assertMapMarker( double lat, double lon, String title ) {
+//		return mapViewUtils.searchForMarker( lat, lon, title );
+//	}
+//	
+	
+//	/**
+//	 * Sorry, doesn't work yet
+//	 * @param togetherOrApart - {@link Pincher#TOGETHER} or {@link Pincher#APART}
+//	 */
+//	public void pinch(int togetherOrApart) {
+//		switch( togetherOrApart ) {
+//		case Pincher.TOGETHER: pincher.pinch(Pincher.Direction.TOGETHER); break;
+//		case Pincher.APART: pincher.pinch(Pincher.Direction.APART); break;
+//		}
+//	}
+//	
+//	/**
+//	 * Sorry, doesn't work yet
+//	 * @param togetherOrApart - {@link Pincher#TOGETHER} or {@link Pincher#APART}
+//	 * @param view
+//	 */
+//	public void pinch(int togetherOrApart, View view) {
+//		switch( togetherOrApart ) {
+//		case Pincher.TOGETHER: pincher.pinch(Pincher.Direction.TOGETHER, view); break;
+//		case Pincher.APART: pincher.pinch(Pincher.Direction.APART, view); break;
+//		}
+//	}
 }
