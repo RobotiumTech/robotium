@@ -2070,6 +2070,10 @@ public class Solo {
 		return mapViewUtils.setZoom(zoomLevel);
 	}
 	
+	public int getMapZoom() {
+		return mapViewUtils.getZoom();
+	}
+	
 	/** 
 	 * @return eg: eg: {"latitude":-33.123456, "longitude":151.123456, "title":"My Marker", "snippet":"More Info about my marker"}
 	 */
@@ -2082,6 +2086,15 @@ public class Solo {
 	 */
 	public String getMapMarkerItem( String title ) {
 		return mapViewUtils.getMarkerItem( title );
+	}
+
+	/**
+	 * @param title
+	 * @param timeout in ms
+	 * @return
+	 */
+	public boolean tapMapMarkerItem( String title, long timeout ) {
+		return mapViewUtils.tapMarkerItem( title, timeout );
 	}
 	
 	/**
@@ -2098,20 +2111,6 @@ public class Solo {
 	public List<String> getMapBounds() {
 		return mapViewUtils.getBounds();
 	}
-	
-	/**
-	 * @param title
-	 * @param timeout in ms
-	 * @return
-	 */
-	public boolean tapMapMarkerItem( String title, long timeout ) {
-		return mapViewUtils.tapMarkerItem( title, timeout );
-	}
-	
-//	public boolean assertMapMarker( double lat, double lon, String title ) {
-//		return mapViewUtils.searchForMarker( lat, lon, title );
-//	}
-//	
 	
 //	/**
 //	 * Sorry, doesn't work yet

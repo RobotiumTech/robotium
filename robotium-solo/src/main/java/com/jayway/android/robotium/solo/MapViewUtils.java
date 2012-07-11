@@ -67,6 +67,11 @@ public class MapViewUtils {
 		mapView.getController().animateTo( new GeoPoint((int)(lat * 1E6), (int)(lon * 1E6)) );
 	}
 	
+	public int getZoom() {
+		MapView mapView = getMapView();
+		return mapView.getZoomLevel();
+	}
+	
 	public int setZoom( int zoomLevel ) {
 		MapView mapView = getMapView();
 		mapView.getController().stopAnimation(true);
