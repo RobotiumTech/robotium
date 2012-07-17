@@ -273,14 +273,17 @@ class ActivityUtils {
 	 * Finalizes the solo object.
 	 *
 	 */  
-
+        @Override
 	public void finalize() throws Throwable {
+		activitySyncTimer.cancel();
 		try {
 			// Remove the monitor added during startup
 			if (activityMonitor != null) {
 				inst.removeMonitor(activityMonitor);
+				activityMonitor = null;
 			}
 		} catch (Exception ignored) {}
+		this.activity = null;
 		super.finalize();
 	}
 	
