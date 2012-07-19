@@ -258,6 +258,7 @@ class Scroller {
 
 	/**
 	 * Scroll the list to a given line
+	 * 
 	 * @param view the {@link AbsListView} to scroll
 	 * @param line the line to scroll to
 	 */

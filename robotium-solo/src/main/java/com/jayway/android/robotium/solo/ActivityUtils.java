@@ -55,7 +55,7 @@ class ActivityUtils {
 		setupActivityMonitor();
 		setupActivityStackListener();
 	}
-	
+
 	/**
 	 * Creates a new activity stack and pushes the start activity 
 	 */
@@ -121,7 +121,7 @@ class ActivityUtils {
 						if(!activity.isFinishing()){
 							if(activitiesStoredInActivityStack.remove(activity.toString()))
 								removeActivityFromStack(activity);
-							
+
 							activitiesStoredInActivityStack.add(activity.toString());
 							weakActivityReference = new WeakReference<Activity>(activity);
 							activityStack.push(weakActivityReference);
@@ -132,13 +132,13 @@ class ActivityUtils {
 		};
 		activitySyncTimer.schedule(activitySyncTimerTask, 0, ACTIVITYSYNCTIME);
 	}
-	
+
 	/**
 	 * Removes a given activity from the activity stack
 	 * @param activity the activity to remove
 	 */
 	private void removeActivityFromStack(Activity activity){
-		
+
 		Iterator<WeakReference<Activity>> activityStackIterator = activityStack.iterator();
 		while(activityStackIterator.hasNext()){
 			Activity activityFromWeakReference = activityStackIterator.next().get();
@@ -219,7 +219,7 @@ class ActivityUtils {
 		if(!activityStack.isEmpty()){
 			activity=activityStack.peek().get();
 		}
-			return activity;
+		return activity;
 	}
 
 	/**
@@ -273,7 +273,8 @@ class ActivityUtils {
 	 * Finalizes the solo object.
 	 *
 	 */  
-        @Override
+
+	@Override
 	public void finalize() throws Throwable {
 		activitySyncTimer.cancel();
 		try {
@@ -283,10 +284,9 @@ class ActivityUtils {
 				activityMonitor = null;
 			}
 		} catch (Exception ignored) {}
-		this.activity = null;
 		super.finalize();
 	}
-	
+
 	/**
 	 * All inactive activities are finished.
 	 */
@@ -317,6 +317,7 @@ class ActivityUtils {
 			sleeper.sleep(MINISLEEP);
 			finishActivity(activitiesOpened.get(i));
 		}
+		activitiesOpened = null;
 		// Finish the initial activity, pressing Back for good measure
 		finishActivity(getCurrentActivity());
 		sleeper.sleepMini();
@@ -329,11 +330,11 @@ class ActivityUtils {
 		}
 		clearActivityStack();
 	}
-	
+
 	/**
 	 * Clears the activity stack
 	 */
-	
+
 	private void clearActivityStack(){
 		activityStack.clear();
 		activitiesStoredInActivityStack.clear();
@@ -352,5 +353,5 @@ class ActivityUtils {
 			e.printStackTrace();
 		}
 	}
-	
+
 }
