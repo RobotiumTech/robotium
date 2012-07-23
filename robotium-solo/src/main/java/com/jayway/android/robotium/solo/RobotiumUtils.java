@@ -168,7 +168,7 @@ class RobotiumUtils {
 	 *
 	 */
 
-	public void takeScreenshot(final View view) {
+	public void takeScreenshot(final View view, final String name) {
 		activityUtils.getCurrentActivity(false).runOnUiThread(new Runnable() {
 
 			@Override
@@ -179,7 +179,11 @@ class RobotiumUtils {
 					Bitmap b = view.getDrawingCache();
 					FileOutputStream fos = null;
 					SimpleDateFormat sdf = new SimpleDateFormat("ddMMyy-hhmmss");
-					String fileName = sdf.format( new Date()).toString()+ ".jpg";
+					String fileName = null;
+					if(name == null)
+						fileName = sdf.format( new Date()).toString()+ ".jpg";
+					else
+						fileName = name;
 					File directory = new File(Environment.getExternalStorageDirectory() + "/Robotium-Screenshots/");
 					directory.mkdir();
 

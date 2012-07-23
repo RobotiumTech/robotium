@@ -1995,7 +1995,20 @@ public class Solo {
 	
 	public void takeScreenshot(){
 		View decorView = viewFetcher.getRecentDecorView(viewFetcher.getWindowDecorViews());
-		robotiumUtils.takeScreenshot(decorView);
+		robotiumUtils.takeScreenshot(decorView, null);
+	}
+	
+	/**
+	 * Takes a screenshot and saves it with a given name in "/sdcard/Robotium-Screenshots/". 
+	 * Requires write permission (android.permission.WRITE_EXTERNAL_STORAGE) in AndroidManifest.xml of the application under test.
+	 *
+	 * @param name the name to give the screenshot
+	 *
+	 */
+	
+	public void takeScreenshot(String name){
+		View decorView = viewFetcher.getRecentDecorView(viewFetcher.getWindowDecorViews());
+		robotiumUtils.takeScreenshot(decorView, name);
 	}
 	
 }
