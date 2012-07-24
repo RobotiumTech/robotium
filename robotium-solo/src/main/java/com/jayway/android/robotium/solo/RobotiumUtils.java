@@ -183,7 +183,7 @@ class RobotiumUtils {
 					if(name == null)
 						fileName = sdf.format( new Date()).toString()+ ".jpg";
 					else
-						fileName = name;
+						fileName = name + ".jpg";
 					File directory = new File(Environment.getExternalStorageDirectory() + "/Robotium-Screenshots/");
 					directory.mkdir();
 
