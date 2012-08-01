@@ -320,6 +320,7 @@ class ActivityUtils {
 		activitiesOpened = null;
 		// Finish the initial activity, pressing Back for good measure
 		finishActivity(getCurrentActivity());
+		this.activity = null;
 		sleeper.sleepMini();
 		try {
 			inst.sendKeyDownUpSync(KeyEvent.KEYCODE_BACK);
