@@ -1,6 +1,8 @@
 package com.jayway.android.robotium.solo;
 
 import java.util.ArrayList;
+import java.util.List;
+
 import android.app.Activity;
 import android.app.Instrumentation;
 import android.content.pm.ActivityInfo;
@@ -71,12 +73,14 @@ public class Solo {
 	protected final Checker checker;
 	protected final Clicker clicker;
 	protected final Presser presser;
+//	protected final Pincher pincher;
 	protected final Searcher searcher;
 	protected final ActivityUtils activityUtils;
 	protected final DialogUtils dialogUtils;
 	protected final TextEnterer textEnterer;
 	protected final Scroller scroller;
 	protected final RobotiumUtils robotiumUtils;
+	protected final MapViewUtils mapViewUtils;
 	protected final Sleeper sleeper;
 	protected final Waiter waiter;
 	protected final Setter setter;
@@ -121,6 +125,7 @@ public class Solo {
         this.clicker = new Clicker(activityUtils, viewFetcher, scroller,robotiumUtils, instrumentation, sleeper, waiter);
         this.presser = new Presser(clicker, instrumentation, sleeper, waiter);
         this.textEnterer = new TextEnterer(instrumentation, activityUtils, clicker);
+        this.mapViewUtils = new MapViewUtils(instrumentation, viewFetcher, sleeper);
 	}
 
 	
@@ -1162,6 +1167,28 @@ public class Solo {
         }
 	}
 	
+//	/**
+//	 * Sorry, doesn't work yet
+//	 * @param togetherOrApart - {@link Pincher#TOGETHER} or {@link Pincher#APART}
+//	 */
+//	public void pinch(int togetherOrApart) {
+//		switch( togetherOrApart ) {
+//		case Pincher.TOGETHER: pincher.pinch(Pincher.Direction.TOGETHER); break;
+//		case Pincher.APART: pincher.pinch(Pincher.Direction.APART); break;
+//		}
+//	}
+//	
+//	/**
+//	 * Sorry, doesn't work yet
+//	 * @param togetherOrApart - {@link Pincher#TOGETHER} or {@link Pincher#APART}
+//	 * @param view
+//	 */
+//	public void pinch(int togetherOrApart, View view) {
+//		switch( togetherOrApart ) {
+//		case Pincher.TOGETHER: pincher.pinch(Pincher.Direction.TOGETHER, view); break;
+//		case Pincher.APART: pincher.pinch(Pincher.Direction.APART, view); break;
+//		}
+//	}
 	
 	/**
 	 * Sets the date in a DatePicker with a given index.
@@ -2062,4 +2089,113 @@ public class Solo {
 		robotiumUtils.takeScreenshot(decorView, name);
 	}
 	
+	/**
+	 * @param lat
+	 * @param lon
+	 */
+	public void setMapCenter( double lat, double lon ) {
+		mapViewUtils.setCenter(lat, lon);
+	}
+	
+	/**
+	 * @return {lat,lon} 
+	 */
+	public double[] getMapCenter() {
+		return mapViewUtils.getMapCenter();
+	}
+	
+	/**
+	 * @param lat
+	 * @param lon
+	 */
+	public void panMapTo( double lat, double lon ) {
+		mapViewUtils.panTo(lat, lon);
+	}
+	
+	/**
+	 * @return true if it was possible to zoom in any further
+	 */
+	public boolean zoomInOnMap() {
+		return mapViewUtils.zoomIn();
+	}
+	
+	/**
+	 * @return true if it was possible to zoom out any further
+	 */
+	public boolean zoomOutOnMap() {
+		return mapViewUtils.zoomOut();
+	}
+	
+	/**
+	 * @param zoomLevel
+	 * @return
+	 */
+	public int setMapZoom( int zoomLevel ) {
+		return mapViewUtils.setZoom(zoomLevel);
+	}
+	
+	public int getMapZoom() {
+		return mapViewUtils.getZoom();
+	}
+	
+	/** 
+	 * @return eg: eg: {"latitude":-33.123456, "longitude":151.123456, "title":"My Marker", "snippet":"More Info about my marker"}
+	 */
+	public List<String> getMapMarkerItems() {
+		return mapViewUtils.getMarkerItems();
+	}
+	
+	/** 
+	 * @return eg: eg: {"latitude":-33.123456, "longitude":151.123456, "title":"My Marker", "snippet":"More Info about my marker"}
+	 */
+	public String getMapMarkerItem( String title ) {
+		return mapViewUtils.getMarkerItem( title );
+	}
+
+	/**
+	 * @param title
+	 * @param timeout in ms
+	 * @return
+	 */
+	public boolean tapMapMarkerItem( String title, long timeout ) {
+		return mapViewUtils.tapMarkerItem( title, timeout );
+	}
+	
+	/**
+	 * @param step - number of pixels to move down/across while searching for an empty peice of map
+	 * @return true if it was possible to tap on the map without tapping on a marker
+	 */
+	public boolean tapMapAwayFromMarkers( int step ) {
+		return mapViewUtils.tapAwayFromMarkerItems( step );
+	}
+	
+	/**
+	 * @return [top, right, bottom, left] in decimal degrees
+	 */
+	public List<String> getMapBounds() {
+		return mapViewUtils.getBounds();
+	}
+	
+//	/**
+//	 * Sorry, doesn't work yet
+//	 * @param togetherOrApart - {@link Pincher#TOGETHER} or {@link Pincher#APART}
+//	 */
+//	public void pinch(int togetherOrApart) {
+//		switch( togetherOrApart ) {
+//		case Pincher.TOGETHER: pincher.pinch(Pincher.Direction.TOGETHER); break;
+//		case Pincher.APART: pincher.pinch(Pincher.Direction.APART); break;
+//		}
+//	}
+//	
+//	/**
+//	 * Sorry, doesn't work yet
+//	 * @param togetherOrApart - {@link Pincher#TOGETHER} or {@link Pincher#APART}
+//	 * @param view
+//	 */
+//	public void pinch(int togetherOrApart, View view) {
+//		switch( togetherOrApart ) {
+//		case Pincher.TOGETHER: pincher.pinch(Pincher.Direction.TOGETHER, view); break;
+//		case Pincher.APART: pincher.pinch(Pincher.Direction.APART, view); break;
+//		}
+//	}
 }
