@@ -5,6 +5,9 @@ import java.util.HashSet;
 import java.util.Set;
 import junit.framework.Assert;
 import android.os.SystemClock;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
@@ -277,7 +280,7 @@ class Waiter {
 	 *
 	 * @param text the text that needs to be shown
 	 * @param expectedMinimumNumberOfMatches the minimum number of matches of text that must be shown. {@code 0} means any number of matches
-	 * @param timeout the the amount of time in milliseconds to wait
+	 * @param timeout the amount of time in milliseconds to wait
 	 * @return {@code true} if text is found and {@code false} if it is not found before the timeout
 	 * 
 	 */
@@ -292,7 +295,7 @@ class Waiter {
 	 *
 	 * @param text the text that needs to be shown
 	 * @param expectedMinimumNumberOfMatches the minimum number of matches of text that must be shown. {@code 0} means any number of matches
-	 * @param timeout the the amount of time in milliseconds to wait
+	 * @param timeout the amount of time in milliseconds to wait
 	 * @param scroll {@code true} if scrolling should be performed
 	 * @return {@code true} if text is found and {@code false} if it is not found before the timeout
 	 * 
@@ -307,7 +310,7 @@ class Waiter {
 	 *
 	 * @param text the text that needs to be shown
 	 * @param expectedMinimumNumberOfMatches the minimum number of matches of text that must be shown. {@code 0} means any number of matches
-	 * @param timeout the the amount of time in milliseconds to wait
+	 * @param timeout the amount of time in milliseconds to wait
 	 * @param scroll {@code true} if scrolling should be performed
 	 * @param onlyVisible {@code true} if only visible text views should be waited for
 	 * @return {@code true} if text is found and {@code false} if it is not found before the timeout
@@ -363,6 +366,85 @@ class Waiter {
 		}
 		views = null;
 		return view;
+	}
+	
+	
+	
+	/**
+	 * Waits for a fragment with a given tag or id to appear
+	 * 
+	 * @param tag the name of the tag or null if no tag	
+	 * @param id the id of the tag
+	 * @param timeout the amount of time in milliseconds to wait
+	 * 
+	 * @return true if fragment appears and false if it does not appear before the timeout
+	 *  
+	 */
+
+	public boolean waitForFragment(String tag, int id, int timeout){
+		
+		long startTime = SystemClock.uptimeMillis();
+		long endTime = startTime + timeout;
+		while (SystemClock.uptimeMillis() <= endTime) {
+
+			if(getSupportFragment(tag, id) != null)
+				return true;
+
+			if(getFragment(tag, id) != null)
+				return true;
+		}
+		return false;
+	}
+	
+	/**
+	 * Returns a SupportFragment with a given tag or id
+	 * 
+	 * @param tag the tag of the SupportFragment or null if no tag
+	 * @param id the id of the SupportFragment
+	 * 
+	 * @return a SupportFragment with a given tag or id
+	 * 
+	 */
+
+	private Fragment getSupportFragment(String tag, int id){
+		FragmentActivity fragmentActivity = null;
+
+		try{
+			fragmentActivity = (FragmentActivity) activityUtils.getCurrentActivity();
+		}catch (ClassCastException ignored) {}
+
+		if(fragmentActivity != null){
+			try{
+				if(tag == null)
+					return fragmentActivity.getSupportFragmentManager().findFragmentById(id);
+				else
+					return fragmentActivity.getSupportFragmentManager().findFragmentByTag(tag);
+			}catch (NoSuchMethodError ignored) {}
+		}
+		return null;
+	}
+
+	/**
+	 * Returns a Fragment with a given tag or id
+	 * 
+	 * @param tag the tag of the Fragment or null if no tag
+	 * @param id the id of the Fragment
+	 * 
+	 * @return a SupportFragment with a given tag or id
+	 * 
+	 */
+
+	private android.app.Fragment getFragment(String tag, int id){
+
+		try{
+			if(tag == null)
+				return activityUtils.getCurrentActivity().getFragmentManager().findFragmentById(id);
+			else
+				return activityUtils.getCurrentActivity().getFragmentManager().findFragmentByTag(tag);
+		}catch (NoSuchMethodError e) {
+			Log.d("Robotium", "waitForFragment() requires API Level 11");
+		}
+		return null;
 	}
 
 

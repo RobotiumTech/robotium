@@ -1931,6 +1931,57 @@ public class Solo {
 		return waiter.waitForActivity(name, timeout);
 	}
 	
+	
+	/**
+	 * Waits for a fragment with a given tag to appear. Default timeout is 20 seconds.
+	 * 
+	 * @param tag the name of the tag	
+	 * @return true if fragment appears and false if it does not appear before the timeout
+	 *  
+	 */
+	
+	public boolean waitForFragmentByTag(String tag){
+		return waiter.waitForFragment(tag, 0, TIMEOUT);
+	}
+	
+	/**
+	 * Waits for a fragment with a given tag to appear.
+	 * 
+	 * @param tag the name of the tag	
+	 * @param timeout the amount of time in milliseconds to wait
+	 * @return true if fragment appears and false if it does not appear before the timeout
+	 *  
+	 */
+	
+	public boolean waitForFragmentByTag(String tag, int timeout){
+		return waiter.waitForFragment(tag, 0, timeout);
+	}
+	
+	/**
+	 * Waits for a fragment with a given id to appear. Default timeout is 20 seconds.
+	 * 
+	 * @param id the id of the fragment	
+	 * @return true if fragment appears and false if it does not appear before the timeout
+	 *  
+	 */
+	
+	public boolean waitForFragmentById(int id){
+		return waiter.waitForFragment(null, id, TIMEOUT);
+	}
+	
+	/**
+	 * Waits for a fragment with a given id to appear.
+	 * 
+	 * @param id the id of the fragment	
+	 * @param timeout the amount of time in milliseconds to wait
+	 * @return true if fragment appears and false if it does not appear before the timeout
+	 *  
+	 */
+	
+	public boolean waitForFragmentById(int id, int timeout){
+		return waiter.waitForFragment(null, id, timeout);
+	}
+	
 	/**
 	 * Returns a localized string.
 	 * 
