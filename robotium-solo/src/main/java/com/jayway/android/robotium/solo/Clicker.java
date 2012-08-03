@@ -1,18 +1,25 @@
 package com.jayway.android.robotium.solo;
 
+import java.lang.reflect.Constructor;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.regex.Pattern;
-import android.widget.*;
+
 import junit.framework.Assert;
+import android.app.Activity;
 import android.app.Instrumentation;
+import android.content.Context;
 import android.os.SystemClock;
 import android.util.Log;
 import android.view.KeyEvent;
+import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewConfiguration;
+import android.view.Window;
+import android.widget.AbsListView;
+import android.widget.TextView;
 
 /**
  * Contains various click methods. Examples are: clickOn(),
@@ -248,7 +255,40 @@ class Clicker {
 	public void clickOnActionBarItem(int resourceId){
 		inst.invokeMenuActionSync(activityUtils.getCurrentActivity(), resourceId, 0);
 	}
-
+	
+	/**
+	 * Clicks on an ActionBar Home/Up button.
+	 */
+        public void clickOnActionBarHomeButton() {
+            	Activity activity = activityUtils.getCurrentActivity();
+        	MenuItem homeMenuItem = null;
+        
+        	try {
+        	    Class<?> cls = Class.forName("com.android.internal.view.menu.ActionMenuItem");
+        	    Class<?> partypes[] = new Class[6];
+        	    partypes[0] = Context.class;
+        	    partypes[1] = Integer.TYPE;
+        	    partypes[2] = Integer.TYPE;
+        	    partypes[3] = Integer.TYPE;
+        	    partypes[4] = Integer.TYPE;
+        	    partypes[5] = CharSequence.class;
+        	    Constructor<?> ct = cls.getConstructor(partypes);
+        	    Object argList[] = new Object[6];
+        	    argList[0] = activity;
+        	    argList[1] = 0;
+        	    argList[2] = android.R.id.home;
+        	    argList[3] = 0;
+        	    argList[4] = 0;
+        	    argList[5] = "";
+        	    homeMenuItem = (MenuItem) ct.newInstance(argList);
+        	} catch (Exception ex) {
+        	    Log.d(LOG_TAG, "Can not find methods to invoke Home button.");
+        	}
+        	
+        	if (homeMenuItem != null) {
+        	    activity.getWindow().getCallback().onMenuItemSelected(Window.FEATURE_OPTIONS_PANEL, homeMenuItem);
+        	}
+        }
 
 	/**
 	 * Clicks on a specific {@link TextView} displaying a given text.

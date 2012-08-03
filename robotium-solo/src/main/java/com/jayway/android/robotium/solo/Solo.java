@@ -1036,6 +1036,13 @@ public class Solo {
 		clicker.clickOnActionBarItem(resourceId);
 	}
 	
+	/**
+	 * Clicks on an ActionBar Home/Up button.
+	 */
+	public void clickOnActionBarHomeHomeButton() {
+	    	clicker.clickOnActionBarHomeButton();
+	}
+	
 
 	 /**
 	 * Simulate touching a given location and dragging it to a new location.
