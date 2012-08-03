@@ -1026,7 +1026,7 @@ public class Solo {
 	public ArrayList<TextView> clickLongInList(int line, int index, int time){
 		return clicker.clickInList(line, index, true, time);
 	}
-	
+
 	/**
 	 * Clicks on an ActionBar item with a given resource id.
 	 * 
@@ -1035,16 +1035,16 @@ public class Solo {
 	public void clickOnActionBarItem(int resourceId){
 		clicker.clickOnActionBarItem(resourceId);
 	}
-	
+
 	/**
 	 * Clicks on an ActionBar Home/Up button.
 	 */
-	public void clickOnActionBarHomeHomeButton() {
-	    	clicker.clickOnActionBarHomeButton();
+	public void clickOnActionBarHomeButton() {
+		clicker.clickOnActionBarHomeButton();
 	}
-	
 
-	 /**
+
+	/**
 	 * Simulate touching a given location and dragging it to a new location.
 	 *
 	 * This method was copied from {@code TouchUtils.java} in the Android Open Source Project, and modified here.
@@ -1056,9 +1056,9 @@ public class Solo {
 	 * @param stepCount How many move steps to include in the drag
 	 *
 	 */
-	
-	public void drag(float fromX, float toX, float fromY, float toY,
-					  int stepCount) {
+
+	public void drag(float fromX, float toX, float fromY, float toY, 
+			int stepCount) {
 		scroller.drag(fromX, toX, fromY, toY, stepCount);
 	}
 
