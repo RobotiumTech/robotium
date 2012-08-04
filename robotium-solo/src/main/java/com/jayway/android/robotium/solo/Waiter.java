@@ -426,6 +426,7 @@ class Waiter {
 
 	/**
 	 * Waits for a log message to appear.
+	 * Requires read logs permission (android.permission.READ_LOGS) in AndroidManifest.xml of the application under test.
 	 * 
 	 * @param logMessage the log message to wait for
 	 * @param timeout the amount of time in milliseconds to wait
