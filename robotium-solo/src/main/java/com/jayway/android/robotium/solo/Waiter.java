@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 import junit.framework.Assert;
+import android.app.Activity;
 import android.os.SystemClock;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
@@ -74,17 +75,17 @@ class Waiter {
 
 	public boolean waitForActivity(String name, int timeout)
 	{
-		long now = SystemClock.uptimeMillis();
-		final long endTime = now + timeout;
-		while(!activityUtils.getCurrentActivity().getClass().getSimpleName().equals(name) && now < endTime)
-		{
-			now = SystemClock.uptimeMillis();
+		final long endTime = SystemClock.uptimeMillis() + timeout;
+		Activity currentActivity = activityUtils.getCurrentActivity(false);
+
+		while(currentActivity != null && !currentActivity.getClass().getSimpleName().equals(name) && SystemClock.uptimeMillis() < endTime){
+			currentActivity = activityUtils.getCurrentActivity();
 		}
-		if(now < endTime)
+
+		if(SystemClock.uptimeMillis() < endTime)
 			return true;
 
-		else
-			return false;
+		return false;
 	}
 
 	/**
