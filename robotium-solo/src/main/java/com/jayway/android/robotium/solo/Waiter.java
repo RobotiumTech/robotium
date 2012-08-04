@@ -207,10 +207,9 @@ class Waiter {
 	 */
 
 	public boolean waitForView(View view, int timeout, boolean scroll){
-		long startTime = SystemClock.uptimeMillis();
-		long endTime = startTime + timeout;
+		long endTime = SystemClock.uptimeMillis() + timeout;
 
-		while (startTime < endTime) {
+		while (SystemClock.uptimeMillis() < endTime) {
 			sleeper.sleep();
 
 			final boolean foundAnyMatchingView = searcher.searchFor(view);
@@ -234,9 +233,8 @@ class Waiter {
 
 	public View waitForView(int id){
 		ArrayList<View> views = new ArrayList<View>();
-		long startTime = SystemClock.uptimeMillis();
-		long endTime = startTime + SMALLTIMEOUT;
-		while (startTime <= endTime) {
+		long endTime = SystemClock.uptimeMillis() + SMALLTIMEOUT;
+		while (SystemClock.uptimeMillis() <= endTime) {
 			sleeper.sleep();
 			views = viewFetcher.getAllViews(false);
 			for (View v : views) {
@@ -383,8 +381,7 @@ class Waiter {
 
 	public boolean waitForFragment(String tag, int id, int timeout){
 
-		long startTime = SystemClock.uptimeMillis();
-		long endTime = startTime + timeout;
+		long endTime = SystemClock.uptimeMillis() + timeout;
 		while (SystemClock.uptimeMillis() <= endTime) {
 
 			if(getSupportFragment(tag, id) != null)
@@ -436,8 +433,7 @@ class Waiter {
 	public boolean waitForLogMessage(String logMessage, int timeout){
 		StringBuilder stringBuilder = new StringBuilder();
 
-		long startTime = SystemClock.uptimeMillis();
-		long endTime = startTime + timeout;
+		long endTime = SystemClock.uptimeMillis() + timeout;
 		while (SystemClock.uptimeMillis() <= endTime) {
 
 			if(getLog(stringBuilder).lastIndexOf(logMessage) != -1){

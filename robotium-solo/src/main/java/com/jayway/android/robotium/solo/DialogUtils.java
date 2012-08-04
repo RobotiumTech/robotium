@@ -38,10 +38,10 @@ class DialogUtils {
 
 	public boolean waitForDialogToClose(long timeout) {
 		int elementsBefore = viewFetcher.getWindowDecorViews().length;
-		long now = SystemClock.uptimeMillis();
-		final long endTime = now + timeout;
+		final long endTime = SystemClock.uptimeMillis() + timeout;
 		
-		while (now < endTime) {
+		while (SystemClock.uptimeMillis() < endTime) {
+			
 			int elementsNow = viewFetcher.getWindowDecorViews().length;
 			if(elementsBefore < elementsNow){
 				elementsBefore = elementsNow;
