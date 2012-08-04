@@ -41,7 +41,7 @@ class DialogUtils {
 		long now = SystemClock.uptimeMillis();
 		final long endTime = now + timeout;
 		
-		while (SystemClock.uptimeMillis() < endTime) {
+		while (now < endTime) {
 			int elementsNow = viewFetcher.getWindowDecorViews().length;
 			if(elementsBefore < elementsNow){
 				elementsBefore = elementsNow;
