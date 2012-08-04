@@ -78,13 +78,12 @@ class Waiter {
 		final long endTime = SystemClock.uptimeMillis() + timeout;
 		Activity currentActivity = activityUtils.getCurrentActivity(false);
 
-		while(currentActivity != null && !currentActivity.getClass().getSimpleName().equals(name) && SystemClock.uptimeMillis() < endTime){
+		while(SystemClock.uptimeMillis() < endTime){
+			if(currentActivity != null && currentActivity.getClass().getSimpleName().equals(name))
+				return true;
+
 			currentActivity = activityUtils.getCurrentActivity();
 		}
-
-		if(SystemClock.uptimeMillis() < endTime)
-			return true;
-
 		return false;
 	}
 
