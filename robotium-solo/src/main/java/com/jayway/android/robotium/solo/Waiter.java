@@ -1,5 +1,8 @@
 package com.jayway.android.robotium.solo;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
@@ -410,7 +413,7 @@ class Waiter {
 		FragmentActivity fragmentActivity = null;
 
 		try{
-			fragmentActivity = (FragmentActivity) activityUtils.getCurrentActivity();
+			fragmentActivity = (FragmentActivity) activityUtils.getCurrentActivity(false);
 		}catch (ClassCastException ignored) {}
 
 		if(fragmentActivity != null){
@@ -422,6 +425,73 @@ class Waiter {
 			}catch (NoSuchMethodError ignored) {}
 		}
 		return null;
+	}
+	
+	/**
+	 * Waits for a log message to appear.
+	 * 
+	 * @param logMessage the log message to wait for
+	 * @param timeout the amount of time in milliseconds to wait
+	 * 
+	 * @return true if log message appears and false if it does not appear before the timeout
+	 */
+	public boolean waitForLogMessage(String logMessage, int timeout){
+		StringBuilder stringBuilder = new StringBuilder();
+	
+		long startTime = SystemClock.uptimeMillis();
+		long endTime = startTime + timeout;
+		while (SystemClock.uptimeMillis() <= endTime) {
+
+			if(getLog(stringBuilder).lastIndexOf(logMessage) != -1){
+				return true;
+			}
+			sleeper.sleep();
+		}
+		return false;
+	}
+	
+	/**
+	 * Returns the log in the given stringBuilder 
+	 * 
+	 * @param stringBuilder the StringBuilder object to return the log in
+	 * 
+	 * @return the log
+	 */
+	private StringBuilder getLog(StringBuilder stringBuilder){
+		Process p = null;
+		BufferedReader reader = null;
+		String line = null;  
+
+		try {
+			p = Runtime.getRuntime().exec("logcat -d");
+			reader = new BufferedReader(  
+					new InputStreamReader(p.getInputStream())); 
+
+			stringBuilder.setLength(0);
+			while ((line = reader.readLine()) != null) {  
+				stringBuilder.append(line); 
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}  
+		destroy(p, reader);
+		return stringBuilder;
+	}
+
+	/**
+	 * Destroys the process and closes the BufferedReader
+	 * 
+	 * @param p the process to destroy
+	 * @param reader the BufferedReader to close
+	 */
+
+	private void destroy(Process p, BufferedReader reader){
+		p.destroy();
+		try {
+			reader.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 
 	/**
@@ -446,7 +516,4 @@ class Waiter {
 		}
 		return null;
 	}
-
-
-
 }

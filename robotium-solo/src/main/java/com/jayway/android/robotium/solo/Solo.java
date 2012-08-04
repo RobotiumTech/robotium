@@ -1990,6 +1990,31 @@ public class Solo {
 	}
 	
 	/**
+	 * Waits for a log message to appear. Default timeout is 20 seconds.
+	 * 
+	 * @param logMessage the log message to wait for
+	 * 
+	 * @return true if log message appears and false if it does not appear before the timeout
+	 */
+	
+	public boolean waitForLogMessage(String logMessage){
+		return waiter.waitForLogMessage(logMessage, TIMEOUT);
+	}
+	
+	/**
+	 * Waits for a log message to appear.
+	 * 
+	 * @param logMessage the log message to wait for
+	 * @param timeout the amount of time in milliseconds to wait
+	 * 
+	 * @return true if log message appears and false if it does not appear before the timeout
+	 */
+	
+	public boolean waitForLogMessage(String logMessage, int timeout){
+		return waiter.waitForLogMessage(logMessage, timeout);
+	}
+	
+	/**
 	 * Returns a localized string.
 	 * 
 	 * @param resId the resource id of the string
