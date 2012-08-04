@@ -263,7 +263,7 @@ public class Solo {
 	}
 	
 	/**
-	 * Waits for a View to be shown. Default timeout is 20 seconds. 
+	 * Waits for a given View to be shown. Default timeout is 20 seconds. 
 	 * 
 	 * @param view the {@link View} object to wait for
 	 * 
@@ -275,7 +275,7 @@ public class Solo {
 	}
 	
 	/**
-	 * Waits for a View to be shown. 
+	 * Waits for a given View to be shown. 
 	 * 
 	 * @param view the {@link View} object to wait for
 	 * @param timeout the amount of time in milliseconds to wait
@@ -1940,7 +1940,7 @@ public class Solo {
 	
 	
 	/**
-	 * Waits for a fragment with a given tag to appear. Default timeout is 20 seconds.
+	 * Waits for a Fragment with a given tag to appear. Default timeout is 20 seconds.
 	 * 
 	 * @param tag the name of the tag	
 	 * @return true if fragment appears and false if it does not appear before the timeout
@@ -1952,7 +1952,7 @@ public class Solo {
 	}
 	
 	/**
-	 * Waits for a fragment with a given tag to appear.
+	 * Waits for a Fragment with a given tag to appear.
 	 * 
 	 * @param tag the name of the tag	
 	 * @param timeout the amount of time in milliseconds to wait
@@ -1965,7 +1965,7 @@ public class Solo {
 	}
 	
 	/**
-	 * Waits for a fragment with a given id to appear. Default timeout is 20 seconds.
+	 * Waits for a Fragment with a given id to appear. Default timeout is 20 seconds.
 	 * 
 	 * @param id the id of the fragment	
 	 * @return true if fragment appears and false if it does not appear before the timeout
@@ -1977,7 +1977,7 @@ public class Solo {
 	}
 	
 	/**
-	 * Waits for a fragment with a given id to appear.
+	 * Waits for a Fragment with a given id to appear.
 	 * 
 	 * @param id the id of the fragment	
 	 * @param timeout the amount of time in milliseconds to wait

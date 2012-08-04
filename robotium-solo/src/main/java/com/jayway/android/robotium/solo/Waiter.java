@@ -172,7 +172,7 @@ class Waiter {
 	}
 
 	/**
-	 * Waits for a certain view. Default timeout is 20 seconds.
+	 * Waits for a given view. Default timeout is 20 seconds.
 	 * 
 	 * @param view the view to wait for
 	 * 
@@ -184,7 +184,7 @@ class Waiter {
 	}
 
 	/**
-	 * Waits for a certain view. 
+	 * Waits for a given view. 
 	 * 
 	 * @param view the view to wait for
 	 * @param timeout the amount of time in milliseconds to wait
@@ -197,7 +197,7 @@ class Waiter {
 	}
 
 	/**
-	 * Waits for a certain view.
+	 * Waits for a given view.
 	 * 
 	 * @param view the view to wait for
 	 * @param timeout the amount of time in milliseconds to wait
@@ -337,7 +337,7 @@ class Waiter {
 	}
 
 	/**
-	 * Waits for and returns a view
+	 * Waits for and returns a View.
 	 * 
 	 * @param index the index of the view
 	 * @param classToFilterby the class to filter
@@ -371,7 +371,7 @@ class Waiter {
 
 
 	/**
-	 * Waits for a fragment with a given tag or id to appear
+	 * Waits for a Fragment with a given tag or id to appear.
 	 * 
 	 * @param tag the name of the tag or null if no tag	
 	 * @param id the id of the tag
@@ -397,7 +397,7 @@ class Waiter {
 	}
 
 	/**
-	 * Returns a SupportFragment with a given tag or id
+	 * Returns a SupportFragment with a given tag or id.
 	 * 
 	 * @param tag the tag of the SupportFragment or null if no tag
 	 * @param id the id of the SupportFragment
@@ -449,7 +449,7 @@ class Waiter {
 	}
 
 	/**
-	 * Returns the log in the given stringBuilder 
+	 * Returns the log in the given stringBuilder. 
 	 * 
 	 * @param stringBuilder the StringBuilder object to return the log in
 	 * 
@@ -477,7 +477,7 @@ class Waiter {
 	}
 
 	/**
-	 * Destroys the process and closes the BufferedReader
+	 * Destroys the process and closes the BufferedReader.
 	 * 
 	 * @param p the process to destroy
 	 * @param reader the BufferedReader to close
@@ -493,7 +493,7 @@ class Waiter {
 	}
 
 	/**
-	 * Returns a Fragment with a given tag or id
+	 * Returns a Fragment with a given tag or id.
 	 * 
 	 * @param tag the tag of the Fragment or null if no tag
 	 * @param id the id of the Fragment
