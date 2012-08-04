@@ -132,22 +132,16 @@ class Scroller {
 		}
 	}
 
-    /**
-   	 * Scrolls a ScrollView to top or bottom.
-   	 *
-   	 * @param direction the direction to be scrolled
-   	 *
-   	 */
+	/**
+	 * Scrolls a ScrollView to top or bottom.
+	 *
+	 * @param direction the direction to be scrolled
+	 *
+	 */
 
-    private void scrollScrollViewAllTheWay(final ScrollView view, int direction) {
-        final int currentScrollX = view.getScrollX();
-        final int targetScrollY = (direction == UP) ? 0 : view.getMaxScrollAmount();
-        inst.runOnMainSync(new Runnable() {
-            public void run() {
-                view.scrollTo(currentScrollX, targetScrollY);
-            }
-        });
-    }
+	private void scrollScrollViewAllTheWay(final ScrollView view, final int direction) {
+		while(scrollScrollView(view, direction));
+	}
 
     /**
      * scrolls up or down.
