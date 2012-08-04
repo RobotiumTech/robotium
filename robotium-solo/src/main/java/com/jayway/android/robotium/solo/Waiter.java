@@ -171,7 +171,6 @@ class Waiter {
 		return false;
 	}
 
-
 	/**
 	 * Waits for a certain view. Default timeout is 20 seconds.
 	 * 
@@ -211,7 +210,7 @@ class Waiter {
 		long startTime = SystemClock.uptimeMillis();
 		long endTime = startTime + timeout;
 
-		while (SystemClock.uptimeMillis() < endTime) {
+		while (startTime < endTime) {
 			sleeper.sleep();
 
 			final boolean foundAnyMatchingView = searcher.searchFor(view);
@@ -226,7 +225,6 @@ class Waiter {
 		return false;
 	}
 
-
 	/**
 	 * Waits for a certain view.
 	 * 
@@ -238,7 +236,7 @@ class Waiter {
 		ArrayList<View> views = new ArrayList<View>();
 		long startTime = SystemClock.uptimeMillis();
 		long endTime = startTime + SMALLTIMEOUT;
-		while (SystemClock.uptimeMillis() <= endTime) {
+		while (startTime <= endTime) {
 			sleeper.sleep();
 			views = viewFetcher.getAllViews(false);
 			for (View v : views) {
@@ -250,7 +248,6 @@ class Waiter {
 		}
 		return null;
 	}
-
 
 	/**
 	 * Waits for a text to be shown. Default timeout is 20 seconds.
@@ -370,9 +367,9 @@ class Waiter {
 		views = null;
 		return view;
 	}
-	
-	
-	
+
+
+
 	/**
 	 * Waits for a fragment with a given tag or id to appear
 	 * 
@@ -385,7 +382,7 @@ class Waiter {
 	 */
 
 	public boolean waitForFragment(String tag, int id, int timeout){
-		
+
 		long startTime = SystemClock.uptimeMillis();
 		long endTime = startTime + timeout;
 		while (SystemClock.uptimeMillis() <= endTime) {
@@ -398,7 +395,7 @@ class Waiter {
 		}
 		return false;
 	}
-	
+
 	/**
 	 * Returns a SupportFragment with a given tag or id
 	 * 
@@ -426,7 +423,7 @@ class Waiter {
 		}
 		return null;
 	}
-	
+
 	/**
 	 * Waits for a log message to appear.
 	 * 
@@ -437,7 +434,7 @@ class Waiter {
 	 */
 	public boolean waitForLogMessage(String logMessage, int timeout){
 		StringBuilder stringBuilder = new StringBuilder();
-	
+
 		long startTime = SystemClock.uptimeMillis();
 		long endTime = startTime + timeout;
 		while (SystemClock.uptimeMillis() <= endTime) {
@@ -449,7 +446,7 @@ class Waiter {
 		}
 		return false;
 	}
-	
+
 	/**
 	 * Returns the log in the given stringBuilder 
 	 * 
