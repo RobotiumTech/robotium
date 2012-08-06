@@ -11,7 +11,6 @@ import android.app.Activity;
 import android.os.SystemClock;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
@@ -505,9 +504,8 @@ class Waiter {
 				return activityUtils.getCurrentActivity().getFragmentManager().findFragmentById(id);
 			else
 				return activityUtils.getCurrentActivity().getFragmentManager().findFragmentByTag(tag);
-		}catch (NoSuchMethodError e) {
-			Log.d("Robotium", "waitForFragment() requires API Level 11");
-		}
+		}catch (NoSuchMethodError ignored) {}
+		
 		return null;
 	}
 }
