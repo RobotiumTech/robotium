@@ -191,7 +191,7 @@ class ActivityUtils {
 	 */
 
 	private final void waitForActivityIfNotAvailable(){
-		if(activity == null){
+		if(activityStack.isEmpty()){
 			if (activityMonitor != null) {
 				while (activityMonitor.getLastActivity() == null){
 					sleeper.sleepMini();
