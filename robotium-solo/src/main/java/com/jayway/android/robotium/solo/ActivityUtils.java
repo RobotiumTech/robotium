@@ -63,6 +63,7 @@ class ActivityUtils {
 		activityStack = new Stack<WeakReference<Activity>>();
 		if (activity != null){
 			WeakReference<Activity> weakReference = new WeakReference<Activity>(activity);
+			activity = null;
 			activityStack.push(weakReference);
 		}
 	}
@@ -124,6 +125,7 @@ class ActivityUtils {
 
 							activitiesStoredInActivityStack.add(activity.toString());
 							weakActivityReference = new WeakReference<Activity>(activity);
+							activity = null;
 							activityStack.push(weakActivityReference);
 						}
 					}

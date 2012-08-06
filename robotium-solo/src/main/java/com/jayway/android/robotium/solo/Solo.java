@@ -2057,7 +2057,7 @@ public class Solo {
     /**
      * All inactive activities are finished.
      * 
-     * @deprecated Method has been deprecated as hard references to activities are no longer kept.  
+     * @deprecated Method has been deprecated as there are no longer strong references to activities.  
      * 
      */
 
