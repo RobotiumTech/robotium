@@ -2056,6 +2056,9 @@ public class Solo {
 
     /**
      * All inactive activities are finished.
+     * 
+     * @deprecated Method has been deprecated as hard references to activities are no longer kept.  
+     * 
      */
 
     public void finishInactiveActivities(){
@@ -2063,8 +2066,7 @@ public class Solo {
     }
     
     /**
-	 *
-	 * All activities that have been active are finished.
+	 * The activities that are alive are finished. Usually used in tearDown().
 	 *
 	 */
 	
