@@ -123,10 +123,7 @@ class ActivityUtils {
 							if(activitiesStoredInActivityStack.remove(activity.toString()))
 								removeActivityFromStack(activity);
 
-							activitiesStoredInActivityStack.add(activity.toString());
-							weakActivityReference = new WeakReference<Activity>(activity);
-							activity = null;
-							activityStack.push(weakActivityReference);
+							addActivityToStack(activity);
 						}
 					}
 				}
@@ -183,6 +180,19 @@ class ActivityUtils {
 	public Activity getCurrentActivity() {
 		return getCurrentActivity(true);
 	}
+	
+	/**
+	 * Adds an activity to the stack
+	 * 
+	 * @param activity the activity to add
+	 */
+
+	private void addActivityToStack(Activity activity){
+		activitiesStoredInActivityStack.add(activity.toString());
+		weakActivityReference = new WeakReference<Activity>(activity);
+		activity = null;
+		activityStack.push(weakActivityReference);
+	}
 
 	/**
 	 * Waits for an activity to be started if one is not provided
@@ -191,11 +201,15 @@ class ActivityUtils {
 	 */
 
 	private final void waitForActivityIfNotAvailable(){
-		if(activityStack.isEmpty()){
+		if(activityStack.isEmpty() || activityStack.peek().get() == null){
+
 			if (activityMonitor != null) {
-				while (activityMonitor.getLastActivity() == null){
+				Activity activity = activityMonitor.getLastActivity();
+				while (activity == null){
 					sleeper.sleepMini();
+					activity = activityMonitor.getLastActivity();
 				}
+				addActivityToStack(activity);
 			}
 			else{
 				sleeper.sleepMini();
