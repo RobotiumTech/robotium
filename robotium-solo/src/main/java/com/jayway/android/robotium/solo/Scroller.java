@@ -29,7 +29,7 @@ class Scroller {
 	private final ActivityUtils activityUtils;
 	private final ViewFetcher viewFetcher;
 	private final Sleeper sleeper;
-	
+
 
 	/**
 	 * Constructs this object.
@@ -99,7 +99,7 @@ class Scroller {
 	 */
 
 	private boolean scrollScrollView(final ScrollView view, int direction){
-		
+
 		if(view == null){
 			return false;
 		}
@@ -143,30 +143,30 @@ class Scroller {
 		while(scrollScrollView(view, direction));
 	}
 
-    /**
-     * scrolls up or down.
-     *
-     * @param direction the direction in which to scroll
-     * @return {@code true} if more scrolling can be done
-     */
+	/**
+	 * scrolls up or down.
+	 *
+	 * @param direction the direction in which to scroll
+	 * @return {@code true} if more scrolling can be done
+	 */
 
-    public boolean scroll(int direction) {
-        return scroll(direction, false);
-    }
+	public boolean scroll(int direction) {
+		return scroll(direction, false);
+	}
 
 
 	/**
 	 * Scrolls up and down.
 	 * 
 	 * @param direction the direction in which to scroll
-     * @param allTheWay <code>true</code> if the view should be scrolled to the beginning or end,
-     *                  <code>false</code> to scroll one page up or down.
+	 * @param allTheWay <code>true</code> if the view should be scrolled to the beginning or end,
+	 *                  <code>false</code> to scroll one page up or down.
 	 * @return {@code true} if more scrolling can be done
 	 * 
 	 */
 
 	public boolean scroll(int direction, boolean allTheWay) {
-		
+
 		final ArrayList<View> viewList = RobotiumUtils.
 				removeInvisibleViews(viewFetcher.getAllViews(true));
 		@SuppressWarnings("unchecked")
@@ -184,12 +184,12 @@ class Scroller {
 		}
 
 		if (view instanceof ScrollView) {
-            if (allTheWay) {
-                scrollScrollViewAllTheWay((ScrollView) view, direction);
-                return false;
-            } else {
-			    return scrollScrollView((ScrollView)view, direction);
-            }
+			if (allTheWay) {
+				scrollScrollViewAllTheWay((ScrollView) view, direction);
+				return false;
+			} else {
+				return scrollScrollView((ScrollView)view, direction);
+			}
 		}
 
 		return false;
@@ -200,31 +200,31 @@ class Scroller {
 	 * 
 	 * @param absListView the list to be scrolled
 	 * @param direction the direction to be scrolled
-     * @param allTheWay {@code true} to scroll the view all the way up or down, {@code false} to scroll one page up
-     *                              or down.
+	 * @param allTheWay {@code true} to scroll the view all the way up or down, {@code false} to scroll one page up
+	 *                              or down.
 	 * @return {@code true} if more scrolling can be done
 	 * 
 	 */
 
 	public <T extends AbsListView> boolean scrollList(T absListView, int direction, boolean allTheWay) {
-		
+
 		if(absListView == null){
 			return false;
 		}
 
 		if (direction == DOWN) {
-            if (allTheWay) {
-                scrollListToLine(absListView, absListView.getCount()-1);
-                return false;
-            }
+			if (allTheWay) {
+				scrollListToLine(absListView, absListView.getCount()-1);
+				return false;
+			}
 			if (absListView.getLastVisiblePosition() >= absListView.getCount()-1) {
 				scrollListToLine(absListView, absListView.getLastVisiblePosition());
 				return false;
 			}
-			
+
 			if(absListView.getFirstVisiblePosition() != absListView.getLastVisiblePosition())
 				scrollListToLine(absListView, absListView.getLastVisiblePosition());
-	
+
 			else
 				scrollListToLine(absListView, absListView.getFirstVisiblePosition()+1);
 
@@ -239,7 +239,7 @@ class Scroller {
 
 			if(lineToScrollTo == absListView.getLastVisiblePosition())
 				lineToScrollTo--;
-			
+
 			if(lineToScrollTo < 0)
 				lineToScrollTo = 0;
 
@@ -248,7 +248,7 @@ class Scroller {
 		sleeper.sleep();
 		return true;
 	}
-	
+
 
 	/**
 	 * Scroll the list to a given line
@@ -258,13 +258,13 @@ class Scroller {
 	 */
 
 	private <T extends AbsListView> void scrollListToLine(final T view, final int line){
-		
+
 		final int lineToMoveTo;
 		if(view instanceof GridView)
 			lineToMoveTo = line+1;
 		else
 			lineToMoveTo = line;
-	
+
 		inst.runOnMainSync(new Runnable(){
 			public void run(){
 				view.setSelection(lineToMoveTo);
@@ -282,9 +282,9 @@ class Scroller {
 
 	public void scrollToSide(Side side) {
 		int screenHeight = activityUtils.getCurrentActivity().getWindowManager().getDefaultDisplay()
-		.getHeight();
+				.getHeight();
 		int screenWidth = activityUtils.getCurrentActivity(false).getWindowManager().getDefaultDisplay()
-		.getWidth();
+				.getWidth();
 		float x = screenWidth / 2.0f;
 		float y = screenHeight / 2.0f;
 		if (side == Side.LEFT)
