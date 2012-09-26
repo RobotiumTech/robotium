@@ -100,9 +100,6 @@ class Waiter {
 		boolean foundMatchingView;
 
 		while(true){
-			if(sleep)
-				sleeper.sleep();
-
 			foundMatchingView = searcher.searchFor(uniqueViews, viewClass, index);
 
 			if(foundMatchingView)
@@ -113,6 +110,9 @@ class Waiter {
 
 			if(!scroll)
 				return false;
+			
+			if(sleep)
+				sleeper.sleep();
 		}
 	}
 
@@ -132,8 +132,6 @@ class Waiter {
 		boolean foundMatchingView;
 
 		while (SystemClock.uptimeMillis() < endTime) {
-			sleeper.sleep();
-
 			foundMatchingView =  searcher.searchFor(uniqueViews, viewClass, index);
 
 			if(foundMatchingView)
@@ -141,6 +139,8 @@ class Waiter {
 
 			if(scroll) 
 				scroller.scroll(Scroller.DOWN);
+			
+			sleeper.sleep();
 		}
 		return false;
 	}
@@ -210,8 +210,6 @@ class Waiter {
 		long endTime = SystemClock.uptimeMillis() + timeout;
 
 		while (SystemClock.uptimeMillis() < endTime) {
-			sleeper.sleep();
-
 			final boolean foundAnyMatchingView = searcher.searchFor(view);
 
 			if (foundAnyMatchingView){
@@ -220,6 +218,8 @@ class Waiter {
 
 			if(scroll) 
 				scroller.scroll(Scroller.DOWN);
+
+			sleeper.sleep();
 		}
 		return false;
 	}
@@ -235,7 +235,6 @@ class Waiter {
 		ArrayList<View> views = new ArrayList<View>();
 		long endTime = SystemClock.uptimeMillis() + SMALLTIMEOUT;
 		while (SystemClock.uptimeMillis() <= endTime) {
-			sleeper.sleep();
 			views = viewFetcher.getAllViews(false);
 			for (View v : views) {
 				if (v.getId() == id) {
@@ -243,6 +242,7 @@ class Waiter {
 					return v;
 				}
 			}
+			sleeper.sleep();
 		}
 		return null;
 	}
@@ -324,13 +324,13 @@ class Waiter {
 				return false;
 			}
 
-			sleeper.sleep();
-
 			final boolean foundAnyTextView = searcher.searchFor(TextView.class, text, expectedMinimumNumberOfMatches, scroll, onlyVisible);
 
 			if (foundAnyTextView){
 				return true;
 			}
+
+			sleeper.sleep();
 		}
 	}
 

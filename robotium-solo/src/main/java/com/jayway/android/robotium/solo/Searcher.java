@@ -64,11 +64,11 @@ class Searcher {
 		final long endTime = SystemClock.uptimeMillis() + TIMEOUT;
 
 		while (SystemClock.uptimeMillis() < endTime) {
-			sleeper.sleep();
 			final boolean foundAnyMatchingView = searchFor(viewClass, regex, expectedMinimumNumberOfMatches, scroll, onlyVisible);
 			if (foundAnyMatchingView){
 				return true;
 			}
+			sleeper.sleep();
 		}
 		return false;
 	}
