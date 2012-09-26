@@ -532,14 +532,24 @@ public class Solo {
 	}
 	
 	/**
-	 * Returns the current Activity.
+	 * Returns the current Activity, after sleeping a default pause length.
 	 *
 	 * @return the current Activity
-	 *
+	 * 
 	 */
 	
 	public Activity getCurrentActivity() {
 		return activityUtils.getCurrentActivity();
+	}
+	
+	/**
+	 * Returns the current Activity, without sleeping.
+	 * 
+	 * @return the current Activity
+	 * 
+	 */
+	public Activity getCurrentActivityImmediate() {
+		return activityUtils.getCurrentActivity(false);
 	}
 	
 	/**
