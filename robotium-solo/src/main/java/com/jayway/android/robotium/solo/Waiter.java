@@ -389,6 +389,8 @@ class Waiter {
 
 			if(getFragment(tag, id) != null)
 				return true;
+			
+			sleeper.sleep();
 		}
 		return false;
 	}
