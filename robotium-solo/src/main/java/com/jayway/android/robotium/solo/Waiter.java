@@ -81,7 +81,8 @@ class Waiter {
 			if(currentActivity != null && currentActivity.getClass().getSimpleName().equals(name))
 				return true;
 
-			currentActivity = activityUtils.getCurrentActivity();
+			// rely on the delay in getCurrentActivity(true) to prevent wait loop from consuming all the CPU
+			currentActivity = activityUtils.getCurrentActivity(true);  
 		}
 		return false;
 	}
@@ -501,9 +502,9 @@ class Waiter {
 
 		try{
 			if(tag == null)
-				return activityUtils.getCurrentActivity().getFragmentManager().findFragmentById(id);
+				return activityUtils.getCurrentActivity(false).getFragmentManager().findFragmentById(id);
 			else
-				return activityUtils.getCurrentActivity().getFragmentManager().findFragmentByTag(tag);
+				return activityUtils.getCurrentActivity(false).getFragmentManager().findFragmentByTag(tag);
 		}catch (NoSuchMethodError ignored) {}
 		
 		return null;
