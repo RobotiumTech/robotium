@@ -39,7 +39,7 @@ class Asserter {
 	public void assertCurrentActivity(String message, String name)
 	{
 		waiter.waitForActivity(name);
-		Assert.assertEquals(message, name, activityUtils.getCurrentActivity().getClass().getSimpleName());
+		Assert.assertEquals(message, name, activityUtils.getCurrentActivity(false).getClass().getSimpleName());
 
 	}
 
@@ -55,7 +55,7 @@ class Asserter {
 	{
 	    waiter.waitForActivity(expectedClass.getSimpleName());
 		Assert.assertEquals(message, expectedClass.getName(), activityUtils
-				.getCurrentActivity().getClass().getName());
+				.getCurrentActivity(false).getClass().getName());
 
 	}
 	
@@ -72,7 +72,7 @@ class Asserter {
 	public void assertCurrentActivity(String message, String name, boolean isNewInstance)
 	{
 		assertCurrentActivity(message, name);
-		assertCurrentActivity(message, activityUtils.getCurrentActivity().getClass(),
+		assertCurrentActivity(message, activityUtils.getCurrentActivity(false).getClass(),
 				isNewInstance);
 	}
 	
@@ -107,7 +107,7 @@ class Asserter {
 	public void assertMemoryNotLow()
 	{
 		ActivityManager.MemoryInfo mi = new ActivityManager.MemoryInfo();
-		((ActivityManager)activityUtils.getCurrentActivity().getSystemService("activity")).getMemoryInfo(mi);
+		((ActivityManager)activityUtils.getCurrentActivity(false).getSystemService("activity")).getMemoryInfo(mi);
 		Assert.assertFalse("Low memory available: " + mi.availMem + " bytes", mi.lowMemory);
 	}
 

@@ -166,7 +166,7 @@ class ActivityUtils {
 
 	public void setActivityOrientation(int orientation)
 	{
-		Activity activity = getCurrentActivity();
+		Activity activity = getCurrentActivity(false);
 		activity.setRequestedOrientation(orientation);	
 	}
 
@@ -256,7 +256,7 @@ class ActivityUtils {
 			}
 		}
 		if(found){
-			while(!getCurrentActivity().getClass().getSimpleName().equals(name))
+			while(!getCurrentActivity(false).getClass().getSimpleName().equals(name))
 			{
 				try{
 					inst.sendKeyDownUpSync(KeyEvent.KEYCODE_BACK);
@@ -310,7 +310,7 @@ class ActivityUtils {
 	public void finishInactiveActivities() {
 		for (Iterator<WeakReference<Activity>> iter = activityStack.iterator(); iter.hasNext();) {
 			Activity activity = iter.next().get();
-			if (activity != getCurrentActivity()) {
+			if (activity != getCurrentActivity(false)) {
 				finishActivity(activity);
 				iter.remove();
 			}
@@ -335,7 +335,7 @@ class ActivityUtils {
 		}
 		activitiesOpened = null;
 		// Finish the initial activity, pressing Back for good measure
-		finishActivity(getCurrentActivity());
+		finishActivity(getCurrentActivity(false));
 		this.activity = null;
 		sleeper.sleepMini();
 		try {

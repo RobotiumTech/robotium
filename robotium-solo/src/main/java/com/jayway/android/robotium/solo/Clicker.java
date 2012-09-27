@@ -252,14 +252,14 @@ class Clicker {
 	 * @param resourceId the R.id of the ActionBar item
 	 */
 	public void clickOnActionBarItem(int resourceId){
-		inst.invokeMenuActionSync(activityUtils.getCurrentActivity(), resourceId, 0);
+		inst.invokeMenuActionSync(activityUtils.getCurrentActivity(false), resourceId, 0);
 	}
 
 	/**
 	 * Clicks on an ActionBar Home/Up button.
 	 */
 	public void clickOnActionBarHomeButton() {
-		Activity activity = activityUtils.getCurrentActivity();
+		Activity activity = activityUtils.getCurrentActivity(false);
 		MenuItem homeMenuItem = null;
 
 		try {
