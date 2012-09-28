@@ -166,7 +166,7 @@ class ViewFetcher {
 
 		 for (int j = 0; j < views.length; j++) {
 			 view = views[j];
-			 if (!(view.getClass().getName()
+			 if (view != null && !(view.getClass().getName()
 					 .equals("com.android.internal.policy.impl.PhoneWindow$DecorView"))) {
 				 decorViews[i] = view;
 				 i++;
