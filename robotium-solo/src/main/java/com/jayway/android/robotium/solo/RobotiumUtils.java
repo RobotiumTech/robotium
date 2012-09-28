@@ -30,6 +30,7 @@ class RobotiumUtils {
 	 * Constructs this object.
 	 * 
      * @param inst the {@code Instrumentation} instance.
+     * @param activityUtils the {@code ActivityUtils} instance
      * @param sleeper the {@code Sleeper} instance.
      */
 	
