@@ -539,7 +539,7 @@ public class Solo {
 	 */
 	
 	public Activity getCurrentActivity() {
-		return activityUtils.getCurrentActivity();
+		return activityUtils.getCurrentActivity(false);
 	}
 	
 	/**
