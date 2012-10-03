@@ -1075,61 +1075,109 @@ public class Solo {
 		return scroller.scroll(Scroller.DOWN);
 	}
 
-    /**
-     * Scrolls to the bottom of the screen.
-     */
+	/**
+	 * Scrolls to the bottom of the screen.
+	 */
 
-    public void scrollToBottom() {
-        waiter.waitForViews(AbsListView.class, ScrollView.class);
-        scroller.scroll(Scroller.DOWN, true);
-    }
+	public void scrollToBottom() {
+		waiter.waitForViews(AbsListView.class, ScrollView.class);
+		scroller.scroll(Scroller.DOWN, true);
+	}
 
 
-    /**
+	/**
 	 * Scrolls up the screen.
 	 *
 	 * @return {@code true} if more scrolling can be done and {@code false} if it is at the top of
 	 * the screen 
 	 *
 	 */
-	
+
 	public boolean scrollUp(){
 		waiter.waitForViews(AbsListView.class, ScrollView.class);
 		return scroller.scroll(Scroller.UP);
 	}
 
-    /**
-    * Scrolls to the top of the screen.
-    */
+	/**
+	 * Scrolls to the top of the screen.
+	 */
 
-    public void scrollToTop() {
-        waiter.waitForViews(AbsListView.class, ScrollView.class);
-        scroller.scroll(Scroller.UP, true);
-    }
+	public void scrollToTop() {
+		waiter.waitForViews(AbsListView.class, ScrollView.class);
+		scroller.scroll(Scroller.UP, true);
+	}
 
-    /**
-     * Scrolls down a list with a given index.
+	/**
+	 * Scrolls down a given list.
+	 * 
+	 * @param list the {@link AbsListView} to be scrolled
+	 * @return {@code true} if more scrolling can be done
+	 * 
+	 */
+
+	public boolean scrollDownList(AbsListView list) {
+		return scroller.scrollList(list, Scroller.DOWN, false);
+	}
+
+	/**
+	 * Scrolls to the bottom of a given list.
+	 *
+	 * @param list the {@link AbsListView} to be scrolled
+	 * @return {@code true} if more scrolling can be done
+	 *
+	 */
+
+	public boolean scrollListToBottom(AbsListView list) {
+		return scroller.scrollList(list, Scroller.DOWN, true);
+	}
+
+	/**
+	 * Scrolls up a given list.
+	 * 
+	 * @param list the {@link AbsListView} to be scrolled
+	 * @return {@code true} if more scrolling can be done
+	 * 
+	 */
+
+	public boolean scrollUpList(AbsListView list) {
+		return scroller.scrollList(list, Scroller.UP, false);
+	}
+
+	/**
+	 * Scrolls to the top of a given list.
+	 *
+	 * @param list the {@link AbsListView} to be scrolled
+	 * @return {@code true} if more scrolling can be done
+	 *
+	 */
+
+	public boolean scrollListToTop(AbsListView list) {
+		return scroller.scrollList(list, Scroller.UP, true);
+	}
+
+	/**
+	 * Scrolls down a list with a given index.
 	 * 
 	 * @param index the {@link ListView} to be scrolled. {@code 0} if only one list is available
 	 * @return {@code true} if more scrolling can be done
 	 * 
 	 */
-	
+
 	public boolean scrollDownList(int index) {
 		return scroller.scrollList(waiter.waitForAndGetView(index, ListView.class), Scroller.DOWN, false);
 	}
 
-    /**
-     * Scrolls a list with a given index to the bottom.
+	/**
+	 * Scrolls a list with a given index to the bottom.
 	 *
 	 * @param index the {@link ListView} to be scrolled. {@code 0} if only one list is available
 	 * @return {@code true} if more scrolling can be done
 	 *
 	 */
 
-    public boolean scrollListToBottom(int index) {
-        return scroller.scrollList(waiter.waitForAndGetView(index, ListView.class), Scroller.DOWN, true);
-    }
+	public boolean scrollListToBottom(int index) {
+		return scroller.scrollList(waiter.waitForAndGetView(index, ListView.class), Scroller.DOWN, true);
+	}
 	
 	/**
 	 * Scrolls up a list with a given index.
