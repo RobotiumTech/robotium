@@ -781,7 +781,6 @@ public class Solo {
 	 */
 	
 	public void clickOnView(View view) {
-		waiter.waitForView(view, SMALLTIMEOUT);
 		clicker.clickOnScreen(view);
 	}
 	
