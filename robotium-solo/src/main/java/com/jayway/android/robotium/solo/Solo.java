@@ -1275,7 +1275,6 @@ public class Solo {
 		setter.setTimePicker(timePicker, hour, minute);
 	}
 	
-	
 	/**
 	 * Sets the progress of a ProgressBar with a given index. Examples are SeekBar and RatingBar.
 	 *

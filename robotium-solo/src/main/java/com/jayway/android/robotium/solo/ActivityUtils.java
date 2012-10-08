@@ -141,6 +141,11 @@ class ActivityUtils {
 		Iterator<WeakReference<Activity>> activityStackIterator = activityStack.iterator();
 		while(activityStackIterator.hasNext()){
 			Activity activityFromWeakReference = activityStackIterator.next().get();
+			
+			if(activityFromWeakReference == null){
+				activityStackIterator.remove();
+			}
+			
 			if(activity!=null && activityFromWeakReference!=null && activityFromWeakReference.equals(activity)){
 				activityStackIterator.remove();
 			}
