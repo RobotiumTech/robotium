@@ -206,11 +206,14 @@ class Waiter {
 	 */
 
 	public boolean waitForView(View view, int timeout, boolean scroll){
+		if(view != null)
+			return true;
+
 		long endTime = SystemClock.uptimeMillis() + timeout;
 
 		while (SystemClock.uptimeMillis() < endTime) {
 			sleeper.sleep();
-
+			
 			final boolean foundAnyMatchingView = searcher.searchFor(view);
 
 			if (foundAnyMatchingView){
