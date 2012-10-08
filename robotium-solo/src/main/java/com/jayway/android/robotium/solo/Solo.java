@@ -16,6 +16,7 @@ import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.NumberPicker;
 import android.widget.ProgressBar;
 import android.widget.RadioButton;
 import android.widget.ScrollView;
@@ -781,6 +782,7 @@ public class Solo {
 	 */
 	
 	public void clickOnView(View view) {
+		waiter.waitForView(view, SMALLTIMEOUT);
 		clicker.clickOnScreen(view);
 	}
 	
@@ -793,6 +795,7 @@ public class Solo {
 	 */
 	
 	public void clickLongOnView(View view) {
+		waiter.waitForView(view, SMALLTIMEOUT);
 		clicker.clickOnScreen(view, true, 0);
 
 	}
@@ -1272,6 +1275,7 @@ public class Solo {
 		waiter.waitForView(timePicker, SMALLTIMEOUT);
 		setter.setTimePicker(timePicker, hour, minute);
 	}
+	
 	
 	/**
 	 * Sets the progress of a ProgressBar with a given index. Examples are SeekBar and RatingBar.
