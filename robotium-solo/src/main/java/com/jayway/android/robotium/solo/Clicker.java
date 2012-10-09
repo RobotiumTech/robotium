@@ -112,8 +112,8 @@ class Clicker {
 		}
 		eventTime = SystemClock.uptimeMillis();
 		event = MotionEvent.obtain(downTime, eventTime, MotionEvent.ACTION_MOVE, 
-				x + ViewConfiguration.getTouchSlop() / 2,
-				y + ViewConfiguration.getTouchSlop() / 2, 0);
+				x + ViewConfiguration.get(inst.getTargetContext()).getScaledTouchSlop() / 2,
+				y + ViewConfiguration.get(inst.getTargetContext()).getScaledTouchSlop() / 2, 0);
 		inst.sendPointerSync(event);
 		if(time > 0)
 			sleeper.sleep(time);
