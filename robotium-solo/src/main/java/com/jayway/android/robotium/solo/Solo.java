@@ -788,8 +788,8 @@ public class Solo {
 	/**
 	 * Clicks on a given View.
 	 * 
-	 * @param view the {@link View} that should be long clicked
-	 * @param immidiately true if view is to be clicked without any wait
+	 * @param view the {@link View} that should be clicked
+	 * @param immediately true if view is to be clicked without any wait
 	 */
 
 	public void clickOnView(View view, boolean immediately){
