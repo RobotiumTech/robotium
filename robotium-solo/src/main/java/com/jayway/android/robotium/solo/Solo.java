@@ -776,7 +776,7 @@ public class Solo {
 	/**
 	 * Clicks on a given View.
 	 *
-	 * @param view the {@link View} that should be clicked
+	 * @param view the {@link View} to be clicked
 	 *
 	 */
 	
@@ -788,7 +788,7 @@ public class Solo {
 	/**
 	 * Clicks on a given View.
 	 * 
-	 * @param view the {@link View} that should be clicked
+	 * @param view the {@link View} to be clicked
 	 * @param immediately true if view is to be clicked without any wait
 	 */
 
@@ -804,7 +804,7 @@ public class Solo {
 	/**
 	 * Long clicks on a given View.
 	 *
-	 * @param view the {@link View} that should be long clicked
+	 * @param view the {@link View} to be long clicked
 	 *
 	 */
 	
@@ -817,7 +817,7 @@ public class Solo {
 	/**
 	 * Long clicks on a given View for a given amount of time.
 	 *
-	 * @param view the {@link View} that should be long clicked
+	 * @param view the {@link View} to be long clicked
 	 * @param time the amount of time to long click
 	 *
 	 */
@@ -831,7 +831,7 @@ public class Solo {
 	 * Clicks on a View displaying a given
 	 * text. Will automatically scroll when needed. 
 	 *
-	 * @param text the text that should be clicked. The parameter will be interpreted as a regular expression
+	 * @param text the text to be clicked. The parameter will be interpreted as a regular expression
 	 *
 	 */
 	
@@ -842,7 +842,7 @@ public class Solo {
 	/**
 	 * Clicks on a View displaying a given text. Will automatically scroll when needed.
 	 *
-	 * @param text the text that should be clicked. The parameter will be interpreted as a regular expression
+	 * @param text the text to be clicked. The parameter will be interpreted as a regular expression
 	 * @param match if multiple objects match the text, this determines which one will be clicked
 	 *
 	 */
@@ -853,7 +853,7 @@ public class Solo {
 	/**
 	 * Clicks on a View displaying a given text.
 	 *
-	 * @param text the text that should be clicked on. The parameter will be interpreted as a regular expression
+	 * @param text the text to be clicked. The parameter will be interpreted as a regular expression
 	 * @param match if multiple objects match the text, this determines which one will be clicked
 	 * @param scroll true if scrolling should be performed
 	 *
@@ -868,7 +868,7 @@ public class Solo {
 	 * Long clicks on a given View. Will automatically scroll when needed. {@link #clickOnText(String)} can then be
 	 * used to click on the context menu items that appear after the long click.
 	 *
-	 * @param text the text that should be clicked. The parameter will be interpreted as a regular expression
+	 * @param text the text to be clicked. The parameter will be interpreted as a regular expression
 	 *
 	 */
 	
@@ -881,7 +881,7 @@ public class Solo {
 	 * Long clicks on a given View. Will automatically scroll when needed. {@link #clickOnText(String)} can then be
 	 * used to click on the context menu items that appear after the long click.
 	 *
-	 * @param text the text that should be clicked. The parameter will be interpreted as a regular expression
+	 * @param text the text to be clicked. The parameter will be interpreted as a regular expression
 	 * @param match if multiple objects match the text, this determines which one will be clicked
 	 *
 	 */
@@ -895,7 +895,7 @@ public class Solo {
 	 * Long clicks on a given View. {@link #clickOnText(String)} can then be
 	 * used to click on the context menu items that appear after the long click.
 	 *
-	 * @param text the text that should be clicked. The parameter will be interpreted as a regular expression
+	 * @param text the text to be clicked. The parameter will be interpreted as a regular expression
 	 * @param match if multiple objects match the text, this determines which one will be clicked
 	 * @param scroll true if scrolling should be performed
 	 *
@@ -910,7 +910,7 @@ public class Solo {
 	 * Long clicks on a given View. {@link #clickOnText(String)} can then be
 	 * used to click on the context menu items that appear after the long click.
 	 *
-	 * @param text the text that should be clicked. The parameter will be interpreted as a regular expression
+	 * @param text the text to be clicked. The parameter will be interpreted as a regular expression
 	 * @param match if multiple objects match the text, this determines which one will be clicked
 	 * @param time the amount of time to long click 
 	 */
@@ -981,7 +981,7 @@ public class Solo {
 	 * Clicks on a given list line and returns an ArrayList of the TextView objects that
 	 * the list line is showing. Will use the first list it finds.
 	 * 
-	 * @param line the line that should be clicked
+	 * @param line the line to be clicked
 	 * @return an {@code ArrayList} of the {@link TextView} objects located in the list line
 	 *
 	 */
@@ -994,7 +994,7 @@ public class Solo {
 	 * Clicks on a given list line on a specified list and 
 	 * returns an ArrayList of the TextView objects that the list line is showing.
 	 * 
-	 * @param line the line that should be clicked
+	 * @param line the line to be clicked
 	 * @param index the index of the list. 1 if two lists are available
 	 * @return an {@code ArrayList} of the {@link TextView} objects located in the list line
 	 *
@@ -1008,7 +1008,7 @@ public class Solo {
 	 * Long clicks on a given list line and returns an ArrayList of the TextView objects that
 	 * the list line is showing. Will use the first list it finds.
 	 * 
-	 * @param line the line that should be clicked
+	 * @param line the line to be clicked
 	 * @return an {@code ArrayList} of the {@link TextView} objects located in the list line
 	 *
 	 */
@@ -1020,7 +1020,7 @@ public class Solo {
 	 * Long clicks on a given list line on a specified list and 
 	 * returns an ArrayList of the TextView objects that the list line is showing.
 	 * 
-	 * @param line the line that should be clicked
+	 * @param line the line to be clicked
 	 * @param index the index of the list. 1 if two lists are available
 	 * @return an {@code ArrayList} of the {@link TextView} objects located in the list line
 	 *
@@ -1033,7 +1033,7 @@ public class Solo {
 	 * Long clicks on a given list line on a specified list and 
 	 * returns an ArrayList of the TextView objects that the list line is showing.
 	 * 
-	 * @param line the line that should be clicked
+	 * @param line the line to be clicked
 	 * @param index the index of the list. 1 if two lists are available
 	 * @param time the amount of time to long click
 	 * @return an {@code ArrayList} of the {@link TextView} objects located in the list line
