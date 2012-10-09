@@ -770,8 +770,7 @@ public class Solo {
 	public void pressSpinnerItem(int spinnerIndex, int itemIndex)
 	{
 		presser.pressSpinnerItem(spinnerIndex, itemIndex);
-	}
-    
+	} 
 	
 	/**
 	 * Clicks on a given View.
@@ -785,6 +784,21 @@ public class Solo {
 		clicker.clickOnScreen(view);
 	}
 	
+	/**
+	 * Clicks on a given View.
+	 * 
+	 * @param view the {@link View} that should be long clicked
+	 * @param immidiately true if view is to be clicked without any wait
+	 */
+
+	public void clickOnView(View view, boolean immediately){
+		if(immidiately)
+			clicker.clickOnScreen(view);
+		else{
+			waiter.waitForView(view, SMALLTIMEOUT);
+			clicker.clickOnScreen(view);
+		}
+	}
 	
 	/**
 	 * Long clicks on a given View.
@@ -797,7 +811,7 @@ public class Solo {
 		waiter.waitForView(view, SMALLTIMEOUT);
 		clicker.clickOnScreen(view, true, 0);
 
-	}
+	}	
 	
 	/**
 	 * Long clicks on a given View for a given amount of time.
