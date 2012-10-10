@@ -1827,6 +1827,19 @@ public class Solo {
 	}
 	
 	/**
+	 * Returns an ArrayList of the NumberPicker objects currently shown in the focused 
+	 * Activity or Dialog.
+	 *
+	 * @return an {@code ArrayList} of the {@link NumberPicker} objects currently shown in the
+	 * focused window
+	 *
+	 */
+	
+	public ArrayList<NumberPicker> getCurrentNumberPickers() {
+		return viewFetcher.getCurrentViews(NumberPicker.class);
+	}
+	
+	/**
 	 * Returns an ArrayList of the SlidingDrawer objects currently shown in the focused 
 	 * Activity or Dialog.
 	 *
