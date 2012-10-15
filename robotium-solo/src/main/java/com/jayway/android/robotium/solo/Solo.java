@@ -1290,29 +1290,6 @@ public class Solo {
 		setter.setTimePicker(timePicker, hour, minute);
 	}
 	
-	/**
-	 * Sets the value of a NumberPicker with a given index.
-	 * 
-	 * @param index the index of the {@link NumberPicker}. {@code 0} if only one is available
-	 * @param value the value that the {@link NumberPicker} should be set to
-	 * 
-	 */
-	public void setNumberPicker(int index, int value){
-		setter.setNumberPicker(waiter.waitForAndGetView(index, NumberPicker.class), value);
-	}
-	
-	/**
-	 * Sets the value of a given NumberPicker.
-	 * 
-	 * @param numberPicker the {@link NumberPicker} object
-	 * @param value the value that the {@link NumberPicker} should be set to
-	 * 
-	 */
-	
-	public void setNumberPicker(NumberPicker numberPicker, int value){
-		waiter.waitForView(numberPicker, SMALLTIMEOUT);
-		setter.setNumberPicker(numberPicker, value);
-	}
 	
 	/**
 	 * Sets the progress of a ProgressBar with a given index. Examples are SeekBar and RatingBar.

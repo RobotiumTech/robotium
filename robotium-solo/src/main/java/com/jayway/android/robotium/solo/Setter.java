@@ -83,28 +83,6 @@ class Setter{
 		}
 	}
 	
-	/**
-	 * Sets the value of a given NumberPicker
-	 * 
-	 * @param numberPicker the {code NumberPicker} object
-	 * @param value the value that the {@code NumberPicker} should be set to
-	 * 
-	 */
-
-	public void setNumberPicker(final NumberPicker numberPicker, final int value) {
-		if(numberPicker != null){
-
-			activityUtils.getCurrentActivity(false).runOnUiThread(new Runnable()
-			{
-				public void run()
-				{
-					try{
-						numberPicker.setValue(value);
-					}catch (Exception ignored){}
-				}
-			});
-		}
-	}
 
 	/**
 	 * Sets the progress of a given {@link ProgressBar}. Examples are SeekBar and RatingBar.
