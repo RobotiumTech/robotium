@@ -4,7 +4,6 @@ import android.widget.DatePicker;
 import android.widget.ProgressBar;
 import android.widget.SlidingDrawer;
 import android.widget.TimePicker;
-import android.widget.NumberPicker;
 
 
 /**
