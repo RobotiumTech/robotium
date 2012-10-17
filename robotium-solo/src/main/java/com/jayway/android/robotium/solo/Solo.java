@@ -16,7 +16,6 @@ import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.NumberPicker;
 import android.widget.ProgressBar;
 import android.widget.RadioButton;
 import android.widget.ScrollView;
@@ -1812,8 +1811,17 @@ public class Solo {
 	 *
 	 */
 	
-	public ArrayList<NumberPicker> getCurrentNumberPickers() {
-		return viewFetcher.getCurrentViews(NumberPicker.class);
+	@SuppressWarnings({ "rawtypes", "unchecked" })
+    public ArrayList getCurrentNumberPickers() {
+	    try {
+	        Class numberPickerClass = Class.forName("android.widget.NumberPicker");
+	        if (numberPickerClass != null) {
+	            return viewFetcher.getCurrentViews(numberPickerClass);
+	        }
+	    } catch(ClassNotFoundException cnfe) {
+	        cnfe.printStackTrace();
+	    }
+	    return null;
 	}
 	
 	/**
