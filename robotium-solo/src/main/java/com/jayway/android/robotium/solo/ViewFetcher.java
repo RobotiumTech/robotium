@@ -120,7 +120,7 @@ class ViewFetcher {
 
 		 for (int j = 0; j < views.length; j++) {
 			 view = views[j];
-			 if (view.getClass().getName()
+			 if (view != null && view.getClass().getName()
 					 .equals("com.android.internal.policy.impl.PhoneWindow$DecorView")) {
 				 decorViews[i] = view;
 				 i++;
@@ -214,17 +214,19 @@ class ViewFetcher {
 	 */
 
 	private void addChildren(ArrayList<View> views, ViewGroup viewGroup, boolean onlySufficientlyVisible) {
-		for (int i = 0; i < viewGroup.getChildCount(); i++) {
-			final View child = viewGroup.getChildAt(i);
+		if(viewGroup != null){
+			for (int i = 0; i < viewGroup.getChildCount(); i++) {
+				final View child = viewGroup.getChildAt(i);
 
-			if(onlySufficientlyVisible && isViewSufficientlyShown(child))
-				views.add(child);
+				if(onlySufficientlyVisible && isViewSufficientlyShown(child))
+					views.add(child);
 
-			else if(!onlySufficientlyVisible)
-				views.add(child);
+				else if(!onlySufficientlyVisible)
+					views.add(child);
 
-			if (child instanceof ViewGroup) {
-				addChildren(views, (ViewGroup) child, onlySufficientlyVisible);
+				if (child instanceof ViewGroup) {
+					addChildren(views, (ViewGroup) child, onlySufficientlyVisible);
+				}
 			}
 		}
 	}
