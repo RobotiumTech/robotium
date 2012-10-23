@@ -24,6 +24,7 @@ class TextEnterer{
 	 * Constructs this object.
 	 * 
 	 * @param inst the {@code Instrumentation} instance.
+	 * @param activityUtils the {@code ActivityUtils} instance
 	 * @param clicker the {@code Clicker} instance.
 	 * 
 	 */
