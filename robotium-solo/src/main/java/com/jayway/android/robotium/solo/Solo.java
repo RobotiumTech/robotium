@@ -603,15 +603,15 @@ public class Solo {
 	}	
 	
 	/**
-	 * Asserts that the available memory in the system is not low.
+	 * Asserts that the available memory is not considered low by the system.
 	 * 
 	 */
-	
+
 	public void assertMemoryNotLow()
 	{
 		asserter.assertMemoryNotLow();
 	}
-	
+
 
 	/**
 	 * Waits for a Dialog to close.
