@@ -280,7 +280,6 @@ class Scroller {
 	 *
 	 */
 
-	@SuppressWarnings("deprecation")
 	public void scrollToSide(Side side) {
 		int screenHeight = activityUtils.getCurrentActivity().getWindowManager().getDefaultDisplay()
 				.getHeight();
