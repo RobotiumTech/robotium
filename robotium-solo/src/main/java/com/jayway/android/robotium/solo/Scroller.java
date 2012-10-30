@@ -14,9 +14,9 @@ import android.widget.ScrollView;
 /**
  * Contains scroll methods. Examples are scrollDown(), scrollUpList(),
  * scrollToSide().
- * 
+ *
  * @author Renas Reda, renas.reda@jayway.com
- * 
+ *
  */
 
 class Scroller {
@@ -92,10 +92,10 @@ class Scroller {
 
 	/**
 	 * Scrolls a ScrollView.
-	 * 
+	 *
 	 * @param direction the direction to be scrolled
 	 * @return {@code true} if scrolling occurred, false if it did not
-	 * 
+	 *
 	 */
 
 	private boolean scrollScrollView(final ScrollView view, int direction){
@@ -157,12 +157,12 @@ class Scroller {
 
 	/**
 	 * Scrolls up and down.
-	 * 
+	 *
 	 * @param direction the direction in which to scroll
 	 * @param allTheWay <code>true</code> if the view should be scrolled to the beginning or end,
 	 *                  <code>false</code> to scroll one page up or down.
 	 * @return {@code true} if more scrolling can be done
-	 * 
+	 *
 	 */
 
 	public boolean scroll(int direction, boolean allTheWay) {
@@ -170,7 +170,7 @@ class Scroller {
 		final ArrayList<View> viewList = RobotiumUtils.
 				removeInvisibleViews(viewFetcher.getAllViews(true));
 		@SuppressWarnings("unchecked")
-		ArrayList<View> views = RobotiumUtils.filterViewsToSet(new Class[] { ListView.class, 
+		ArrayList<View> views = RobotiumUtils.filterViewsToSet(new Class[] { ListView.class,
 				ScrollView.class, GridView.class}, viewList);
 		View view = viewFetcher.getFreshestView(views);
 
@@ -197,13 +197,13 @@ class Scroller {
 
 	/**
 	 * Scrolls a list.
-	 * 
+	 *
 	 * @param absListView the list to be scrolled
 	 * @param direction the direction to be scrolled
 	 * @param allTheWay {@code true} to scroll the view all the way up or down, {@code false} to scroll one page up
 	 *                              or down.
 	 * @return {@code true} if more scrolling can be done
-	 * 
+	 *
 	 */
 
 	public <T extends AbsListView> boolean scrollList(T absListView, int direction, boolean allTheWay) {
@@ -244,7 +244,7 @@ class Scroller {
 				lineToScrollTo = 0;
 
 			scrollListToLine(absListView, lineToScrollTo);
-		}	
+		}
 		sleeper.sleep();
 		return true;
 	}
@@ -252,7 +252,7 @@ class Scroller {
 
 	/**
 	 * Scroll the list to a given line
-	 * 
+	 *
 	 * @param view the {@link AbsListView} to scroll
 	 * @param line the line to scroll to
 	 */
@@ -291,6 +291,27 @@ class Scroller {
 			drag(0, x, y, y, 40);
 		else if (side == Side.RIGHT)
 			drag(x, 0, y, y, 40);
+	}
+
+	/**
+	 * Scrolls view horizontally.
+	 *
+	 * @param view the view to scroll
+	 * @param side the side to which to scroll; {@link Side#RIGHT} or {@link Side#LEFT}
+	 *
+	 */
+
+	public void scrollViewToSide(View view, Side side) {
+		int[] corners = new int[2];
+		view.getLocationOnScreen(corners);
+		int viewHeight = view.getHeight();
+		int viewWidth = view.getWidth();
+		float x = corners[0] + viewWidth / 2.0f;
+		float y = corners[1] + viewHeight / 2.0f;
+		if (side == Side.LEFT)
+			drag(corners[0], x, y, y, 40);
+		else if (side == Side.RIGHT)
+			drag(x, corners[0], y, y, 40);
 	}
 
 }
