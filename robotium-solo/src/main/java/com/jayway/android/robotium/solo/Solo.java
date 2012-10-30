@@ -1232,8 +1232,22 @@ public class Solo {
             case LEFT:  scroller.scrollToSide(Scroller.Side.LEFT);  break;
         }
 	}
-	
-	
+
+	/**
+	 * Scrolls horizontally.
+	 *
+	 * @param view the view to scroll
+	 * @param side the side to which to scroll; {@link #RIGHT} or {@link #LEFT}
+	 *
+	 */
+
+	public void scrollViewToSide(View view, int side) {
+		switch (side){
+			case RIGHT: scroller.scrollViewToSide(view, Scroller.Side.RIGHT); break;
+			case LEFT:  scroller.scrollViewToSide(view, Scroller.Side.LEFT);  break;
+		}
+	}
+
 	/**
 	 * Sets the date in a DatePicker with a given index.
 	 *
