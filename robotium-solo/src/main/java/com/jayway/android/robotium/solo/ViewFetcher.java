@@ -360,7 +360,13 @@ class ViewFetcher {
 	private static Class<?> windowManager;
 	static{
 		try {
-			windowManager = Class.forName("android.view.WindowManagerImpl");
+			String windowManagerClassName;
+			if (android.os.Build.VERSION.SDK_INT >= 17) {
+				windowManagerClassName = "android.view.WindowManagerGlobal";
+			} else {
+				windowManagerClassName = "android.view.WindowManagerImpl"; 
+			}
+ 			windowManager = Class.forName(windowManagerClassName);
 
 		} catch (ClassNotFoundException e) {
 			throw new RuntimeException(e);
@@ -401,11 +407,15 @@ class ViewFetcher {
 	
 	private void setWindowManagerString(){
 
-		if(android.os.Build.VERSION.SDK_INT >= 13)
+		if (android.os.Build.VERSION.SDK_INT >= 17) {
+			windowManagerString = "sDefaultWindowManager";
+			
+		} else if(android.os.Build.VERSION.SDK_INT >= 13) {
 			windowManagerString = "sWindowManager";
 
-		else
+		} else {
 			windowManagerString = "mWindowManager";
+		}
 	}
 
 
