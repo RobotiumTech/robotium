@@ -325,7 +325,7 @@ class Waiter {
 
 			sleeper.sleep();
 
-			final boolean foundAnyTextView = searcher.searchFor(TextView.class, text, expectedMinimumNumberOfMatches, scroll, onlyVisible);
+			final boolean foundAnyTextView = searcher.searchFor(TextView.class, text, expectedMinimumNumberOfMatches, timeout, scroll, onlyVisible);
 
 			if (foundAnyTextView){
 				return true;
