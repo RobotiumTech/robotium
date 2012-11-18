@@ -1218,6 +1218,28 @@ public class Solo {
    	public boolean scrollListToTop(int index) {
    		return scroller.scrollList(waiter.waitForAndGetView(index, ListView.class), Scroller.UP, true);
    	}
+   	
+   	/**
+	 * Scroll the given list to a given line 
+	 *
+	 * @param absListView the {@link AbsListView} to scroll
+	 * @param line the line to scroll to
+	 */
+   	
+   	public void scrollListToLine(AbsListView absListView, int line){
+   		scroller.scrollListToLine(absListView, line);
+   	}
+   	
+	/**
+	 * Scroll a list with a given index to a given line 
+	 *
+	 * @param index the index of the {@link AbsListView} to scroll
+	 * @param line the line to scroll to
+	 */
+   	
+   	public void scrollListToLine(int index, int line){
+   		scroller.scrollListToLine(waiter.waitForAndGetView(index, AbsListView.class), line);
+   	}
 
 	/**
 	 * Scrolls horizontally.

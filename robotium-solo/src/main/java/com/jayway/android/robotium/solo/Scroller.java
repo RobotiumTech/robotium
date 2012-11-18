@@ -1,6 +1,8 @@
 package com.jayway.android.robotium.solo;
 
 import java.util.ArrayList;
+
+import junit.framework.Assert;
 import android.app.Instrumentation;
 import android.os.SystemClock;
 import android.view.MotionEvent;
@@ -257,8 +259,10 @@ class Scroller {
 	 * @param line the line to scroll to
 	 */
 
-	private <T extends AbsListView> void scrollListToLine(final T view, final int line){
-
+	public <T extends AbsListView> void scrollListToLine(final T view, final int line){
+		if(view == null)
+			Assert.assertTrue("AbsListView is null!", false);
+		
 		final int lineToMoveTo;
 		if(view instanceof GridView)
 			lineToMoveTo = line+1;
