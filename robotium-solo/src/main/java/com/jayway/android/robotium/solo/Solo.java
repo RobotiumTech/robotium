@@ -326,6 +326,15 @@ public class Solo {
 		return waiter.waitForView(viewClass, index, timeout, scroll);
 	}
 	
+	/**
+	 * Waits for a condition to be satisfied.
+	 * @param condition the condition to wait for
+	 * @param timeout the amount of time in milliseconds to wait
+	 * @return {@code true} if condition is satisfied and {@code false} if it is not satisfied before the timeout
+	 */
+	public boolean waitForCondition(Condition condition, final int timeout){
+		return waiter.waitForCondition(condition, timeout);
+	}
 	
 	/**
 	 * Searches for a text string in the EditText objects currently shown and returns true if found. Will automatically scroll when needed.
