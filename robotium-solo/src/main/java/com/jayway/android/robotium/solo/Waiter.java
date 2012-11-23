@@ -245,6 +245,30 @@ class Waiter {
 		}
 		return null;
 	}
+	
+
+	/**
+	 * Waits for a condition to be satisfied.
+	 * @param condition the condition to wait for
+	 * @param timeout the amount of time in milliseconds to wait
+	 * @return {@code true} if condition is satisfied and {@code false} if it is not satisfied before the timeout
+	 */
+	public boolean waitForCondition(Condition condition, int timeout){
+		final long endTime = SystemClock.uptimeMillis() + timeout;
+
+		while (true) {
+			final boolean timedOut = SystemClock.uptimeMillis() > endTime;
+			if (timedOut){
+				return false;
+			}
+
+			sleeper.sleep();
+
+			if (condition.isSatisfied()){
+				return true;
+			}
+		}
+	}
 
 	/**
 	 * Waits for a text to be shown. Default timeout is 20 seconds.
