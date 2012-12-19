@@ -4,8 +4,9 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Collection;
+import java.util.Collections;
 import java.util.Date;
+import java.util.List;
 import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -126,6 +127,27 @@ class RobotiumUtils {
 			}
 		}
 		return filteredViews;
+	}
+
+	/**
+	 * Orders {@link View}s by their location on-screen.
+	 * 
+	 * @param views The views to sort.
+	 * @see ViewLocationOnScreenComparator
+	 */
+	public static void sortViewsByLocationOnScreen(List<? extends View> views) {
+		Collections.sort(views, new ViewLocationOnScreenComparator());
+	}
+
+	/**
+	 * Orders {@link View}s by their location on-screen.
+	 * 
+	 * @param views The views to sort.
+	 * @param yAxisFirst Whether the y-axis should be compared before the x-axis.
+	 * @see ViewLocationOnScreenComparator
+	 */
+	public static void sortViewsByLocationOnScreen(List<? extends View> views, boolean yAxisFirst) {
+		Collections.sort(views, new ViewLocationOnScreenComparator(yAxisFirst));
 	}
 
 	/**
