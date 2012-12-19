@@ -197,7 +197,7 @@ public class Solo {
     /**
 	 * Waits for a text to be shown. Default timeout is 20 seconds. 
 	 * 
-	 * @param text the text to wait for
+	 * @param text the text to wait for, specified as a regular expression
 	 * @return {@code true} if text is shown and {@code false} if it is not shown before the timeout
 	 * 
 	 */
@@ -210,7 +210,7 @@ public class Solo {
 	 /**
 	 * Waits for a text to be shown. 
 	 * 
-	 * @param text the text to wait for
+	 * @param text the text to wait for, specified as a regular expression
 	 * @param minimumNumberOfMatches the minimum number of matches that are expected to be shown. {@code 0} means any number of matches
 	 * @param timeout the the amount of time in milliseconds to wait 
 	 * @return {@code true} if text is shown and {@code false} if it is not shown before the timeout
@@ -224,7 +224,7 @@ public class Solo {
 	 /**
 	 * Waits for a text to be shown. 
 	 * 
-	 * @param text the text to wait for
+	 * @param text the text to wait for, specified as a regular expression
 	 * @param minimumNumberOfMatches the minimum number of matches that are expected to be shown. {@code 0} means any number of matches
 	 * @param timeout the the amount of time in milliseconds to wait
 	 * @param scroll {@code true} if scrolling should be performed
@@ -239,7 +239,7 @@ public class Solo {
 	/**
 	 * Waits for a text to be shown. 
 	 * 
-	 * @param text the text to wait for
+	 * @param text the text to wait for, specified as a regular expression
 	 * @param minimumNumberOfMatches the minimum number of matches that are expected to be shown. {@code 0} means any number of matches
 	 * @param timeout the the amount of time in milliseconds to wait
 	 * @param scroll {@code true} if scrolling should be performed
