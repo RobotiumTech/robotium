@@ -4,11 +4,14 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
+import java.util.List;
 import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.regex.PatternSyntaxException;
+
 import junit.framework.Assert;
 import android.app.Instrumentation;
 import android.graphics.Bitmap;
@@ -75,8 +78,8 @@ class RobotiumUtils {
 	 * @return a filtered {@code ArrayList} with no invisible {@code View}s.
 	 */
 	
-	public static <T extends View> ArrayList<T> removeInvisibleViews(ArrayList<T> viewList) {
-		ArrayList<T> tmpViewList = new ArrayList<T>(viewList.size());
+	public static <T extends View> ArrayList<T> removeInvisibleViews(Iterable<T> viewList) {
+		ArrayList<T> tmpViewList = new ArrayList<T>();
 		for (T view : viewList) {
 			if (view != null && view.isShown()) {
 				tmpViewList.add(view);
@@ -93,9 +96,9 @@ class RobotiumUtils {
 	 * @return an ArrayList with filtered views
 	 */
 	
-	public static <T extends View> ArrayList<T> filterViews(Class<T> classToFilterBy, ArrayList<View> viewList) {
-        ArrayList<T> filteredViews = new ArrayList<T>(viewList.size());
-        for (View view : viewList) {
+	public static <T> ArrayList<T> filterViews(Class<T> classToFilterBy, Iterable<?> viewList) {
+        ArrayList<T> filteredViews = new ArrayList<T>();
+        for (Object view : viewList) {
             if (view != null && classToFilterBy.isAssignableFrom(view.getClass())) {
                 filteredViews.add(classToFilterBy.cast(view));
             }
@@ -111,9 +114,8 @@ class RobotiumUtils {
 	 * @param viewList the ArrayList to filter form
 	 * @return an ArrayList with filtered views
 	 */
-	public static ArrayList<View> filterViewsToSet(Class<View> classSet[],
-			ArrayList<View> viewList) {
-		ArrayList<View> filteredViews = new ArrayList<View>(viewList.size());
+	public static ArrayList<View> filterViewsToSet(Class<View> classSet[], Iterable<View> viewList) {
+		ArrayList<View> filteredViews = new ArrayList<View>();
 		for (View view : viewList) {
 			if (view == null)
 				continue;
@@ -125,6 +127,27 @@ class RobotiumUtils {
 			}
 		}
 		return filteredViews;
+	}
+
+	/**
+	 * Orders {@link View}s by their location on-screen.
+	 * 
+	 * @param views The views to sort.
+	 * @see ViewLocationOnScreenComparator
+	 */
+	public static void sortViewsByLocationOnScreen(List<? extends View> views) {
+		Collections.sort(views, new ViewLocationOnScreenComparator());
+	}
+
+	/**
+	 * Orders {@link View}s by their location on-screen.
+	 * 
+	 * @param views The views to sort.
+	 * @param yAxisFirst Whether the y-axis should be compared before the x-axis.
+	 * @see ViewLocationOnScreenComparator
+	 */
+	public static void sortViewsByLocationOnScreen(List<? extends View> views, boolean yAxisFirst) {
+		Collections.sort(views, new ViewLocationOnScreenComparator(yAxisFirst));
 	}
 
 	/**
