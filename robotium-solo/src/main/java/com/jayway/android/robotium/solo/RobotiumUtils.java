@@ -5,10 +5,12 @@ import java.io.FileOutputStream;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.regex.PatternSyntaxException;
+
 import junit.framework.Assert;
 import android.app.Instrumentation;
 import android.graphics.Bitmap;
@@ -19,7 +21,7 @@ import android.view.View;
 import android.widget.TextView;
 
 
-class RobotiumUtils {
+public class RobotiumUtils {
 	
 	private final Instrumentation inst;
 	private final Sleeper sleeper;
@@ -161,7 +163,37 @@ class RobotiumUtils {
 		}	
 		return uniqueTextViews.size();		
 	}
-	
+
+	/**
+	 * Filters a collection of views and returns a list that contains only views
+	 * with text that matches a specified regular expression.
+	 * 
+	 * @param views The collection of views to scan.
+	 * @param regex The text pattern to search for.
+	 * @return A list of views whose text matches the given regex.
+	 */
+	public static <T extends TextView> List<T> filterViewsByText(Iterable<T> views, String regex) {
+		return filterViewsByText(views, Pattern.compile(regex));
+	}
+
+	/**
+	 * Filters a collection of views and returns a list that contains only views
+	 * with text that matches a specified regular expression.
+	 * 
+	 * @param views The collection of views to scan.
+	 * @param regex The text pattern to search for.
+	 * @return A list of views whose text matches the given regex.
+	 */
+	public static <T extends TextView> List<T> filterViewsByText(Iterable<T> views, Pattern regex) {
+		final ArrayList<T> filteredViews = new ArrayList<T>();
+		for (T view : views) {
+			if (view != null && regex.matcher(view.getText()).matches()) {
+				filteredViews.add(view);
+			}
+		}
+		return filteredViews;
+	}
+
 	/**
 	 * Takes a screenshot and saves it in "/sdcard/Robotium-Screenshots/". 
 	 * Requires write permission (android.permission.WRITE_EXTERNAL_STORAGE) in AndroidManifest.xml of the application under test.
