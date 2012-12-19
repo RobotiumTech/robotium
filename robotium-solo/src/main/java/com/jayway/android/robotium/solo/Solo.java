@@ -1535,7 +1535,7 @@ public class Solo {
 	/**
 	 * Returns a TextView which shows a given text. 
 	 * 
-	 * @param text the text that is shown
+	 * @param text the text that is shown, specified as a regular expression
 	 * @return the {@link TextView} that shows the given text
 	 */
 	
@@ -1547,7 +1547,7 @@ public class Solo {
 	/**
 	 * Returns a TextView which shows a given text. 
 	 * 
-	 * @param text the text that is shown
+	 * @param text the text that is shown, specified as a regular expression
 	 * @param onlyVisible {@code true} if only visible texts on the screen should be returned
 	 * @return the {@link TextView} that shows the given text
 	 */
@@ -1560,7 +1560,7 @@ public class Solo {
 	/**
 	 * Returns a Button which shows a given text.
 	 * 
-	 * @param text the text that is shown
+	 * @param text the text that is shown, specified as a regular expression
 	 * @return the {@link Button} that shows the given text
 	 */
 	
@@ -1572,7 +1572,7 @@ public class Solo {
 	/**
 	 * Returns a Button which shows a given text.
 	 * 
-	 * @param text the text that is shown
+	 * @param text the text that is shown, specified as a regular expression
 	 * @param onlyVisible {@code true} if only visible buttons on the screen should be returned
 	 * @return the {@link Button} that shows the given text
 	 */
@@ -1585,7 +1585,7 @@ public class Solo {
 	/**
 	 * Returns an EditText which shows a given text.
 	 * 
-	 * @param text the text that is shown
+	 * @param text the text that is shown, specified as a regular expression
 	 * @return the {@link EditText} which shows the given text
 	 */
 	
@@ -1597,7 +1597,7 @@ public class Solo {
 	/**
 	 * Returns an EditText which shows a given text.
 	 * 
-	 * @param text the text that is shown
+	 * @param text the text that is shown, specified as a regular expression
 	 * @param onlyVisible {@code true} if only visible EditTexts on the screen should be returned
 	 * @return the {@link EditText} which shows the given text
 	 */
