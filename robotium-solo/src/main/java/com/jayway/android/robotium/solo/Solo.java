@@ -1627,7 +1627,7 @@ public class Solo {
 	 * @return a {@link View} with a given class and index
 	 */
 
-	public <T extends View> View getView(Class<T> viewClass, int index){
+	public <T extends View> T getView(Class<T> viewClass, int index){
 		return waiter.waitForAndGetView(index, viewClass);
 	}
 	
