@@ -1912,7 +1912,7 @@ public class Solo {
 	/**
 	 * Checks if a RadioButton with a given text is checked.
 	 *
-	 * @param text the text that the {@link RadioButton} shows
+	 * @param text the text that the {@link RadioButton} shows, specified as a regular expression
 	 * @return {@code true} if a {@link RadioButton} with the given text is checked and {@code false} if it is not checked
 	 *
 	 */
@@ -1938,7 +1938,7 @@ public class Solo {
 	/**
 	 * Checks if a ToggleButton with a given text is checked.
 	 *
-	 * @param text the text that the {@link ToggleButton} shows
+	 * @param text the text that the {@link ToggleButton} shows, specified as a regular expression
 	 * @return {@code true} if a {@link ToggleButton} with the given text is checked and {@code false} if it is not checked
 	 *
 	 */
@@ -1964,7 +1964,7 @@ public class Solo {
 	/**
 	 * Checks if a CheckBox with a given text is checked.
 	 *
-	 * @param text the text that the {@link CheckBox} shows
+	 * @param text the text that the {@link CheckBox} shows, specified as a regular expression
 	 * @return {@code true} if a {@link CheckBox} with the given text is checked and {@code false} if it is not checked
 	 *
 	 */
@@ -1977,7 +1977,7 @@ public class Solo {
 	/**
 	 * Checks if the given text is checked.
 	 *
-	 * @param text the text that the {@link CheckedTextView} or {@link CompoundButton} objects show
+	 * @param text the text that the {@link CheckedTextView} or {@link CompoundButton} objects show, specified as a regular expression
 	 * @return {@code true} if the given text is checked and {@code false} if it is not checked
 	 */
 	
@@ -1996,7 +1996,7 @@ public class Solo {
 	/**
 	 * Checks if a given text is selected in any Spinner located in the current screen.
 	 *
-	 * @param text the text that is expected to be selected
+	 * @param text the text that is expected to be selected, specified as a regular expression
 	 * @return {@code true} if the given text is selected in any {@link Spinner} and false if it is not
 	 * 
 	 */
@@ -2010,7 +2010,7 @@ public class Solo {
 	 * Checks if a given text is selected in a given Spinner. 
 	 *
 	 * @param index the index of the spinner to check. {@code 0} if only one spinner is available
-	 * @param text the text that is expected to be selected
+	 * @param text the text that is expected to be selected, specified as a regular expression
 	 * @return true if the given text is selected in the given {@link Spinner} and false if it is not
 	 */
 	
