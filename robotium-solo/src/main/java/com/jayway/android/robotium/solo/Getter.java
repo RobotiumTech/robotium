@@ -1,6 +1,8 @@
 package com.jayway.android.robotium.solo;
 
 import java.util.ArrayList;
+import java.util.regex.Pattern;
+
 import junit.framework.Assert;
 import android.app.Activity;
 import android.view.View;
@@ -52,7 +54,7 @@ class Getter {
 	 * Returns a {@code View} that shows a given text, from the list of current {@code View}s of the specified type.
 	 *
 	 * @param classToFilterBy which {@code View}s to choose from
-	 * @param text the text that the view shows
+	 * @param text the text that the view shows, specified as a regular expression
 	 * @param onlyVisible {@code true} if only visible texts on the screen should be returned
 	 * @return a {@code View} showing a given text, from the list of current {@code View}s of the specified type
 	 */
@@ -63,12 +65,13 @@ class Getter {
 		if(onlyVisible)
 			views =	RobotiumUtils.removeInvisibleViews(views);
 		T viewToReturn = null;
+		final Pattern textPattern = Pattern.compile(text);
 		for(T view: views){
-			if(view.getText().toString().equals(text))
+			if(textPattern.matcher(view.getText()).matches())
 				viewToReturn = view;
 		}
 		if(viewToReturn == null)
-			Assert.assertTrue("No " + classToFilterBy.getSimpleName() + " with text " + text + " is found!", false);
+			Assert.assertTrue("No " + classToFilterBy.getSimpleName() + " with text matching " + text + " is found!", false);
 
 		return viewToReturn;
 	}
