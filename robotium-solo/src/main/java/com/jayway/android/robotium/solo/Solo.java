@@ -1643,6 +1643,30 @@ public class Solo {
 	public ArrayList<View> getCurrentViews() {
 		return viewFetcher.getViews(null, true);
 	}
+
+	/**
+	 * Returns an {@code ArrayList} of {@code View}s of the specified {@code Class} located in the current
+	 * {@code Activity}.
+	 *
+	 * @param classToFilterBy return all instances of this class, e.g. {@code Button.class} or {@code GridView.class}
+	 * @return an {@code ArrayList} of {@code View}s of the specified {@code Class} located in the current {@code Activity}
+	 */
+
+	public <T extends View> ArrayList<T> getCurrentViews(Class<T> classToFilterBy) {
+		return viewFetcher.getCurrentViews(classToFilterBy);
+	}
+
+	/**
+	 * Returns an {@code ArrayList} of {@code View}s of the specified {@code Class} located under the specified {@code parent}.
+	 *
+	 * @param classToFilterBy return all instances of this class, e.g. {@code Button.class} or {@code GridView.class}
+	 * @param parent the parent {@code View} for where to start the traversal
+	 * @return an {@code ArrayList} of {@code View}s of the specified {@code Class} located under the specified {@code parent}
+	 */
+	public <T extends View> ArrayList<T> getCurrentViews(Class<T> classToFilterBy, View parent) {
+		return viewFetcher.getCurrentViews(classToFilterBy, parent);
+	}
+
 	
 	/**
 	 * Returns an ArrayList of the ImageView objects currently shown in the focused 
