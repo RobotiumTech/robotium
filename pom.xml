@@ -2,7 +2,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.jayway.android.robotium</groupId>
 	<artifactId>robotium</artifactId>
-	<version>3.6.1-SNAPSHOT</version>
+	<version>3.6.1-mk</version>
 	<packaging>pom</packaging>
     <name>Robotium</name>
     <description>User scenario testing for Android</description>
@@ -14,8 +14,8 @@
     <properties>
         <scm.branch>master</scm.branch>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <maven.version>2.2.1</maven.version>
-        <android.jar.version>4.0.1.2</android.jar.version>
+        <maven.version>3.0.4</maven.version>
+        <android.jar.version>4.1.1.4</android.jar.version>
     </properties>
     <scm>
         <url>http://github.com/jayway/robotium/tree/${scm.branch}</url>
@@ -56,6 +56,7 @@
     <prerequisites>
         <maven>${maven.version}</maven>
     </prerequisites>
+    
     <dependencyManagement>
         <dependencies>
             <dependency>
@@ -165,8 +166,8 @@
             <plugin>
                 <artifactId>maven-compiler-plugin</artifactId>
                 <configuration>
-                    <source>1.5</source>
-                    <target>1.5</target>
+                    <source>1.6</source>
+                    <target>1.6</target>
                 </configuration>
             </plugin>
             <plugin>
@@ -174,8 +175,8 @@
                 <configuration>
                     <archive>
                         <manifestEntries>
-                            <Build-Source-Version>1.5</Build-Source-Version>
-                            <Build-Target-Version>1.5</Build-Target-Version>
+                            <Build-Source-Version>1.6</Build-Source-Version>
+                            <Build-Target-Version>1.6</Build-Target-Version>
                         </manifestEntries>
                     </archive>
                 </configuration>
@@ -202,6 +203,25 @@
             </plugin>
         </plugins>
     </build>
+  <repositories>
+    <repository>
+      <id>Noser-Library</id>
+      <name>Noser-Library</name>
+      <url>https://ps.noser.com/svn/a20999002006/04_Software/repository</url>
+    </repository>
+    <repository>
+      <id>codehaus.org</id>
+      <name>Codehaus repository</name>
+      <url>http://repository.codehaus.org/</url>
+    </repository>
+  </repositories>
+  <pluginRepositories>
+    <pluginRepository>
+      <id>codehaus.org</id>
+      <name>Codehaus repository</name>
+      <url>http://repository.codehaus.org</url>
+    </pluginRepository>
+  </pluginRepositories>
 
 	<distributionManagement>
         <repository>

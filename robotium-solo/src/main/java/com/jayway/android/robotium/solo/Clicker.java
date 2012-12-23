@@ -30,6 +30,13 @@ import android.widget.TextView;
 
 class Clicker {
 
+   /**
+    * <p>
+    * class logger tag.
+    * </p>
+    */
+   private static final String TAG = Clicker.class.getName ();
+    
 	private final String LOG_TAG = "Robotium";
 	private final ActivityUtils activityUtils;
 	private final ViewFetcher viewFetcher;
@@ -88,6 +95,7 @@ class Clicker {
 			inst.sendPointerSync(event2);
 			sleeper.sleep(MINISLEEP);
 		}catch(SecurityException e){
+                        android.util.Log.e (TAG, "LOG00010: Click can not be completed!", e);
 			Assert.assertTrue("Click can not be completed!", false);
 		}
 	}
