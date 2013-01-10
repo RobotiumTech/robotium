@@ -14,6 +14,7 @@ import android.content.IntentFilter;
 import android.util.Log;
 import android.view.KeyEvent;
 
+
 /**
  * Contains activity related methods. Examples are:
  * getCurrentActivity(), getActivityList(), getAllOpenedActivities().
@@ -55,6 +56,8 @@ class ActivityUtils {
 		setupActivityMonitor();
 		setupActivityStackListener();
 	}
+	
+	
 
 	/**
 	 * Creates a new activity stack and pushes the start activity 
@@ -116,15 +119,15 @@ class ActivityUtils {
 				if (activityMonitor != null){
 					Activity activity = activityMonitor.getLastActivity();
 					if (activity != null){
+						
 						if(!activitiesStoredInActivityStack.isEmpty() && activitiesStoredInActivityStack.peek().equals(activity.toString()))
 							return;
 
-						if(!activity.isFinishing()){
-							if(activitiesStoredInActivityStack.remove(activity.toString()))
-								removeActivityFromStack(activity);
+						if (activitiesStoredInActivityStack.remove(activity.toString())) 
+							removeActivityFromStack(activity);
 
+						if (!activity.isFinishing())
 							addActivityToStack(activity);
-						}
 					}
 				}
 			}
