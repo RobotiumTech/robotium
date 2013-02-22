@@ -10,7 +10,7 @@ import android.widget.EditText;
 /**
  * Contains setEditText() to enter text into text fields.
  * 
- * @author Renas Reda, renas.reda@jayway.com
+ * @author Renas Reda, renasreda@gmail.com
  *
  */
 
@@ -89,11 +89,13 @@ class TextEnterer{
 		}
 	}
 
+
 	/**
 	 * Hides the soft keyboard
 	 * 
 	 * @param editText the edit text in focus
 	 */
+	
 	@SuppressWarnings("static-access")
 	private void closeSoftKeyboard(EditText editText) {
 		InputMethodManager imm = (InputMethodManager)activityUtils.getCurrentActivity(false).

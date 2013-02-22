@@ -19,7 +19,7 @@ import android.view.KeyEvent;
  * Contains activity related methods. Examples are:
  * getCurrentActivity(), getActivityList(), getAllOpenedActivities().
  * 
- * @author Renas Reda, renas.reda@jayway.com
+ * @author Renas Reda, renasreda@gmail.com
  * 
  */
 
@@ -43,7 +43,6 @@ class ActivityUtils {
 	 * @param inst the {@code Instrumentation} instance.
 	 * @param activity the start {@code Activity}
 	 * @param sleeper the {@code Sleeper} instance
-	 *
 	 */
 
 	public ActivityUtils(Instrumentation inst, Activity activity, Sleeper sleeper) {
@@ -56,12 +55,13 @@ class ActivityUtils {
 		setupActivityMonitor();
 		setupActivityStackListener();
 	}
-	
-	
+
+
 
 	/**
 	 * Creates a new activity stack and pushes the start activity 
 	 */
+	
 	private void createStackAndPushStartActivity(){
 		activityStack = new Stack<WeakReference<Activity>>();
 		if (activity != null){
@@ -75,7 +75,6 @@ class ActivityUtils {
 	 * Returns a {@code List} of all the opened/active activities.
 	 * 
 	 * @return a {@code List} of all the opened/active activities
-	 * 
 	 */
 
 	public ArrayList<Activity> getAllOpenedActivities()
@@ -94,7 +93,6 @@ class ActivityUtils {
 	/**
 	 * This is were the activityMonitor is set up. The monitor will keep check
 	 * for the currently active activity.
-	 *
 	 */
 
 	private void setupActivityMonitor() {
@@ -119,15 +117,16 @@ class ActivityUtils {
 				if (activityMonitor != null){
 					Activity activity = activityMonitor.getLastActivity();
 					if (activity != null){
-						
-						if(!activitiesStoredInActivityStack.isEmpty() && activitiesStoredInActivityStack.peek().equals(activity.toString()))
+
+						if(!activitiesStoredInActivityStack.isEmpty() && activitiesStoredInActivityStack.peek().equals(activity.toString())){
 							return;
-
-						if (activitiesStoredInActivityStack.remove(activity.toString())) 
+						}						
+						if (activitiesStoredInActivityStack.remove(activity.toString())){
 							removeActivityFromStack(activity);
-
-						if (!activity.isFinishing())
+						}
+						if (!activity.isFinishing()){
 							addActivityToStack(activity);
+						}
 					}
 				}
 			}
@@ -137,18 +136,20 @@ class ActivityUtils {
 
 	/**
 	 * Removes a given activity from the activity stack
+	 * 
 	 * @param activity the activity to remove
 	 */
+
 	private void removeActivityFromStack(Activity activity){
 
 		Iterator<WeakReference<Activity>> activityStackIterator = activityStack.iterator();
 		while(activityStackIterator.hasNext()){
 			Activity activityFromWeakReference = activityStackIterator.next().get();
-			
+
 			if(activityFromWeakReference == null){
 				activityStackIterator.remove();
 			}
-			
+
 			if(activity!=null && activityFromWeakReference!=null && activityFromWeakReference.equals(activity)){
 				activityStackIterator.remove();
 			}
@@ -168,8 +169,7 @@ class ActivityUtils {
 	/**
 	 * Sets the Orientation (Landscape/Portrait) for the current activity.
 	 * 
-	 * @param orientation An orientation constant such as {@link android.content.pm.ActivityInfo#SCREEN_ORIENTATION_LANDSCAPE} or {@link android.content.pm.ActivityInfo#SCREEN_ORIENTATION_PORTRAIT}.
-	 *  
+	 * @param orientation An orientation constant such as {@link android.content.pm.ActivityInfo#SCREEN_ORIENTATION_LANDSCAPE} or {@link android.content.pm.ActivityInfo#SCREEN_ORIENTATION_PORTRAIT}
 	 */
 
 	public void setActivityOrientation(int orientation)
@@ -182,13 +182,12 @@ class ActivityUtils {
 	 * Returns the current {@code Activity}, after sleeping a default pause length.
 	 *
 	 * @return the current {@code Activity}
-	 *
 	 */
 
 	public Activity getCurrentActivity() {
 		return getCurrentActivity(true);
 	}
-	
+
 	/**
 	 * Adds an activity to the stack
 	 * 
@@ -205,7 +204,6 @@ class ActivityUtils {
 	/**
 	 * Waits for an activity to be started if one is not provided
 	 * by the constructor.
-	 *
 	 */
 
 	private final void waitForActivityIfNotAvailable(){
@@ -232,7 +230,6 @@ class ActivityUtils {
 	 *
 	 * @param shouldSleepFirst whether to sleep a default pause first
 	 * @return the current {@code Activity}
-	 *
 	 */
 
 	public Activity getCurrentActivity(boolean shouldSleepFirst) {
@@ -250,7 +247,6 @@ class ActivityUtils {
 	 * Returns to the given {@link Activity}.
 	 *
 	 * @param name the name of the {@code Activity} to return to, e.g. {@code "MyActivity"}
-	 * 
 	 */
 
 	public void goBackToActivity(String name)
@@ -272,9 +268,10 @@ class ActivityUtils {
 			}
 		}
 		else{
-			for (int i = 0; i < activitiesOpened.size(); i++)
+			for (int i = 0; i < activitiesOpened.size(); i++){
 				Log.d(LOG_TAG, "Activity priorly opened: "+ activitiesOpened.get(i).getClass().getSimpleName());
-			Assert.assertTrue("No Activity named " + name + " has been priorly opened", false);
+			}
+			Assert.assertTrue("No Activity named: '" + name + "' has been priorly opened", false);
 		}
 	}
 
@@ -283,7 +280,6 @@ class ActivityUtils {
 	 * 
 	 * @param resId the resource ID for the string
 	 * @return the localized string
-	 * 
 	 */
 
 	public String getString(int resId)
@@ -293,9 +289,7 @@ class ActivityUtils {
 	}
 
 	/**
-	 *
 	 * Finalizes the solo object.
-	 *
 	 */  
 
 	@Override
@@ -327,9 +321,7 @@ class ActivityUtils {
 	}
 
 	/**
-	 *
 	 * All activites that have been opened are finished.
-	 *
 	 */
 
 	public void finishOpenedActivities(){

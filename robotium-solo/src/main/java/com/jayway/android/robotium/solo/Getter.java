@@ -1,8 +1,5 @@
 package com.jayway.android.robotium.solo;
 
-import java.util.ArrayList;
-import java.util.regex.Pattern;
-
 import junit.framework.Assert;
 import android.app.Activity;
 import android.view.View;
@@ -13,14 +10,13 @@ import android.widget.TextView;
  * Contains various get methods. Examples are: getView(int id),
  * getView(Class<T> classToFilterBy, int index).
  * 
- * @author Renas Reda, renas.reda@jayway.com
+ * @author Renas Reda, renasreda@gmail.com
  * 
  */
 
 class Getter {
 	
 	private final ActivityUtils activityUtils;
-	private final ViewFetcher viewFetcher;
 	private final Waiter waiter;
 
 	/**
@@ -31,9 +27,8 @@ class Getter {
      * @param waiter the {@code Waiter} instance
 	 */
 	
-	public Getter(ActivityUtils activityUtils, ViewFetcher viewFetcher, Waiter waiter){
+	public Getter(ActivityUtils activityUtils, Waiter waiter){
 		this.activityUtils = activityUtils;
-		this.viewFetcher = viewFetcher;
 		this.waiter = waiter;
 	}
 
@@ -54,24 +49,18 @@ class Getter {
 	 * Returns a {@code View} that shows a given text, from the list of current {@code View}s of the specified type.
 	 *
 	 * @param classToFilterBy which {@code View}s to choose from
-	 * @param text the text that the view shows, specified as a regular expression
+	 * @param text the text that the view shows
 	 * @param onlyVisible {@code true} if only visible texts on the screen should be returned
 	 * @return a {@code View} showing a given text, from the list of current {@code View}s of the specified type
 	 */
 
 	public <T extends TextView> T getView(Class<T> classToFilterBy, String text, boolean onlyVisible) {
-		waiter.waitForText(text, 0, 10000, false, onlyVisible);
-		ArrayList<T> views = viewFetcher.getCurrentViews(classToFilterBy);
-		if(onlyVisible)
-			views =	RobotiumUtils.removeInvisibleViews(views);
-		T viewToReturn = null;
-		final Pattern textPattern = Pattern.compile(text);
-		for(T view: views){
-			if(textPattern.matcher(view.getText()).matches())
-				viewToReturn = view;
-		}
+	
+		@SuppressWarnings("unchecked")
+		T viewToReturn = (T) waiter.waitForText(text, 0, 10000, false, onlyVisible, false);
+		
 		if(viewToReturn == null)
-			Assert.assertTrue("No " + classToFilterBy.getSimpleName() + " with text matching " + text + " is found!", false);
+			Assert.assertTrue("No " + classToFilterBy.getSimpleName() + " with text " + text + " is found!", false);
 
 		return viewToReturn;
 	}

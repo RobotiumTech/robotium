@@ -6,7 +6,7 @@ import android.os.SystemClock;
 /**
  * Contains the waitForDialogToClose() method.
  * 
- * @author Renas Reda, renas.reda@jayway.com
+ * @author Renas Reda, renasreda@gmail.com
  * 
  */
 
@@ -20,7 +20,6 @@ class DialogUtils {
 	 * 
 	 * @param viewFetcher the {@code ViewFetcher} instance.
      * @param sleeper the {@code Sleeper} instance.
-	 * 
 	 */
 
 	public DialogUtils(ViewFetcher viewFetcher, Sleeper sleeper) {

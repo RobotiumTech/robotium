@@ -201,6 +201,17 @@
                 </configuration>
             </plugin>
         </plugins>
+	<resources>
+    		<resource>
+      			<directory>src/main/resources</directory>
+    		</resource>
+    	<resource>
+      		<directory>src/main/java</directory>
+      	<includes>
+        	<include>**/*.js</include>
+      	</includes>
+    </resource>
+  </resources>  
     </build>
 
 	<distributionManagement>
@@ -219,7 +230,7 @@
     <profiles>
         <profile>
             <id>official-release</id>
-            <build>
+            <build>    
                 <plugins>
                     <!-- We want to sign the artifact, the POM, and all attached artifacts -->
                     <plugin>

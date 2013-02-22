@@ -18,7 +18,7 @@ import android.widget.TextView;
  * Contains various wait methods. Examples are: waitForText(),
  * waitForView().
  * 
- * @author Renas Reda, renas.reda@jayway.com
+ * @author Renas Reda, renasreda@gmail.com
  * 
  */
 
@@ -72,8 +72,7 @@ class Waiter {
 	 *
 	 */
 
-	public boolean waitForActivity(String name, int timeout)
-	{
+	public boolean waitForActivity(String name, int timeout){
 		final long endTime = SystemClock.uptimeMillis() + timeout;
 		Activity currentActivity = activityUtils.getCurrentActivity(false);
 
@@ -99,6 +98,7 @@ class Waiter {
 		boolean foundMatchingView;
 
 		while(true){
+
 			if(sleep)
 				sleeper.sleep();
 
@@ -152,17 +152,15 @@ class Waiter {
 	 * @return {@code true} if any of the views are shown and {@code false} if none of the views are shown before the timeout
 	 */
 
-	public <T extends View> boolean waitForViews(final Class<T> viewClass, final Class<? extends View> viewClass2){
+	public <T extends View> boolean  waitForViews(Class<? extends T>... classes) {
 		final long endTime = SystemClock.uptimeMillis() + SMALLTIMEOUT;
 
 		while (SystemClock.uptimeMillis() < endTime) {
 
-			if(waitForView(viewClass, 0, false, false)){
-				return true;
-			}
-
-			if(waitForView(viewClass2, 0, false, false)){
-				return true;
+			for (Class<? extends T> classToWaitFor : classes) {
+				if (waitForView(classToWaitFor, 0, false, false)) {
+					return true;
+				}
 			}
 			scroller.scroll(Scroller.DOWN);
 			sleeper.sleep();
@@ -245,10 +243,43 @@ class Waiter {
 		}
 		return null;
 	}
-	
+
+	/**
+	 * Waits for a web element.
+	 * 
+	 * @param by the By object. Examples are By.id("id") and By.name("name")
+	 * @param match if multiple objects match, this determines which one will be clicked
+	 * @param timeout the the amount of time in milliseconds to wait 
+	 * @param scroll {@code true} if scrolling should be performed 
+	 */
+
+	public WebElement waitForWebElement(final By by, int match, int timeout, boolean scroll){
+		final long endTime = SystemClock.uptimeMillis() + timeout;
+
+		while (true) {	
+
+			final boolean timedOut = SystemClock.uptimeMillis() > endTime;
+
+			if (timedOut){
+				searcher.logMatchesFound(by.getValue());
+				return null;
+			}
+			sleeper.sleep();
+
+			WebElement webElementToReturn = searcher.searchForWebElement(by, match, timeout, scroll); 
+
+			if(webElementToReturn != null)
+				return webElementToReturn;
+
+			if(scroll) 
+				scroller.scroll(Scroller.DOWN);
+		}
+	}
+
 
 	/**
 	 * Waits for a condition to be satisfied.
+	 * 
 	 * @param condition the condition to wait for
 	 * @param timeout the amount of time in milliseconds to wait
 	 * @return {@code true} if condition is satisfied and {@code false} if it is not satisfied before the timeout
@@ -275,10 +306,9 @@ class Waiter {
 	 *
 	 * @param text the text that needs to be shown, specified as a regular expression
 	 * @return {@code true} if text is found and {@code false} if it is not found before the timeout
-	 * 
 	 */
 
-	public boolean waitForText(String text) {
+	public TextView waitForText(String text) {
 		return waitForText(text, 0, TIMEOUT, true);
 	}
 
@@ -288,10 +318,9 @@ class Waiter {
 	 * @param text the text that needs to be shown, specified as a regular expression
 	 * @param expectedMinimumNumberOfMatches the minimum number of matches of text that must be shown. {@code 0} means any number of matches
 	 * @return {@code true} if text is found and {@code false} if it is not found before the timeout
-	 * 
 	 */
 
-	public boolean waitForText(String text, int expectedMinimumNumberOfMatches) {
+	public TextView waitForText(String text, int expectedMinimumNumberOfMatches) {
 
 		return waitForText(text, expectedMinimumNumberOfMatches, TIMEOUT, true);
 	}
@@ -303,10 +332,9 @@ class Waiter {
 	 * @param expectedMinimumNumberOfMatches the minimum number of matches of text that must be shown. {@code 0} means any number of matches
 	 * @param timeout the amount of time in milliseconds to wait
 	 * @return {@code true} if text is found and {@code false} if it is not found before the timeout
-	 * 
 	 */
 
-	public boolean waitForText(String text, int expectedMinimumNumberOfMatches, long timeout)
+	public TextView waitForText(String text, int expectedMinimumNumberOfMatches, long timeout)
 	{
 		return waitForText(text, expectedMinimumNumberOfMatches, timeout, true);
 	}
@@ -319,12 +347,12 @@ class Waiter {
 	 * @param timeout the amount of time in milliseconds to wait
 	 * @param scroll {@code true} if scrolling should be performed
 	 * @return {@code true} if text is found and {@code false} if it is not found before the timeout
-	 * 
 	 */
 
-	public boolean waitForText(String text, int expectedMinimumNumberOfMatches, long timeout, boolean scroll) {
-		return waitForText(text, expectedMinimumNumberOfMatches, timeout, scroll, false);	
+	public TextView waitForText(String text, int expectedMinimumNumberOfMatches, long timeout, boolean scroll) {
+		return waitForText(text, expectedMinimumNumberOfMatches, timeout, scroll, false, true);	
 	}
+
 
 	/**
 	 * Waits for a text to be shown.
@@ -334,25 +362,28 @@ class Waiter {
 	 * @param timeout the amount of time in milliseconds to wait
 	 * @param scroll {@code true} if scrolling should be performed
 	 * @param onlyVisible {@code true} if only visible text views should be waited for
+	 * @param hardStoppage {@code true} if search is to be stopped when timeout expires
 	 * @return {@code true} if text is found and {@code false} if it is not found before the timeout
-	 * 
 	 */
 
-	public boolean waitForText(String text, int expectedMinimumNumberOfMatches, long timeout, boolean scroll, boolean onlyVisible) {
+	public TextView waitForText(String text, int expectedMinimumNumberOfMatches, long timeout, boolean scroll, boolean onlyVisible, boolean hardStoppage) {
 		final long endTime = SystemClock.uptimeMillis() + timeout;
 
 		while (true) {
 			final boolean timedOut = SystemClock.uptimeMillis() > endTime;
 			if (timedOut){
-				return false;
+				return null;
 			}
 
 			sleeper.sleep();
 
-			final boolean foundAnyTextView = searcher.searchFor(TextView.class, text, expectedMinimumNumberOfMatches, timeout, scroll, onlyVisible);
+			if(!hardStoppage)
+				timeout = 0;
 
-			if (foundAnyTextView){
-				return true;
+			final TextView textViewToReturn = searcher.searchFor(TextView.class, text, expectedMinimumNumberOfMatches, timeout, scroll, onlyVisible);
+
+			if (textViewToReturn != null ){
+				return textViewToReturn;
 			}
 		}
 	}
@@ -363,7 +394,6 @@ class Waiter {
 	 * @param index the index of the view
 	 * @param classToFilterby the class to filter
 	 * @return view
-	 * 
 	 */
 
 	public <T extends View> T waitForAndGetView(int index, Class<T> classToFilterBy){
@@ -383,7 +413,8 @@ class Waiter {
 		try{
 			view = views.get(index);
 		}catch (IndexOutOfBoundsException exception) {
-			Assert.assertTrue(classToFilterBy.getSimpleName() + " with index " + index + " is not available!", false);
+			index++;
+			Assert.assertTrue(index + " " + classToFilterBy.getSimpleName() +"s" + " are not found!", false);
 		}
 		views = null;
 		return view;
@@ -397,9 +428,7 @@ class Waiter {
 	 * @param tag the name of the tag or null if no tag	
 	 * @param id the id of the tag
 	 * @param timeout the amount of time in milliseconds to wait
-	 * 
 	 * @return true if fragment appears and false if it does not appear before the timeout
-	 *  
 	 */
 
 	public boolean waitForFragment(String tag, int id, int timeout){
@@ -421,9 +450,7 @@ class Waiter {
 	 * 
 	 * @param tag the tag of the SupportFragment or null if no tag
 	 * @param id the id of the SupportFragment
-	 * 
 	 * @return a SupportFragment with a given tag or id
-	 * 
 	 */
 
 	private Fragment getSupportFragment(String tag, int id){
@@ -450,9 +477,9 @@ class Waiter {
 	 * 
 	 * @param logMessage the log message to wait for
 	 * @param timeout the amount of time in milliseconds to wait
-	 * 
 	 * @return true if log message appears and false if it does not appear before the timeout
 	 */
+
 	public boolean waitForLogMessage(String logMessage, int timeout){
 		StringBuilder stringBuilder = new StringBuilder();
 
@@ -471,9 +498,9 @@ class Waiter {
 	 * Returns the log in the given stringBuilder. 
 	 * 
 	 * @param stringBuilder the StringBuilder object to return the log in
-	 * 
 	 * @return the log
 	 */
+
 	private StringBuilder getLog(StringBuilder stringBuilder){
 		Process p = null;
 		BufferedReader reader = null;
@@ -516,9 +543,7 @@ class Waiter {
 	 * 
 	 * @param tag the tag of the Fragment or null if no tag
 	 * @param id the id of the Fragment
-	 * 
 	 * @return a SupportFragment with a given tag or id
-	 * 
 	 */
 
 	private android.app.Fragment getFragment(String tag, int id){
@@ -529,7 +554,7 @@ class Waiter {
 			else
 				return activityUtils.getCurrentActivity().getFragmentManager().findFragmentByTag(tag);
 		}catch (NoSuchMethodError ignored) {}
-		
+
 		return null;
 	}
 }

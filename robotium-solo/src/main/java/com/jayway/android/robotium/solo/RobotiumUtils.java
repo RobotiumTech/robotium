@@ -1,83 +1,33 @@
 package com.jayway.android.robotium.solo;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Date;
 import java.util.List;
 import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.regex.PatternSyntaxException;
-
-import junit.framework.Assert;
-import android.app.Instrumentation;
-import android.graphics.Bitmap;
-import android.os.Environment;
-import android.util.Log;
-import android.view.KeyEvent;
 import android.view.View;
 import android.widget.TextView;
 
+/**
+ * Contains utility methods. Examples are: removeInvisibleViews(Iterable<T> viewList),
+ * filterViews(Class<T> classToFilterBy, Iterable<?> viewList), sortViewsByLocationOnScreen(List<? extends View> views).
+ * 
+ * @author Renas Reda, renasreda@gmail.com
+ * 
+ */
 
 public class RobotiumUtils {
-	
-	private final Instrumentation inst;
-	private final Sleeper sleeper;
-	private final ActivityUtils activityUtils;
-	private final String LOG_TAG = "Robotium";
 
-    /**
-	 * Constructs this object.
-	 * 
-     * @param inst the {@code Instrumentation} instance.
-     * @param activityUtils the {@code ActivityUtils} instance
-     * @param sleeper the {@code Sleeper} instance.
-     */
-	
-	public RobotiumUtils(Instrumentation inst, ActivityUtils activityUtils, Sleeper sleeper) {
-		this.inst = inst;
-		this.activityUtils = activityUtils;
-        this.sleeper = sleeper;
-    }
-   
-	/**
-	 * Tells Robotium to send a key code: Right, Left, Up, Down, Enter or other.
-	 * @param keycode the key code to be sent. Use {@link KeyEvent#KEYCODE_ENTER}, {@link KeyEvent#KEYCODE_MENU}, {@link KeyEvent#KEYCODE_DEL}, {@link KeyEvent#KEYCODE_DPAD_RIGHT} and so on...
-	 * 
-	 */
-	
-	public void sendKeyCode(int keycode)
-	{
-		try{
-			inst.sendCharacterSync(keycode);
-		}catch(SecurityException e){
-			Assert.assertTrue("Can not complete action!", false);
-		}
-	}
-	
-	/**
-	 * Simulates pressing the hardware back key.
-	 *
-	 */
-
-	public void goBack() {
-		sleeper.sleep();
-		try {
-			inst.sendKeyDownUpSync(KeyEvent.KEYCODE_BACK);
-			sleeper.sleep();
-		} catch (Throwable ignored) {}
-	}
 
 	/**
-	 * Removes invisible {@code View}s
+	 * Removes invisible Views
 	 * 
-	 * @param viewList an {@code ArrayList} with {@code View}s that is being checked for invisible {@code View}s.
-	 * @return a filtered {@code ArrayList} with no invisible {@code View}s.
+	 * @param viewList an Iterable with Views that is being checked for invisible Views.
+	 * @return a filtered Iterable with no invisible Views.
 	 */
-	
+
 	public static <T extends View> ArrayList<T> removeInvisibleViews(Iterable<T> viewList) {
 		ArrayList<T> tmpViewList = new ArrayList<T>();
 		for (T view : viewList) {
@@ -87,33 +37,34 @@ public class RobotiumUtils {
 		}
 		return tmpViewList;
 	}
-	
+
 	/**
 	 * Filters views
 	 * 
 	 * @param classToFilterBy the class to filter
-	 * @param viewList the ArrayList to filter from
+	 * @param viewList the Iterable to filter from
 	 * @return an ArrayList with filtered views
 	 */
-	
+
 	public static <T> ArrayList<T> filterViews(Class<T> classToFilterBy, Iterable<?> viewList) {
-        ArrayList<T> filteredViews = new ArrayList<T>();
-        for (Object view : viewList) {
-            if (view != null && classToFilterBy.isAssignableFrom(view.getClass())) {
-                filteredViews.add(classToFilterBy.cast(view));
-            }
-        }
-        viewList = null;
-        return filteredViews;
-    }
-	
+		ArrayList<T> filteredViews = new ArrayList<T>();
+		for (Object view : viewList) {
+			if (view != null && classToFilterBy.isAssignableFrom(view.getClass())) {
+				filteredViews.add(classToFilterBy.cast(view));
+			}
+		}
+		viewList = null;
+		return filteredViews;
+	}
+
 	/**
 	 * Filters all views not within the given set
 	 *
 	 * @param classSet contains all classes that are ok to pass the filter
-	 * @param viewList the ArrayList to filter form
+	 * @param viewList the Iterable to filter form
 	 * @return an ArrayList with filtered views
 	 */
+
 	public static ArrayList<View> filterViewsToSet(Class<View> classSet[], Iterable<View> viewList) {
 		ArrayList<View> filteredViews = new ArrayList<View>();
 		for (View view : viewList) {
@@ -130,36 +81,38 @@ public class RobotiumUtils {
 	}
 
 	/**
-	 * Orders {@link View}s by their location on-screen.
+	 * Orders Views by their location on-screen.
 	 * 
 	 * @param views The views to sort.
-	 * @see ViewLocationOnScreenComparator
+	 * @see ViewLocationComparator
 	 */
+
 	public static void sortViewsByLocationOnScreen(List<? extends View> views) {
-		Collections.sort(views, new ViewLocationOnScreenComparator());
+		Collections.sort(views, new ViewLocationComparator());
 	}
 
 	/**
-	 * Orders {@link View}s by their location on-screen.
+	 * Orders Views by their location on-screen.
 	 * 
 	 * @param views The views to sort.
 	 * @param yAxisFirst Whether the y-axis should be compared before the x-axis.
-	 * @see ViewLocationOnScreenComparator
+	 * @see ViewLocationComparator
 	 */
+
 	public static void sortViewsByLocationOnScreen(List<? extends View> views, boolean yAxisFirst) {
-		Collections.sort(views, new ViewLocationOnScreenComparator(yAxisFirst));
+		Collections.sort(views, new ViewLocationComparator(yAxisFirst));
 	}
 
 	/**
-	 * Checks if a view matches a certain string and returns the amount of matches
+	 * Checks if a view matches a certain string and returns the amount of total matches.
 	 * 
 	 * @param regex the regex to match
 	 * @param view the view to check
 	 * @param uniqueTextViews set of views that have matched
-	 * @return amount of total matches
+	 * @return number of total matches
 	 */
-	
-	public static int checkAndGetMatches(String regex, TextView view, Set<TextView> uniqueTextViews){
+
+	public static int getNumberOfMatches(String regex, TextView view, Set<TextView> uniqueTextViews){
 		Pattern pattern = null;
 		try{
 			pattern = Pattern.compile(regex);
@@ -193,6 +146,7 @@ public class RobotiumUtils {
 	 * @param regex The text pattern to search for.
 	 * @return A list of views whose text matches the given regex.
 	 */
+
 	public static <T extends TextView> List<T> filterViewsByText(Iterable<T> views, String regex) {
 		return filterViewsByText(views, Pattern.compile(regex));
 	}
@@ -205,6 +159,7 @@ public class RobotiumUtils {
 	 * @param regex The text pattern to search for.
 	 * @return A list of views whose text matches the given regex.
 	 */
+
 	public static <T extends TextView> List<T> filterViewsByText(Iterable<T> views, Pattern regex) {
 		final ArrayList<T> filteredViews = new ArrayList<T>();
 		for (T view : views) {
@@ -213,48 +168,5 @@ public class RobotiumUtils {
 			}
 		}
 		return filteredViews;
-	}
-
-	/**
-	 * Takes a screenshot and saves it in "/sdcard/Robotium-Screenshots/". 
-	 * Requires write permission (android.permission.WRITE_EXTERNAL_STORAGE) in AndroidManifest.xml of the application under test.
-	 *
-	 */
-
-	public void takeScreenshot(final View view, final String name) {
-		activityUtils.getCurrentActivity(false).runOnUiThread(new Runnable() {
-
-			@Override
-			public void run() {
-				if(view !=null){
-					view.destroyDrawingCache();
-					view.buildDrawingCache(false);
-					Bitmap b = view.getDrawingCache();
-					FileOutputStream fos = null;
-					SimpleDateFormat sdf = new SimpleDateFormat("ddMMyy-hhmmss");
-					String fileName = null;
-					if(name == null)
-						fileName = sdf.format( new Date()).toString()+ ".jpg";
-					else
-						fileName = name + ".jpg";
-					File directory = new File(Environment.getExternalStorageDirectory() + "/Robotium-Screenshots/");
-					directory.mkdir();
-
-					File fileToSave = new File(directory,fileName);
-					try {
-						fos = new FileOutputStream(fileToSave);
-						if (b.compress(Bitmap.CompressFormat.JPEG, 100, fos) == false)
-							Log.d(LOG_TAG, "Compress/Write failed");
-						fos.flush();
-						fos.close();
-					} catch (Exception e) {
-						Log.d(LOG_TAG, "Can't save the screenshot! Requires write permission (android.permission.WRITE_EXTERNAL_STORAGE) in AndroidManifest.xml of the application under test.");
-						e.printStackTrace();
-					}
-					view.destroyDrawingCache();
-				}
-			}
-
-		});
 	}
 }
