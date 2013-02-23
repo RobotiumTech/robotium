@@ -209,9 +209,7 @@ public class Solo {
 	 */
 	
 	public boolean waitForText(String text) {
-		TextView textView = waiter.waitForText(text);
-		return textView != null;
-
+		return (waiter.waitForText(text) != null);
 	}
 
 	
@@ -226,8 +224,7 @@ public class Solo {
 	 */
 	
 	public boolean waitForText(String text, int minimumNumberOfMatches, long timeout) {
-		TextView textView = waiter.waitForText(text, minimumNumberOfMatches, timeout);
-		return textView != null;
+		return (waiter.waitForText(text, minimumNumberOfMatches, timeout) != null);
     }
 	
 	 /**
@@ -242,9 +239,7 @@ public class Solo {
 	 */
 	
 	public boolean waitForText(String text, int minimumNumberOfMatches, long timeout, boolean scroll) {
-		TextView textView = waiter.waitForText(text, minimumNumberOfMatches, timeout, scroll);
-		return textView != null;
-		
+		return (waiter.waitForText(text, minimumNumberOfMatches, timeout, scroll) != null);
     }
 	
 	/**
@@ -260,8 +255,7 @@ public class Solo {
 	 */
 	
 	public boolean waitForText(String text, int minimumNumberOfMatches, long timeout, boolean scroll, boolean onlyVisible) {
-		TextView textView = waiter.waitForText(text, minimumNumberOfMatches, timeout, scroll, onlyVisible, true);
-		return textView != null;
+		return (waiter.waitForText(text, minimumNumberOfMatches, timeout, scroll, onlyVisible, true) != null);
     }
 	
 	/**
