@@ -2177,17 +2177,6 @@ public class Solo {
     public void finalize() throws Throwable {
 		activityUtils.finalize();
 	}
-
-    /**
-     * All inactive activities are finished.
-     * 
-     * @deprecated Method has been deprecated as there are no longer strong references to activities.  
-     * 
-     */
-
-    public void finishInactiveActivities(){
-    	activityUtils.finishInactiveActivities();  	 	
-    }
     
     /**
 	 * The activities that are alive are finished. Usually used in tearDown().
