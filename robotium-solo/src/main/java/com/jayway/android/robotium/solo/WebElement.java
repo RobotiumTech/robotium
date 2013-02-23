@@ -157,7 +157,7 @@ public class WebElement {
 	}
 
 	/**
-	 * Sets the tag name
+	 * Sets the tag name.
 	 * 
 	 * @param tagName the tag name to set
 	 */

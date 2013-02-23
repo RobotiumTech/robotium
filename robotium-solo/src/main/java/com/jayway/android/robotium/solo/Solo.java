@@ -29,8 +29,7 @@ import android.widget.ToggleButton;
 import android.app.Instrumentation.ActivityMonitor;
 
 /**
- * Contains all the methods that the sub-classes have. It supports test
- * cases that span over multiple activities. 
+ * Main class for development of Robotium tests.  
  * 
  * Robotium has full support for Activities, Dialogs, Toasts, Menus and Context Menus. 
  * 
@@ -2210,7 +2209,7 @@ public class Solo {
 	 * Requires write permission (android.permission.WRITE_EXTERNAL_STORAGE) in AndroidManifest.xml of the application under test.
 	 *
 	 * @param name the name to give the screenshot
-	 * @param quality the compression quality. From 0 (compress for lowest size) to 100 (compress for maximum quality).
+	 * @param quality the compression rate. From 0 (compress for lowest size) to 100 (compress for maximum quality).
 	 *
 	 */
 	
