@@ -1,7 +1,6 @@
 package com.jayway.android.robotium.solo;
 
 import android.view.View;
-
 import java.util.Comparator;
 
 /**
