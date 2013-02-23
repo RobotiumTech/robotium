@@ -8,6 +8,7 @@ package com.jayway.android.robotium.solo;
  */
 
 public class WebElement {
+	
 	private int locationX = 0;
 	private int locationY = 0;
 	private String id;
@@ -19,8 +20,11 @@ public class WebElement {
 	/**
 	 * Constructs this object. 
 	 * 
-	 * @param context the given context
-	 * @param text the given text to be set
+	 * @param webId the given web id
+	 * @param textContent the given text to be set
+	 * @param name the given name to be set
+	 * @param className the given class name to set
+	 * @param tagName the given tag name to be set
 	 */
 
 	public WebElement(String webId, String textContent, String name, String className, String tagName) {
