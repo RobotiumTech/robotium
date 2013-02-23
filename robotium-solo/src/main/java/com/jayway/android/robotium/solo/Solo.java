@@ -585,18 +585,6 @@ public class Solo {
 	}
 	
 	/**
-	 * Returns an ArrayList of all the opened/active activities.
-	 * 
-	 * @return an ArrayList of all the opened/active activities
-	 *
-	 */
-	
-	public ArrayList<Activity> getAllOpenedActivities()
-	{
-		return activityUtils.getAllOpenedActivities();
-	}
-	
-	/**
 	 * Returns the current Activity.
 	 *
 	 * @return the current Activity
