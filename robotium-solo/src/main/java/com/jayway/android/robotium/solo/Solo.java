@@ -2204,4 +2204,18 @@ public class Solo {
 		View decorView = viewFetcher.getRecentDecorView(viewFetcher.getWindowDecorViews());
 		screenshotTaker.takeScreenshot(decorView, name);
 	}
+	
+	/**
+	 * Takes a screenshot and saves it with a given name in "/sdcard/Robotium-Screenshots/". 
+	 * Requires write permission (android.permission.WRITE_EXTERNAL_STORAGE) in AndroidManifest.xml of the application under test.
+	 *
+	 * @param name the name to give the screenshot
+	 * @param quality the compression quality. From 0 (lowest) to 100 (highest).
+	 *
+	 */
+	
+	public void takeScreenshot(String name, int quality){
+		View decorView = viewFetcher.getRecentDecorView(viewFetcher.getWindowDecorViews());
+		screenshotTaker.takeScreenshot(decorView, name, quality);
+	}
 }
