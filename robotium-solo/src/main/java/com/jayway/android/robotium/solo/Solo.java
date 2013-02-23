@@ -335,7 +335,7 @@ public class Solo {
 	}
 	
 	/**
-	 * Waits for a web element.
+	 * Waits for a web element. Default timeout is 20 seconds. 
 	 * 
 	 * @param by the By object. Examples are By.id("id") and By.name("name")
 	 * 
@@ -375,6 +375,7 @@ public class Solo {
 	
 	/**
 	 * Waits for a condition to be satisfied.
+	 * 
 	 * @param condition the condition to wait for
 	 * @param timeout the amount of time in milliseconds to wait
 	 * @return {@code true} if condition is satisfied and {@code false} if it is not satisfied before the timeout
