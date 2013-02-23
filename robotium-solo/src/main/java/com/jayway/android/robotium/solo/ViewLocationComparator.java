@@ -9,7 +9,7 @@ import java.util.Comparator;
  * 
  */
 
-public class ViewLocationComparator implements Comparator<View> {
+class ViewLocationComparator implements Comparator<View> {
 
 	private final int a[] = new int[2];
 	private final int b[] = new int[2];
