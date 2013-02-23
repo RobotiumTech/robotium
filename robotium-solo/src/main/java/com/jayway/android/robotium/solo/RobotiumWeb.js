@@ -24,11 +24,11 @@ function allWebElements() {
 
 function allTexts() {
 	var walk=document.createTreeWalker(document.body,NodeFilter.SHOW_TEXT,null,false); 
+	var range = document.createRange();
 	while(n=walk.nextNode()){
 		try{
 			var text = n.textContent;
 			if(text.trim().length>0) {
-				var range = document.createRange();
 				range.selectNodeContents(n);
 				var rect = range.getBoundingClientRect();
 				if(rect.width > 0 && rect.height > 0 && rect.left > 0){
@@ -128,6 +128,7 @@ function className(name) {
 
 function textContent(text) {
 	var walk=document.createTreeWalker(document.body,NodeFilter.SHOW_TEXT,null,false); 
+	var range = document.createRange();
 	while(n=walk.nextNode()){ 
 		try{
 			var textContent = n.textContent; 
@@ -136,7 +137,6 @@ function textContent(text) {
 				var name = n.parentNode.getAttribute('name');
 				var className = n.parentNode.className;
 				var tagName = n.parentNode.tagName;
-				var range = document.createRange();
 				range.selectNodeContents(n);
 				var rect = range.getBoundingClientRect();
 				if(rect.width > 0 && rect.height > 0 && rect.left > 0){
