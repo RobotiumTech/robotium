@@ -2210,7 +2210,7 @@ public class Solo {
 	 * Requires write permission (android.permission.WRITE_EXTERNAL_STORAGE) in AndroidManifest.xml of the application under test.
 	 *
 	 * @param name the name to give the screenshot
-	 * @param quality the compression quality. From 0 (lowest) to 100 (highest).
+	 * @param quality the compression quality. From 0 (compress for lowest size) to 100 (compress for maximum quality).
 	 *
 	 */
 	

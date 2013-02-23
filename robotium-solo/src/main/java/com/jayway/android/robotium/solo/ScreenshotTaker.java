@@ -53,7 +53,7 @@ class ScreenshotTaker {
 	 * 
 	 * @param view the view to take screenshot of
 	 * @param name the name to give the screenshot image
-	 * @param quality the compression quality. From 0 (lowest) to 100 (highest).
+	 * @param quality the compression rate. From 0 (compress for lowest size) to 100 (compress for maximum quality).
 	 */
 
 	public void takeScreenshot(final View view, final String name, final int quality) {
@@ -83,7 +83,7 @@ class ScreenshotTaker {
 	 * 
 	 * @param name the name of the file
 	 * @param b the bitmap to save
-	 * @param quality the compression quality. From 0 (lowest) to 100 (highest).
+	 * @param quality the compression rate. From 0 (compress for lowest size) to 100 (compress for maximum quality).
 	 * 
 	 */
 	
@@ -111,7 +111,7 @@ class ScreenshotTaker {
 	 * Returns a bitmap of a given WebView.
 	 *  
 	 * @param webView the webView to save a bitmap from
-	 * @return a bitmap of the given webview
+	 * @return a bitmap of the given web view
 	 * 
 	 */
 	
