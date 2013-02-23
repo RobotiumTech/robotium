@@ -52,7 +52,7 @@ class Clicker {
 	 */
 
 	public Clicker(ActivityUtils activityUtils, ViewFetcher viewFetcher, Sender sender, Instrumentation inst, Sleeper sleeper, Waiter waiter, WebUtils webUtils) {
-		
+
 		this.activityUtils = activityUtils;
 		this.viewFetcher = viewFetcher;
 		this.sender = sender;
@@ -93,7 +93,6 @@ class Clicker {
 	 * @param time the amount of time to long click
 	 */
 
-	@SuppressWarnings("deprecation")
 	public void clickLongOnScreen(float x, float y, int time) {
 		long downTime = SystemClock.uptimeMillis();
 		long eventTime = SystemClock.uptimeMillis();
@@ -105,8 +104,8 @@ class Clicker {
 		}
 		eventTime = SystemClock.uptimeMillis();
 		event = MotionEvent.obtain(downTime, eventTime, MotionEvent.ACTION_MOVE, 
-				x + ViewConfiguration.getTouchSlop() / 2,
-				y + ViewConfiguration.getTouchSlop() / 2, 0);
+				x + 1.0f,
+				y + 1.0f, 0);
 		inst.sendPointerSync(event);
 		if(time > 0)
 			sleeper.sleep(time);
@@ -220,7 +219,7 @@ class Clicker {
 			Assert.assertTrue("Can not open the menu!", false);
 		}
 		boolean textShown = waiter.waitForText(text, 1, 1500, false) != null;
-		
+
 		if(subMenu && (viewFetcher.getCurrentViews(TextView.class).size() > 5) && !textShown){
 			for(TextView textView : viewFetcher.getCurrentViews(TextView.class)){
 				x = xy[0];
@@ -242,7 +241,7 @@ class Clicker {
 	 * 
 	 * @param resourceId the R.id of the ActionBar item
 	 */
-	
+
 	public void clickOnActionBarItem(int resourceId){
 		inst.invokeMenuActionSync(activityUtils.getCurrentActivity(), resourceId, 0);
 	}
@@ -250,7 +249,7 @@ class Clicker {
 	/**
 	 * Clicks on an ActionBar Home/Up button.
 	 */
-	
+
 	public void clickOnActionBarHomeButton() {
 		Activity activity = activityUtils.getCurrentActivity();
 		MenuItem homeMenuItem = null;
@@ -281,7 +280,7 @@ class Clicker {
 			activity.getWindow().getCallback().onMenuItemSelected(Window.FEATURE_OPTIONS_PANEL, homeMenuItem);
 		}
 	}
-	
+
 	/**
 	 * Clicks on a web element using the given By method
 	 * 
@@ -289,20 +288,20 @@ class Clicker {
 	 * @param match if multiple objects match, this determines which one will be clicked
 	 * @param scroll true if scrolling should be performed
 	 */
-	
+
 	public void clickOnWebElement(By by, int match, boolean scroll){	
 		WebElement webElementToClick = waiter.waitForWebElement(by, match, TIMEOUT, scroll);
-		
+
 		if(webElementToClick == null){
 			if(match > 1)
 				Assert.assertTrue(match + " web elements with " + by.getClass().getSimpleName() + ": '" + by.getValue() + "' are not found!", false);
 			else
 				Assert.assertTrue("Web element with " + by.getClass().getSimpleName() + ": '" + by.getValue() + "' is not found", false);
-				
+
 		}
 		clickOnScreen(webElementToClick.getLocationX(), webElementToClick.getLocationY());
 	}
-	
+
 
 	/**
 	 * Clicks on a specific {@link TextView} displaying a given text.
@@ -322,7 +321,7 @@ class Clicker {
 		}
 
 		else {
-			
+
 			if(match > 1){
 				Assert.assertTrue(match + " matches with text string: '" + regex +  "' are not found!", false);
 			}
@@ -347,7 +346,7 @@ class Clicker {
 	 * @param viewClass what kind of {@code View} to click, e.g. {@code Button.class} or {@code TextView.class}
 	 * @param nameRegex the name of the view presented to the user. The parameter <strong>will</strong> be interpreted as a regular expression.
 	 */
-	
+
 	public <T extends TextView> void clickOn(Class<T> viewClass, String nameRegex) {
 		@SuppressWarnings("unchecked")
 		T viewToClick = (T) waiter.waitForText(nameRegex, 0, TIMEOUT, true, true, false);
@@ -370,7 +369,7 @@ class Clicker {
 	 * @param viewClass what kind of {@code View} to click, e.g. {@code Button.class} or {@code ImageView.class}
 	 * @param index the index of the {@code View} to be clicked, within {@code View}s of the specified class
 	 */
-	
+
 	public <T extends View> void clickOn(Class<T> viewClass, int index) {
 		clickOnScreen(waiter.waitForAndGetView(index, viewClass));
 	}
