@@ -37,7 +37,7 @@ public class WebElement {
 	}
 
 	/**
-	 * Returns the location on screen of the {@code TextView} that is based on a web element.
+	 * Returns the WebElements location on screen.
 	 */
 
 	public void getLocationOnScreen(int[] location) {
@@ -47,9 +47,9 @@ public class WebElement {
 	}
 
 	/**
-	 * Sets the X location of the TextView.
+	 * Sets the X location.
 	 * 
-	 * @param locationX the X location of the {@code TextView}
+	 * @param locationX the X location of the {@code WebElement}
 	 */
 
 	public void setLocationX(int locationX){
@@ -59,7 +59,7 @@ public class WebElement {
 	/**
 	 * Sets the Y location.
 	 * 
-	 * @param locationY the Y location of the {@code TextView}
+	 * @param locationY the Y location of the {@code WebElement}
 	 */
 
 	public void setLocationY(int locationY){
