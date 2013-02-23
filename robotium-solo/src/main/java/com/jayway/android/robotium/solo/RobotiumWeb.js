@@ -27,8 +27,10 @@ function allTexts() {
 	while(n=walk.nextNode()){
 		try{
 			var text = n.textContent;
-			if(text.trim().length>0) { 	
-				var rect = n.parentNode.getBoundingClientRect();
+			if(text.trim().length>0) {
+				var range = document.createRange();
+				range.selectNodeContents(n);
+				var rect = range.getBoundingClientRect();
 				if(rect.width > 0 && rect.height > 0 && rect.left > 0){
 					var id = n.parentNode.id;
 					var name = n.parentNode.getAttribute('name');
@@ -134,7 +136,9 @@ function textContent(text) {
 				var name = n.parentNode.getAttribute('name');
 				var className = n.parentNode.className;
 				var tagName = n.parentNode.tagName;
-				var rect = n.parentNode.getBoundingClientRect();
+				var range = document.createRange();
+				range.selectNodeContents(n);
+				var rect = range.getBoundingClientRect();
 				if(rect.width > 0 && rect.height > 0 && rect.left > 0){
 					prompt(id + ';,' + textContent + ';,' + name + ";," + className + ";," + tagName + ";," + rect.left + ';,' + rect.top + ';,' + rect.width + ';,' + rect.height); 
 				}
