@@ -235,7 +235,7 @@ class WebUtils {
 		final WebView webView = viewFetcher.getFreshestView(viewFetcher.getCurrentViews(WebView.class));
 		final int[] xyWebView = new int[2];
 
-		if(webElement != null){
+		if(webView != null && webElement != null){
 			webView.getLocationOnScreen(xyWebView);
 
 			if(xyWebView[1] + webView.getHeight() > webElement.getLocationY())
