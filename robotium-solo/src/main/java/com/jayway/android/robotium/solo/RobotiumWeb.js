@@ -132,7 +132,7 @@ function textContent(text) {
 	while(n=walk.nextNode()){ 
 		try{
 			var textContent = n.textContent; 
-			if(textContent == text){  
+			if(textContent.trim() == text.trim()){  
 				var id = n.parentNode.id;
 				var name = n.parentNode.getAttribute('name');
 				var className = n.parentNode.className;
