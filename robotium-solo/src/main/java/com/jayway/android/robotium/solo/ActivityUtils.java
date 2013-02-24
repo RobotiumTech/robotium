@@ -306,21 +306,6 @@ class ActivityUtils {
 	}
 
 	/**
-	 * All inactive activities are finished.
-	 */
-
-	public void finishInactiveActivities() {
-		for (Iterator<WeakReference<Activity>> iter = activityStack.iterator(); iter.hasNext();) {
-			Activity activity = iter.next().get();
-			if (activity != getCurrentActivity()) {
-				finishActivity(activity);
-				iter.remove();
-			}
-
-		}
-	}
-
-	/**
 	 * All activites that have been opened are finished.
 	 */
 
