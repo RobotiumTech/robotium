@@ -107,7 +107,6 @@ class WebElementCreator {
 
 		webElement.setLocationX(locationX);
 		webElement.setLocationY(locationY);
-
 	}
 
 	/**
@@ -132,9 +131,13 @@ class WebElementCreator {
 			height = Integer.valueOf(data[8]);
 		}catch(Exception ignored){}
 
-		WebElement webElement = new WebElement(data[0], data[1], data[2], data[3], data[4]);
-		setLocation(webElement, webView, x, y, width, height);
-
+		WebElement webElement = null;
+		
+		try{
+			webElement = new WebElement(data[0], data[1], data[2], data[3], data[4]);
+			setLocation(webElement, webView, x, y, width, height);
+		}catch(Exception ignored) {}
+		
 		return webElement;
 	}
 
