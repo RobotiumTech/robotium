@@ -1580,7 +1580,7 @@ public class Solo {
 	 */
 	
 	public void typeTextInWebElement(By by, String text, int match){
-		clickOnWebElement(by);
+		clickOnWebElement(by, match);
 		waiter.waitForWebElement(by, match, SMALLTIMEOUT, false);
 		instrumentation.sendStringSync(text);
 	}
