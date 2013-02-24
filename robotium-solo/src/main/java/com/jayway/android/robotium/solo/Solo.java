@@ -84,8 +84,8 @@ public class Solo {
 	protected final Sender sender;
 	protected final ScreenshotTaker screenshotTaker;
 	protected final Instrumentation instrumentation;
-	public final int TIMEOUT = 20000;
-	public final int SMALLTIMEOUT = 10000;
+	public final static int TIMEOUT = 20000;
+	public final static int SMALLTIMEOUT = 10000;
 	public final static int LANDSCAPE = ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE;   // 0
 	public final static int PORTRAIT = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT;     // 1
 	public final static int RIGHT = KeyEvent.KEYCODE_DPAD_RIGHT;
