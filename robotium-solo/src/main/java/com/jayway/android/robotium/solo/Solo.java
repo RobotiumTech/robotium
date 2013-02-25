@@ -1087,7 +1087,7 @@ public class Solo {
 
 	/**
 	 * Clicks on a given list line and returns an ArrayList of the TextView objects that
-	 * the list line is showing. Will use the first list it finds.
+	 * the list line is showing. Will use the first ListView it finds.
 	 * 
 	 * @param line the line to be clicked
 	 * @return an {@code ArrayList} of the {@link TextView} objects located in the list line
@@ -1099,7 +1099,7 @@ public class Solo {
 	}
 
 	/**
-	 * Clicks on a given list line on a specified list and 
+	 * Clicks on a given list line on a specified ListView and 
 	 * returns an ArrayList of the TextView objects that the list line is showing.
 	 * 
 	 * @param line the line to be clicked
@@ -1114,7 +1114,7 @@ public class Solo {
 	
 	/**
 	 * Long clicks on a given list line and returns an ArrayList of the TextView objects that
-	 * the list line is showing. Will use the first list it finds.
+	 * the list line is showing. Will use the first ListView it finds.
 	 * 
 	 * @param line the line to be clicked
 	 * @return an {@code ArrayList} of the {@link TextView} objects located in the list line
@@ -1125,7 +1125,7 @@ public class Solo {
 	}
 	
 	/**
-	 * Long clicks on a given list line on a specified list and 
+	 * Long clicks on a given list line on a specified ListView and 
 	 * returns an ArrayList of the TextView objects that the list line is showing.
 	 * 
 	 * @param line the line to be clicked
@@ -1138,7 +1138,7 @@ public class Solo {
 	}
 	
 	/**
-	 * Long clicks on a given list line on a specified list and 
+	 * Long clicks on a given list line on a specified ListView and 
 	 * returns an ArrayList of the TextView objects that the list line is showing.
 	 * 
 	 * @param line the line to be clicked
@@ -1236,7 +1236,7 @@ public class Solo {
 	}
 
 	/**
-	 * Scrolls down a given list.
+	 * Scrolls down a given ListView.
 	 * 
 	 * @param list the {@link AbsListView} to be scrolled
 	 * @return {@code true} if more scrolling can be done
@@ -1248,7 +1248,7 @@ public class Solo {
 	}
 
 	/**
-	 * Scrolls to the bottom of a given list.
+	 * Scrolls to the bottom of a given ListView.
 	 *
 	 * @param list the {@link AbsListView} to be scrolled
 	 * @return {@code true} if more scrolling can be done
@@ -1260,7 +1260,7 @@ public class Solo {
 	}
 
 	/**
-	 * Scrolls up a given list.
+	 * Scrolls up a given ListView.
 	 * 
 	 * @param list the {@link AbsListView} to be scrolled
 	 * @return {@code true} if more scrolling can be done
@@ -1272,7 +1272,7 @@ public class Solo {
 	}
 
 	/**
-	 * Scrolls to the top of a given list.
+	 * Scrolls to the top of a given ListView.
 	 *
 	 * @param list the {@link AbsListView} to be scrolled
 	 * @return {@code true} if more scrolling can be done
@@ -1284,7 +1284,7 @@ public class Solo {
 	}
 
 	/**
-	 * Scrolls down a list with a given index.
+	 * Scrolls down a ListView with a given index.
 	 * 
 	 * @param index the {@link ListView} to be scrolled. {@code 0} if only one list is available
 	 * @return {@code true} if more scrolling can be done
@@ -1296,7 +1296,7 @@ public class Solo {
 	}
 
 	/**
-	 * Scrolls a list with a given index to the bottom.
+	 * Scrolls a ListView with a given index to the bottom.
 	 *
 	 * @param index the {@link ListView} to be scrolled. {@code 0} if only one list is available
 	 * @return {@code true} if more scrolling can be done
@@ -1308,7 +1308,7 @@ public class Solo {
 	}
 	
 	/**
-	 * Scrolls up a list with a given index.
+	 * Scrolls up a ListView with a given index.
 	 * 
 	 * @param index the {@link ListView} to be scrolled. {@code 0} if only one list is available
 	 * @return {@code true} if more scrolling can be done
@@ -1320,7 +1320,7 @@ public class Solo {
 	}
 	
     /**
-   	 * Scrolls a list with a given index to the top.
+   	 * Scrolls a ListView with a given index to the top.
    	 *
    	 * @param index the {@link ListView} to be scrolled. {@code 0} if only one list is available
    	 * @return {@code true} if more scrolling can be done
@@ -1332,7 +1332,7 @@ public class Solo {
    	}
    	
    	/**
-	 * Scroll the given list to a given line 
+	 * Scroll the given ListView to a given line. 
 	 *
 	 * @param absListView the {@link AbsListView} to scroll
 	 * @param line the line to scroll to
@@ -1343,8 +1343,8 @@ public class Solo {
    	}
    	
 	/**
-	 * Scroll a list with a given index to a given line 
-	 *
+	 * Scroll a ListView with a given index to a given line. 
+	 *g
 	 * @param index the index of the {@link AbsListView} to scroll
 	 * @param line the line to scroll to
 	 */
@@ -1368,10 +1368,10 @@ public class Solo {
 	}
 
 	/**
-	 * Scrolls horizontally.
+	 * Scrolls a View horizontally.
 	 *
-	 * @param view the view to scroll
-	 * @param side the side to which to scroll; {@link #RIGHT} or {@link #LEFT}
+	 * @param view the View to scroll
+	 * @param side the side to scroll; {@link #RIGHT} or {@link #LEFT}
 	 *
 	 */
 
