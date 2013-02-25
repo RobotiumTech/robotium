@@ -1626,7 +1626,6 @@ public class Solo {
 	 * Clears text in a web element.
 	 * 
 	 * @param by the By object. Examples are By.id("id") and By.name("name")
-	 * @param text the text to enter
 	 * 
 	 */
 	

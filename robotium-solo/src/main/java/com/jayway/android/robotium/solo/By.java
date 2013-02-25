@@ -36,7 +36,7 @@ public abstract class By {
 	/**
 	 * Select a WebElement by its css selector.
 	 * 
-	 * @param cssSelector the cssSelector of the web element
+	 * @param selectors the css selector of the web element
 	 * @return a CssSelector object
 	 */
 
