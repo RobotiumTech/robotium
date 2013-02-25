@@ -14,7 +14,7 @@ import android.webkit.WebView;
  */
 
 class RobotiumWebClient extends WebChromeClient{
-	WebElementCreator textViewCreator;
+	WebElementCreator webElementCreator;
 	private Instrumentation inst;
 	private WebChromeClient robotiumWebClient;
 
@@ -23,12 +23,12 @@ class RobotiumWebClient extends WebChromeClient{
 	 * Constructs this object.
 	 *
 	 * @param instrumentation the {@code Instrumentation} instance
-	 * @param textViewCreator the {@code TextViewCreator} instance
+	 * @param webElementCreator the {@code WebElementCreator} instance
 	 */
 
-	public RobotiumWebClient(Instrumentation inst, WebElementCreator textViewCreator){
+	public RobotiumWebClient(Instrumentation inst, WebElementCreator webElementCreator){
 		this.inst = inst;
-		this.textViewCreator = textViewCreator;
+		this.webElementCreator = webElementCreator;
 		robotiumWebClient = this;
 	}
 
@@ -65,10 +65,10 @@ class RobotiumWebClient extends WebChromeClient{
 		if(message != null){
 
 			if(message.equals("robotium-finished")){
-				textViewCreator.setFinished(true);
+				webElementCreator.setFinished(true);
 			}
 			else{
-				textViewCreator.createWebElementAndAddInList(message, view);
+				webElementCreator.createWebElementAndAddInList(message, view);
 			}
 		}
 		r.confirm();
