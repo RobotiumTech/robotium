@@ -16,6 +16,7 @@ import android.webkit.WebView;
 class RobotiumWebClient extends WebChromeClient{
 	WebElementCreator textViewCreator;
 	private Instrumentation inst;
+	private WebChromeClient robotiumWebClient;
 
 
 	/**
@@ -28,6 +29,7 @@ class RobotiumWebClient extends WebChromeClient{
 	public RobotiumWebClient(Instrumentation inst, WebElementCreator textViewCreator){
 		this.inst = inst;
 		this.textViewCreator = textViewCreator;
+		robotiumWebClient = this;
 	}
 
 	/**
@@ -45,10 +47,10 @@ class RobotiumWebClient extends WebChromeClient{
 					@Override
 					public void run() {
 						webView.getSettings().setJavaScriptEnabled(true);
+						webView.setWebChromeClient(robotiumWebClient);
 
 					}
 				});
-				webView.setWebChromeClient(this);
 			}
 		}
 	}
