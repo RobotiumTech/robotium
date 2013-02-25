@@ -56,7 +56,7 @@ class RobotiumWebClient extends WebChromeClient{
 	}
 
 	/**
-	 * Overrides onJsPrompt in order to create {@code TextView} objects based on the web elements information prompted by the injections of JavaScript
+	 * Overrides onJsPrompt in order to create {@code WebElement} objects based on the web elements attributes prompted by the injections of JavaScript
 	 */
 
 	@Override
