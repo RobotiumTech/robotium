@@ -22,7 +22,7 @@ public class RobotiumUtils {
 
 
 	/**
-	 * Removes invisible Views
+	 * Removes invisible Views.
 	 * 
 	 * @param viewList an Iterable with Views that is being checked for invisible Views.
 	 * @return a filtered Iterable with no invisible Views.
@@ -39,7 +39,7 @@ public class RobotiumUtils {
 	}
 
 	/**
-	 * Filters views
+	 * Filters Views based on the given class type.
 	 * 
 	 * @param classToFilterBy the class to filter
 	 * @param viewList the Iterable to filter from
@@ -58,7 +58,7 @@ public class RobotiumUtils {
 	}
 
 	/**
-	 * Filters all views not within the given set
+	 * Filters all Views not within the given set.
 	 *
 	 * @param classSet contains all classes that are ok to pass the filter
 	 * @param viewList the Iterable to filter form
@@ -104,7 +104,7 @@ public class RobotiumUtils {
 	}
 
 	/**
-	 * Checks if a view matches a certain string and returns the amount of total matches.
+	 * Checks if a View matches a certain string and returns the amount of total matches.
 	 * 
 	 * @param regex the regex to match
 	 * @param view the view to check
@@ -139,7 +139,7 @@ public class RobotiumUtils {
 	}
 
 	/**
-	 * Filters a collection of views and returns a list that contains only views
+	 * Filters a collection of Views and returns a list that contains only Views
 	 * with text that matches a specified regular expression.
 	 * 
 	 * @param views The collection of views to scan.
@@ -152,7 +152,7 @@ public class RobotiumUtils {
 	}
 
 	/**
-	 * Filters a collection of views and returns a list that contains only views
+	 * Filters a collection of Views and returns a list that contains only Views
 	 * with text that matches a specified regular expression.
 	 * 
 	 * @param views The collection of views to scan.

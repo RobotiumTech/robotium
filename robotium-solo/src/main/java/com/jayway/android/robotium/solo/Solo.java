@@ -334,7 +334,7 @@ public class Solo {
 	}
 	
 	/**
-	 * Waits for a web element. Default timeout is 20 seconds. 
+	 * Waits for a WebElement. Default timeout is 20 seconds. 
 	 * 
 	 * @param by the By object. Examples are By.id("id") and By.name("name")
 	 * 
@@ -345,7 +345,7 @@ public class Solo {
 	}
 	
 	/**
-	 * Waits for a web element.
+	 * Waits for a WebElement.
 	 * 
 	 * @param by the By object. Examples are By.id("id") and By.name("name")
 	 * @param timeout the the amount of time in milliseconds to wait 
@@ -358,7 +358,7 @@ public class Solo {
 	}
 	
 	/**
-	 * Waits for a web element.
+	 * Waits for a WebElement.
 	 * 
 	 * @param by the By object. Examples are By.id("id") and By.name("name")
 	 * @param match if multiple objects match, this determines which one will be clicked
@@ -790,7 +790,7 @@ public class Solo {
 	}
 	
 	/**
-	 * Clicks on the given web element.
+	 * Clicks on the given WebElement.
 	 * 
 	 * @param webElement the WebElement to click
 	 * 
@@ -804,7 +804,7 @@ public class Solo {
 	}
 	
 	/**
-	 * Clicks on a web element.
+	 * Clicks on a WebElement.
 	 * 
 	 * @param by the By object. Examples are By.id("id") and By.name("name")
 	 * 
@@ -815,7 +815,7 @@ public class Solo {
 	}
 	
 	/**
-	 * Clicks on a web element.
+	 * Clicks on a WebElement.
 	 * 
 	 * @param by the By object. Examples are By.id("id") and By.name("name")
 	 * @param match if multiple objects match, this determines which one will be clicked
@@ -827,7 +827,7 @@ public class Solo {
 	}
 	
 	/**
-	 * Clicks on a web element.
+	 * Clicks on a WebElement.
 	 * 
 	 * @param by the By object. Examples are By.id("id") and By.name("name")
 	 * @param match if multiple objects match, this determines which one will be clicked
@@ -1517,7 +1517,7 @@ public class Solo {
 	}
 	
 	/**
-	 * Enters text in a web element.
+	 * Enters text in a WebElement.
 	 * 
 	 * @param by the By object. Examples are By.id("id") and By.name("name")
 	 * @param text the text to enter
@@ -1557,7 +1557,7 @@ public class Solo {
 	}
 	
 	/**
-	 * Types text in a web element.
+	 * Types text in a WebElement.
 	 * 
 	 * @param by the By object. Examples are By.id("id") and By.name("name")
 	 * @param text the text to enter
@@ -1571,7 +1571,7 @@ public class Solo {
 	}
 	
 	/**
-	 * Types text in a web element.
+	 * Types text in a WebElement.
 	 * 
 	 * @param by the By object. Examples are By.id("id") and By.name("name")
 	 * @param text the text to enter
@@ -1586,7 +1586,7 @@ public class Solo {
 	}
 	
 	/**
-	 * Types text in a web element.
+	 * Types text in a WebElement.
 	 * 
 	 * @param webElement the WebElement to type text in
 	 * @param text the text to enter

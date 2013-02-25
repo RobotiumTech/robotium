@@ -10,7 +10,7 @@ package com.jayway.android.robotium.solo;
 public abstract class By {
 
 	/**
-	 * Select a web element by its id
+	 * Select a WebElement by its id.
 	 * 
 	 * @param id the id of the web element	
 	 * @return an Id object
@@ -22,7 +22,7 @@ public abstract class By {
 	}
 
 	/**
-	 * Select a web element by its xpath
+	 * Select a WebElement by its xpath.
 	 * 
 	 * @param xpath the xpath of the web element
 	 * @return a Xpath object
@@ -34,7 +34,7 @@ public abstract class By {
 	}
 
 	/**
-	 * Select a web element by its css selector
+	 * Select a WebElement by its css selector.
 	 * 
 	 * @param cssSelector the cssSelector of the web element
 	 * @return a CssSelector object
@@ -46,7 +46,7 @@ public abstract class By {
 	}
 
 	/**
-	 * Select a web element by its name
+	 * Select a WebElement by its name.
 	 * 
 	 * @param name the name of the web element
 	 * @return a Name object
@@ -58,7 +58,7 @@ public abstract class By {
 	}
 
 	/**
-	 * Select a web element by its class name
+	 * Select a WebElement by its class name.
 	 * 
 	 * @param className the class name of the web element
 	 * @return a ClassName object
@@ -70,7 +70,7 @@ public abstract class By {
 	}
 
 	/**
-	 * Select a web element by its text content
+	 * Select a WebElement by its text content.
 	 * 
 	 * @param textContent the text content of the web element
 	 * @return a TextContent object
@@ -82,7 +82,7 @@ public abstract class By {
 	}
 	
 	/**
-	 * Select a web element by its tag name
+	 * Select a WebElement by its tag name.
 	 * 
 	 * @param tagName the tag name of the web element
 	 * @return a TagName object
@@ -94,7 +94,7 @@ public abstract class By {
 	}
 
 	/**
-	 * Returns the value 
+	 * Returns the value. 
 	 * 
 	 * @return the value
 	 */
