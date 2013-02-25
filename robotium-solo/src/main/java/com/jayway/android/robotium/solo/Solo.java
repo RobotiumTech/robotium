@@ -31,7 +31,7 @@ import android.app.Instrumentation.ActivityMonitor;
 /**
  * Main class for development of Robotium tests.  
  * 
- * Robotium has full support for Activities, Dialogs, Toasts, Menus and Context Menus. 
+ * Robotium has full support for WebViews, Activities, Dialogs, Toasts, Menus and Context Menus. 
  * 
  * When writing tests there is no need to plan for or expect new activities in the test case. 
  * All is handled automatically by Robotium-Solo. Robotium-Solo can be used in conjunction with
