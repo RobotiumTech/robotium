@@ -1813,7 +1813,7 @@ public class Solo {
 	
 	public WebElement getWebElement(By by, int index){
 		int match = index + 1;
-		WebElement webElement = waiter.waitForWebElement(by, match, TIMEOUT, true);
+		WebElement webElement = waiter.waitForWebElement(by, match, SMALLTIMEOUT, true);
 		
 		if(webElement == null)
 			Assert.assertTrue(match + " web elements with " + by.getClass().getSimpleName() + ": '" + by.getValue() + "' are not found!", false);
