@@ -44,7 +44,6 @@ class RobotiumWebClient extends WebChromeClient{
 			if(webView != null){ 
 
 				inst.runOnMainSync(new Runnable() {
-					@Override
 					public void run() {
 						webView.getSettings().setJavaScriptEnabled(true);
 						webView.setWebChromeClient(robotiumWebClient);
