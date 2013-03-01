@@ -60,7 +60,6 @@ class ScreenshotTaker {
 		activityUtils.getCurrentActivity(false).runOnUiThread(new Runnable() {
 			Bitmap  b;
 
-			@Override
 			public void run() {
 				if(view !=null){
 

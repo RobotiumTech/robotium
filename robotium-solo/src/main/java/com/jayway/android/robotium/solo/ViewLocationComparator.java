@@ -27,7 +27,6 @@ class ViewLocationComparator implements Comparator<View> {
 		this.axis2 = yAxisFirst ? 0 : 1;
 	}
 
-	@Override
 	public int compare(View lhs, View rhs) {
 		lhs.getLocationOnScreen(a);
 		rhs.getLocationOnScreen(b);
