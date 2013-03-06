@@ -78,29 +78,31 @@ class ViewFetcher {
 	 */
 
 	public ArrayList<View> getAllViews(boolean onlySufficientlyVisible) {
-	    final View[] views = getWindowDecorViews();
-	    final ArrayList<View> allViews = new ArrayList<View>();
-	    final View[] nonDecorViews = getNonDecorViews(views);
+		final View[] views = getWindowDecorViews();
+		final ArrayList<View> allViews = new ArrayList<View>();
+		final View[] nonDecorViews = getNonDecorViews(views);
+		View view = null;
 
+		if(nonDecorViews != null){
+			for(int i = 0; i < nonDecorViews.length; i++){
+				view = nonDecorViews[i];
+				try {
+					addChildren(allViews, (ViewGroup)view, onlySufficientlyVisible);
+				} catch (Exception ignored) {}
+				if(view != null) allViews.add(view);
+			}
+		}
 
-	    if (views != null && views.length > 0) {
-	        View view;
-	        for(int i = 0; i < nonDecorViews.length; i++){
-	            view = nonDecorViews[i];
-	            try {
-	                addChildren(allViews, (ViewGroup)view, onlySufficientlyVisible);
-	            } catch (Exception ignored) {
-	            }
-                     if(view != null) allViews.add(view);
-	        }
-	        view = getRecentDecorView(views);
-	        try {
-	            addChildren(allViews, (ViewGroup)view, onlySufficientlyVisible);
-	        } catch (Exception ignored) {
-	        }
-                 if(view != null) allViews.add(view);
-	    }
-	    return allViews;
+		if (views != null && views.length > 0) {
+			view = getRecentDecorView(views);
+			try {
+				addChildren(allViews, (ViewGroup)view, onlySufficientlyVisible);
+			} catch (Exception ignored) {}
+
+			if(view != null) allViews.add(view);
+		}
+
+		return allViews;
 	}
 
 	/**
@@ -148,24 +150,29 @@ class ViewFetcher {
 		 return container;
 	 }
 
-	/**
-	 * Returns all views that are non DecorViews
-	 *
-	 * @param views the views to check
-	 * @return the non DecorViews
-	 */
+	 /**
+	  * Returns all views that are non DecorViews
+	  *
+	  * @param views the views to check
+	  * @return the non DecorViews
+	  */
 
 	 private final View[] getNonDecorViews(View[] views) {
-		 final View[] decorViews = new View[views.length];
-		 int i = 0;
-		 View view;
+		 View[] decorViews = null;
 
-		 for (int j = 0; j < views.length; j++) {
-			 view = views[j];
-			 if (view != null && !(view.getClass().getName()
-					 .equals("com.android.internal.policy.impl.PhoneWindow$DecorView"))) {
-				 decorViews[i] = view;
-				 i++;
+		 if(views != null) {
+			 decorViews = new View[views.length];
+
+			 int i = 0;
+			 View view;
+
+			 for (int j = 0; j < views.length; j++) {
+				 view = views[j];
+				 if (view != null && !(view.getClass().getName()
+						 .equals("com.android.internal.policy.impl.PhoneWindow$DecorView"))) {
+					 decorViews[i] = view;
+					 i++;
+				 }
 			 }
 		 }
 		 return decorViews;
