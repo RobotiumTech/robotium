@@ -85,6 +85,40 @@ class Waiter {
 		return false;
 	}
 
+    /**
+     * Waits for the given {@link Activity}.
+     *
+     * @param clazz the class of the {@code Activity} to wait for e.g. {@code "MyActivity"}
+     * @return {@code true} if {@code Activity} appears before the timeout and {@code false} if it does not
+     *
+     */
+
+    public boolean waitForActivity(Class<? extends Activity> clazz){
+        return waitForActivity(clazz, SMALLTIMEOUT);
+    }
+
+    /**
+     * Waits for the given {@link Activity}.
+     *
+     * @param clazz the class of the {@code Activity} to wait for e.g. {@code "MyActivity"}
+     * @param timeout the amount of time in milliseconds to wait
+     * @return {@code true} if {@code Activity} appears before the timeout and {@code false} if it does not
+     *
+     */
+
+    public boolean waitForActivity(Class<? extends Activity> clazz, int timeout){
+        final long endTime = SystemClock.uptimeMillis() + timeout;
+        Activity currentActivity = activityUtils.getCurrentActivity(false);
+
+        while(SystemClock.uptimeMillis() < endTime){
+            if(currentActivity != null && currentActivity.getClass().equals(clazz))
+                return true;
+
+            currentActivity = activityUtils.getCurrentActivity();
+        }
+        return false;
+    }
+
 	/**
 	 * Waits for a view to be shown.
 	 * 
@@ -144,9 +178,11 @@ class Waiter {
 		return false;
 	}
 
-	/**
+
+
+    /**
 	 * Waits for two views to be shown.
-	 * 
+	 *
 	 * @param viewClass the first {@code View} class to wait for 
 	 * @param viewClass2 the second {@code View} class to wait for
 	 * @return {@code true} if any of the views are shown and {@code false} if none of the views are shown before the timeout
