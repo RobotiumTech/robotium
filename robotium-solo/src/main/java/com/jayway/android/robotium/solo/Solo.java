@@ -2023,8 +2023,7 @@ public class Solo {
 	 *
 	 */
 	
-	public void goBackToActivity(String name)
-	{
+	public void goBackToActivity(String name) {
 		activityUtils.goBackToActivity(name);
 	}
 	
@@ -2053,6 +2052,32 @@ public class Solo {
 	{
 		return waiter.waitForActivity(name, timeout);
 	}
+
+    /**
+     * Waits for the given Activity. Default timeout is 20 seconds.
+     *
+     * @param clazz the class of the {@code Activity} to wait for e.g. {@code "MyActivity"}
+     * @return {@code true} if {@code Activity} appears before the timeout and {@code false} if it does not
+     *
+     */
+
+    public boolean waitForActivity(Class<? extends Activity> clazz){
+        return waiter.waitForActivity(clazz, TIMEOUT);
+    }
+
+    /**
+     * Waits for the given Activity.
+     *
+     * @param clazz the class of the {@code Activity} to wait for e.g. {@code "MyActivity"}
+     * @param timeout the amount of time in milliseconds to wait
+     * @return {@code true} if {@link Activity} appears before the timeout and {@code false} if it does not
+     *
+     */
+
+    public boolean waitForActivity(Class<? extends Activity> clazz, int timeout)
+    {
+        return waiter.waitForActivity(clazz, timeout);
+    }
 	
 	
 	/**
