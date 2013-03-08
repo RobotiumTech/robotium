@@ -17,6 +17,7 @@ import android.view.ViewConfiguration;
 import android.view.Window;
 import android.widget.AbsListView;
 import android.widget.TextView;
+import android.widget.AdapterView;
 
 /**
  * Contains various click methods. Examples are: clickOn(),
@@ -402,16 +403,16 @@ class Clicker {
 			line = 0;
 
 		ArrayList<View> views = new ArrayList<View>();
-		final AbsListView absListView = waiter.waitForAndGetView(index, AbsListView.class);
-		if(absListView == null)
+		final AdapterView adapterView = waiter.waitForAndGetView(index, AdapterView.class);
+		if(adapterView == null)
 			Assert.assertTrue("ListView is null!", false);
 
-		int numberOfLines = absListView.getChildCount();
+		int numberOfLines = adapterView.getChildCount();
 
-		if(line > absListView.getChildCount()){
+		if(line > adapterView.getChildCount()){
 			Assert.assertTrue("Can not click line number " + line + " as there are only " + numberOfLines + " lines available", false);
 		}
-		View view = absListView.getChildAt(line);
+		View view = adapterView.getChildAt(line);
 
 		if(view != null){
 			views = viewFetcher.getViews(view, true);
