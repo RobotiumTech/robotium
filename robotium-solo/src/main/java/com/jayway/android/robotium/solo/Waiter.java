@@ -88,30 +88,18 @@ class Waiter {
 	/**
 	 * Waits for the given {@link Activity}.
 	 *
-	 * @param clazz the class of the {@code Activity} to wait for e.g. {@code "MyActivity"}
-	 * @return {@code true} if {@code Activity} appears before the timeout and {@code false} if it does not
-	 *
-	 */
-
-	public boolean waitForActivity(Class<? extends Activity> clazz){
-		return waitForActivity(clazz, SMALLTIMEOUT);
-	}
-
-	/**
-	 * Waits for the given {@link Activity}.
-	 *
-	 * @param clazz the class of the {@code Activity} to wait for e.g. {@code "MyActivity"}
+	 * @param activityClass the class of the {@code Activity} to wait for
 	 * @param timeout the amount of time in milliseconds to wait
 	 * @return {@code true} if {@code Activity} appears before the timeout and {@code false} if it does not
 	 *
 	 */
 
-	public boolean waitForActivity(Class<? extends Activity> clazz, int timeout){
+	public boolean waitForActivity(Class<? extends Activity> activityClass, int timeout){
 		final long endTime = SystemClock.uptimeMillis() + timeout;
 		Activity currentActivity = activityUtils.getCurrentActivity(false);
 
 		while(SystemClock.uptimeMillis() < endTime){
-			if(currentActivity != null && currentActivity.getClass().equals(clazz))
+			if(currentActivity != null && currentActivity.getClass().equals(activityClass))
 				return true;
 
 			currentActivity = activityUtils.getCurrentActivity();

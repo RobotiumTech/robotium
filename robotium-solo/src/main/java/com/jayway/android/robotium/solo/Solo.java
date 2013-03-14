@@ -2075,27 +2075,27 @@ public class Solo {
     /**
      * Waits for the given Activity. Default timeout is 20 seconds.
      *
-     * @param clazz the class of the {@code Activity} to wait for e.g. {@code "MyActivity"}
+     * @param activityClass the class of the {@code Activity} to wait for 
      * @return {@code true} if {@code Activity} appears before the timeout and {@code false} if it does not
      *
      */
 
-    public boolean waitForActivity(Class<? extends Activity> clazz){
-        return waiter.waitForActivity(clazz, TIMEOUT);
+    public boolean waitForActivity(Class<? extends Activity> activityClass){
+        return waiter.waitForActivity(activityClass, TIMEOUT);
     }
 
     /**
      * Waits for the given Activity.
      *
-     * @param clazz the class of the {@code Activity} to wait for e.g. {@code "MyActivity"}
+     * @param activityClass the class of the {@code Activity} to wait for e.g. {@code "MyActivity"}
      * @param timeout the amount of time in milliseconds to wait
      * @return {@code true} if {@link Activity} appears before the timeout and {@code false} if it does not
      *
      */
 
-    public boolean waitForActivity(Class<? extends Activity> clazz, int timeout)
+    public boolean waitForActivity(Class<? extends Activity> activityClass, int timeout)
     {
-        return waiter.waitForActivity(clazz, timeout);
+        return waiter.waitForActivity(activityClass, timeout);
     }
 	
 	
