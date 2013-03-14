@@ -85,39 +85,39 @@ class Waiter {
 		return false;
 	}
 
-    /**
-     * Waits for the given {@link Activity}.
-     *
-     * @param clazz the class of the {@code Activity} to wait for e.g. {@code "MyActivity"}
-     * @return {@code true} if {@code Activity} appears before the timeout and {@code false} if it does not
-     *
-     */
+	/**
+	 * Waits for the given {@link Activity}.
+	 *
+	 * @param clazz the class of the {@code Activity} to wait for e.g. {@code "MyActivity"}
+	 * @return {@code true} if {@code Activity} appears before the timeout and {@code false} if it does not
+	 *
+	 */
 
-    public boolean waitForActivity(Class<? extends Activity> clazz){
-        return waitForActivity(clazz, SMALLTIMEOUT);
-    }
+	public boolean waitForActivity(Class<? extends Activity> clazz){
+		return waitForActivity(clazz, SMALLTIMEOUT);
+	}
 
-    /**
-     * Waits for the given {@link Activity}.
-     *
-     * @param clazz the class of the {@code Activity} to wait for e.g. {@code "MyActivity"}
-     * @param timeout the amount of time in milliseconds to wait
-     * @return {@code true} if {@code Activity} appears before the timeout and {@code false} if it does not
-     *
-     */
+	/**
+	 * Waits for the given {@link Activity}.
+	 *
+	 * @param clazz the class of the {@code Activity} to wait for e.g. {@code "MyActivity"}
+	 * @param timeout the amount of time in milliseconds to wait
+	 * @return {@code true} if {@code Activity} appears before the timeout and {@code false} if it does not
+	 *
+	 */
 
-    public boolean waitForActivity(Class<? extends Activity> clazz, int timeout){
-        final long endTime = SystemClock.uptimeMillis() + timeout;
-        Activity currentActivity = activityUtils.getCurrentActivity(false);
+	public boolean waitForActivity(Class<? extends Activity> clazz, int timeout){
+		final long endTime = SystemClock.uptimeMillis() + timeout;
+		Activity currentActivity = activityUtils.getCurrentActivity(false);
 
-        while(SystemClock.uptimeMillis() < endTime){
-            if(currentActivity != null && currentActivity.getClass().equals(clazz))
-                return true;
+		while(SystemClock.uptimeMillis() < endTime){
+			if(currentActivity != null && currentActivity.getClass().equals(clazz))
+				return true;
 
-            currentActivity = activityUtils.getCurrentActivity();
-        }
-        return false;
-    }
+			currentActivity = activityUtils.getCurrentActivity();
+		}
+		return false;
+	}
 
 	/**
 	 * Waits for a view to be shown.
@@ -180,7 +180,7 @@ class Waiter {
 
 
 
-    /**
+	/**
 	 * Waits for two views to be shown.
 	 *
 	 * @param viewClass the first {@code View} class to wait for 
@@ -240,6 +240,9 @@ class Waiter {
 	 */
 
 	public boolean waitForView(View view, int timeout, boolean scroll){
+		if(view == null)
+			return false;
+
 		long endTime = SystemClock.uptimeMillis() + timeout;
 
 		while (SystemClock.uptimeMillis() < endTime) {
@@ -261,21 +264,30 @@ class Waiter {
 	 * Waits for a certain view.
 	 * 
 	 * @param view the id of the view to wait for
+	 * @param index the index of the {@link View}. {@code 0} if only one is available
 	 * @return {@code true} if view is shown and {@code false} if it is not shown before the timeout
 	 */
 
-	public View waitForView(int id){
-		ArrayList<View> views = new ArrayList<View>();
+	public View waitForView(int id, int index){
+
+		ArrayList<View> viewsMatchingId = new ArrayList<View>();
 		long endTime = SystemClock.uptimeMillis() + SMALLTIMEOUT;
+
 		while (SystemClock.uptimeMillis() <= endTime) {
 			sleeper.sleep();
-			views = viewFetcher.getAllViews(false);
-			for (View v : views) {
-				if (v.getId() == id) {
-					views = null;
-					return v;
+
+			for (View view : viewFetcher.getAllViews(false)) {
+				Integer idOfView = Integer.valueOf(view.getId());
+
+				if (idOfView.equals(id)) {
+					viewsMatchingId.add(view);
+
+					if(viewsMatchingId.size() > index) {
+						return viewsMatchingId.get(index);
+					}
 				}
 			}
+			viewsMatchingId.clear();
 		}
 		return null;
 	}
@@ -284,12 +296,12 @@ class Waiter {
 	 * Waits for a web element.
 	 * 
 	 * @param by the By object. Examples are By.id("id") and By.name("name")
-	 * @param match if multiple objects match, this determines which one will be clicked
+	 * @param minimumNumberOfMatches the minimum number of matches that are expected to be shown. {@code 0} means any number of matches
 	 * @param timeout the the amount of time in milliseconds to wait 
 	 * @param scroll {@code true} if scrolling should be performed 
 	 */
 
-	public WebElement waitForWebElement(final By by, int match, int timeout, boolean scroll){
+	public WebElement waitForWebElement(final By by, int minimumNumberOfMatches, int timeout, boolean scroll){
 		final long endTime = SystemClock.uptimeMillis() + timeout;
 
 		while (true) {	
@@ -302,7 +314,7 @@ class Waiter {
 			}
 			sleeper.sleep();
 
-			WebElement webElementToReturn = searcher.searchForWebElement(by, match, timeout, scroll); 
+			WebElement webElementToReturn = searcher.searchForWebElement(by, minimumNumberOfMatches, timeout, scroll); 
 
 			if(webElementToReturn != null)
 				return webElementToReturn;

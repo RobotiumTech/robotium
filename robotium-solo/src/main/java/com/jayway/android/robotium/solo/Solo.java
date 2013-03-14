@@ -361,14 +361,14 @@ public class Solo {
 	 * Waits for a WebElement.
 	 * 
 	 * @param by the By object. Examples are By.id("id") and By.name("name")
-	 * @param match if multiple objects match, this determines which one will be clicked
+	 * @param minimumNumberOfMatches the minimum number of matches that are expected to be shown. {@code 0} means any number of matches
 	 * @param timeout the the amount of time in milliseconds to wait 
 	 * @param scroll {@code true} if scrolling should be performed
 	 * 
 	 */
 	
-	public void waitForWebElement(By by, int match, int timeout, boolean scroll){
-		waiter.waitForWebElement(by, match, timeout, scroll);
+	public void waitForWebElement(By by, int minimumNumberOfMatches, int timeout, boolean scroll){
+		waiter.waitForWebElement(by, minimumNumberOfMatches, timeout, scroll);
 	}
 	
 	
@@ -1784,11 +1784,30 @@ public class Solo {
 	 * Returns a View with a given resource id. 
 	 * 
 	 * @param id the R.id of the {@link View} to be returned 
-	 * @return a {@link View} with a given id
+	 * @return a {@link View} with a given id 
 	 */
 
 	public View getView(int id){
-		return getter.getView(id);
+		return getView(id, 0);
+	}
+	
+	/**
+	 * Returns a View with a given resource id and index. 
+	 * 
+	 * @param id the R.id of the {@link View} to be returned 
+	 * @param index the index of the {@link View}. {@code 0} if only one is available
+	 * @return a {@link View} with a given id and index
+	 */
+
+	public View getView(int id, int index){
+		View viewToReturn = getter.getView(id, index);
+		
+		if(viewToReturn == null) {
+			int match = index + 1;
+			Assert.assertTrue(match + " views with id: '" + id + "' are not found!", false);
+		}
+		
+		return viewToReturn;
 	}
 
 	/**
@@ -1796,7 +1815,7 @@ public class Solo {
 	 * 
 	 * @param viewClass the class of the requested view
 	 * @param index the index of the {@link View}. {@code 0} if only one is available
-	 * @return a {@link View} with a given class and index
+	 * @return a {@link View} with a given class and index 
 	 */
 
 	public <T extends View> T getView(Class<T> viewClass, int index){
@@ -1808,7 +1827,7 @@ public class Solo {
 	 * 
 	 * @param by the By object. Examples are By.id("id") and By.name("name")
 	 * @param index the index of the {@link WebElement}. {@code 0} if only one is available
-	 * 
+	 * @return a {@link WebElement} with a given index
 	 */
 	
 	public WebElement getWebElement(By by, int index){

@@ -223,22 +223,22 @@ class Searcher {
 	 * Searches for a web element.
 	 * 
 	 * @param by the By object e.g. By.id("id");
-	 * @param match if multiple objects match the text, this determines which one will be clicked
+	 * @param minimumNumberOfMatches the minimum number of matches that are expected to be shown. {@code 0} means any number of matches
 	 * @param timeout the amount of time in milliseconds to wait
 	 * @param scroll true if scrolling should be performed
 	 * @return true if the web element is found
 	 */
 
-	public WebElement searchForWebElement(final By by, int match, int timeout, boolean scroll){
+	public WebElement searchForWebElement(final By by, int minimumNumberOfMatches, int timeout, boolean scroll){
 
-		if(match < 1){
-			match = 1;
+		if(minimumNumberOfMatches < 1){
+			minimumNumberOfMatches = 1;
 		}
 
 		List<WebElement> viewsFromScreen = webUtils.getCurrentWebElements(by);
 		addViewsToList (webElements, viewsFromScreen);
 
-		return getViewFromList(webElements, match);
+		return getViewFromList(webElements, minimumNumberOfMatches);
 	}
 
 	/**
