@@ -398,9 +398,8 @@ class Waiter {
 	 */
 
 	public TextView waitForText(String text, int expectedMinimumNumberOfMatches, long timeout, boolean scroll) {
-		return waitForText(text, expectedMinimumNumberOfMatches, timeout, scroll, false, true);	
+		return waitForText(TextView.class, text, expectedMinimumNumberOfMatches, timeout, scroll, false, true);	
 	}
-
 
 	/**
 	 * Waits for a text to be shown.
@@ -413,8 +412,25 @@ class Waiter {
 	 * @param hardStoppage {@code true} if search is to be stopped when timeout expires
 	 * @return {@code true} if text is found and {@code false} if it is not found before the timeout
 	 */
-
+	
 	public TextView waitForText(String text, int expectedMinimumNumberOfMatches, long timeout, boolean scroll, boolean onlyVisible, boolean hardStoppage) {
+		return waitForText(TextView.class, text, expectedMinimumNumberOfMatches, timeout, scroll, onlyVisible, hardStoppage);
+	}
+
+	/**
+	 * Waits for a text to be shown.
+	 *
+	 * @param classToFilterBy the class to filter by
+	 * @param text the text that needs to be shown, specified as a regular expression.
+	 * @param expectedMinimumNumberOfMatches the minimum number of matches of text that must be shown. {@code 0} means any number of matches
+	 * @param timeout the amount of time in milliseconds to wait
+	 * @param scroll {@code true} if scrolling should be performed
+	 * @param onlyVisible {@code true} if only visible text views should be waited for
+	 * @param hardStoppage {@code true} if search is to be stopped when timeout expires
+	 * @return {@code true} if text is found and {@code false} if it is not found before the timeout
+	 */
+
+	public <T extends TextView> T waitForText(Class<T> classToFilterBy, String text, int expectedMinimumNumberOfMatches, long timeout, boolean scroll, boolean onlyVisible, boolean hardStoppage) {
 		final long endTime = SystemClock.uptimeMillis() + timeout;
 
 		while (true) {
@@ -428,7 +444,7 @@ class Waiter {
 			if(!hardStoppage)
 				timeout = 0;
 
-			final TextView textViewToReturn = searcher.searchFor(TextView.class, text, expectedMinimumNumberOfMatches, timeout, scroll, onlyVisible);
+			final T textViewToReturn = searcher.searchFor(classToFilterBy, text, expectedMinimumNumberOfMatches, timeout, scroll, onlyVisible);
 
 			if (textViewToReturn != null ){
 				return textViewToReturn;

@@ -15,7 +15,6 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewConfiguration;
 import android.view.Window;
-import android.widget.AbsListView;
 import android.widget.TextView;
 import android.widget.AdapterView;
 
@@ -349,8 +348,7 @@ class Clicker {
 	 */
 
 	public <T extends TextView> void clickOn(Class<T> viewClass, String nameRegex) {
-		@SuppressWarnings("unchecked")
-		T viewToClick = (T) waiter.waitForText(nameRegex, 0, TIMEOUT, true, true, false);
+		T viewToClick = (T) waiter.waitForText(viewClass, nameRegex, 0, TIMEOUT, true, true, false);
 
 		if (viewToClick != null) {
 			clickOnScreen(viewToClick);
@@ -403,7 +401,7 @@ class Clicker {
 			line = 0;
 
 		ArrayList<View> views = new ArrayList<View>();
-		final AdapterView adapterView = waiter.waitForAndGetView(index, AdapterView.class);
+		final AdapterView<?> adapterView = waiter.waitForAndGetView(index, AdapterView.class);
 		if(adapterView == null)
 			Assert.assertTrue("ListView is null!", false);
 

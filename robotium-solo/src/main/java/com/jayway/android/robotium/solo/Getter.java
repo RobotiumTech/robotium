@@ -56,8 +56,7 @@ class Getter {
 
 	public <T extends TextView> T getView(Class<T> classToFilterBy, String text, boolean onlyVisible) {
 
-		@SuppressWarnings("unchecked")
-		T viewToReturn = (T) waiter.waitForText(text, 0, 10000, false, onlyVisible, false);
+		T viewToReturn = (T) waiter.waitForText(classToFilterBy, text, 0, 10000, false, onlyVisible, false);
 
 		if(viewToReturn == null)
 			Assert.assertTrue("No " + classToFilterBy.getSimpleName() + " with text " + text + " is found!", false);
