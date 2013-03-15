@@ -107,15 +107,13 @@ class Searcher {
 			@SuppressWarnings("unchecked")
 			public Collection<T> call() throws Exception {
 				sleeper.sleep();
-
-				ArrayList<T> viewsToReturn = null;
+	
+				ArrayList<T> viewsToReturn = viewFetcher.getCurrentViews(viewClass);
 
 				if(onlyVisible){
-					viewsToReturn = RobotiumUtils.removeInvisibleViews(viewFetcher.getCurrentViews(viewClass));
+					viewsToReturn = RobotiumUtils.removeInvisibleViews(viewsToReturn);
 				}
-				else{
-					viewsToReturn = viewFetcher.getCurrentViews(viewClass);
-				}
+		
 				if(viewClass.isAssignableFrom(TextView.class)) {
 					viewsToReturn.addAll((Collection<? extends T>) webUtils.getTextViewsFromWebView());
 				}
