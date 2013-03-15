@@ -108,16 +108,18 @@ class Searcher {
 			public Collection<T> call() throws Exception {
 				sleeper.sleep();
 
+				ArrayList<T> viewsToReturn = null;
+
 				if(onlyVisible){
-					ArrayList<T> allVisibleViews = RobotiumUtils.removeInvisibleViews(viewFetcher.getCurrentViews(viewClass));
-					allVisibleViews.addAll((Collection<? extends T>) webUtils.getTextViewsFromWebView());
-					return allVisibleViews;
+					viewsToReturn = RobotiumUtils.removeInvisibleViews(viewFetcher.getCurrentViews(viewClass));
 				}
 				else{
-					ArrayList<T> allViews = viewFetcher.getCurrentViews(viewClass);
-					allViews.addAll((Collection<? extends T>) webUtils.getTextViewsFromWebView());
-					return allViews;
+					viewsToReturn = viewFetcher.getCurrentViews(viewClass);
 				}
+				if(viewClass.isAssignableFrom(TextView.class)) {
+					viewsToReturn.addAll((Collection<? extends T>) webUtils.getTextViewsFromWebView());
+				}
+				return viewsToReturn;
 			}
 		};
 
