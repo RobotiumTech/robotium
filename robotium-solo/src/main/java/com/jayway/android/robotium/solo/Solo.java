@@ -261,6 +261,7 @@ public class Solo {
 	 * Waits for a View of a certain class to be shown. Default timeout is 20 seconds. 
 	 * 
 	 * @param viewClass the {@link View} class to wait for
+	 * @return {@code true} if the {@link View} is shown and {@code false} if it is not shown before the timeout
 	 */
 	
 	public <T extends View> boolean waitForView(final Class<T> viewClass){
@@ -272,24 +273,24 @@ public class Solo {
 	 * Waits for a given View to be shown. Default timeout is 20 seconds. 
 	 * 
 	 * @param view the {@link View} object to wait for
-	 * @return {@code true} if view is shown and {@code false} if it is not shown before the timeout
+	 * @return {@code true} if the {@link View} is shown and {@code false} if it is not shown before the timeout
 	 * 
 	 */
-	
+
 	public <T extends View> boolean waitForView(View view){
 		return waiter.waitForView(view);
 	}
-	
+
 	/**
 	 * Waits for a given View to be shown. 
 	 * 
 	 * @param view the {@link View} object to wait for
 	 * @param timeout the amount of time in milliseconds to wait
 	 * @param scroll {@code true} if scrolling should be performed
-	 * @return {@code true} if view is shown and {@code false} if it is not shown before the timeout
+	 * @return {@code true} if the {@link View} is shown and {@code false} if it is not shown before the timeout
 	 * 
 	 */
-	
+
 	public <T extends View> boolean waitForView(View view, int timeout, boolean scroll){
 		return waiter.waitForView(view, timeout, scroll);
 	}
@@ -300,7 +301,7 @@ public class Solo {
 	 * @param viewClass the {@link View} class to wait for
 	 * @param minimumNumberOfMatches the minimum number of matches that are expected to be shown. {@code 0} means any number of matches
 	 * @param timeout the amount of time in milliseconds to wait
-	 * @return {@code true} if view is shown and {@code false} if it is not shown before the timeout
+	 * @return {@code true} if the {@link View} is shown and {@code false} if it is not shown before the timeout
 	 * 
 	 */
 	
@@ -337,11 +338,12 @@ public class Solo {
 	 * Waits for a WebElement. Default timeout is 20 seconds. 
 	 * 
 	 * @param by the By object. Examples are By.id("id") and By.name("name")
+	 * @return {@code true} if the {@link WebElement} is shown and {@code false} if it is not shown before the timeout
 	 * 
 	 */
 	
-	public void waitForWebElement(By by){
-		waiter.waitForWebElement(by, 0, TIMEOUT, true);
+	public boolean waitForWebElement(By by){
+		return (waiter.waitForWebElement(by, 0, TIMEOUT, true) != null);
 	}
 	
 	/**
@@ -350,11 +352,12 @@ public class Solo {
 	 * @param by the By object. Examples are By.id("id") and By.name("name")
 	 * @param timeout the the amount of time in milliseconds to wait 
 	 * @param scroll {@code true} if scrolling should be performed
+	 * @return {@code true} if the {@link WebElement} is shown and {@code false} if it is not shown before the timeout
 	 * 
 	 */
 	
-	public void waitForWebElement(By by, int timeout, boolean scroll){
-		waiter.waitForWebElement(by, 0, timeout, scroll);
+	public boolean waitForWebElement(By by, int timeout, boolean scroll){
+		return (waiter.waitForWebElement(by, 0, timeout, scroll) != null);
 	}
 	
 	/**
@@ -364,11 +367,11 @@ public class Solo {
 	 * @param minimumNumberOfMatches the minimum number of matches that are expected to be shown. {@code 0} means any number of matches
 	 * @param timeout the the amount of time in milliseconds to wait 
 	 * @param scroll {@code true} if scrolling should be performed
-	 * 
+	 * @return {@code true} if the {@link WebElement} is shown and {@code false} if it is not shown before the timeout
 	 */
 	
-	public void waitForWebElement(By by, int minimumNumberOfMatches, int timeout, boolean scroll){
-		waiter.waitForWebElement(by, minimumNumberOfMatches, timeout, scroll);
+	public boolean waitForWebElement(By by, int minimumNumberOfMatches, int timeout, boolean scroll){
+		return (waiter.waitForWebElement(by, minimumNumberOfMatches, timeout, scroll) != null);
 	}
 	
 	
