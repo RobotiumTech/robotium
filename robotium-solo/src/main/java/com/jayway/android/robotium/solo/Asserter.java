@@ -36,9 +36,7 @@ class Asserter {
 
 	public void assertCurrentActivity(String message, String name)
 	{
-		waiter.waitForActivity(name);
-		Assert.assertEquals(message, name, activityUtils.getCurrentActivity().getClass().getSimpleName());
-
+		Assert.assertTrue(message, waiter.waitForActivity(name));
 	}
 
 	/**
