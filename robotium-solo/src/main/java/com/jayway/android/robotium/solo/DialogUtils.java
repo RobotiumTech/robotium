@@ -6,7 +6,7 @@ import android.os.SystemClock;
 /**
  * Contains the waitForDialogToClose() method.
  * 
- * @author Renas Reda, renas.reda@jayway.com
+ * @author Renas Reda, renasreda@gmail.com
  * 
  */
 
@@ -20,7 +20,6 @@ class DialogUtils {
 	 * 
 	 * @param viewFetcher the {@code ViewFetcher} instance.
      * @param sleeper the {@code Sleeper} instance.
-	 * 
 	 */
 
 	public DialogUtils(ViewFetcher viewFetcher, Sleeper sleeper) {
@@ -37,27 +36,44 @@ class DialogUtils {
 	 */
 
 	public boolean waitForDialogToClose(long timeout) {
-		sleeper.sleepMini();
 		int elementsBefore = viewFetcher.getWindowDecorViews().length;
-		long now = SystemClock.uptimeMillis();
-		final long endTime = now + timeout;
-		int elementsNow;
-		while (now < endTime) {
-			elementsNow = viewFetcher.getWindowDecorViews().length;
+		final long endTime = SystemClock.uptimeMillis() + timeout;
+		
+		while (SystemClock.uptimeMillis() < endTime) {
+			
+			int elementsNow = viewFetcher.getWindowDecorViews().length;
 			if(elementsBefore < elementsNow){
 				elementsBefore = elementsNow;
 			}
 			if(elementsBefore > elementsNow)
-				break;
-
-			sleeper.sleepMini();
-			now = SystemClock.uptimeMillis();
+				return true;
+			
+			sleeper.sleep(10);
 		}
+		return false;
+	}
+	
+	/**
+	 * Waits for a {@link android.app.Dialog} to open.
+	 *
+	 * @param timeout the amount of time in milliseconds to wait
+	 * @return {@code true} if the {@code Dialog} is opened before the timeout and {@code false} if it is not opened.
+	 */
 
-		if (now > endTime)
-			return false;
-
-		return true;
+	public boolean waitForDialogToOpen(long timeout) {
+		int elementsBefore = viewFetcher.getWindowDecorViews().length;
+		final long endTime = SystemClock.uptimeMillis() + timeout;
+		
+		while (SystemClock.uptimeMillis() < endTime) {
+			
+			int elementsNow = viewFetcher.getWindowDecorViews().length;
+			
+			if(elementsBefore < elementsNow){
+				return true;
+			}
+			sleeper.sleep(10);
+		}
+		return false;
 	}
 
 

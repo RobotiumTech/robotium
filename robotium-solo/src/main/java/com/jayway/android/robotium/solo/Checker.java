@@ -10,7 +10,7 @@ import android.widget.TextView;
  * Contains various check methods. Examples are: isButtonChecked(),
  * isSpinnerTextSelected.
  * 
- * @author Renas Reda, renas.reda@jayway.com
+ * @author Renas Reda, renasreda@gmail.com
  * 
  */
 
@@ -86,9 +86,9 @@ class Checker {
 	
 	/**
 	 * Checks if a given text is selected in any {@link Spinner} located on the current screen.
+	 * 
 	 * @param text the text that is expected to be selected
 	 * @return {@code true} if the given text is selected in any {@code Spinner} and false if it is not
-	 * 
 	 */
 	
 	public boolean isSpinnerTextSelected(String text)

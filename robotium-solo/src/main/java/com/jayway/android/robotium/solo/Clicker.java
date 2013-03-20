@@ -1,62 +1,65 @@
 package com.jayway.android.robotium.solo;
 
+import java.lang.reflect.Constructor;
 import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Set;
-import java.util.regex.Pattern;
-import android.widget.*;
+import java.util.Collection;
 import junit.framework.Assert;
+import android.app.Activity;
 import android.app.Instrumentation;
+import android.content.Context;
 import android.os.SystemClock;
 import android.util.Log;
 import android.view.KeyEvent;
+import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewConfiguration;
+import android.view.Window;
+import android.widget.TextView;
+import android.widget.AdapterView;
 
 /**
  * Contains various click methods. Examples are: clickOn(),
  * clickOnText(), clickOnScreen().
  * 
- * @author Renas Reda, renas.reda@jayway.com
+ * @author Renas Reda, renasreda@gmail.com
  * 
  */
 
 class Clicker {
 
 	private final String LOG_TAG = "Robotium";
+	private final ActivityUtils activityUtils;
 	private final ViewFetcher viewFetcher;
-	private final Scroller scroller;
 	private final Instrumentation inst;
-	private final RobotiumUtils robotiumUtils;
+	private final Sender sender;
 	private final Sleeper sleeper;
 	private final Waiter waiter;
+	private final WebUtils webUtils;
 	private final int TIMEOUT = 10000;
 	private final int MINISLEEP = 100;
-	Set<TextView> uniqueTextViews;
 
 
 	/**
 	 * Constructs this object.
 	 * 
+	 * @param activityUtils the {@code ActivityUtils} instance.
 	 * @param viewFetcher the {@code ViewFetcher} instance.
-	 * @param scroller the {@code Scroller} instance.
-	 * @param robotiumUtils the {@code RobotiumUtils} instance.
+	 * @param sender the {@code Sender} instance.
 	 * @param inst the {@code android.app.Instrumentation} instance.
 	 * @param sleeper the {@code Sleeper} instance
 	 * @param waiter the {@code Waiter} instance
 	 */
 
-	public Clicker(ViewFetcher viewFetcher,
-			Scroller scroller, RobotiumUtils robotiumUtils, Instrumentation inst, Sleeper sleeper, Waiter waiter) {
+	public Clicker(ActivityUtils activityUtils, ViewFetcher viewFetcher, Sender sender, Instrumentation inst, Sleeper sleeper, Waiter waiter, WebUtils webUtils) {
 
+		this.activityUtils = activityUtils;
 		this.viewFetcher = viewFetcher;
-		this.scroller = scroller;
-		this.robotiumUtils = robotiumUtils;
+		this.sender = sender;
 		this.inst = inst;
 		this.sleeper = sleeper;
 		this.waiter = waiter;
-		uniqueTextViews = new HashSet<TextView>();
+		this.webUtils = webUtils;
 	}
 
 	/**
@@ -64,7 +67,6 @@ class Clicker {
 	 *
 	 * @param x the x coordinate
 	 * @param y the y coordinate
-	 *
 	 */
 
 	public void clickOnScreen(float x, float y) {
@@ -89,7 +91,6 @@ class Clicker {
 	 * @param x the x coordinate
 	 * @param y the y coordinate
 	 * @param time the amount of time to long click
-	 *
 	 */
 
 	public void clickLongOnScreen(float x, float y, int time) {
@@ -103,8 +104,8 @@ class Clicker {
 		}
 		eventTime = SystemClock.uptimeMillis();
 		event = MotionEvent.obtain(downTime, eventTime, MotionEvent.ACTION_MOVE, 
-				x + ViewConfiguration.getTouchSlop() / 2,
-				y + ViewConfiguration.getTouchSlop() / 2, 0);
+				x + 1.0f,
+				y + 1.0f, 0);
 		inst.sendPointerSync(event);
 		if(time > 0)
 			sleeper.sleep(time);
@@ -123,7 +124,6 @@ class Clicker {
 	 * Clicks on a given {@link View}.
 	 *
 	 * @param view the view that should be clicked
-	 *
 	 */
 
 	public void clickOnScreen(View view) {
@@ -136,7 +136,6 @@ class Clicker {
 	 * @param view the view that should be clicked
 	 * @param longClick true if the click should be a long click
 	 * @param time the amount of time to long click
-	 *
 	 */
 
 	public void clickOnScreen(View view, boolean longClick, int time) {
@@ -164,7 +163,6 @@ class Clicker {
 	 *
 	 * @param text the text that should be clicked on. The parameter <strong>will</strong> be interpreted as a regular expression.
 	 * @param index the index of the menu item that should be pressed
-	 *
 	 */
 
 	public void clickLongOnTextAndPress(String text, int index)
@@ -185,15 +183,15 @@ class Clicker {
 
 	/**
 	 * Clicks on a menu item with a given text
-	 * @param text the menu text that should be clicked on. The parameter <strong>will</strong> be interpreted as a regular expression.
 	 * 
+	 * @param text the menu text that should be clicked on. The parameter <strong>will</strong> be interpreted as a regular expression.
 	 */
 
 	public void clickOnMenuItem(String text)
 	{	
 		sleeper.sleep();
 		try{
-			robotiumUtils.sendKeyCode(KeyEvent.KEYCODE_MENU);
+			sender.sendKeyCode(KeyEvent.KEYCODE_MENU);
 		}catch(SecurityException e){
 			Assert.assertTrue("Can not open the menu!", false);
 		}
@@ -205,7 +203,6 @@ class Clicker {
 	 * 
 	 * @param text the menu text that should be clicked on. The parameter <strong>will</strong> be interpreted as a regular expression.
 	 * @param subMenu true if the menu item could be located in a sub menu
-	 * 
 	 */
 
 	public void clickOnMenuItem(String text, boolean subMenu)
@@ -217,11 +214,13 @@ class Clicker {
 		int y = 0;
 
 		try{
-			robotiumUtils.sendKeyCode(KeyEvent.KEYCODE_MENU);
+			sender.sendKeyCode(KeyEvent.KEYCODE_MENU);
 		}catch(SecurityException e){
 			Assert.assertTrue("Can not open the menu!", false);
 		}
-		if(subMenu && (viewFetcher.getCurrentViews(TextView.class).size() > 5) && !waiter.waitForText(text, 1, 1500, false)){
+		boolean textShown = waiter.waitForText(text, 1, 1500, false) != null;
+
+		if(subMenu && (viewFetcher.getCurrentViews(TextView.class).size() > 5) && !textShown){
 			for(TextView textView : viewFetcher.getCurrentViews(TextView.class)){
 				x = xy[0];
 				y = xy[1];
@@ -237,6 +236,72 @@ class Clicker {
 		clickOnText(text, false, 1, true, 0);
 	}
 
+	/**
+	 * Clicks on an ActionBar item with a given resource id
+	 * 
+	 * @param resourceId the R.id of the ActionBar item
+	 */
+
+	public void clickOnActionBarItem(int resourceId){
+		inst.invokeMenuActionSync(activityUtils.getCurrentActivity(), resourceId, 0);
+	}
+
+	/**
+	 * Clicks on an ActionBar Home/Up button.
+	 */
+
+	public void clickOnActionBarHomeButton() {
+		Activity activity = activityUtils.getCurrentActivity();
+		MenuItem homeMenuItem = null;
+
+		try {
+			Class<?> cls = Class.forName("com.android.internal.view.menu.ActionMenuItem");
+			Class<?> partypes[] = new Class[6];
+			partypes[0] = Context.class;
+			partypes[1] = Integer.TYPE;
+			partypes[2] = Integer.TYPE;
+			partypes[3] = Integer.TYPE;
+			partypes[4] = Integer.TYPE;
+			partypes[5] = CharSequence.class;
+			Constructor<?> ct = cls.getConstructor(partypes);
+			Object argList[] = new Object[6];
+			argList[0] = activity;
+			argList[1] = 0;
+			argList[2] = android.R.id.home;
+			argList[3] = 0;
+			argList[4] = 0;
+			argList[5] = "";
+			homeMenuItem = (MenuItem) ct.newInstance(argList);
+		} catch (Exception ex) {
+			Log.d(LOG_TAG, "Can not find methods to invoke Home button!");
+		}
+
+		if (homeMenuItem != null) {
+			activity.getWindow().getCallback().onMenuItemSelected(Window.FEATURE_OPTIONS_PANEL, homeMenuItem);
+		}
+	}
+
+	/**
+	 * Clicks on a web element using the given By method
+	 * 
+	 * @param by the By object e.g. By.id("id");
+	 * @param match if multiple objects match, this determines which one will be clicked
+	 * @param scroll true if scrolling should be performed
+	 */
+
+	public void clickOnWebElement(By by, int match, boolean scroll){	
+		WebElement webElementToClick = waiter.waitForWebElement(by, match, TIMEOUT, scroll);
+
+		if(webElementToClick == null){
+			if(match > 1)
+				Assert.assertTrue(match + " web elements with " + by.getClass().getSimpleName() + ": '" + by.getValue() + "' are not found!", false);
+			else
+				Assert.assertTrue("Web element with " + by.getClass().getSimpleName() + ": '" + by.getValue() + "' is not found", false);
+
+		}
+		clickOnScreen(webElementToClick.getLocationX(), webElementToClick.getLocationY());
+	}
+
 
 	/**
 	 * Clicks on a specific {@link TextView} displaying a given text.
@@ -244,40 +309,33 @@ class Clicker {
 	 * @param regex the text that should be clicked on. The parameter <strong>will</strong> be interpreted as a regular expression.
 	 * @param longClick {@code true} if the click should be a long click
 	 * @param match the regex match that should be clicked on
-	 * @param scroll whether to scroll to find the regex
+	 * @param scroll true if scrolling should be performed
 	 * @param time the amount of time to long click
 	 */
 
 	public void clickOnText(String regex, boolean longClick, int match, boolean scroll, int time) {
-		waiter.waitForText(regex, 0, TIMEOUT, scroll, true);
-		TextView textToClick = null;
-		ArrayList <TextView> allTextViews = viewFetcher.getCurrentViews(TextView.class);
-		allTextViews = RobotiumUtils.removeInvisibleViews(allTextViews);
-		if (match == 0) {
-			match = 1;
-		}
-		for (TextView textView : allTextViews){
-			if (RobotiumUtils.checkAndGetMatches(regex, textView, uniqueTextViews) == match) {
-				uniqueTextViews.clear();
-				textToClick = textView;
-				break;
-			}
-		}
+		TextView textToClick = waiter.waitForText(regex, match, TIMEOUT, scroll, true, false);
+
 		if (textToClick != null) {
 			clickOnScreen(textToClick, longClick, time);
-		} else if (scroll && scroller.scroll(Scroller.DOWN)) {
-			clickOnText(regex, longClick, match, scroll, time);
-		} else {
-			int sizeOfUniqueTextViews = uniqueTextViews.size();
-			uniqueTextViews.clear();
-			if (sizeOfUniqueTextViews > 0)
-				Assert.assertTrue("There are only " + sizeOfUniqueTextViews + " matches of " + regex, false);
-			else {
-				for (TextView textView : allTextViews) {
-					Log.d(LOG_TAG, regex + " not found. Have found: " + textView.getText());
-				}
-				Assert.assertTrue("The text: " + regex + " is not found!", false);
+		}
+
+		else {
+
+			if(match > 1){
+				Assert.assertTrue(match + " matches with text string: '" + regex +  "' are not found!", false);
 			}
+
+			else{
+				ArrayList<TextView> allTextViews = RobotiumUtils.removeInvisibleViews(viewFetcher.getCurrentViews(TextView.class));
+				allTextViews.addAll((Collection<? extends TextView>) webUtils.getTextViewsFromWebView());
+
+				for (TextView textView : allTextViews) {
+					Log.d(LOG_TAG, "'" + regex + "' not found. Have found: '" + textView.getText() + "'");
+				}
+				allTextViews = null;
+				Assert.assertTrue("The text: '" + regex + "' is not found!", false);
+			}	
 		}
 	}
 
@@ -288,28 +346,19 @@ class Clicker {
 	 * @param viewClass what kind of {@code View} to click, e.g. {@code Button.class} or {@code TextView.class}
 	 * @param nameRegex the name of the view presented to the user. The parameter <strong>will</strong> be interpreted as a regular expression.
 	 */
+
 	public <T extends TextView> void clickOn(Class<T> viewClass, String nameRegex) {
-		final Pattern pattern = Pattern.compile(nameRegex);
-		waiter.waitForText(nameRegex, 0, TIMEOUT, true, true);
-		ArrayList<T> views = viewFetcher.getCurrentViews(viewClass);
-		views = RobotiumUtils.removeInvisibleViews(views);
-		T viewToClick = null;
-		for(T view : views){
-			if(pattern.matcher(view.getText().toString()).matches()){
-				viewToClick = view;
-				if(viewToClick.isShown())
-					break;
-			}
-		}
+		T viewToClick = (T) waiter.waitForText(viewClass, nameRegex, 0, TIMEOUT, true, true, false);
+
 		if (viewToClick != null) {
 			clickOnScreen(viewToClick);
-		} else if (scroller.scroll(Scroller.DOWN)){
-			clickOn(viewClass, nameRegex);
-		}else {
-			for (T view : views) {
+		} else {
+			ArrayList <T> allTextViews = RobotiumUtils.removeInvisibleViews(viewFetcher.getCurrentViews(viewClass));
+
+			for (T view : allTextViews) {
 				Log.d(LOG_TAG, nameRegex + " not found. Have found: " + view.getText());
 			}
-			Assert.assertTrue(viewClass.getSimpleName() + " with the text: " + nameRegex + " is not found!", false);
+			Assert.assertTrue(viewClass.getSimpleName() + " with the text: '" + nameRegex + "' is not found!", false);
 		}
 	}
 
@@ -319,6 +368,7 @@ class Clicker {
 	 * @param viewClass what kind of {@code View} to click, e.g. {@code Button.class} or {@code ImageView.class}
 	 * @param index the index of the {@code View} to be clicked, within {@code View}s of the specified class
 	 */
+
 	public <T extends View> void clickOn(Class<T> viewClass, int index) {
 		clickOnScreen(waiter.waitForAndGetView(index, viewClass));
 	}
@@ -351,11 +401,17 @@ class Clicker {
 			line = 0;
 
 		ArrayList<View> views = new ArrayList<View>();
-		final ListView listView = waiter.waitForAndGetView(index, ListView.class);
-		if(listView == null)
+		final AdapterView<?> adapterView = waiter.waitForAndGetView(index, AdapterView.class);
+		if(adapterView == null)
 			Assert.assertTrue("ListView is null!", false);
 
-		View view = listView.getChildAt(line);
+		int numberOfLines = adapterView.getChildCount();
+
+		if(line > adapterView.getChildCount()){
+			Assert.assertTrue("Can not click line number " + line + " as there are only " + numberOfLines + " lines available", false);
+		}
+		View view = adapterView.getChildAt(line);
+
 		if(view != null){
 			views = viewFetcher.getViews(view, true);
 			views = RobotiumUtils.removeInvisibleViews(views);

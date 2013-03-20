@@ -9,7 +9,7 @@ import android.view.KeyEvent;
  * Contains press methods. Examples are pressMenuItem(),
  * pressSpinnerItem().
  * 
- * @author Renas Reda, renas.reda@jayway.com
+ * @author Renas Reda, renasreda@gmail.com
  * 
  */
 
@@ -45,7 +45,6 @@ class Presser{
 	 * index {@code 5} is the first item in the third row.
 	 *
 	 * @param index the index of the {@code MenuItem} to be pressed
-	 * 
 	 */
 	
 	public void pressMenuItem(int index){
@@ -59,7 +58,6 @@ class Presser{
 	 * 
 	 * @param index the index of the {@code MenuItem} to be pressed
 	 * @param itemsPerRow the amount of menu items there are per row.   
-	 * 
 	 */
 	
 	public void pressMenuItem(int index, int itemsPerRow) {	
@@ -109,7 +107,6 @@ class Presser{
 	 * @param spinnerIndex the index of the {@code Spinner} menu to be used
 	 * @param itemIndex the index of the {@code Spinner} item to be pressed relative to the currently selected item.
 	 * A Negative number moves up on the {@code Spinner}, positive moves down
-	 *
 	 */
 
 	public void pressSpinnerItem(int spinnerIndex, int itemIndex)

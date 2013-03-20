@@ -7,7 +7,7 @@ import android.app.ActivityManager;
 /**
  * Contains assert methods examples are assertActivity() and assertLowMemory().
  * 
- * @author Renas Reda, renas.reda@jayway.com
+ * @author Renas Reda, renasreda@gmail.com
  *
  */
 
@@ -20,7 +20,6 @@ class Asserter {
 	 *
 	 * @param activityUtils the {@code ActivityUtils} instance.
      * @param waiter the {@code Waiter} instance.
-	 *
 	 */
 
 	public Asserter(ActivityUtils activityUtils, Waiter waiter) {
@@ -33,14 +32,11 @@ class Asserter {
      *
      * @param message the message that should be displayed if the assert fails
      * @param name the name of the {@code Activity} that is expected to be active e.g. {@code "MyActivity"}
-     *
      */
 
 	public void assertCurrentActivity(String message, String name)
 	{
-		waiter.waitForActivity(name);
-		Assert.assertEquals(message, name, activityUtils.getCurrentActivity().getClass().getSimpleName());
-
+		Assert.assertTrue(message, waiter.waitForActivity(name));
 	}
 
 	/**
@@ -48,15 +44,11 @@ class Asserter {
      *
      * @param message the message that should be displayed if the assert fails
 	 * @param expectedClass the {@code Class} object that is expected to be active e.g. {@code MyActivity.class}
-	 *
 	 */
 
 	public void assertCurrentActivity(String message, Class<? extends Activity> expectedClass)
 	{
-	    waiter.waitForActivity(expectedClass.getSimpleName());
-		Assert.assertEquals(message, expectedClass.getName(), activityUtils
-				.getCurrentActivity().getClass().getName());
-
+		Assert.assertTrue(message, waiter.waitForActivity(expectedClass.getSimpleName()));
 	}
 	
 	/**
@@ -66,7 +58,6 @@ class Asserter {
 	 * @param message the message that should be displayed if the assert fails
 	 * @param name the name of the {@code Activity} that is expected to be active e.g. {@code "MyActivity"}
 	 * @param isNewInstance {@code true} if the expected {@code Activity} is a new instance of the {@code Activity}
-	 * 
 	 */
 	
 	public void assertCurrentActivity(String message, String name, boolean isNewInstance)
@@ -83,7 +74,6 @@ class Asserter {
 	 * @param message the message that should be displayed if the assert fails
 	 * @param expectedClass the {@code Class} object that is expected to be active e.g. {@code MyActivity.class}
 	 * @param isNewInstance {@code true} if the expected {@code Activity} is a new instance of the {@code Activity}
-	 * 
 	 */
 	
 	public void assertCurrentActivity(String message, Class<? extends Activity> expectedClass,
@@ -100,10 +90,9 @@ class Asserter {
 	}
 	
 	/**
-	 * Asserts that the available memory in the system is not low.
-	 * 
+	 * Asserts that the available memory is not considered low by the system.
 	 */
-	
+
 	public void assertMemoryNotLow()
 	{
 		ActivityManager.MemoryInfo mi = new ActivityManager.MemoryInfo();

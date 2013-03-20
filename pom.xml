@@ -2,7 +2,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.jayway.android.robotium</groupId>
 	<artifactId>robotium</artifactId>
-	<version>3.2.2-SNAPSHOT</version>
+	<version>4.0.1-SNAPSHOT</version>
 	<packaging>pom</packaging>
     <name>Robotium</name>
     <description>User scenario testing for Android</description>
@@ -15,7 +15,7 @@
         <scm.branch>master</scm.branch>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.version>2.2.1</maven.version>
-        <android.jar.version>1.6_r2</android.jar.version>
+        <android.jar.version>4.0.1.2</android.jar.version>
     </properties>
     <scm>
         <url>http://github.com/jayway/robotium/tree/${scm.branch}</url>
@@ -201,6 +201,17 @@
                 </configuration>
             </plugin>
         </plugins>
+	<resources>
+    		<resource>
+      			<directory>src/main/resources</directory>
+    		</resource>
+    	<resource>
+      		<directory>src/main/java</directory>
+      	<includes>
+        	<include>**/*.js</include>
+      	</includes>
+    </resource>
+  </resources>  
     </build>
 
 	<distributionManagement>
@@ -219,7 +230,7 @@
     <profiles>
         <profile>
             <id>official-release</id>
-            <build>
+            <build>    
                 <plugins>
                     <!-- We want to sign the artifact, the POM, and all attached artifacts -->
                     <plugin>

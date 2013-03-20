@@ -1,71 +1,35 @@
 package com.jayway.android.robotium.solo;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import junit.framework.Assert;
-import android.app.Instrumentation;
-import android.view.KeyEvent;
+import java.util.regex.PatternSyntaxException;
 import android.view.View;
 import android.widget.TextView;
 
+/**
+ * Contains utility methods. Examples are: removeInvisibleViews(Iterable<T> viewList),
+ * filterViews(Class<T> classToFilterBy, Iterable<?> viewList), sortViewsByLocationOnScreen(List<? extends View> views).
+ * 
+ * @author Renas Reda, renasreda@gmail.com
+ * 
+ */
 
-class RobotiumUtils {
-	
-	private final Instrumentation inst;
-	private final Sleeper sleeper;
+public class RobotiumUtils {
 
-    /**
-	 * Constructs this object.
-	 * 
-     * @param inst the {@code Instrumentation} instance.
-     * @param sleeper the {@code Sleeper} instance.
-     */
-	
-	public RobotiumUtils(Instrumentation inst, Sleeper sleeper) {
-		this.inst = inst;
-        this.sleeper = sleeper;
-    }
-   
-	/**
-	 * Tells Robotium to send a key code: Right, Left, Up, Down, Enter or other.
-	 * @param keycode the key code to be sent. Use {@link KeyEvent#KEYCODE_ENTER}, {@link KeyEvent#KEYCODE_MENU}, {@link KeyEvent#KEYCODE_DEL}, {@link KeyEvent#KEYCODE_DPAD_RIGHT} and so on...
-	 * 
-	 */
-	
-	public void sendKeyCode(int keycode)
-	{
-		sleeper.sleep();
-		try{
-			inst.sendCharacterSync(keycode);
-		}catch(SecurityException e){
-			Assert.assertTrue("Can not complete action!", false);
-		}
-	}
-	
-	/**
-	 * Simulates pressing the hardware back key.
-	 *
-	 */
-
-	public void goBack() {
-		sleeper.sleep();
-		try {
-			inst.sendKeyDownUpSync(KeyEvent.KEYCODE_BACK);
-			sleeper.sleep();
-		} catch (Throwable ignored) {}
-	}
 
 	/**
-	 * Removes invisible {@code View}s
+	 * Removes invisible Views.
 	 * 
-	 * @param viewList an {@code ArrayList} with {@code View}s that is being checked for invisible {@code View}s.
-	 * @return a filtered {@code ArrayList} with no invisible {@code View}s.
+	 * @param viewList an Iterable with Views that is being checked for invisible Views.
+	 * @return a filtered Iterable with no invisible Views.
 	 */
-	
-	public static <T extends View> ArrayList<T> removeInvisibleViews(ArrayList<T> viewList) {
-		ArrayList<T> tmpViewList = new ArrayList<T>(viewList.size());
+
+	public static <T extends View> ArrayList<T> removeInvisibleViews(Iterable<T> viewList) {
+		ArrayList<T> tmpViewList = new ArrayList<T>();
 		for (T view : viewList) {
 			if (view != null && view.isShown()) {
 				tmpViewList.add(view);
@@ -73,37 +37,88 @@ class RobotiumUtils {
 		}
 		return tmpViewList;
 	}
-	
+
 	/**
-	 * Filters views
+	 * Filters Views based on the given class type.
 	 * 
 	 * @param classToFilterBy the class to filter
-	 * @param viewList the ArrayList to filter form
+	 * @param viewList the Iterable to filter from
 	 * @return an ArrayList with filtered views
 	 */
-	
-	public static <T extends View> ArrayList<T> filterViews(Class<T> classToFilterBy, ArrayList<View> viewList) {
-        ArrayList<T> filteredViews = new ArrayList<T>(viewList.size());
-        for (View view : viewList) {
-            if (view != null && classToFilterBy.isAssignableFrom(view.getClass())) {
-                filteredViews.add(classToFilterBy.cast(view));
-            }
-        }
-        viewList = null;
-        return filteredViews;
-    }
-	
+
+	public static <T> ArrayList<T> filterViews(Class<T> classToFilterBy, Iterable<?> viewList) {
+		ArrayList<T> filteredViews = new ArrayList<T>();
+		for (Object view : viewList) {
+			if (view != null && classToFilterBy.isAssignableFrom(view.getClass())) {
+				filteredViews.add(classToFilterBy.cast(view));
+			}
+		}
+		viewList = null;
+		return filteredViews;
+	}
+
 	/**
-	 * Checks if a view matches a certain string and returns the amount of matches
+	 * Filters all Views not within the given set.
+	 *
+	 * @param classSet contains all classes that are ok to pass the filter
+	 * @param viewList the Iterable to filter form
+	 * @return an ArrayList with filtered views
+	 */
+
+	public static ArrayList<View> filterViewsToSet(Class<View> classSet[], Iterable<View> viewList) {
+		ArrayList<View> filteredViews = new ArrayList<View>();
+		for (View view : viewList) {
+			if (view == null)
+				continue;
+			for (Class<View> filter : classSet) {
+				if (filter.isAssignableFrom(view.getClass())) {
+					filteredViews.add(view);
+					break;
+				}
+			}
+		}
+		return filteredViews;
+	}
+
+	/**
+	 * Orders Views by their location on-screen.
+	 * 
+	 * @param views The views to sort.
+	 * @see ViewLocationComparator
+	 */
+
+	public static void sortViewsByLocationOnScreen(List<? extends View> views) {
+		Collections.sort(views, new ViewLocationComparator());
+	}
+
+	/**
+	 * Orders Views by their location on-screen.
+	 * 
+	 * @param views The views to sort.
+	 * @param yAxisFirst Whether the y-axis should be compared before the x-axis.
+	 * @see ViewLocationComparator
+	 */
+
+	public static void sortViewsByLocationOnScreen(List<? extends View> views, boolean yAxisFirst) {
+		Collections.sort(views, new ViewLocationComparator(yAxisFirst));
+	}
+
+	/**
+	 * Checks if a View matches a certain string and returns the amount of total matches.
 	 * 
 	 * @param regex the regex to match
 	 * @param view the view to check
 	 * @param uniqueTextViews set of views that have matched
-	 * @return amount of total matches
+	 * @return number of total matches
 	 */
-	
-	public static int checkAndGetMatches(String regex, TextView view, Set<TextView> uniqueTextViews){
-		final Pattern pattern = Pattern.compile(regex);
+
+	public static int getNumberOfMatches(String regex, TextView view, Set<TextView> uniqueTextViews){
+		Pattern pattern = null;
+		try{
+			pattern = Pattern.compile(regex);
+		}catch(PatternSyntaxException e){
+			pattern = Pattern.compile(regex, Pattern.LITERAL);
+		}
 		Matcher matcher = pattern.matcher(view.getText().toString());
 		if (matcher.find()){
 			uniqueTextViews.add(view);
@@ -121,5 +136,37 @@ class RobotiumUtils {
 			}
 		}	
 		return uniqueTextViews.size();		
+	}
+
+	/**
+	 * Filters a collection of Views and returns a list that contains only Views
+	 * with text that matches a specified regular expression.
+	 * 
+	 * @param views The collection of views to scan.
+	 * @param regex The text pattern to search for.
+	 * @return A list of views whose text matches the given regex.
+	 */
+
+	public static <T extends TextView> List<T> filterViewsByText(Iterable<T> views, String regex) {
+		return filterViewsByText(views, Pattern.compile(regex));
+	}
+
+	/**
+	 * Filters a collection of Views and returns a list that contains only Views
+	 * with text that matches a specified regular expression.
+	 * 
+	 * @param views The collection of views to scan.
+	 * @param regex The text pattern to search for.
+	 * @return A list of views whose text matches the given regex.
+	 */
+
+	public static <T extends TextView> List<T> filterViewsByText(Iterable<T> views, Pattern regex) {
+		final ArrayList<T> filteredViews = new ArrayList<T>();
+		for (T view : views) {
+			if (view != null && regex.matcher(view.getText()).matches()) {
+				filteredViews.add(view);
+			}
+		}
+		return filteredViews;
 	}
 }
