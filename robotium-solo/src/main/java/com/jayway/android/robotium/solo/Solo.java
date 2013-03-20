@@ -84,6 +84,7 @@ public class Solo {
 	protected final Sender sender;
 	protected final ScreenshotTaker screenshotTaker;
 	protected final Instrumentation instrumentation;
+	protected String webUrl = null;
 	public final static int TIMEOUT = 20000;
 	public final static int SMALLTIMEOUT = 10000;
 	public final static int LANDSCAPE = ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE;   // 0
@@ -1841,6 +1842,27 @@ public class Solo {
 			Assert.assertTrue(match + " web elements with " + by.getClass().getSimpleName() + ": '" + by.getValue() + "' are not found!", false);
 		
 		return webElement;
+	}
+	
+	/**
+	 * Returns the current web page URL.
+	 * 
+	 * @return the current web page URL
+	 * 
+	 */
+
+	public String getWebUrl() {
+		final WebView webView = waiter.waitForAndGetView(0, WebView.class);
+
+		if(webView == null)
+			Assert.assertTrue("No WebView is found!", false);
+
+		instrumentation.runOnMainSync(new Runnable() {
+			public void run() {
+				webUrl = webView.getUrl();
+			}
+		});
+		return webUrl;
 	}
 	
 	/**
