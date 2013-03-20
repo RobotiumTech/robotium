@@ -28,6 +28,7 @@ class Waiter {
 	private final ViewFetcher viewFetcher;
 	private final int TIMEOUT = 20000;
 	private final int SMALLTIMEOUT = 10000;
+	private final int MINISLEEP = 50;
 	private final Searcher searcher;
 	private final Scroller scroller;
 	private final Sleeper sleeper;
@@ -73,14 +74,16 @@ class Waiter {
 	 */
 
 	public boolean waitForActivity(String name, int timeout){
-		final long endTime = SystemClock.uptimeMillis() + timeout;
 		Activity currentActivity = activityUtils.getCurrentActivity(false);
+		final long endTime = SystemClock.uptimeMillis() + timeout;
 
 		while(SystemClock.uptimeMillis() < endTime){
-			if(currentActivity != null && currentActivity.getClass().getSimpleName().equals(name))
+			if(currentActivity != null && currentActivity.getClass().getSimpleName().equals(name)) {
 				return true;
-
-			currentActivity = activityUtils.getCurrentActivity();
+			}
+			
+			sleeper.sleep(MINISLEEP);
+			currentActivity = activityUtils.getCurrentActivity(false);
 		}
 		return false;
 	}
@@ -95,14 +98,16 @@ class Waiter {
 	 */
 
 	public boolean waitForActivity(Class<? extends Activity> activityClass, int timeout){
-		final long endTime = SystemClock.uptimeMillis() + timeout;
 		Activity currentActivity = activityUtils.getCurrentActivity(false);
+		final long endTime = SystemClock.uptimeMillis() + timeout;
 
 		while(SystemClock.uptimeMillis() < endTime){
-			if(currentActivity != null && currentActivity.getClass().equals(activityClass))
+			if(currentActivity != null && currentActivity.getClass().equals(activityClass)) {
 				return true;
-
-			currentActivity = activityUtils.getCurrentActivity();
+			}
+			
+			sleeper.sleep(MINISLEEP);
+			currentActivity = activityUtils.getCurrentActivity(false);
 		}
 		return false;
 	}
