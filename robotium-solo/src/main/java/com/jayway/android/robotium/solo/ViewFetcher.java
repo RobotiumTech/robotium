@@ -272,7 +272,6 @@ class ViewFetcher {
 	 * @return the height of the scroll or list view parent
 	 */
 
-	@SuppressWarnings("deprecation")
 	public float getScrollListWindowHeight(View view) {
 		final int[] xyParent = new int[2];
 		View parent = getScrollOrListParent(view);
