@@ -15,10 +15,11 @@ function allWebElements() {
 }
 
 function allTexts() {
+	var range = document.createRange();
 	var walk=document.createTreeWalker(document.body,NodeFilter.SHOW_TEXT,null,false); 
 	while(n=walk.nextNode()){
 		try{
-			promptText(n);
+			promptText(n, range);
 		}catch(ignored){}
 	} 
 	finished();
@@ -75,12 +76,13 @@ function className(nameOfClass) {
 }
 
 function textContent(text) {
+	var range = document.createRange();
 	var walk=document.createTreeWalker(document.body,NodeFilter.SHOW_TEXT,null,false); 
 	while(n=walk.nextNode()){ 
 		try{
 			var textContent = n.textContent; 
 			if(textContent.trim() == text.trim()){  
-				promptText(n);
+				promptText(n, range);
 			}
 		}catch(ignored){} 
 	} 
@@ -176,8 +178,7 @@ function promptElement(element) {
 	}
 }
 
-function promptText(element) {
-	var range = document.createRange();
+function promptText(element, range) {	
 	var text = element.textContent;
 	if(text.trim().length>0) {
 		range.selectNodeContents(element);
