@@ -1107,7 +1107,7 @@ public class Solo {
 	 * returns an ArrayList of the TextView objects that the list line is showing.
 	 * 
 	 * @param line the line to be clicked
-	 * @param index the index of the list. 1 if two lists are available
+	 * @param index the index of the list. {@code 0} if only one is available
 	 * @return an {@code ArrayList} of the {@link TextView} objects located in the list line
 	 *
 	 */
@@ -1133,7 +1133,7 @@ public class Solo {
 	 * returns an ArrayList of the TextView objects that the list line is showing.
 	 * 
 	 * @param line the line to be clicked
-	 * @param index the index of the list. 1 if two lists are available
+	 * @param index the index of the list. {@code 0} if only one is available
 	 * @return an {@code ArrayList} of the {@link TextView} objects located in the list line
 	 *
 	 */
@@ -1146,7 +1146,7 @@ public class Solo {
 	 * returns an ArrayList of the TextView objects that the list line is showing.
 	 * 
 	 * @param line the line to be clicked
-	 * @param index the index of the list. 1 if two lists are available
+	 * @param index the index of the list. {@code 0} if only one is available
 	 * @param time the amount of time to long click
 	 * @return an {@code ArrayList} of the {@link TextView} objects located in the list line
 	 *
