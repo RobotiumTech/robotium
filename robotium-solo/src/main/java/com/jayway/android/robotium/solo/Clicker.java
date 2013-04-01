@@ -100,7 +100,7 @@ class Clicker {
 		try{
 			inst.sendPointerSync(event);
 		}catch(SecurityException e){
-			Assert.assertTrue("Click can not be completed! Something is in the way e.g. the keyboard.", false);
+			Assert.assertTrue("Click can not be completed!", false);
 		}
 		eventTime = SystemClock.uptimeMillis();
 		event = MotionEvent.obtain(downTime, eventTime, MotionEvent.ACTION_MOVE, 
