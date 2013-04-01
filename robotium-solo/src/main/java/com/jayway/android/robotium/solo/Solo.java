@@ -1864,7 +1864,7 @@ public class Solo {
 		final WebView webView = waiter.waitForAndGetView(0, WebView.class);
 
 		if(webView == null)
-			Assert.assertTrue("No WebView is found!", false);
+			Assert.assertTrue("WebView is not found!", false);
 
 		instrumentation.runOnMainSync(new Runnable() {
 			public void run() {
