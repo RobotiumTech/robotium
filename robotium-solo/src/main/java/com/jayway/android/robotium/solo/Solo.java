@@ -1815,7 +1815,6 @@ public class Solo {
 				Assert.assertTrue(match + " view with id: '" + id + "' is not found!", false);
 			}
 		}
-
 		return viewToReturn;
 	}
 
@@ -2058,7 +2057,7 @@ public class Solo {
 	}
 	
 	/**
-	 * Hides the soft keyboard
+	 * Hides the soft keyboard.
 	 * 
 	 * 
 	 */
