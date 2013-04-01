@@ -116,7 +116,9 @@ class Waiter {
 	 * Waits for a view to be shown.
 	 * 
 	 * @param viewClass the {@code View} class to wait for
-	 * @param minimumNumberOfMatches the minimum number of matches that are expected to be shown. {@code 0} means any number of matches
+	 * @param index the index of the view that is expected to be shown
+	 * @param sleep true if should sleep
+	 * @param scroll {@code true} if scrolling should be performed
 	 * @return {@code true} if view is shown and {@code false} if it is not shown before the timeout
 	 */
 
