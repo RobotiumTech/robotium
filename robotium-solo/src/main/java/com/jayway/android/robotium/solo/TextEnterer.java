@@ -1,6 +1,7 @@
 package com.jayway.android.robotium.solo;
 
 import junit.framework.Assert;
+import android.app.Activity;
 import android.app.Instrumentation;
 import android.text.InputType;
 import android.view.inputmethod.InputMethodManager;
@@ -55,7 +56,7 @@ class TextEnterer{
 				{
 					editText.setInputType(InputType.TYPE_NULL); 
 					editText.performClick();
-					hideSoftKeyboard(editText);
+					hideSoftKeyboard();
 					if(text.equals(""))
 						editText.setText(text);
 					else{
@@ -84,7 +85,7 @@ class TextEnterer{
 				}
 			});
 			clicker.clickOnScreen(editText, false, 0);
-			hideSoftKeyboard(editText);
+			hideSoftKeyboard();
 			inst.sendStringSync(text);
 		}
 	}
@@ -97,9 +98,9 @@ class TextEnterer{
 	 */
 	
 	@SuppressWarnings("static-access")
-	public void hideSoftKeyboard(EditText editText) {
-		InputMethodManager imm = (InputMethodManager)activityUtils.getCurrentActivity(false).
-		getSystemService(activityUtils.getCurrentActivity(false).INPUT_METHOD_SERVICE);
-		imm.hideSoftInputFromWindow(editText.getWindowToken(), 0);
+	public void hideSoftKeyboard() {
+		Activity activity = activityUtils.getCurrentActivity(false);
+		InputMethodManager inputMethodManager = (InputMethodManager)  activity.getSystemService(Activity.INPUT_METHOD_SERVICE);
+		inputMethodManager.hideSoftInputFromWindow(activity.getCurrentFocus().getWindowToken(), 0);
 	}
 }

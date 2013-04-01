@@ -2052,15 +2052,8 @@ public class Solo {
 	 * 
 	 */
 	
-	public void hideSoftKeyboard() {
-		waiter.waitForView(EditText.class, 0, SMALLTIMEOUT, false);
-		ArrayList<EditText> visibleEditTexts = RobotiumUtils.removeInvisibleViews(viewFetcher.getCurrentViews(EditText.class));
-		EditText editText = viewFetcher.getFreshestView(visibleEditTexts);
-		
-		if(editText == null) {
-			Assert.assertTrue("No EditText is found!", false);
-		}		
-		textEnterer.hideSoftKeyboard(editText);
+	public void hideSoftKeyboard() {	
+		textEnterer.hideSoftKeyboard();
 	}
 
 	/**
