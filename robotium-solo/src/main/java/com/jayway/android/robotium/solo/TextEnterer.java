@@ -85,7 +85,7 @@ class TextEnterer{
 				}
 			});
 			clicker.clickOnScreen(editText, false, 0);
-			hideSoftKeyboard(false);
+			hideSoftKeyboard(true);
 			inst.sendStringSync(text);
 		}
 	}
