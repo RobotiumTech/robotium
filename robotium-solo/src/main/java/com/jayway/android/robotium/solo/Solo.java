@@ -1530,7 +1530,7 @@ public class Solo {
 
 	public void enterTextInWebElement(By by, String text){
 		if(waiter.waitForWebElement(by, 0, SMALLTIMEOUT, false) == null) {
-			Assert.assertTrue("WebElement with " + by.getClass().getSimpleName().toLowerCase() + ": '" + by.getValue() + "' is not found!", false);
+			Assert.assertTrue("WebElement with " + webUtils.splitNameByUpperCase(by.getClass().getSimpleName()) + ": '" + by.getValue() + "' is not found!", false);
 		}
 		webUtils.enterTextIntoWebElement(by, text);
 	}
@@ -1845,10 +1845,10 @@ public class Solo {
 
 		if(webElement == null) {
 			if(match > 1){
-				Assert.assertTrue(match + " WebElements with " + by.getClass().getSimpleName().toLowerCase() + ": '" + by.getValue() + "' are not found!", false);
+				Assert.assertTrue(match + " WebElements with " + webUtils.splitNameByUpperCase(by.getClass().getSimpleName()) + ": '" + by.getValue() + "' are not found!", false);
 			}
 			else {
-				Assert.assertTrue("WebElement with " + by.getClass().getSimpleName().toLowerCase() + ": '" + by.getValue() + "' is not found!", false);
+				Assert.assertTrue("WebElement with " + webUtils.splitNameByUpperCase(by.getClass().getSimpleName()) + ": '" + by.getValue() + "' is not found!", false);
 			}
 		}
 		return webElement;

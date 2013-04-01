@@ -242,6 +242,30 @@ class WebUtils {
 		}
 		return false;
 	}
+	
+	/**
+	 * Splits a name by upper case.
+	 * 
+	 * @param name the name to split
+	 * @return a String with the split name
+	 * 
+	 */
+
+	public String splitNameByUpperCase(String name) {
+		String [] texts = name.split("(?=\\p{Upper})");
+		StringBuilder stringToReturn = new StringBuilder();
+
+		for(String string : texts){
+
+			if(stringToReturn.length() > 0) {
+				stringToReturn.append(" " + string.toLowerCase());
+			}
+			else {
+				stringToReturn.append(string.toLowerCase());
+			}
+		}
+		return stringToReturn.toString();
+	}
 
 	/**
 	 * Returns the JavaScript file RobotiumWeb.js as a String

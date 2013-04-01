@@ -294,10 +294,10 @@ class Clicker {
 
 		if(webElementToClick == null){
 			if(match > 1) {
-				Assert.assertTrue(match + " WebElements with " + by.getClass().getSimpleName().toLowerCase() + ": '" + by.getValue() + "' are not found!", false);
+				Assert.assertTrue(match + " WebElements with " + webUtils.splitNameByUpperCase(by.getClass().getSimpleName()) + ": '" + by.getValue() + "' are not found!", false);
 			}
 			else {
-				Assert.assertTrue("WebElement with " + by.getClass().getSimpleName().toLowerCase() + ": '" + by.getValue() + "' is not found!", false);
+				Assert.assertTrue("WebElement with " + webUtils.splitNameByUpperCase(by.getClass().getSimpleName()) + ": '" + by.getValue() + "' is not found!", false);
 			}
 		}
 		clickOnScreen(webElementToClick.getLocationX(), webElementToClick.getLocationY());
