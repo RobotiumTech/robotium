@@ -18,6 +18,7 @@ class Checker {
 	
 	private final ViewFetcher viewFetcher;
 	private final Waiter waiter;
+	private final int SMALLTIMEOUT = 10000;
 
 	/**
 	 * Constructs this object.
@@ -55,7 +56,7 @@ class Checker {
 
 	public <T extends CompoundButton> boolean isButtonChecked(Class<T> expectedClass, String text)
 	{
-		T button = waiter.waitForText(expectedClass, text, 0, 10000, true);
+		T button = waiter.waitForText(expectedClass, text, 0, SMALLTIMEOUT, true);
 
 		if(button != null && button.isChecked()){
 			return true;
@@ -73,7 +74,7 @@ class Checker {
 
 	public boolean isCheckedTextChecked(String text)
 	{
-		CheckedTextView checkedTextView = waiter.waitForText(CheckedTextView.class, text, 0, 10000, true);
+		CheckedTextView checkedTextView = waiter.waitForText(CheckedTextView.class, text, 0, SMALLTIMEOUT, true);
 
 		if(checkedTextView != null && checkedTextView.isChecked()) {
 			return true;
