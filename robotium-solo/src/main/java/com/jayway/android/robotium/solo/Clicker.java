@@ -293,11 +293,12 @@ class Clicker {
 		WebElement webElementToClick = waiter.waitForWebElement(by, match, TIMEOUT, scroll);
 
 		if(webElementToClick == null){
-			if(match > 1)
-				Assert.assertTrue(match + " web elements with " + by.getClass().getSimpleName() + ": '" + by.getValue() + "' are not found!", false);
-			else
-				Assert.assertTrue("Web element with " + by.getClass().getSimpleName() + ": '" + by.getValue() + "' is not found", false);
-
+			if(match > 1) {
+				Assert.assertTrue(match + " WebElements with " + by.getClass().getSimpleName() + ": '" + by.getValue() + "' are not found!", false);
+			}
+			else {
+				Assert.assertTrue("WebElement with " + by.getClass().getSimpleName() + ": '" + by.getValue() + "' is not found!", false);
+			}
 		}
 		clickOnScreen(webElementToClick.getLocationX(), webElementToClick.getLocationY());
 	}

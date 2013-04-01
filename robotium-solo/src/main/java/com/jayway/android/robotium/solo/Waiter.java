@@ -356,19 +356,6 @@ class Waiter {
 	}
 
 	/**
-	 * Waits for a text to be shown. Default timeout is 20 seconds. 
-	 * 
-	 * @param text the text that needs to be shown, specified as a regular expression
-	 * @param expectedMinimumNumberOfMatches the minimum number of matches of text that must be shown. {@code 0} means any number of matches
-	 * @return {@code true} if text is found and {@code false} if it is not found before the timeout
-	 */
-
-	public TextView waitForText(String text, int expectedMinimumNumberOfMatches) {
-
-		return waitForText(text, expectedMinimumNumberOfMatches, TIMEOUT, true);
-	}
-
-	/**
 	 * Waits for a text to be shown.
 	 *
 	 * @param text the text that needs to be shown, specified as a regular expression
@@ -394,6 +381,21 @@ class Waiter {
 
 	public TextView waitForText(String text, int expectedMinimumNumberOfMatches, long timeout, boolean scroll) {
 		return waitForText(TextView.class, text, expectedMinimumNumberOfMatches, timeout, scroll, false, true);	
+	}
+	
+	/**
+	 * Waits for a text to be shown.
+	 *
+	 * @param classToFilterBy the class to filter by
+	 * @param text the text that needs to be shown, specified as a regular expression
+	 * @param expectedMinimumNumberOfMatches the minimum number of matches of text that must be shown. {@code 0} means any number of matches
+	 * @param timeout the amount of time in milliseconds to wait
+	 * @param scroll {@code true} if scrolling should be performed
+	 * @return {@code true} if text is found and {@code false} if it is not found before the timeout
+	 */
+
+	public <T extends TextView> T waitForText(Class<T> classToFilterBy, String text, int expectedMinimumNumberOfMatches, long timeout, boolean scroll) {
+		return waitForText(classToFilterBy, text, expectedMinimumNumberOfMatches, timeout, scroll, false, true);	
 	}
 
 	/**

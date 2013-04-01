@@ -1809,10 +1809,10 @@ public class Solo {
 		if(viewToReturn == null) {
 			int match = index + 1;
 			if(match > 1){
-				Assert.assertTrue(match + " views with id: '" + id + "' are not found!", false);
+				Assert.assertTrue(match + " Views with id: '" + id + "' are not found!", false);
 			}
 			else {
-				Assert.assertTrue(match + " view with id: '" + id + "' is not found!", false);
+				Assert.assertTrue(match + " View with id: '" + id + "' is not found!", false);
 			}
 		}
 		return viewToReturn;
@@ -1844,10 +1844,10 @@ public class Solo {
 
 		if(webElement == null) {
 			if(match > 1){
-				Assert.assertTrue(match + " web elements with " + by.getClass().getSimpleName() + ": '" + by.getValue() + "' are not found!", false);
+				Assert.assertTrue(match + " WebElements with " + by.getClass().getSimpleName() + ": '" + by.getValue() + "' are not found!", false);
 			}
 			else {
-				Assert.assertTrue(match + " web element with " + by.getClass().getSimpleName() + ": '" + by.getValue() + "' is not found!", false);
+				Assert.assertTrue(match + " WebElement with " + by.getClass().getSimpleName() + ": '" + by.getValue() + "' is not found!", false);
 			}
 		}
 		return webElement;

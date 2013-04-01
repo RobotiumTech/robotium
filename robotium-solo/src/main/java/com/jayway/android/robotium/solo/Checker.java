@@ -52,18 +52,17 @@ class Checker {
 	 * @param text the text that is expected to be checked
 	 * @return {@code true} if {@code CompoundButton} is checked and {@code false} if it is not checked
 	 */
-	
+
 	public <T extends CompoundButton> boolean isButtonChecked(Class<T> expectedClass, String text)
 	{
-		waiter.waitForText(text, 0, 10000);
-		ArrayList<T> list = viewFetcher.getCurrentViews(expectedClass);
-		for(T button : list){
-			if(button.getText().equals(text) && button.isChecked())
-				return true;
+		T button = waiter.waitForText(expectedClass, text, 0, 10000, true);
+
+		if(button != null && button.isChecked()){
+			return true;
 		}
 		return false;
 	}
-	
+
 	/**
 	 * Checks if a {@link CheckedTextView} with a given text is checked.
 	 *
@@ -71,18 +70,17 @@ class Checker {
 	 * @param text the text that is expected to be checked
 	 * @return {@code true} if {@code CheckedTextView} is checked and {@code false} if it is not checked
 	 */
-	
+
 	public boolean isCheckedTextChecked(String text)
 	{
-		waiter.waitForText(text, 0, 10000);
-		ArrayList<CheckedTextView> list = viewFetcher.getCurrentViews(CheckedTextView.class);
-		for(CheckedTextView checkedText : list){
-			if(checkedText.getText().equals(text) && checkedText.isChecked())
-				return true;
+		CheckedTextView checkedTextView = waiter.waitForText(CheckedTextView.class, text, 0, 10000, true);
+
+		if(checkedTextView != null && checkedTextView.isChecked()) {
+			return true;
 		}
 		return false;
 	}
-	
+
 	
 	/**
 	 * Checks if a given text is selected in any {@link Spinner} located on the current screen.
