@@ -96,11 +96,13 @@ class TextEnterer{
 	 * 
 	 * @param editText the edit text in focus
 	 */
-	
-	@SuppressWarnings("static-access")
+
 	public void hideSoftKeyboard() {
 		Activity activity = activityUtils.getCurrentActivity(false);
+		
 		InputMethodManager inputMethodManager = (InputMethodManager)  activity.getSystemService(Activity.INPUT_METHOD_SERVICE);
-		inputMethodManager.hideSoftInputFromWindow(activity.getCurrentFocus().getWindowToken(), 0);
+		if(activity.getCurrentFocus() != null){
+			inputMethodManager.hideSoftInputFromWindow(activity.getCurrentFocus().getWindowToken(), 0);
+		}
 	}
 }
