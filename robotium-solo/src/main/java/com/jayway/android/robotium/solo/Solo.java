@@ -1805,12 +1805,17 @@ public class Solo {
 
 	public View getView(int id, int index){
 		View viewToReturn = getter.getView(id, index);
-		
+
 		if(viewToReturn == null) {
 			int match = index + 1;
-			Assert.assertTrue(match + " views with id: '" + id + "' are not found!", false);
+			if(match > 1){
+				Assert.assertTrue(match + " views with id: '" + id + "' are not found!", false);
+			}
+			else {
+				Assert.assertTrue(match + " view with id: '" + id + "' is not found!", false);
+			}
 		}
-		
+
 		return viewToReturn;
 	}
 
@@ -1833,14 +1838,19 @@ public class Solo {
 	 * @param index the index of the {@link WebElement}. {@code 0} if only one is available
 	 * @return a {@link WebElement} with a given index
 	 */
-	
+
 	public WebElement getWebElement(By by, int index){
 		int match = index + 1;
 		WebElement webElement = waiter.waitForWebElement(by, match, SMALLTIMEOUT, true);
-		
-		if(webElement == null)
-			Assert.assertTrue(match + " web elements with " + by.getClass().getSimpleName() + ": '" + by.getValue() + "' are not found!", false);
-		
+
+		if(webElement == null) {
+			if(match > 1){
+				Assert.assertTrue(match + " web elements with " + by.getClass().getSimpleName() + ": '" + by.getValue() + "' are not found!", false);
+			}
+			else {
+				Assert.assertTrue(match + " web element with " + by.getClass().getSimpleName() + ": '" + by.getValue() + "' is not found!", false);
+			}
+		}
 		return webElement;
 	}
 	

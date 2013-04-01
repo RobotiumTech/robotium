@@ -472,14 +472,17 @@ class Waiter {
 		try{
 			view = views.get(index);
 		}catch (IndexOutOfBoundsException exception) {
-			index++;
-			Assert.assertTrue(index + " " + classToFilterBy.getSimpleName() +"s" + " are not found!", false);
+			int match = index + 1;
+			if(match > 1) {
+				Assert.assertTrue(index + " " + classToFilterBy.getSimpleName() +"s" + " are not found!", false);
+			}
+			else {
+				Assert.assertTrue(index + " " + classToFilterBy.getSimpleName() + " is not found!", false);
+			}
 		}
 		views = null;
 		return view;
 	}
-
-
 
 	/**
 	 * Waits for a Fragment with a given tag or id to appear.
