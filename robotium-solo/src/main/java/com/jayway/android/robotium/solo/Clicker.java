@@ -357,7 +357,7 @@ class Clicker {
 			ArrayList <T> allTextViews = RobotiumUtils.removeInvisibleViews(viewFetcher.getCurrentViews(viewClass));
 
 			for (T view : allTextViews) {
-				Log.d(LOG_TAG, nameRegex + " not found. Have found: " + view.getText());
+				Log.d(LOG_TAG, "'" + nameRegex + "' not found. Have found: '" + view.getText() + "'");
 			}
 			Assert.assertTrue(viewClass.getSimpleName() + " with the text: '" + nameRegex + "' is not found!", false);
 		}
