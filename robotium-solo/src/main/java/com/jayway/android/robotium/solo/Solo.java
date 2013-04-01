@@ -1570,7 +1570,7 @@ public class Solo {
 	
 	public void typeTextInWebElement(By by, String text){
 		clickOnWebElement(by);
-		waiter.waitForWebElement(by, 0, SMALLTIMEOUT, false);
+		hideSoftKeyboard();
 		instrumentation.sendStringSync(text);
 	}
 	
@@ -1585,7 +1585,7 @@ public class Solo {
 	
 	public void typeTextInWebElement(By by, String text, int match){
 		clickOnWebElement(by, match);
-		waiter.waitForWebElement(by, match, SMALLTIMEOUT, false);
+		hideSoftKeyboard();
 		instrumentation.sendStringSync(text);
 	}
 	
@@ -1599,6 +1599,7 @@ public class Solo {
 	
 	public void typeTextInWebElement(WebElement webElement, String text){
 		clickOnWebElement(webElement);
+		hideSoftKeyboard();
 		instrumentation.sendStringSync(text);
 	}
 
