@@ -2046,6 +2046,22 @@ public class Solo {
 	{
 		return checker.isSpinnerTextSelected(index, text);
 	}
+	
+	/**
+	 * Hides the soft keyboard
+	 * 
+	 */
+	
+	public void hideSoftKeyboard() {
+		waiter.waitForView(EditText.class, 0, SMALLTIMEOUT, false);
+		ArrayList<EditText> visibleEditTexts = RobotiumUtils.removeInvisibleViews(viewFetcher.getCurrentViews(EditText.class));
+		EditText editText = viewFetcher.getFreshestView(visibleEditTexts);
+		
+		if(editText == null) {
+			Assert.assertTrue("No EditText is found!", false);
+		}		
+		textEnterer.hideSoftKeyboard(editText);
+	}
 
 	/**
 	 * Sends a key: Right, Left, Up, Down, Enter, Menu or Delete.
