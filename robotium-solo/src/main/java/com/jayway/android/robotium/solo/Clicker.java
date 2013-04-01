@@ -324,7 +324,7 @@ class Clicker {
 		else {
 
 			if(match > 1){
-				Assert.assertTrue(match + " matches with text string: '" + regex +  "' are not found!", false);
+				Assert.assertTrue(match + " matches of the text string: '" + regex +  "' are not found!", false);
 			}
 
 			else{
@@ -409,7 +409,7 @@ class Clicker {
 		int numberOfLines = absListView.getChildCount();
 
 		if(line > absListView.getChildCount()){
-			Assert.assertTrue("Can not click line number " + line + " as there are only " + numberOfLines + " lines available", false);
+			Assert.assertTrue("Can not click on line number " + line + " as there are only " + numberOfLines + " lines available", false);
 		}
 		View view = absListView.getChildAt(line);
 

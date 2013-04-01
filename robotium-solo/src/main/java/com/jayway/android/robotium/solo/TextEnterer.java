@@ -48,7 +48,7 @@ class TextEnterer{
 		if(editText != null){
 			final String previousText = editText.getText().toString();
 			if(!editText.isEnabled())
-				Assert.assertTrue("Edit text is not enabled!", false);
+				Assert.assertTrue("EditText is not enabled!", false);
 
 			inst.runOnMainSync(new Runnable()
 			{
