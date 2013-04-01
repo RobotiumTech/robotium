@@ -479,7 +479,7 @@ class Waiter {
 				Assert.assertTrue(match + " " + classToFilterBy.getSimpleName() +"s" + " are not found!", false);
 			}
 			else {
-				Assert.assertTrue(match + " " + classToFilterBy.getSimpleName() + " is not found!", false);
+				Assert.assertTrue(classToFilterBy.getSimpleName() + " is not found!", false);
 			}
 		}
 		views = null;

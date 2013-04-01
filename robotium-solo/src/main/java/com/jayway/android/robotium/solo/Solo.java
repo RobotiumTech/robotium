@@ -1812,7 +1812,7 @@ public class Solo {
 				Assert.assertTrue(match + " Views with id: '" + id + "' are not found!", false);
 			}
 			else {
-				Assert.assertTrue(match + " View with id: '" + id + "' is not found!", false);
+				Assert.assertTrue("View with id: '" + id + "' is not found!", false);
 			}
 		}
 		return viewToReturn;
@@ -1847,7 +1847,7 @@ public class Solo {
 				Assert.assertTrue(match + " WebElements with " + by.getClass().getSimpleName() + ": '" + by.getValue() + "' are not found!", false);
 			}
 			else {
-				Assert.assertTrue(match + " WebElement with " + by.getClass().getSimpleName() + ": '" + by.getValue() + "' is not found!", false);
+				Assert.assertTrue("WebElement with " + by.getClass().getSimpleName() + ": '" + by.getValue() + "' is not found!", false);
 			}
 		}
 		return webElement;
