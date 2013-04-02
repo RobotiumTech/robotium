@@ -1444,7 +1444,7 @@ public class Solo {
 	
 	
 	/**
-	 * Sets the progress of a ProgressBar with a given index. Examples are: {@link SeekBar} and {@link RatingBar}.
+	 * Sets the progress of a ProgressBar with a given index. Examples are: {@link android.widget.SeekBar} and {@link android.widget.RatingBar}.
 	 *
 	 * @param index the index of the {@link ProgressBar}
 	 * @param progress the progress that the {@link ProgressBar} should be set to
@@ -1456,7 +1456,7 @@ public class Solo {
 	}
 
 	/**
-	 * Sets the progress of a given ProgressBar. Examples are: {@link SeekBar} and {@link RatingBar}.
+	 * Sets the progress of a given ProgressBar. Examples are: {@link android.widget.SeekBar} and {@link android.widget.RatingBar}.
 	 *
 	 * @param progressBar the {@link ProgressBar}
 	 * @param progress the progress that the {@link ProgressBar} should be set to
