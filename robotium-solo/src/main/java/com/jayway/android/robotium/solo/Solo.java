@@ -338,7 +338,7 @@ public class Solo {
 	/**
 	 * Waits for a WebElement. Default timeout is 20 seconds. 
 	 * 
-	 * @param by the By object. Examples are By.id("id") and By.name("name")
+	 * @param by the By object. Examples are: {@code By.id("id")} and {@code By.name("name")}
 	 * @return {@code true} if the {@link WebElement} is shown and {@code false} if it is not shown before the timeout
 	 * 
 	 */
@@ -350,7 +350,7 @@ public class Solo {
 	/**
 	 * Waits for a WebElement.
 	 * 
-	 * @param by the By object. Examples are By.id("id") and By.name("name")
+	 * @param by the By object. Examples are: {@code By.id("id")} and {@code By.name("name")}
 	 * @param timeout the the amount of time in milliseconds to wait 
 	 * @param scroll {@code true} if scrolling should be performed
 	 * @return {@code true} if the {@link WebElement} is shown and {@code false} if it is not shown before the timeout
@@ -364,7 +364,7 @@ public class Solo {
 	/**
 	 * Waits for a WebElement.
 	 * 
-	 * @param by the By object. Examples are By.id("id") and By.name("name")
+	 * @param by the By object. Examples are: {@code By.id("id")} and {@code By.name("name")}
 	 * @param minimumNumberOfMatches the minimum number of matches that are expected to be shown. {@code 0} means any number of matches
 	 * @param timeout the the amount of time in milliseconds to wait 
 	 * @param scroll {@code true} if scrolling should be performed
@@ -597,7 +597,7 @@ public class Solo {
 	 * Asserts that the expected Activity is the currently active one.
 	 * 
 	 * @param message the message that should be displayed if the assert fails
-	 * @param name the name of the {@link Activity} that is expected to be active e.g. {@code "MyActivity"}
+	 * @param name the name of the {@link Activity} that is expected to be active. Example is: {@code "MyActivity"}
 	 * 
 	 */
 	
@@ -610,7 +610,7 @@ public class Solo {
 	 * Asserts that the expected Activity is the currently active one.
 	 * 
 	 * @param message the message that should be displayed if the assert fails
-	 * @param expectedClass the {@code Class} object that is expected to be active e.g. {@code MyActivity.class}
+	 * @param expectedClass the {@code Class} object that is expected to be active. Example is: {@code MyActivity.class}
 	 * 
 	 */
 	
@@ -626,7 +626,7 @@ public class Solo {
 	 * verify that the expected Activity is a new instance of the Activity.
 	 * 
 	 * @param message the message that should be displayed if the assert fails
-	 * @param name the name of the activity that is expected to be active e.g. {@code "MyActivity"}
+	 * @param name the name of the activity that is expected to be active. Example is: {@code "MyActivity"}
 	 * @param isNewInstance {@code true} if the expected {@link Activity} is a new instance of the {@link Activity}
 	 * 
 	 */
@@ -641,7 +641,7 @@ public class Solo {
 	 * verify that the expected Activity is a new instance of the Activity.
 	 * 
 	 * @param message the message that should be displayed if the assert fails
-	 * @param expectedClass the {@code Class} object that is expected to be active e.g. {@code MyActivity.class}
+	 * @param expectedClass the {@code Class} object that is expected to be active. Example is: {@code MyActivity.class}
 	 * @param isNewInstance {@code true} if the expected {@link Activity} is a new instance of the {@link Activity}
 	 * 
 	 */
@@ -810,7 +810,7 @@ public class Solo {
 	/**
 	 * Clicks on a WebElement.
 	 * 
-	 * @param by the By object. Examples are By.id("id") and By.name("name")
+	 * @param by the By object. Examples are: {@code By.id("id")} and {@code By.name("name")}
 	 * 
 	 */
 	
@@ -821,7 +821,7 @@ public class Solo {
 	/**
 	 * Clicks on a WebElement.
 	 * 
-	 * @param by the By object. Examples are By.id("id") and By.name("name")
+	 * @param by the By object. Examples are: {@code By.id("id")} and {@code By.name("name")}
 	 * @param match if multiple objects match, this determines which one will be clicked
 	 * 
 	 */
@@ -833,7 +833,7 @@ public class Solo {
 	/**
 	 * Clicks on a WebElement.
 	 * 
-	 * @param by the By object. Examples are By.id("id") and By.name("name")
+	 * @param by the By object. Examples are: {@code By.id("id")} and {@code By.name("name")}
 	 * @param match if multiple objects match, this determines which one will be clicked
 	 * @param scroll {@code true} if scrolling should be performed
 	 * 
@@ -1444,7 +1444,7 @@ public class Solo {
 	
 	
 	/**
-	 * Sets the progress of a ProgressBar with a given index. Examples are SeekBar and RatingBar.
+	 * Sets the progress of a ProgressBar with a given index. Examples are: {@link SeekBar} and {@link RatingBar}.
 	 *
 	 * @param index the index of the {@link ProgressBar}
 	 * @param progress the progress that the {@link ProgressBar} should be set to
@@ -1456,7 +1456,7 @@ public class Solo {
 	}
 
 	/**
-	 * Sets the progress of a given ProgressBar. Examples are SeekBar and RatingBar.
+	 * Sets the progress of a given ProgressBar. Examples are: {@link SeekBar} and {@link RatingBar}.
 	 *
 	 * @param progressBar the {@link ProgressBar}
 	 * @param progress the progress that the {@link ProgressBar} should be set to
@@ -1469,7 +1469,7 @@ public class Solo {
 	}
 	
 	/**
-	 * Sets the status of a SlidingDrawer with a given index. Examples are Solo.CLOSED and Solo.OPENED.
+	 * Sets the status of a SlidingDrawer with a given index. Examples are: {@code Solo.CLOSED} and {@code Solo.OPENED}.
 	 *
 	 * @param index the index of the {@link SlidingDrawer}
 	 * @param status the status that the {@link SlidingDrawer} should be set to
@@ -1481,7 +1481,7 @@ public class Solo {
 	}
 
 	/**
-	 * Sets the status of a given SlidingDrawer. Examples are Solo.CLOSED and Solo.OPENED.
+	 * Sets the status of a given SlidingDrawer. Examples are: {@code Solo.CLOSED} and {@code Solo.OPENED}.
 	 *
 	 * @param slidingDrawer the {@link SlidingDrawer}
 	 * @param status the status that the {@link SlidingDrawer} should be set to
@@ -1523,7 +1523,7 @@ public class Solo {
 	/**
 	 * Enters text in a WebElement.
 	 * 
-	 * @param by the By object. Examples are By.id("id") and By.name("name")
+	 * @param by the By object. Examples are: {@code By.id("id")} and {@code By.name("name")}
 	 * @param text the text to enter
 	 * 
 	 */
@@ -1563,7 +1563,7 @@ public class Solo {
 	/**
 	 * Types text in a WebElement.
 	 * 
-	 * @param by the By object. Examples are By.id("id") and By.name("name")
+	 * @param by the By object. Examples are: {@code By.id("id")} and {@code By.name("name")}
 	 * @param text the text to enter
 	 * 
 	 */
@@ -1577,7 +1577,7 @@ public class Solo {
 	/**
 	 * Types text in a WebElement.
 	 * 
-	 * @param by the By object. Examples are By.id("id") and By.name("name")
+	 * @param by the By object. Examples are: {@code By.id("id")} and {@code By.name("name")}
 	 * @param text the text to enter
 	 * @param match if multiple objects match, this determines which one will be typed in
 	 * 
@@ -1630,7 +1630,7 @@ public class Solo {
     /**
 	 * Clears text in a web element.
 	 * 
-	 * @param by the By object. Examples are By.id("id") and By.name("name")
+	 * @param by the By object. Examples are: {@code By.id("id")} and {@code By.name("name")}
 	 * 
 	 */
 	
@@ -1834,7 +1834,7 @@ public class Solo {
 	/**
 	 * Returns a WebElement with a given index
 	 * 
-	 * @param by the By object. Examples are By.id("id") and By.name("name")
+	 * @param by the By object. Examples are: {@code By.id("id")} and {@code By.name("name")}
 	 * @param index the index of the {@link WebElement}. {@code 0} if only one is available
 	 * @return a {@link WebElement} with a given index
 	 */
@@ -1890,7 +1890,7 @@ public class Solo {
 	/**
 	 * Returns an ArrayList of Views of the specified Class located in the focused Activity or Dialog.
 	 *
-	 * @param classToFilterBy return all instances of this class. Examples are {@code Button.class} or {@code ListView.class}
+	 * @param classToFilterBy return all instances of this class. Examples are: {@code Button.class} or {@code ListView.class}
 	 * @return an {@code ArrayList} of {@code View}s of the specified {@code Class} located in the current {@code Activity}
 	 * 
 	 */
@@ -1902,7 +1902,7 @@ public class Solo {
 	/**
 	 * Returns an ArrayList of Views of the specified Class located under the specified parent.
 	 *
-	 * @param classToFilterBy return all instances of this class. Examples are {@code Button.class} or {@code ListView.class}
+	 * @param classToFilterBy return all instances of this class. Examples are: {@code Button.class} or {@code ListView.class}
 	 * @param parent the parent {@code View} for where to start the traversal
 	 * @return an {@code ArrayList} of {@code View}s of the specified {@code Class} located under the specified {@code parent}
 	 * 
@@ -1925,7 +1925,7 @@ public class Solo {
 	/**
 	 * Returns an ArrayList of WebElements of the specified By object currently shown in the active WebView.
 	 * 
-	 * @param by the By object. Examples are By.id("id") and By.name("name")
+	 * @param by the By object. Examples are: {@code By.id("id")} and {@code By.name("name")}
 	 * @return an {@code ArrayList} of the {@link WebElement} objects currently shown in the active WebView 
 	 */
 	
@@ -2083,7 +2083,7 @@ public class Solo {
 	/**
 	 * Returns to the given Activity.
 	 *
-	 * @param name the name of the {@link Activity} to return to, e.g. {@code "MyActivity"}
+	 * @param name the name of the {@link Activity} to return to. Example is: {@code "MyActivity"}
 	 *
 	 */
 	
@@ -2094,7 +2094,7 @@ public class Solo {
 	/**
 	 * Waits for the given Activity. Default timeout is 20 seconds. 
 	 *
-	 * @param name the name of the {@code Activity} to wait for e.g. {@code "MyActivity"}
+	 * @param name the name of the {@code Activity} to wait for. Example is: {@code "MyActivity"}
 	 * @return {@code true} if {@code Activity} appears before the timeout and {@code false} if it does not
 	 *
 	 */
@@ -2106,7 +2106,7 @@ public class Solo {
 	/**
 	 * Waits for the given Activity. 
 	 *
-	 * @param name the name of the {@link Activity} to wait for e.g. {@code "MyActivity"}
+	 * @param name the name of the {@link Activity} to wait for. Example is: {@code "MyActivity"}
 	 * @param timeout the amount of time in milliseconds to wait
 	 * @return {@code true} if {@link Activity} appears before the timeout and {@code false} if it does not
 	 * 
@@ -2120,7 +2120,7 @@ public class Solo {
     /**
      * Waits for the given Activity. Default timeout is 20 seconds.
      *
-     * @param activityClass the class of the {@code Activity} to wait for 
+     * @param activityClass the class of the {@code Activity} to wait for. Example is: {@code MyActivity.class}
      * @return {@code true} if {@code Activity} appears before the timeout and {@code false} if it does not
      *
      */
@@ -2132,7 +2132,7 @@ public class Solo {
     /**
      * Waits for the given Activity.
      *
-     * @param activityClass the class of the {@code Activity} to wait for e.g. {@code "MyActivity"}
+     * @param activityClass the class of the {@code Activity} to wait for. Example is: {@code MyActivity.class}
      * @param timeout the amount of time in milliseconds to wait
      * @return {@code true} if {@link Activity} appears before the timeout and {@code false} if it does not
      *
