@@ -31,33 +31,12 @@ import android.app.Instrumentation.ActivityMonitor;
 /**
  * Main class for development of Robotium tests.  
  * 
- * Robotium has full support for WebViews, Activities, Dialogs, Toasts, Menus and Context Menus. 
+ * Robotium has full support for Views, WebViews, Activities, Dialogs, Menus and Context Menus. 
  * 
- * When writing tests there is no need to plan for or expect new activities in the test case. 
- * All is handled automatically by Robotium-Solo. Robotium-Solo can be used in conjunction with
- * ActivityInstrumentationTestCase2. The test cases are written from a user
- * perspective were technical details are not needed.
+ * Robotium can be used in conjunction with Android test classes like 
+ * ActivityInstrumentationTestCase2 and SingleLaunchActivityTestCase. 
  * 
  *
- * Example of usage (test case spanning over multiple activities):
- *
- * <pre>
- *
- * public void setUp() throws Exception {
- * solo = new Solo(getInstrumentation(), getActivity());
- * }
- *
- * public void testTextShows() throws Exception {
- *
- * solo.clickOnText(&quot;Categories&quot;);
- * solo.clickOnText(&quot;Other&quot;);
- * solo.clickOnButton(&quot;Edit&quot;);
- * solo.searchText(&quot;Edit Window&quot;);
- * solo.clickOnButton(&quot;Commit&quot;);
- * assertTrue(solo.searchText(&quot;Changes have been made successfully&quot;));
- * }
- *
- * </pre>
  *
  *
  * @author Renas Reda, renasreda@gmail.com
@@ -2222,10 +2201,10 @@ public class Solo {
 	}
 	
 	/**
-	 * Returns a localized string.
+	 * Returns a localized String.
 	 * 
-	 * @param resId the resource id of the string
-	 * @return the localized string
+	 * @param resId the resource id of the String
+	 * @return the localized String
 	 *
 	 */
 	
@@ -2249,7 +2228,7 @@ public class Solo {
 	
     /**
 	 *
-	 * Finalizes the solo object and removes the ActivityMonitor.
+	 * Finalizes the Solo object and removes the ActivityMonitor.
 	 * 
 	 * @see #finishOpenedActivities() finishOpenedActivities() to close the activities that have been active.
 	 *
@@ -2260,7 +2239,7 @@ public class Solo {
 	}
     
     /**
-	 * The activities that are alive are finished. Usually used in tearDown().
+	 * The Activities that are alive are finished. Usually used in tearDown().
 	 *
 	 */
 	
