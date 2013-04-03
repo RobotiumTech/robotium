@@ -1,6 +1,13 @@
 package com.jayway.android.robotium.solo;
 
 import java.util.ArrayList;
+import java.util.List;
+
+import android.app.Activity;
+import android.app.ActivityManager;
+import android.app.ActivityManager.RunningServiceInfo;
+import android.content.Context;
+import android.util.Log;
 import android.widget.CheckedTextView;
 import android.widget.CompoundButton;
 import android.widget.Spinner;
@@ -11,6 +18,7 @@ import android.widget.TextView;
  * isSpinnerTextSelected.
  * 
  * @author Renas Reda, renasreda@gmail.com
+ * @author tri.van, tri.van@kiss-concept.com
  * 
  */
 
@@ -18,7 +26,7 @@ class Checker {
 	
 	private final ViewFetcher viewFetcher;
 	private final Waiter waiter;
-	private final int SMALLTIMEOUT = 10000;
+	private final Activity activity;
 
 	/**
 	 * Constructs this object.
@@ -27,9 +35,10 @@ class Checker {
      * @param waiter the {@code Waiter} instance
 	 */
 	
-	public Checker(ViewFetcher viewFetcher, Waiter waiter){
+	public Checker(ViewFetcher viewFetcher, Waiter waiter, Activity activity){
 		this.viewFetcher = viewFetcher;
 		this.waiter = waiter;
+		this.activity = activity;
 	}
 
 	
@@ -53,17 +62,18 @@ class Checker {
 	 * @param text the text that is expected to be checked
 	 * @return {@code true} if {@code CompoundButton} is checked and {@code false} if it is not checked
 	 */
-
+	
 	public <T extends CompoundButton> boolean isButtonChecked(Class<T> expectedClass, String text)
 	{
-		T button = waiter.waitForText(expectedClass, text, 0, SMALLTIMEOUT, true);
-
-		if(button != null && button.isChecked()){
-			return true;
+		waiter.waitForText(text, 0, 10000);
+		ArrayList<T> list = viewFetcher.getCurrentViews(expectedClass);
+		for(T button : list){
+			if(button.getText().equals(text) && button.isChecked())
+				return true;
 		}
 		return false;
 	}
-
+	
 	/**
 	 * Checks if a {@link CheckedTextView} with a given text is checked.
 	 *
@@ -71,17 +81,18 @@ class Checker {
 	 * @param text the text that is expected to be checked
 	 * @return {@code true} if {@code CheckedTextView} is checked and {@code false} if it is not checked
 	 */
-
+	
 	public boolean isCheckedTextChecked(String text)
 	{
-		CheckedTextView checkedTextView = waiter.waitForText(CheckedTextView.class, text, 0, SMALLTIMEOUT, true);
-
-		if(checkedTextView != null && checkedTextView.isChecked()) {
-			return true;
+		waiter.waitForText(text, 0, 10000);
+		ArrayList<CheckedTextView> list = viewFetcher.getCurrentViews(CheckedTextView.class);
+		for(CheckedTextView checkedText : list){
+			if(checkedText.getText().equals(text) && checkedText.isChecked())
+				return true;
 		}
 		return false;
 	}
-
+	
 	
 	/**
 	 * Checks if a given text is selected in any {@link Spinner} located on the current screen.
@@ -119,4 +130,45 @@ class Checker {
 		else
 			return false;
 	}
+	
+	/**
+	 * Checks if there is one or more service(s) running in the current activity
+	 *
+	 * @return {@code true} if there is one or more service(s) running in the current activity and false if it is not
+	 */
+    public boolean isServiceRunning()
+    {
+            final ActivityManager activityManager = (ActivityManager) this.activity.getSystemService(Context.ACTIVITY_SERVICE);
+            final List<RunningServiceInfo> services = activityManager.getRunningServices(Integer.MAX_VALUE);
+
+            for (RunningServiceInfo runningServiceInfo : services) {
+                String packageName = runningServiceInfo.service.getPackageName();
+
+                if (packageName.equals(this.activity.getPackageName())){
+                    return true;
+                }
+            }
+            return false;
+    }
+
+	/**
+	 * Checks if a specified service (in the param) is running or not
+	 *
+	 * @param shortServicesClassName is name of Service 
+	 * @return {@code true} if this service is running and false if it is not
+	 */
+    public boolean isServiceRunning(String shortServicesClassName)
+    {
+            final ActivityManager activityManager = (ActivityManager) this.activity.getSystemService(Context.ACTIVITY_SERVICE);
+            final List<RunningServiceInfo> services = activityManager.getRunningServices(Integer.MAX_VALUE);
+
+            for (RunningServiceInfo runningServiceInfo : services) {
+                String shortClassName = runningServiceInfo.service.getShortClassName().replace(".","");
+
+                if (shortClassName.equals(shortServicesClassName)){
+                    return true;
+                }
+            }
+            return false;
+    }
 }
