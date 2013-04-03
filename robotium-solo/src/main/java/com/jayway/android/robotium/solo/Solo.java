@@ -103,7 +103,7 @@ public class Solo {
         this.setter = new Setter(activityUtils);
         this.getter = new Getter(activityUtils, waiter);
         this.asserter = new Asserter(activityUtils, waiter);
-        this.checker = new Checker(viewFetcher, waiter);
+        this.checker = new Checker(viewFetcher, waiter,activity);
         this.clicker = new Clicker(activityUtils, viewFetcher,sender, instrumentation, sleeper, waiter, webUtils);
         this.presser = new Presser(clicker, instrumentation, sleeper, waiter);
         this.textEnterer = new TextEnterer(instrumentation, activityUtils, clicker);
@@ -1086,7 +1086,7 @@ public class Solo {
 	 * returns an ArrayList of the TextView objects that the list line is showing.
 	 * 
 	 * @param line the line to be clicked
-	 * @param index the index of the list. {@code 0} if only one is available
+	 * @param index the index of the list. 1 if two lists are available
 	 * @return an {@code ArrayList} of the {@link TextView} objects located in the list line
 	 *
 	 */
@@ -1112,7 +1112,7 @@ public class Solo {
 	 * returns an ArrayList of the TextView objects that the list line is showing.
 	 * 
 	 * @param line the line to be clicked
-	 * @param index the index of the list. {@code 0} if only one is available
+	 * @param index the index of the list. 1 if two lists are available
 	 * @return an {@code ArrayList} of the {@link TextView} objects located in the list line
 	 *
 	 */
@@ -1125,7 +1125,7 @@ public class Solo {
 	 * returns an ArrayList of the TextView objects that the list line is showing.
 	 * 
 	 * @param line the line to be clicked
-	 * @param index the index of the list. {@code 0} if only one is available
+	 * @param index the index of the list. 1 if two lists are available
 	 * @param time the amount of time to long click
 	 * @return an {@code ArrayList} of the {@link TextView} objects located in the list line
 	 *
@@ -1506,11 +1506,11 @@ public class Solo {
 	 * @param text the text to enter
 	 * 
 	 */
-
+	
 	public void enterTextInWebElement(By by, String text){
-		if(waiter.waitForWebElement(by, 0, SMALLTIMEOUT, false) == null) {
-			Assert.assertTrue("WebElement with " + webUtils.splitNameByUpperCase(by.getClass().getSimpleName()) + ": '" + by.getValue() + "' is not found!", false);
-		}
+		if(waiter.waitForWebElement(by, 0, SMALLTIMEOUT, false) == null)
+			Assert.assertTrue("There is no web element with " + by.getClass().getSimpleName() + ": " + by.getValue(), false);
+
 		webUtils.enterTextIntoWebElement(by, text);
 	}
 	
@@ -1549,7 +1549,7 @@ public class Solo {
 	
 	public void typeTextInWebElement(By by, String text){
 		clickOnWebElement(by);
-		hideSoftKeyboard();
+		waiter.waitForWebElement(by, 0, SMALLTIMEOUT, false);
 		instrumentation.sendStringSync(text);
 	}
 	
@@ -1564,7 +1564,7 @@ public class Solo {
 	
 	public void typeTextInWebElement(By by, String text, int match){
 		clickOnWebElement(by, match);
-		hideSoftKeyboard();
+		waiter.waitForWebElement(by, match, SMALLTIMEOUT, false);
 		instrumentation.sendStringSync(text);
 	}
 	
@@ -1578,7 +1578,6 @@ public class Solo {
 	
 	public void typeTextInWebElement(WebElement webElement, String text){
 		clickOnWebElement(webElement);
-		hideSoftKeyboard();
 		instrumentation.sendStringSync(text);
 	}
 
@@ -1785,16 +1784,12 @@ public class Solo {
 
 	public View getView(int id, int index){
 		View viewToReturn = getter.getView(id, index);
-
+		
 		if(viewToReturn == null) {
 			int match = index + 1;
-			if(match > 1){
-				Assert.assertTrue(match + " Views with id: '" + id + "' are not found!", false);
-			}
-			else {
-				Assert.assertTrue("View with id: '" + id + "' is not found!", false);
-			}
+			Assert.assertTrue(match + " views with id: '" + id + "' are not found!", false);
 		}
+		
 		return viewToReturn;
 	}
 
@@ -1817,19 +1812,14 @@ public class Solo {
 	 * @param index the index of the {@link WebElement}. {@code 0} if only one is available
 	 * @return a {@link WebElement} with a given index
 	 */
-
+	
 	public WebElement getWebElement(By by, int index){
 		int match = index + 1;
 		WebElement webElement = waiter.waitForWebElement(by, match, SMALLTIMEOUT, true);
-
-		if(webElement == null) {
-			if(match > 1){
-				Assert.assertTrue(match + " WebElements with " + webUtils.splitNameByUpperCase(by.getClass().getSimpleName()) + ": '" + by.getValue() + "' are not found!", false);
-			}
-			else {
-				Assert.assertTrue("WebElement with " + webUtils.splitNameByUpperCase(by.getClass().getSimpleName()) + ": '" + by.getValue() + "' is not found!", false);
-			}
-		}
+		
+		if(webElement == null)
+			Assert.assertTrue(match + " web elements with " + by.getClass().getSimpleName() + ": '" + by.getValue() + "' are not found!", false);
+		
 		return webElement;
 	}
 	
@@ -1844,7 +1834,7 @@ public class Solo {
 		final WebView webView = waiter.waitForAndGetView(0, WebView.class);
 
 		if(webView == null)
-			Assert.assertTrue("WebView is not found!", false);
+			Assert.assertTrue("No WebView is found!", false);
 
 		instrumentation.runOnMainSync(new Runnable() {
 			public void run() {
@@ -2035,15 +2025,28 @@ public class Solo {
 	{
 		return checker.isSpinnerTextSelected(index, text);
 	}
+
+	/**
+	 * Checks if there is one or more service(s) running in the current activity
+	 *
+	 * @return {@code true} if there is one or more service(s) running in the current activity and false if it is not
+	 */
+
+	public boolean isServiceRunning()
+	{
+		return checker.isServiceRunning();
+	}
 	
 	/**
-	 * Hides the soft keyboard.
-	 * 
-	 * 
+	 * Checks if a specified service (in the param) is running or not
+	 *
+	 * @param shortServicesClassName is name of Service 
+	 * @return {@code true} if this service is running and false if it is not
 	 */
-	
-	public void hideSoftKeyboard() {	
-		textEnterer.hideSoftKeyboard(true);
+
+	public boolean isServiceRunning(String shortServicesClassName)
+	{
+		return checker.isServiceRunning(shortServicesClassName);
 	}
 
 	/**
