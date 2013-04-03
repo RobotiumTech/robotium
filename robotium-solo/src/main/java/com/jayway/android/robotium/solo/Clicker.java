@@ -350,7 +350,7 @@ class Clicker {
 
 	public <T extends TextView> void clickOn(Class<T> viewClass, String nameRegex) {
 		T viewToClick = (T) waiter.waitForText(viewClass, nameRegex, 0, TIMEOUT, true, true, false);
-
+	
 		if (viewToClick != null) {
 			clickOnScreen(viewToClick);
 		} else {
@@ -361,6 +361,21 @@ class Clicker {
 			}
 			Assert.assertTrue(viewClass.getSimpleName() + " with the text: '" + nameRegex + "' is not found!", false);
 		}
+	}
+	
+	/**
+	 * Clicks on a {@code View} of a specific class, with a given.
+	 *
+	 * @param viewClass what kind of {@code View} to click, e.g. {@code Button.class} or {@code TextView.class}
+	 * @param resId integer string from resource id
+	 */
+
+	public <T extends TextView> void clickOnResStrId(Class<T> viewClass, int resId) {
+		String string = activityUtils.getString(resId);
+		if(string == null)
+			Assert.assertTrue("No " + viewClass.toString() + " with string resource with " + resId + " is found!", false);
+		
+		this.clickOn(viewClass, string);
 	}
 
 	/**

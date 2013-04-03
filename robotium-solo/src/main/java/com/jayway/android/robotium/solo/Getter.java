@@ -63,6 +63,22 @@ class Getter {
 
 		return viewToReturn;
 	}
+	
+	/**
+	 * Returns a {@code View} that show a given text, from list of current {@code View}s of the specified type.
+	 * 
+	 * @param classToFilterBy which {@code View}s to choose from
+	 * @param resId string resource id that used in view
+	 * @param onlyVisible {@code true} if only visible texts on the screen should be returned
+	 * @return a {@code View} showing a given text, from the list of current {@code View}s of the specified type
+	 */
+	public <T extends TextView> T getViewResStrId(Class<T> classToFilterBy, int resId, boolean onlyVisible){
+		String string = activityUtils.getString(resId);
+		if(string == null)
+			Assert.assertTrue("No " + classToFilterBy.getSimpleName() + " with string resource " + resId + " is found!", false);
+		
+		return this.getView(classToFilterBy, string, onlyVisible);
+	}
 
 	/**
 	 * Returns a {@code View} with a given id.

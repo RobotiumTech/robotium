@@ -723,7 +723,6 @@ public class Solo {
 	
 	public void clickOnButton(String name) {
 		clicker.clickOn(Button.class, name);
-
 	}
 	
 	/**
@@ -930,6 +929,18 @@ public class Solo {
 	}
 	
 	/**
+	 * Clicks on a View displaying a given
+	 * string resource id . Will automatically scroll when needed. 
+	 *
+	 * @param resId the string resource id to be clicked. The parameter will be interpreted as a regular expression
+	 *
+	 */
+	
+	public void clickOnTextResStrId(int resId) {
+		clicker.clickOnResStrId(TextView.class, resId);
+	}
+	
+	/**
 	 * Clicks on a View displaying a given text. Will automatically scroll when needed.
 	 *
 	 * @param text the text to be clicked. The parameter will be interpreted as a regular expression
@@ -1036,6 +1047,17 @@ public class Solo {
 	}
 	
 	/**
+	 * Clicks on a Button with a given string resource id.
+	 *
+	 * @param resId the string resource id {@link Button} to be clicked. {@code 0} if only one is available
+	 *
+	 */
+	
+	public void clickOnButtonResStrId(int resId) {
+		clicker.clickOnResStrId(Button.class, resId);
+	}
+	
+	/**
 	 * Clicks on a RadioButton with a given index.
 	 *
 	 * @param index the index of the {@link RadioButton} to be clicked. {@code 0} if only one is available
@@ -1066,6 +1088,17 @@ public class Solo {
 	
 	public void clickOnEditText(int index) {
 		clicker.clickOn(EditText.class, index);
+	}
+	
+	/**
+	 * Clicks on an EditText with a given string resource id.
+	 *
+	 * @param resId the string resource id of the {@link EditText} to be clicked. {@code 0} if only one is available
+	 *
+	 */
+	
+	public void clickOnEditTextResStrId(int resId) {
+		clicker.clickOnResStrId(EditText.class, resId);
 	}
 
 	/**
@@ -1641,6 +1674,18 @@ public class Solo {
 	}
 	
 	/**
+	 * Returns an EditText with a given string resource id.
+	 *
+	 * @param resId resource string id {@link EditText}. {@code 0} if only one is available
+	 * @return the {@link EditText} with a specified index or {@code null} if index is invalid
+	 *
+	 */
+	
+	public EditText getEditTextResStrId(int resId) {
+		return getter.getViewResStrId(EditText.class, resId, false);
+	}
+	
+	/**
 	 * Returns a Button with a given index.
 	 *
 	 * @param index the index of the {@link Button}. {@code 0} if only one is available
@@ -1650,6 +1695,17 @@ public class Solo {
 	
 	public Button getButton(int index) {
 		return getter.getView(Button.class, index);
+	}
+	
+	
+	/**
+	 * Returns a Button with a given string resource id
+	 * 
+	 * @param resId the id from string that {@link Button} show text. {@code 0} if only one is available
+	 * @return the {@link Button} with a specified index or {@code null} if index is invalid
+	 */
+	public Button getButtonResStrId(int resId){
+		return getter.getViewResStrId(Button.class, resId, false);
 	}
 	
 	/**
@@ -1662,6 +1718,26 @@ public class Solo {
 	
 	public TextView getText(int index) {
 		return getter.getView(TextView.class, index);
+	}
+	
+	/**
+	 * Returns a TextView with a given id from get text.
+	 *
+	 * @param resId the string resource id of the {@link TextView}. {@code 0} if only one is available
+	 * @return the {@link TextView} with a specified index or {@code null} if index is invalid
+	 *
+	 */
+	
+	/**
+	 * Returns a TextView with a given string resource id.
+	 *
+	 * @param index string from resource id {@link TextView}. {@code 0} if only one is available
+	 * @return the {@link TextView} with a specified index or {@code null} if index is invalid
+	 *
+	 */
+	
+	public TextView getTextResStrId(int resId) {
+		return getter.getViewResStrId(TextView.class, resId, false);
 	}
 	
 	/**
