@@ -13,7 +13,7 @@ public abstract class By {
 	 * Select a WebElement by its id.
 	 * 
 	 * @param id the id of the web element	
-	 * @return an Id object
+	 * @return the Id object
 	 */
 
 	public static By id(final String id) {
@@ -25,7 +25,7 @@ public abstract class By {
 	 * Select a WebElement by its xpath.
 	 * 
 	 * @param xpath the xpath of the web element
-	 * @return a Xpath object
+	 * @return the Xpath object
 	 */
 
 	public static By xpath(final String xpath) {
@@ -37,7 +37,7 @@ public abstract class By {
 	 * Select a WebElement by its css selector.
 	 * 
 	 * @param selectors the css selector of the web element
-	 * @return a CssSelector object
+	 * @return the CssSelector object
 	 */
 
 	public static By cssSelector(final String selectors) {
@@ -49,7 +49,7 @@ public abstract class By {
 	 * Select a WebElement by its name.
 	 * 
 	 * @param name the name of the web element
-	 * @return a Name object
+	 * @return the Name object
 	 */
 
 	public static By name(final String name) {
@@ -61,7 +61,7 @@ public abstract class By {
 	 * Select a WebElement by its class name.
 	 * 
 	 * @param className the class name of the web element
-	 * @return a ClassName object
+	 * @return the ClassName object
 	 */
 
 	public static By className(final String className) {
@@ -73,7 +73,7 @@ public abstract class By {
 	 * Select a WebElement by its text content.
 	 * 
 	 * @param textContent the text content of the web element
-	 * @return a TextContent object
+	 * @return the TextContent object
 	 */
 
 	public static By textContent(final String textContent) {
@@ -85,7 +85,7 @@ public abstract class By {
 	 * Select a WebElement by its tag name.
 	 * 
 	 * @param tagName the tag name of the web element
-	 * @return a TagName object
+	 * @return the TagName object
 	 */
 
 	public static By tagName(final String tagName) {

@@ -264,7 +264,6 @@ class Waiter {
 	 */
 
 	public View waitForView(int id, int index){
-
 		ArrayList<View> viewsMatchingId = new ArrayList<View>();
 		long endTime = SystemClock.uptimeMillis() + SMALLTIMEOUT;
 
@@ -458,7 +457,6 @@ class Waiter {
 	 */
 
 	public <T extends View> T waitForAndGetView(int index, Class<T> classToFilterBy){
-
 		long endTime = SystemClock.uptimeMillis() + SMALLTIMEOUT;
 		while (SystemClock.uptimeMillis() <= endTime && !waitForView(classToFilterBy, index, true, true));
 		int numberOfUniqueViews = searcher.getNumberOfUniqueViews();
@@ -496,7 +494,6 @@ class Waiter {
 	 */
 
 	public boolean waitForFragment(String tag, int id, int timeout){
-
 		long endTime = SystemClock.uptimeMillis() + timeout;
 		while (SystemClock.uptimeMillis() <= endTime) {
 
