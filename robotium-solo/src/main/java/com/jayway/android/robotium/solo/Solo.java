@@ -1,10 +1,14 @@
 package com.jayway.android.robotium.solo;
 
 import java.util.ArrayList;
+import java.util.concurrent.CountDownLatch;
+
 import junit.framework.Assert;
 import android.app.Activity;
 import android.app.Instrumentation;
 import android.content.pm.ActivityInfo;
+import android.opengl.GLSurfaceView;
+import android.opengl.GLSurfaceView.Renderer;
 import android.view.KeyEvent;
 import android.view.View;
 import android.webkit.WebView;
@@ -2255,9 +2259,38 @@ public class Solo {
 	
 	public void takeScreenshot(){
 		View decorView = viewFetcher.getRecentDecorView(viewFetcher.getWindowDecorViews());
+		wrapAllGLViews(decorView);
 		screenshotTaker.takeScreenshot(decorView, null);
 	}
-	
+
+	/**
+	 * Extract and wrap the all OpenGL ES Renderer
+	 */
+
+	private void wrapAllGLViews(View decorView) {
+		ArrayList<GLSurfaceView> currentViews = viewFetcher.getCurrentViews(GLSurfaceView.class, decorView);
+		final CountDownLatch latch = new CountDownLatch(currentViews.size());
+
+		for (GLSurfaceView glView : currentViews) {
+			Thread thread = new Reflect(glView).field("mGLThread").type(GLSurfaceView.class).out(Thread.class);
+			Renderer renderer = new Reflect(thread).field("mRenderer").out(Renderer.class);
+			if (renderer instanceof GLRenderWrapper) {
+				GLRenderWrapper wrapper = (GLRenderWrapper) renderer;
+				wrapper.setTakeScreenshot();
+				wrapper.setLatch(latch);
+			} else {
+				GLRenderWrapper wrapper = new GLRenderWrapper(glView, renderer, latch);
+				new Reflect(thread).field("mRenderer").in(wrapper);
+			}
+		}
+
+		try {
+			latch.await();
+		} catch (InterruptedException ex) {
+			ex.printStackTrace();
+		}
+	}
+		
 	/**
 	 * Takes a screenshot and saves it with a given name in "/sdcard/Robotium-Screenshots/". 
 	 * Requires write permission (android.permission.WRITE_EXTERNAL_STORAGE) in AndroidManifest.xml of the application under test.
