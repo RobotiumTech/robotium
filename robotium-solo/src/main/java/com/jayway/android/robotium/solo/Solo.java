@@ -2,7 +2,6 @@ package com.jayway.android.robotium.solo;
 
 import java.util.ArrayList;
 import java.util.concurrent.CountDownLatch;
-
 import junit.framework.Assert;
 import android.app.Activity;
 import android.app.Instrumentation;
@@ -2258,11 +2257,36 @@ public class Solo {
 	 */
 	
 	public void takeScreenshot(){
-		View decorView = viewFetcher.getRecentDecorView(viewFetcher.getWindowDecorViews());
-		wrapAllGLViews(decorView);
-		screenshotTaker.takeScreenshot(decorView, null);
+		takeScreenshot(null);
 	}
 
+	/**
+	 * Takes a screenshot and saves it with a given name in "/sdcard/Robotium-Screenshots/". 
+	 * Requires write permission (android.permission.WRITE_EXTERNAL_STORAGE) in AndroidManifest.xml of the application under test.
+	 *
+	 * @param name the name to give the screenshot
+	 *
+	 */
+	
+	public void takeScreenshot(String name){
+		takeScreenshot(name, 100);
+	}
+	
+	/**
+	 * Takes a screenshot and saves it with a given name in "/sdcard/Robotium-Screenshots/". 
+	 * Requires write permission (android.permission.WRITE_EXTERNAL_STORAGE) in AndroidManifest.xml of the application under test.
+	 *
+	 * @param name the name to give the screenshot
+	 * @param quality the compression rate. From 0 (compress for lowest size) to 100 (compress for maximum quality).
+	 *
+	 */
+	
+	public void takeScreenshot(String name, int quality){
+		View decorView = viewFetcher.getRecentDecorView(viewFetcher.getWindowDecorViews());
+		wrapAllGLViews(decorView);
+		screenshotTaker.takeScreenshot(decorView, name, quality);
+	}
+	
 	/**
 	 * Extract and wrap the all OpenGL ES Renderer
 	 */
@@ -2289,32 +2313,5 @@ public class Solo {
 		} catch (InterruptedException ex) {
 			ex.printStackTrace();
 		}
-	}
-		
-	/**
-	 * Takes a screenshot and saves it with a given name in "/sdcard/Robotium-Screenshots/". 
-	 * Requires write permission (android.permission.WRITE_EXTERNAL_STORAGE) in AndroidManifest.xml of the application under test.
-	 *
-	 * @param name the name to give the screenshot
-	 *
-	 */
-	
-	public void takeScreenshot(String name){
-		View decorView = viewFetcher.getRecentDecorView(viewFetcher.getWindowDecorViews());
-		screenshotTaker.takeScreenshot(decorView, name);
-	}
-	
-	/**
-	 * Takes a screenshot and saves it with a given name in "/sdcard/Robotium-Screenshots/". 
-	 * Requires write permission (android.permission.WRITE_EXTERNAL_STORAGE) in AndroidManifest.xml of the application under test.
-	 *
-	 * @param name the name to give the screenshot
-	 * @param quality the compression rate. From 0 (compress for lowest size) to 100 (compress for maximum quality).
-	 *
-	 */
-	
-	public void takeScreenshot(String name, int quality){
-		View decorView = viewFetcher.getRecentDecorView(viewFetcher.getWindowDecorViews());
-		screenshotTaker.takeScreenshot(decorView, name, quality);
 	}
 }

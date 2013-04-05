@@ -35,17 +35,6 @@ class ScreenshotTaker {
 		this.activityUtils = activityUtils;
 	}
 	
-	/**
-	 * Takes a screenshot and saves it in "/sdcard/Robotium-Screenshots/". 
-	 * Requires write permission (android.permission.WRITE_EXTERNAL_STORAGE) in AndroidManifest.xml of the application under test.
-	 * 
-	 * @param view the view to take screenshot of
-	 * @param name the name to give the screenshot image
-	 */
-	
-	public void takeScreenshot(final View view, final String name) {
-		takeScreenshot(view, name, 100);
-	}
 
 	/**
 	 * Takes a screenshot and saves it in "/sdcard/Robotium-Screenshots/". 
