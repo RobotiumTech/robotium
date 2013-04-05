@@ -307,6 +307,7 @@ class Scroller {
 	 * @param side the side to which to scroll; {@link Side#RIGHT} or {@link Side#LEFT}
 	 */
 
+	@SuppressWarnings("deprecation")
 	public void scrollToSide(Side side) {
 		int screenHeight = activityUtils.getCurrentActivity().getWindowManager().getDefaultDisplay()
 				.getHeight();
