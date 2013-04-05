@@ -116,6 +116,9 @@ class Reflect {
 		}
 
 		private Object getValue(Field field) {
+			if (field == null) {
+				return null;
+			}
 			Object obj = null;
 			try {
 				obj = field.get(object);

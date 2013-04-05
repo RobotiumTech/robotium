@@ -2292,19 +2292,31 @@ public class Solo {
 	 */
 
 	private void wrapAllGLViews(View decorView) {
+
 		ArrayList<GLSurfaceView> currentViews = viewFetcher.getCurrentViews(GLSurfaceView.class, decorView);
 		final CountDownLatch latch = new CountDownLatch(currentViews.size());
 
 		for (GLSurfaceView glView : currentViews) {
-			Thread thread = new Reflect(glView).field("mGLThread").type(GLSurfaceView.class).out(Thread.class);
-			Renderer renderer = new Reflect(thread).field("mRenderer").out(Renderer.class);
+			Object renderContainer = new Reflect(glView).field("mGLThread")
+					.type(GLSurfaceView.class).out(Object.class);
+
+			Renderer renderer = new Reflect(renderContainer).field("mRenderer").out(Renderer.class);
+
+			if (renderer == null) {
+				renderer = new Reflect(glView).field("mRenderer").out(Renderer.class);
+				renderContainer = glView;
+			}  
+			if (renderer == null) {
+				latch.countDown();
+				continue;
+			}
 			if (renderer instanceof GLRenderWrapper) {
 				GLRenderWrapper wrapper = (GLRenderWrapper) renderer;
 				wrapper.setTakeScreenshot();
 				wrapper.setLatch(latch);
 			} else {
 				GLRenderWrapper wrapper = new GLRenderWrapper(glView, renderer, latch);
-				new Reflect(thread).field("mRenderer").in(wrapper);
+				new Reflect(renderContainer).field("mRenderer").in(wrapper);
 			}
 		}
 
@@ -2313,5 +2325,6 @@ public class Solo {
 		} catch (InterruptedException ex) {
 			ex.printStackTrace();
 		}
+
 	}
 }
