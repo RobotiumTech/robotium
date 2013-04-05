@@ -2292,7 +2292,6 @@ public class Solo {
 	 */
 
 	private void wrapAllGLViews(View decorView) {
-
 		ArrayList<GLSurfaceView> currentViews = viewFetcher.getCurrentViews(GLSurfaceView.class, decorView);
 		final CountDownLatch latch = new CountDownLatch(currentViews.size());
 
@@ -2325,6 +2324,5 @@ public class Solo {
 		} catch (InterruptedException ex) {
 			ex.printStackTrace();
 		}
-
 	}
 }
