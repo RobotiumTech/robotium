@@ -1610,7 +1610,7 @@ public class Solo {
     }
     
     /**
-	 * Clears text in a web element.
+	 * Clears text in a WebElement.
 	 * 
 	 * @param by the By object. Examples are: {@code By.id("id")} and {@code By.name("name")}
 	 * 
@@ -1814,7 +1814,7 @@ public class Solo {
 	}
 	
 	/**
-	 * Returns a WebElement with a given index
+	 * Returns a WebElement with a given index.
 	 * 
 	 * @param by the By object. Examples are: {@code By.id("id")} and {@code By.name("name")}
 	 * @param index the index of the {@link WebElement}. {@code 0} if only one is available
@@ -2288,7 +2288,7 @@ public class Solo {
 	}
 	
 	/**
-	 * Extract and wrap the all OpenGL ES Renderer
+	 * Extract and wrap the all OpenGL ES Renderer.
 	 */
 
 	private void wrapAllGLViews(View decorView) {
