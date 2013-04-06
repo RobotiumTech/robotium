@@ -49,6 +49,7 @@ class Clicker {
 	 * @param inst the {@code android.app.Instrumentation} instance.
 	 * @param sleeper the {@code Sleeper} instance
 	 * @param waiter the {@code Waiter} instance
+	 * @param webUtils the {@code WebUtils} instance
 	 */
 
 	public Clicker(ActivityUtils activityUtils, ViewFetcher viewFetcher, Sender sender, Instrumentation inst, Sleeper sleeper, Waiter waiter, WebUtils webUtils) {
@@ -324,7 +325,7 @@ class Clicker {
 		else {
 
 			if(match > 1){
-				Assert.assertTrue(match + " matches of the text string: '" + regex +  "' are not found!", false);
+				Assert.assertTrue(match + " matches of text string: '" + regex +  "' are not found!", false);
 			}
 
 			else{
@@ -335,7 +336,7 @@ class Clicker {
 					Log.d(LOG_TAG, "'" + regex + "' not found. Have found: '" + textView.getText() + "'");
 				}
 				allTextViews = null;
-				Assert.assertTrue("The text: '" + regex + "' is not found!", false);
+				Assert.assertTrue("Text string: '" + regex + "' is not found!", false);
 			}	
 		}
 	}
@@ -359,7 +360,7 @@ class Clicker {
 			for (T view : allTextViews) {
 				Log.d(LOG_TAG, "'" + nameRegex + "' not found. Have found: '" + view.getText() + "'");
 			}
-			Assert.assertTrue(viewClass.getSimpleName() + " with the text: '" + nameRegex + "' is not found!", false);
+			Assert.assertTrue(viewClass.getSimpleName() + " with text: '" + nameRegex + "' is not found!", false);
 		}
 	}
 
