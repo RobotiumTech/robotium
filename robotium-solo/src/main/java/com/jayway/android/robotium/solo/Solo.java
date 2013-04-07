@@ -318,7 +318,7 @@ public class Solo {
 	}
 	
 	/**
-	 * Waits for a WebElement matching the specified by object. Default timeout is 20 seconds. 
+	 * Waits for a WebElement matching the specified By object. Default timeout is 20 seconds. 
 	 * 
 	 * @param by the By object. Examples are: {@code By.id("id")} and {@code By.name("name")}
 	 * @return {@code true} if the {@link WebElement} is displayed and {@code false} if it is not displayed before the timeout
@@ -330,7 +330,7 @@ public class Solo {
 	}
 	
 	/**
-	 * Waits for a WebElement matching the specified by object.
+	 * Waits for a WebElement matching the specified By object.
 	 * 
 	 * @param by the By object. Examples are: {@code By.id("id")} and {@code By.name("name")}
 	 * @param timeout the the amount of time in milliseconds to wait 
@@ -344,7 +344,7 @@ public class Solo {
 	}
 	
 	/**
-	 * Waits for a WebElement matching the specified by object.
+	 * Waits for a WebElement matching the specified By object.
 	 * 
 	 * @param by the By object. Examples are: {@code By.id("id")} and {@code By.name("name")}
 	 * @param minimumNumberOfMatches the minimum number of matches that are expected to be found. {@code 0} means any number of matches
@@ -791,7 +791,7 @@ public class Solo {
 	}
 	
 	/**
-	 * Clicks a WebElement matching the specified by object.
+	 * Clicks a WebElement matching the specified By object.
 	 * 
 	 * @param by the By object. Examples are: {@code By.id("id")} and {@code By.name("name")}
 	 * 
@@ -802,7 +802,7 @@ public class Solo {
 	}
 	
 	/**
-	 * Clicks a WebElement matching the specified by object and match.
+	 * Clicks a WebElement matching the specified By object and match.
 	 * 
 	 * @param by the By object. Examples are: {@code By.id("id")} and {@code By.name("name")}
 	 * @param match if multiple objects match, this determines which one will be clicked
@@ -814,7 +814,7 @@ public class Solo {
 	}
 	
 	/**
-	 * Clicks a WebElement matching the specified by object and match.
+	 * Clicks a WebElement matching the specified By object and match.
 	 * 
 	 * @param by the By object. Examples are: {@code By.id("id")} and {@code By.name("name")}
 	 * @param match if multiple objects match, this determines which one will be clicked
@@ -1502,7 +1502,7 @@ public class Solo {
 	}
 	
 	/**
-	 * Enters text in a WebElement matching the specified by object.
+	 * Enters text in a WebElement matching the specified By object.
 	 * 
 	 * @param by the By object. Examples are: {@code By.id("id")} and {@code By.name("name")}
 	 * @param text the text to enter
@@ -1542,7 +1542,7 @@ public class Solo {
 	}
 	
 	/**
-	 * Types text in a WebElement matching the specified by object.
+	 * Types text in a WebElement matching the specified By object.
 	 * 
 	 * @param by the By object. Examples are: {@code By.id("id")} and {@code By.name("name")}
 	 * @param text the text to enter
@@ -1556,7 +1556,7 @@ public class Solo {
 	}
 	
 	/**
-	 * Types text in a WebElement matching the specified by object.
+	 * Types text in a WebElement matching the specified By object.
 	 * 
 	 * @param by the By object. Examples are: {@code By.id("id")} and {@code By.name("name")}
 	 * @param text the text to enter
@@ -1609,7 +1609,7 @@ public class Solo {
     }
     
     /**
-	 * Clears text in a WebElement matching the specified by object.
+	 * Clears text in a WebElement matching the specified By object.
 	 * 
 	 * @param by the By object. Examples are: {@code By.id("id")} and {@code By.name("name")}
 	 * 
@@ -1813,7 +1813,7 @@ public class Solo {
 	}
 	
 	/**
-	 * Returns a WebElement matching the specified by object and index.
+	 * Returns a WebElement matching the specified By object and index.
 	 * 
 	 * @param by the By object. Examples are: {@code By.id("id")} and {@code By.name("name")}
 	 * @param index the index of the {@link WebElement}. {@code 0} if only one is available
@@ -1904,7 +1904,7 @@ public class Solo {
 	}
 	
 	/**
-	 * Returns an ArrayList of WebElements displayed in the active WebView matching the specified by object.
+	 * Returns an ArrayList of WebElements displayed in the active WebView matching the specified By object.
 	 * 
 	 * @param by the By object. Examples are: {@code By.id("id")} and {@code By.name("name")}
 	 * @return an {@code ArrayList} of the {@link WebElement} objects currently displayed in the active WebView 
