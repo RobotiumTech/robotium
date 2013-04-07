@@ -83,11 +83,11 @@ public class Solo {
 
 
 	/**
-	 * Constructor that takes in the instrumentation and the start activity.
+	 * Constructor that takes in the Instrumentation and the start Activity.
 	 *
 	 * @param instrumentation the {@link Instrumentation} instance
 	 * @param activity the start {@link Activity} or {@code null}
-	 * if no start activity is provided
+	 * if no Activity is specified
 	 *
 	 */
 
@@ -552,7 +552,7 @@ public class Solo {
 	}
 
 	/**
-	 * Sets the Orientation (Landscape/Portrait) for the current activity.
+	 * Sets the Orientation (Landscape/Portrait) for the current Activity.
 	 * 
 	 * @param orientation the orientation to be set. <code>Solo.</code>{@link #LANDSCAPE} for landscape or
 	 * <code>Solo.</code>{@link #PORTRAIT} for portrait.
@@ -608,7 +608,7 @@ public class Solo {
 	 * verify that the expected Activity is a new instance of the Activity.
 	 * 
 	 * @param message the message to display if the assert fails
-	 * @param name the name of the activity that is expected to be active. Example is: {@code "MyActivity"}
+	 * @param name the name of the Activity that is expected to be active. Example is: {@code "MyActivity"}
 	 * @param isNewInstance {@code true} if the expected {@link Activity} is a new instance of the {@link Activity}
 	 * 
 	 */
