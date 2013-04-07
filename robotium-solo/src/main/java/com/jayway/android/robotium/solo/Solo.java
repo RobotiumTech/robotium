@@ -1103,6 +1103,7 @@ public class Solo {
 	 * @return an {@code ArrayList} of the {@link TextView} objects located in the list line
 	 *
 	 */
+	
 	public ArrayList<TextView> clickLongInList(int line){
 		return clicker.clickInList(line, 0, true, 0);
 	}
@@ -1116,6 +1117,7 @@ public class Solo {
 	 * @return an {@code ArrayList} of the {@link TextView} objects located in the list line
 	 *
 	 */
+	
 	public ArrayList<TextView> clickLongInList(int line, int index){
 		return clicker.clickInList(line, index, true, 0);
 	}
@@ -1130,17 +1132,19 @@ public class Solo {
 	 * @return an {@code ArrayList} of the {@link TextView} objects located in the list line
 	 *
 	 */
+	
 	public ArrayList<TextView> clickLongInList(int line, int index, int time){
 		return clicker.clickInList(line, index, true, time);
 	}
 
 	/**
-	 * Clicks an ActionBar item matching the specified resource id.
+	 * Clicks an ActionBarItem matching the specified resource id.
 	 * 
-	 * @param resourceId the R.id of the ActionBar item
+	 * @param id the R.id of the ActionBar item
 	 */
-	public void clickOnActionBarItem(int resourceId){
-		clicker.clickOnActionBarItem(resourceId);
+	
+	public void clickOnActionBarItem(int id){
+		clicker.clickOnActionBarItem(id);
 	}
 
 	/**
@@ -1149,7 +1153,6 @@ public class Solo {
 	public void clickOnActionBarHomeButton() {
 		clicker.clickOnActionBarHomeButton();
 	}
-
 
 	/**
 	 * Simulate touching the specified location and dragging it to a new location.
