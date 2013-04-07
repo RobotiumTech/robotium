@@ -831,7 +831,7 @@ public class Solo {
 	 * first row, Index {@code 3} is the first item in the second row and
 	 * index {@code 6} is the first item in the third row.
 	 * 
-	 * @param index the index of the {@link android.view.MenuItem} to be pressed
+	 * @param index the index of the {@link android.view.MenuItem} to press
 	 * 
 	 */
 	
@@ -844,8 +844,8 @@ public class Solo {
 	 * of items. If itemsPerRow equals 5 then index 0 is the first item in the first row, 
 	 * index 5 is the first item in the second row and index 10 is the first item in the third row.
 	 * 
-	 * @param index the index of the {@link android.view.MenuItem} to be pressed
-	 * @param itemsPerRow the amount of menu items there are per row.   
+	 * @param index the index of the {@link android.view.MenuItem} to press
+	 * @param itemsPerRow the amount of menu items there are per row   
 	 * 
 	 */
 	
@@ -856,8 +856,8 @@ public class Solo {
 	/**
 	 * Presses a Spinner (drop-down menu) item.
 	 * 
-	 * @param spinnerIndex the index of the {@link Spinner} menu to be used
-	 * @param itemIndex the index of the {@link Spinner} item to be pressed relative to the currently selected item
+	 * @param spinnerIndex the index of the {@link Spinner} menu to use
+	 * @param itemIndex the index of the {@link Spinner} item to press relative to the currently selected item. 
 	 * A Negative number moves up on the {@link Spinner}, positive moves down
 	 * 
 	 */
@@ -1016,7 +1016,7 @@ public class Solo {
 	 * an item from the context menu that appears. Will automatically scroll when needed. 
 	 *
 	 * @param text the text to be clicked. The parameter will be interpreted as a regular expression
-	 * @param index the index of the menu item to be pressed. {@code 0} if only one is available
+	 * @param index the index of the menu item to press. {@code 0} if only one is available
 	 *
 	 */
 	
