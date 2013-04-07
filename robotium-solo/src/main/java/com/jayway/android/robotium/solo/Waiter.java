@@ -87,6 +87,18 @@ class Waiter {
 		}
 		return false;
 	}
+	
+	/**
+	 * Waits for the given {@link Activity}.
+	 *
+	 * @param activityClass the class of the {@code Activity} to wait for
+	 * @return {@code true} if {@code Activity} appears before the timeout and {@code false} if it does not
+	 *
+	 */
+
+	public boolean waitForActivity(Class<? extends Activity> activityClass){
+		return waitForActivity(activityClass, SMALLTIMEOUT);
+	}
 
 	/**
 	 * Waits for the given {@link Activity}.
