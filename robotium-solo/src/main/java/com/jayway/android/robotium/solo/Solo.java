@@ -2148,9 +2148,9 @@ public class Solo {
 	}
 	
 	/**
-	 * Waits for a Fragment matching the specified id. Default timeout is 20 seconds.
+	 * Waits for a Fragment matching the specified resource id. Default timeout is 20 seconds.
 	 * 
-	 * @param id the id of the fragment	
+	 * @param id the R.id of the fragment	
 	 * @return {@code true} if fragment appears and {@code false} if it does not appear before the timeout
 	 *  
 	 */
@@ -2160,9 +2160,9 @@ public class Solo {
 	}
 	
 	/**
-	 * Waits for a Fragment matching the specified id.
+	 * Waits for a Fragment matching the specified resource id.
 	 * 
-	 * @param id the id of the fragment	
+	 * @param id the R.id of the fragment	
 	 * @param timeout the amount of time in milliseconds to wait
 	 * @return {@code true} if fragment appears and {@code false} if it does not appear before the timeout
 	 *  
@@ -2200,16 +2200,16 @@ public class Solo {
 	}
 	
 	/**
-	 * Returns a localized String.
+	 * Returns a localized String matching the specified resource id.
 	 * 
-	 * @param resId the resource id of the String
+	 * @param id the R.id of the String
 	 * @return the localized String
 	 *
 	 */
 	
-	public String getString(int resId)
+	public String getString(int id)
 	{
-		return activityUtils.getString(resId);
+		return activityUtils.getString(id);
 	}
 	
 
