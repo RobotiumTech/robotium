@@ -1631,7 +1631,7 @@ public class Solo {
 	 * Returns an EditText matching the specified index.
 	 *
 	 * @param index the index of the {@link EditText}. {@code 0} if only one is available
-	 * @return an {@link EditText} matching the specified index or {@code null} if index is invalid
+	 * @return an {@link EditText} matching the specified index
 	 *
 	 */
 	
@@ -1643,7 +1643,7 @@ public class Solo {
 	 * Returns a Button matching the specified index.
 	 *
 	 * @param index the index of the {@link Button}. {@code 0} if only one is available
-	 * @return a {@link Button} matching the specified index or {@code null} if index is invalid
+	 * @return a {@link Button} matching the specified index
 	 *
 	 */
 	
@@ -1655,7 +1655,7 @@ public class Solo {
 	 * Returns a TextView matching the specified index.
 	 *
 	 * @param index the index of the {@link TextView}. {@code 0} if only one is available
-	 * @return a {@link TextView} matching the specified index or {@code null} if index is invalid
+	 * @return a {@link TextView} matching the specified index
 	 *
 	 */
 	
@@ -1667,7 +1667,7 @@ public class Solo {
 	 * Returns an ImageView matching the specified index.
 	 *
 	 * @param index the index of the {@link ImageView}. {@code 0} if only one is available
-	 * @return an {@link ImageView} matching the specified index or {@code null} if index is invalid
+	 * @return an {@link ImageView} matching the specified index
 	 *
 	 */
 	
@@ -1679,7 +1679,7 @@ public class Solo {
 	 * Returns an ImageButton matching the specified index.
 	 *
 	 * @param index the index of the {@link ImageButton}. {@code 0} if only one is available
-	 * @return the {@link ImageButton} matching the specified index or {@code null} if index is invalid
+	 * @return the {@link ImageButton} matching the specified index
 	 *
 	 */
 	
@@ -1691,7 +1691,7 @@ public class Solo {
 	 * Returns a TextView displaying the specified text. 
 	 * 
 	 * @param text the text that is displayedn, specified as a regular expression
-	 * @return the {@link TextView} that displays the specified text
+	 * @return the {@link TextView} displaying the specified text
 	 */
 	
 	public TextView getText(String text)
@@ -1704,7 +1704,7 @@ public class Solo {
 	 * 
 	 * @param text the text that is displayed, specified as a regular expression
 	 * @param onlyVisible {@code true} if only visible texts on the screen should be returned
-	 * @return the {@link TextView} that displays the specified text
+	 * @return the {@link TextView} displaying the specified text
 	 */
 	
 	public TextView getText(String text, boolean onlyVisible)
@@ -1716,7 +1716,7 @@ public class Solo {
 	 * Returns a Button displaying the specified text.
 	 * 
 	 * @param text the text that is displayed, specified as a regular expression
-	 * @return the {@link Button} that displays the specified text
+	 * @return the {@link Button} displaying the specified text
 	 */
 	
 	public Button getButton(String text)
@@ -1729,7 +1729,7 @@ public class Solo {
 	 * 
 	 * @param text the text that is displayed, specified as a regular expression
 	 * @param onlyVisible {@code true} if only visible buttons on the screen should be returned
-	 * @return the {@link Button} that displays the specified text
+	 * @return the {@link Button} displaying the specified text
 	 */
 	
 	public Button getButton(String text, boolean onlyVisible)
@@ -1741,7 +1741,7 @@ public class Solo {
 	 * Returns an EditText displaying the specified text.
 	 * 
 	 * @param text the text that is displayed, specified as a regular expression
-	 * @return the {@link EditText} which displayss the specified text
+	 * @return the {@link EditText} displaying the specified text
 	 */
 	
 	public EditText getEditText(String text)
@@ -1754,7 +1754,7 @@ public class Solo {
 	 * 
 	 * @param text the text that is displayed, specified as a regular expression
 	 * @param onlyVisible {@code true} if only visible EditTexts on the screen should be returned
-	 * @return the {@link EditText} which displays the specified text
+	 * @return the {@link EditText} displaying the specified text
 	 */
 	
 	public EditText getEditText(String text, boolean onlyVisible)
