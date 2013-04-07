@@ -1082,7 +1082,7 @@ public class Solo {
 	}
 
 	/**
-	 * Clicks the specified list line in the specified ListView and 
+	 * Clicks the specified list line in the ListView matching the specified index and 
 	 * returns an ArrayList of the TextView objects that the list line is displaying.
 	 * 
 	 * @param line the line to be clicked
@@ -1108,7 +1108,7 @@ public class Solo {
 	}
 	
 	/**
-	 * Long clicks the specified list line in the specified ListView and 
+	 * Long clicks the specified list line in the ListView matching the specified index and 
 	 * returns an ArrayList of the TextView objects that the list line is displaying.
 	 * 
 	 * @param line the line to be clicked
@@ -1121,7 +1121,7 @@ public class Solo {
 	}
 	
 	/**
-	 * Long clicks the specified list line in the specified ListView and 
+	 * Long clicks the specified list line in the ListView matching the specified index and 
 	 * returns an ArrayList of the TextView objects that the list line is displaying.
 	 * 
 	 * @param line the line to be clicked
@@ -1314,7 +1314,7 @@ public class Solo {
    	}
    	
    	/**
-	 * Scroll the specified ListView to the specified line. 
+	 * Scroll the specified AbsListView to the specified line. 
 	 *
 	 * @param absListView the {@link AbsListView} to scroll
 	 * @param line the line to scroll to
@@ -1325,7 +1325,7 @@ public class Solo {
    	}
    	
 	/**
-	 * Scroll a ListView matching the specified index to the specified line. 
+	 * Scroll a AbsListView matching the specified index to the specified line. 
 	 *
 	 * @param index the index of the {@link AbsListView} to scroll
 	 * @param line the line to scroll to
