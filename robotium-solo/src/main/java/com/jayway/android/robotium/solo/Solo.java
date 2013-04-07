@@ -576,7 +576,7 @@ public class Solo {
 	}
 	
 	/**
-	 * Asserts that the expected Activity is the currently active one.
+	 * Asserts that the Activity matching the specified name is active.
 	 * 
 	 * @param message the message to display if the assert fails
 	 * @param name the name of the {@link Activity} that is expected to be active. Example is: {@code "MyActivity"}
@@ -589,22 +589,22 @@ public class Solo {
 	}
 	
 	/**
-	 * Asserts that the expected Activity is the currently active one.
+	 * Asserts that the Activity matching the specified class is active.
 	 * 
 	 * @param message the message to display if the assert fails
-	 * @param expectedClass the {@code Class} object that is expected to be active. Example is: {@code MyActivity.class}
+	 * @param activityClass the class of the Activity that is expected to be active. Example is: {@code MyActivity.class}
 	 * 
 	 */
 	
 	@SuppressWarnings("unchecked")
-	public void assertCurrentActivity(String message, @SuppressWarnings("rawtypes") Class expectedClass)
+	public void assertCurrentActivity(String message, @SuppressWarnings("rawtypes") Class activityClass)
 	{
-		asserter.assertCurrentActivity(message, expectedClass);
+		asserter.assertCurrentActivity(message, activityClass);
 
 	}
 	
 	/**
-	 * Asserts that the expected Activity is the currently active one, with the possibility to
+	 * Asserts that the Activity matching the specified name is active, with the possibility to
 	 * verify that the expected Activity is a new instance of the Activity.
 	 * 
 	 * @param message the message to display if the assert fails
@@ -619,19 +619,19 @@ public class Solo {
 	}
 	
 	/**
-	 * Asserts that the expected Activity is the currently active one, with the possibility to
+	 * Asserts that the Activity matching the specified class is active, with the possibility to
 	 * verify that the expected Activity is a new instance of the Activity.
 	 * 
 	 * @param message the message to display if the assert fails
-	 * @param expectedClass the {@code Class} object that is expected to be active. Example is: {@code MyActivity.class}
+	 * @param activityClass the class of the Activity that is expected to be active. Example is: {@code MyActivity.class}
 	 * @param isNewInstance {@code true} if the expected {@link Activity} is a new instance of the {@link Activity}
 	 * 
 	 */
 
 	@SuppressWarnings("unchecked")
-	public void assertCurrentActivity(String message, @SuppressWarnings("rawtypes") Class expectedClass,
+	public void assertCurrentActivity(String message, @SuppressWarnings("rawtypes") Class activityClass,
 			boolean isNewInstance) {
-		asserter.assertCurrentActivity(message, expectedClass, isNewInstance);
+		asserter.assertCurrentActivity(message, activityClass, isNewInstance);
 	}	
 	
 	/**
