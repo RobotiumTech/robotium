@@ -1480,7 +1480,7 @@ public class Solo {
 	 * Enters text in an EditText matching the specified index.
 	 *
 	 * @param index the index of the {@link EditText}. {@code 0} if only one is available
-	 * @param text the text to enter into the {@link EditText} field
+	 * @param text the text to enter in the {@link EditText} field
 	 *
 	 */
 
@@ -1491,8 +1491,8 @@ public class Solo {
 	/**
 	 * Enters text in the specified EditText.
 	 *
-	 * @param editText the {@link EditText} to enter text into
-	 * @param text the text to enter into the {@link EditText} field
+	 * @param editText the {@link EditText} to enter text in
+	 * @param text the text to enter in the {@link EditText} field
 	 *
 	 */
 	
@@ -1505,7 +1505,7 @@ public class Solo {
 	 * Enters text in a WebElement matching the specified By object.
 	 * 
 	 * @param by the By object. Examples are: {@code By.id("id")} and {@code By.name("name")}
-	 * @param text the text to enter
+	 * @param text the text to enter in the {@link WebElement} field
 	 * 
 	 */
 
@@ -1545,7 +1545,7 @@ public class Solo {
 	 * Types text in a WebElement matching the specified By object.
 	 * 
 	 * @param by the By object. Examples are: {@code By.id("id")} and {@code By.name("name")}
-	 * @param text the text to enter
+	 * @param text the text to enter in the {@link WebElement} field
 	 * 
 	 */
 	
@@ -1559,7 +1559,7 @@ public class Solo {
 	 * Types text in a WebElement matching the specified By object.
 	 * 
 	 * @param by the By object. Examples are: {@code By.id("id")} and {@code By.name("name")}
-	 * @param text the text to enter
+	 * @param text the text to enter in the {@link WebElement} field
 	 * @param match if multiple objects match, this determines which one will be typed in
 	 * 
 	 */
@@ -1574,7 +1574,7 @@ public class Solo {
 	 * Types text in the specified WebElement.
 	 * 
 	 * @param webElement the WebElement to type text in
-	 * @param text the text to enter
+	 * @param text the text to enter in the {@link WebElement} field
 	 * 
 	 */
 	
