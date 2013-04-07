@@ -578,7 +578,7 @@ public class Solo {
 	/**
 	 * Asserts that the expected Activity is the currently active one.
 	 * 
-	 * @param message the message that should be displayed if the assert fails
+	 * @param message the message to display if the assert fails
 	 * @param name the name of the {@link Activity} that is expected to be active. Example is: {@code "MyActivity"}
 	 * 
 	 */
@@ -591,7 +591,7 @@ public class Solo {
 	/**
 	 * Asserts that the expected Activity is the currently active one.
 	 * 
-	 * @param message the message that should be displayed if the assert fails
+	 * @param message the message to display if the assert fails
 	 * @param expectedClass the {@code Class} object that is expected to be active. Example is: {@code MyActivity.class}
 	 * 
 	 */
@@ -607,7 +607,7 @@ public class Solo {
 	 * Asserts that the expected Activity is the currently active one, with the possibility to
 	 * verify that the expected Activity is a new instance of the Activity.
 	 * 
-	 * @param message the message that should be displayed if the assert fails
+	 * @param message the message to display if the assert fails
 	 * @param name the name of the activity that is expected to be active. Example is: {@code "MyActivity"}
 	 * @param isNewInstance {@code true} if the expected {@link Activity} is a new instance of the {@link Activity}
 	 * 
@@ -622,7 +622,7 @@ public class Solo {
 	 * Asserts that the expected Activity is the currently active one, with the possibility to
 	 * verify that the expected Activity is a new instance of the Activity.
 	 * 
-	 * @param message the message that should be displayed if the assert fails
+	 * @param message the message to display if the assert fails
 	 * @param expectedClass the {@code Class} object that is expected to be active. Example is: {@code MyActivity.class}
 	 * @param isNewInstance {@code true} if the expected {@link Activity} is a new instance of the {@link Activity}
 	 * 
@@ -720,12 +720,12 @@ public class Solo {
 	/**
 	 * Clicks a Button displaying the specified text. Will automatically scroll when needed. 
 	 *
-	 * @param name the name of the {@link Button} presented to the user. The parameter will be interpreted as a regular expression
+	 * @param text the text displayed by the {@link Button}. The parameter will be interpreted as a regular expression
 	 *
 	 */
 	
-	public void clickOnButton(String name) {
-		clicker.clickOn(Button.class, name);
+	public void clickOnButton(String text) {
+		clicker.clickOn(Button.class, text);
 
 	}
 	
@@ -743,17 +743,18 @@ public class Solo {
 	/**
 	 * Clicks a ToggleButton displaying the specified text.
 	 * 
-	 * @param name the name of the {@link ToggleButton} presented to the user. The parameter will be interpreted as a regular expression
+	 * @param text the text displayed by the {@link ToggleButton}. The parameter will be interpreted as a regular expression
 	 * 
 	 */
 
-	public void clickOnToggleButton(String name) {
-		clicker.clickOn(ToggleButton.class, name);
+	public void clickOnToggleButton(String text) {
+		clicker.clickOn(ToggleButton.class, text);
 	}
 	
 	/**
 	 * Clicks a MenuItem displaying the specified text.
-	 * @param text the menu text that should be clicked. The parameter will be interpreted as a regular expression
+	 * 
+	 * @param text the text displayed by the MenuItem. The parameter will be interpreted as a regular expression
 	 *
 	 */
 	
@@ -765,7 +766,7 @@ public class Solo {
 	/**
 	 * Clicks a MenuItem displaying the specified text.
 	 * 
-	 * @param text the menu text that should be clicked. The parameter will be interpreted as a regular expression
+	 * @param text the text displayed by the MenuItem. The parameter will be interpreted as a regular expression
 	 * @param subMenu {@code true} if the menu item could be located in a sub menu
 	 * 
 	 */
@@ -882,7 +883,7 @@ public class Solo {
 	 * Clicks the specified View.
 	 * 
 	 * @param view the {@link View} to be clicked
-	 * @param immediately {@code true} if view is to be clicked without any wait
+	 * @param immediately {@code true} if View is to be clicked without any wait
 	 */
 
 	public void clickOnView(View view, boolean immediately){
@@ -921,7 +922,7 @@ public class Solo {
 	}
 	
 	/**
-	 * Clicks a View displaying the specified
+	 * Clicks a View or WebElement displaying the specified
 	 * text. Will automatically scroll when needed. 
 	 *
 	 * @param text the text to be clicked. The parameter will be interpreted as a regular expression
@@ -933,7 +934,7 @@ public class Solo {
 	}
 	
 	/**
-	 * Clicks a View displaying the specified text. Will automatically scroll when needed.
+	 * Clicks a View or WebElement displaying the specified text. Will automatically scroll when needed.
 	 *
 	 * @param text the text to be clicked. The parameter will be interpreted as a regular expression
 	 * @param match if multiple objects match the text, this determines which one will be clicked
@@ -945,7 +946,7 @@ public class Solo {
 	}
 	
 	/**
-	 * Clicks a View displaying the specified text.
+	 * Clicks a View or WebElement displaying the specified text.
 	 *
 	 * @param text the text to be clicked. The parameter will be interpreted as a regular expression
 	 * @param match if multiple objects match the text, this determines which one will be clicked
@@ -959,8 +960,7 @@ public class Solo {
 	
 	
 	/**
-	 * Long clicks a View displaying the specified text. Will automatically scroll when needed. {@link #clickOnText(String)} can then be
-	 * used to click the context menu items that appear after the long click.
+	 * Long clicks a View or WebElement displaying the specified text. Will automatically scroll when needed. 
 	 *
 	 * @param text the text to be clicked. The parameter will be interpreted as a regular expression
 	 *
@@ -972,8 +972,7 @@ public class Solo {
 	}
 	
 	/**
-	 * Long clicks a View displaying the specified text. Will automatically scroll when needed. {@link #clickOnText(String)} can then be
-	 * used to click the context menu items that appear after the long click.
+	 * Long clicks a View or WebElement displaying the specified text. Will automatically scroll when needed.
 	 *
 	 * @param text the text to be clicked. The parameter will be interpreted as a regular expression
 	 * @param match if multiple objects match the text, this determines which one will be clicked
@@ -986,8 +985,7 @@ public class Solo {
 	}
 	
 	/**
-	 * Long clicks a View displaying the specified text. {@link #clickOnText(String)} can then be
-	 * used to click the context menu items that appear after the long click.
+	 * Long clicks a View or WebElement displaying the specified text.
 	 *
 	 * @param text the text to be clicked. The parameter will be interpreted as a regular expression
 	 * @param match if multiple objects match the text, this determines which one will be clicked
@@ -1001,8 +999,7 @@ public class Solo {
 	}
 	
 	/**
-	 * Long clicks a View displaying the specified text. {@link #clickOnText(String)} can then be
-	 * used to click the context menu items that appear after the long click.
+	 * Long clicks a View or WebElement displaying the specified text. 
 	 *
 	 * @param text the text to be clicked. The parameter will be interpreted as a regular expression
 	 * @param match if multiple objects match the text, this determines which one will be clicked
@@ -1157,7 +1154,6 @@ public class Solo {
 	/**
 	 * Simulate touching the specified location and dragging it to a new location.
 	 *
-	 * This method was copied from {@code TouchUtils.java} in the Android Open Source Project, and modified here.
 	 *
 	 * @param fromX X coordinate of the initial touch, in screen coordinates
 	 * @param toX X coordinate of the drag destination, in screen coordinates
@@ -1222,7 +1218,7 @@ public class Solo {
 	}
 
 	/**
-	 * Scrolls down the specified ListView.
+	 * Scrolls down the specified AbsListView.
 	 * 
 	 * @param list the {@link AbsListView} to be scrolled
 	 * @return {@code true} if more scrolling can be done
@@ -1234,7 +1230,7 @@ public class Solo {
 	}
 
 	/**
-	 * Scrolls to the bottom of the specified ListView.
+	 * Scrolls to the bottom of the specified AbsListView.
 	 *
 	 * @param list the {@link AbsListView} to be scrolled
 	 * @return {@code true} if more scrolling can be done
@@ -1246,7 +1242,7 @@ public class Solo {
 	}
 
 	/**
-	 * Scrolls up the specified ListView.
+	 * Scrolls up the specified AbsListView.
 	 * 
 	 * @param list the {@link AbsListView} to be scrolled
 	 * @return {@code true} if more scrolling can be done
@@ -1258,7 +1254,7 @@ public class Solo {
 	}
 
 	/**
-	 * Scrolls to the top of the specified ListView.
+	 * Scrolls to the top of the specified AbsListView.
 	 *
 	 * @param list the {@link AbsListView} to be scrolled
 	 * @return {@code true} if more scrolling can be done
@@ -1342,7 +1338,7 @@ public class Solo {
 	/**
 	 * Scrolls horizontally.
 	 *
-	 * @param side the side to which to scroll; {@link #RIGHT} or {@link #LEFT}
+	 * @param side the side to scroll; {@link #RIGHT} or {@link #LEFT}
 	 *
 	 */
 	
@@ -1426,7 +1422,7 @@ public class Solo {
 	
 	
 	/**
-	 * Sets the progress of a ProgressBar matching the specified index. Examples are: {@link android.widget.SeekBar} and {@link android.widget.RatingBar}.
+	 * Sets the progress of a ProgressBar matching the specified index. Examples of ProgressBars are: {@link android.widget.SeekBar} and {@link android.widget.RatingBar}.
 	 *
 	 * @param index the index of the {@link ProgressBar}
 	 * @param progress the progress that the {@link ProgressBar} should be set to
@@ -1438,7 +1434,7 @@ public class Solo {
 	}
 
 	/**
-	 * Sets the progress of the specified ProgressBar. Examples are: {@link android.widget.SeekBar} and {@link android.widget.RatingBar}.
+	 * Sets the progress of the specified ProgressBar. Examples of ProgressBars are: {@link android.widget.SeekBar} and {@link android.widget.RatingBar}.
 	 *
 	 * @param progressBar the {@link ProgressBar}
 	 * @param progress the progress that the {@link ProgressBar} should be set to
@@ -1451,7 +1447,7 @@ public class Solo {
 	}
 	
 	/**
-	 * Sets the status of a SlidingDrawer matching the specified index. Examples are: {@code Solo.CLOSED} and {@code Solo.OPENED}.
+	 * Sets the status of a SlidingDrawer matching the specified index. Examples of status are: {@code Solo.CLOSED} and {@code Solo.OPENED}.
 	 *
 	 * @param index the index of the {@link SlidingDrawer}
 	 * @param status the status that the {@link SlidingDrawer} should be set to
@@ -1463,7 +1459,7 @@ public class Solo {
 	}
 
 	/**
-	 * Sets the status of the specified SlidingDrawer. Examples are: {@code Solo.CLOSED} and {@code Solo.OPENED}.
+	 * Sets the status of the specified SlidingDrawer. Examples of status are: {@code Solo.CLOSED} and {@code Solo.OPENED}.
 	 *
 	 * @param slidingDrawer the {@link SlidingDrawer}
 	 * @param status the status that the {@link SlidingDrawer} should be set to
@@ -1895,7 +1891,7 @@ public class Solo {
 	}
 	
 	/**
-	 * Returns an ArrayList of WebElements currently displayed in the active WebView.
+	 * Returns an ArrayList of WebElements displayed in the active WebView.
 	 * 
 	 * @return an {@code ArrayList} of the {@link WebElement} objects currently displayed in the active WebView
 	 */
@@ -1905,7 +1901,7 @@ public class Solo {
 	}
 	
 	/**
-	 * Returns an ArrayList of WebElements matching the specified by object currently displayed in the active WebView.
+	 * Returns an ArrayList of WebElements displayed in the active WebView matching the specified by object.
 	 * 
 	 * @param by the By object. Examples are: {@code By.id("id")} and {@code By.name("name")}
 	 * @return an {@code ArrayList} of the {@link WebElement} objects currently displayed in the active WebView 
