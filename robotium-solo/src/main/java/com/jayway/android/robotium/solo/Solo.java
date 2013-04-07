@@ -802,7 +802,7 @@ public class Solo {
 	}
 	
 	/**
-	 * Clicks a WebElement matching the specified By object and match.
+	 * Clicks a WebElement matching the specified By object.
 	 * 
 	 * @param by the By object. Examples are: {@code By.id("id")} and {@code By.name("name")}
 	 * @param match if multiple objects match, this determines which one will be clicked
@@ -814,7 +814,7 @@ public class Solo {
 	}
 	
 	/**
-	 * Clicks a WebElement matching the specified By object and match.
+	 * Clicks a WebElement matching the specified By object.
 	 * 
 	 * @param by the By object. Examples are: {@code By.id("id")} and {@code By.name("name")}
 	 * @param match if multiple objects match, this determines which one will be clicked
