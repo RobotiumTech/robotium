@@ -554,7 +554,7 @@ public class Solo {
 	/**
 	 * Sets the Orientation (Landscape/Portrait) for the current Activity.
 	 * 
-	 * @param orientation the orientation to be set. <code>Solo.</code>{@link #LANDSCAPE} for landscape or
+	 * @param orientation the orientation to set. <code>Solo.</code>{@link #LANDSCAPE} for landscape or
 	 * <code>Solo.</code>{@link #PORTRAIT} for portrait.
 	 *
 	 */
@@ -732,7 +732,7 @@ public class Solo {
 	/**
 	 * Clicks an ImageButton matching the specified index.
 	 *
-	 * @param index the index of the {@link ImageButton} to be clicked. 0 if only one is available
+	 * @param index the index of the {@link ImageButton} to click. 0 if only one is available
 	 *
 	 */
 	
@@ -805,7 +805,7 @@ public class Solo {
 	 * Clicks a WebElement matching the specified By object.
 	 * 
 	 * @param by the By object. Examples are: {@code By.id("id")} and {@code By.name("name")}
-	 * @param match if multiple objects match, this determines which one will be clicked
+	 * @param match if multiple objects match, this determines which one to click
 	 * 
 	 */
 	
@@ -817,7 +817,7 @@ public class Solo {
 	 * Clicks a WebElement matching the specified By object.
 	 * 
 	 * @param by the By object. Examples are: {@code By.id("id")} and {@code By.name("name")}
-	 * @param match if multiple objects match, this determines which one will be clicked
+	 * @param match if multiple objects match, this determines which one to click
 	 * @param scroll {@code true} if scrolling should be performed
 	 * 
 	 */
@@ -870,7 +870,7 @@ public class Solo {
 	/**
 	 * Clicks the specified View.
 	 *
-	 * @param view the {@link View} to be clicked
+	 * @param view the {@link View} to click
 	 *
 	 */
 	
@@ -882,8 +882,8 @@ public class Solo {
 	/**
 	 * Clicks the specified View.
 	 * 
-	 * @param view the {@link View} to be clicked
-	 * @param immediately {@code true} if View is to be clicked without any wait
+	 * @param view the {@link View} to click
+	 * @param immediately {@code true} if View should be clicked without any wait
 	 */
 
 	public void clickOnView(View view, boolean immediately){
@@ -898,7 +898,7 @@ public class Solo {
 	/**
 	 * Long clicks the specified View.
 	 *
-	 * @param view the {@link View} to be long clicked
+	 * @param view the {@link View} to long click
 	 *
 	 */
 	
@@ -911,7 +911,7 @@ public class Solo {
 	/**
 	 * Long clicks the specified View for a specified amount of time.
 	 *
-	 * @param view the {@link View} to be long clicked
+	 * @param view the {@link View} to long click
 	 * @param time the amount of time to long click
 	 *
 	 */
@@ -925,7 +925,7 @@ public class Solo {
 	 * Clicks a View or WebElement displaying the specified
 	 * text. Will automatically scroll when needed. 
 	 *
-	 * @param text the text to be clicked. The parameter will be interpreted as a regular expression
+	 * @param text the text to click. The parameter will be interpreted as a regular expression
 	 *
 	 */
 	
@@ -936,8 +936,8 @@ public class Solo {
 	/**
 	 * Clicks a View or WebElement displaying the specified text. Will automatically scroll when needed.
 	 *
-	 * @param text the text to be clicked. The parameter will be interpreted as a regular expression
-	 * @param match if multiple objects match the text, this determines which one will be clicked
+	 * @param text the text to click. The parameter will be interpreted as a regular expression
+	 * @param match if multiple objects match the text, this determines which one to click
 	 *
 	 */
 	
@@ -948,8 +948,8 @@ public class Solo {
 	/**
 	 * Clicks a View or WebElement displaying the specified text.
 	 *
-	 * @param text the text to be clicked. The parameter will be interpreted as a regular expression
-	 * @param match if multiple objects match the text, this determines which one will be clicked
+	 * @param text the text to click. The parameter will be interpreted as a regular expression
+	 * @param match if multiple objects match the text, this determines which one to click
 	 * @param scroll {@code true} if scrolling should be performed
 	 *
 	 */
@@ -962,7 +962,7 @@ public class Solo {
 	/**
 	 * Long clicks a View or WebElement displaying the specified text. Will automatically scroll when needed. 
 	 *
-	 * @param text the text to be clicked. The parameter will be interpreted as a regular expression
+	 * @param text the text to click. The parameter will be interpreted as a regular expression
 	 *
 	 */
 	
@@ -974,8 +974,8 @@ public class Solo {
 	/**
 	 * Long clicks a View or WebElement displaying the specified text. Will automatically scroll when needed.
 	 *
-	 * @param text the text to be clicked. The parameter will be interpreted as a regular expression
-	 * @param match if multiple objects match the text, this determines which one will be clicked
+	 * @param text the text to click. The parameter will be interpreted as a regular expression
+	 * @param match if multiple objects match the text, this determines which one to click
 	 *
 	 */
 	
@@ -987,8 +987,8 @@ public class Solo {
 	/**
 	 * Long clicks a View or WebElement displaying the specified text.
 	 *
-	 * @param text the text to be clicked. The parameter will be interpreted as a regular expression
-	 * @param match if multiple objects match the text, this determines which one will be clicked
+	 * @param text the text to click. The parameter will be interpreted as a regular expression
+	 * @param match if multiple objects match the text, this determines which one to click
 	 * @param scroll {@code true} if scrolling should be performed
 	 *
 	 */
@@ -1001,8 +1001,8 @@ public class Solo {
 	/**
 	 * Long clicks a View or WebElement displaying the specified text. 
 	 *
-	 * @param text the text to be clicked. The parameter will be interpreted as a regular expression
-	 * @param match if multiple objects match the text, this determines which one will be clicked
+	 * @param text the text to click. The parameter will be interpreted as a regular expression
+	 * @param match if multiple objects match the text, this determines which one to click
 	 * @param time the amount of time to long click 
 	 */
 	
@@ -1015,7 +1015,7 @@ public class Solo {
 	 * Long clicks a View displaying the specified text and then selects
 	 * an item from the context menu that appears. Will automatically scroll when needed. 
 	 *
-	 * @param text the text to be clicked. The parameter will be interpreted as a regular expression
+	 * @param text the text to click. The parameter will be interpreted as a regular expression
 	 * @param index the index of the menu item to press. {@code 0} if only one is available
 	 *
 	 */
@@ -1027,7 +1027,7 @@ public class Solo {
 	/**
 	 * Clicks a Button matching the specified index.
 	 *
-	 * @param index the index of the {@link Button} to be clicked. {@code 0} if only one is available
+	 * @param index the index of the {@link Button} to click. {@code 0} if only one is available
 	 *
 	 */
 	
@@ -1038,7 +1038,7 @@ public class Solo {
 	/**
 	 * Clicks a RadioButton matching the specified index.
 	 *
-	 * @param index the index of the {@link RadioButton} to be clicked. {@code 0} if only one is available
+	 * @param index the index of the {@link RadioButton} to click. {@code 0} if only one is available
 	 *
 	 */
 	
@@ -1049,7 +1049,7 @@ public class Solo {
 	/**
 	 * Clicks a CheckBox matching the specified index.
 	 *
-	 * @param index the index of the {@link CheckBox} to be clicked. {@code 0} if only one is available
+	 * @param index the index of the {@link CheckBox} to click. {@code 0} if only one is available
 	 *
 	 */
 	
@@ -1060,7 +1060,7 @@ public class Solo {
 	/**
 	 * Clicks an EditText matching the specified index.
 	 *
-	 * @param index the index of the {@link EditText} to be clicked. {@code 0} if only one is available
+	 * @param index the index of the {@link EditText} to click. {@code 0} if only one is available
 	 *
 	 */
 	
@@ -1072,7 +1072,7 @@ public class Solo {
 	 * Clicks the specified list line and returns an ArrayList of the TextView objects that
 	 * the list line is displaying. Will use the first ListView it finds.
 	 * 
-	 * @param line the line to be clicked
+	 * @param line the line to click
 	 * @return an {@code ArrayList} of the {@link TextView} objects located in the list line
 	 *
 	 */
@@ -1085,7 +1085,7 @@ public class Solo {
 	 * Clicks the specified list line in the ListView matching the specified index and 
 	 * returns an ArrayList of the TextView objects that the list line is displaying.
 	 * 
-	 * @param line the line to be clicked
+	 * @param line the line to click
 	 * @param index the index of the list. {@code 0} if only one is available
 	 * @return an {@code ArrayList} of the {@link TextView} objects located in the list line
 	 *
@@ -1099,7 +1099,7 @@ public class Solo {
 	 * Long clicks the specified list line and returns an ArrayList of the TextView objects that
 	 * the list line is displaying. Will use the first ListView it finds.
 	 * 
-	 * @param line the line to be clicked
+	 * @param line the line to click
 	 * @return an {@code ArrayList} of the {@link TextView} objects located in the list line
 	 *
 	 */
@@ -1112,7 +1112,7 @@ public class Solo {
 	 * Long clicks the specified list line in the ListView matching the specified index and 
 	 * returns an ArrayList of the TextView objects that the list line is displaying.
 	 * 
-	 * @param line the line to be clicked
+	 * @param line the line to click
 	 * @param index the index of the list. {@code 0} if only one is available
 	 * @return an {@code ArrayList} of the {@link TextView} objects located in the list line
 	 *
@@ -1126,7 +1126,7 @@ public class Solo {
 	 * Long clicks the specified list line in the ListView matching the specified index and 
 	 * returns an ArrayList of the TextView objects that the list line is displaying.
 	 * 
-	 * @param line the line to be clicked
+	 * @param line the line to click
 	 * @param index the index of the list. {@code 0} if only one is available
 	 * @param time the amount of time to long click
 	 * @return an {@code ArrayList} of the {@link TextView} objects located in the list line
@@ -1140,7 +1140,7 @@ public class Solo {
 	/**
 	 * Clicks an ActionBarItem matching the specified resource id.
 	 * 
-	 * @param id the R.id of the ActionBar item
+	 * @param id the R.id of the ActionBar item to click
 	 */
 	
 	public void clickOnActionBarItem(int id){
@@ -1174,7 +1174,7 @@ public class Solo {
 	/**
 	 * Scrolls down the screen.
 	 *
-	 * @return {@code true} if more scrolling can be done and {@code false} if it is at the end of
+	 * @return {@code true} if more scrolling can be performed and {@code false} if it is at the end of
 	 * the screen
 	 *
 	 */
@@ -1199,7 +1199,7 @@ public class Solo {
 	/**
 	 * Scrolls up the screen.
 	 *
-	 * @return {@code true} if more scrolling can be done and {@code false} if it is at the top of
+	 * @return {@code true} if more scrolling can be performed and {@code false} if it is at the top of
 	 * the screen 
 	 *
 	 */
@@ -1223,8 +1223,8 @@ public class Solo {
 	/**
 	 * Scrolls down the specified AbsListView.
 	 * 
-	 * @param list the {@link AbsListView} to be scrolled
-	 * @return {@code true} if more scrolling can be done
+	 * @param list the {@link AbsListView} to scroll
+	 * @return {@code true} if more scrolling can be performed
 	 * 
 	 */
 
@@ -1235,8 +1235,8 @@ public class Solo {
 	/**
 	 * Scrolls to the bottom of the specified AbsListView.
 	 *
-	 * @param list the {@link AbsListView} to be scrolled
-	 * @return {@code true} if more scrolling can be done
+	 * @param list the {@link AbsListView} to scroll
+	 * @return {@code true} if more scrolling can be performed
 	 *
 	 */
 
@@ -1247,8 +1247,8 @@ public class Solo {
 	/**
 	 * Scrolls up the specified AbsListView.
 	 * 
-	 * @param list the {@link AbsListView} to be scrolled
-	 * @return {@code true} if more scrolling can be done
+	 * @param list the {@link AbsListView} to scroll
+	 * @return {@code true} if more scrolling can be performed
 	 * 
 	 */
 
@@ -1259,8 +1259,8 @@ public class Solo {
 	/**
 	 * Scrolls to the top of the specified AbsListView.
 	 *
-	 * @param list the {@link AbsListView} to be scrolled
-	 * @return {@code true} if more scrolling can be done
+	 * @param list the {@link AbsListView} to scroll
+	 * @return {@code true} if more scrolling can be performed
 	 *
 	 */
 
@@ -1271,8 +1271,8 @@ public class Solo {
 	/**
 	 * Scrolls down a ListView matching the specified index.
 	 * 
-	 * @param index the {@link ListView} to be scrolled. {@code 0} if only one list is available
-	 * @return {@code true} if more scrolling can be done
+	 * @param index the index of the {@link ListView} to scroll. {@code 0} if only one list is available
+	 * @return {@code true} if more scrolling can be performed
 	 * 
 	 */
 
@@ -1283,8 +1283,8 @@ public class Solo {
 	/**
 	 * Scrolls a ListView matching the specified index to the bottom.
 	 *
-	 * @param index the {@link ListView} to be scrolled. {@code 0} if only one list is available
-	 * @return {@code true} if more scrolling can be done
+	 * @param index the index of the {@link ListView} to scroll. {@code 0} if only one list is available
+	 * @return {@code true} if more scrolling can be performed
 	 *
 	 */
 
@@ -1295,8 +1295,8 @@ public class Solo {
 	/**
 	 * Scrolls up a ListView matching the specified index.
 	 * 
-	 * @param index the {@link ListView} to be scrolled. {@code 0} if only one list is available
-	 * @return {@code true} if more scrolling can be done
+	 * @param index the index of the {@link ListView} to scroll. {@code 0} if only one list is available
+	 * @return {@code true} if more scrolling can be performed
 	 * 
 	 */
 	
@@ -1307,8 +1307,8 @@ public class Solo {
     /**
    	 * Scrolls a ListView matching the specified index to the top.
    	 *
-   	 * @param index the {@link ListView} to be scrolled. {@code 0} if only one list is available
-   	 * @return {@code true} if more scrolling can be done
+   	 * @param index the index of the {@link ListView} to scroll. {@code 0} if only one list is available
+   	 * @return {@code true} if more scrolling can be performed
    	 *
    	 */
 
@@ -1588,7 +1588,7 @@ public class Solo {
 	/**
 	 * Clears the value of an EditText.
 	 * 
-	 * @param index the index of the {@link EditText} that should be cleared. 0 if only one is available
+	 * @param index the index of the {@link EditText} to clear. 0 if only one is available
 	 *
 	 */
 
@@ -1599,7 +1599,7 @@ public class Solo {
     /**
      * Clears the value of an EditText.
      * 
-     * @param editText the {@link EditText} that should be cleared
+     * @param editText the {@link EditText} to clear
 	 *
      */
 	
@@ -1622,7 +1622,7 @@ public class Solo {
 	/**
 	 * Clicks an ImageView matching the specified index.
 	 *
-	 * @param index the index of the {@link ImageView} to be clicked. {@code 0} if only one is available
+	 * @param index the index of the {@link ImageView} to click. {@code 0} if only one is available
 	 *
 	 */
 	
@@ -1769,7 +1769,7 @@ public class Solo {
 	/**
 	 * Returns a View matching the specified resource id. 
 	 * 
-	 * @param id the R.id of the {@link View} to be returned 
+	 * @param id the R.id of the {@link View} to return
 	 * @return a {@link View} matching the specified id 
 	 */
 
@@ -1780,7 +1780,7 @@ public class Solo {
 	/**
 	 * Returns a View matching the specified resource id and index. 
 	 * 
-	 * @param id the R.id of the {@link View} to be returned 
+	 * @param id the R.id of the {@link View} to return
 	 * @param index the index of the {@link View}. {@code 0} if only one is available
 	 * @return a {@link View} matching the specified id and index
 	 */
