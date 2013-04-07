@@ -2232,7 +2232,7 @@ public class Solo {
 	 *
 	 * Finalizes the Solo object and removes the ActivityMonitor.
 	 * 
-	 * @see #finishOpenedActivities() finishOpenedActivities() to close the activities that have been active.
+	 * @see #finishOpenedActivities() finishOpenedActivities() to close the activities that have been active
 	 *
 	 */    
 	
@@ -2276,7 +2276,7 @@ public class Solo {
 	 * Requires write permission (android.permission.WRITE_EXTERNAL_STORAGE) in AndroidManifest.xml of the application under test.
 	 *
 	 * @param name the name to give the screenshot
-	 * @param quality the compression rate. From 0 (compress for lowest size) to 100 (compress for maximum quality).
+	 * @param quality the compression rate. From 0 (compress for lowest size) to 100 (compress for maximum quality)
 	 *
 	 */
 	
