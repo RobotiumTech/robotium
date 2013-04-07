@@ -86,7 +86,7 @@ class Asserter {
 			if (instanceString.equals(activity.toString()))
 				found = true;
 		}
-			Assert.assertNotSame(message + ", isNewInstance: actual and ", isNewInstance, found);
+			Assert.assertNotSame(message, isNewInstance, found);
 	}
 	
 	/**
@@ -97,7 +97,7 @@ class Asserter {
 	{
 		ActivityManager.MemoryInfo mi = new ActivityManager.MemoryInfo();
 		((ActivityManager)activityUtils.getCurrentActivity().getSystemService("activity")).getMemoryInfo(mi);
-		Assert.assertFalse("Low memory available: " + mi.availMem + " bytes", mi.lowMemory);
+		Assert.assertFalse("Low memory available: " + mi.availMem + " bytes!", mi.lowMemory);
 	}
 
 }
