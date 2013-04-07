@@ -1995,7 +1995,7 @@ public class Solo {
 	/**
 	 * Checks if the specified text is checked.
 	 *
-	 * @param text the text that the {@link CheckedTextView} or {@link CompoundButton} objects show, specified as a regular expression
+	 * @param text the text that the {@link CheckedTextView} or {@link CompoundButton} objects display, specified as a regular expression
 	 * @return {@code true} if the specified text is checked and {@code false} if it is not checked
 	 */
 	
