@@ -1425,7 +1425,7 @@ public class Solo {
 	 * Sets the progress of a ProgressBar matching the specified index. Examples of ProgressBars are: {@link android.widget.SeekBar} and {@link android.widget.RatingBar}.
 	 *
 	 * @param index the index of the {@link ProgressBar}
-	 * @param progress the progress that the {@link ProgressBar} should be set to
+	 * @param progress the progress to set the {@link ProgressBar} 
 	 * 
 	 */
 
@@ -1437,7 +1437,7 @@ public class Solo {
 	 * Sets the progress of the specified ProgressBar. Examples of ProgressBars are: {@link android.widget.SeekBar} and {@link android.widget.RatingBar}.
 	 *
 	 * @param progressBar the {@link ProgressBar}
-	 * @param progress the progress that the {@link ProgressBar} should be set to
+	 * @param progress the progress to set the {@link ProgressBar} 
 	 * 
 	 */
 
@@ -1450,7 +1450,7 @@ public class Solo {
 	 * Sets the status of a SlidingDrawer matching the specified index. Examples of status are: {@code Solo.CLOSED} and {@code Solo.OPENED}.
 	 *
 	 * @param index the index of the {@link SlidingDrawer}
-	 * @param status the status that the {@link SlidingDrawer} should be set to
+	 * @param status the status to set the {@link SlidingDrawer} 
 	 * 
 	 */
 
@@ -1462,7 +1462,7 @@ public class Solo {
 	 * Sets the status of the specified SlidingDrawer. Examples of status are: {@code Solo.CLOSED} and {@code Solo.OPENED}.
 	 *
 	 * @param slidingDrawer the {@link SlidingDrawer}
-	 * @param status the status that the {@link SlidingDrawer} should be set to
+	 * @param status the status to set the {@link SlidingDrawer} 
 	 * 
 	 */
 
