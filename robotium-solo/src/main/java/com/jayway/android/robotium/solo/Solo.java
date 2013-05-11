@@ -31,6 +31,9 @@ import android.widget.TimePicker;
 import android.widget.ToggleButton;
 import android.app.Instrumentation.ActivityMonitor;
 
+import static com.jayway.android.robotium.solo.Timeout.TIMEOUT;
+import static com.jayway.android.robotium.solo.Timeout.SMALLTIMEOUT;
+
 /**
  * Main class for development of Robotium tests.  
  * 
@@ -67,8 +70,6 @@ public class Solo {
 	protected final ScreenshotTaker screenshotTaker;
 	protected final Instrumentation instrumentation;
 	protected String webUrl = null;
-	public final static int TIMEOUT = 20000;
-	public final static int SMALLTIMEOUT = 10000;
 	public final static int LANDSCAPE = ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE;   // 0
 	public final static int PORTRAIT = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT;     // 1
 	public final static int RIGHT = KeyEvent.KEYCODE_DPAD_RIGHT;

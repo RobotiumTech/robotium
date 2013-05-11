@@ -14,6 +14,10 @@ import android.support.v4.app.FragmentActivity;
 import android.view.View;
 import android.widget.TextView;
 
+import static com.jayway.android.robotium.solo.Timeout.TIMEOUT;
+import static com.jayway.android.robotium.solo.Timeout.SMALLTIMEOUT;
+import static com.jayway.android.robotium.solo.Timeout.MINISLEEP;
+
 /**
  * Contains various wait methods. Examples are: waitForText(),
  * waitForView().
@@ -26,9 +30,6 @@ class Waiter {
 
 	private final ActivityUtils activityUtils;
 	private final ViewFetcher viewFetcher;
-	private final int TIMEOUT = 20000;
-	private final int SMALLTIMEOUT = 10000;
-	private final int MINISLEEP = 50;
 	private final Searcher searcher;
 	private final Scroller scroller;
 	private final Sleeper sleeper;

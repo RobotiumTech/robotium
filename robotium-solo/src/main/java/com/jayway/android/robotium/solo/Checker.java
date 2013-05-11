@@ -6,6 +6,8 @@ import android.widget.CompoundButton;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import static com.jayway.android.robotium.solo.Timeout.SMALLTIMEOUT;
+
 /**
  * Contains various check methods. Examples are: isButtonChecked(),
  * isSpinnerTextSelected.
@@ -18,7 +20,6 @@ class Checker {
 	
 	private final ViewFetcher viewFetcher;
 	private final Waiter waiter;
-	private final int SMALLTIMEOUT = 10000;
 
 	/**
 	 * Constructs this object.
