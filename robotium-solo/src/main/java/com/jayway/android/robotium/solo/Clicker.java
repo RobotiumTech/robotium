@@ -18,6 +18,9 @@ import android.view.Window;
 import android.widget.AbsListView;
 import android.widget.TextView;
 
+import static com.jayway.android.robotium.solo.Solo.TIMEOUT;
+import static com.jayway.android.robotium.solo.Solo.MINISLEEP;
+
 /**
  * Contains various click methods. Examples are: clickOn(),
  * clickOnText(), clickOnScreen().
@@ -36,8 +39,6 @@ class Clicker {
 	private final Sleeper sleeper;
 	private final Waiter waiter;
 	private final WebUtils webUtils;
-	private final int TIMEOUT = 10000;
-	private final int MINISLEEP = 100;
 
 
 	/**
