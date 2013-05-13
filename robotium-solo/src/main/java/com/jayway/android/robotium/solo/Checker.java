@@ -6,7 +6,7 @@ import android.widget.CompoundButton;
 import android.widget.Spinner;
 import android.widget.TextView;
 
-import static com.jayway.android.robotium.solo.Timeout.SMALLTIMEOUT;
+import static com.jayway.android.robotium.solo.Solo.SMALLTIMEOUT;
 
 /**
  * Contains various check methods. Examples are: isButtonChecked(),

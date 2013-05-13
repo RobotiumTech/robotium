@@ -18,8 +18,8 @@ import android.view.Window;
 import android.widget.AbsListView;
 import android.widget.TextView;
 
-import static com.jayway.android.robotium.solo.Timeout.TIMEOUT;
-import static com.jayway.android.robotium.solo.Timeout.MINISLEEP;
+import static com.jayway.android.robotium.solo.Solo.TIMEOUT;
+import static com.jayway.android.robotium.solo.Solo.MINISLEEP;
 
 /**
  * Contains various click methods. Examples are: clickOn(),

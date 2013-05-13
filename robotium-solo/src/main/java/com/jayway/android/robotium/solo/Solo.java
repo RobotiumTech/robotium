@@ -1,5 +1,6 @@
 package com.jayway.android.robotium.solo;
 
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.concurrent.CountDownLatch;
 import junit.framework.Assert;
@@ -31,9 +32,6 @@ import android.widget.TimePicker;
 import android.widget.ToggleButton;
 import android.app.Instrumentation.ActivityMonitor;
 
-import static com.jayway.android.robotium.solo.Timeout.TIMEOUT;
-import static com.jayway.android.robotium.solo.Timeout.SMALLTIMEOUT;
-
 /**
  * Main class for development of Robotium tests.  
  * 
@@ -51,7 +49,7 @@ import static com.jayway.android.robotium.solo.Timeout.SMALLTIMEOUT;
 
 public class Solo {
 
-	protected final Asserter asserter;
+  protected final Asserter asserter;
 	protected final ViewFetcher viewFetcher;
 	protected final Checker checker;
 	protected final Clicker clicker;
@@ -82,8 +80,46 @@ public class Solo {
 	public final static int CLOSED = 0;
 	public final static int OPENED = 1;
 
+  static int SMALLTIMEOUT;
+  static int TIMEOUT;
+  static int MINISLEEP;
 
-	/**
+  /**
+   * Initialize timeout using adb shell properties,
+   * Or fall back to default hard-coded values
+   */
+  static {
+    Solo.SMALLTIMEOUT = Solo.initializeTimeout("SOLO_SMALLTIMEOUT", 10000);
+    Solo.TIMEOUT = Solo.initializeTimeout("SOLO_TIMEOUT", 20000);
+    Solo.MINISLEEP = Solo.initializeTimeout("SOLO_MINISLEEP", 50);
+  }
+
+  /**
+   * Parse a timeout value set using the adb shell.
+   *
+   * There are two options to set the timeout:
+   * Either set it using adb shell as follows:
+   *   adb shell setprop SOLO_TIMEOUT millis
+   *
+   * Or set the values directly using setTimeout/getTimeout
+   *
+   * @param property Name of the property to read the timeout from
+   * @param defaultValue Default value for the timeout
+   * @return Timeout in millis
+   */
+  protected static int initializeTimeout(String property, int defaultValue) {
+    try {
+      Class clazz = Class.forName("android.os.SystemProperties");
+      Method method = clazz.getDeclaredMethod("get", String.class);
+      String value = (String) method.invoke(null, property);
+      return Integer.parseInt(value);
+    } catch (Exception e) {
+      return defaultValue;
+    }
+  }
+
+
+  /**
 	 * Constructor that takes in the Instrumentation and the start Activity.
 	 *
 	 * @param instrumentation the {@link Instrumentation} instance
@@ -124,8 +160,8 @@ public class Solo {
 	public Solo(Instrumentation instrumentation) {
 	   this(instrumentation, null);
 	}
-	
-	/**
+
+  /**
 	 * Returns the ActivityMonitor used by Robotium.
 	 * 
 	 * @return the ActivityMonitor used by Robotium
@@ -1434,7 +1470,7 @@ public class Solo {
 	 */
 
 	public void setProgressBar(int index, int progress){
-		setProgressBar(waiter.waitForAndGetView(index, ProgressBar.class),progress);
+		setProgressBar(waiter.waitForAndGetView(index, ProgressBar.class), progress);
 	}
 
 	/**
@@ -1459,7 +1495,7 @@ public class Solo {
 	 */
 
 	public void setSlidingDrawer(int index, int status){
-		setSlidingDrawer(waiter.waitForAndGetView(index, SlidingDrawer.class),status);
+		setSlidingDrawer(waiter.waitForAndGetView(index, SlidingDrawer.class), status);
 	}
 
 	/**
@@ -2325,4 +2361,29 @@ public class Solo {
 			ex.printStackTrace();
 		}
 	}
+
+  public int getTimeout() {
+    return Solo.TIMEOUT;
+  }
+
+  public void setTimeout(int timeout) {
+    Solo.TIMEOUT = timeout;
+  }
+
+  public int getSmallTimeout() {
+    return Solo.SMALLTIMEOUT;
+  }
+
+  public void setSmallTimeout(int smallTimeout) {
+    Solo.SMALLTIMEOUT = smallTimeout;
+  }
+
+  public int getMiniSleep() {
+    return Solo.MINISLEEP;
+  }
+
+  public void setMiniSleep(int miniSleep) {
+    Solo.MINISLEEP = miniSleep;
+  }
+
 }

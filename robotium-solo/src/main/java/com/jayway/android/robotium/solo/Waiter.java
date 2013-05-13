@@ -14,9 +14,9 @@ import android.support.v4.app.FragmentActivity;
 import android.view.View;
 import android.widget.TextView;
 
-import static com.jayway.android.robotium.solo.Timeout.TIMEOUT;
-import static com.jayway.android.robotium.solo.Timeout.SMALLTIMEOUT;
-import static com.jayway.android.robotium.solo.Timeout.MINISLEEP;
+import static com.jayway.android.robotium.solo.Solo.TIMEOUT;
+import static com.jayway.android.robotium.solo.Solo.SMALLTIMEOUT;
+import static com.jayway.android.robotium.solo.Solo.MINISLEEP;
 
 /**
  * Contains various wait methods. Examples are: waitForText(),
