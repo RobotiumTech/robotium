@@ -17,9 +17,7 @@ import android.view.ViewConfiguration;
 import android.view.Window;
 import android.widget.AbsListView;
 import android.widget.TextView;
-
-import static com.jayway.android.robotium.solo.Solo.TIMEOUT;
-import static com.jayway.android.robotium.solo.Solo.MINISLEEP;
+import static com.jayway.android.robotium.solo.Solo.SMALL_TIMEOUT;
 
 /**
  * Contains various click methods. Examples are: clickOn(),
@@ -39,6 +37,7 @@ class Clicker {
 	private final Sleeper sleeper;
 	private final Waiter waiter;
 	private final WebUtils webUtils;
+	private final int MINISLEEP = 100;
 
 
 	/**
@@ -292,7 +291,7 @@ class Clicker {
 	 */
 
 	public void clickOnWebElement(By by, int match, boolean scroll){	
-		WebElement webElementToClick = waiter.waitForWebElement(by, match, TIMEOUT, scroll);
+		WebElement webElementToClick = waiter.waitForWebElement(by, match, SMALL_TIMEOUT, scroll);
 
 		if(webElementToClick == null){
 			if(match > 1) {
@@ -317,7 +316,7 @@ class Clicker {
 	 */
 
 	public void clickOnText(String regex, boolean longClick, int match, boolean scroll, int time) {
-		TextView textToClick = waiter.waitForText(regex, match, TIMEOUT, scroll, true, false);
+		TextView textToClick = waiter.waitForText(regex, match, SMALL_TIMEOUT, scroll, true, false);
 
 		if (textToClick != null) {
 			clickOnScreen(textToClick, longClick, time);
@@ -351,7 +350,7 @@ class Clicker {
 	 */
 
 	public <T extends TextView> void clickOn(Class<T> viewClass, String nameRegex) {
-		T viewToClick = (T) waiter.waitForText(viewClass, nameRegex, 0, TIMEOUT, true, true, false);
+		T viewToClick = (T) waiter.waitForText(viewClass, nameRegex, 0, SMALL_TIMEOUT, true, true, false);
 
 		if (viewToClick != null) {
 			clickOnScreen(viewToClick);

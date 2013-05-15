@@ -13,10 +13,8 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.view.View;
 import android.widget.TextView;
-
-import static com.jayway.android.robotium.solo.Solo.TIMEOUT;
-import static com.jayway.android.robotium.solo.Solo.SMALLTIMEOUT;
-import static com.jayway.android.robotium.solo.Solo.MINISLEEP;
+import static com.jayway.android.robotium.solo.Solo.LARGE_TIMEOUT;
+import static com.jayway.android.robotium.solo.Solo.SMALL_TIMEOUT;
 
 /**
  * Contains various wait methods. Examples are: waitForText(),
@@ -33,6 +31,7 @@ class Waiter {
 	private final Searcher searcher;
 	private final Scroller scroller;
 	private final Sleeper sleeper;
+	private final int MINISLEEP = 50;
 
 
 	/**
@@ -62,7 +61,7 @@ class Waiter {
 	 */
 
 	public boolean waitForActivity(String name){
-		return waitForActivity(name, SMALLTIMEOUT);
+		return waitForActivity(name, SMALL_TIMEOUT);
 	}
 
 	/**
@@ -98,7 +97,7 @@ class Waiter {
 	 */
 
 	public boolean waitForActivity(Class<? extends Activity> activityClass){
-		return waitForActivity(activityClass, SMALLTIMEOUT);
+		return waitForActivity(activityClass, SMALL_TIMEOUT);
 	}
 
 	/**
@@ -197,7 +196,7 @@ class Waiter {
 	 */
 
 	public <T extends View> boolean  waitForViews(Class<? extends T>... classes) {
-		final long endTime = SystemClock.uptimeMillis() + SMALLTIMEOUT;
+		final long endTime = SystemClock.uptimeMillis() + SMALL_TIMEOUT;
 
 		while (SystemClock.uptimeMillis() < endTime) {
 
@@ -221,7 +220,7 @@ class Waiter {
 	 */
 
 	public boolean waitForView(View view){
-		return waitForView(view, TIMEOUT, true);
+		return waitForView(view, LARGE_TIMEOUT, true);
 	}
 
 	/**
@@ -278,7 +277,7 @@ class Waiter {
 
 	public View waitForView(int id, int index){
 		ArrayList<View> viewsMatchingId = new ArrayList<View>();
-		long endTime = SystemClock.uptimeMillis() + SMALLTIMEOUT;
+		long endTime = SystemClock.uptimeMillis() + SMALL_TIMEOUT;
 
 		while (SystemClock.uptimeMillis() <= endTime) {
 			sleeper.sleep();
@@ -364,7 +363,7 @@ class Waiter {
 	 */
 
 	public TextView waitForText(String text) {
-		return waitForText(text, 0, TIMEOUT, true);
+		return waitForText(text, 0, LARGE_TIMEOUT, true);
 	}
 
 	/**
@@ -470,7 +469,7 @@ class Waiter {
 	 */
 
 	public <T extends View> T waitForAndGetView(int index, Class<T> classToFilterBy){
-		long endTime = SystemClock.uptimeMillis() + SMALLTIMEOUT;
+		long endTime = SystemClock.uptimeMillis() + SMALL_TIMEOUT;
 		while (SystemClock.uptimeMillis() <= endTime && !waitForView(classToFilterBy, index, true, true));
 		int numberOfUniqueViews = searcher.getNumberOfUniqueViews();
 		ArrayList<T> views = RobotiumUtils.removeInvisibleViews(viewFetcher.getCurrentViews(classToFilterBy));

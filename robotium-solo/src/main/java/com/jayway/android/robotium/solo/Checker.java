@@ -5,8 +5,7 @@ import android.widget.CheckedTextView;
 import android.widget.CompoundButton;
 import android.widget.Spinner;
 import android.widget.TextView;
-
-import static com.jayway.android.robotium.solo.Solo.SMALLTIMEOUT;
+import static com.jayway.android.robotium.solo.Solo.SMALL_TIMEOUT;
 
 /**
  * Contains various check methods. Examples are: isButtonChecked(),
@@ -57,7 +56,7 @@ class Checker {
 
 	public <T extends CompoundButton> boolean isButtonChecked(Class<T> expectedClass, String text)
 	{
-		T button = waiter.waitForText(expectedClass, text, 0, SMALLTIMEOUT, true);
+		T button = waiter.waitForText(expectedClass, text, 0, SMALL_TIMEOUT, true);
 
 		if(button != null && button.isChecked()){
 			return true;
@@ -75,7 +74,7 @@ class Checker {
 
 	public boolean isCheckedTextChecked(String text)
 	{
-		CheckedTextView checkedTextView = waiter.waitForText(CheckedTextView.class, text, 0, SMALLTIMEOUT, true);
+		CheckedTextView checkedTextView = waiter.waitForText(CheckedTextView.class, text, 0, SMALL_TIMEOUT, true);
 
 		if(checkedTextView != null && checkedTextView.isChecked()) {
 			return true;

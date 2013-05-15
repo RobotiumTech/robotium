@@ -11,7 +11,6 @@ import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
-import static com.jayway.android.robotium.solo.Solo.TIMEOUT;
 
 /**
  * Contains various search methods. Examples are: searchForEditTextWithTimeout(),
@@ -31,6 +30,7 @@ class Searcher {
 	Set<TextView> uniqueTextViews;
 	List<WebElement> webElements;
 	private int numberOfUniqueViews;
+	private final int TIMEOUT = 5000;
 
 
 	/**
