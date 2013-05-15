@@ -109,9 +109,7 @@ class Reflect {
 			try {
 				field = clazz.getDeclaredField(name);
 				field.setAccessible(true);
-			} catch (NoSuchFieldException e) {
-				e.printStackTrace();
-			}
+			} catch (NoSuchFieldException ignored) {}
 			return field;
 		}
 
