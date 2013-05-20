@@ -23,7 +23,7 @@ import android.view.KeyEvent;
  * 
  */
 
-class ActivityUtils {
+protected class ActivityUtils {
 
 	private final Instrumentation inst;
 	private ActivityMonitor activityMonitor;

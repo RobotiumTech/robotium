@@ -10,7 +10,7 @@ import android.os.SystemClock;
  * 
  */
 
-class DialogUtils {
+protected class DialogUtils {
 
 	private final ViewFetcher viewFetcher;
 	private final Sleeper sleeper;

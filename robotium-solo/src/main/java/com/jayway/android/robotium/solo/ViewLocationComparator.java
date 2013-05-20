@@ -8,7 +8,7 @@ import java.util.Comparator;
  * 
  */
 
-class ViewLocationComparator implements Comparator<View> {
+protected class ViewLocationComparator implements Comparator<View> {
 
 	private final int a[] = new int[2];
 	private final int b[] = new int[2];

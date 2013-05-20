@@ -18,7 +18,7 @@ import android.widget.TextView;
  * 
  */
 
-class WebUtils {
+protected class WebUtils {
 
 	private ViewFetcher viewFetcher;
 	private Instrumentation inst;

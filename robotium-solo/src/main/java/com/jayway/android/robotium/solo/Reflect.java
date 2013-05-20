@@ -9,7 +9,7 @@ import java.lang.reflect.Field;
  * 
  */
 
-class Reflect {
+protected class Reflect {
 	private Object object;
 
 	/**

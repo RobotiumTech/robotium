@@ -24,7 +24,7 @@ import static com.jayway.android.robotium.solo.Solo.SMALL_TIMEOUT;
  * 
  */
 
-class Waiter {
+protected class Waiter {
 
 	private final ActivityUtils activityUtils;
 	private final ViewFetcher viewFetcher;

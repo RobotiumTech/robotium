@@ -27,7 +27,7 @@ import static com.jayway.android.robotium.solo.Solo.SMALL_TIMEOUT;
  * 
  */
 
-class Clicker {
+protected class Clicker {
 
 	private final String LOG_TAG = "Robotium";
 	private final ActivityUtils activityUtils;

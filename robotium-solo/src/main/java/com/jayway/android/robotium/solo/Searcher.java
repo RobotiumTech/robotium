@@ -20,7 +20,7 @@ import android.widget.TextView;
  * 
  */
 
-class Searcher {
+protected class Searcher {
 
 	private final ViewFetcher viewFetcher;
 	private final WebUtils webUtils;

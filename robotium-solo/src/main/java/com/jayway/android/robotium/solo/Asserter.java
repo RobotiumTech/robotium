@@ -11,7 +11,7 @@ import android.app.ActivityManager;
  *
  */
 
-class Asserter {
+protected class Asserter {
 	private final ActivityUtils activityUtils;
 	private final Waiter waiter;
 

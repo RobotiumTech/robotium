@@ -15,7 +15,7 @@ import android.widget.EditText;
  *
  */
 
-class TextEnterer{
+protected class TextEnterer{
 
 	private final Instrumentation inst;
 	private final Clicker clicker;
