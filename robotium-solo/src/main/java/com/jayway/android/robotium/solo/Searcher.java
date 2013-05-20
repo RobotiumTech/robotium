@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
+
 /**
  * Contains various search methods. Examples are: searchForEditTextWithTimeout(),
  * searchForTextWithTimeout(), searchForButtonWithTimeout().
@@ -25,11 +26,11 @@ class Searcher {
 	private final WebUtils webUtils;
 	private final Scroller scroller;
 	private final Sleeper sleeper;
-	private final int TIMEOUT = 5000;
 	private final String LOG_TAG = "Robotium";
 	Set<TextView> uniqueTextViews;
 	List<WebElement> webElements;
 	private int numberOfUniqueViews;
+	private final int TIMEOUT = 5000;
 
 
 	/**

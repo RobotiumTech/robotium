@@ -13,6 +13,8 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.view.View;
 import android.widget.TextView;
+import static com.jayway.android.robotium.solo.Solo.LARGE_TIMEOUT;
+import static com.jayway.android.robotium.solo.Solo.SMALL_TIMEOUT;
 
 /**
  * Contains various wait methods. Examples are: waitForText(),
@@ -26,12 +28,10 @@ class Waiter {
 
 	private final ActivityUtils activityUtils;
 	private final ViewFetcher viewFetcher;
-	private final int TIMEOUT = 20000;
-	private final int SMALLTIMEOUT = 10000;
-	private final int MINISLEEP = 50;
 	private final Searcher searcher;
 	private final Scroller scroller;
 	private final Sleeper sleeper;
+	private final int MINISLEEP = 50;
 
 
 	/**
@@ -61,7 +61,7 @@ class Waiter {
 	 */
 
 	public boolean waitForActivity(String name){
-		return waitForActivity(name, SMALLTIMEOUT);
+		return waitForActivity(name, SMALL_TIMEOUT);
 	}
 
 	/**
@@ -86,6 +86,18 @@ class Waiter {
 			currentActivity = activityUtils.getCurrentActivity(false);
 		}
 		return false;
+	}
+	
+	/**
+	 * Waits for the given {@link Activity}.
+	 *
+	 * @param activityClass the class of the {@code Activity} to wait for
+	 * @return {@code true} if {@code Activity} appears before the timeout and {@code false} if it does not
+	 *
+	 */
+
+	public boolean waitForActivity(Class<? extends Activity> activityClass){
+		return waitForActivity(activityClass, SMALL_TIMEOUT);
 	}
 
 	/**
@@ -116,7 +128,9 @@ class Waiter {
 	 * Waits for a view to be shown.
 	 * 
 	 * @param viewClass the {@code View} class to wait for
-	 * @param minimumNumberOfMatches the minimum number of matches that are expected to be shown. {@code 0} means any number of matches
+	 * @param index the index of the view that is expected to be shown
+	 * @param sleep true if should sleep
+	 * @param scroll {@code true} if scrolling should be performed
 	 * @return {@code true} if view is shown and {@code false} if it is not shown before the timeout
 	 */
 
@@ -182,7 +196,7 @@ class Waiter {
 	 */
 
 	public <T extends View> boolean  waitForViews(Class<? extends T>... classes) {
-		final long endTime = SystemClock.uptimeMillis() + SMALLTIMEOUT;
+		final long endTime = SystemClock.uptimeMillis() + SMALL_TIMEOUT;
 
 		while (SystemClock.uptimeMillis() < endTime) {
 
@@ -206,7 +220,7 @@ class Waiter {
 	 */
 
 	public boolean waitForView(View view){
-		return waitForView(view, TIMEOUT, true);
+		return waitForView(view, LARGE_TIMEOUT, true);
 	}
 
 	/**
@@ -262,9 +276,8 @@ class Waiter {
 	 */
 
 	public View waitForView(int id, int index){
-
 		ArrayList<View> viewsMatchingId = new ArrayList<View>();
-		long endTime = SystemClock.uptimeMillis() + SMALLTIMEOUT;
+		long endTime = SystemClock.uptimeMillis() + SMALL_TIMEOUT;
 
 		while (SystemClock.uptimeMillis() <= endTime) {
 			sleeper.sleep();
@@ -350,20 +363,7 @@ class Waiter {
 	 */
 
 	public TextView waitForText(String text) {
-		return waitForText(text, 0, TIMEOUT, true);
-	}
-
-	/**
-	 * Waits for a text to be shown. Default timeout is 20 seconds. 
-	 * 
-	 * @param text the text that needs to be shown, specified as a regular expression
-	 * @param expectedMinimumNumberOfMatches the minimum number of matches of text that must be shown. {@code 0} means any number of matches
-	 * @return {@code true} if text is found and {@code false} if it is not found before the timeout
-	 */
-
-	public TextView waitForText(String text, int expectedMinimumNumberOfMatches) {
-
-		return waitForText(text, expectedMinimumNumberOfMatches, TIMEOUT, true);
+		return waitForText(text, 0, LARGE_TIMEOUT, true);
 	}
 
 	/**
@@ -392,6 +392,21 @@ class Waiter {
 
 	public TextView waitForText(String text, int expectedMinimumNumberOfMatches, long timeout, boolean scroll) {
 		return waitForText(TextView.class, text, expectedMinimumNumberOfMatches, timeout, scroll, false, true);	
+	}
+	
+	/**
+	 * Waits for a text to be shown.
+	 *
+	 * @param classToFilterBy the class to filter by
+	 * @param text the text that needs to be shown, specified as a regular expression
+	 * @param expectedMinimumNumberOfMatches the minimum number of matches of text that must be shown. {@code 0} means any number of matches
+	 * @param timeout the amount of time in milliseconds to wait
+	 * @param scroll {@code true} if scrolling should be performed
+	 * @return {@code true} if text is found and {@code false} if it is not found before the timeout
+	 */
+
+	public <T extends TextView> T waitForText(Class<T> classToFilterBy, String text, int expectedMinimumNumberOfMatches, long timeout, boolean scroll) {
+		return waitForText(classToFilterBy, text, expectedMinimumNumberOfMatches, timeout, scroll, false, true);	
 	}
 
 	/**
@@ -454,8 +469,7 @@ class Waiter {
 	 */
 
 	public <T extends View> T waitForAndGetView(int index, Class<T> classToFilterBy){
-
-		long endTime = SystemClock.uptimeMillis() + SMALLTIMEOUT;
+		long endTime = SystemClock.uptimeMillis() + SMALL_TIMEOUT;
 		while (SystemClock.uptimeMillis() <= endTime && !waitForView(classToFilterBy, index, true, true));
 		int numberOfUniqueViews = searcher.getNumberOfUniqueViews();
 		ArrayList<T> views = RobotiumUtils.removeInvisibleViews(viewFetcher.getCurrentViews(classToFilterBy));
@@ -470,14 +484,17 @@ class Waiter {
 		try{
 			view = views.get(index);
 		}catch (IndexOutOfBoundsException exception) {
-			index++;
-			Assert.assertTrue(index + " " + classToFilterBy.getSimpleName() +"s" + " are not found!", false);
+			int match = index + 1;
+			if(match > 1) {
+				Assert.assertTrue(match + " " + classToFilterBy.getSimpleName() +"s" + " are not found!", false);
+			}
+			else {
+				Assert.assertTrue(classToFilterBy.getSimpleName() + " is not found!", false);
+			}
 		}
 		views = null;
 		return view;
 	}
-
-
 
 	/**
 	 * Waits for a Fragment with a given tag or id to appear.
@@ -489,7 +506,6 @@ class Waiter {
 	 */
 
 	public boolean waitForFragment(String tag, int id, int timeout){
-
 		long endTime = SystemClock.uptimeMillis() + timeout;
 		while (SystemClock.uptimeMillis() <= endTime) {
 

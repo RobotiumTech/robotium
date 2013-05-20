@@ -313,7 +313,7 @@ class Scroller {
 				.getHeight();
 		int screenWidth = activityUtils.getCurrentActivity(false).getWindowManager().getDefaultDisplay()
 				.getWidth();
-		float x = screenWidth / 2.0f;
+		float x = screenWidth * 0.55f;
 		float y = screenHeight / 2.0f;
 		if (side == Side.LEFT)
 			drag(0, x, y, y, 40);
@@ -333,7 +333,7 @@ class Scroller {
 		view.getLocationOnScreen(corners);
 		int viewHeight = view.getHeight();
 		int viewWidth = view.getWidth();
-		float x = corners[0] + viewWidth / 2.0f;
+		float x = corners[0] + viewWidth * 0.55f;
 		float y = corners[1] + viewHeight / 2.0f;
 		if (side == Side.LEFT)
 			drag(corners[0], x, y, y, 40);

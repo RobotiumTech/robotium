@@ -15,8 +15,9 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewConfiguration;
 import android.view.Window;
+import android.widget.AbsListView;
 import android.widget.TextView;
-import android.widget.AdapterView;
+import static com.jayway.android.robotium.solo.Solo.SMALL_TIMEOUT;
 
 /**
  * Contains various click methods. Examples are: clickOn(),
@@ -36,7 +37,6 @@ class Clicker {
 	private final Sleeper sleeper;
 	private final Waiter waiter;
 	private final WebUtils webUtils;
-	private final int TIMEOUT = 10000;
 	private final int MINISLEEP = 100;
 
 
@@ -49,6 +49,7 @@ class Clicker {
 	 * @param inst the {@code android.app.Instrumentation} instance.
 	 * @param sleeper the {@code Sleeper} instance
 	 * @param waiter the {@code Waiter} instance
+	 * @param webUtils the {@code WebUtils} instance
 	 */
 
 	public Clicker(ActivityUtils activityUtils, ViewFetcher viewFetcher, Sender sender, Instrumentation inst, Sleeper sleeper, Waiter waiter, WebUtils webUtils) {
@@ -100,7 +101,7 @@ class Clicker {
 		try{
 			inst.sendPointerSync(event);
 		}catch(SecurityException e){
-			Assert.assertTrue("Click can not be completed! Something is in the way e.g. the keyboard.", false);
+			Assert.assertTrue("Click can not be completed!", false);
 		}
 		eventTime = SystemClock.uptimeMillis();
 		event = MotionEvent.obtain(downTime, eventTime, MotionEvent.ACTION_MOVE, 
@@ -290,14 +291,15 @@ class Clicker {
 	 */
 
 	public void clickOnWebElement(By by, int match, boolean scroll){	
-		WebElement webElementToClick = waiter.waitForWebElement(by, match, TIMEOUT, scroll);
+		WebElement webElementToClick = waiter.waitForWebElement(by, match, SMALL_TIMEOUT, scroll);
 
 		if(webElementToClick == null){
-			if(match > 1)
-				Assert.assertTrue(match + " web elements with " + by.getClass().getSimpleName() + ": '" + by.getValue() + "' are not found!", false);
-			else
-				Assert.assertTrue("Web element with " + by.getClass().getSimpleName() + ": '" + by.getValue() + "' is not found", false);
-
+			if(match > 1) {
+				Assert.assertTrue(match + " WebElements with " + webUtils.splitNameByUpperCase(by.getClass().getSimpleName()) + ": '" + by.getValue() + "' are not found!", false);
+			}
+			else {
+				Assert.assertTrue("WebElement with " + webUtils.splitNameByUpperCase(by.getClass().getSimpleName()) + ": '" + by.getValue() + "' is not found!", false);
+			}
 		}
 		clickOnScreen(webElementToClick.getLocationX(), webElementToClick.getLocationY());
 	}
@@ -314,7 +316,7 @@ class Clicker {
 	 */
 
 	public void clickOnText(String regex, boolean longClick, int match, boolean scroll, int time) {
-		TextView textToClick = waiter.waitForText(regex, match, TIMEOUT, scroll, true, false);
+		TextView textToClick = waiter.waitForText(regex, match, SMALL_TIMEOUT, scroll, true, false);
 
 		if (textToClick != null) {
 			clickOnScreen(textToClick, longClick, time);
@@ -323,7 +325,7 @@ class Clicker {
 		else {
 
 			if(match > 1){
-				Assert.assertTrue(match + " matches with text string: '" + regex +  "' are not found!", false);
+				Assert.assertTrue(match + " matches of text string: '" + regex +  "' are not found!", false);
 			}
 
 			else{
@@ -334,7 +336,7 @@ class Clicker {
 					Log.d(LOG_TAG, "'" + regex + "' not found. Have found: '" + textView.getText() + "'");
 				}
 				allTextViews = null;
-				Assert.assertTrue("The text: '" + regex + "' is not found!", false);
+				Assert.assertTrue("Text string: '" + regex + "' is not found!", false);
 			}	
 		}
 	}
@@ -348,7 +350,7 @@ class Clicker {
 	 */
 
 	public <T extends TextView> void clickOn(Class<T> viewClass, String nameRegex) {
-		T viewToClick = (T) waiter.waitForText(viewClass, nameRegex, 0, TIMEOUT, true, true, false);
+		T viewToClick = (T) waiter.waitForText(viewClass, nameRegex, 0, SMALL_TIMEOUT, true, true, false);
 
 		if (viewToClick != null) {
 			clickOnScreen(viewToClick);
@@ -356,9 +358,9 @@ class Clicker {
 			ArrayList <T> allTextViews = RobotiumUtils.removeInvisibleViews(viewFetcher.getCurrentViews(viewClass));
 
 			for (T view : allTextViews) {
-				Log.d(LOG_TAG, nameRegex + " not found. Have found: " + view.getText());
+				Log.d(LOG_TAG, "'" + nameRegex + "' not found. Have found: '" + view.getText() + "'");
 			}
-			Assert.assertTrue(viewClass.getSimpleName() + " with the text: '" + nameRegex + "' is not found!", false);
+			Assert.assertTrue(viewClass.getSimpleName() + " with text: '" + nameRegex + "' is not found!", false);
 		}
 	}
 
@@ -401,16 +403,16 @@ class Clicker {
 			line = 0;
 
 		ArrayList<View> views = new ArrayList<View>();
-		final AdapterView<?> adapterView = waiter.waitForAndGetView(index, AdapterView.class);
-		if(adapterView == null)
+		final AbsListView absListView = waiter.waitForAndGetView(index, AbsListView.class);
+		if(absListView == null)
 			Assert.assertTrue("ListView is null!", false);
 
-		int numberOfLines = adapterView.getChildCount();
+		int numberOfLines = absListView.getChildCount();
 
-		if(line > adapterView.getChildCount()){
-			Assert.assertTrue("Can not click line number " + line + " as there are only " + numberOfLines + " lines available", false);
+		if(line > absListView.getChildCount()){
+			Assert.assertTrue("Can not click on line number " + line + " as there are only " + numberOfLines + " lines available", false);
 		}
-		View view = adapterView.getChildAt(line);
+		View view = absListView.getChildAt(line);
 
 		if(view != null){
 			views = viewFetcher.getViews(view, true);

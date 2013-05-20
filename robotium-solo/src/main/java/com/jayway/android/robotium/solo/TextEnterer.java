@@ -1,6 +1,7 @@
 package com.jayway.android.robotium.solo;
 
 import junit.framework.Assert;
+import android.app.Activity;
 import android.app.Instrumentation;
 import android.text.InputType;
 import android.view.inputmethod.InputMethodManager;
@@ -47,7 +48,7 @@ class TextEnterer{
 		if(editText != null){
 			final String previousText = editText.getText().toString();
 			if(!editText.isEnabled())
-				Assert.assertTrue("Edit text is not enabled!", false);
+				Assert.assertTrue("EditText is not enabled!", false);
 
 			inst.runOnMainSync(new Runnable()
 			{
@@ -55,7 +56,7 @@ class TextEnterer{
 				{
 					editText.setInputType(InputType.TYPE_NULL); 
 					editText.performClick();
-					closeSoftKeyboard(editText);
+					hideSoftKeyboard(false);
 					if(text.equals(""))
 						editText.setText(text);
 					else{
@@ -84,7 +85,7 @@ class TextEnterer{
 				}
 			});
 			clicker.clickOnScreen(editText, false, 0);
-			closeSoftKeyboard(editText);
+			hideSoftKeyboard(true);
 			inst.sendStringSync(text);
 		}
 	}
@@ -93,13 +94,15 @@ class TextEnterer{
 	/**
 	 * Hides the soft keyboard
 	 * 
-	 * @param editText the edit text in focus
+	 * @param shouldSleepFirst whether to sleep a default pause first
 	 */
-	
-	@SuppressWarnings("static-access")
-	private void closeSoftKeyboard(EditText editText) {
-		InputMethodManager imm = (InputMethodManager)activityUtils.getCurrentActivity(false).
-		getSystemService(activityUtils.getCurrentActivity(false).INPUT_METHOD_SERVICE);
-		imm.hideSoftInputFromWindow(editText.getWindowToken(), 0);
+
+	public void hideSoftKeyboard(boolean shouldSleepFirst) {
+		Activity activity = activityUtils.getCurrentActivity(shouldSleepFirst);
+		
+		InputMethodManager inputMethodManager = (InputMethodManager)  activity.getSystemService(Activity.INPUT_METHOD_SERVICE);
+		if(activity.getCurrentFocus() != null){
+			inputMethodManager.hideSoftInputFromWindow(activity.getCurrentFocus().getWindowToken(), 0);
+		}
 	}
 }

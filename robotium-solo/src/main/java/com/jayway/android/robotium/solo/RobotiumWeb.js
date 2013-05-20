@@ -8,37 +8,18 @@
 function allWebElements() {
 	for (var key in document.all){
 		try{
-			var rect = document.all[key].getBoundingClientRect();
-			if(rect.width > 0 && rect.height > 0 && rect.left >= 0 && rect.top >= 0){
-				var id = document.all[key].id;
-				var text = document.all[key].innerText;
-				var name = document.all[key].getAttribute('name');
-				var className = document.all[key].className;
-				var tagName = document.all[key].tagName;
-				prompt(id + ';,' + text + ';,' + name + ";," + className + ";," + tagName + ";," + rect.left + ';,' + rect.top + ';,' + rect.width + ';,' + rect.height);
-			}
+			promptElement(document.all[key]);			
 		}catch(ignored){}
-	} 
+	}
 	finished();
 }
 
 function allTexts() {
-	var walk=document.createTreeWalker(document.body,NodeFilter.SHOW_TEXT,null,false); 
 	var range = document.createRange();
+	var walk=document.createTreeWalker(document.body,NodeFilter.SHOW_TEXT,null,false); 
 	while(n=walk.nextNode()){
 		try{
-			var text = n.textContent;
-			if(text.trim().length>0) {
-				range.selectNodeContents(n);
-				var rect = range.getBoundingClientRect();
-				if(rect.width > 0 && rect.height > 0 && rect.left >= 0 && rect.top >= 0){
-					var id = n.parentNode.id;
-					var name = n.parentNode.getAttribute('name');
-					var className = n.parentNode.className;
-					var tagName = n.parentNode.tagName;
-					prompt(id + ';,' + text + ';,' + name + ";," + className + ";," + tagName + ";," + rect.left + ';,' + rect.top + ';,' + rect.width + ';,' + rect.height);
-				}
-			}
+			promptText(n, range);
 		}catch(ignored){}
 	} 
 	finished();
@@ -47,12 +28,7 @@ function allTexts() {
 function id(id) {
 	var element = document.getElementById(id);
 	if(element != null){ 
-		var text = element.textContent;
-		var name = element.getAttribute('name');
-		var className = element.className;
-		var tagName = element.tagName;
-		var rect = element.getBoundingClientRect(); 
-		prompt(id + ';,' + text + ';,' + name + ";," + className + ";," + tagName + ";," + rect.left + ';,' + rect.top + ';,' + rect.width + ';,' + rect.height); 
+		promptElement(element);
 	} 
 	finished(); 
 }
@@ -60,13 +36,7 @@ function id(id) {
 function xpath(xpath) {
 	var element = document.evaluate(xpath, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null ).singleNodeValue; 
 	if(element != null){ 
-		var id = element.id;
-		var text = element.textContent;
-		var name = element.getAttribute('name');
-		var className = element.className;
-		var tagName = element.tagName;
-		var rect = element.getBoundingClientRect(); 
-		prompt(id + ';,' + text + ';,' + name + ";," + className + ";," + tagName + ";," + rect.left + ';,' + rect.top + ';,' + rect.width + ';,' + rect.height); 
+		promptElement(element);
 	} 
 	finished();
 }
@@ -74,13 +44,7 @@ function xpath(xpath) {
 function cssSelector(cssSelector) {
 	var element = document.querySelector(cssSelector); 
 	if(element != null){ 
-		var id = element.id;
-		var text = element.textContent;
-		var name = element.getAttribute('name');
-		var className = element.className;
-		var tagName = element.tagName;
-		var rect = element.getBoundingClientRect(); 
-		prompt(id + ';,' + text + ';,' + name + ";," + className + ";," + tagName + ";," + rect.left + ';,' + rect.top + ';,' + rect.width + ';,' + rect.height); 
+		promptElement(element);
 	} 
 	finished(); 
 }
@@ -91,15 +55,7 @@ function name(name) {
 		try{
 			var attributeName = n.getAttribute('name');
 			if(attributeName != null && attributeName.trim().length>0 && attributeName == name){
-				var id = n.id;
-				var text = n.textContent;
-				var name = n.getAttribute('name');
-				var className = n.className;
-				var tagName = n.tagName;
-				var rect = n.getBoundingClientRect();
-				if(rect.width > 0 && rect.height > 0 && rect.left >= 0 && rect.top >= 0){
-					prompt(id + ';,' + text + ';,' + name + ";," + className + ";," + tagName + ";," + rect.left + ';,' + rect.top + ';,' + rect.width + ';,' + rect.height); 
-				}
+				promptElement(n);
 			}
 		}catch(ignored){} 
 	} 
@@ -112,14 +68,7 @@ function className(nameOfClass) {
 		try{
 			var className = n.className; 
 			if(className != null && className.trim().length>0 && className == nameOfClass) {
-				var id = n.id;
-				var text = n.textContent;
-				var name = n.getAttribute('name');
-				var tagName = n.tagName;
-				var rect = n.getBoundingClientRect();
-				if(rect.width > 0 && rect.height > 0 && rect.left >= 0 && rect.top >= 0){
-					prompt(id + ';,' + text + ';,' + name + ";," + className + ";," + tagName + ";," + rect.left + ';,' + rect.top + ';,' + rect.width + ';,' + rect.height);
-				}
+				promptElement(n);
 			}
 		}catch(ignored){} 
 	} 
@@ -127,21 +76,13 @@ function className(nameOfClass) {
 }
 
 function textContent(text) {
-	var walk=document.createTreeWalker(document.body,NodeFilter.SHOW_TEXT,null,false); 
 	var range = document.createRange();
+	var walk=document.createTreeWalker(document.body,NodeFilter.SHOW_TEXT,null,false); 
 	while(n=walk.nextNode()){ 
 		try{
 			var textContent = n.textContent; 
 			if(textContent.trim() == text.trim()){  
-				var id = n.parentNode.id;
-				var name = n.parentNode.getAttribute('name');
-				var className = n.parentNode.className;
-				var tagName = n.parentNode.tagName;
-				range.selectNodeContents(n);
-				var rect = range.getBoundingClientRect();
-				if(rect.width > 0 && rect.height > 0 && rect.left >= 0 && rect.top >= 0){
-					prompt(id + ';,' + textContent + ';,' + name + ";," + className + ";," + tagName + ";," + rect.left + ';,' + rect.top + ';,' + rect.width + ';,' + rect.height); 
-				}
+				promptText(n, range);
 			}
 		}catch(ignored){} 
 	} 
@@ -153,15 +94,7 @@ function tagName(tagName) {
 	for (var key in elements) {
 		if(elements != null){ 
 			try{
-				var id = elements[key].id;
-				var text = elements[key].textContent;
-				var name = elements[key].getAttribute('name');
-				var className = elements[key].className;
-				var tagName = elements[key].tagName;
-				var rect = elements[key].getBoundingClientRect(); 
-				if(rect.width > 0 && rect.height > 0 && rect.left >= 0 && rect.top >= 0){
-					prompt(id + ';,' + text + ';,' + name + ";," + className + ";," + tagName + ";," + rect.left + ';,' + rect.top + ';,' + rect.width + ';,' + rect.height); 
-				}
+				promptElement(elements[key]);
 			}catch(ignored){}  
 		}
 	}
@@ -228,6 +161,36 @@ function enterTextByTagName(tagName, text) {
 		elements[0].value = text;
 	}
 	finished();
+}
+
+function promptElement(element) {
+	var id = element.id;
+	var text = element.innerText;
+	if(text.trim().length == 0){
+		text = element.value;
+	}
+	var name = element.getAttribute('name');
+	var className = element.className;
+	var tagName = element.tagName;
+	var rect = element.getBoundingClientRect();
+	if(rect.width > 0 && rect.height > 0 && rect.left >= 0 && rect.top >= 0){
+		prompt(id + ';,' + text + ';,' + name + ";," + className + ";," + tagName + ";," + rect.left + ';,' + rect.top + ';,' + rect.width + ';,' + rect.height);
+	}
+}
+
+function promptText(element, range) {	
+	var text = element.textContent;
+	if(text.trim().length>0) {
+		range.selectNodeContents(element);
+		var rect = range.getBoundingClientRect();
+		if(rect.width > 0 && rect.height > 0 && rect.left >= 0 && rect.top >= 0){
+			var id = element.parentNode.id;
+			var name = element.parentNode.getAttribute('name');
+			var className = element.parentNode.className;
+			var tagName = element.parentNode.tagName;
+			prompt(id + ';,' + text + ';,' + name + ";," + className + ";," + tagName + ";," + rect.left + ';,' + rect.top + ';,' + rect.width + ';,' + rect.height);
+		}
+	}
 }
 
 function finished(){
