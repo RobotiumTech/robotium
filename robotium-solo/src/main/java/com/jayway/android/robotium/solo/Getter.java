@@ -14,7 +14,7 @@ import android.widget.TextView;
  * 
  */
 
-class Getter {
+protected class Getter {
 
 	private final ActivityUtils activityUtils;
 	private final Waiter waiter;

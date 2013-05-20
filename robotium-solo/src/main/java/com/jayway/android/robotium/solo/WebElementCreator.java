@@ -12,7 +12,7 @@ import android.webkit.WebView;
  * 
  */
 
-class WebElementCreator {
+protected class WebElementCreator {
 
 	private ArrayList<WebElement> webElements;
 	private Sleeper sleeper;

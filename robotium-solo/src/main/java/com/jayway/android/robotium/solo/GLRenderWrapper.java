@@ -19,7 +19,7 @@ import android.view.View;
  * 
  */
 
-class GLRenderWrapper implements Renderer {
+protected class GLRenderWrapper implements Renderer {
 
 	private Renderer renderer;
 	private int width;

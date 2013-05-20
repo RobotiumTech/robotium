@@ -15,7 +15,7 @@ import android.webkit.WebView;
  *
  */
 
-class ViewFetcher {
+protected class ViewFetcher {
 
 	private final ActivityUtils activityUtils;
 	private String windowManagerString;

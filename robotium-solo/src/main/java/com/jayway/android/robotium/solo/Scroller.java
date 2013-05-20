@@ -21,7 +21,7 @@ import android.widget.ScrollView;
  *
  */
 
-class Scroller {
+protected class Scroller {
 
 	public static final int DOWN = 0;
 	public static final int UP = 1;

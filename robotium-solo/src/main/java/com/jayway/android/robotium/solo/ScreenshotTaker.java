@@ -19,7 +19,7 @@ import android.webkit.WebView;
  * 
  */
 
-class ScreenshotTaker {
+protected class ScreenshotTaker {
 
 	private final ActivityUtils activityUtils;
 	private final String LOG_TAG = "Robotium";

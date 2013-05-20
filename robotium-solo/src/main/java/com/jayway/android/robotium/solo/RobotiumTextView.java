@@ -10,7 +10,7 @@ import android.widget.TextView;
  * 
  */
 
-class RobotiumTextView extends TextView {
+protected class RobotiumTextView extends TextView {
 	private int locationX = 0;
 	private int locationY = 0;
 

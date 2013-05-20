@@ -13,7 +13,7 @@ import android.webkit.WebView;
  * 
  */
 
-class RobotiumWebClient extends WebChromeClient{
+protected class RobotiumWebClient extends WebChromeClient{
 	WebElementCreator webElementCreator;
 	private Instrumentation inst;
 	private WebChromeClient robotiumWebClient;
