@@ -5,6 +5,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.List;
+
 import android.app.Instrumentation;
 import android.webkit.WebView;
 import android.widget.TextView;
@@ -23,7 +25,6 @@ class WebUtils {
 	private ViewFetcher viewFetcher;
 	private Instrumentation inst;
 	private ActivityUtils activityUtils;
-	RobotiumWebClient robotiumWebCLient;
 	WebElementCreator webElementCreator;
 
 
@@ -41,7 +42,6 @@ class WebUtils {
 		this.activityUtils = activityUtils;
 		this.viewFetcher = viewFetcher;
 		webElementCreator = new WebElementCreator(sleeper);
-		robotiumWebCLient = new RobotiumWebClient(instrumentation, webElementCreator);
 	}
 
 
@@ -130,7 +130,7 @@ class WebUtils {
 
 	private String prepareForStartOfJavascriptExecution(){
 		webElementCreator.prepareForStart();
-		robotiumWebCLient.enableJavascriptAndSetRobotiumWebClient(viewFetcher.getCurrentViews(WebView.class));
+		enableJavascriptAndSetRobotiumWebClient(viewFetcher.getCurrentViews(WebView.class));
 		return getJavaScriptAsString();
 	}
 
@@ -289,5 +289,27 @@ class WebUtils {
 			throw new RuntimeException(e);
 		}
 		return javaScript.toString();
+	}
+	
+	/**
+	 * Enables JavaScript in the given {@code WebViews} objects.
+	 * 
+	 * @param webViews the {@code WebView} objects to enable JavaScript in
+	 */
+
+	private void enableJavascriptAndSetRobotiumWebClient(List<WebView> webViews){
+		for(final WebView webView : webViews){
+
+			if(webView != null){
+
+				inst.runOnMainSync(new Runnable() {
+					public void run() {
+						webView.getSettings().setJavaScriptEnabled(true);
+						webView.setWebChromeClient(new RobotiumWebClient(webView, webElementCreator));
+
+					}
+				});
+			}
+		}
 	}
 }
