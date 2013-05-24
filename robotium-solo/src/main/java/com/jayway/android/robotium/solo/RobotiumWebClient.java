@@ -29,7 +29,7 @@ class RobotiumWebClient extends WebChromeClient{
 	/**
 	 * Constructs this object.
 	 *
-	 * @param instrumentation the {@code Instrumentation} instance
+	 * @param webView the {@code WebView} instance
 	 * @param webElementCreator the {@code WebElementCreator} instance
 	 */
 
@@ -77,7 +77,7 @@ class RobotiumWebClient extends WebChromeClient{
         }
 	}
 	
-	@Override
+    @Override
     public Bitmap getDefaultVideoPoster() {
         if (originalWebChromeClient != null) {
             return originalWebChromeClient.getDefaultVideoPoster();
