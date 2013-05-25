@@ -288,7 +288,7 @@ class Scroller {
 				.getHeight();
 		int screenWidth = activityUtils.getCurrentActivity(false).getWindowManager().getDefaultDisplay()
 				.getWidth();
-		float x = screenWidth / 2.0f;
+		float x = screenWidth * 0.75f;
 		float y = screenHeight / 2.0f;
 		if (side == Side.LEFT)
 			drag(0, x, y, y, 40);
