@@ -2048,7 +2048,7 @@ public class Solo {
 	 */
 	
 	public void hideSoftKeyboard() {	
-		textEnterer.hideSoftKeyboard(true);
+		textEnterer.hideSoftKeyboard(null, true);
 	}
 
 	/**

@@ -36,7 +36,6 @@ class TextEnterer{
 		this.clicker = clicker;
 	}
 
-
 	/**
 	 * Sets an {@code EditText} text
 	 * 
@@ -56,7 +55,7 @@ class TextEnterer{
 				{
 					editText.setInputType(InputType.TYPE_NULL); 
 					editText.performClick();
-					hideSoftKeyboard(false);
+					hideSoftKeyboard(editText, false);
 					if(text.equals(""))
 						editText.setText(text);
 					else{
@@ -85,11 +84,10 @@ class TextEnterer{
 				}
 			});
 			clicker.clickOnScreen(editText, false, 0);
-			hideSoftKeyboard(true);
+			hideSoftKeyboard(editText, true);
 			inst.sendStringSync(text);
 		}
 	}
-
 
 	/**
 	 * Hides the soft keyboard
@@ -97,11 +95,15 @@ class TextEnterer{
 	 * @param shouldSleepFirst whether to sleep a default pause first
 	 */
 
-	public void hideSoftKeyboard(boolean shouldSleepFirst) {
+	public void hideSoftKeyboard(EditText editText, boolean shouldSleepFirst) {
 		Activity activity = activityUtils.getCurrentActivity(shouldSleepFirst);
 		
 		InputMethodManager inputMethodManager = (InputMethodManager)  activity.getSystemService(Activity.INPUT_METHOD_SERVICE);
-		if(activity.getCurrentFocus() != null){
+		
+		if(editText != null) {
+			inputMethodManager.hideSoftInputFromWindow(editText.getWindowToken(), 0);
+		}
+		else if(activity.getCurrentFocus() != null){
 			inputMethodManager.hideSoftInputFromWindow(activity.getCurrentFocus().getWindowToken(), 0);
 		}
 	}
