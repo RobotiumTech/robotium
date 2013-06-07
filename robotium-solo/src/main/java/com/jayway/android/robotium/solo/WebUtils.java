@@ -69,10 +69,10 @@ class WebUtils {
 
 		if(javaScriptWasExecuted){
 			for(WebElement webElement : webElementCreator.getWebElementsFromWebViews()){
-
-				RobotiumTextView textView = new RobotiumTextView(inst.getContext(), webElement.getText(), webElement.getLocationX(), webElement.getLocationY());
-				if(viewFetcher.isViewSufficientlyShown(textView))
+				if(isWebElementSufficientlyShown(webElement)){
+					RobotiumTextView textView = new RobotiumTextView(inst.getContext(), webElement.getText(), webElement.getLocationX(), webElement.getLocationY());
 					webElementsAsTextViews.add(textView);
+				}
 			}	
 		}
 		return webElementsAsTextViews;		
