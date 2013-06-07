@@ -9,6 +9,7 @@ import android.app.Instrumentation;
 import android.content.pm.ActivityInfo;
 import android.opengl.GLSurfaceView;
 import android.opengl.GLSurfaceView.Renderer;
+import android.os.SystemClock;
 import android.view.KeyEvent;
 import android.view.View;
 import android.webkit.WebView;
@@ -2284,6 +2285,18 @@ public class Solo {
 
 	public void takeScreenshot(String name, int quality){
 		View decorView = viewFetcher.getRecentDecorView(viewFetcher.getWindowDecorViews());
+		final long endTime = SystemClock.uptimeMillis() + SMALL_TIMEOUT;
+
+		while (decorView == null) {	
+
+			final boolean timedOut = SystemClock.uptimeMillis() > endTime;
+
+			if (timedOut){
+				return;
+			}
+			sleeper.sleepMini();
+			decorView = viewFetcher.getRecentDecorView(viewFetcher.getWindowDecorViews());
+		}
 		wrapAllGLViews(decorView);
 		screenshotTaker.takeScreenshot(decorView, name, quality);
 	}
