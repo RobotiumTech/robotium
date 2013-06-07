@@ -61,7 +61,7 @@ class ActivityUtils {
 	/**
 	 * Creates a new activity stack and pushes the start activity 
 	 */
-	
+
 	private void createStackAndPushStartActivity(){
 		activityStack = new Stack<WeakReference<Activity>>();
 		if (activity != null){
@@ -181,11 +181,22 @@ class ActivityUtils {
 	/**
 	 * Returns the current {@code Activity}, after sleeping a default pause length.
 	 *
+	 * @param shouldSleepFirst whether to sleep a default pause first
+	 * @return the current {@code Activity}
+	 */
+
+	public Activity getCurrentActivity(boolean shouldSleepFirst) {
+		return getCurrentActivity(shouldSleepFirst, true);
+	}
+	
+	/**
+	 * Returns the current {@code Activity}, after sleeping a default pause length.
+	 *
 	 * @return the current {@code Activity}
 	 */
 
 	public Activity getCurrentActivity() {
-		return getCurrentActivity(true);
+		return getCurrentActivity(true, true);
 	}
 
 	/**
@@ -229,14 +240,17 @@ class ActivityUtils {
 	 * Returns the current {@code Activity}.
 	 *
 	 * @param shouldSleepFirst whether to sleep a default pause first
+	 * @param waitForActivity whether to wait for the activity
 	 * @return the current {@code Activity}
 	 */
 
-	public Activity getCurrentActivity(boolean shouldSleepFirst) {
+	public Activity getCurrentActivity(boolean shouldSleepFirst, boolean waitForActivity) {
 		if(shouldSleepFirst){
 			sleeper.sleep();
 		}
-		waitForActivityIfNotAvailable();
+		if(waitForActivity){
+			waitForActivityIfNotAvailable();
+		}
 		if(!activityStack.isEmpty()){
 			activity=activityStack.peek().get();
 		}
@@ -320,7 +334,7 @@ class ActivityUtils {
 		}
 		activitiesOpened = null;
 		// Finish the initial activity, pressing Back for good measure
-		finishActivity(getCurrentActivity());
+		finishActivity(getCurrentActivity(true, false));
 		this.activity = null;
 		sleeper.sleepMini();
 		try {
