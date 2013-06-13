@@ -8,7 +8,7 @@ import android.view.MotionEvent;
 import android.view.MotionEvent.PointerCoords;
 import android.view.MotionEvent.PointerProperties;
 
-public class Tapper
+class Tapper
 {
     private final Instrumentation _instrument;
     public static final int GESTURE_DURATION_MS = 1000;
@@ -19,7 +19,7 @@ public class Tapper
         this._instrument = inst;
     }
 
-    public void generateTapGesture(int numTaps, PointF... points)
+	public void generateTapGesture(int numTaps, PointF... points)
     {
         MotionEvent event;
 

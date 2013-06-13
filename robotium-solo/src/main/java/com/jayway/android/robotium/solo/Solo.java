@@ -60,11 +60,11 @@ public class Solo {
 	protected final ActivityUtils activityUtils;
 	protected final DialogUtils dialogUtils;
 	protected final TextEnterer textEnterer;
-        protected final Rotator rotator;
+	protected final Rotator rotator;
 	protected final Scroller scroller;
 	protected final Sleeper sleeper;
-        protected final Swiper swiper;
-        protected final Tapper tapper;
+	protected final Swiper swiper;
+	protected final Tapper tapper;
 	protected final Waiter waiter;
 	protected final Setter setter;
 	protected final Getter getter;
@@ -72,7 +72,7 @@ public class Solo {
 	protected final Sender sender;
 	protected final ScreenshotTaker screenshotTaker;
 	protected final Instrumentation instrumentation;
-        protected final Zoomer zoomer;
+	protected final Zoomer zoomer;
 	protected String webUrl = null;
 	public final static int LANDSCAPE = ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE;   // 0
 	public final static int PORTRAIT = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT;     // 1
@@ -116,10 +116,10 @@ public class Solo {
 		this.asserter = new Asserter(activityUtils, waiter);
 		this.checker = new Checker(viewFetcher, waiter);
 		this.clicker = new Clicker(activityUtils, viewFetcher,sender, instrumentation, sleeper, waiter, webUtils);
-                this.zoomer = new Zoomer(instrumentation);
-                this.swiper = new Swiper(instrumentation);
-                this.tapper =  new Tapper(instrumentation);
-                this.rotator = new Rotator(instrumentation);
+		this.zoomer = new Zoomer(instrumentation);
+		this.swiper = new Swiper(instrumentation);
+		this.tapper =  new Tapper(instrumentation);
+		this.rotator = new Rotator(instrumentation);
 		this.presser = new Presser(clicker, instrumentation, sleeper, waiter);
 		this.textEnterer = new TextEnterer(instrumentation, activityUtils, clicker);
 	}
@@ -563,71 +563,6 @@ public class Solo {
 		return searcher.searchWithTimeoutFor(TextView.class, text, minimumNumberOfMatches, scroll, onlyVisible);
 	}
 
-        /**
-         * Zooms in if startPoint1 < endPoint1 and startPoint2 < endPoint2<br>
-         * Zooms out if startPoint1 > endPoint1 and startPoint2 > endPoint2<br>
-         * 
-         * @param startPoint1 First "finger" down on the screen.
-         * @param startPoint2 Second "finger" down on the screen.
-         * @param endPoint1 Corresponding ending point of startPoint1.
-         * @param endPoint2 Corresponding ending point of startPoint2.
-        */
-	public void zoom(PointF startPoint1, PointF startPoint2, PointF endPoint1, PointF endPoint2)
-        {
-            zoomer.generateZoomGesture(startPoint1, startPoint2, endPoint1, endPoint2);
-        }
-
-    /**
-     * Swipes with two fingers in linear path determined by starting and ending points.<br>
-     * Swipes left with two fingers if startPoint1.x < endPoint1.x, startPoint2.x < endPoint2.x, startPoint1.y == endPoint1.y, and startPoint2.y == endPoint2.y<br>
-     * Swipes right with two fingers if startPoint1.x > endPoint1.x, startPoint2.x > endPoint2.x, startPoint1.y == endPoint1.y, and startPoint2.y == endPoint2.y<br>
-     * Swipes down with two fingers if startPoint1.x == endPoint1.x, startPoint2.x == endPoint2.x, startPoint1.y > endPoint1.y, and startPoint2.y > endPoint2.y<br>
-     * Swipes up with two fingers if startPoint1.x == endPoint1.x, startPoint2.x == endPoint2.x, startPoint1.y < endPoint1.y, and startPoint2.y < endPoint2.y<br>
-     * 
-     * @param startPoint1 First "finger" down on the screen.
-     * @param startPoint2 Second "finger" down on the screen.
-     * @param endPoint1 Corresponding ending point of startPoint1
-     * @param endPoint2 Corresponding ending point of startPoint2
-     */
-    public void swipe(PointF startPoint1, PointF startPoint2, PointF endPoint1,
-            PointF endPoint2)
-    {
-        swiper.generateSwipeGesture(startPoint1, startPoint2, endPoint1,
-                endPoint2);
-    }
-
-    /**
-     * Draws two semi-circles at the specified centers. Both circles are larger than smallRotate()
-     * 
-     * @param center1 Center of semi-circle drawn from [0, Pi]
-     * @param center2 Center of semi-circle drawn from [Pi, 3*Pi]
-     */
-    public void largeRotate(PointF center1, PointF center2)
-    {
-        rotator.generateRotateGesture(Rotator.LARGE, center1, center2);
-    }
-    
-    /**
-     * Draws two semi-circles at the specified centers. Both circles are smaller than largeRotate()
-     * 
-     * @param center1 Center of semi-circle drawn from [0, Pi]
-     * @param center2 Center of semi-circle drawn from [Pi, 3*Pi]
-     */	
-    public void smallRotate(PointF center1, PointF center2)
-    {
-        rotator.generateRotateGesture(Rotator.SMALL, center1, center2);
-    }
-
-    /**
-     * Rapidly taps on a point twice.
-     * 
-     * @param point The location to be tapped.
-     */
-    public void doubleTap(PointF point)
-    {
-        tapper.generateTapGesture(2, point);
-    }
-
 	/**
 	 * Sets the Orientation (Landscape/Portrait) for the current Activity.
 	 * 
@@ -635,7 +570,7 @@ public class Solo {
 	 * <code>Solo.</code>{@link #PORTRAIT} for portrait.
 	 *
 	 */
-	
+
 	public void setActivityOrientation(int orientation)
 	{
 		activityUtils.setActivityOrientation(orientation);
@@ -750,12 +685,12 @@ public class Solo {
 	 * Simulates pressing the hardware back key.
 	 * 
 	 */
-	
+
 	public void goBack()
 	{
 		sender.goBack();
 	}
-	
+
 	/**
 	 * Clicks the specified coordinates.
 	 *
@@ -763,11 +698,25 @@ public class Solo {
 	 * @param y the y coordinate
 	 *
 	 */
-	
+
 	public void clickOnScreen(float x, float y) {
 		sleeper.sleep();
 		clicker.clickOnScreen(x, y);
 	}
+
+	/**
+	 * Rapidly clicks the specified coordinates a specified number of times. 
+	 *
+	 * @param x the x coordinate
+	 * @param y the y coordinate
+	 * @param numberOfClicks the number of clicks to perform
+	 *
+	 */
+
+	public void clickOnScreen(float x, float y, int numberOfClicks) {
+		tapper.generateTapGesture(numberOfClicks, new PointF(x, y));
+	}
+
 	/**
 	 * Long clicks the specified coordinates.
 	 *
@@ -775,7 +724,7 @@ public class Solo {
 	 * @param y the y coordinate
 	 *
 	 */
-	
+
 	public void clickLongOnScreen(float x, float y) {
 		clicker.clickLongOnScreen(x, y, 0);
 	}
@@ -1442,6 +1391,64 @@ public class Solo {
 			case RIGHT: scroller.scrollViewToSide(view, Scroller.Side.RIGHT); break;
 			case LEFT:  scroller.scrollViewToSide(view, Scroller.Side.LEFT);  break;
 		}
+	}
+	
+	/**
+	 * Zooms in if startPoint1 < endPoint1 and startPoint2 < endPoint2<br>
+	 * Zooms out if startPoint1 > endPoint1 and startPoint2 > endPoint2<br>
+	 * 
+	 * @param startPoint1 First "finger" down on the screen.
+	 * @param startPoint2 Second "finger" down on the screen.
+	 * @param endPoint1 Corresponding ending point of startPoint1.
+	 * @param endPoint2 Corresponding ending point of startPoint2.
+	 */
+	
+	public void pinchToZoom(PointF startPoint1, PointF startPoint2, PointF endPoint1, PointF endPoint2)
+	{
+		zoomer.generateZoomGesture(startPoint1, startPoint2, endPoint1, endPoint2);
+	}
+
+	/**
+	 * Swipes with two fingers in linear path determined by starting and ending points.<br>
+	 * Swipes left with two fingers if startPoint1.x < endPoint1.x, startPoint2.x < endPoint2.x, startPoint1.y == endPoint1.y, and startPoint2.y == endPoint2.y<br>
+	 * Swipes right with two fingers if startPoint1.x > endPoint1.x, startPoint2.x > endPoint2.x, startPoint1.y == endPoint1.y, and startPoint2.y == endPoint2.y<br>
+	 * Swipes down with two fingers if startPoint1.x == endPoint1.x, startPoint2.x == endPoint2.x, startPoint1.y > endPoint1.y, and startPoint2.y > endPoint2.y<br>
+	 * Swipes up with two fingers if startPoint1.x == endPoint1.x, startPoint2.x == endPoint2.x, startPoint1.y < endPoint1.y, and startPoint2.y < endPoint2.y<br>
+	 * 
+	 * @param startPoint1 First "finger" down on the screen.
+	 * @param startPoint2 Second "finger" down on the screen.
+	 * @param endPoint1 Corresponding ending point of startPoint1
+	 * @param endPoint2 Corresponding ending point of startPoint2
+	 */
+
+	public void swipe(PointF startPoint1, PointF startPoint2, PointF endPoint1, PointF endPoint2)
+	{
+		swiper.generateSwipeGesture(startPoint1, startPoint2, endPoint1,
+				endPoint2);
+	}
+
+	/**
+	 * Draws two semi-circles at the specified centers. Both circles are larger than smallRotate()
+	 * 
+	 * @param center1 Center of semi-circle drawn from [0, Pi]
+	 * @param center2 Center of semi-circle drawn from [Pi, 3*Pi]
+	 */
+
+	public void rotateLarge(PointF center1, PointF center2)
+	{
+		rotator.generateRotateGesture(Rotator.LARGE, center1, center2);
+	}
+
+	/**
+	 * Draws two semi-circles at the specified centers. Both circles are smaller than largeRotate()
+	 * 
+	 * @param center1 Center of semi-circle drawn from [0, Pi]
+	 * @param center2 Center of semi-circle drawn from [Pi, 3*Pi]
+	 */	
+	
+	public void rotateSmall(PointF center1, PointF center2)
+	{
+		rotator.generateRotateGesture(Rotator.SMALL, center1, center2);
 	}
 
 	/**

@@ -8,7 +8,7 @@ import android.view.MotionEvent;
 import android.view.MotionEvent.PointerCoords;
 import android.view.MotionEvent.PointerProperties;
 
-public class Swiper
+class Swiper
 {
     private final Instrumentation _instrument;
     public static final int GESTURE_DURATION_MS = 1000;
@@ -19,7 +19,7 @@ public class Swiper
         this._instrument = inst;
     }
 
-    public void generateSwipeGesture(PointF startPoint1, PointF startPoint2,
+	public void generateSwipeGesture(PointF startPoint1, PointF startPoint2,
             PointF endPoint1, PointF endPoint2)
     {
 

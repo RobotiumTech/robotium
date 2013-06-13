@@ -1,20 +1,13 @@
 package com.jayway.android.robotium.solo;
 
-import java.util.ArrayList;
-import junit.framework.Assert;
 import android.app.Instrumentation;
 import android.os.SystemClock;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.MotionEvent.PointerProperties;
 import android.view.MotionEvent.PointerCoords;
-import android.view.View;
-import android.webkit.WebView;
-import android.widget.AbsListView;
-import android.widget.GridView;
-import android.widget.ListView;
-import android.widget.ScrollView;
 import android.graphics.PointF;
+
 
 class Zoomer {
 	
