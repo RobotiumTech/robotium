@@ -150,16 +150,16 @@ class WebUtils {
 	 */
 
 	private WebChromeClient getCurrentWebChromeClient(){
-		WebChromeClient originalWebChromeClient = null;
+		WebChromeClient currentWebChromeClient = null;
 		Object currentWebView = null;
 		if (android.os.Build.VERSION.SDK_INT >= 16) {
 			currentWebView = new Reflect(viewFetcher.getFreshestView(viewFetcher.getCurrentViews(WebView.class))).field("mProvider").out(Object.class);
 		}
 
 		Object mCallbackProxy = new Reflect(currentWebView).field("mCallbackProxy").out(Object.class);
-		originalWebChromeClient = new Reflect(mCallbackProxy).field("mWebChromeClient").out(WebChromeClient.class);
+		currentWebChromeClient = new Reflect(mCallbackProxy).field("mWebChromeClient").out(WebChromeClient.class);
 		
-		return originalWebChromeClient;
+		return currentWebChromeClient;
 	}
 
 	/**
