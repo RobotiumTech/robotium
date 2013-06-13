@@ -6,6 +6,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import android.app.Instrumentation;
+import android.webkit.WebChromeClient;
 import android.webkit.WebView;
 import android.widget.TextView;
 
@@ -25,6 +26,7 @@ class WebUtils {
 	private ActivityUtils activityUtils;
 	RobotiumWebClient robotiumWebCLient;
 	WebElementCreator webElementCreator;
+	WebChromeClient originalWebChromeClient = null;
 
 
 	/**
@@ -43,7 +45,6 @@ class WebUtils {
 		webElementCreator = new WebElementCreator(sleeper);
 		robotiumWebCLient = new RobotiumWebClient(instrumentation, webElementCreator);
 	}
-
 
 	/**
 	 * Returns {@code TextView} objects based on web elements shown in the present WebViews
@@ -130,8 +131,35 @@ class WebUtils {
 
 	private String prepareForStartOfJavascriptExecution(){
 		webElementCreator.prepareForStart();
-		robotiumWebCLient.enableJavascriptAndSetRobotiumWebClient(viewFetcher.getCurrentViews(WebView.class));
+
+		WebChromeClient currentWebChromeClient = getCurrentWebChromeClient();
+
+		if(!currentWebChromeClient.getClass().isAssignableFrom(RobotiumWebClient.class)){
+			originalWebChromeClient = getCurrentWebChromeClient();	
+		}
+
+		robotiumWebCLient.enableJavascriptAndSetRobotiumWebClient(viewFetcher.getCurrentViews(WebView.class), originalWebChromeClient);
 		return getJavaScriptAsString();
+	}
+	
+	/**
+	 * Returns the current WebChromeClient through reflection
+	 * 
+	 * @return the current WebChromeClient
+	 * 
+	 */
+
+	private WebChromeClient getCurrentWebChromeClient(){
+		WebChromeClient originalWebChromeClient = null;
+		Object currentWebView = null;
+		if (android.os.Build.VERSION.SDK_INT >= 16) {
+			currentWebView = new Reflect(viewFetcher.getFreshestView(viewFetcher.getCurrentViews(WebView.class))).field("mProvider").out(Object.class);
+		}
+
+		Object mCallbackProxy = new Reflect(currentWebView).field("mCallbackProxy").out(Object.class);
+		originalWebChromeClient = new Reflect(mCallbackProxy).field("mWebChromeClient").out(WebChromeClient.class);
+		
+		return originalWebChromeClient;
 	}
 
 	/**

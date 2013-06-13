@@ -125,10 +125,10 @@ class WebElementCreator {
 		int width = 0;
 		int height = 0;
 		try{
-			x = Integer.valueOf(data[5]);
-			y = Integer.valueOf(data[6]);
-			width = Integer.valueOf(data[7]);
-			height = Integer.valueOf(data[8]);
+			x = Math.round(Float.valueOf(data[5]));
+			y = Math.round(Float.valueOf(data[6]));
+			width = Math.round(Float.valueOf(data[7]));
+			height = Math.round(Float.valueOf(data[8]));
 		}catch(Exception ignored){}
 
 		WebElement webElement = null;
