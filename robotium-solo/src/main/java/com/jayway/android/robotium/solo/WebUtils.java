@@ -134,7 +134,7 @@ class WebUtils {
 
 		WebChromeClient currentWebChromeClient = getCurrentWebChromeClient();
 
-		if(!currentWebChromeClient.getClass().isAssignableFrom(RobotiumWebClient.class)){
+		if(currentWebChromeClient != null && !currentWebChromeClient.getClass().isAssignableFrom(RobotiumWebClient.class)){
 			originalWebChromeClient = getCurrentWebChromeClient();	
 		}
 
@@ -152,13 +152,18 @@ class WebUtils {
 	private WebChromeClient getCurrentWebChromeClient(){
 		WebChromeClient currentWebChromeClient = null;
 		Object currentWebView = null;
+
 		if (android.os.Build.VERSION.SDK_INT >= 16) {
-			currentWebView = new Reflect(viewFetcher.getFreshestView(viewFetcher.getCurrentViews(WebView.class))).field("mProvider").out(Object.class);
+			try{
+				currentWebView = new Reflect(viewFetcher.getFreshestView(viewFetcher.getCurrentViews(WebView.class))).field("mProvider").out(Object.class);
+			}catch(IllegalArgumentException ignored) {}
 		}
 
-		Object mCallbackProxy = new Reflect(currentWebView).field("mCallbackProxy").out(Object.class);
-		currentWebChromeClient = new Reflect(mCallbackProxy).field("mWebChromeClient").out(WebChromeClient.class);
-		
+		try{
+			Object mCallbackProxy = new Reflect(currentWebView).field("mCallbackProxy").out(Object.class);
+			currentWebChromeClient = new Reflect(mCallbackProxy).field("mWebChromeClient").out(WebChromeClient.class);
+		}catch(Exception ignored){}
+
 		return currentWebChromeClient;
 	}
 
