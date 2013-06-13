@@ -16,16 +16,6 @@ import android.widget.ListView;
 import android.widget.ScrollView;
 import android.graphics.PointF;
 
-
-/**
- * Contains zoom method.
- *
- * @author longchuan, stackoverflow.com
- * @author Renas Reda, renasreda@gmail.com
- * @author sdicken, sdicken@lexmark.com
- * @author jmayol, jmayol@lexmark.com
- */
-
 class Zoomer {
 	
 	private final Instrumentation _instrument;
