@@ -7,6 +7,7 @@ import junit.framework.Assert;
 import android.app.Activity;
 import android.app.Instrumentation;
 import android.content.pm.ActivityInfo;
+import android.graphics.PointF;
 import android.opengl.GLSurfaceView;
 import android.opengl.GLSurfaceView.Renderer;
 import android.os.SystemClock;
@@ -68,6 +69,7 @@ public class Solo {
 	protected final Sender sender;
 	protected final ScreenshotTaker screenshotTaker;
 	protected final Instrumentation instrumentation;
+        protected final Zoomer zoomer;
 	protected String webUrl = null;
 	public final static int LANDSCAPE = ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE;   // 0
 	public final static int PORTRAIT = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT;     // 1
@@ -111,6 +113,7 @@ public class Solo {
 		this.asserter = new Asserter(activityUtils, waiter);
 		this.checker = new Checker(viewFetcher, waiter);
 		this.clicker = new Clicker(activityUtils, viewFetcher,sender, instrumentation, sleeper, waiter, webUtils);
+                this.zoomer = new Zoomer(instrumentation);
 		this.presser = new Presser(clicker, instrumentation, sleeper, waiter);
 		this.textEnterer = new TextEnterer(instrumentation, activityUtils, clicker);
 	}
@@ -553,6 +556,20 @@ public class Solo {
 	public boolean searchText(String text, int minimumNumberOfMatches, boolean scroll, boolean onlyVisible) {
 		return searcher.searchWithTimeoutFor(TextView.class, text, minimumNumberOfMatches, scroll, onlyVisible);
 	}
+
+        /**
+         * Zooms in if startPoint1 < endPoint1 and startPoint2 < endPoint2<br>
+         * Zooms out if startPoint1 > endPoint1 and startPoint2 > endPoint2<br>
+         * 
+         * @param startPoint1 First "finger" down on the screen.
+         * @param startPoint2 Second "finger" down on the screen.
+         * @param endPoint1 Corresponding ending point of startPoint1.
+         * @param endPoint2 Corresponding ending point of startPoint2.
+        */
+	public void zoom(PointF startPoint1, PointF startPoint2, PointF endPoint1, PointF endPoint2)
+        {
+            zoomer.generateZoomGesture(startPoint1, startPoint2, endPoint1, endPoint2);
+        }
 
 	/**
 	 * Sets the Orientation (Landscape/Portrait) for the current Activity.
