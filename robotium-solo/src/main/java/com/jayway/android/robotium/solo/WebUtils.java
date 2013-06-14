@@ -151,11 +151,12 @@ class WebUtils {
 
 	private WebChromeClient getCurrentWebChromeClient(){
 		WebChromeClient currentWebChromeClient = null;
-		Object currentWebView = null;
+
+		Object currentWebView = viewFetcher.getFreshestView(viewFetcher.getCurrentViews(WebView.class));
 
 		if (android.os.Build.VERSION.SDK_INT >= 16) {
 			try{
-				currentWebView = new Reflect(viewFetcher.getFreshestView(viewFetcher.getCurrentViews(WebView.class))).field("mProvider").out(Object.class);
+				currentWebView = new Reflect(currentWebView).field("mProvider").out(Object.class);
 			}catch(IllegalArgumentException ignored) {}
 		}
 
