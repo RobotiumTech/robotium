@@ -251,6 +251,49 @@ public class Solo {
 	public boolean waitForText(String text, int minimumNumberOfMatches, long timeout, boolean scroll, boolean onlyVisible) {
 		return (waiter.waitForText(text, minimumNumberOfMatches, timeout, scroll, onlyVisible, true) != null);
     }
+
+	/**
+	 * Waits for a View matching the specified resource id. Default timeout is 20 seconds. 
+	 * 
+	 * @param id the R.id of the {@link View} to wait for
+	 * @return {@code true} if the {@link View} is displayed and {@code false} if it is not displayed before the timeout
+	 */
+	
+	public boolean waitForView(int id){
+		return waitForView(id, 0, LARGE_TIMEOUT, true);
+	}
+	
+	/**
+	 * Waits for a View matching the specified resource id. 
+	 * 
+	 * @param id the R.id of the {@link View} to wait for
+	 * @param minimumNumberOfMatches the minimum number of matches that are expected to be found. {@code 0} means any number of matches
+	 * @param timeout the amount of time in milliseconds to wait
+	 * @return {@code true} if the {@link View} is displayed and {@code false} if it is not displayed before the timeout
+	 */
+
+	public boolean waitForView(int id, int minimumNumberOfMatches, int timeout){
+		return waitForView(id, minimumNumberOfMatches, timeout, true);
+	}
+	
+	/**
+	 * Waits for a View matching the specified resource id. 
+	 * 
+	 * @param id the R.id of the {@link View} to wait for
+	 * @param minimumNumberOfMatches the minimum number of matches that are expected to be found. {@code 0} means any number of matches
+	 * @param timeout the amount of time in milliseconds to wait
+	 * @param scroll {@code true} if scrolling should be performed
+	 * @return {@code true} if the {@link View} is displayed and {@code false} if it is not displayed before the timeout
+	 */
+
+	public boolean waitForView(int id, int minimumNumberOfMatches, int timeout, boolean scroll){
+		int index = minimumNumberOfMatches-1;
+
+		if(index < 1)
+			index = 0;
+
+		return (waiter.waitForView(id, index, timeout, scroll) != null);
+	}
 	
 	/**
 	 * Waits for a View matching the specified class. Default timeout is 20 seconds. 

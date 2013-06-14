@@ -266,7 +266,7 @@ class Waiter {
 		}
 		return false;
 	}
-
+	
 	/**
 	 * Waits for a certain view.
 	 * 
@@ -276,8 +276,20 @@ class Waiter {
 	 */
 
 	public View waitForView(int id, int index){
-		ArrayList<View> viewsMatchingId = new ArrayList<View>();
-		long endTime = SystemClock.uptimeMillis() + SMALL_TIMEOUT;
+		return waitForView(id, index, SMALL_TIMEOUT, false);
+	}
+
+	/**
+	 * Waits for a certain view.
+	 * 
+	 * @param view the id of the view to wait for
+	 * @param index the index of the {@link View}. {@code 0} if only one is available
+	 * @return {@code true} if view is shown and {@code false} if it is not shown before the timeout
+	 */
+
+	public View waitForView(int id, int index, int timeout, boolean scroll){
+		Set<View> uniqueViewsMatchingId = new HashSet<View>();
+		long endTime = SystemClock.uptimeMillis() + timeout;
 
 		while (SystemClock.uptimeMillis() <= endTime) {
 			sleeper.sleep();
@@ -286,14 +298,15 @@ class Waiter {
 				Integer idOfView = Integer.valueOf(view.getId());
 
 				if (idOfView.equals(id)) {
-					viewsMatchingId.add(view);
+					uniqueViewsMatchingId.add(view);
 
-					if(viewsMatchingId.size() > index) {
-						return viewsMatchingId.get(index);
+					if(uniqueViewsMatchingId.size() > index) {
+						return view;
 					}
 				}
 			}
-			viewsMatchingId.clear();
+			if(scroll) 
+				scroller.scroll(Scroller.DOWN);
 		}
 		return null;
 	}
