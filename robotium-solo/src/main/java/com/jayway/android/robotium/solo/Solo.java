@@ -112,7 +112,7 @@ public class Solo {
 		this.searcher = new Searcher(viewFetcher, webUtils, scroller, sleeper);
 		this.waiter = new Waiter(activityUtils, viewFetcher, searcher,scroller, sleeper);
 		this.setter = new Setter(activityUtils);
-		this.getter = new Getter(activityUtils, waiter);
+		this.getter = new Getter(instrumentation, activityUtils, waiter);
 		this.asserter = new Asserter(activityUtils, waiter);
 		this.checker = new Checker(viewFetcher, waiter);
 		this.clicker = new Clicker(activityUtils, viewFetcher,sender, instrumentation, sleeper, waiter, webUtils);
@@ -1926,6 +1926,40 @@ public class Solo {
 		}
 		return viewToReturn;
 	}
+	
+	/**
+	 * Returns a View matching the specified resource id. 
+	 * 
+	 * @param id the id of the {@link View} to return
+	 * @return a {@link View} matching the specified id
+	 */
+
+	public View getView(String id){
+		return getter.getView(id, 0);
+	}
+	
+	/**
+	 * Returns a View matching the specified resource id and index. 
+	 * 
+	 * @param id the id of the {@link View} to return
+	 * @param index the index of the {@link View}. {@code 0} if only one is available
+	 * @return a {@link View} matching the specified id and index
+	 */
+
+	public View getView(String id, int index){
+		View viewToReturn = getter.getView(id, index);
+
+		if(viewToReturn == null) {
+			int match = index + 1;
+			if(match > 1){
+				Assert.assertTrue(match + " Views with id: '" + id + "' are not found!", false);
+			}
+			else {
+				Assert.assertTrue("View with id: '" + id + "' is not found!", false);
+			}
+		}
+		return viewToReturn;
+	}
 
 	/**
 	 * Returns a View matching the specified class and index. 
@@ -2499,6 +2533,7 @@ public class Solo {
 			String value = (String) method.invoke(null, property);
 			return Integer.parseInt(value);
 		} catch (Exception e) {
+			e.printStackTrace();
 			return defaultValue;
 		}
 	}

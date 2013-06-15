@@ -2,6 +2,8 @@ package com.jayway.android.robotium.solo;
 
 import junit.framework.Assert;
 import android.app.Activity;
+import android.app.Instrumentation;
+import android.content.Context;
 import android.view.View;
 import android.widget.TextView;
 
@@ -16,6 +18,7 @@ import android.widget.TextView;
 
 class Getter {
 
+	private final Instrumentation instrumentation;
 	private final ActivityUtils activityUtils;
 	private final Waiter waiter;
 
@@ -27,7 +30,8 @@ class Getter {
 	 * @param waiter the {@code Waiter} instance
 	 */
 
-	public Getter(ActivityUtils activityUtils, Waiter waiter){
+	public Getter(Instrumentation instrumentation, ActivityUtils activityUtils, Waiter waiter){
+		this.instrumentation = instrumentation;
 		this.activityUtils = activityUtils;
 		this.waiter = waiter;
 	}
@@ -86,5 +90,20 @@ class Getter {
 		}
 
 		return waiter.waitForView(id, index);
+	}
+	
+	/**
+	 * Returns a {@code View} with a given id.
+	 * 
+	 * @param id the id of the {@link View} to return
+	 * @param index the index of the {@link View}. {@code 0} if only one is available
+	 * @return a {@code View} with a given id
+	 */
+	
+	public View getView(String id, int index){
+		Context targetContext = instrumentation.getTargetContext(); 
+		String packageName = targetContext.getPackageName(); 
+		int viewId = targetContext.getResources().getIdentifier(id, "id", packageName);
+		return getView(viewId, index); 
 	}
 }

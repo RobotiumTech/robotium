@@ -215,7 +215,6 @@ class Waiter {
 	 * Waits for a given view. Default timeout is 20 seconds.
 	 * 
 	 * @param view the view to wait for
-	 * 
 	 * @return {@code true} if view is shown and {@code false} if it is not shown before the timeout
 	 */
 
@@ -228,7 +227,6 @@ class Waiter {
 	 * 
 	 * @param view the view to wait for
 	 * @param timeout the amount of time in milliseconds to wait
-	 * 
 	 * @return {@code true} if view is shown and {@code false} if it is not shown before the timeout
 	 */
 
@@ -242,7 +240,6 @@ class Waiter {
 	 * @param view the view to wait for
 	 * @param timeout the amount of time in milliseconds to wait
 	 * @param scroll {@code true} if scrolling should be performed
-	 * 
 	 * @return {@code true} if view is shown and {@code false} if it is not shown before the timeout
 	 */
 
@@ -272,7 +269,7 @@ class Waiter {
 	 * 
 	 * @param view the id of the view to wait for
 	 * @param index the index of the {@link View}. {@code 0} if only one is available
-	 * @return {@code true} if view is shown and {@code false} if it is not shown before the timeout
+	 * @return the specified View
 	 */
 
 	public View waitForView(int id, int index){
@@ -284,7 +281,7 @@ class Waiter {
 	 * 
 	 * @param view the id of the view to wait for
 	 * @param index the index of the {@link View}. {@code 0} if only one is available
-	 * @return {@code true} if view is shown and {@code false} if it is not shown before the timeout
+	 * @return the specified View
 	 */
 
 	public View waitForView(int id, int index, int timeout, boolean scroll){
@@ -478,7 +475,7 @@ class Waiter {
 	 * 
 	 * @param index the index of the view
 	 * @param classToFilterby the class to filter
-	 * @return view
+	 * @return the specified View
 	 */
 
 	public <T extends View> T waitForAndGetView(int index, Class<T> classToFilterBy){
