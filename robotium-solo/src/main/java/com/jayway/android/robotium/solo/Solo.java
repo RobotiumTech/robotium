@@ -2536,7 +2536,7 @@ public class Solo {
 	 */
 
 	@SuppressWarnings({ "rawtypes", "unchecked" })
-	protected static int initializeTimeout(String property, int defaultValue) {
+	private static int initializeTimeout(String property, int defaultValue) {
 		try {
 			Class clazz = Class.forName("android.os.SystemProperties");
 			Method method = clazz.getDeclaredMethod("get", String.class);
