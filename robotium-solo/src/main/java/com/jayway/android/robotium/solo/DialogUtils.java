@@ -1,6 +1,10 @@
 package com.jayway.android.robotium.solo;
 
+import android.app.Activity;
+import android.content.Context;
 import android.os.SystemClock;
+import android.view.ContextThemeWrapper;
+import android.view.View;
 
 
 /**
@@ -12,19 +16,19 @@ import android.os.SystemClock;
 
 class DialogUtils {
 
+	private final ActivityUtils activityUtils;
 	private final ViewFetcher viewFetcher;
-	private final Sleeper sleeper;
 
 	/**
 	 * Constructs this object.
 	 * 
+	 * @param activityUtils the {@code ActivityUtils} instance.
 	 * @param viewFetcher the {@code ViewFetcher} instance.
-	 * @param sleeper the {@code Sleeper} instance.
 	 */
 
-	public DialogUtils(ViewFetcher viewFetcher, Sleeper sleeper) {
+	public DialogUtils(ActivityUtils activityUtils, ViewFetcher viewFetcher) {
+		this.activityUtils = activityUtils;
 		this.viewFetcher = viewFetcher;
-		this.sleeper = sleeper;
 	}
 
 
@@ -36,19 +40,15 @@ class DialogUtils {
 	 */
 
 	public boolean waitForDialogToClose(long timeout) {
-		int elementsBefore = viewFetcher.getWindowDecorViews().length;
 		final long endTime = SystemClock.uptimeMillis() + timeout;
 
 		while (SystemClock.uptimeMillis() < endTime) {
 
-			int elementsNow = viewFetcher.getWindowDecorViews().length;
-			if(elementsBefore < elementsNow){
-				elementsBefore = elementsNow;
-			}
-			if(elementsBefore > elementsNow)
-				return true;
+			boolean dialogIsOpen = isDialogOpen();
 
-			sleeper.sleep(10);
+			if(!dialogIsOpen){
+				return true;
+			}
 		}
 		return false;
 	}
@@ -61,21 +61,37 @@ class DialogUtils {
 	 */
 
 	public boolean waitForDialogToOpen(long timeout) {
-		int elementsBefore = viewFetcher.getWindowDecorViews().length;
 		final long endTime = SystemClock.uptimeMillis() + timeout;
 
 		while (SystemClock.uptimeMillis() < endTime) {
 
-			int elementsNow = viewFetcher.getWindowDecorViews().length;
+			boolean dialogIsOpen = isDialogOpen();
 
-			if(elementsBefore < elementsNow){
+			if(dialogIsOpen){
 				return true;
 			}
-			sleeper.sleep(10);
 		}
 		return false;
 	}
 
+	/**
+	 * Checks if a dialog is open. 
+	 * 
+	 * @return true if dialog is open
+	 */
+	
+	private boolean isDialogOpen(){
+		final Activity activity = activityUtils.getCurrentActivity();
+		final View view = viewFetcher.getRecentDecorView(viewFetcher.getWindowDecorViews());
+		Context viewContext = view.getContext();
 
-
+		if (viewContext instanceof ContextThemeWrapper) {
+			ContextThemeWrapper ctw = (ContextThemeWrapper) viewContext;
+			viewContext = ctw.getBaseContext();
+		}
+		
+		Context activityContext = activity;
+		Context activityBaseContext = activity.getBaseContext();
+		return (activityContext.equals(viewContext) || activityBaseContext.equals(viewContext)) && (view != activity.getWindow().getDecorView());
+	}
 }
