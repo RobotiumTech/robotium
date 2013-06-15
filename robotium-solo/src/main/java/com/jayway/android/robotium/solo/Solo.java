@@ -748,7 +748,7 @@ public class Solo {
 	}
 
 	/**
-	 * Clicks the specified coordinates rapidly a specified number of times. 
+	 * Clicks the specified coordinates rapidly a specified number of times. Requires API level >= 14.
 	 *
 	 * @param x the x coordinate
 	 * @param y the y coordinate
@@ -757,6 +757,9 @@ public class Solo {
 	 */
 
 	public void clickOnScreen(float x, float y, int numberOfClicks) {
+		if (android.os.Build.VERSION.SDK_INT < 14){
+			Assert.assertTrue("clickOnScreen(float x, float y, int numberOfClicks) requires API level >= 14", false);
+		}
 		tapper.generateTapGesture(numberOfClicks, new PointF(x, y));
 	}
 
@@ -1437,21 +1440,24 @@ public class Solo {
 	}
 	
 	/**
-	 * Zooms in or out if startPoint1 and startPoint2 are larger or smaller then endPoint1 and endPoint2.
+	 * Zooms in or out if startPoint1 and startPoint2 are larger or smaller then endPoint1 and endPoint2. Requires API level >= 14.
 	 * 
 	 * @param startPoint1 First "finger" down on the screen.
 	 * @param startPoint2 Second "finger" down on the screen.
 	 * @param endPoint1 Corresponding ending point of startPoint1.
 	 * @param endPoint2 Corresponding ending point of startPoint2.
 	 */
-	
+
 	public void pinchToZoom(PointF startPoint1, PointF startPoint2, PointF endPoint1, PointF endPoint2)
 	{
+		if (android.os.Build.VERSION.SDK_INT < 14){
+			Assert.assertTrue("pinchToZoom() requires API level >= 14", false);
+		}
 		zoomer.generateZoomGesture(startPoint1, startPoint2, endPoint1, endPoint2);
 	}
 
 	/**
-	 * Swipes with two fingers in linear path determined by starting and ending points.
+	 * Swipes with two fingers in linear path determined by starting and ending points. Requires API level >= 14.
 	 * 
 	 * @param startPoint1 First "finger" down on the screen.
 	 * @param startPoint2 Second "finger" down on the screen.
@@ -1461,12 +1467,15 @@ public class Solo {
 
 	public void swipe(PointF startPoint1, PointF startPoint2, PointF endPoint1, PointF endPoint2)
 	{
+		if (android.os.Build.VERSION.SDK_INT < 14){
+			Assert.assertTrue("swipe() requires API level >= 14", false);
+		}
 		swiper.generateSwipeGesture(startPoint1, startPoint2, endPoint1,
 				endPoint2);
 	}
 
 	/**
-	 * Draws two semi-circles at the specified centers. Both circles are larger than rotateSmall().
+	 * Draws two semi-circles at the specified centers. Both circles are larger than rotateSmall(). Requires API level >= 14.
 	 * 
 	 * @param center1 Center of semi-circle drawn from [0, Pi]
 	 * @param center2 Center of semi-circle drawn from [Pi, 3*Pi]
@@ -1474,11 +1483,14 @@ public class Solo {
 
 	public void rotateLarge(PointF center1, PointF center2)
 	{
+		if (android.os.Build.VERSION.SDK_INT < 14){
+			Assert.assertTrue("rotateLarge() requires API level >= 14", false);
+		}
 		rotator.generateRotateGesture(Rotator.LARGE, center1, center2);
 	}
 
 	/**
-	 * Draws two semi-circles at the specified centers. Both circles are smaller than rotateLarge().
+	 * Draws two semi-circles at the specified centers. Both circles are smaller than rotateLarge(). Requires API level >= 14.
 	 * 
 	 * @param center1 Center of semi-circle drawn from [0, Pi]
 	 * @param center2 Center of semi-circle drawn from [Pi, 3*Pi]
@@ -1486,6 +1498,9 @@ public class Solo {
 	
 	public void rotateSmall(PointF center1, PointF center2)
 	{
+		if (android.os.Build.VERSION.SDK_INT < 14){
+			Assert.assertTrue("rotateSmall() requires API level >= 14", false);
+		}
 		rotator.generateRotateGesture(Rotator.SMALL, center1, center2);
 	}
 
