@@ -748,7 +748,7 @@ public class Solo {
 	}
 
 	/**
-	 * Rapidly clicks the specified coordinates a specified number of times. 
+	 * Clicks the specified coordinates rapidly a specified number of times. 
 	 *
 	 * @param x the x coordinate
 	 * @param y the y coordinate
@@ -1437,8 +1437,7 @@ public class Solo {
 	}
 	
 	/**
-	 * Zooms in if startPoint1 < endPoint1 and startPoint2 < endPoint2<br>
-	 * Zooms out if startPoint1 > endPoint1 and startPoint2 > endPoint2<br>
+	 * Zooms in or out if startPoint1 and startPoint2 are larger or smaller then endPoint1 and endPoint2.
 	 * 
 	 * @param startPoint1 First "finger" down on the screen.
 	 * @param startPoint2 Second "finger" down on the screen.
@@ -1452,11 +1451,7 @@ public class Solo {
 	}
 
 	/**
-	 * Swipes with two fingers in linear path determined by starting and ending points.<br>
-	 * Swipes left with two fingers if startPoint1.x < endPoint1.x, startPoint2.x < endPoint2.x, startPoint1.y == endPoint1.y, and startPoint2.y == endPoint2.y<br>
-	 * Swipes right with two fingers if startPoint1.x > endPoint1.x, startPoint2.x > endPoint2.x, startPoint1.y == endPoint1.y, and startPoint2.y == endPoint2.y<br>
-	 * Swipes down with two fingers if startPoint1.x == endPoint1.x, startPoint2.x == endPoint2.x, startPoint1.y > endPoint1.y, and startPoint2.y > endPoint2.y<br>
-	 * Swipes up with two fingers if startPoint1.x == endPoint1.x, startPoint2.x == endPoint2.x, startPoint1.y < endPoint1.y, and startPoint2.y < endPoint2.y<br>
+	 * Swipes with two fingers in linear path determined by starting and ending points.
 	 * 
 	 * @param startPoint1 First "finger" down on the screen.
 	 * @param startPoint2 Second "finger" down on the screen.
@@ -1471,7 +1466,7 @@ public class Solo {
 	}
 
 	/**
-	 * Draws two semi-circles at the specified centers. Both circles are larger than smallRotate()
+	 * Draws two semi-circles at the specified centers. Both circles are larger than rotateSmall().
 	 * 
 	 * @param center1 Center of semi-circle drawn from [0, Pi]
 	 * @param center2 Center of semi-circle drawn from [Pi, 3*Pi]
@@ -1483,7 +1478,7 @@ public class Solo {
 	}
 
 	/**
-	 * Draws two semi-circles at the specified centers. Both circles are smaller than largeRotate()
+	 * Draws two semi-circles at the specified centers. Both circles are smaller than rotateLarge().
 	 * 
 	 * @param center1 Center of semi-circle drawn from [0, Pi]
 	 * @param center2 Center of semi-circle drawn from [Pi, 3*Pi]
