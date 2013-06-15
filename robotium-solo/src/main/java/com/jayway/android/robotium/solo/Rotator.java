@@ -1,10 +1,8 @@
 package com.jayway.android.robotium.solo;
 
-import junit.framework.Assert;
 import android.app.Instrumentation;
 import android.graphics.PointF;
 import android.os.SystemClock;
-import android.text.AndroidCharacter;
 import android.util.Log;
 import android.view.InputDevice;
 import android.view.MotionEvent;
@@ -25,10 +23,6 @@ class Rotator
 
 	public void generateRotateGesture(int size, PointF center1, PointF center2)
 	{
-		if (android.os.Build.VERSION.SDK_INT < 14){
-			Assert.assertTrue("Only works on API Level >= 14", false);
-		}
-		
 		double incrementFactor = 0;
 		float startX1 = center1.x;
 		float startY1 = center1.y;

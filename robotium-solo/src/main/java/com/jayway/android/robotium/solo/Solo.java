@@ -1457,7 +1457,7 @@ public class Solo {
 	}
 
 	/**
-	 * Swipes with two fingers in linear path determined by starting and ending points. Requires API level >= 14.
+	 * Swipes with two fingers in a linear path determined by starting and ending points. Requires API level >= 14.
 	 * 
 	 * @param startPoint1 First "finger" down on the screen.
 	 * @param startPoint2 Second "finger" down on the screen.
