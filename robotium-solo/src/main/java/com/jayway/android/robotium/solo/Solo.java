@@ -2533,7 +2533,6 @@ public class Solo {
 			String value = (String) method.invoke(null, property);
 			return Integer.parseInt(value);
 		} catch (Exception e) {
-			e.printStackTrace();
 			return defaultValue;
 		}
 	}
