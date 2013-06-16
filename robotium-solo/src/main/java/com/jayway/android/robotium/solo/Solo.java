@@ -2351,28 +2351,39 @@ public class Solo {
 	 * Requires read logs permission (android.permission.READ_LOGS) in AndroidManifest.xml of the application under test.
 	 * 
 	 * @param logMessage the log message to wait for
-	 * 
 	 * @return {@code true} if log message appears and {@code false} if it does not appear before the timeout
+	 * 
+	 * @see clearLog()
 	 */
-	
+
 	public boolean waitForLogMessage(String logMessage){
 		return waiter.waitForLogMessage(logMessage, LARGE_TIMEOUT);
 	}
-	
+
 	/**
 	 * Waits for the specified log message to appear.
 	 * Requires read logs permission (android.permission.READ_LOGS) in AndroidManifest.xml of the application under test.
 	 * 
 	 * @param logMessage the log message to wait for
 	 * @param timeout the amount of time in milliseconds to wait
-	 * 
 	 * @return {@code true} if log message appears and {@code false} if it does not appear before the timeout
+	 * 
+	 * @see clearLog()
 	 */
-	
+
 	public boolean waitForLogMessage(String logMessage, int timeout){
 		return waiter.waitForLogMessage(logMessage, timeout);
 	}
-	
+
+	/**
+	 * Clears the log.
+	 * 
+	 */
+
+	public void clearLog(){
+		waiter.clearLog();
+	}
+
 	/**
 	 * Returns a localized String matching the specified resource id.
 	 * 
@@ -2380,12 +2391,11 @@ public class Solo {
 	 * @return the localized String
 	 *
 	 */
-	
+
 	public String getString(int id)
 	{
 		return activityUtils.getString(id);
 	}
-	
 
 	/**
 	 * Robotium will sleep for the specified time.

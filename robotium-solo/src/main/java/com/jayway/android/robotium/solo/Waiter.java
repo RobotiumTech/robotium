@@ -606,6 +606,19 @@ class Waiter {
 	}
 
 	/**
+	 * Clears the log.
+	 */
+
+	public void clearLog(){
+		Process p = null;
+		try {
+			p = Runtime.getRuntime().exec("logcat -c");
+		}catch(IOException e){
+			e.printStackTrace();
+		}
+	}
+
+	/**
 	 * Destroys the process and closes the BufferedReader.
 	 * 
 	 * @param p the process to destroy
