@@ -13,8 +13,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.view.View;
 import android.widget.TextView;
-import static com.jayway.android.robotium.solo.Solo.LARGE_TIMEOUT;
-import static com.jayway.android.robotium.solo.Solo.SMALL_TIMEOUT;
+
 
 /**
  * Contains various wait methods. Examples are: waitForText(),
@@ -61,7 +60,7 @@ class Waiter {
 	 */
 
 	public boolean waitForActivity(String name){
-		return waitForActivity(name, SMALL_TIMEOUT);
+		return waitForActivity(name, Timeout.getSmallTimeout());
 	}
 
 	/**
@@ -97,7 +96,7 @@ class Waiter {
 	 */
 
 	public boolean waitForActivity(Class<? extends Activity> activityClass){
-		return waitForActivity(activityClass, SMALL_TIMEOUT);
+		return waitForActivity(activityClass, Timeout.getSmallTimeout());
 	}
 
 	/**
@@ -196,7 +195,7 @@ class Waiter {
 	 */
 
 	public <T extends View> boolean  waitForViews(Class<? extends T>... classes) {
-		final long endTime = SystemClock.uptimeMillis() + SMALL_TIMEOUT;
+		final long endTime = SystemClock.uptimeMillis() + Timeout.getSmallTimeout();
 
 		while (SystemClock.uptimeMillis() < endTime) {
 
@@ -219,7 +218,7 @@ class Waiter {
 	 */
 
 	public boolean waitForView(View view){
-		return waitForView(view, LARGE_TIMEOUT, true);
+		return waitForView(view, Timeout.getLargeTimeout(), true);
 	}
 
 	/**
@@ -273,7 +272,7 @@ class Waiter {
 	 */
 
 	public View waitForView(int id, int index){
-		return waitForView(id, index, SMALL_TIMEOUT, false);
+		return waitForView(id, index, Timeout.getSmallTimeout(), false);
 	}
 
 	/**
@@ -373,7 +372,7 @@ class Waiter {
 	 */
 
 	public TextView waitForText(String text) {
-		return waitForText(text, 0, LARGE_TIMEOUT, true);
+		return waitForText(text, 0, Timeout.getLargeTimeout(), true);
 	}
 
 	/**
@@ -479,7 +478,7 @@ class Waiter {
 	 */
 
 	public <T extends View> T waitForAndGetView(int index, Class<T> classToFilterBy){
-		long endTime = SystemClock.uptimeMillis() + SMALL_TIMEOUT;
+		long endTime = SystemClock.uptimeMillis() + Timeout.getSmallTimeout();
 		while (SystemClock.uptimeMillis() <= endTime && !waitForView(classToFilterBy, index, true, true));
 		int numberOfUniqueViews = searcher.getNumberOfUniqueViews();
 		ArrayList<T> views = RobotiumUtils.removeInvisibleViews(viewFetcher.getCurrentViews(classToFilterBy));

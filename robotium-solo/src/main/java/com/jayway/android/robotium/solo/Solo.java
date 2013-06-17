@@ -1,6 +1,5 @@
 package com.jayway.android.robotium.solo;
 
-import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.concurrent.CountDownLatch;
 import junit.framework.Assert;
@@ -85,9 +84,7 @@ public class Solo {
 	public final static int DELETE = KeyEvent.KEYCODE_DEL;
 	public final static int CLOSED = 0;
 	public final static int OPENED = 1;
-	public enum Timeout {LARGE_TIMEOUT, SMALL_TIMEOUT}
-	static int LARGE_TIMEOUT;
-	static int SMALL_TIMEOUT;
+
 
 
 	/**
@@ -260,7 +257,7 @@ public class Solo {
 	 */
 	
 	public boolean waitForView(int id){
-		return waitForView(id, 0, LARGE_TIMEOUT, true);
+		return waitForView(id, 0, Timeout.getLargeTimeout(), true);
 	}
 	
 	/**
@@ -304,7 +301,7 @@ public class Solo {
 	
 	public <T extends View> boolean waitForView(final Class<T> viewClass){
 		
-		return waiter.waitForView(viewClass, 0, LARGE_TIMEOUT, true);
+		return waiter.waitForView(viewClass, 0, Timeout.getLargeTimeout(), true);
 	}
 	
 	/**
@@ -381,7 +378,7 @@ public class Solo {
 	 */
 	
 	public boolean waitForWebElement(By by){
-		return (waiter.waitForWebElement(by, 0, LARGE_TIMEOUT, true) != null);
+		return (waiter.waitForWebElement(by, 0, Timeout.getLargeTimeout(), true) != null);
 	}
 	
 	/**
@@ -947,7 +944,7 @@ public class Solo {
 	 */
 	
 	public void clickOnView(View view) {
-		waiter.waitForView(view, SMALL_TIMEOUT);
+		waiter.waitForView(view, Timeout.getSmallTimeout());
 		clicker.clickOnScreen(view);
 	}
 	
@@ -962,7 +959,7 @@ public class Solo {
 		if(immediately)
 			clicker.clickOnScreen(view);
 		else{
-			waiter.waitForView(view, SMALL_TIMEOUT);
+			waiter.waitForView(view, Timeout.getSmallTimeout());
 			clicker.clickOnScreen(view);
 		}
 	}
@@ -975,7 +972,7 @@ public class Solo {
 	 */
 	
 	public void clickLongOnView(View view) {
-		waiter.waitForView(view, SMALL_TIMEOUT);
+		waiter.waitForView(view, Timeout.getSmallTimeout());
 		clicker.clickOnScreen(view, true, 0);
 
 	}	
@@ -1529,7 +1526,7 @@ public class Solo {
 	 */
 	
 	public void setDatePicker(DatePicker datePicker, int year, int monthOfYear, int dayOfMonth) {
-		waiter.waitForView(datePicker, SMALL_TIMEOUT);
+		waiter.waitForView(datePicker, Timeout.getSmallTimeout());
 		setter.setDatePicker(datePicker, year, monthOfYear, dayOfMonth);
 	}
 	
@@ -1556,7 +1553,7 @@ public class Solo {
 	 */
 
 	public void setTimePicker(TimePicker timePicker, int hour, int minute) {
-		waiter.waitForView(timePicker, SMALL_TIMEOUT);
+		waiter.waitForView(timePicker, Timeout.getSmallTimeout());
 		setter.setTimePicker(timePicker, hour, minute);
 	}
 	
@@ -1582,7 +1579,7 @@ public class Solo {
 	 */
 
 	public void setProgressBar(ProgressBar progressBar, int progress){
-		waiter.waitForView(progressBar, SMALL_TIMEOUT);
+		waiter.waitForView(progressBar, Timeout.getSmallTimeout());
 		setter.setProgressBar(progressBar, progress);
 	}
 	
@@ -1607,7 +1604,7 @@ public class Solo {
 	 */
 
 	public void setSlidingDrawer(SlidingDrawer slidingDrawer, int status){
-		waiter.waitForView(slidingDrawer, SMALL_TIMEOUT);
+		waiter.waitForView(slidingDrawer, Timeout.getSmallTimeout());
 		setter.setSlidingDrawer(slidingDrawer, status);
 	}
 
@@ -1634,7 +1631,7 @@ public class Solo {
 	 */
 	
 	public void enterText(EditText editText, String text) {
-		waiter.waitForView(editText, SMALL_TIMEOUT);
+		waiter.waitForView(editText, Timeout.getSmallTimeout());
 		textEnterer.setEditText(editText, text);		
 	}
 	
@@ -1647,7 +1644,7 @@ public class Solo {
 	 */
 
 	public void enterTextInWebElement(By by, String text){
-		if(waiter.waitForWebElement(by, 0, SMALL_TIMEOUT, false) == null) {
+		if(waiter.waitForWebElement(by, 0, Timeout.getSmallTimeout(), false) == null) {
 			Assert.assertTrue("WebElement with " + webUtils.splitNameByUpperCase(by.getClass().getSimpleName()) + ": '" + by.getValue() + "' is not found!", false);
 		}
 		webUtils.enterTextIntoWebElement(by, text);
@@ -1674,7 +1671,7 @@ public class Solo {
 	 */
 	
 	public void typeText(EditText editText, String text) {
-		waiter.waitForView(editText, SMALL_TIMEOUT);
+		waiter.waitForView(editText, Timeout.getSmallTimeout());
 		textEnterer.typeText(editText, text);		
 	}
 	
@@ -1741,7 +1738,7 @@ public class Solo {
      */
 	
     public void clearEditText(EditText editText) {
-    	waiter.waitForView(editText, SMALL_TIMEOUT);
+    	waiter.waitForView(editText, Timeout.getSmallTimeout());
     	textEnterer.setEditText(editText, "");	
     }
     
@@ -1993,7 +1990,7 @@ public class Solo {
 
 	public WebElement getWebElement(By by, int index){
 		int match = index + 1;
-		WebElement webElement = waiter.waitForWebElement(by, match, SMALL_TIMEOUT, true);
+		WebElement webElement = waiter.waitForWebElement(by, match, Timeout.getSmallTimeout(), true);
 
 		if(webElement == null) {
 			if(match > 1){
@@ -2252,7 +2249,7 @@ public class Solo {
 	 */
 
 	public boolean waitForActivity(String name){
-		return waiter.waitForActivity(name, LARGE_TIMEOUT);
+		return waiter.waitForActivity(name, Timeout.getLargeTimeout());
 	}
 
 	/**
@@ -2278,7 +2275,7 @@ public class Solo {
      */
 
     public boolean waitForActivity(Class<? extends Activity> activityClass){
-        return waiter.waitForActivity(activityClass, LARGE_TIMEOUT);
+        return waiter.waitForActivity(activityClass, Timeout.getLargeTimeout());
     }
 
     /**
@@ -2305,7 +2302,7 @@ public class Solo {
 	 */
 	
 	public boolean waitForFragmentByTag(String tag){
-		return waiter.waitForFragment(tag, 0, LARGE_TIMEOUT);
+		return waiter.waitForFragment(tag, 0, Timeout.getLargeTimeout());
 	}
 	
 	/**
@@ -2330,7 +2327,7 @@ public class Solo {
 	 */
 	
 	public boolean waitForFragmentById(int id){
-		return waiter.waitForFragment(null, id, LARGE_TIMEOUT);
+		return waiter.waitForFragment(null, id, Timeout.getLargeTimeout());
 	}
 	
 	/**
@@ -2357,7 +2354,7 @@ public class Solo {
 	 */
 
 	public boolean waitForLogMessage(String logMessage){
-		return waiter.waitForLogMessage(logMessage, LARGE_TIMEOUT);
+		return waiter.waitForLogMessage(logMessage, Timeout.getLargeTimeout());
 	}
 
 	/**
@@ -2463,7 +2460,7 @@ public class Solo {
 
 	public void takeScreenshot(String name, int quality){
 		View decorView = viewFetcher.getRecentDecorView(viewFetcher.getWindowDecorViews());
-		final long endTime = SystemClock.uptimeMillis() + SMALL_TIMEOUT;
+		final long endTime = SystemClock.uptimeMillis() + Timeout.getSmallTimeout();
 
 		while (decorView == null) {	
 
@@ -2517,82 +2514,5 @@ public class Solo {
 			ex.printStackTrace();
 		}
 	}
-	
-	/**
-	 * Initialize timeout using 'adb shell setprop' or use setTimeout(). Will fall back to default hard coded values.
-	 * 
-	 */
-
-	static {
-		Solo.SMALL_TIMEOUT = Solo.initializeTimeout("SOLO_SMALL_TIMEOUT", 10000);
-		Solo.LARGE_TIMEOUT = Solo.initializeTimeout("SOLO_LARGE_TIMEOUT", 20000);
-	}
-
-	/**
-	 * Parse a timeout value set using adb shell.
-	 *
-	 * There are two options to set the timeout. Set it using adb shell:
-	 * <br><br>
-	 * 'adb shell setprop SOLO_LARGE_TIMEOUT milliseconds' 
-	 * <br>  
-	 * 'adb shell setprop SOLO_SMALL_TIMEOUT milliseconds'
-	 * <br><br>
-	 * Set the values directly using setTimeout()
-	 *
-	 * @param property name of the property to read the timeout from
-	 * @param defaultValue default value for the timeout
-	 * @return timeout in milliseconds 
-	 * 
-	 */
-
-	@SuppressWarnings({ "rawtypes", "unchecked" })
-	private static int initializeTimeout(String property, int defaultValue) {
-		try {
-			Class clazz = Class.forName("android.os.SystemProperties");
-			Method method = clazz.getDeclaredMethod("get", String.class);
-			String value = (String) method.invoke(null, property);
-			return Integer.parseInt(value);
-		} catch (Exception e) {
-			return defaultValue;
-		}
-	}
-
-	/**
-	 * Get the length of the specified timeout variable. Timeout.LARGE_TIMEOUT is by default set to 20 000 milliseconds. It's used by the waitFor methods.
-	 * Timeout.SMALL_TIMEOUT is by default set to 10 000 milliseconds. It's used by the get, check, set and click methods.  
-	 * 
-	 * @param timeout the timeout variable to get. Examples are: Timeout.LARGE_TIMEOUT and Timeout.SMALL_TIMEOUT 
-	 * @return the length of the specified timeout variable 
-	 * 
-	 */
-
-	public int getTimeout(Timeout timeout) {
-		if(timeout == Timeout.LARGE_TIMEOUT){
-			return Solo.LARGE_TIMEOUT;
-		}
-		return Solo.SMALL_TIMEOUT;
-	}
-
-	/**
-	 * Sets the length of the specified timeout variable. Timeout.LARGE_TIMEOUT is by default set to 20 000 milliseconds. It's used by the waitFor methods.
-	 * Timeout.SMALL_TIMEOUT is by default set to 10 000 milliseconds. It's used by the get, check, set and click methods. Timeouts can also be set through adb shell:
-	 * <br><br>
-	 * 'adb shell setprop SOLO_LARGE_TIMEOUT milliseconds' 
-	 * <br>  
-	 * 'adb shell setprop SOLO_SMALL_TIMEOUT milliseconds'
-	 * 
-	 * @param timeout the timeout variable to set. Examples are: Timeout.LARGE_TIMEOUT and Timeout.SMALL_TIMEOUT
-	 * @param milliseconds the length to give the specified timeout variable
-	 * 
-	 */
-
-	public void setTimeout(Timeout timeout, int milliseconds) {
-		if(timeout == Timeout.LARGE_TIMEOUT){
-			Solo.LARGE_TIMEOUT = milliseconds;
-		}
-
-		else if(timeout == Timeout.SMALL_TIMEOUT){
-			Solo.SMALL_TIMEOUT = milliseconds;
-		}
-	}
 }
+
