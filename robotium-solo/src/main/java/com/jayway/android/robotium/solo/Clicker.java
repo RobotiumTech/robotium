@@ -397,21 +397,28 @@ class Clicker {
 	 */
 
 	public ArrayList<TextView> clickInList(int line, int index, boolean longClick, int time) {	
-		line--;
-		if(line < 0)
-			line = 0;
+		final long endTime = SystemClock.uptimeMillis() + Timeout.getSmallTimeout();
+
+		int lineIndex = line - 1;
+		if(lineIndex < 0)
+			lineIndex = 0;
 
 		ArrayList<View> views = new ArrayList<View>();
 		final AbsListView absListView = waiter.waitForAndGetView(index, AbsListView.class);
+		
 		if(absListView == null)
 			Assert.assertTrue("ListView is null!", false);
 
-		int numberOfLines = absListView.getChildCount();
-
-		if(line > absListView.getChildCount()){
-			Assert.assertTrue("Can not click on line number " + line + " as there are only " + numberOfLines + " lines available", false);
+		while(lineIndex > absListView.getChildCount()){
+			final boolean timedOut = SystemClock.uptimeMillis() > endTime;
+			if (timedOut){
+				int numberOfLines = absListView.getChildCount();
+				Assert.assertTrue("Can not click on line number " + line + " as there are only " + numberOfLines + " lines available", false);
+			}
+			sleeper.sleep();
 		}
-		View view = absListView.getChildAt(line);
+		
+		View view = absListView.getChildAt(lineIndex);
 
 		if(view != null){
 			views = viewFetcher.getViews(view, true);
