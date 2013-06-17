@@ -29,12 +29,12 @@ public class Timeout{
 	}
 	
 	/**
-	 * Sets the timeout length of the waitFor methods. Its by default set to 20 000 milliseconds.
+	 * Sets the default timeout length of the waitFor methods. Its by default set to 20 000 milliseconds.
 	 * Timeout can also be set through adb shell:
 	 * <br><br>
 	 * 'adb shell setprop solo_large_timeout milliseconds' 
 	 * 
-	 * @param milliseconds the timeout length of the waitFor methods
+	 * @param milliseconds the default timeout length of the waitFor methods
 	 * 
 	 */
 	public static void setLargeTimeout(int milliseconds){
@@ -42,12 +42,12 @@ public class Timeout{
 	}
 
 	/**
-	 * Sets the timeout length of the get, is, set, assert, enter and click methods. Its by default set to 10 000 milliseconds.
+	 * Sets the default timeout length of the get, is, set, assert, enter and click methods. Its by default set to 10 000 milliseconds.
 	 * Timeout can also be set through adb shell:
 	 * <br><br>
 	 * 'adb shell setprop solo_small_timeout milliseconds' 
 	 * 
-	 * @param milliseconds the timeout length of the get, is, set, assert, enter and click methods
+	 * @param milliseconds the default timeout length of the get, is, set, assert, enter and click methods
 	 * 
 	 */
 	public static void setSmallTimeout(int milliseconds){
