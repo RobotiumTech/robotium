@@ -2,7 +2,6 @@ package com.jayway.android.robotium.solo;
 
 import android.app.Instrumentation;
 import android.os.SystemClock;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.MotionEvent.PointerProperties;
 import android.view.MotionEvent.PointerCoords;
@@ -67,8 +66,6 @@ class Zoomer {
          pp2.toolType = MotionEvent.TOOL_TYPE_FINGER;
          pointerProperties[0] = pp1;
          pointerProperties[1] = pp2;
-
-         Log.d("TouchImageViewActivityTest", "Injecting events...");
 
          MotionEvent event;
          // send the initial touches
