@@ -60,7 +60,7 @@ class Getter {
 
 	public <T extends TextView> T getView(Class<T> classToFilterBy, String text, boolean onlyVisible) {
 
-		T viewToReturn = (T) waiter.waitForText(classToFilterBy, text, 0, 10000, false, onlyVisible, false);
+		T viewToReturn = (T) waiter.waitForText(classToFilterBy, text, 0, Timeout.getSmallTimeout(), false, onlyVisible, false);
 
 		if(viewToReturn == null)
 			Assert.assertTrue(classToFilterBy.getSimpleName() + " with text: '" + text + "' is not found!", false);
