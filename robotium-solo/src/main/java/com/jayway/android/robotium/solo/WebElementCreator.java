@@ -1,6 +1,8 @@
 package com.jayway.android.robotium.solo;
 
 import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
 import android.os.SystemClock;
 import android.webkit.WebView;
 
@@ -14,7 +16,7 @@ import android.webkit.WebView;
 
 class WebElementCreator {
 
-	private ArrayList<WebElement> webElements;
+	private List<WebElement> webElements;
 	private Sleeper sleeper;
 	private boolean isFinished = false;
 
@@ -27,7 +29,7 @@ class WebElementCreator {
 
 	public WebElementCreator(Sleeper sleeper){
 		this.sleeper = sleeper;
-		webElements = new ArrayList<WebElement>();
+		webElements = new CopyOnWriteArrayList<WebElement>();
 	}
 
 	/**
@@ -47,7 +49,7 @@ class WebElementCreator {
 
 	public ArrayList<WebElement> getWebElementsFromWebViews(){
 		waitForWebElementsToBeCreted();
-		return webElements;
+		return new ArrayList<WebElement>(webElements);
 	}
 
 	/**
@@ -82,7 +84,7 @@ class WebElementCreator {
 
 		WebElement webElement = createWebElementAndSetLocation(webData, webView);
 
-		if((webElement!=null))
+		if((webElement!=null)) 
 			webElements.add(webElement);
 	}
 

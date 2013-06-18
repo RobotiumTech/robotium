@@ -1,5 +1,6 @@
 package com.jayway.android.robotium.solo;
 
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.concurrent.CountDownLatch;
 import junit.framework.Assert;
@@ -2512,6 +2513,45 @@ public class Solo {
 			latch.await();
 		} catch (InterruptedException ex) {
 			ex.printStackTrace();
+		}
+	}
+	
+	/**
+	 * Initialize timeout using 'adb shell setprop' or use setLargeTimeout() and setSmallTimeout(). Will fall back to default hard coded values.
+	 * 
+	 */
+
+	static {
+		Timeout.setLargeTimeout(initializeTimeout("solo_large_timeout", 20000));
+		Timeout.setSmallTimeout(initializeTimeout("solo_small_timeout", 10000));
+	}
+	
+	/**
+	 * Parse a timeout value set using adb shell.
+	 *
+	 * There are two options to set the timeout. Set it using adb shell:
+	 * <br><br>
+	 * 'adb shell setprop solo_large_timeout milliseconds' 
+	 * <br>  
+	 * 'adb shell setprop solo_small_timeout milliseconds'
+	 * <br><br>
+	 * Set the values directly using setLargeTimeout() and setSmallTimeout
+	 *
+	 * @param property name of the property to read the timeout from
+	 * @param defaultValue default value for the timeout
+	 * @return timeout in milliseconds 
+	 * 
+	 */
+
+	@SuppressWarnings({ "rawtypes", "unchecked" })
+	private static int initializeTimeout(String property, int defaultValue) {
+		try {
+			Class clazz = Class.forName("android.os.SystemProperties");
+			Method method = clazz.getDeclaredMethod("get", String.class);
+			String value = (String) method.invoke(null, property);
+			return Integer.parseInt(value);
+		} catch (Exception e) {
+			return defaultValue;
 		}
 	}
 }
