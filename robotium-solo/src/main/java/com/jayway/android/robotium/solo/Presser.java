@@ -17,28 +17,31 @@ class Presser{
 
 	private final Clicker clicker;
 	private final Instrumentation inst;
-    private final Sleeper sleeper;
-    private final Waiter waiter;
-    
+	private final Sleeper sleeper;
+	private final Waiter waiter;
+	private final DialogUtils dialogUtils;
 
-    /**
-     * Constructs this object.
-     *
-     * @param clicker the {@code Clicker} instance.
-     * @param inst the {@code Instrumentation} instance.
-     * @param sleeper the {@code Sleeper} instance.
-     * @param waiter the {@code Waiter} instance.
-     */
 
-	public Presser(Clicker clicker, Instrumentation inst, Sleeper sleeper, Waiter waiter) {
+	/**
+	 * Constructs this object.
+	 *
+	 * @param clicker the {@code Clicker} instance.
+	 * @param inst the {@code Instrumentation} instance.
+	 * @param sleeper the {@code Sleeper} instance.
+	 * @param waiter the {@code Waiter} instance.
+	 * @param dialogUtils the {@code DialogUtils} instance.
+	 */
+
+	public Presser(Clicker clicker, Instrumentation inst, Sleeper sleeper, Waiter waiter, DialogUtils dialogUtils) {
 
 		this.clicker = clicker;
 		this.inst = inst;
-        this.sleeper = sleeper;
-        this.waiter = waiter;
-    }
+		this.sleeper = sleeper;
+		this.waiter = waiter;
+		this.dialogUtils = dialogUtils;
+	}
 
-	
+
 	/**
 	 * Presses a {@link android.view.MenuItem} with a given index. Index {@code 0} is the first item in the
 	 * first row, Index {@code 3} is the first item in the second row and
@@ -46,11 +49,11 @@ class Presser{
 	 *
 	 * @param index the index of the {@code MenuItem} to be pressed
 	 */
-	
+
 	public void pressMenuItem(int index){
 		pressMenuItem(index, 3);
 	}
-	
+
 	/**
 	 * Presses a {@link android.view.MenuItem} with a given index. Supports three rows with a given amount
 	 * of items. If itemsPerRow equals 5 then index 0 is the first item in the first row, 
@@ -59,7 +62,7 @@ class Presser{
 	 * @param index the index of the {@code MenuItem} to be pressed
 	 * @param itemsPerRow the amount of menu items there are per row.   
 	 */
-	
+
 	public void pressMenuItem(int index, int itemsPerRow) {	
 		int[] row = new int[4];
 		for(int i = 1; i <=3; i++)
@@ -68,7 +71,7 @@ class Presser{
 		sleeper.sleep();
 		try{
 			inst.sendKeyDownUpSync(KeyEvent.KEYCODE_MENU);
-			sleeper.sleepMini();
+			dialogUtils.waitForDialogToOpen(Timeout.getSmallTimeout());
 			inst.sendKeyDownUpSync(KeyEvent.KEYCODE_DPAD_UP);
 			inst.sendKeyDownUpSync(KeyEvent.KEYCODE_DPAD_UP);
 		}catch(SecurityException e){
@@ -112,10 +115,12 @@ class Presser{
 	public void pressSpinnerItem(int spinnerIndex, int itemIndex)
 	{	
 		clicker.clickOnScreen(waiter.waitForAndGetView(spinnerIndex, Spinner.class));
-		sleeper.sleep();
+		dialogUtils.waitForDialogToOpen(Timeout.getSmallTimeout());
+
 		try{
 			inst.sendKeyDownUpSync(KeyEvent.KEYCODE_DPAD_DOWN);
 		}catch(SecurityException ignored){}
+
 		boolean countingUp = true;
 		if(itemIndex < 0){
 			countingUp = false;

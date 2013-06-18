@@ -118,7 +118,7 @@ public class Solo {
 		this.swiper = new Swiper(instrumentation);
 		this.tapper =  new Tapper(instrumentation);
 		this.rotator = new Rotator(instrumentation);
-		this.presser = new Presser(clicker, instrumentation, sleeper, waiter);
+		this.presser = new Presser(clicker, instrumentation, sleeper, waiter, dialogUtils);
 		this.textEnterer = new TextEnterer(instrumentation, activityUtils, clicker);
 	}
 
