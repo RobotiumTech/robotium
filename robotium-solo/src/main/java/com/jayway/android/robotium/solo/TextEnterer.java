@@ -1,6 +1,5 @@
 package com.jayway.android.robotium.solo;
 
-import junit.framework.Assert;
 import android.app.Activity;
 import android.app.Instrumentation;
 import android.text.InputType;
@@ -46,9 +45,7 @@ class TextEnterer{
 	public void setEditText(final EditText editText, final String text) {
 		if(editText != null){
 			final String previousText = editText.getText().toString();
-			if(!editText.isEnabled())
-				Assert.assertTrue("EditText is not enabled!", false);
-
+	
 			inst.runOnMainSync(new Runnable()
 			{
 				public void run()
