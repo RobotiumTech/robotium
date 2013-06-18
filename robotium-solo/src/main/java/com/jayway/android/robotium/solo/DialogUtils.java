@@ -18,20 +18,17 @@ class DialogUtils {
 
 	private final ActivityUtils activityUtils;
 	private final ViewFetcher viewFetcher;
-	private final Sleeper sleeper;
 
 	/**
 	 * Constructs this object.
 	 * 
 	 * @param activityUtils the {@code ActivityUtils} instance.
 	 * @param viewFetcher the {@code ViewFetcher} instance.
-	 * @param sleeper the {@code Sleeper} instance.
 	 */
 
-	public DialogUtils(ActivityUtils activityUtils, ViewFetcher viewFetcher, Sleeper sleeper) {
+	public DialogUtils(ActivityUtils activityUtils, ViewFetcher viewFetcher) {
 		this.activityUtils = activityUtils;
 		this.viewFetcher = viewFetcher;
-		this.sleeper = sleeper;
 	}
 
 
@@ -43,22 +40,19 @@ class DialogUtils {
 	 */
 
 	public boolean waitForDialogToClose(long timeout) {
-		int elementsBefore = viewFetcher.getWindowDecorViews().length;
+		waitForDialogToOpen(timeout);
 		final long endTime = SystemClock.uptimeMillis() + timeout;
 
 		while (SystemClock.uptimeMillis() < endTime) {
 
-			int elementsNow = viewFetcher.getWindowDecorViews().length;
-			if(elementsBefore < elementsNow){
-				elementsBefore = elementsNow;
-			}
-			if(elementsBefore > elementsNow)
+			if(!isDialogOpen()){
 				return true;
-
-			sleeper.sleep(10);
+			}
 		}
 		return false;
 	}
+
+
 
 	/**
 	 * Waits for a {@link android.app.Dialog} to open.
@@ -72,9 +66,7 @@ class DialogUtils {
 
 		while (SystemClock.uptimeMillis() < endTime) {
 
-			boolean dialogIsOpen = isDialogOpen();
-
-			if(dialogIsOpen){
+			if(isDialogOpen()){
 				return true;
 			}
 		}
