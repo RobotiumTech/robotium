@@ -36,6 +36,7 @@ class Clicker {
 	private final Sleeper sleeper;
 	private final Waiter waiter;
 	private final WebUtils webUtils;
+	private final DialogUtils dialogUtils;
 	private final int MINISLEEP = 100;
 
 
@@ -49,9 +50,10 @@ class Clicker {
 	 * @param sleeper the {@code Sleeper} instance
 	 * @param waiter the {@code Waiter} instance
 	 * @param webUtils the {@code WebUtils} instance
+	 * @param dialogUtils the {@code DialogUtils} instance
 	 */
 
-	public Clicker(ActivityUtils activityUtils, ViewFetcher viewFetcher, Sender sender, Instrumentation inst, Sleeper sleeper, Waiter waiter, WebUtils webUtils) {
+	public Clicker(ActivityUtils activityUtils, ViewFetcher viewFetcher, Sender sender, Instrumentation inst, Sleeper sleeper, Waiter waiter, WebUtils webUtils, DialogUtils dialogUtils) {
 
 		this.activityUtils = activityUtils;
 		this.viewFetcher = viewFetcher;
@@ -60,6 +62,7 @@ class Clicker {
 		this.sleeper = sleeper;
 		this.waiter = waiter;
 		this.webUtils = webUtils;
+		this.dialogUtils = dialogUtils;
 	}
 
 	/**
@@ -70,17 +73,27 @@ class Clicker {
 	 */
 
 	public void clickOnScreen(float x, float y) {
-		long downTime = SystemClock.uptimeMillis();
-		long eventTime = SystemClock.uptimeMillis();
-		MotionEvent event = MotionEvent.obtain(downTime, eventTime,
-				MotionEvent.ACTION_DOWN, x, y, 0);
-		MotionEvent event2 = MotionEvent.obtain(downTime, eventTime,
-				MotionEvent.ACTION_UP, x, y, 0);
-		try{
-			inst.sendPointerSync(event);
-			inst.sendPointerSync(event2);
-			sleeper.sleep(MINISLEEP);
-		}catch(SecurityException e){
+		boolean successfull = false;
+		int retry = 0;
+		
+		while(!successfull && retry < 10) {
+			long downTime = SystemClock.uptimeMillis();
+			long eventTime = SystemClock.uptimeMillis();
+			MotionEvent event = MotionEvent.obtain(downTime, eventTime,
+					MotionEvent.ACTION_DOWN, x, y, 0);
+			MotionEvent event2 = MotionEvent.obtain(downTime, eventTime,
+					MotionEvent.ACTION_UP, x, y, 0);
+			try{
+				inst.sendPointerSync(event);
+				inst.sendPointerSync(event2);
+				successfull = true;
+				sleeper.sleep(MINISLEEP);
+			}catch(SecurityException e){
+				activityUtils.hideSoftKeyboard(null, true);
+				retry++;
+			}		
+		}
+		if(!successfull) {
 			Assert.assertTrue("Click can not be completed!", false);
 		}
 	}
@@ -94,14 +107,25 @@ class Clicker {
 	 */
 
 	public void clickLongOnScreen(float x, float y, int time) {
+		boolean successfull = false;
+		int retry = 0;
 		long downTime = SystemClock.uptimeMillis();
 		long eventTime = SystemClock.uptimeMillis();
 		MotionEvent event = MotionEvent.obtain(downTime, eventTime, MotionEvent.ACTION_DOWN, x, y, 0);
-		try{
-			inst.sendPointerSync(event);
-		}catch(SecurityException e){
+
+		while(!successfull && retry < 10) {
+			try{
+				inst.sendPointerSync(event);
+				successfull = true;
+			}catch(SecurityException e){
+				activityUtils.hideSoftKeyboard(null, true);
+				retry++;
+			}
+		}
+		if(!successfull) {
 			Assert.assertTrue("Click can not be completed!", false);
 		}
+
 		eventTime = SystemClock.uptimeMillis();
 		event = MotionEvent.obtain(downTime, eventTime, MotionEvent.ACTION_MOVE, 
 				x + 1.0f,
@@ -168,6 +192,7 @@ class Clicker {
 	public void clickLongOnTextAndPress(String text, int index)
 	{
 		clickOnText(text, true, 0, true, 0);
+		dialogUtils.waitForDialogToOpen(Timeout.getSmallTimeout());
 		try{
 			inst.sendKeyDownUpSync(KeyEvent.KEYCODE_DPAD_DOWN);
 		}catch(SecurityException e){

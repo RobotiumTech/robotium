@@ -1,9 +1,8 @@
 package com.jayway.android.robotium.solo;
 
-import android.app.Activity;
+import junit.framework.Assert;
 import android.app.Instrumentation;
 import android.text.InputType;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 
 
@@ -52,7 +51,7 @@ class TextEnterer{
 				{
 					editText.setInputType(InputType.TYPE_NULL); 
 					editText.performClick();
-					hideSoftKeyboard(editText, false);
+					activityUtils.hideSoftKeyboard(editText, false);
 					if(text.equals(""))
 						editText.setText(text);
 					else{
@@ -81,27 +80,24 @@ class TextEnterer{
 				}
 			});
 			clicker.clickOnScreen(editText, false, 0);
-			hideSoftKeyboard(editText, true);
-			inst.sendStringSync(text);
-		}
-	}
+			activityUtils.hideSoftKeyboard(editText, true);
 
-	/**
-	 * Hides the soft keyboard
-	 * 
-	 * @param shouldSleepFirst whether to sleep a default pause first
-	 */
+			boolean successfull = false;
+			int retry = 0;
 
-	public void hideSoftKeyboard(EditText editText, boolean shouldSleepFirst) {
-		Activity activity = activityUtils.getCurrentActivity(shouldSleepFirst);
-		
-		InputMethodManager inputMethodManager = (InputMethodManager)  activity.getSystemService(Activity.INPUT_METHOD_SERVICE);
-		
-		if(editText != null) {
-			inputMethodManager.hideSoftInputFromWindow(editText.getWindowToken(), 0);
-		}
-		else if(activity.getCurrentFocus() != null){
-			inputMethodManager.hideSoftInputFromWindow(activity.getCurrentFocus().getWindowToken(), 0);
+			while(!successfull && retry < 10) {
+
+				try{
+					inst.sendStringSync(text);
+					successfull = true;
+				}catch(SecurityException e){
+					activityUtils.hideSoftKeyboard(editText, true);
+					retry++;
+				}
+			}
+			if(!successfull) {
+				Assert.assertTrue("Text can not be typed!", false);
+			}
 		}
 	}
 }

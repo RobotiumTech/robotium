@@ -113,7 +113,7 @@ public class Solo {
 		this.getter = new Getter(instrumentation, activityUtils, waiter);
 		this.asserter = new Asserter(activityUtils, waiter);
 		this.checker = new Checker(viewFetcher, waiter);
-		this.clicker = new Clicker(activityUtils, viewFetcher,sender, instrumentation, sleeper, waiter, webUtils);
+		this.clicker = new Clicker(activityUtils, viewFetcher,sender, instrumentation, sleeper, waiter, webUtils, dialogUtils);
 		this.zoomer = new Zoomer(instrumentation);
 		this.swiper = new Swiper(instrumentation);
 		this.tapper =  new Tapper(instrumentation);
@@ -2214,7 +2214,7 @@ public class Solo {
 	 */
 	
 	public void hideSoftKeyboard() {	
-		textEnterer.hideSoftKeyboard(null, true);
+		activityUtils.hideSoftKeyboard(null, true);
 	}
 
 	/**
