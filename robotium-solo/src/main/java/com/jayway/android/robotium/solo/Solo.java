@@ -2471,7 +2471,7 @@ public class Solo {
 	}
 
 	/**
-	 * Takes a screenshot and saves it with the specified name in "/sdcard/Robotium-Screenshots/". 
+	 * Takes a screenshot and saves the image with the specified name in "/sdcard/Robotium-Screenshots/". 
 	 * Requires write permission (android.permission.WRITE_EXTERNAL_STORAGE) in AndroidManifest.xml of the application under test.
 	 *
 	 * @param name the name to give the screenshot
@@ -2486,17 +2486,17 @@ public class Solo {
 
 	/**
 	 * Takes a screenshot sequence and saves the images with the specified name prefix in "/sdcard/Robotium-Screenshots/". 
-         *
-         * The name prefix is appended with "_"+sequence_number for each image in the sequence,
-         * where numbering starts at 0  
-         *
+	 *
+	 * The name prefix is appended with "_"+sequence_number for each image in the sequence,
+	 * where numbering starts at 0  
+	 *
 	 * Requires write permission (android.permission.WRITE_EXTERNAL_STORAGE) in AndroidManifest.xml of the application under test.
 	 *
-         * At present multiple simultaneous screenshot sequences are not supported.  
-         * This method will throw an exception if stopScreenshotSequence() has not been
-         *  called to finish any prior sequences.
-         * Calling this method is equivalend to calling startScreenshotSequence(name, 80, 400, 10);
-         *
+	 * At present multiple simultaneous screenshot sequences are not supported.  
+	 * This method will throw an exception if stopScreenshotSequence() has not been
+	 * called to finish any prior sequences.
+	 * Calling this method is equivalend to calling startScreenshotSequence(name, 80, 400, 10);
+	 *
 	 * @param name the name prefix to give the screenshot
 	 *
 	 */
@@ -2509,24 +2509,24 @@ public class Solo {
 
 	/**
 	 * Takes a screenshot sequence and saves the images with the specified name prefix in "/sdcard/Robotium-Screenshots/". 
-         *
-         * The name prefix is appended with "_"+sequence_number for each image in the sequence,
-         * where numbering starts at 0  
-         *
-	 * Requires write permission (android.permission.WRITE_EXTERNAL_STORAGE) in the 
-         * AndroidManifest.xml of the application under test.
 	 *
-         * Taking a screenshot will take on the order of 40-100 millis of time on the 
-         * main UI thread.  Therefore it is possible to mess up the timing of tests if
-         * the frameDelay value is set too small.
-         *
-         * At present multiple simultaneous screenshot sequences are not supported.  
-         * This method will throw an exception if stopScreenshotSequence() has not been
-         *  called to finish any prior sequences.
-         *
+	 * The name prefix is appended with "_"+sequence_number for each image in the sequence,
+	 * where numbering starts at 0  
+	 *
+	 * Requires write permission (android.permission.WRITE_EXTERNAL_STORAGE) in the 
+	 * AndroidManifest.xml of the application under test.
+	 *
+	 * Taking a screenshot will take on the order of 40-100 milliseconds of time on the 
+	 * main UI thread.  Therefore it is possible to mess up the timing of tests if
+	 * the frameDelay value is set too small.
+	 *
+	 * At present multiple simultaneous screenshot sequences are not supported.  
+	 * This method will throw an exception if stopScreenshotSequence() has not been
+	 * called to finish any prior sequences.
+	 *
 	 * @param name the name prefix to give the screenshot
 	 * @param quality the compression rate. From 0 (compress for lowest size) to 100 (compress for maximum quality)
-	 * @param frameDelay the time in millis to wait between each frame.
+	 * @param frameDelay the time in milliseconds to wait between each frame.
 	 * @param maxFrames the maximum number of frames that will comprise this sequence.
 	 *
 	 */
