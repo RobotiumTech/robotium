@@ -18,17 +18,21 @@ class DialogUtils {
 
 	private final ActivityUtils activityUtils;
 	private final ViewFetcher viewFetcher;
+	private final Sleeper sleeper;
+	private final int MINISLEEP = 50;
 
 	/**
 	 * Constructs this object.
 	 * 
 	 * @param activityUtils the {@code ActivityUtils} instance.
 	 * @param viewFetcher the {@code ViewFetcher} instance.
+	 * @param sleeper the {@code Sleeper} instance.
 	 */
 
-	public DialogUtils(ActivityUtils activityUtils, ViewFetcher viewFetcher) {
+	public DialogUtils(ActivityUtils activityUtils, ViewFetcher viewFetcher, Sleeper sleeper) {
 		this.activityUtils = activityUtils;
 		this.viewFetcher = viewFetcher;
+		this.sleeper = sleeper;
 	}
 
 
@@ -48,6 +52,7 @@ class DialogUtils {
 			if(!isDialogOpen()){
 				return true;
 			}
+			sleeper.sleep(MINISLEEP);
 		}
 		return false;
 	}
@@ -69,6 +74,7 @@ class DialogUtils {
 			if(isDialogOpen()){
 				return true;
 			}
+			sleeper.sleep(MINISLEEP);
 		}
 		return false;
 	}
@@ -80,7 +86,7 @@ class DialogUtils {
 	 */
 
 	private boolean isDialogOpen(){
-		final Activity activity = activityUtils.getCurrentActivity();
+		final Activity activity = activityUtils.getCurrentActivity(false);
 		final View view = viewFetcher.getRecentDecorView(viewFetcher.getWindowDecorViews());
 		Context viewContext = null;
 		if(view != null){
