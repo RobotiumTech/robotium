@@ -168,7 +168,7 @@ class ScreenshotTaker {
 		
 		public void run() {
 			while(seqno < maxFrames) {
-				if(!keepRunning || Thread.interrupted()) return;
+				if(!keepRunning || Thread.interrupted()) break;
 				doScreenshot();
 				seqno++;
 				try {
