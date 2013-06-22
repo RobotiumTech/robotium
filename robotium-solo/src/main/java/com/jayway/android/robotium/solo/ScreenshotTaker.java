@@ -26,11 +26,11 @@ class ScreenshotTaker {
 
 	private final ActivityUtils activityUtils;
 	private final String LOG_TAG = "Robotium";
-
 	private Solo solo;
 	private ScreenshotSequenceThread screenshotSequenceThread = null;
 	private HandlerThread screenShotSaverThread = null;
 	private ScreenShotSaver screenShotSaver = null;
+	
 
 	/**
 	 * Constructs this object.
@@ -156,7 +156,7 @@ class ScreenshotTaker {
 		private int quality;
 		private int frameDelay;
 		private int maxFrames;
-
+		
 		private boolean keepRunning = true;
 
 		public ScreenshotSequenceThread(String _name, int _quality, int _frameDelay, int _maxFrames) {
@@ -167,8 +167,8 @@ class ScreenshotTaker {
 		}
 		
 		public void run() {
-			if(!keepRunning || Thread.interrupted()) return;
 			while(seqno < maxFrames) {
+				if(!keepRunning || Thread.interrupted()) return;
 				doScreenshot();
 				seqno++;
 				try {
