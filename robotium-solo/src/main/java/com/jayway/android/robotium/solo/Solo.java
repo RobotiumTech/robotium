@@ -2407,7 +2407,7 @@ public class Solo {
 		sleeper.sleep(time);
 	}
 	
-    /**
+	/**
 	 *
 	 * Finalizes the Solo object and removes the ActivityMonitor.
 	 * 
@@ -2415,15 +2415,14 @@ public class Solo {
 	 *
 	 */    
 	
-    public void finalize() throws Throwable {
+	public void finalize() throws Throwable {
 		activityUtils.finalize();
 	}
     
-    /**
+	/**
 	 * The Activities that are alive are finished. Usually used in tearDown().
 	 *
 	 */
-	
 	public void finishOpenedActivities(){
 		activityUtils.finishOpenedActivities();
 	}
@@ -2445,9 +2444,30 @@ public class Solo {
 	 * @param name the name to give the screenshot
 	 *
 	 */
-
 	public void takeScreenshot(String name){
 		takeScreenshot(name, 100);
+	}
+
+	/**
+	 * Gets the proper view to use for a screenshot.  
+	 */
+	public View getScreenshotView() {
+		View decorView = viewFetcher.getRecentDecorView(viewFetcher.getWindowDecorViews());
+		final long endTime = SystemClock.uptimeMillis() + Timeout.getSmallTimeout();
+
+		while (decorView == null) {	
+
+			final boolean timedOut = SystemClock.uptimeMillis() > endTime;
+
+			if (timedOut){
+				return null;
+			}
+			sleeper.sleepMini();
+			decorView = viewFetcher.getRecentDecorView(viewFetcher.getWindowDecorViews());
+		}
+		wrapAllGLViews(decorView);
+
+		return decorView;
 	}
 
 	/**
@@ -2458,29 +2478,75 @@ public class Solo {
 	 * @param quality the compression rate. From 0 (compress for lowest size) to 100 (compress for maximum quality)
 	 *
 	 */
-
 	public void takeScreenshot(String name, int quality){
-		View decorView = viewFetcher.getRecentDecorView(viewFetcher.getWindowDecorViews());
-		final long endTime = SystemClock.uptimeMillis() + Timeout.getSmallTimeout();
-
-		while (decorView == null) {	
-
-			final boolean timedOut = SystemClock.uptimeMillis() > endTime;
-
-			if (timedOut){
-				return;
-			}
-			sleeper.sleepMini();
-			decorView = viewFetcher.getRecentDecorView(viewFetcher.getWindowDecorViews());
-		}
-		wrapAllGLViews(decorView);
+		View decorView = getScreenshotView();
+		if(decorView == null) return;
 		screenshotTaker.takeScreenshot(decorView, name, quality);
+	}
+
+	/**
+	 * Takes a screenshot sequence and saves the images with the specified name prefix in "/sdcard/Robotium-Screenshots/". 
+         *
+         * The name prefix is appended with "_"+sequence_number for each image in the sequence,
+         * where numbering starts at 0  
+         *
+	 * Requires write permission (android.permission.WRITE_EXTERNAL_STORAGE) in AndroidManifest.xml of the application under test.
+	 *
+         * At present multiple simultaneous screenshot sequences are not supported.  
+         * This method will throw an exception if stopScreenshotSequence() has not been
+         *  called to finish any prior sequences.
+         * Calling this method is equivalend to calling startScreenshotSequence(name, 80, 400, 10);
+         *
+	 * @param name the name prefix to give the screenshot
+	 *
+	 */
+	public void startScreenshotSequence(String name) {
+		startScreenshotSequence(name, 
+					80, // quality
+					400, // 400 ms frame delay
+					100); // max frames
+	}
+
+	/**
+	 * Takes a screenshot sequence and saves the images with the specified name prefix in "/sdcard/Robotium-Screenshots/". 
+         *
+         * The name prefix is appended with "_"+sequence_number for each image in the sequence,
+         * where numbering starts at 0  
+         *
+	 * Requires write permission (android.permission.WRITE_EXTERNAL_STORAGE) in the 
+         * AndroidManifest.xml of the application under test.
+	 *
+         * Taking a screenshot will take on the order of 40-100 millis of time on the 
+         * main UI thread.  Therefore it is possible to mess up the timing of tests if
+         * the frameDelay value is set too small.
+         *
+         * At present multiple simultaneous screenshot sequences are not supported.  
+         * This method will throw an exception if stopScreenshotSequence() has not been
+         *  called to finish any prior sequences.
+         *
+	 * @param name the name prefix to give the screenshot
+	 * @param quality the compression rate. From 0 (compress for lowest size) to 100 (compress for maximum quality)
+	 * @param frameDelay the time in millis to wait between each frame.
+	 * @param maxFrames the maximum number of frames that will comprise this sequence.
+	 *
+	 */
+	public void startScreenshotSequence(String name, int quality, int frameDelay, int maxFrames) {
+		screenshotTaker.startScreenshotSequence(this, name, quality, frameDelay, maxFrames);
+	}
+
+	/**
+	 * Causes a screenshot sequence to end.
+	 * 
+	 * If this method is not called to end a sequence and a prior sequence is still in 
+	 * progress, startScreenshotSequence() will throw an exception.
+	 */
+	public void stopScreenshotSequence() {
+		screenshotTaker.stopScreenshotSequence();
 	}
 
 	/**
 	 * Extract and wrap the all OpenGL ES Renderer.
 	 */
-
 	private void wrapAllGLViews(View decorView) {
 		ArrayList<GLSurfaceView> currentViews = viewFetcher.getCurrentViews(GLSurfaceView.class, decorView);
 		final CountDownLatch latch = new CountDownLatch(currentViews.size());
