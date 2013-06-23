@@ -21,7 +21,9 @@ import android.view.View;
 import android.webkit.WebView;
 
 /**
- * Contains takeScreenshot(final View, final String name)
+ * Contains screenshot methods like: takeScreenshot(final View, final String name), startScreenshotSequence(final String name, final int quality, final int frameDelay, final int maxFrames), 
+ * stopScreenshotSequence().
+ * 
  * 
  * @author Renas Reda, renasreda@gmail.com
  * 
@@ -69,7 +71,30 @@ class ScreenshotTaker {
 		ScreenshotRunnable runnable = new ScreenshotRunnable(decorView, name, quality);
 		activityUtils.getCurrentActivity(false).runOnUiThread(runnable);
 	}
-
+	
+	/**
+	 * Takes a screenshot sequence and saves the images with the specified name prefix in "/sdcard/Robotium-Screenshots/". 
+	 *
+	 * The name prefix is appended with "_" + sequence_number for each image in the sequence,
+	 * where numbering starts at 0.  
+	 *
+	 * Requires write permission (android.permission.WRITE_EXTERNAL_STORAGE) in the 
+	 * AndroidManifest.xml of the application under test.
+	 *
+	 * Taking a screenshot will take on the order of 40-100 milliseconds of time on the 
+	 * main UI thread.  Therefore it is possible to mess up the timing of tests if
+	 * the frameDelay value is set too small.
+	 *
+	 * At present multiple simultaneous screenshot sequences are not supported.  
+	 * This method will throw an exception if stopScreenshotSequence() has not been
+	 * called to finish any prior sequences.
+	 *
+	 * @param name the name prefix to give the screenshot
+	 * @param quality the compression rate. From 0 (compress for lowest size) to 100 (compress for maximum quality)
+	 * @param frameDelay the time in milliseconds to wait between each frame
+	 * @param maxFrames the maximum number of frames that will comprise this sequence
+	 *
+	 */
 	public void startScreenshotSequence(final String name, final int quality, final int frameDelay, final int maxFrames) {
 		initScreenShotSaver();
 
@@ -81,7 +106,13 @@ class ScreenshotTaker {
 
 		screenshotSequenceThread.start();
 	}
-
+	
+	/**
+	 * Causes a screenshot sequence to end.
+	 * 
+	 * If this method is not called to end a sequence and a prior sequence is still in 
+	 * progress, startScreenshotSequence() will throw an exception.
+	 */
 	public void stopScreenshotSequence() {
 		if(screenshotSequenceThread != null) {
 			screenshotSequenceThread.interrupt();
