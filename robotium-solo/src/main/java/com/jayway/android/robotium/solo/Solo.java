@@ -2460,7 +2460,7 @@ public class Solo {
 	/**
 	 * Takes a screenshot sequence and saves the images with the specified name prefix in "/sdcard/Robotium-Screenshots/". 
 	 *
-	 * The name prefix is appended with "_"+sequence_number for each image in the sequence,
+	 * The name prefix is appended with "_" + sequence_number for each image in the sequence,
 	 * where numbering starts at 0.  
 	 *
 	 * Requires write permission (android.permission.WRITE_EXTERNAL_STORAGE) in AndroidManifest.xml of the application under test.
@@ -2468,7 +2468,7 @@ public class Solo {
 	 * At present multiple simultaneous screenshot sequences are not supported.  
 	 * This method will throw an exception if stopScreenshotSequence() has not been
 	 * called to finish any prior sequences.
-	 * Calling this method is equivalend to calling startScreenshotSequence(name, 80, 400, 10);
+	 * Calling this method is equivalend to calling startScreenshotSequence(name, 80, 400, 100);
 	 *
 	 * @param name the name prefix to give the screenshot
 	 *
@@ -2483,7 +2483,7 @@ public class Solo {
 	/**
 	 * Takes a screenshot sequence and saves the images with the specified name prefix in "/sdcard/Robotium-Screenshots/". 
 	 *
-	 * The name prefix is appended with "_"+sequence_number for each image in the sequence,
+	 * The name prefix is appended with "_" + sequence_number for each image in the sequence,
 	 * where numbering starts at 0.  
 	 *
 	 * Requires write permission (android.permission.WRITE_EXTERNAL_STORAGE) in the 

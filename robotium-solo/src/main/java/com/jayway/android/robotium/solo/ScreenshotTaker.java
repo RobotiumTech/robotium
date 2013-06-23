@@ -92,7 +92,7 @@ class ScreenshotTaker {
 	/**
 	 * Gets the proper view to use for a screenshot.  
 	 */
-	protected View getScreenshotView() {
+	private View getScreenshotView() {
 		View decorView = viewFetcher.getRecentDecorView(viewFetcher.getWindowDecorViews());
 		final long endTime = SystemClock.uptimeMillis() + Timeout.getSmallTimeout();
 
