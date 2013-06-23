@@ -2,15 +2,11 @@ package com.jayway.android.robotium.solo;
 
 import java.lang.reflect.Method;
 import java.util.ArrayList;
-import java.util.concurrent.CountDownLatch;
 import junit.framework.Assert;
 import android.app.Activity;
 import android.app.Instrumentation;
 import android.content.pm.ActivityInfo;
 import android.graphics.PointF;
-import android.opengl.GLSurfaceView;
-import android.opengl.GLSurfaceView.Renderer;
-import android.os.SystemClock;
 import android.view.KeyEvent;
 import android.view.View;
 import android.webkit.WebView;
@@ -102,8 +98,8 @@ public class Solo {
 		this.sleeper = new Sleeper();
 		this.sender = new Sender(instrumentation, sleeper);
 		this.activityUtils = new ActivityUtils(instrumentation, activity, sleeper);
-		this.screenshotTaker = new ScreenshotTaker(activityUtils);
 		this.viewFetcher = new ViewFetcher(activityUtils);
+		this.screenshotTaker = new ScreenshotTaker(activityUtils, viewFetcher, sleeper);
 		this.dialogUtils = new DialogUtils(activityUtils, viewFetcher, sleeper);
 		this.webUtils = new WebUtils(instrumentation,activityUtils,viewFetcher, sleeper);
 		this.scroller = new Scroller(instrumentation, activityUtils, viewFetcher, sleeper);
@@ -2450,28 +2446,6 @@ public class Solo {
 	}
 
 	/**
-	 * Gets the proper view to use for a screenshot.  
-	 */
-	public View getScreenshotView() {
-		View decorView = viewFetcher.getRecentDecorView(viewFetcher.getWindowDecorViews());
-		final long endTime = SystemClock.uptimeMillis() + Timeout.getSmallTimeout();
-
-		while (decorView == null) {	
-
-			final boolean timedOut = SystemClock.uptimeMillis() > endTime;
-
-			if (timedOut){
-				return null;
-			}
-			sleeper.sleepMini();
-			decorView = viewFetcher.getRecentDecorView(viewFetcher.getWindowDecorViews());
-		}
-		wrapAllGLViews(decorView);
-
-		return decorView;
-	}
-
-	/**
 	 * Takes a screenshot and saves the image with the specified name in "/sdcard/Robotium-Screenshots/". 
 	 * Requires write permission (android.permission.WRITE_EXTERNAL_STORAGE) in AndroidManifest.xml of the application under test.
 	 *
@@ -2480,16 +2454,14 @@ public class Solo {
 	 *
 	 */
 	public void takeScreenshot(String name, int quality){
-		View decorView = getScreenshotView();
-		if(decorView == null) return;
-		screenshotTaker.takeScreenshot(decorView, name, quality);
+		screenshotTaker.takeScreenshot(name, quality);
 	}
 
 	/**
 	 * Takes a screenshot sequence and saves the images with the specified name prefix in "/sdcard/Robotium-Screenshots/". 
 	 *
 	 * The name prefix is appended with "_"+sequence_number for each image in the sequence,
-	 * where numbering starts at 0  
+	 * where numbering starts at 0.  
 	 *
 	 * Requires write permission (android.permission.WRITE_EXTERNAL_STORAGE) in AndroidManifest.xml of the application under test.
 	 *
@@ -2512,7 +2484,7 @@ public class Solo {
 	 * Takes a screenshot sequence and saves the images with the specified name prefix in "/sdcard/Robotium-Screenshots/". 
 	 *
 	 * The name prefix is appended with "_"+sequence_number for each image in the sequence,
-	 * where numbering starts at 0  
+	 * where numbering starts at 0.  
 	 *
 	 * Requires write permission (android.permission.WRITE_EXTERNAL_STORAGE) in the 
 	 * AndroidManifest.xml of the application under test.
@@ -2527,12 +2499,12 @@ public class Solo {
 	 *
 	 * @param name the name prefix to give the screenshot
 	 * @param quality the compression rate. From 0 (compress for lowest size) to 100 (compress for maximum quality)
-	 * @param frameDelay the time in milliseconds to wait between each frame.
-	 * @param maxFrames the maximum number of frames that will comprise this sequence.
+	 * @param frameDelay the time in milliseconds to wait between each frame
+	 * @param maxFrames the maximum number of frames that will comprise this sequence
 	 *
 	 */
 	public void startScreenshotSequence(String name, int quality, int frameDelay, int maxFrames) {
-		screenshotTaker.startScreenshotSequence(this, name, quality, frameDelay, maxFrames);
+		screenshotTaker.startScreenshotSequence(name, quality, frameDelay, maxFrames);
 	}
 
 	/**
@@ -2545,43 +2517,6 @@ public class Solo {
 		screenshotTaker.stopScreenshotSequence();
 	}
 
-	/**
-	 * Extract and wrap the all OpenGL ES Renderer.
-	 */
-	private void wrapAllGLViews(View decorView) {
-		ArrayList<GLSurfaceView> currentViews = viewFetcher.getCurrentViews(GLSurfaceView.class, decorView);
-		final CountDownLatch latch = new CountDownLatch(currentViews.size());
-
-		for (GLSurfaceView glView : currentViews) {
-			Object renderContainer = new Reflect(glView).field("mGLThread")
-					.type(GLSurfaceView.class).out(Object.class);
-
-			Renderer renderer = new Reflect(renderContainer).field("mRenderer").out(Renderer.class);
-
-			if (renderer == null) {
-				renderer = new Reflect(glView).field("mRenderer").out(Renderer.class);
-				renderContainer = glView;
-			}  
-			if (renderer == null) {
-				latch.countDown();
-				continue;
-			}
-			if (renderer instanceof GLRenderWrapper) {
-				GLRenderWrapper wrapper = (GLRenderWrapper) renderer;
-				wrapper.setTakeScreenshot();
-				wrapper.setLatch(latch);
-			} else {
-				GLRenderWrapper wrapper = new GLRenderWrapper(glView, renderer, latch);
-				new Reflect(renderContainer).field("mRenderer").in(wrapper);
-			}
-		}
-
-		try {
-			latch.await();
-		} catch (InterruptedException ex) {
-			ex.printStackTrace();
-		}
-	}
 	
 	/**
 	 * Initialize timeout using 'adb shell setprop' or use setLargeTimeout() and setSmallTimeout(). Will fall back to default hard coded values.
