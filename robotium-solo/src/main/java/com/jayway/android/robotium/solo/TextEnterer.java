@@ -18,6 +18,7 @@ class TextEnterer{
 	private final Instrumentation inst;
 	private final Clicker clicker;
 	private final ActivityUtils activityUtils;
+	private final Sleeper sleeper;
 
 	/**
 	 * Constructs this object.
@@ -25,13 +26,15 @@ class TextEnterer{
 	 * @param inst the {@code Instrumentation} instance.
 	 * @param activityUtils the {@code ActivityUtils} instance
 	 * @param clicker the {@code Clicker} instance.
+	 * @param sleeper the {@code Sleeper} instance.
 	 * 
 	 */
 
-	public TextEnterer(Instrumentation inst, ActivityUtils activityUtils, Clicker clicker) {
+	public TextEnterer(Instrumentation inst, ActivityUtils activityUtils, Clicker clicker, Sleeper sleeper) {
 		this.inst = inst;
 		this.activityUtils = activityUtils;
 		this.clicker = clicker;
+		this.sleeper = sleeper;
 	}
 
 	/**
@@ -80,6 +83,7 @@ class TextEnterer{
 				}
 			});
 			clicker.clickOnScreen(editText, false, 0);
+			sleeper.sleep();
 			activityUtils.hideSoftKeyboard(editText, true);
 
 			boolean successfull = false;

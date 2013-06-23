@@ -382,7 +382,6 @@ class ActivityUtils {
 	 */
 
 	public void hideSoftKeyboard(EditText editText, boolean shouldSleepAfter) {
-		sleeper.sleep(MINISLEEP);
 		Activity activity = getCurrentActivity(false);
 
 		InputMethodManager inputMethodManager = (InputMethodManager)  activity.getSystemService(Activity.INPUT_METHOD_SERVICE);
