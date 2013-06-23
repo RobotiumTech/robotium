@@ -756,7 +756,8 @@ public class Solo {
 
 	public void clickOnScreen(float x, float y, int numberOfClicks) {
 		if (android.os.Build.VERSION.SDK_INT < 14){
-			Assert.assertTrue("clickOnScreen(float x, float y, int numberOfClicks) requires API level >= 14", false);
+			throw new RuntimeException("clickOnScreen(float x, float y, int numberOfClicks) requires API level >= 14");
+			
 		}
 		tapper.generateTapGesture(numberOfClicks, new PointF(x, y));
 	}
@@ -1449,7 +1450,7 @@ public class Solo {
 	public void pinchToZoom(PointF startPoint1, PointF startPoint2, PointF endPoint1, PointF endPoint2)
 	{
 		if (android.os.Build.VERSION.SDK_INT < 14){
-			Assert.assertTrue("pinchToZoom() requires API level >= 14", false);
+			throw new RuntimeException("pinchToZoom() requires API level >= 14");
 		}
 		zoomer.generateZoomGesture(startPoint1, startPoint2, endPoint1, endPoint2);
 	}
@@ -1466,7 +1467,7 @@ public class Solo {
 	public void swipe(PointF startPoint1, PointF startPoint2, PointF endPoint1, PointF endPoint2)
 	{
 		if (android.os.Build.VERSION.SDK_INT < 14){
-			Assert.assertTrue("swipe() requires API level >= 14", false);
+			throw new RuntimeException("rotateLarge() requires API level >= 14");
 		}
 		swiper.generateSwipeGesture(startPoint1, startPoint2, endPoint1,
 				endPoint2);
@@ -1482,7 +1483,7 @@ public class Solo {
 	public void rotateLarge(PointF center1, PointF center2)
 	{
 		if (android.os.Build.VERSION.SDK_INT < 14){
-			Assert.assertTrue("rotateLarge() requires API level >= 14", false);
+			throw new RuntimeException("rotateLarge() requires API level >= 14");
 		}
 		rotator.generateRotateGesture(Rotator.LARGE, center1, center2);
 	}
@@ -1497,7 +1498,7 @@ public class Solo {
 	public void rotateSmall(PointF center1, PointF center2)
 	{
 		if (android.os.Build.VERSION.SDK_INT < 14){
-			Assert.assertTrue("rotateSmall() requires API level >= 14", false);
+			throw new RuntimeException("rotateLarge() requires API level >= 14");
 		}
 		rotator.generateRotateGesture(Rotator.SMALL, center1, center2);
 	}
