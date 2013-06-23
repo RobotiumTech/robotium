@@ -119,7 +119,7 @@ public class Solo {
 		this.tapper =  new Tapper(instrumentation);
 		this.rotator = new Rotator(instrumentation);
 		this.presser = new Presser(clicker, instrumentation, sleeper, waiter, dialogUtils);
-		this.textEnterer = new TextEnterer(instrumentation, activityUtils, clicker, sleeper);
+		this.textEnterer = new TextEnterer(instrumentation, activityUtils, clicker);
 	}
 
 
@@ -1687,7 +1687,7 @@ public class Solo {
 	
 	public void typeTextInWebElement(By by, String text){
 		clickOnWebElement(by);
-		hideSoftKeyboard();
+		activityUtils.hideSoftKeyboard(null, true, true);
 		instrumentation.sendStringSync(text);
 	}
 	
@@ -1702,7 +1702,7 @@ public class Solo {
 	
 	public void typeTextInWebElement(By by, String text, int match){
 		clickOnWebElement(by, match);
-		hideSoftKeyboard();
+		activityUtils.hideSoftKeyboard(null, true, true);
 		instrumentation.sendStringSync(text);
 	}
 	
@@ -1716,7 +1716,7 @@ public class Solo {
 	
 	public void typeTextInWebElement(WebElement webElement, String text){
 		clickOnWebElement(webElement);
-		hideSoftKeyboard();
+		activityUtils.hideSoftKeyboard(null, true, true);
 		instrumentation.sendStringSync(text);
 	}
 
@@ -2215,8 +2215,7 @@ public class Solo {
 	 */
 	
 	public void hideSoftKeyboard() {
-		sleeper.sleep();
-		activityUtils.hideSoftKeyboard(null, true);
+		activityUtils.hideSoftKeyboard(null, true, false);
 	}
 
 	/**

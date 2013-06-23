@@ -378,11 +378,12 @@ class ActivityUtils {
 	/**
 	 * Hides the soft keyboard
 	 * 
-	 * @param shouldSleepAfter whether to sleep a default pause 
+	 * @param shouldSleepFirst whether to sleep a default pause first
+	 * @param shouldSleepAfter whether to sleep a default pause after
 	 */
 
-	public void hideSoftKeyboard(EditText editText, boolean shouldSleepAfter) {
-		Activity activity = getCurrentActivity(false);
+	public void hideSoftKeyboard(EditText editText, boolean shouldSleepFirst, boolean shouldSleepAfter) {
+		Activity activity = getCurrentActivity(shouldSleepFirst);
 
 		InputMethodManager inputMethodManager = (InputMethodManager)  activity.getSystemService(Activity.INPUT_METHOD_SERVICE);
 
