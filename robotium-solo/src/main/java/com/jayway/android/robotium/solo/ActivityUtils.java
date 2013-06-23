@@ -335,6 +335,7 @@ class ActivityUtils {
 			finishActivity(activitiesOpened.get(i));
 		}
 		activitiesOpened = null;
+		sleeper.sleep(MINISLEEP);
 		// Finish the initial activity, pressing Back for good measure
 		finishActivity(getCurrentActivity(true, false));
 		this.activity = null;
@@ -365,13 +366,15 @@ class ActivityUtils {
 	 */
 
 	private void finishActivity(Activity activity){
-		try{
-			activity.finish();
-		}catch(Throwable e){
-			e.printStackTrace();
+		if(activity != null) {
+			try{
+				activity.finish();
+			}catch(Throwable e){
+				e.printStackTrace();
+			}
 		}
 	}
-	
+
 	/**
 	 * Hides the soft keyboard
 	 * 
