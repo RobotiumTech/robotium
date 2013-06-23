@@ -1463,7 +1463,7 @@ public class Solo {
 	public void swipe(PointF startPoint1, PointF startPoint2, PointF endPoint1, PointF endPoint2)
 	{
 		if (android.os.Build.VERSION.SDK_INT < 14){
-			throw new RuntimeException("rotateLarge() requires API level >= 14");
+			throw new RuntimeException("swipe() requires API level >= 14");
 		}
 		swiper.generateSwipeGesture(startPoint1, startPoint2, endPoint1,
 				endPoint2);
@@ -1479,7 +1479,7 @@ public class Solo {
 	public void rotateLarge(PointF center1, PointF center2)
 	{
 		if (android.os.Build.VERSION.SDK_INT < 14){
-			throw new RuntimeException("rotateLarge() requires API level >= 14");
+			throw new RuntimeException("rotateLarge(PointF center1, PointF center2) requires API level >= 14");
 		}
 		rotator.generateRotateGesture(Rotator.LARGE, center1, center2);
 	}
@@ -1494,7 +1494,7 @@ public class Solo {
 	public void rotateSmall(PointF center1, PointF center2)
 	{
 		if (android.os.Build.VERSION.SDK_INT < 14){
-			throw new RuntimeException("rotateLarge() requires API level >= 14");
+			throw new RuntimeException("rotateSmall(PointF center1, PointF center2) requires API level >= 14");
 		}
 		rotator.generateRotateGesture(Rotator.SMALL, center1, center2);
 	}
