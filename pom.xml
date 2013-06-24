@@ -2,7 +2,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.jayway.android.robotium</groupId>
 	<artifactId>robotium</artifactId>
-	<version>4.1.1-SNAPSHOT</version>
+	<version>4.2</version>
 	<packaging>pom</packaging>
     <name>Robotium</name>
     <description>User scenario testing for Android</description>
