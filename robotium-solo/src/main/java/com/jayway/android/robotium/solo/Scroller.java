@@ -320,6 +320,26 @@ class Scroller {
 		else if (side == Side.RIGHT)
 			drag(x, 0, y, y, 40);
 	}
+	
+		/**
+	 * Scrolls all the way horizontally.
+	 *
+	 * @param side the side to which to scroll; {@link Side#RIGHT} or {@link Side#LEFT}
+	 */
+
+	@SuppressWarnings("deprecation")
+	public void scrollToSideAllTheWay(Side side) {
+		int screenHeight = activityUtils.getCurrentActivity().getWindowManager().getDefaultDisplay()
+				.getHeight();
+		int screenWidth = activityUtils.getCurrentActivity(false).getWindowManager().getDefaultDisplay()
+				.getWidth();
+		float x = screenWidth * 0.99f;
+		float y = screenHeight / 2.0f;
+		if (side == Side.LEFT)
+			drag(0, x, y, y, 40);
+		else if (side == Side.RIGHT)
+			drag(x, 0, y, y, 40);
+	}
 
 	/**
 	 * Scrolls view horizontally.
