@@ -373,10 +373,13 @@ class ScreenshotTaker {
 			String name = message.getData().getString("name");
 			int quality = message.arg1;
 			Bitmap b = (Bitmap)message.obj;
-			if(b != null)
+			if(b != null) {
 				saveFile(name, b, quality);
-			else 
+				b.recycle();
+			}
+			else {
 				Log.d(LOG_TAG, "NULL BITMAP!!");
+			}
 		}
 
 		/**
