@@ -1437,10 +1437,10 @@ public class Solo {
 	/**
 	 * Zooms in or out if startPoint1 and startPoint2 are larger or smaller then endPoint1 and endPoint2. Requires API level >= 14.
 	 * 
-	 * @param startPoint1 First "finger" down on the screen.
-	 * @param startPoint2 Second "finger" down on the screen.
-	 * @param endPoint1 Corresponding ending point of startPoint1.
-	 * @param endPoint2 Corresponding ending point of startPoint2.
+	 * @param startPoint1 First "finger" down on the screen
+	 * @param startPoint2 Second "finger" down on the screen
+	 * @param endPoint1 Corresponding ending point of startPoint1
+	 * @param endPoint2 Corresponding ending point of startPoint2
 	 */
 
 	public void pinchToZoom(PointF startPoint1, PointF startPoint2, PointF endPoint1, PointF endPoint2)
@@ -1454,8 +1454,8 @@ public class Solo {
 	/**
 	 * Swipes with two fingers in a linear path determined by starting and ending points. Requires API level >= 14.
 	 * 
-	 * @param startPoint1 First "finger" down on the screen.
-	 * @param startPoint2 Second "finger" down on the screen.
+	 * @param startPoint1 First "finger" down on the screen
+	 * @param startPoint2 Second "finger" down on the screen
 	 * @param endPoint1 Corresponding ending point of startPoint1
 	 * @param endPoint2 Corresponding ending point of startPoint2
 	 */
