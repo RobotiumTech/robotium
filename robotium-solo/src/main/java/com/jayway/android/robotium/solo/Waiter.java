@@ -31,6 +31,7 @@ class Waiter {
 	private final Scroller scroller;
 	private final Sleeper sleeper;
 	private final int MINISLEEP = 50;
+	private final int MINIPAUSE = 300;
 
 
 	/**
@@ -73,7 +74,7 @@ class Waiter {
 	 */
 
 	public boolean waitForActivity(String name, int timeout){
-		Activity currentActivity = activityUtils.getCurrentActivity(false);
+		Activity currentActivity = activityUtils.getCurrentActivity(false, false);
 		final long endTime = SystemClock.uptimeMillis() + timeout;
 
 		while(SystemClock.uptimeMillis() < endTime){
@@ -81,8 +82,8 @@ class Waiter {
 				return true;
 			}
 			
-			sleeper.sleep(MINISLEEP);
-			currentActivity = activityUtils.getCurrentActivity(false);
+			sleeper.sleep(MINIPAUSE);
+			currentActivity = activityUtils.getCurrentActivity(false, false);
 		}
 		return false;
 	}
@@ -109,7 +110,7 @@ class Waiter {
 	 */
 
 	public boolean waitForActivity(Class<? extends Activity> activityClass, int timeout){
-		Activity currentActivity = activityUtils.getCurrentActivity(false);
+		Activity currentActivity = activityUtils.getCurrentActivity(false, false);
 		final long endTime = SystemClock.uptimeMillis() + timeout;
 
 		while(SystemClock.uptimeMillis() < endTime){
@@ -117,8 +118,8 @@ class Waiter {
 				return true;
 			}
 			
-			sleeper.sleep(MINISLEEP);
-			currentActivity = activityUtils.getCurrentActivity(false);
+			sleeper.sleep(MINIPAUSE);
+			currentActivity = activityUtils.getCurrentActivity(false, false);
 		}
 		return false;
 	}
