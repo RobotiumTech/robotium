@@ -31,7 +31,6 @@ class Waiter {
 	private final Scroller scroller;
 	private final Sleeper sleeper;
 	private final int MINISLEEP = 50;
-	private final int MINIPAUSE = 300;
 
 
 	/**
@@ -82,7 +81,7 @@ class Waiter {
 				return true;
 			}
 			
-			sleeper.sleep(MINIPAUSE);
+			sleeper.sleep(MINISLEEP);
 			currentActivity = activityUtils.getCurrentActivity(false, false);
 		}
 		return false;
@@ -118,7 +117,7 @@ class Waiter {
 				return true;
 			}
 			
-			sleeper.sleep(MINIPAUSE);
+			sleeper.sleep(MINISLEEP);
 			currentActivity = activityUtils.getCurrentActivity(false, false);
 		}
 		return false;
