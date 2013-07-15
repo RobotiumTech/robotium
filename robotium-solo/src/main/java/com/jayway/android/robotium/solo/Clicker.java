@@ -75,7 +75,8 @@ class Clicker {
 	public void clickOnScreen(float x, float y) {
 		boolean successfull = false;
 		int retry = 0;
-		
+		SecurityException ex = null;
+
 		while(!successfull && retry < 10) {
 			long downTime = SystemClock.uptimeMillis();
 			long eventTime = SystemClock.uptimeMillis();
@@ -89,12 +90,13 @@ class Clicker {
 				successfull = true;
 				sleeper.sleep(MINISLEEP);
 			}catch(SecurityException e){
+				ex = e;
 				activityUtils.hideSoftKeyboard(null, true);
 				retry++;
 			}		
 		}
 		if(!successfull) {
-			Assert.assertTrue("Click can not be completed!", false);
+			Assert.assertTrue("Click at ("+x+", "+y+") can not be completed! ("+(ex != null ? ex.getClass().getName()+": "+ex.getMessage() : "null")+")", false);
 		}
 	}
 
