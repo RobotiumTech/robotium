@@ -19,6 +19,7 @@ class DialogUtils {
 	private final ActivityUtils activityUtils;
 	private final ViewFetcher viewFetcher;
 	private final Sleeper sleeper;
+	private final static int TIMEOUT_DIALOG_TO_CLOSE = 2000;
 	private final int MINISLEEP = 50;
 
 	/**
@@ -44,7 +45,7 @@ class DialogUtils {
 	 */
 
 	public boolean waitForDialogToClose(long timeout) {
-		waitForDialogToOpen(timeout);
+		waitForDialogToOpen(TIMEOUT_DIALOG_TO_CLOSE);
 		final long endTime = SystemClock.uptimeMillis() + timeout;
 
 		while (SystemClock.uptimeMillis() < endTime) {

@@ -692,6 +692,28 @@ public class Solo {
 	{
 		asserter.assertMemoryNotLow();
 	}
+	
+	/**
+	 * Waits for a Dialog to open. Default timeout is 20 seconds.
+	 * 
+	 * @return {@code true} if the {@link android.app.Dialog} is opened before the timeout and {@code false} if it is not opened
+	 * 
+	 */
+
+	public boolean waitForDialogToOpen() {
+		return dialogUtils.waitForDialogToOpen(Timeout.getLargeTimeout());
+	}
+	
+	/**
+	 * Waits for a Dialog to close. Default timeout is 20 seconds.
+	 * 
+	 * @return {@code true} if the {@link android.app.Dialog} is closed before the timeout and {@code false} if it is not closed
+	 * 
+	 */
+
+	public boolean waitForDialogToClose() {
+		return dialogUtils.waitForDialogToClose(Timeout.getLargeTimeout());
+	}
 
 	/**
 	 * Waits for a Dialog to open.
