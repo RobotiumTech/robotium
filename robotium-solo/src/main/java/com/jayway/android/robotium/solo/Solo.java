@@ -701,7 +701,7 @@ public class Solo {
 	 */
 
 	public boolean waitForDialogToOpen() {
-		return dialogUtils.waitForDialogToOpen(Timeout.getLargeTimeout());
+		return dialogUtils.waitForDialogToOpen(Timeout.getLargeTimeout(), true);
 	}
 	
 	/**
@@ -724,7 +724,7 @@ public class Solo {
 	 */
 
 	public boolean waitForDialogToOpen(long timeout) {
-		return dialogUtils.waitForDialogToOpen(timeout);
+		return dialogUtils.waitForDialogToOpen(timeout, true);
 	}
 	
 	/**
@@ -1847,7 +1847,7 @@ public class Solo {
 	/**
 	 * Returns a TextView displaying the specified text. 
 	 * 
-	 * @param text the text that is displayedn, specified as a regular expression
+	 * @param text the text that is displayed, specified as a regular expression
 	 * @return the {@link TextView} displaying the specified text
 	 */
 	

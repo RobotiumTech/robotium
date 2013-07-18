@@ -38,6 +38,7 @@ class Clicker {
 	private final WebUtils webUtils;
 	private final DialogUtils dialogUtils;
 	private final int MINISLEEP = 100;
+	private final int WAIT_TIME = 1500;
 
 
 	/**
@@ -192,7 +193,7 @@ class Clicker {
 	public void clickLongOnTextAndPress(String text, int index)
 	{
 		clickOnText(text, true, 0, true, 0);
-		dialogUtils.waitForDialogToOpen(Timeout.getSmallTimeout());
+		dialogUtils.waitForDialogToOpen(Timeout.getSmallTimeout(), true);
 		try{
 			inst.sendKeyDownUpSync(KeyEvent.KEYCODE_DPAD_DOWN);
 		}catch(SecurityException e){
@@ -220,6 +221,7 @@ class Clicker {
 		}catch(SecurityException e){
 			Assert.assertTrue("Can not open the menu!", false);
 		}
+		dialogUtils.waitForDialogToOpen(WAIT_TIME, true);
 		clickOnText(text, false, 1, true, 0);
 	}
 
@@ -243,7 +245,8 @@ class Clicker {
 		}catch(SecurityException e){
 			Assert.assertTrue("Can not open the menu!", false);
 		}
-		boolean textShown = waiter.waitForText(text, 1, 1500, false) != null;
+		dialogUtils.waitForDialogToOpen(WAIT_TIME, true);
+		boolean textShown = waiter.waitForText(text, 1, WAIT_TIME, false) != null;
 
 		if(subMenu && (viewFetcher.getCurrentViews(TextView.class).size() > 5) && !textShown){
 			for(TextView textView : viewFetcher.getCurrentViews(TextView.class)){

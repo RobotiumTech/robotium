@@ -45,7 +45,7 @@ class DialogUtils {
 	 */
 
 	public boolean waitForDialogToClose(long timeout) {
-		waitForDialogToOpen(TIMEOUT_DIALOG_TO_CLOSE);
+		waitForDialogToOpen(TIMEOUT_DIALOG_TO_CLOSE, false);
 		final long endTime = SystemClock.uptimeMillis() + timeout;
 
 		while (SystemClock.uptimeMillis() < endTime) {
@@ -67,8 +67,11 @@ class DialogUtils {
 	 * @return {@code true} if the {@code Dialog} is opened before the timeout and {@code false} if it is not opened
 	 */
 
-	public boolean waitForDialogToOpen(long timeout) {
+	public boolean waitForDialogToOpen(long timeout, boolean sleepFirst) {
 		final long endTime = SystemClock.uptimeMillis() + timeout;
+
+		if(sleepFirst)
+			sleeper.sleep();
 
 		while (SystemClock.uptimeMillis() < endTime) {
 

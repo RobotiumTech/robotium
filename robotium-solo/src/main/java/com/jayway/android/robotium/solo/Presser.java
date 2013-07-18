@@ -71,7 +71,7 @@ class Presser{
 		sleeper.sleep();
 		try{
 			inst.sendKeyDownUpSync(KeyEvent.KEYCODE_MENU);
-			dialogUtils.waitForDialogToOpen(Timeout.getSmallTimeout());
+			dialogUtils.waitForDialogToOpen(Timeout.getSmallTimeout(), true);
 			inst.sendKeyDownUpSync(KeyEvent.KEYCODE_DPAD_UP);
 			inst.sendKeyDownUpSync(KeyEvent.KEYCODE_DPAD_UP);
 		}catch(SecurityException e){
@@ -115,7 +115,7 @@ class Presser{
 	public void pressSpinnerItem(int spinnerIndex, int itemIndex)
 	{	
 		clicker.clickOnScreen(waiter.waitForAndGetView(spinnerIndex, Spinner.class));
-		dialogUtils.waitForDialogToOpen(Timeout.getSmallTimeout());
+		dialogUtils.waitForDialogToOpen(Timeout.getSmallTimeout(), true);
 
 		try{
 			inst.sendKeyDownUpSync(KeyEvent.KEYCODE_DPAD_DOWN);
