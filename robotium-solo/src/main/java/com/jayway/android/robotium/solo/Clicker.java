@@ -245,7 +245,7 @@ class Clicker {
 		}catch(SecurityException e){
 			Assert.assertTrue("Can not open the menu!", false);
 		}
-		dialogUtils.waitForDialogToOpen(WAIT_TIME, true);
+		dialogUtils.waitForDialogToOpen(WAIT_TIME, false);
 		boolean textShown = waiter.waitForText(text, 1, WAIT_TIME, false) != null;
 
 		if(subMenu && (viewFetcher.getCurrentViews(TextView.class).size() > 5) && !textShown){
