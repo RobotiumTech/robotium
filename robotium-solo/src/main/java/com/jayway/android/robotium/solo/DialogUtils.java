@@ -20,7 +20,7 @@ class DialogUtils {
 	private final ViewFetcher viewFetcher;
 	private final Sleeper sleeper;
 	private final static int TIMEOUT_DIALOG_TO_CLOSE = 2000;
-	private final int MINISLEEP = 50;
+	private final int MINISLEEP = 100;
 
 	/**
 	 * Constructs this object.
@@ -71,7 +71,7 @@ class DialogUtils {
 		final long endTime = SystemClock.uptimeMillis() + timeout;
 
 		if(sleepFirst)
-			sleeper.sleep();
+			sleeper.sleep(MINISLEEP);
 
 		while (SystemClock.uptimeMillis() < endTime) {
 
