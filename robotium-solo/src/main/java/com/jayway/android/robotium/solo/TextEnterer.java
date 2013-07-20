@@ -51,7 +51,7 @@ class TextEnterer{
 				{
 					editText.setInputType(InputType.TYPE_NULL); 
 					editText.performClick();
-					activityUtils.hideSoftKeyboard(editText, true, false);
+					activityUtils.hideSoftKeyboard(editText, false, false);
 					if(text.equals(""))
 						editText.setText(text);
 					else{
