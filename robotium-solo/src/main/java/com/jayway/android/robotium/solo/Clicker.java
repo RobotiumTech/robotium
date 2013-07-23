@@ -38,6 +38,7 @@ class Clicker {
 	private final WebUtils webUtils;
 	private final DialogUtils dialogUtils;
 	private final int MINISLEEP = 100;
+	private final int TIMEOUT = 200;
 	private final int WAIT_TIME = 1500;
 
 
@@ -76,7 +77,7 @@ class Clicker {
 	public void clickOnScreen(float x, float y) {
 		boolean successfull = false;
 		int retry = 0;
-		
+
 		while(!successfull && retry < 10) {
 			long downTime = SystemClock.uptimeMillis();
 			long eventTime = SystemClock.uptimeMillis();
@@ -215,13 +216,16 @@ class Clicker {
 
 	public void clickOnMenuItem(String text)
 	{	
-		sleeper.sleep();
-		try{
-			sender.sendKeyCode(KeyEvent.KEYCODE_MENU);
-		}catch(SecurityException e){
-			Assert.assertTrue("Can not open the menu!", false);
+		sleeper.sleepMini();
+		
+		if(!dialogUtils.waitForDialogToOpen(TIMEOUT, false)) {
+			try{
+				sender.sendKeyCode(KeyEvent.KEYCODE_MENU);
+				dialogUtils.waitForDialogToOpen(WAIT_TIME, true);
+			}catch(SecurityException e){
+				Assert.assertTrue("Can not open the menu!", false);
+			}
 		}
-		dialogUtils.waitForDialogToOpen(WAIT_TIME, true);
 		clickOnText(text, false, 1, true, 0);
 	}
 
@@ -234,18 +238,21 @@ class Clicker {
 
 	public void clickOnMenuItem(String text, boolean subMenu)
 	{
-		sleeper.sleep();
+		sleeper.sleepMini();
+		
 		TextView textMore = null;
 		int [] xy = new int[2];
 		int x = 0;
 		int y = 0;
 
-		try{
-			sender.sendKeyCode(KeyEvent.KEYCODE_MENU);
-		}catch(SecurityException e){
-			Assert.assertTrue("Can not open the menu!", false);
+		if(!dialogUtils.waitForDialogToOpen(TIMEOUT, false)) {
+			try{
+				sender.sendKeyCode(KeyEvent.KEYCODE_MENU);
+				dialogUtils.waitForDialogToOpen(WAIT_TIME, true);
+			}catch(SecurityException e){
+				Assert.assertTrue("Can not open the menu!", false);
+			}
 		}
-		dialogUtils.waitForDialogToOpen(WAIT_TIME, false);
 		boolean textShown = waiter.waitForText(text, 1, WAIT_TIME, false) != null;
 
 		if(subMenu && (viewFetcher.getCurrentViews(TextView.class).size() > 5) && !textShown){
@@ -433,7 +440,7 @@ class Clicker {
 
 		ArrayList<View> views = new ArrayList<View>();
 		final AbsListView absListView = waiter.waitForAndGetView(index, AbsListView.class);
-		
+
 		if(absListView == null)
 			Assert.assertTrue("ListView is null!", false);
 
@@ -445,7 +452,7 @@ class Clicker {
 			}
 			sleeper.sleep();
 		}
-		
+
 		View view = absListView.getChildAt(lineIndex);
 
 		if(view != null){
