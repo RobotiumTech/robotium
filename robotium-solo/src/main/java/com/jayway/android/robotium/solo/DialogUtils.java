@@ -19,7 +19,7 @@ class DialogUtils {
 	private final ActivityUtils activityUtils;
 	private final ViewFetcher viewFetcher;
 	private final Sleeper sleeper;
-	private final static int TIMEOUT_DIALOG_TO_CLOSE = 2000;
+	private final static int TIMEOUT_DIALOG_TO_CLOSE = 1000;
 	private final int MINISLEEP = 100;
 
 	/**
