@@ -172,9 +172,18 @@ function promptElement(element) {
 	var name = element.getAttribute('name');
 	var className = element.className;
 	var tagName = element.tagName;
+	var attributes = "";
+	var htmlAttributes = element.attributes;
+	for (var i = 0, htmlAttribute; htmlAttribute = htmlAttributes[i]; i++){
+		attributes += htmlAttribute.name + "::" + htmlAttribute.value;
+		if (i + 1 < htmlAttributes.length) {
+			attributes += "#$";
+		}
+	}
+	
 	var rect = element.getBoundingClientRect();
 	if(rect.width > 0 && rect.height > 0 && rect.left >= 0 && rect.top >= 0){
-		prompt(id + ';,' + text + ';,' + name + ";," + className + ";," + tagName + ";," + rect.left + ';,' + rect.top + ';,' + rect.width + ';,' + rect.height);
+		prompt(id + ';,' + text + ';,' + name + ";," + className + ";," + tagName + ";," + rect.left + ';,' + rect.top + ';,' + rect.width + ';,' + rect.height + ';,' + attributes);
 	}
 }
 
