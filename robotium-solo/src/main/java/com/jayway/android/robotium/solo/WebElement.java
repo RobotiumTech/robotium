@@ -1,5 +1,7 @@
 package com.jayway.android.robotium.solo;
 
+import java.util.Hashtable;
+
 /**
  * Represents an element shown in a WebView.  
  * 
@@ -16,6 +18,8 @@ public class WebElement {
 	private String name;
 	private String className;
 	private String tagName;
+	private Hashtable<String, String> attributes;
+	
 
 	/**
 	 * Constructs this object. 
@@ -27,13 +31,14 @@ public class WebElement {
 	 * @param tagName the given tag name to be set
 	 */
 
-	public WebElement(String webId, String textContent, String name, String className, String tagName) {
+	public WebElement(String webId, String textContent, String name, String className, String tagName, Hashtable<String, String> attributes) {
 
 		this.setId(webId);
 		this.setTextContent(textContent);
 		this.setName(name);
 		this.setClassName(className);
 		this.setTagName(tagName);
+		this.setAttributes(attributes);
 	}
 
 	/**
@@ -184,6 +189,26 @@ public class WebElement {
 	
 	public void setTextContent(String textContent) {
 		this.text = textContent;
+	}
+
+	/**
+	 * Returns the attributes key/value list.
+	 * 
+	 * @return attributes
+	 */
+
+	public Hashtable<String, String> getAttributes() {
+		return attributes;
+	}
+
+	/**
+	 * Sets the attributes.
+	 * 
+	 * @param attributes the attributes to set
+	 */
+	
+	public void setAttributes(Hashtable<String,String> attributes) {
+		this.attributes = attributes;
 	}
 
 }
