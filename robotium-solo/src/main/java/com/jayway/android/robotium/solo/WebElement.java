@@ -197,8 +197,12 @@ public class WebElement {
 	 * @return attributes
 	 */
 
-	public Hashtable<String, String> getAttributes() {
-		return attributes;
+	public String getAttribute(String attributeName) {
+		if (attributeName != null){
+			return this.attributes.get(attributeName);
+		}
+		
+		return null;
 	}
 
 	/**
