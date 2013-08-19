@@ -1257,7 +1257,7 @@ public class Solo {
 
 	public void drag(float fromX, float toX, float fromY, float toY, 
 			int stepCount) {
-		hideSoftKeyboard();
+		activityUtils.hideSoftKeyboard(null, false, true);
 		scroller.drag(fromX, toX, fromY, toY, stepCount);
 	}
 
