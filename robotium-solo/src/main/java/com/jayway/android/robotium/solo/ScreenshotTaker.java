@@ -71,7 +71,7 @@ class ScreenshotTaker {
 		ScreenshotRunnable runnable = new ScreenshotRunnable(decorView, name, quality);
 		activityUtils.getCurrentActivity(false).runOnUiThread(runnable);
 	}
-	
+
 	/**
 	 * Takes a screenshot sequence and saves the images with the specified name prefix in "/sdcard/Robotium-Screenshots/". 
 	 *
@@ -106,7 +106,7 @@ class ScreenshotTaker {
 
 		screenshotSequenceThread.start();
 	}
-	
+
 	/**
 	 * Causes a screenshot sequence to end.
 	 * 
@@ -209,9 +209,15 @@ class ScreenshotTaker {
 		view.destroyDrawingCache();
 		view.buildDrawingCache(false);
 		Bitmap orig = view.getDrawingCache();
-		Bitmap.Config config = orig.getConfig();
-		if(config == null) 
+		Bitmap.Config config = null;
+
+		if(orig != null) {
+			config = orig.getConfig();
+		}
+
+		if(config == null) {
 			config = Bitmap.Config.ARGB_8888;
+		}
 		Bitmap b = orig.copy(config, false);
 		view.destroyDrawingCache();
 		return b; 
