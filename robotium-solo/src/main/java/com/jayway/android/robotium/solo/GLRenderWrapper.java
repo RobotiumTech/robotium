@@ -47,8 +47,14 @@ class GLRenderWrapper implements Renderer {
 		this.width = view.getWidth();
 		this.height = view.getHeight();
 		
-		this.glVersion = new Reflect(view).field("mEGLContextClientVersion")
-				.out(Integer.class).intValue();
+		Integer out = new Reflect(view).field("mEGLContextClientVersion")
+				.out(Integer.class);
+		if ( out != null ) {
+			this.glVersion = out.intValue();
+		} else {
+			this.glVersion = -1;
+			this.takeScreenshot = false;
+		}
 	}
 
 	@Override
