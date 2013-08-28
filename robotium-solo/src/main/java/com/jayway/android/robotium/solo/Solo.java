@@ -841,15 +841,15 @@ public class Solo {
 	}
 
 	/**
-	 * Clicks the specified MenuItem.
+	 * Clicks a MenuItem matching the specified resource id.
 	 * 
-	 * @param view the {@link View} to click. The parameter will be interpreted as a regular expression
+	 * @param id the R.id of the MenuItem to click
 	 *
 	 */
 
-	public void clickOnMenuItem(View view)
+	public void clickOnMenuItem(int id)
 	{	
-		clicker.clickOnMenuItem(view);
+		clicker.clickOnMenuItem(id);
 	}
 
 	/**
