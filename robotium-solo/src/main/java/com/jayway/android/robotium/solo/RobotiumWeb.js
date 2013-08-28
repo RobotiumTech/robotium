@@ -30,6 +30,16 @@ function id(id) {
 	if(element != null){ 
 		promptElement(element);
 	} 
+	else {
+		for (var key in document.all){
+			try{
+				element = document.all[key];
+				if(element.id == id) {
+					promptElement(element);
+				}
+			} catch(ignored){}			
+		}
+	}
 	finished(); 
 }
 
