@@ -238,20 +238,6 @@ class Clicker {
 	}
 
 	/**
-	 * Clicks a MenuItem matching the specified resource id.
-	 * 
-	 * @param the R.id of the MenuItem to click
-	 *
-	 */
-
-	public void clickOnMenuItem(int id)
-	{	
-		openMenu();
-		View menuItem = waiter.waitForView(id, 0);
-		clickOnScreen(menuItem);
-	}
-
-	/**
 	 * Clicks on a menu item with a given text
 	 * 
 	 * @param text the menu text that should be clicked on. The parameter <strong>will</strong> be interpreted as a regular expression.

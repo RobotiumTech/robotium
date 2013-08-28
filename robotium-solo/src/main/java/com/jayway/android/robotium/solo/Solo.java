@@ -841,18 +841,6 @@ public class Solo {
 	}
 
 	/**
-	 * Clicks a MenuItem matching the specified resource id.
-	 * 
-	 * @param id the R.id of the MenuItem to click
-	 *
-	 */
-
-	public void clickOnMenuItem(int id)
-	{	
-		clicker.clickOnMenuItem(id);
-	}
-
-	/**
 	 * Clicks a MenuItem displaying the specified text.
 	 * 
 	 * @param text the text displayed by the MenuItem. The parameter will be interpreted as a regular expression
