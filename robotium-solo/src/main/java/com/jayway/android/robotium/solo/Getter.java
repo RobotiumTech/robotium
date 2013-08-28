@@ -104,6 +104,9 @@ class Getter {
 		Context targetContext = instrumentation.getTargetContext(); 
 		String packageName = targetContext.getPackageName(); 
 		int viewId = targetContext.getResources().getIdentifier(id, "id", packageName);
+		if(viewId == 0){
+			viewId = targetContext.getResources().getIdentifier(id, "id", "android");
+		}
 		return getView(viewId, index); 
 	}
 }

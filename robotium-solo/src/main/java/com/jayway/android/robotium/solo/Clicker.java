@@ -208,16 +208,13 @@ class Clicker {
 		inst.sendKeyDownUpSync(KeyEvent.KEYCODE_ENTER);
 	}
 
-	/**
-	 * Clicks on a menu item with a given text
-	 * 
-	 * @param text the menu text that should be clicked on. The parameter <strong>will</strong> be interpreted as a regular expression.
+	/*
+	 * Opens the menu and waits for it to open
 	 */
 
-	public void clickOnMenuItem(String text)
-	{	
+	private void openMenu(){
 		sleeper.sleepMini();
-		
+
 		if(!dialogUtils.waitForDialogToOpen(TIMEOUT, false)) {
 			try{
 				sender.sendKeyCode(KeyEvent.KEYCODE_MENU);
@@ -226,7 +223,30 @@ class Clicker {
 				Assert.assertTrue("Can not open the menu!", false);
 			}
 		}
+	}
+
+	/**
+	 * Clicks on a menu item with a given text
+	 * 
+	 * @param text the menu text that should be clicked on. The parameter <strong>will</strong> be interpreted as a regular expression.
+	 */
+
+	public void clickOnMenuItem(String text)
+	{	
+		openMenu();
 		clickOnText(text, false, 1, true, 0);
+	}
+
+	/**
+	 * Clicks on a given menu item
+	 * 
+	 * @param view the menu item that should be clicked on. The parameter <strong>will</strong> be interpreted as a regular expression.
+	 */
+
+	public void clickOnMenuItem(View view)
+	{	
+		openMenu();
+		clickOnScreen(view);
 	}
 
 	/**
@@ -239,7 +259,7 @@ class Clicker {
 	public void clickOnMenuItem(String text, boolean subMenu)
 	{
 		sleeper.sleepMini();
-		
+
 		TextView textMore = null;
 		int [] xy = new int[2];
 		int x = 0;

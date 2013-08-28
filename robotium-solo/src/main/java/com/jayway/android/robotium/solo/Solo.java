@@ -839,14 +839,26 @@ public class Solo {
 	public void clickOnToggleButton(String text) {
 		clicker.clickOn(ToggleButton.class, text);
 	}
-	
+
+	/**
+	 * Clicks the specified MenuItem.
+	 * 
+	 * @param view the {@link View} to click. The parameter will be interpreted as a regular expression
+	 *
+	 */
+
+	public void clickOnMenuItem(View view)
+	{	
+		clicker.clickOnMenuItem(view);
+	}
+
 	/**
 	 * Clicks a MenuItem displaying the specified text.
 	 * 
 	 * @param text the text displayed by the MenuItem. The parameter will be interpreted as a regular expression
 	 *
 	 */
-	
+
 	public void clickOnMenuItem(String text)
 	{	
 		clicker.clickOnMenuItem(text);
