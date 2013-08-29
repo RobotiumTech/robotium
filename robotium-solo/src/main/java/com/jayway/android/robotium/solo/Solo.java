@@ -2412,8 +2412,22 @@ public class Solo {
 
 	public String getString(int id)
 	{
-		return activityUtils.getString(id);
+		return getter.getString(id);
 	}
+	
+	/**
+	 * Returns a localized String matching the specified resource id.
+	 * 
+	 * @param id the R.id of the String
+	 * @return the localized String
+	 *
+	 */
+
+	public String getString(String id)
+	{
+		return getter.getString(id);
+	}
+
 
 	/**
 	 * Robotium will sleep for the specified time.

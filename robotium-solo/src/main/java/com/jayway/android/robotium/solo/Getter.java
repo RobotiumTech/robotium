@@ -67,6 +67,37 @@ class Getter {
 
 		return viewToReturn;
 	}
+	
+	/**
+	 * Returns a localized string
+	 * 
+	 * @param id the resource ID for the string
+	 * @return the localized string
+	 */
+
+	public String getString(int id)
+	{
+		Activity activity = activityUtils.getCurrentActivity(false);
+		return activity.getString(id);
+	}
+	
+	/**
+	 * Returns a localized string
+	 * 
+	 * @param id the resource ID for the string
+	 * @return the localized string
+	 */
+
+	public String getString(String id)
+	{
+		Context targetContext = instrumentation.getTargetContext(); 
+		String packageName = targetContext.getPackageName(); 
+		int viewId = targetContext.getResources().getIdentifier(id, "string", packageName);
+		if(viewId == 0){
+			viewId = targetContext.getResources().getIdentifier(id, "string", "android");
+		}
+		return getString(viewId);		
+	}
 
 	/**
 	 * Returns a {@code View} with a given id.
