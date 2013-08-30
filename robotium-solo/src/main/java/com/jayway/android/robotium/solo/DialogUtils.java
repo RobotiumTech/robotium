@@ -1,10 +1,13 @@
 package com.jayway.android.robotium.solo;
 
+
 import android.app.Activity;
 import android.content.Context;
 import android.os.SystemClock;
 import android.view.ContextThemeWrapper;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.EditText;
 
 
 /**
@@ -104,5 +107,37 @@ class DialogUtils {
 		Context activityContext = activity;
 		Context activityBaseContext = activity.getBaseContext();
 		return (activityContext.equals(viewContext) || activityBaseContext.equals(viewContext)) && (view != activity.getWindow().getDecorView());
+	}
+
+	/**
+	 * Hides the soft keyboard
+	 * 
+	 * @param shouldSleepFirst whether to sleep a default pause first
+	 * @param shouldSleepAfter whether to sleep a default pause after
+	 */
+
+	public void hideSoftKeyboard(EditText editText, boolean shouldSleepFirst, boolean shouldSleepAfter) {
+		Activity activity = activityUtils.getCurrentActivity(shouldSleepFirst);
+
+		InputMethodManager inputMethodManager = (InputMethodManager)  activity.getSystemService(Activity.INPUT_METHOD_SERVICE);
+
+		if(editText != null) {
+			inputMethodManager.hideSoftInputFromWindow(editText.getWindowToken(), 0);
+			return;
+		}
+		View focusedView = activity.getCurrentFocus();
+
+		if(!(focusedView instanceof EditText)) {
+			EditText freshestEditText = viewFetcher.getFreshestView(viewFetcher.getCurrentViews(EditText.class));
+			if(freshestEditText != null){
+				focusedView = freshestEditText;
+			}
+		}
+		if(focusedView != null) {
+			inputMethodManager.hideSoftInputFromWindow(focusedView.getWindowToken(), 0);
+		}
+		if(shouldSleepAfter){
+			sleeper.sleep();
+		}
 	}
 }

@@ -13,6 +13,7 @@ import android.app.Instrumentation.ActivityMonitor;
 import android.content.IntentFilter;
 import android.util.Log;
 import android.view.KeyEvent;
+import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 
@@ -190,7 +191,7 @@ class ActivityUtils {
 	public Activity getCurrentActivity(boolean shouldSleepFirst) {
 		return getCurrentActivity(shouldSleepFirst, true);
 	}
-	
+
 	/**
 	 * Returns the current {@code Activity}, after sleeping a default pause length.
 	 *
@@ -372,29 +373,6 @@ class ActivityUtils {
 			}catch(Throwable e){
 				e.printStackTrace();
 			}
-		}
-	}
-
-	/**
-	 * Hides the soft keyboard
-	 * 
-	 * @param shouldSleepFirst whether to sleep a default pause first
-	 * @param shouldSleepAfter whether to sleep a default pause after
-	 */
-
-	public void hideSoftKeyboard(EditText editText, boolean shouldSleepFirst, boolean shouldSleepAfter) {
-		Activity activity = getCurrentActivity(shouldSleepFirst);
-
-		InputMethodManager inputMethodManager = (InputMethodManager)  activity.getSystemService(Activity.INPUT_METHOD_SERVICE);
-
-		if(editText != null) {
-			inputMethodManager.hideSoftInputFromWindow(editText.getWindowToken(), 0);
-		}
-		else if(activity.getCurrentFocus() != null){
-			inputMethodManager.hideSoftInputFromWindow(activity.getCurrentFocus().getWindowToken(), 0);
-		}
-		if(shouldSleepAfter){
-			sleeper.sleep();
 		}
 	}
 

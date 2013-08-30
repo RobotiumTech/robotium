@@ -17,21 +17,21 @@ class TextEnterer{
 
 	private final Instrumentation inst;
 	private final Clicker clicker;
-	private final ActivityUtils activityUtils;
+	private final DialogUtils dialogUtils;
 
 	/**
 	 * Constructs this object.
 	 * 
 	 * @param inst the {@code Instrumentation} instance.
-	 * @param activityUtils the {@code ActivityUtils} instance
 	 * @param clicker the {@code Clicker} instance.
+	 * @param dialogUtils the {@code DialogUtils} instance.
 	 * 
 	 */
 
-	public TextEnterer(Instrumentation inst, ActivityUtils activityUtils, Clicker clicker) {
+	public TextEnterer(Instrumentation inst, Clicker clicker, DialogUtils dialogUtils) {
 		this.inst = inst;
-		this.activityUtils = activityUtils;
 		this.clicker = clicker;
+		this.dialogUtils = dialogUtils;
 	}
 
 	/**
@@ -51,7 +51,7 @@ class TextEnterer{
 				{
 					editText.setInputType(InputType.TYPE_NULL); 
 					editText.performClick();
-					activityUtils.hideSoftKeyboard(editText, false, false);
+					dialogUtils.hideSoftKeyboard(editText, false, false);
 					if(text.equals(""))
 						editText.setText(text);
 					else{
@@ -80,7 +80,7 @@ class TextEnterer{
 				}
 			});
 			clicker.clickOnScreen(editText, false, 0);
-			activityUtils.hideSoftKeyboard(editText, true, true);
+			dialogUtils.hideSoftKeyboard(editText, true, true);
 
 			boolean successfull = false;
 			int retry = 0;
@@ -91,7 +91,7 @@ class TextEnterer{
 					inst.sendStringSync(text);
 					successfull = true;
 				}catch(SecurityException e){
-					activityUtils.hideSoftKeyboard(editText, true, true);
+					dialogUtils.hideSoftKeyboard(editText, true, true);
 					retry++;
 				}
 			}

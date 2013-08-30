@@ -91,7 +91,7 @@ class Clicker {
 				successfull = true;
 				sleeper.sleep(MINISLEEP);
 			}catch(SecurityException e){
-				activityUtils.hideSoftKeyboard(null, false, true);
+				dialogUtils.hideSoftKeyboard(null, false, true);
 				retry++;
 			}		
 		}
@@ -120,7 +120,7 @@ class Clicker {
 				inst.sendPointerSync(event);
 				successfull = true;
 			}catch(SecurityException e){
-				activityUtils.hideSoftKeyboard(null, false, true);
+				dialogUtils.hideSoftKeyboard(null, false, true);
 				retry++;
 			}
 		}
