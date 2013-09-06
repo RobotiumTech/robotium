@@ -1432,14 +1432,14 @@ public class Solo {
 	 * Scrolls horizontally.
 	 *
 	 * @param side the side to scroll; {@link #RIGHT} or {@link #LEFT}
-	 * @param scrollLength the length to scroll from 0 to 1 where 1 is all the way. Example is: 0.55.
+	 * @param scrollPosition the position to scroll to, from 0 to 1 where 1 is all the way. Example is: 0.55.
 	 *
 	 */
 	
-	public void scrollToSide(int side, float scrollLength) {
+	public void scrollToSide(int side, float scrollPosition) {
         switch (side){
-            case RIGHT: scroller.scrollToSide(Scroller.Side.RIGHT, scrollLength); break;
-            case LEFT:  scroller.scrollToSide(Scroller.Side.LEFT, scrollLength);  break;
+            case RIGHT: scroller.scrollToSide(Scroller.Side.RIGHT, scrollPosition); break;
+            case LEFT:  scroller.scrollToSide(Scroller.Side.LEFT, scrollPosition);  break;
         }
 	}
 
@@ -1463,14 +1463,14 @@ public class Solo {
 	 *
 	 * @param view the View to scroll
 	 * @param side the side to scroll; {@link #RIGHT} or {@link #LEFT}
-	 * @param scrollLength the length to scroll from 0 to 1 where 1 is all the way. Example is: 0.55.
+	 * @param scrollPosition the position to scroll to, from 0 to 1 where 1 is all the way. Example is: 0.55.
 	 *
 	 */
 
-	public void scrollViewToSide(View view, int side, float scrollLength) {
+	public void scrollViewToSide(View view, int side, float scrollPosition) {
 		switch (side){
-			case RIGHT: scroller.scrollViewToSide(view, Scroller.Side.RIGHT, scrollLength); break;
-			case LEFT:  scroller.scrollViewToSide(view, Scroller.Side.LEFT, scrollLength);  break;
+			case RIGHT: scroller.scrollViewToSide(view, Scroller.Side.RIGHT, scrollPosition); break;
+			case LEFT:  scroller.scrollViewToSide(view, Scroller.Side.LEFT, scrollPosition);  break;
 		}
 	}
 

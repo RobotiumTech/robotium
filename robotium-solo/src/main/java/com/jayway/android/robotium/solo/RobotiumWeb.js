@@ -44,18 +44,27 @@ function id(id) {
 }
 
 function xpath(xpath) {
-	var element = document.evaluate(xpath, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null ).singleNodeValue; 
-	if(element != null){ 
-		promptElement(element);
-	} 
-	finished();
+	var elements = document.evaluate(xpath, document, null, XPathResult.ORDERED_NODE_ITERATOR_TYPE, null); 
+
+	if (elements){
+		var element = elements.iterateNext();
+		while(element) {
+			promptElement(element);
+			element = result.iterateNext();
+		}
+		finished();
+	}
 }
 
 function cssSelector(cssSelector) {
-	var element = document.querySelector(cssSelector); 
-	if(element != null){ 
-		promptElement(element);
-	} 
+	var elements = document.querySelectorAll(cssSelector);
+	for (var key in elements) {
+		if(elements != null){ 
+			try{
+				promptElement(elements[key]);
+			}catch(ignored){}  
+		}
+	}
 	finished(); 
 }
 
