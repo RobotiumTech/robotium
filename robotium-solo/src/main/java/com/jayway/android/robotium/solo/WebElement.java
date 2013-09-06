@@ -192,9 +192,9 @@ public class WebElement {
 	}
 
 	/**
-	 * Returns the attributes key/value list.
+	 * Returns the value for the specified attribute.
 	 * 
-	 * @return attributes
+	 * @return the value for the specified attribute
 	 */
 
 	public String getAttribute(String attributeName) {
