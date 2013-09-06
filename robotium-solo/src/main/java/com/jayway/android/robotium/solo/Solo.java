@@ -1427,6 +1427,22 @@ public class Solo {
    	public void scrollListToLine(int index, int line){
    		scroller.scrollListToLine(waiter.waitForAndGetView(index, AbsListView.class), line);
    	}
+   	
+   	/**
+	 * Scrolls horizontally.
+	 *
+	 * @param side the side to scroll; {@link #RIGHT} or {@link #LEFT}
+	 * @param scrollLength the length to scroll from 0 to 1 where 1 is all the way. Example is: 0.55.
+	 *
+	 */
+	
+	public void scrollToSide(int side, float scrollLength) {
+        switch (side){
+            case RIGHT: scroller.scrollToSide(Scroller.Side.RIGHT, scrollLength); break;
+            case LEFT:  scroller.scrollToSide(Scroller.Side.LEFT, scrollLength);  break;
+        }
+	}
+
 
 	/**
 	 * Scrolls horizontally.
@@ -1437,9 +1453,25 @@ public class Solo {
 	
 	public void scrollToSide(int side) {
         switch (side){
-            case RIGHT: scroller.scrollToSide(Scroller.Side.RIGHT); break;
-            case LEFT:  scroller.scrollToSide(Scroller.Side.LEFT);  break;
+            case RIGHT: scroller.scrollToSide(Scroller.Side.RIGHT, 0.55F); break;
+            case LEFT:  scroller.scrollToSide(Scroller.Side.LEFT, 0.55F);  break;
         }
+	}
+	
+	/**
+	 * Scrolls a View horizontally.
+	 *
+	 * @param view the View to scroll
+	 * @param side the side to scroll; {@link #RIGHT} or {@link #LEFT}
+	 * @param scrollLength the length to scroll from 0 to 1 where 1 is all the way. Example is: 0.55.
+	 *
+	 */
+
+	public void scrollViewToSide(View view, int side, float scrollLength) {
+		switch (side){
+			case RIGHT: scroller.scrollViewToSide(view, Scroller.Side.RIGHT, scrollLength); break;
+			case LEFT:  scroller.scrollViewToSide(view, Scroller.Side.LEFT, scrollLength);  break;
+		}
 	}
 
 	/**
@@ -1452,8 +1484,8 @@ public class Solo {
 
 	public void scrollViewToSide(View view, int side) {
 		switch (side){
-			case RIGHT: scroller.scrollViewToSide(view, Scroller.Side.RIGHT); break;
-			case LEFT:  scroller.scrollViewToSide(view, Scroller.Side.LEFT);  break;
+			case RIGHT: scroller.scrollViewToSide(view, Scroller.Side.RIGHT, 0.55F); break;
+			case LEFT:  scroller.scrollViewToSide(view, Scroller.Side.LEFT, 0.55F);  break;
 		}
 	}
 	
