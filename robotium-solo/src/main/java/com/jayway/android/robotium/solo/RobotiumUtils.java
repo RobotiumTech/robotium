@@ -114,7 +114,7 @@ public class RobotiumUtils {
 
 	public static int getNumberOfMatches(String regex, TextView view, Set<TextView> uniqueTextViews){
 		if(view == null) {
-			return 0;
+			return uniqueTextViews.size();
 		}
 
 		Pattern pattern = null;
