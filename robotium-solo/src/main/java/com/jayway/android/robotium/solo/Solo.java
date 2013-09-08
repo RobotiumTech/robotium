@@ -2450,7 +2450,7 @@ public class Solo {
 	/**
 	 * Returns a localized String matching the specified resource id.
 	 * 
-	 * @param id the R.id of the String
+	 * @param id the id of the String
 	 * @return the localized String
 	 *
 	 */
