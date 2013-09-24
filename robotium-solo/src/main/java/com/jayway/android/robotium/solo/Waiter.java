@@ -73,7 +73,7 @@ class Waiter {
 	 */
 
 	public boolean waitForActivity(String name, int timeout){
-		Activity currentActivity = activityUtils.getCurrentActivity(false);
+		Activity currentActivity = activityUtils.getCurrentActivity(false, false);
 		final long endTime = SystemClock.uptimeMillis() + timeout;
 
 		while(SystemClock.uptimeMillis() < endTime){
@@ -82,7 +82,7 @@ class Waiter {
 			}
 			
 			sleeper.sleep(MINISLEEP);
-			currentActivity = activityUtils.getCurrentActivity(false);
+			currentActivity = activityUtils.getCurrentActivity(false, false);
 		}
 		return false;
 	}
@@ -109,7 +109,7 @@ class Waiter {
 	 */
 
 	public boolean waitForActivity(Class<? extends Activity> activityClass, int timeout){
-		Activity currentActivity = activityUtils.getCurrentActivity(false);
+		Activity currentActivity = activityUtils.getCurrentActivity(false, false);
 		final long endTime = SystemClock.uptimeMillis() + timeout;
 
 		while(SystemClock.uptimeMillis() < endTime){
@@ -118,7 +118,7 @@ class Waiter {
 			}
 			
 			sleeper.sleep(MINISLEEP);
-			currentActivity = activityUtils.getCurrentActivity(false);
+			currentActivity = activityUtils.getCurrentActivity(false, false);
 		}
 		return false;
 	}
