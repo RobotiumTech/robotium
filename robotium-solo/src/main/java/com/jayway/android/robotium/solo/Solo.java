@@ -1249,7 +1249,7 @@ public class Solo {
 	 *
 	 * @param fromX X coordinate of the initial touch, in screen coordinates
 	 * @param toX X coordinate of the drag destination, in screen coordinates
-	 * @param fromY X coordinate of the initial touch, in screen coordinates
+	 * @param fromY Y coordinate of the initial touch, in screen coordinates
 	 * @param toY Y coordinate of the drag destination, in screen coordinates
 	 * @param stepCount How many move steps to include in the drag
 	 *
