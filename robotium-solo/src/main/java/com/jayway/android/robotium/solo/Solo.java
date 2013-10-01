@@ -1995,7 +1995,7 @@ public class Solo {
 	 */
 
 	public View getView(String id){
-		return getter.getView(id, 0);
+		return getView(id, 0);
 	}
 	
 	/**
