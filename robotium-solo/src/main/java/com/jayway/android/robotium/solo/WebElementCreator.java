@@ -49,7 +49,7 @@ class WebElementCreator {
 	 */
 
 	public ArrayList<WebElement> getWebElementsFromWebViews(){
-		waitForWebElementsToBeCreted();
+		waitForWebElementsToBeCreated();
 		return new ArrayList<WebElement>(webElements);
 	}
 
@@ -164,7 +164,7 @@ class WebElementCreator {
 	 * @return true if successfully created before timout
 	 */
 
-	private boolean waitForWebElementsToBeCreted(){
+	private boolean waitForWebElementsToBeCreated(){
 		final long endTime = SystemClock.uptimeMillis() + 5000;
 
 		while(SystemClock.uptimeMillis() < endTime){
