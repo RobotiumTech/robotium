@@ -211,9 +211,11 @@ class ScreenshotTaker {
 		Bitmap orig = view.getDrawingCache();
 		Bitmap.Config config = null;
 
-		if(orig != null) {
-			config = orig.getConfig();
+		if(orig == null) {
+			return null;
 		}
+
+		config = orig.getConfig();
 
 		if(config == null) {
 			config = Bitmap.Config.ARGB_8888;
