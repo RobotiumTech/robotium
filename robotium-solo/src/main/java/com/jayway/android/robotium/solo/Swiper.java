@@ -85,10 +85,10 @@ class Swiper
 
         int numMoves = GESTURE_DURATION_MS / EVENT_TIME_INTERVAL_MS;
 
-        float stepX1 = (startX1 - endX1) / numMoves;
-        float stepY1 = (startY1 - endY1) / numMoves;
-        float stepX2 = (startX2 - endX2) / numMoves;
-        float stepY2 = (startY2 - endY2) / numMoves;
+        float stepX1 = (endX1 - startX1) / numMoves;
+        float stepY1 = (endY1 - startY1) / numMoves;
+        float stepX2 = (endX2 - startX2) / numMoves;
+        float stepY2 = (endY2 - startY2) / numMoves;
 
         // send the zoom
         for (int i = 0; i < numMoves; i++)
