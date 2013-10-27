@@ -320,7 +320,9 @@ class Clicker {
 		}
 
 		if (homeMenuItem != null) {
-			activity.getWindow().getCallback().onMenuItemSelected(Window.FEATURE_OPTIONS_PANEL, homeMenuItem);
+			try{
+				activity.getWindow().getCallback().onMenuItemSelected(Window.FEATURE_OPTIONS_PANEL, homeMenuItem);
+			}catch(Exception ignored) {}
 		}
 	}
 
