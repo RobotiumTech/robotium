@@ -74,7 +74,7 @@ class DialogUtils {
 		final long endTime = SystemClock.uptimeMillis() + timeout;
 
 		if(sleepFirst)
-			sleeper.sleepMini();
+			sleeper.sleep();
 
 		while (SystemClock.uptimeMillis() < endTime) {
 
