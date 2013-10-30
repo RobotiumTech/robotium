@@ -324,7 +324,7 @@ public class Solo {
 	 */
 
 	public <T extends View> boolean waitForView(View view, int timeout, boolean scroll){
-		return waiter.waitForView(view, timeout, scroll);
+		return waiter.waitForView(view, timeout, scroll, false);
 	}
 	
 	/**

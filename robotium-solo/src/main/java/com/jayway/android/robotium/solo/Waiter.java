@@ -218,7 +218,7 @@ class Waiter {
 	 */
 
 	public boolean waitForView(View view){
-		return waitForView(view, Timeout.getLargeTimeout(), true);
+		return waitForView(view, Timeout.getLargeTimeout(), true, true);
 	}
 
 	/**
@@ -230,7 +230,7 @@ class Waiter {
 	 */
 
 	public boolean waitForView(View view, int timeout){
-		return waitForView(view, timeout, true);
+		return waitForView(view, timeout, true, false);
 	}
 
 	/**
@@ -239,10 +239,11 @@ class Waiter {
 	 * @param view the view to wait for
 	 * @param timeout the amount of time in milliseconds to wait
 	 * @param scroll {@code true} if scrolling should be performed
+	 * @param checkIsShown {@code true} if view.isShown() should be used
 	 * @return {@code true} if view is shown and {@code false} if it is not shown before the timeout
 	 */
 
-	public boolean waitForView(View view, int timeout, boolean scroll){
+	public boolean waitForView(View view, int timeout, boolean scroll, boolean checkIsShown){
 	
 		if(view == null)
 			return false;
@@ -257,7 +258,7 @@ class Waiter {
 			if (foundAnyMatchingView){
 				return true;
 			}
-			else if(view != null && view.isShown()){
+			else if(checkIsShown && view != null && view.isShown()){
 				return true;
 			}
 
