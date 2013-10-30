@@ -116,7 +116,7 @@ public class RobotiumUtils {
 		if(view == null) {
 			return uniqueTextViews.size();
 		}
-
+		
 		Pattern pattern = null;
 		try{
 			pattern = Pattern.compile(regex);
@@ -126,10 +126,16 @@ public class RobotiumUtils {
 		String viewText = view.getText().toString();
 		viewText = viewText.replaceAll("[\n\r]", " ");
 		Matcher matcher = pattern.matcher(viewText);
+	
+		if(!matcher.find()){
+			regex = regex.replaceAll("[\n\r]", " ");
+			matcher = Pattern.compile(regex).matcher(viewText);
+		}
 
 		if (matcher.find()){
 			uniqueTextViews.add(view);
 		}
+		
 		if (view.getError() != null){
 			matcher = pattern.matcher(view.getError().toString());
 			if (matcher.find()){

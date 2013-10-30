@@ -243,6 +243,7 @@ class Waiter {
 	 */
 
 	public boolean waitForView(View view, int timeout, boolean scroll){
+	
 		if(view == null)
 			return false;
 
@@ -252,8 +253,11 @@ class Waiter {
 			sleeper.sleep();
 
 			final boolean foundAnyMatchingView = searcher.searchFor(view);
-
+		
 			if (foundAnyMatchingView){
+				return true;
+			}
+			else if(view != null && view.isShown()){
 				return true;
 			}
 
