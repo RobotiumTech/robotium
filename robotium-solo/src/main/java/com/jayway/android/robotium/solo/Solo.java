@@ -29,6 +29,9 @@ import android.widget.ListView;
 import android.widget.TimePicker;
 import android.widget.ToggleButton;
 import android.app.Instrumentation.ActivityMonitor;
+import android.opengl.GLSurfaceView;
+import java.util.concurrent.CountDownLatch;
+import android.opengl.GLSurfaceView.Renderer;
 
 /**
  * Main class for development of Robotium tests.  
