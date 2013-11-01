@@ -305,15 +305,16 @@ class Scroller {
 	 * Scrolls horizontally.
 	 *
 	 * @param side the side to which to scroll; {@link Side#RIGHT} or {@link Side#LEFT}
+	 * @param scrollPosition the position to scroll to, from 0 to 1 where 1 is all the way. Example is: 0.55.
 	 */
 
 	@SuppressWarnings("deprecation")
-	public void scrollToSide(Side side) {
+	public void scrollToSide(Side side, float scrollPosition) {
 		int screenHeight = activityUtils.getCurrentActivity().getWindowManager().getDefaultDisplay()
 				.getHeight();
 		int screenWidth = activityUtils.getCurrentActivity(false).getWindowManager().getDefaultDisplay()
 				.getWidth();
-		float x = screenWidth * 0.55f;
+		float x = screenWidth * scrollPosition;
 		float y = screenHeight / 2.0f;
 		if (side == Side.LEFT)
 			drag(0, x, y, y, 40);
@@ -326,14 +327,15 @@ class Scroller {
 	 *
 	 * @param view the view to scroll
 	 * @param side the side to which to scroll; {@link Side#RIGHT} or {@link Side#LEFT}
+	 * @param scrollPosition the position to scroll to, from 0 to 1 where 1 is all the way. Example is: 0.55.
 	 */
 
-	public void scrollViewToSide(View view, Side side) {
+	public void scrollViewToSide(View view, Side side, float scrollPosition) {
 		int[] corners = new int[2];
 		view.getLocationOnScreen(corners);
 		int viewHeight = view.getHeight();
 		int viewWidth = view.getWidth();
-		float x = corners[0] + viewWidth * 0.55f;
+		float x = corners[0] + viewWidth * scrollPosition;
 		float y = corners[1] + viewHeight / 2.0f;
 		if (side == Side.LEFT)
 			drag(corners[0], x, y, y, 40);

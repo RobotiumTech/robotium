@@ -113,13 +113,20 @@ public class RobotiumUtils {
 	 */
 
 	public static int getNumberOfMatches(String regex, TextView view, Set<TextView> uniqueTextViews){
+		if(view == null) {
+			return uniqueTextViews.size();
+		}
+
 		Pattern pattern = null;
 		try{
 			pattern = Pattern.compile(regex);
 		}catch(PatternSyntaxException e){
 			pattern = Pattern.compile(regex, Pattern.LITERAL);
 		}
-		Matcher matcher = pattern.matcher(view.getText().toString());
+		String viewText = view.getText().toString();
+		viewText = viewText.replaceAll("[\n\r]", " ");
+		Matcher matcher = pattern.matcher(viewText);
+
 		if (matcher.find()){
 			uniqueTextViews.add(view);
 		}
