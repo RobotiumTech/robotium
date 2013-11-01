@@ -77,6 +77,7 @@ class Clicker {
 	public void clickOnScreen(float x, float y) {
 		boolean successfull = false;
 		int retry = 0;
+      SecurityException ex = null;
 
 		while(!successfull && retry < 10) {
 			long downTime = SystemClock.uptimeMillis();
@@ -91,6 +92,7 @@ class Clicker {
 				successfull = true;
 				sleeper.sleep(MINISLEEP);
 			}catch(SecurityException e){
+            ex = e;
 				dialogUtils.hideSoftKeyboard(null, false, true);
 				retry++;
 			}
