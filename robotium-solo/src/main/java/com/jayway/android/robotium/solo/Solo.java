@@ -2,15 +2,11 @@ package com.jayway.android.robotium.solo;
 
 import java.lang.reflect.Method;
 import java.util.ArrayList;
-import java.util.concurrent.CountDownLatch;
 import junit.framework.Assert;
 import android.app.Activity;
 import android.app.Instrumentation;
 import android.content.pm.ActivityInfo;
 import android.graphics.PointF;
-import android.opengl.GLSurfaceView;
-import android.opengl.GLSurfaceView.Renderer;
-import android.os.SystemClock;
 import android.view.KeyEvent;
 import android.view.View;
 import android.webkit.WebView;
@@ -101,9 +97,9 @@ public class Solo {
 		this.sleeper = new Sleeper();
 		this.sender = new Sender(instrumentation, sleeper);
 		this.activityUtils = new ActivityUtils(instrumentation, activity, sleeper);
-		this.screenshotTaker = new ScreenshotTaker(activityUtils);
 		this.viewFetcher = new ViewFetcher(activityUtils);
-		this.dialogUtils = new DialogUtils(activityUtils, viewFetcher);
+		this.screenshotTaker = new ScreenshotTaker(activityUtils, viewFetcher, sleeper);
+		this.dialogUtils = new DialogUtils(activityUtils, viewFetcher, sleeper);
 		this.webUtils = new WebUtils(instrumentation,activityUtils,viewFetcher, sleeper);
 		this.scroller = new Scroller(instrumentation, activityUtils, viewFetcher, sleeper);
 		this.searcher = new Searcher(viewFetcher, webUtils, scroller, sleeper);
@@ -118,7 +114,7 @@ public class Solo {
 		this.tapper =  new Tapper(instrumentation);
 		this.rotator = new Rotator(instrumentation);
 		this.presser = new Presser(clicker, instrumentation, sleeper, waiter, dialogUtils);
-		this.textEnterer = new TextEnterer(instrumentation, activityUtils, clicker);
+		this.textEnterer = new TextEnterer(instrumentation, clicker, dialogUtils);
 	}
 
 
@@ -723,6 +719,28 @@ public class Solo {
 	{
 		asserter.assertMemoryNotLow();
 	}
+	
+	/**
+	 * Waits for a Dialog to open. Default timeout is 20 seconds.
+	 * 
+	 * @return {@code true} if the {@link android.app.Dialog} is opened before the timeout and {@code false} if it is not opened
+	 * 
+	 */
+
+	public boolean waitForDialogToOpen() {
+		return dialogUtils.waitForDialogToOpen(Timeout.getLargeTimeout(), true);
+	}
+	
+	/**
+	 * Waits for a Dialog to close. Default timeout is 20 seconds.
+	 * 
+	 * @return {@code true} if the {@link android.app.Dialog} is closed before the timeout and {@code false} if it is not closed
+	 * 
+	 */
+
+	public boolean waitForDialogToClose() {
+		return dialogUtils.waitForDialogToClose(Timeout.getLargeTimeout());
+	}
 
 	/**
 	 * Waits for a Dialog to open.
@@ -733,7 +751,7 @@ public class Solo {
 	 */
 
 	public boolean waitForDialogToOpen(long timeout) {
-		return dialogUtils.waitForDialogToOpen(timeout);
+		return dialogUtils.waitForDialogToOpen(timeout, true);
 	}
 	
 	/**
@@ -783,7 +801,8 @@ public class Solo {
 
 	public void clickOnScreen(float x, float y, int numberOfClicks) {
 		if (android.os.Build.VERSION.SDK_INT < 14){
-			Assert.assertTrue("clickOnScreen(float x, float y, int numberOfClicks) requires API level >= 14", false);
+			throw new RuntimeException("clickOnScreen(float x, float y, int numberOfClicks) requires API level >= 14");
+			
 		}
 		tapper.generateTapGesture(numberOfClicks, new PointF(x, y));
 	}
@@ -847,14 +866,14 @@ public class Solo {
 	public void clickOnToggleButton(String text) {
 		clicker.clickOn(ToggleButton.class, text);
 	}
-	
+
 	/**
 	 * Clicks a MenuItem displaying the specified text.
 	 * 
 	 * @param text the text displayed by the MenuItem. The parameter will be interpreted as a regular expression
 	 *
 	 */
-	
+
 	public void clickOnMenuItem(String text)
 	{	
 		clicker.clickOnMenuItem(text);
@@ -1274,6 +1293,7 @@ public class Solo {
 
 	public void drag(float fromX, float toX, float fromY, float toY, 
 			int stepCount) {
+		dialogUtils.hideSoftKeyboard(null, false, true);
 		scroller.drag(fromX, toX, fromY, toY, stepCount);
 	}
 
@@ -1443,6 +1463,22 @@ public class Solo {
    	public void scrollListToLine(int index, int line){
    		scroller.scrollListToLine(waiter.waitForAndGetView(index, AbsListView.class), line);
    	}
+   	
+   	/**
+	 * Scrolls horizontally.
+	 *
+	 * @param side the side to scroll; {@link #RIGHT} or {@link #LEFT}
+	 * @param scrollPosition the position to scroll to, from 0 to 1 where 1 is all the way. Example is: 0.55.
+	 *
+	 */
+	
+	public void scrollToSide(int side, float scrollPosition) {
+        switch (side){
+            case RIGHT: scroller.scrollToSide(Scroller.Side.RIGHT, scrollPosition); break;
+            case LEFT:  scroller.scrollToSide(Scroller.Side.LEFT, scrollPosition);  break;
+        }
+	}
+
 
 	/**
 	 * Scrolls horizontally.
@@ -1453,9 +1489,25 @@ public class Solo {
 	
 	public void scrollToSide(int side) {
         switch (side){
-            case RIGHT: scroller.scrollToSide(Scroller.Side.RIGHT); break;
-            case LEFT:  scroller.scrollToSide(Scroller.Side.LEFT);  break;
+            case RIGHT: scroller.scrollToSide(Scroller.Side.RIGHT, 0.55F); break;
+            case LEFT:  scroller.scrollToSide(Scroller.Side.LEFT, 0.55F);  break;
         }
+	}
+	
+	/**
+	 * Scrolls a View horizontally.
+	 *
+	 * @param view the View to scroll
+	 * @param side the side to scroll; {@link #RIGHT} or {@link #LEFT}
+	 * @param scrollPosition the position to scroll to, from 0 to 1 where 1 is all the way. Example is: 0.55.
+	 *
+	 */
+
+	public void scrollViewToSide(View view, int side, float scrollPosition) {
+		switch (side){
+			case RIGHT: scroller.scrollViewToSide(view, Scroller.Side.RIGHT, scrollPosition); break;
+			case LEFT:  scroller.scrollViewToSide(view, Scroller.Side.LEFT, scrollPosition);  break;
+		}
 	}
 
 	/**
@@ -1468,24 +1520,24 @@ public class Solo {
 
 	public void scrollViewToSide(View view, int side) {
 		switch (side){
-			case RIGHT: scroller.scrollViewToSide(view, Scroller.Side.RIGHT); break;
-			case LEFT:  scroller.scrollViewToSide(view, Scroller.Side.LEFT);  break;
+			case RIGHT: scroller.scrollViewToSide(view, Scroller.Side.RIGHT, 0.55F); break;
+			case LEFT:  scroller.scrollViewToSide(view, Scroller.Side.LEFT, 0.55F);  break;
 		}
 	}
 	
 	/**
 	 * Zooms in or out if startPoint1 and startPoint2 are larger or smaller then endPoint1 and endPoint2. Requires API level >= 14.
 	 * 
-	 * @param startPoint1 First "finger" down on the screen.
-	 * @param startPoint2 Second "finger" down on the screen.
-	 * @param endPoint1 Corresponding ending point of startPoint1.
-	 * @param endPoint2 Corresponding ending point of startPoint2.
+	 * @param startPoint1 First "finger" down on the screen
+	 * @param startPoint2 Second "finger" down on the screen
+	 * @param endPoint1 Corresponding ending point of startPoint1
+	 * @param endPoint2 Corresponding ending point of startPoint2
 	 */
 
 	public void pinchToZoom(PointF startPoint1, PointF startPoint2, PointF endPoint1, PointF endPoint2)
 	{
 		if (android.os.Build.VERSION.SDK_INT < 14){
-			Assert.assertTrue("pinchToZoom() requires API level >= 14", false);
+			throw new RuntimeException("pinchToZoom() requires API level >= 14");
 		}
 		zoomer.generateZoomGesture(startPoint1, startPoint2, endPoint1, endPoint2);
 	}
@@ -1493,8 +1545,8 @@ public class Solo {
 	/**
 	 * Swipes with two fingers in a linear path determined by starting and ending points. Requires API level >= 14.
 	 * 
-	 * @param startPoint1 First "finger" down on the screen.
-	 * @param startPoint2 Second "finger" down on the screen.
+	 * @param startPoint1 First "finger" down on the screen
+	 * @param startPoint2 Second "finger" down on the screen
 	 * @param endPoint1 Corresponding ending point of startPoint1
 	 * @param endPoint2 Corresponding ending point of startPoint2
 	 */
@@ -1502,7 +1554,7 @@ public class Solo {
 	public void swipe(PointF startPoint1, PointF startPoint2, PointF endPoint1, PointF endPoint2)
 	{
 		if (android.os.Build.VERSION.SDK_INT < 14){
-			Assert.assertTrue("swipe() requires API level >= 14", false);
+			throw new RuntimeException("swipe() requires API level >= 14");
 		}
 		swiper.generateSwipeGesture(startPoint1, startPoint2, endPoint1,
 				endPoint2);
@@ -1518,7 +1570,7 @@ public class Solo {
 	public void rotateLarge(PointF center1, PointF center2)
 	{
 		if (android.os.Build.VERSION.SDK_INT < 14){
-			Assert.assertTrue("rotateLarge() requires API level >= 14", false);
+			throw new RuntimeException("rotateLarge(PointF center1, PointF center2) requires API level >= 14");
 		}
 		rotator.generateRotateGesture(Rotator.LARGE, center1, center2);
 	}
@@ -1533,7 +1585,7 @@ public class Solo {
 	public void rotateSmall(PointF center1, PointF center2)
 	{
 		if (android.os.Build.VERSION.SDK_INT < 14){
-			Assert.assertTrue("rotateSmall() requires API level >= 14", false);
+			throw new RuntimeException("rotateSmall(PointF center1, PointF center2) requires API level >= 14");
 		}
 		rotator.generateRotateGesture(Rotator.SMALL, center1, center2);
 	}
@@ -1722,7 +1774,7 @@ public class Solo {
 	
 	public void typeTextInWebElement(By by, String text){
 		clickOnWebElement(by);
-		hideSoftKeyboard();
+		dialogUtils.hideSoftKeyboard(null, true, true);
 		instrumentation.sendStringSync(text);
 	}
 	
@@ -1737,7 +1789,7 @@ public class Solo {
 	
 	public void typeTextInWebElement(By by, String text, int match){
 		clickOnWebElement(by, match);
-		hideSoftKeyboard();
+		dialogUtils.hideSoftKeyboard(null, true, true);
 		instrumentation.sendStringSync(text);
 	}
 	
@@ -1751,7 +1803,7 @@ public class Solo {
 	
 	public void typeTextInWebElement(WebElement webElement, String text){
 		clickOnWebElement(webElement);
-		hideSoftKeyboard();
+		dialogUtils.hideSoftKeyboard(null, true, true);
 		instrumentation.sendStringSync(text);
 	}
 
@@ -1864,7 +1916,7 @@ public class Solo {
 	/**
 	 * Returns a TextView displaying the specified text. 
 	 * 
-	 * @param text the text that is displayedn, specified as a regular expression
+	 * @param text the text that is displayed, specified as a regular expression
 	 * @return the {@link TextView} displaying the specified text
 	 */
 	
@@ -2253,8 +2305,8 @@ public class Solo {
 	 * 
 	 */
 	
-	public void hideSoftKeyboard() {	
-		activityUtils.hideSoftKeyboard(null, true);
+	public void hideSoftKeyboard() {
+		dialogUtils.hideSoftKeyboard(null, true, false);
 	}
 
 	/**
@@ -2432,8 +2484,22 @@ public class Solo {
 
 	public String getString(int id)
 	{
-		return activityUtils.getString(id);
+		return getter.getString(id);
 	}
+	
+	/**
+	 * Returns a localized String matching the specified resource id.
+	 * 
+	 * @param id the id of the String
+	 * @return the localized String
+	 *
+	 */
+
+	public String getString(String id)
+	{
+		return getter.getString(id);
+	}
+
 
 	/**
 	 * Robotium will sleep for the specified time.
@@ -2489,29 +2555,7 @@ public class Solo {
 	}
 
 	/**
-	 * Gets the proper view to use for a screenshot.  
-	 */
-	public View getScreenshotView() {
-		View decorView = viewFetcher.getRecentDecorView(viewFetcher.getWindowDecorViews());
-		final long endTime = SystemClock.uptimeMillis() + Timeout.getSmallTimeout();
-
-		while (decorView == null) {	
-
-			final boolean timedOut = SystemClock.uptimeMillis() > endTime;
-
-			if (timedOut){
-				return null;
-			}
-			sleeper.sleepMini();
-			decorView = viewFetcher.getRecentDecorView(viewFetcher.getWindowDecorViews());
-		}
-		wrapAllGLViews(decorView);
-
-		return decorView;
-	}
-
-	/**
-	 * Takes a screenshot and saves it with the specified name in "/sdcard/Robotium-Screenshots/". 
+	 * Takes a screenshot and saves the image with the specified name in "/sdcard/Robotium-Screenshots/". 
 	 * Requires write permission (android.permission.WRITE_EXTERNAL_STORAGE) in AndroidManifest.xml of the application under test.
 	 *
 	 * @param name the name to give the screenshot
@@ -2519,24 +2563,22 @@ public class Solo {
 	 *
 	 */
 	public void takeScreenshot(String name, int quality){
-		View decorView = getScreenshotView();
-		if(decorView == null) return;
-		screenshotTaker.takeScreenshot(decorView, name, quality);
+		screenshotTaker.takeScreenshot(name, quality);
 	}
 
 	/**
 	 * Takes a screenshot sequence and saves the images with the specified name prefix in "/sdcard/Robotium-Screenshots/". 
-         *
-         * The name prefix is appended with "_"+sequence_number for each image in the sequence,
-         * where numbering starts at 0  
-         *
+	 *
+	 * The name prefix is appended with "_" + sequence_number for each image in the sequence,
+	 * where numbering starts at 0.  
+	 *
 	 * Requires write permission (android.permission.WRITE_EXTERNAL_STORAGE) in AndroidManifest.xml of the application under test.
 	 *
-         * At present multiple simultaneous screenshot sequences are not supported.  
-         * This method will throw an exception if stopScreenshotSequence() has not been
-         *  called to finish any prior sequences.
-         * Calling this method is equivalend to calling startScreenshotSequence(name, 80, 400, 10);
-         *
+	 * At present multiple simultaneous screenshot sequences are not supported.  
+	 * This method will throw an exception if stopScreenshotSequence() has not been
+	 * called to finish any prior sequences.
+	 * Calling this method is equivalend to calling startScreenshotSequence(name, 80, 400, 100);
+	 *
 	 * @param name the name prefix to give the screenshot
 	 *
 	 */
@@ -2549,29 +2591,29 @@ public class Solo {
 
 	/**
 	 * Takes a screenshot sequence and saves the images with the specified name prefix in "/sdcard/Robotium-Screenshots/". 
-         *
-         * The name prefix is appended with "_"+sequence_number for each image in the sequence,
-         * where numbering starts at 0  
-         *
-	 * Requires write permission (android.permission.WRITE_EXTERNAL_STORAGE) in the 
-         * AndroidManifest.xml of the application under test.
 	 *
-         * Taking a screenshot will take on the order of 40-100 millis of time on the 
-         * main UI thread.  Therefore it is possible to mess up the timing of tests if
-         * the frameDelay value is set too small.
-         *
-         * At present multiple simultaneous screenshot sequences are not supported.  
-         * This method will throw an exception if stopScreenshotSequence() has not been
-         *  called to finish any prior sequences.
-         *
+	 * The name prefix is appended with "_" + sequence_number for each image in the sequence,
+	 * where numbering starts at 0.  
+	 *
+	 * Requires write permission (android.permission.WRITE_EXTERNAL_STORAGE) in the 
+	 * AndroidManifest.xml of the application under test.
+	 *
+	 * Taking a screenshot will take on the order of 40-100 milliseconds of time on the 
+	 * main UI thread.  Therefore it is possible to mess up the timing of tests if
+	 * the frameDelay value is set too small.
+	 *
+	 * At present multiple simultaneous screenshot sequences are not supported.  
+	 * This method will throw an exception if stopScreenshotSequence() has not been
+	 * called to finish any prior sequences.
+	 *
 	 * @param name the name prefix to give the screenshot
 	 * @param quality the compression rate. From 0 (compress for lowest size) to 100 (compress for maximum quality)
-	 * @param frameDelay the time in millis to wait between each frame.
-	 * @param maxFrames the maximum number of frames that will comprise this sequence.
+	 * @param frameDelay the time in milliseconds to wait between each frame
+	 * @param maxFrames the maximum number of frames that will comprise this sequence
 	 *
 	 */
 	public void startScreenshotSequence(String name, int quality, int frameDelay, int maxFrames) {
-		screenshotTaker.startScreenshotSequence(this, name, quality, frameDelay, maxFrames);
+		screenshotTaker.startScreenshotSequence(name, quality, frameDelay, maxFrames);
 	}
 
 	/**

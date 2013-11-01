@@ -1,6 +1,7 @@
 package com.jayway.android.robotium.solo;
 
 import java.util.ArrayList;
+import java.util.Hashtable;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 import android.os.SystemClock;
@@ -122,24 +123,38 @@ class WebElementCreator {
 
 	private WebElement createWebElementAndSetLocation(String information, WebView webView){
 		String[] data = information.split(";,");
+		String[] elements = null;
 		int x = 0;
 		int y = 0;
 		int width = 0;
 		int height = 0;
+		Hashtable<String, String> attributes = new Hashtable<String, String>();
 		try{
 			x = Math.round(Float.valueOf(data[5]));
 			y = Math.round(Float.valueOf(data[6]));
 			width = Math.round(Float.valueOf(data[7]));
-			height = Math.round(Float.valueOf(data[8]));
+			height = Math.round(Float.valueOf(data[8]));	
+			elements = data[9].split("\\#\\$");
 		}catch(Exception ignored){}
 
+		if(elements != null) {
+			for (int index = 0; index < elements.length; index++){
+				String[] element = elements[index].split("::");
+				if (element.length > 1) {
+					attributes.put(element[0], element[1]);
+				} else {
+					attributes.put(element[0], element[0]);
+				}
+			}
+		}
+
 		WebElement webElement = null;
-		
+
 		try{
-			webElement = new WebElement(data[0], data[1], data[2], data[3], data[4]);
+			webElement = new WebElement(data[0], data[1], data[2], data[3], data[4], attributes);
 			setLocation(webElement, webView, x, y, width, height);
 		}catch(Exception ignored) {}
-		
+
 		return webElement;
 	}
 

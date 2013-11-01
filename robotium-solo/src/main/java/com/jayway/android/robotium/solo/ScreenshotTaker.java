@@ -3,20 +3,27 @@ package com.jayway.android.robotium.solo;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.concurrent.CountDownLatch;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Picture;
+import android.opengl.GLSurfaceView;
+import android.opengl.GLSurfaceView.Renderer;
 import android.os.Environment;
 import android.os.Handler;
 import android.os.HandlerThread;
 import android.os.Message;
+import android.os.SystemClock;
 import android.util.Log;
 import android.view.View;
 import android.webkit.WebView;
 
 /**
- * Contains takeScreenshot(final View, final String name)
+ * Contains screenshot methods like: takeScreenshot(final View, final String name), startScreenshotSequence(final String name, final int quality, final int frameDelay, final int maxFrames), 
+ * stopScreenshotSequence().
+ * 
  * 
  * @author Renas Reda, renasreda@gmail.com
  * 
@@ -26,20 +33,25 @@ class ScreenshotTaker {
 
 	private final ActivityUtils activityUtils;
 	private final String LOG_TAG = "Robotium";
-
-	private Solo solo;
 	private ScreenshotSequenceThread screenshotSequenceThread = null;
 	private HandlerThread screenShotSaverThread = null;
 	private ScreenShotSaver screenShotSaver = null;
+	private final ViewFetcher viewFetcher;
+	private final Sleeper sleeper;
+
 
 	/**
 	 * Constructs this object.
 	 * 
 	 * @param activityUtils the {@code ActivityUtils} instance
+	 * @param viewFetcher the {@code ViewFetcher} instance
+	 * @param sleeper the {@code Sleeper} instance
 	 * 
 	 */
-	ScreenshotTaker(ActivityUtils activityUtils) {
+	ScreenshotTaker(ActivityUtils activityUtils, ViewFetcher viewFetcher, Sleeper sleeper) {
 		this.activityUtils = activityUtils;
+		this.viewFetcher = viewFetcher;
+		this.sleeper = sleeper;
 	}
 
 	/**
@@ -50,17 +62,42 @@ class ScreenshotTaker {
 	 * @param name the name to give the screenshot image
 	 * @param quality the compression rate. From 0 (compress for lowest size) to 100 (compress for maximum quality).
 	 */
-	public void takeScreenshot(final View view, final String name, final int quality) {
+	public void takeScreenshot(final String name, final int quality) {
+		View decorView = getScreenshotView();
+		if(decorView == null) 
+			return;
+
 		initScreenShotSaver();
-		ScreenshotRunnable runnable = new ScreenshotRunnable(view, name, quality);
+		ScreenshotRunnable runnable = new ScreenshotRunnable(decorView, name, quality);
 		activityUtils.getCurrentActivity(false).runOnUiThread(runnable);
 	}
-	
-	public void startScreenshotSequence(final Solo _solo, final String name, final int quality, final int frameDelay, final int maxFrames) {
+
+	/**
+	 * Takes a screenshot sequence and saves the images with the specified name prefix in "/sdcard/Robotium-Screenshots/". 
+	 *
+	 * The name prefix is appended with "_" + sequence_number for each image in the sequence,
+	 * where numbering starts at 0.  
+	 *
+	 * Requires write permission (android.permission.WRITE_EXTERNAL_STORAGE) in the 
+	 * AndroidManifest.xml of the application under test.
+	 *
+	 * Taking a screenshot will take on the order of 40-100 milliseconds of time on the 
+	 * main UI thread.  Therefore it is possible to mess up the timing of tests if
+	 * the frameDelay value is set too small.
+	 *
+	 * At present multiple simultaneous screenshot sequences are not supported.  
+	 * This method will throw an exception if stopScreenshotSequence() has not been
+	 * called to finish any prior sequences.
+	 *
+	 * @param name the name prefix to give the screenshot
+	 * @param quality the compression rate. From 0 (compress for lowest size) to 100 (compress for maximum quality)
+	 * @param frameDelay the time in milliseconds to wait between each frame
+	 * @param maxFrames the maximum number of frames that will comprise this sequence
+	 *
+	 */
+	public void startScreenshotSequence(final String name, final int quality, final int frameDelay, final int maxFrames) {
 		initScreenShotSaver();
 
-		solo = _solo;
-		
 		if(screenshotSequenceThread != null) {
 			throw new RuntimeException("only one screenshot sequence is supported at a time");
 		}
@@ -70,6 +107,12 @@ class ScreenshotTaker {
 		screenshotSequenceThread.start();
 	}
 
+	/**
+	 * Causes a screenshot sequence to end.
+	 * 
+	 * If this method is not called to end a sequence and a prior sequence is still in 
+	 * progress, startScreenshotSequence() will throw an exception.
+	 */
 	public void stopScreenshotSequence() {
 		if(screenshotSequenceThread != null) {
 			screenshotSequenceThread.interrupt();
@@ -77,7 +120,67 @@ class ScreenshotTaker {
 		}
 	}
 
-	
+	/**
+	 * Gets the proper view to use for a screenshot.  
+	 */
+	private View getScreenshotView() {
+		View decorView = viewFetcher.getRecentDecorView(viewFetcher.getWindowDecorViews());
+		final long endTime = SystemClock.uptimeMillis() + Timeout.getSmallTimeout();
+
+		while (decorView == null) {	
+
+			final boolean timedOut = SystemClock.uptimeMillis() > endTime;
+
+			if (timedOut){
+				return null;
+			}
+			sleeper.sleepMini();
+			decorView = viewFetcher.getRecentDecorView(viewFetcher.getWindowDecorViews());
+		}
+		wrapAllGLViews(decorView);
+
+		return decorView;
+	}
+
+	/**
+	 * Extract and wrap the all OpenGL ES Renderer.
+	 */
+	private void wrapAllGLViews(View decorView) {
+		ArrayList<GLSurfaceView> currentViews = viewFetcher.getCurrentViews(GLSurfaceView.class, decorView);
+		final CountDownLatch latch = new CountDownLatch(currentViews.size());
+
+		for (GLSurfaceView glView : currentViews) {
+			Object renderContainer = new Reflect(glView).field("mGLThread")
+					.type(GLSurfaceView.class).out(Object.class);
+
+			Renderer renderer = new Reflect(renderContainer).field("mRenderer").out(Renderer.class);
+
+			if (renderer == null) {
+				renderer = new Reflect(glView).field("mRenderer").out(Renderer.class);
+				renderContainer = glView;
+			}  
+			if (renderer == null) {
+				latch.countDown();
+				continue;
+			}
+			if (renderer instanceof GLRenderWrapper) {
+				GLRenderWrapper wrapper = (GLRenderWrapper) renderer;
+				wrapper.setTakeScreenshot();
+				wrapper.setLatch(latch);
+			} else {
+				GLRenderWrapper wrapper = new GLRenderWrapper(glView, renderer, latch);
+				new Reflect(renderContainer).field("mRenderer").in(wrapper);
+			}
+		}
+
+		try {
+			latch.await();
+		} catch (InterruptedException ex) {
+			ex.printStackTrace();
+		}
+	}
+
+
 	/**
 	 * Returns a bitmap of a given WebView.
 	 *  
@@ -85,7 +188,7 @@ class ScreenshotTaker {
 	 * @return a bitmap of the given web view
 	 * 
 	 */
-	
+
 	private Bitmap getBitmapOfWebView(final WebView webView){
 		Picture picture = webView.capturePicture();
 		Bitmap b = Bitmap.createBitmap( picture.getWidth(), picture.getHeight(), Bitmap.Config.ARGB_8888);
@@ -93,7 +196,7 @@ class ScreenshotTaker {
 		picture.draw(c);
 		return b;
 	}
-	
+
 	/**
 	 * Returns a bitmap of a given View.
 	 * 
@@ -101,19 +204,25 @@ class ScreenshotTaker {
 	 * @return a bitmap of the given view
 	 * 
 	 */
-	
+
 	private Bitmap getBitmapOfView(final View view){
 		view.destroyDrawingCache();
 		view.buildDrawingCache(false);
 		Bitmap orig = view.getDrawingCache();
-		Bitmap.Config config = orig.getConfig();
-		if(config == null) 
-                    config = Bitmap.Config.ARGB_8888;
-                Bitmap b = orig.copy(config, false);
-                view.destroyDrawingCache();
+		Bitmap.Config config = null;
+
+		if(orig != null) {
+			config = orig.getConfig();
+		}
+
+		if(config == null) {
+			config = Bitmap.Config.ARGB_8888;
+		}
+		Bitmap b = orig.copy(config, false);
+		view.destroyDrawingCache();
 		return b; 
 	}
-	
+
 	/**
 	 * Returns a proper filename depending on if name is given or not.
 	 * 
@@ -121,7 +230,7 @@ class ScreenshotTaker {
 	 * @return a proper filename depedning on if a name is given or not
 	 * 
 	 */
-	
+
 	private String getFileName(final String name){
 		SimpleDateFormat sdf = new SimpleDateFormat("ddMMyy-hhmmss");
 		String fileName = null;
@@ -165,10 +274,10 @@ class ScreenshotTaker {
 			frameDelay = _frameDelay;
 			maxFrames = _maxFrames;
 		}
-		
+
 		public void run() {
-			if(!keepRunning || Thread.interrupted()) return;
 			while(seqno < maxFrames) {
+				if(!keepRunning || Thread.interrupted()) break;
 				doScreenshot();
 				seqno++;
 				try {
@@ -180,7 +289,7 @@ class ScreenshotTaker {
 		}
 
 		public void doScreenshot() {
-			View v = solo.getScreenshotView();
+			View v = getScreenshotView();
 			if(v == null) keepRunning = false;
 			String final_name = name+"_"+seqno;
 			ScreenshotRunnable r = new ScreenshotRunnable(v, final_name, quality);
@@ -270,10 +379,13 @@ class ScreenshotTaker {
 			String name = message.getData().getString("name");
 			int quality = message.arg1;
 			Bitmap b = (Bitmap)message.obj;
-			if(b != null)
+			if(b != null) {
 				saveFile(name, b, quality);
-			else 
+				b.recycle();
+			}
+			else {
 				Log.d(LOG_TAG, "NULL BITMAP!!");
+			}
 		}
 
 		/**

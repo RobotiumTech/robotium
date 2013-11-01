@@ -30,22 +30,41 @@ function id(id) {
 	if(element != null){ 
 		promptElement(element);
 	} 
+	else {
+		for (var key in document.all){
+			try{
+				element = document.all[key];
+				if(element.id == id) {
+					promptElement(element);
+				}
+			} catch(ignored){}			
+		}
+	}
 	finished(); 
 }
 
 function xpath(xpath) {
-	var element = document.evaluate(xpath, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null ).singleNodeValue; 
-	if(element != null){ 
-		promptElement(element);
-	} 
-	finished();
+	var elements = document.evaluate(xpath, document, null, XPathResult.ORDERED_NODE_ITERATOR_TYPE, null); 
+
+	if (elements){
+		var element = elements.iterateNext();
+		while(element) {
+			promptElement(element);
+			element = result.iterateNext();
+		}
+		finished();
+	}
 }
 
 function cssSelector(cssSelector) {
-	var element = document.querySelector(cssSelector); 
-	if(element != null){ 
-		promptElement(element);
-	} 
+	var elements = document.querySelectorAll(cssSelector);
+	for (var key in elements) {
+		if(elements != null){ 
+			try{
+				promptElement(elements[key]);
+			}catch(ignored){}  
+		}
+	}
 	finished(); 
 }
 
@@ -172,9 +191,18 @@ function promptElement(element) {
 	var name = element.getAttribute('name');
 	var className = element.className;
 	var tagName = element.tagName;
+	var attributes = "";
+	var htmlAttributes = element.attributes;
+	for (var i = 0, htmlAttribute; htmlAttribute = htmlAttributes[i]; i++){
+		attributes += htmlAttribute.name + "::" + htmlAttribute.value;
+		if (i + 1 < htmlAttributes.length) {
+			attributes += "#$";
+		}
+	}
+	
 	var rect = element.getBoundingClientRect();
 	if(rect.width > 0 && rect.height > 0 && rect.left >= 0 && rect.top >= 0){
-		prompt(id + ';,' + text + ';,' + name + ";," + className + ";," + tagName + ";," + rect.left + ';,' + rect.top + ';,' + rect.width + ';,' + rect.height);
+		prompt(id + ';,' + text + ';,' + name + ";," + className + ";," + tagName + ";," + rect.left + ';,' + rect.top + ';,' + rect.width + ';,' + rect.height + ';,' + attributes);
 	}
 }
 
