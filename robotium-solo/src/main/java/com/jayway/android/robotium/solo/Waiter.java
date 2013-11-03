@@ -273,11 +273,15 @@ class Waiter {
 	 * 
 	 * @param view the id of the view to wait for
 	 * @param index the index of the {@link View}. {@code 0} if only one is available
+	 * @param timeout the timeout in milliseconds
 	 * @return the specified View
 	 */
 
-	public View waitForView(int id, int index){
-		return waitForView(id, index, Timeout.getSmallTimeout(), false);
+	public View waitForView(int id, int index, int timeout){
+		if(timeout == 0){
+			timeout = Timeout.getSmallTimeout();
+		}
+		return waitForView(id, index, timeout, false);
 	}
 
 	/**
@@ -297,7 +301,7 @@ class Waiter {
 
 			for (View view : viewFetcher.getAllViews(false)) {
 				Integer idOfView = Integer.valueOf(view.getId());
-
+				
 				if (idOfView.equals(id)) {
 					uniqueViewsMatchingId.add(view);
 

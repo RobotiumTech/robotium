@@ -21,6 +21,7 @@ class Getter {
 	private final Instrumentation instrumentation;
 	private final ActivityUtils activityUtils;
 	private final Waiter waiter;
+	private final int TIMEOUT = 1000;
 
 	/**
 	 * Constructs this object.
@@ -67,7 +68,7 @@ class Getter {
 
 		return viewToReturn;
 	}
-	
+
 	/**
 	 * Returns a localized string
 	 * 
@@ -80,7 +81,7 @@ class Getter {
 		Activity activity = activityUtils.getCurrentActivity(false);
 		return activity.getString(id);
 	}
-	
+
 	/**
 	 * Returns a localized string
 	 * 
@@ -98,16 +99,17 @@ class Getter {
 		}
 		return getString(viewId);		
 	}
-
+	
 	/**
 	 * Returns a {@code View} with a given id.
 	 * 
 	 * @param id the R.id of the {@code View} to be returned
 	 * @param index the index of the {@link View}. {@code 0} if only one is available
+	 * @param timeout the timeout in milliseconds
 	 * @return a {@code View} with a given id
 	 */
 
-	public View getView(int id, int index){
+	public View getView(int id, int index, int timeout){
 		final Activity activity = activityUtils.getCurrentActivity(false);
 		View viewToReturn = null;
 
@@ -120,9 +122,21 @@ class Getter {
 			return viewToReturn;
 		}
 
-		return waiter.waitForView(id, index);
+		return waiter.waitForView(id, index, timeout);
 	}
-	
+
+	/**
+	 * Returns a {@code View} with a given id.
+	 * 
+	 * @param id the R.id of the {@code View} to be returned
+	 * @param index the index of the {@link View}. {@code 0} if only one is available
+	 * @return a {@code View} with a given id
+	 */
+
+	public View getView(int id, int index){
+		return getView(id, index, 0);
+	}
+
 	/**
 	 * Returns a {@code View} with a given id.
 	 * 
@@ -130,13 +144,26 @@ class Getter {
 	 * @param index the index of the {@link View}. {@code 0} if only one is available
 	 * @return a {@code View} with a given id
 	 */
-	
+
 	public View getView(String id, int index){
+		View viewToReturn = null;
 		Context targetContext = instrumentation.getTargetContext(); 
 		String packageName = targetContext.getPackageName(); 
 		int viewId = targetContext.getResources().getIdentifier(id, "id", packageName);
-		if(viewId == 0){
-			viewId = targetContext.getResources().getIdentifier(id, "id", "android");
+
+		if(viewId != 0){
+			viewToReturn = getView(viewId, index, TIMEOUT); 
+		}
+		
+		if(viewToReturn == null){
+			int androidViewId = targetContext.getResources().getIdentifier(id, "id", "android");
+			if(androidViewId != 0){
+				viewToReturn = getView(androidViewId, index, TIMEOUT);
+			}
+		}
+
+		if(viewToReturn != null){
+			return viewToReturn;
 		}
 		return getView(viewId, index); 
 	}

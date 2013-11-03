@@ -132,7 +132,7 @@ public class RobotiumUtils {
 			matcher = Pattern.compile(regex).matcher(viewText);
 		}
 
-		if (matcher.find()){
+		if (matcher.find(0)){
 			uniqueTextViews.add(view);
 		}
 		
