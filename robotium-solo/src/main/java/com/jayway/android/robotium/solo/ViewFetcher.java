@@ -385,6 +385,7 @@ class ViewFetcher {
 	 * @return the WindorDecorViews shown on the screen
 	 */
 
+	@SuppressWarnings("unchecked")
 	public View[] getWindowDecorViews()
 	{
 
@@ -396,7 +397,13 @@ class ViewFetcher {
 			viewsField.setAccessible(true);
 			instanceField.setAccessible(true);
 			Object instance = instanceField.get(null);
-			return (View[]) viewsField.get(instance);
+			View[] result;
+			if (android.os.Build.VERSION.SDK_INT >= 19) {
+				result = ((ArrayList<View>) viewsField.get(instance)).toArray(new View[0]);
+			} else {
+				result = (View[]) viewsField.get(instance);
+			}
+			return result;
 		} catch (SecurityException e) {
 			e.printStackTrace();
 		} catch (NoSuchFieldException e) {
