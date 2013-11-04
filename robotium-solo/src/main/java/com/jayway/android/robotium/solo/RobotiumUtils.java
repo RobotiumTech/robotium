@@ -123,16 +123,10 @@ public class RobotiumUtils {
 		}catch(PatternSyntaxException e){
 			pattern = Pattern.compile(regex, Pattern.LITERAL);
 		}
-		String viewText = view.getText().toString();
-		viewText = viewText.replaceAll("[\n\r]", " ");
-		Matcher matcher = pattern.matcher(viewText);
-	
-		if(!matcher.find()){
-			regex = regex.replaceAll("[\n\r]", " ");
-			matcher = Pattern.compile(regex).matcher(viewText);
-		}
-
-		if (matcher.find(0)){
+		
+		Matcher matcher = pattern.matcher(view.getText().toString());
+		
+		if (matcher.find()){
 			uniqueTextViews.add(view);
 		}
 		
