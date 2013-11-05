@@ -7,7 +7,6 @@ import android.content.Context;
 import android.view.View;
 import android.widget.TextView;
 
-
 /**
  * Contains various get methods. Examples are: getView(int id),
  * getView(Class<T> classToFilterBy, int index).
@@ -37,7 +36,6 @@ class Getter {
 		this.waiter = waiter;
 	}
 
-
 	/**
 	 * Returns a {@code View} with a certain index, from the list of current {@code View}s of the specified type.
 	 *
@@ -60,7 +58,6 @@ class Getter {
 	 */
 
 	public <T extends TextView> T getView(Class<T> classToFilterBy, String text, boolean onlyVisible) {
-
 		T viewToReturn = (T) waiter.waitForText(classToFilterBy, text, 0, Timeout.getSmallTimeout(), false, onlyVisible, false);
 
 		if(viewToReturn == null)
@@ -99,7 +96,7 @@ class Getter {
 		}
 		return getString(viewId);		
 	}
-	
+
 	/**
 	 * Returns a {@code View} with a given id.
 	 * 

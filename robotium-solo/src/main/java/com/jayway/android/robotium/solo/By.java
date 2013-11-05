@@ -18,7 +18,6 @@ public abstract class By {
 
 	public static By id(final String id) {
 		return new Id(id); 
-
 	}
 
 	/**
@@ -30,7 +29,6 @@ public abstract class By {
 
 	public static By xpath(final String xpath) {
 		return new Xpath(xpath); 
-
 	}
 
 	/**
@@ -42,7 +40,6 @@ public abstract class By {
 
 	public static By cssSelector(final String selectors) {
 		return new CssSelector(selectors); 
-
 	}
 
 	/**
@@ -54,7 +51,6 @@ public abstract class By {
 
 	public static By name(final String name) {
 		return new Name(name); 
-
 	}
 
 	/**
@@ -66,7 +62,6 @@ public abstract class By {
 
 	public static By className(final String className) {
 		return new ClassName(className); 
-
 	}
 
 	/**
@@ -80,7 +75,7 @@ public abstract class By {
 		return new Text(textContent); 
 
 	}
-	
+
 	/**
 	 * Select a WebElement by its tag name.
 	 * 
@@ -98,11 +93,10 @@ public abstract class By {
 	 * 
 	 * @return the value
 	 */
-	
+
 	public String getValue(){
 		return "";
 	}
-
 
 	static class Id extends By {
 		private final String id;
@@ -155,7 +149,7 @@ public abstract class By {
 			return name;
 		}
 	}
-	
+
 	static class ClassName extends By {
 		private final String className;
 
@@ -168,7 +162,7 @@ public abstract class By {
 			return className;
 		}
 	}
-	
+
 	static class Text extends By {
 		private final String textContent;
 
@@ -181,14 +175,14 @@ public abstract class By {
 			return textContent;
 		}
 	}
-	
+
 	static class TagName extends By {
 		private final String tagName;
-		
+
 		public TagName(String tagName){
 			this.tagName = tagName;
 		}
-		
+
 		@Override
 		public String getValue(){
 			return tagName;

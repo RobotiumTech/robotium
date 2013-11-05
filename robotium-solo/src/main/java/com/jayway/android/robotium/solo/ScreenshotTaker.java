@@ -39,7 +39,6 @@ class ScreenshotTaker {
 	private final ViewFetcher viewFetcher;
 	private final Sleeper sleeper;
 
-
 	/**
 	 * Constructs this object.
 	 * 
@@ -48,6 +47,7 @@ class ScreenshotTaker {
 	 * @param sleeper the {@code Sleeper} instance
 	 * 
 	 */
+ 
 	ScreenshotTaker(ActivityUtils activityUtils, ViewFetcher viewFetcher, Sleeper sleeper) {
 		this.activityUtils = activityUtils;
 		this.viewFetcher = viewFetcher;
@@ -62,6 +62,7 @@ class ScreenshotTaker {
 	 * @param name the name to give the screenshot image
 	 * @param quality the compression rate. From 0 (compress for lowest size) to 100 (compress for maximum quality).
 	 */
+
 	public void takeScreenshot(final String name, final int quality) {
 		View decorView = getScreenshotView();
 		if(decorView == null) 
@@ -95,6 +96,7 @@ class ScreenshotTaker {
 	 * @param maxFrames the maximum number of frames that will comprise this sequence
 	 *
 	 */
+
 	public void startScreenshotSequence(final String name, final int quality, final int frameDelay, final int maxFrames) {
 		initScreenShotSaver();
 
@@ -113,6 +115,7 @@ class ScreenshotTaker {
 	 * If this method is not called to end a sequence and a prior sequence is still in 
 	 * progress, startScreenshotSequence() will throw an exception.
 	 */
+
 	public void stopScreenshotSequence() {
 		if(screenshotSequenceThread != null) {
 			screenshotSequenceThread.interrupt();
@@ -123,6 +126,7 @@ class ScreenshotTaker {
 	/**
 	 * Gets the proper view to use for a screenshot.  
 	 */
+
 	private View getScreenshotView() {
 		View decorView = viewFetcher.getRecentDecorView(viewFetcher.getWindowDecorViews());
 		final long endTime = SystemClock.uptimeMillis() + Timeout.getSmallTimeout();
@@ -145,6 +149,7 @@ class ScreenshotTaker {
 	/**
 	 * Extract and wrap the all OpenGL ES Renderer.
 	 */
+
 	private void wrapAllGLViews(View decorView) {
 		ArrayList<GLSurfaceView> currentViews = viewFetcher.getCurrentViews(GLSurfaceView.class, decorView);
 		final CountDownLatch latch = new CountDownLatch(currentViews.size());
@@ -179,7 +184,6 @@ class ScreenshotTaker {
 			ex.printStackTrace();
 		}
 	}
-
 
 	/**
 	 * Returns a bitmap of a given WebView.
@@ -248,6 +252,7 @@ class ScreenshotTaker {
 	/**
 	 * This method initializes the aysnc screenshot saving logic
 	 */
+
 	private void initScreenShotSaver() {
 		if(screenShotSaverThread == null || screenShotSaver == null) {
 			screenShotSaverThread = new HandlerThread("ScreenShotSaver");
@@ -260,6 +265,7 @@ class ScreenshotTaker {
 	 * This is the thread which causes a screenshot sequence to happen
 	 * in parallel with testing.
 	 */
+
 	private class ScreenshotSequenceThread extends Thread {
 		private int seqno = 0;
 
@@ -311,6 +317,7 @@ class ScreenshotTaker {
 	 *
 	 * This Runnable is run on the UI thread.
 	 */
+
 	private class ScreenshotRunnable implements Runnable {
 
 		private View view;
@@ -352,6 +359,7 @@ class ScreenshotTaker {
 	 * process approx 3x faster as far as the main thread is concerned.
 	 *
 	 */
+
 	private class ScreenShotSaver extends Handler {
 		public ScreenShotSaver(HandlerThread thread) {
 			super(thread.getLooper());
@@ -364,6 +372,7 @@ class ScreenshotTaker {
 		 * @param name the name of the file
 		 * @param quality the compression rate. From 0 (compress for lowest size) to 100 (compress for maximum quality).
 		 */
+
 		public void saveBitmap(Bitmap bitmap, String name, int quality) {
 			Message message = this.obtainMessage();
 			message.arg1 = quality;
@@ -377,6 +386,7 @@ class ScreenshotTaker {
 		 *
 		 * @param message A Message containing the bitmap to save, and some metadata.
 		 */
+
 		public void handleMessage(Message message) {
 			String name = message.getData().getString("name");
 			int quality = message.arg1;
@@ -398,6 +408,7 @@ class ScreenshotTaker {
 		 * @param quality the compression rate. From 0 (compress for lowest size) to 100 (compress for maximum quality).
 		 * 
 		 */
+
 		private void saveFile(String name, Bitmap b, int quality){
 			FileOutputStream fos = null;
 			String fileName = getFileName(name);

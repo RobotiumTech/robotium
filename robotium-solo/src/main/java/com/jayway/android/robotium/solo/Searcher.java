@@ -11,7 +11,6 @@ import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
-
 /**
  * Contains various search methods. Examples are: searchForEditTextWithTimeout(),
  * searchForTextWithTimeout(), searchForButtonWithTimeout().
@@ -32,7 +31,6 @@ class Searcher {
 	private int numberOfUniqueViews;
 	private final int TIMEOUT = 5000;
 
-
 	/**
 	 * Constructs this object.
 	 *
@@ -50,7 +48,6 @@ class Searcher {
 		webElements = new ArrayList<WebElement>();
 		uniqueTextViews = new HashSet<TextView>();
 	}
-
 
 	/**
 	 * Searches for a {@code View} with the given regex string and returns {@code true} if the
@@ -81,7 +78,6 @@ class Searcher {
 		}
 		return false;
 	}
-
 
 	/**
 	 * Searches for a {@code View} with the given regex string and returns {@code true} if the
@@ -231,7 +227,6 @@ class Searcher {
 	 */
 
 	public WebElement searchForWebElement(final By by, int minimumNumberOfMatches, int timeout, boolean scroll){
-
 		if(minimumNumberOfMatches < 1){
 			minimumNumberOfMatches = 1;
 		}
@@ -250,7 +245,6 @@ class Searcher {
 	 */
 
 	private void addViewsToList(List<WebElement> allWebElements, List<WebElement> webElementsOnScreen){
-
 		int[] xyViewFromSet = new int[2];
 		int[] xyViewFromScreen = new int[2];
 
@@ -282,7 +276,6 @@ class Searcher {
 	 */
 
 	private WebElement getViewFromList(List<WebElement> webElements, int match){
-
 		WebElement webElementToReturn = null;
 
 		if(webElements.size() >= match){
@@ -306,7 +299,7 @@ class Searcher {
 	 */
 
 	public <T extends View> int getNumberOfUniqueViews(Set<T>uniqueViews, ArrayList<T> views){
-		for(int i = 0; i < views.size(); i++){
+		for(int i = 0, n = views.size(); i < n; i++){
 			uniqueViews.add(views.get(i));
 		}
 		numberOfUniqueViews = uniqueViews.size();

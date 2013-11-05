@@ -37,7 +37,7 @@ class GLRenderWrapper implements Renderer {
 	 * @param renderer the renderer to wrap
 	 * @param latch the count down latch
 	 */
-	
+
 	public GLRenderWrapper(GLSurfaceView view,
 			Renderer renderer, CountDownLatch latch) {
 		this.view = view;
@@ -57,34 +57,34 @@ class GLRenderWrapper implements Renderer {
 		}
 	}
 
-	@Override
 	/*
 	 * (non-Javadoc)
 	 * @see android.opengl.GLSurfaceView.Renderer#onSurfaceCreated(javax.microedition.khronos.opengles.GL10, javax.microedition.khronos.egl.EGLConfig)
 	 */
-	
+
+    @Override
 	public void onSurfaceCreated(GL10 gl, EGLConfig config) {
 		renderer.onSurfaceCreated(gl, config);
 	}
 
-	@Override
 	/*
 	 * (non-Javadoc)
 	 * @see android.opengl.GLSurfaceView.Renderer#onSurfaceChanged(javax.microedition.khronos.opengles.GL10, int, int)
 	 */
-	
+
+	@Override	
 	public void onSurfaceChanged(GL10 gl, int width, int height) {
 		this.width = width;
 		this.height = height;
 		renderer.onSurfaceChanged(gl, width, height);
 	}
 
-	@Override
 	/*
 	 * (non-Javadoc)
 	 * @see android.opengl.GLSurfaceView.Renderer#onDrawFrame(javax.microedition.khronos.opengles.GL10)
 	 */
-	
+
+	@Override	
 	public void onDrawFrame(GL10 gl) {
 		renderer.onDrawFrame(gl);
 		if (takeScreenshot) {
@@ -106,7 +106,7 @@ class GLRenderWrapper implements Renderer {
 	/**
 	 * Tell the wrapper to take a screen shot 
 	 */
-	
+
 	public void setTakeScreenshot() {
 		takeScreenshot = true;
 	}
@@ -127,7 +127,7 @@ class GLRenderWrapper implements Renderer {
 	 * @param w the width of the bitmap
 	 * @param h the height of the bitmap
 	 */
-	
+
 	private Bitmap savePixels(int x, int y, int w, int h) {
 		int b[] = new int[w * (y + h)];
 		int bt[] = new int[w * h];
@@ -161,7 +161,7 @@ class GLRenderWrapper implements Renderer {
 	 * @param h the height of the bitmap
 	 * @param gl the current GL reference
 	 */
-	
+
 	private static Bitmap savePixels(int x, int y, int w, int h, GL10 gl) {
 		int b[] = new int[w * (y + h)];
 		int bt[] = new int[w * h];
@@ -184,5 +184,4 @@ class GLRenderWrapper implements Renderer {
 		Bitmap sb = Bitmap.createBitmap(bt, w, h, Bitmap.Config.ARGB_8888);
 		return sb;
 	}
-
 }

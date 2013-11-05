@@ -32,7 +32,6 @@ class ViewFetcher {
 		setWindowManagerString();
 	}
 
-
 	/**
 	 * Returns the absolute top parent {@code View} in for a given {@code View}.
 	 *
@@ -48,7 +47,6 @@ class ViewFetcher {
 			return view;
 		}
 	}
-
 
 	/**
 	 * Returns the scroll or list parent view
@@ -84,7 +82,7 @@ class ViewFetcher {
 		View view = null;
 
 		if(nonDecorViews != null){
-			for(int i = 0; i < nonDecorViews.length; i++){
+			for(int i = 0, n = nonDecorViews.length; i < n; i++){
 				view = nonDecorViews[i];
 				try {
 					addChildren(allViews, (ViewGroup)view, onlySufficientlyVisible);
@@ -120,7 +118,7 @@ class ViewFetcher {
 		 int i = 0;
 		 View view;
 
-		 for (int j = 0; j < views.length; j++) {
+		 for (int j = 0, n = views.length; j < n; j++) {
 			 view = views[j];
 			 if (view != null && view.getClass().getName()
 					 .equals("com.android.internal.policy.impl.PhoneWindow$DecorView")) {
@@ -143,7 +141,7 @@ class ViewFetcher {
 		 long drawingTime = 0;
 		 View view;
 
-		 for(int i = 0; i < views.length; i++){
+		 for(int i = 0, n = views.length; i < n; i++){
 			 view = views[i];
 			 if (view != null && view.isShown() && view.hasWindowFocus() && view.getDrawingTime() > drawingTime) {
 				 container = view;
@@ -169,7 +167,7 @@ class ViewFetcher {
 			 int i = 0;
 			 View view;
 
-			 for (int j = 0; j < views.length; j++) {
+			 for (int j = 0, n = views.length; j < n; j++) {
 				 view = views[j];
 				 if (view != null && !(view.getClass().getName()
 						 .equals("com.android.internal.policy.impl.PhoneWindow$DecorView"))) {
@@ -180,8 +178,6 @@ class ViewFetcher {
 		 }
 		 return decorViews;
 	 }
-
-
 
 	/**
 	 * Extracts all {@code View}s located in the currently active {@code Activity}, recursively.
@@ -219,7 +215,7 @@ class ViewFetcher {
 
 	private void addChildren(ArrayList<View> views, ViewGroup viewGroup, boolean onlySufficientlyVisible) {
 		if(viewGroup != null){
-			for (int i = 0; i < viewGroup.getChildCount(); i++) {
+			for (int i = 0, n = viewGroup.getChildCount(); i < n; i++) {
 				final View child = viewGroup.getChildAt(i);
 
 				if(onlySufficientlyVisible && isViewSufficientlyShown(child))
@@ -292,7 +288,6 @@ class ViewFetcher {
 		return windowHeight;
 	}
 
-
 	/**
 	 * Returns an {@code ArrayList} of {@code View}s of the specified {@code Class} located in the current
 	 * {@code Activity}.
@@ -325,7 +320,6 @@ class ViewFetcher {
 		return filteredViews;
 	}
 
-	
 	/**
 	 * Tries to guess which view is the most likely to be interesting. Returns
 	 * the most recently drawn view, which presumably will be the one that the
@@ -415,10 +409,11 @@ class ViewFetcher {
 		}
 		return null;
 	}
-	
+
 	/**
 	 * Sets the window manager string.
 	 */
+
 	private void setWindowManagerString(){
 
 		if (android.os.Build.VERSION.SDK_INT >= 17) {
@@ -431,6 +426,4 @@ class ViewFetcher {
 			windowManagerString = "mWindowManager";
 		}
 	}
-
-
 }

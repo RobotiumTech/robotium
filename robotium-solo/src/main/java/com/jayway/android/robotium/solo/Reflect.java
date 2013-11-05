@@ -17,7 +17,7 @@ class Reflect {
 	 * 
 	 * @param object the object to reflect on
 	 */
-	
+
 	public Reflect(Object object) {
 		if (object == null)
 			throw new IllegalArgumentException("Object can not be null.");
@@ -31,7 +31,7 @@ class Reflect {
 	 * 
 	 * @return a field reference
 	 */
-	
+
 	public FieldRf field(String name) {
 		return new FieldRf(object, name);
 	}
@@ -39,6 +39,7 @@ class Reflect {
 	/**
 	 * A field reference.  
 	 */
+
 	public class FieldRf {
 		private Class<?> clazz;
 		private Object object;
@@ -50,7 +51,7 @@ class Reflect {
 		 * @param object the object to reflect on
 		 * @param name the name of the field
 		 */
-		
+
 		public FieldRf(Object object, String name) {
 			this.object = object;
 			this.name = name;
@@ -63,7 +64,7 @@ class Reflect {
 		 *
 		 * @return <T> T
 		 */
-		
+
 		public <T> T out(Class<T> outclazz) {
 			Field field = getField();
 			Object obj = getValue(field);
@@ -75,7 +76,7 @@ class Reflect {
 		 * 
 		 * @param value the value to set
 		 */
-		
+
 		public void in(Object value) {
 			Field field = getField();
 			try {
@@ -94,7 +95,7 @@ class Reflect {
 		 *
 		 * @return a field reference
 		 */
-		
+
 		public FieldRf type(Class<?> clazz) {
 			this.clazz = clazz;
 			return this;
@@ -128,5 +129,4 @@ class Reflect {
 			return obj;
 		}
 	}
-
 }

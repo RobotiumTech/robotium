@@ -12,7 +12,6 @@ import android.widget.GridView;
 import android.widget.ListView;
 import android.widget.ScrollView;
 
-
 /**
  * Contains scroll methods. Examples are scrollDown(), scrollUpList(),
  * scrollToSide().
@@ -32,7 +31,6 @@ class Scroller {
 	private final ViewFetcher viewFetcher;
 	private final Sleeper sleeper;
 
-
 	/**
 	 * Constructs this object.
 	 *
@@ -48,7 +46,6 @@ class Scroller {
 		this.viewFetcher = viewFetcher;
 		this.sleeper = sleeper;
 	}
-
 
 	/**
 	 * Simulate touching a specific location and dragging to a new location.
@@ -89,7 +86,6 @@ class Scroller {
 			inst.sendPointerSync(event);
 		} catch (SecurityException ignored) {}
 	}
-
 
 	/**
 	 * Scrolls a ScrollView.
@@ -153,7 +149,6 @@ class Scroller {
 		return scroll(direction, false);
 	}
 
-
 	/**
 	 * Scrolls up and down.
 	 *
@@ -194,7 +189,7 @@ class Scroller {
 		}
 		return false;
 	}
-	
+
 	/**
 	 * Scrolls a WebView.
 	 * 
@@ -203,9 +198,8 @@ class Scroller {
 	 * @param allTheWay {@code true} to scroll the view all the way up or down, {@code false} to scroll one page up or down                          or down.
 	 * @return {@code true} if more scrolling can be done
 	 */
-	
-	public boolean scrollWebView(final WebView webView, int direction, final boolean allTheWay){
 
+	public boolean scrollWebView(final WebView webView, int direction, final boolean allTheWay){
 		if (direction == DOWN) {
 			inst.runOnMainSync(new Runnable(){
 				public void run(){
@@ -233,7 +227,6 @@ class Scroller {
 	 */
 
 	public <T extends AbsListView> boolean scrollList(T absListView, int direction, boolean allTheWay) {
-
 		if(absListView == null){
 			return false;
 		}
@@ -275,7 +268,6 @@ class Scroller {
 		return true;
 	}
 
-
 	/**
 	 * Scroll the list to a given line
 	 *
@@ -299,7 +291,6 @@ class Scroller {
 			}
 		});
 	}
-
 
 	/**
 	 * Scrolls horizontally.
@@ -342,5 +333,4 @@ class Scroller {
 		else if (side == Side.RIGHT)
 			drag(x, corners[0], y, y, 40);
 	}
-
 }

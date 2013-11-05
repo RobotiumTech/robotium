@@ -63,7 +63,6 @@ class WebElementCreator {
 		return isFinished;
 	}
 
-
 	/**
 	 * Set to true if all {@code TextView} objects have been created
 	 * 
@@ -82,7 +81,6 @@ class WebElementCreator {
 	 */
 
 	public void createWebElementAndAddInList(String webData, WebView webView){
-
 		WebElement webElement = createWebElementAndSetLocation(webData, webView);
 
 		if((webElement!=null)) 
@@ -138,7 +136,7 @@ class WebElementCreator {
 		}catch(Exception ignored){}
 
 		if(elements != null) {
-			for (int index = 0; index < elements.length; index++){
+			for (int index = 0, n = elements.length; index < n; index++){
 				String[] element = elements[index].split("::");
 				if (element.length > 1) {
 					attributes.put(element[0], element[1]);
@@ -177,5 +175,4 @@ class WebElementCreator {
 		}
 		return false;
 	}
-
 }

@@ -1,6 +1,5 @@
 package com.jayway.android.robotium.solo;
 
-
 import junit.framework.Assert;
 import android.app.Instrumentation;
 import android.view.KeyEvent;

@@ -82,8 +82,6 @@ public class Solo {
 	public final static int CLOSED = 0;
 	public final static int OPENED = 1;
 
-
-
 	/**
 	 * Constructor that takes in the Instrumentation and the start Activity.
 	 *
@@ -118,7 +116,6 @@ public class Solo {
 		this.textEnterer = new TextEnterer(instrumentation, clicker, dialogUtils);
 	}
 
-
 	/**
 	 * Constructor that takes in the instrumentation.
 	 *
@@ -147,7 +144,7 @@ public class Solo {
 	 * @return an {@code ArrayList} of the {@link View} objects located in the focused window
 	 *
 	 */
-	
+
 	public ArrayList<View> getViews() {
 		try {
 			return viewFetcher.getViews(null, false);
@@ -156,7 +153,7 @@ public class Solo {
 			return null;
 		}
 	}
-	
+
 	/**
 	 * Returns an ArrayList of the View objects contained in the parent View.
 	 *
@@ -164,7 +161,7 @@ public class Solo {
 	 * @return an {@code ArrayList} of the {@link View} objects contained in the specified {@code View}
 	 *
 	 */
-	
+
 	public ArrayList<View> getViews(View parent) {
 		try {
 			return viewFetcher.getViews(parent, false);
@@ -173,7 +170,7 @@ public class Solo {
 			return null;
 		}
 	}
-	
+
 	/**
 	 * Returns the absolute top parent View of the specified View.
 	 *
@@ -181,13 +178,12 @@ public class Solo {
 	 * @return the top parent {@link View}
 	 *
 	 */
-	
+
 	public View getTopParent(View view) {
 		View topParent = viewFetcher.getTopParent(view);
 		return topParent;
 	}
-  
-    
+
     /**
 	 * Waits for the specified text to appear. Default timeout is 20 seconds. 
 	 * 
@@ -195,12 +191,11 @@ public class Solo {
 	 * @return {@code true} if text is displayed and {@code false} if it is not displayed before the timeout
 	 * 
 	 */
-	
+
 	public boolean waitForText(String text) {
 		return (waiter.waitForText(text) != null);
 	}
 
-	
 	 /**
 	 * Waits for the specified text to appear. 
 	 * 
@@ -210,11 +205,11 @@ public class Solo {
 	 * @return {@code true} if text is displayed and {@code false} if it is not displayed before the timeout
 	 * 
 	 */
-	
+
 	public boolean waitForText(String text, int minimumNumberOfMatches, long timeout) {
 		return (waiter.waitForText(text, minimumNumberOfMatches, timeout) != null);
     }
-	
+
 	 /**
 	 * Waits for the specified text to appear. 
 	 * 
@@ -225,11 +220,11 @@ public class Solo {
 	 * @return {@code true} if text is displayed and {@code false} if it is not displayed before the timeout
 	 * 
 	 */
-	
+
 	public boolean waitForText(String text, int minimumNumberOfMatches, long timeout, boolean scroll) {
 		return (waiter.waitForText(text, minimumNumberOfMatches, timeout, scroll) != null);
     }
-	
+
 	/**
 	 * Waits for the specified text to appear. 
 	 * 
@@ -241,7 +236,7 @@ public class Solo {
 	 * @return {@code true} if text is displayed and {@code false} if it is not displayed before the timeout
 	 * 
 	 */
-	
+
 	public boolean waitForText(String text, int minimumNumberOfMatches, long timeout, boolean scroll, boolean onlyVisible) {
 		return (waiter.waitForText(text, minimumNumberOfMatches, timeout, scroll, onlyVisible, true) != null);
     }
@@ -252,11 +247,11 @@ public class Solo {
 	 * @param id the R.id of the {@link View} to wait for
 	 * @return {@code true} if the {@link View} is displayed and {@code false} if it is not displayed before the timeout
 	 */
-	
+
 	public boolean waitForView(int id){
 		return waitForView(id, 0, Timeout.getLargeTimeout(), true);
 	}
-	
+
 	/**
 	 * Waits for a View matching the specified resource id. 
 	 * 
@@ -269,7 +264,7 @@ public class Solo {
 	public boolean waitForView(int id, int minimumNumberOfMatches, int timeout){
 		return waitForView(id, minimumNumberOfMatches, timeout, true);
 	}
-	
+
 	/**
 	 * Waits for a View matching the specified resource id. 
 	 * 
@@ -288,7 +283,7 @@ public class Solo {
 
 		return (waiter.waitForView(id, index, timeout, scroll) != null);
 	}
-	
+
 	/**
 	 * Waits for a View matching the specified class. Default timeout is 20 seconds. 
 	 * 
@@ -300,7 +295,7 @@ public class Solo {
 		
 		return waiter.waitForView(viewClass, 0, Timeout.getLargeTimeout(), true);
 	}
-	
+
 	/**
 	 * Waits for the specified View. Default timeout is 20 seconds. 
 	 * 
@@ -332,7 +327,7 @@ public class Solo {
 		
 		return waiter.waitForView(view, timeout, scroll, checkIsShown);
 	}
-	
+
 	/**
 	 * Waits for a View matching the specified class.
 	 * 
@@ -342,7 +337,7 @@ public class Solo {
 	 * @return {@code true} if the {@link View} is displayed and {@code false} if it is not displayed before the timeout
 	 * 
 	 */
-	
+
 	public <T extends View> boolean waitForView(final Class<T> viewClass, final int minimumNumberOfMatches, final int timeout){
 		int index = minimumNumberOfMatches-1;
 		
@@ -351,7 +346,7 @@ public class Solo {
 		
 		return waiter.waitForView(viewClass, index, timeout, true);
 	}
-	
+
 	/**
 	 * Waits for a View matching the specified class.
 	 * 
@@ -362,7 +357,7 @@ public class Solo {
 	 * @return {@code true} if the {@link View} is displayed and {@code false} if it is not displayed before the timeout
 	 * 
 	 */
-	
+
 	public <T extends View> boolean waitForView(final Class<T> viewClass, final int minimumNumberOfMatches, final int timeout,final boolean scroll){
 		int index = minimumNumberOfMatches-1;
 
@@ -371,7 +366,7 @@ public class Solo {
 
 		return waiter.waitForView(viewClass, index, timeout, scroll);
 	}
-	
+
 	/**
 	 * Waits for a WebElement matching the specified By object. Default timeout is 20 seconds. 
 	 * 
@@ -379,11 +374,11 @@ public class Solo {
 	 * @return {@code true} if the {@link WebElement} is displayed and {@code false} if it is not displayed before the timeout
 	 * 
 	 */
-	
+
 	public boolean waitForWebElement(By by){
 		return (waiter.waitForWebElement(by, 0, Timeout.getLargeTimeout(), true) != null);
 	}
-	
+
 	/**
 	 * Waits for a WebElement matching the specified By object.
 	 * 
@@ -393,11 +388,11 @@ public class Solo {
 	 * @return {@code true} if the {@link WebElement} is displayed and {@code false} if it is not displayed before the timeout
 	 * 
 	 */
-	
+
 	public boolean waitForWebElement(By by, int timeout, boolean scroll){
 		return (waiter.waitForWebElement(by, 0, timeout, scroll) != null);
 	}
-	
+
 	/**
 	 * Waits for a WebElement matching the specified By object.
 	 * 
@@ -407,12 +402,11 @@ public class Solo {
 	 * @param scroll {@code true} if scrolling should be performed
 	 * @return {@code true} if the {@link WebElement} is displayed and {@code false} if it is not displayed before the timeout
 	 */
-	
+
 	public boolean waitForWebElement(By by, int minimumNumberOfMatches, int timeout, boolean scroll){
 		return (waiter.waitForWebElement(by, minimumNumberOfMatches, timeout, scroll) != null);
 	}
-	
-	
+
 	/**
 	 * Waits for a condition to be satisfied.
 	 * 
@@ -421,11 +415,11 @@ public class Solo {
 	 * @return {@code true} if condition is satisfied and {@code false} if it is not satisfied before the timeout
 	 * 
 	 */
-	
+
 	public boolean waitForCondition(Condition condition, final int timeout){
 		return waiter.waitForCondition(condition, timeout);
 	}
-	
+
 	/**
 	 * Searches for a text in the EditText objects currently displayed and returns true if found. Will automatically scroll when needed.
 	 *
@@ -433,12 +427,11 @@ public class Solo {
 	 * @return {@code true} if an {@link EditText} displaying the specified text is found or {@code false} if it is not found
 	 *
 	 */
-	
+
 	public boolean searchEditText(String text) {
 		return searcher.searchWithTimeoutFor(EditText.class, text, 1, true, false);
 	}
-	
-	
+
 	/**
 	 * Searches for a Button displaying the specified text and returns {@code true} if at least one Button
 	 * is found. Will automatically scroll when needed. 
@@ -447,11 +440,11 @@ public class Solo {
 	 * @return {@code true} if a {@link Button} displaying the specified text is found and {@code false} if it is not found
 	 *
 	 */
-	
+
 	public boolean searchButton(String text) {
 		return searcher.searchWithTimeoutFor(Button.class, text, 0, true, false);
 	}
-	
+
 	/**
 	 * Searches for a Button displaying the specified text and returns {@code true} if at least one Button
 	 * is found. Will automatically scroll when needed. 
@@ -461,11 +454,11 @@ public class Solo {
 	 * @return {@code true} if a {@link Button} displaying the specified text is found and {@code false} if it is not found
 	 *
 	 */
-	
+
 	public boolean searchButton(String text, boolean onlyVisible) {
 		return searcher.searchWithTimeoutFor(Button.class, text, 0, true, onlyVisible);
 	}
-	
+
 	/**
 	 * Searches for a ToggleButton displaying the specified text and returns {@code true} if at least one ToggleButton
 	 * is found. Will automatically scroll when needed. 
@@ -474,11 +467,11 @@ public class Solo {
 	 * @return {@code true} if a {@link ToggleButton} displaying the specified text is found and {@code false} if it is not found
 	 *
 	 */
-	
+
 	public boolean searchToggleButton(String text) {
 		return searcher.searchWithTimeoutFor(ToggleButton.class, text, 0, true, false);
 	}
-	
+
 	/**
 	 * Searches for a Button displaying the specified text and returns {@code true} if the
 	 * searched Button is found a specified number of times. Will automatically scroll when needed.
@@ -490,11 +483,11 @@ public class Solo {
 	 * if it is not found
 	 *  
 	 */
-	
+
 	public boolean searchButton(String text, int minimumNumberOfMatches) {
 		return searcher.searchWithTimeoutFor(Button.class, text, minimumNumberOfMatches, true, false);
 	}
-	
+
 	/**
 	 * Searches for a Button displaying the specified text and returns {@code true} if the
 	 * searched Button is found a specified number of times. Will automatically scroll when needed.
@@ -507,11 +500,11 @@ public class Solo {
 	 * if it is not found
 	 *  
 	 */
-	
+
 	public boolean searchButton(String text, int minimumNumberOfMatches, boolean onlyVisible) {
 		return searcher.searchWithTimeoutFor(Button.class, text, minimumNumberOfMatches, true, onlyVisible);
 	}
-	
+
 	/**
 	 * Searches for a ToggleButton displaying the specified text and returns {@code true} if the
 	 * searched ToggleButton is found a specified number of times. Will automatically scroll when needed.
@@ -523,11 +516,11 @@ public class Solo {
 	 * if it is not found
 	 *  
 	 */
-	
+
 	public boolean searchToggleButton(String text, int minimumNumberOfMatches) {
 		return searcher.searchWithTimeoutFor(ToggleButton.class, text, minimumNumberOfMatches, true, false);
 	}
-	
+
 	/**
 	 * Searches for the specified text and returns {@code true} if at least one item
 	 * is found displaying the expected text. Will automatically scroll when needed. 
@@ -536,11 +529,11 @@ public class Solo {
 	 * @return {@code true} if the search string is found and {@code false} if it is not found
 	 *
 	 */
-	
+
 	public boolean searchText(String text) {
 		return searcher.searchWithTimeoutFor(TextView.class, text, 0, true, false);
 	}
-	
+
 	/**
 	 * Searches for the specified text and returns {@code true} if at least one item
 	 * is found displaying the expected text. Will automatically scroll when needed. 
@@ -550,11 +543,11 @@ public class Solo {
 	 * @return {@code true} if the search string is found and {@code false} if it is not found
 	 *
 	 */
-	
+
 	public boolean searchText(String text, boolean onlyVisible) {
 		return searcher.searchWithTimeoutFor(TextView.class, text, 0, true, onlyVisible);
 	}
-	
+
 	/**
 	 * Searches for the specified text and returns {@code true} if the searched text is found a specified
 	 * number of times. Will automatically scroll when needed. 
@@ -566,11 +559,11 @@ public class Solo {
 	 * is not found
 	 *  
 	 */
-	
+
 	public boolean searchText(String text, int minimumNumberOfMatches) {
 		return searcher.searchWithTimeoutFor(TextView.class, text, minimumNumberOfMatches, true, false);
 	}
-	
+
 	/**
 	 * Searches for the specified text and returns {@code true} if the searched text is found a specified
 	 * number of times.
@@ -583,11 +576,11 @@ public class Solo {
 	 * is not found
 	 *  
 	 */
-	
+
 	public boolean searchText(String text, int minimumNumberOfMatches, boolean scroll) {
 		return searcher.searchWithTimeoutFor(TextView.class, text, minimumNumberOfMatches, scroll, false);
 	}
-	
+
 	/**
 	 * Searches for the specified text and returns {@code true} if the searched text is found a specified
 	 * number of times.
@@ -601,7 +594,7 @@ public class Solo {
 	 * is not found
 	 *  
 	 */
-	
+
 	public boolean searchText(String text, int minimumNumberOfMatches, boolean scroll, boolean onlyVisible) {
 		return searcher.searchWithTimeoutFor(TextView.class, text, minimumNumberOfMatches, scroll, onlyVisible);
 	}
@@ -618,18 +611,18 @@ public class Solo {
 	{
 		activityUtils.setActivityOrientation(orientation);
 	}
-	
+
 	/**
 	 * Returns the current Activity.
 	 *
 	 * @return the current Activity
 	 *
 	 */
-	
+
 	public Activity getCurrentActivity() {
 		return activityUtils.getCurrentActivity(false);
 	}
-	
+
 	/**
 	 * Asserts that the Activity matching the specified name is active.
 	 * 
@@ -637,12 +630,12 @@ public class Solo {
 	 * @param name the name of the {@link Activity} that is expected to be active. Example is: {@code "MyActivity"}
 	 * 
 	 */
-	
+
 	public void assertCurrentActivity(String message, String name)
 	{	
 		asserter.assertCurrentActivity(message, name);
 	}
-	
+
 	/**
 	 * Asserts that the Activity matching the specified class is active.
 	 * 
@@ -650,14 +643,13 @@ public class Solo {
 	 * @param activityClass the class of the Activity that is expected to be active. Example is: {@code MyActivity.class}
 	 * 
 	 */
-	
+
 	@SuppressWarnings("unchecked")
 	public void assertCurrentActivity(String message, @SuppressWarnings("rawtypes") Class activityClass)
 	{
 		asserter.assertCurrentActivity(message, activityClass);
-
 	}
-	
+
 	/**
 	 * Asserts that the Activity matching the specified name is active, with the possibility to
 	 * verify that the expected Activity is a new instance of the Activity.
@@ -667,12 +659,12 @@ public class Solo {
 	 * @param isNewInstance {@code true} if the expected {@link Activity} is a new instance of the {@link Activity}
 	 * 
 	 */
-	
+
 	public void assertCurrentActivity(String message, String name, boolean isNewInstance)
 	{
 		asserter.assertCurrentActivity(message, name, isNewInstance);
 	}
-	
+
 	/**
 	 * Asserts that the Activity matching the specified class is active, with the possibility to
 	 * verify that the expected Activity is a new instance of the Activity.
@@ -688,7 +680,7 @@ public class Solo {
 			boolean isNewInstance) {
 		asserter.assertCurrentActivity(message, activityClass, isNewInstance);
 	}	
-	
+
 	/**
 	 * Asserts that the available memory is not considered low by the system.
 	 * 
@@ -698,7 +690,7 @@ public class Solo {
 	{
 		asserter.assertMemoryNotLow();
 	}
-	
+
 	/**
 	 * Waits for a Dialog to open. Default timeout is 20 seconds.
 	 * 
@@ -709,7 +701,7 @@ public class Solo {
 	public boolean waitForDialogToOpen() {
 		return dialogUtils.waitForDialogToOpen(Timeout.getLargeTimeout(), true);
 	}
-	
+
 	/**
 	 * Waits for a Dialog to close. Default timeout is 20 seconds.
 	 * 
@@ -732,7 +724,7 @@ public class Solo {
 	public boolean waitForDialogToOpen(long timeout) {
 		return dialogUtils.waitForDialogToOpen(timeout, true);
 	}
-	
+
 	/**
 	 * Waits for a Dialog to close.
 	 * 
@@ -744,8 +736,7 @@ public class Solo {
 	public boolean waitForDialogToClose(long timeout) {
 		return dialogUtils.waitForDialogToClose(timeout);
 	}
-	
-	
+
 	/**
 	 * Simulates pressing the hardware back key.
 	 * 
@@ -797,7 +788,7 @@ public class Solo {
 	public void clickLongOnScreen(float x, float y) {
 		clicker.clickLongOnScreen(x, y, 0);
 	}
-	
+
 	/**
 	 * Long clicks the specified coordinates for a specified amount of time.
 	 *
@@ -806,35 +797,33 @@ public class Solo {
 	 * @param time the amount of time to long click
 	 *
 	 */
-	
+
 	public void clickLongOnScreen(float x, float y, int time) {
 		clicker.clickLongOnScreen(x, y, time);
 	}
-	
-	
+
 	/**
 	 * Clicks a Button displaying the specified text. Will automatically scroll when needed. 
 	 *
 	 * @param text the text displayed by the {@link Button}. The parameter will be interpreted as a regular expression
 	 *
 	 */
-	
+
 	public void clickOnButton(String text) {
 		clicker.clickOn(Button.class, text);
-
 	}
-	
+
 	/**
 	 * Clicks an ImageButton matching the specified index.
 	 *
 	 * @param index the index of the {@link ImageButton} to click. 0 if only one is available
 	 *
 	 */
-	
+
 	public void clickOnImageButton(int index) {
 		clicker.clickOn(ImageButton.class, index);
 	}
-	
+
 	/**
 	 * Clicks a ToggleButton displaying the specified text.
 	 * 
@@ -857,7 +846,7 @@ public class Solo {
 	{	
 		clicker.clickOnMenuItem(text);
 	}
-	
+
 	/**
 	 * Clicks a MenuItem displaying the specified text.
 	 * 
@@ -865,37 +854,37 @@ public class Solo {
 	 * @param subMenu {@code true} if the menu item could be located in a sub menu
 	 * 
 	 */
-	
+
 	public void clickOnMenuItem(String text, boolean subMenu)
 	{
 		clicker.clickOnMenuItem(text, subMenu);
 	}
-	
+
 	/**
 	 * Clicks the specified WebElement.
 	 * 
 	 * @param webElement the WebElement to click
 	 * 
 	 */
-	
+
 	public void clickOnWebElement(WebElement webElement){
 		if(webElement == null)
 			Assert.assertTrue("WebElement is null and can therefore not be clicked!", false);
 
 		clicker.clickOnScreen(webElement.getLocationX(), webElement.getLocationY());
 	}
-	
+
 	/**
 	 * Clicks a WebElement matching the specified By object.
 	 * 
 	 * @param by the By object. Examples are: {@code By.id("id")} and {@code By.name("name")}
 	 * 
 	 */
-	
+
 	public void clickOnWebElement(By by){
 		clicker.clickOnWebElement(by, 0, true);
 	}
-	
+
 	/**
 	 * Clicks a WebElement matching the specified By object.
 	 * 
@@ -903,11 +892,11 @@ public class Solo {
 	 * @param match if multiple objects match, this determines which one to click
 	 * 
 	 */
-	
+
 	public void clickOnWebElement(By by, int match){
 		clicker.clickOnWebElement(by, match, true);
 	}
-	
+
 	/**
 	 * Clicks a WebElement matching the specified By object.
 	 * 
@@ -916,11 +905,11 @@ public class Solo {
 	 * @param scroll {@code true} if scrolling should be performed
 	 * 
 	 */
-	
+
 	public void clickOnWebElement(By by, int match, boolean scroll){
 		clicker.clickOnWebElement(by, match, scroll);
 	}
-	
+
 	/**
 	 * Presses a MenuItem matching the specified index. Index {@code 0} is the first item in the
 	 * first row, Index {@code 3} is the first item in the second row and
@@ -929,11 +918,11 @@ public class Solo {
 	 * @param index the index of the {@link android.view.MenuItem} to press
 	 * 
 	 */
-	
+
 	public void pressMenuItem(int index) {	
 		presser.pressMenuItem(index);
 	}
-	
+
 	/**
 	 * Presses a MenuItem matching the specified index. Supports three rows with a specified amount
 	 * of items. If itemsPerRow equals 5 then index 0 is the first item in the first row, 
@@ -943,11 +932,11 @@ public class Solo {
 	 * @param itemsPerRow the amount of menu items there are per row   
 	 * 
 	 */
-	
+
 	public void pressMenuItem(int index, int itemsPerRow) {	
 		presser.pressMenuItem(index, itemsPerRow);
 	}
-	
+
 	/**
 	 * Presses a Spinner (drop-down menu) item.
 	 * 
@@ -956,24 +945,24 @@ public class Solo {
 	 * A Negative number moves up on the {@link Spinner}, positive moves down
 	 * 
 	 */
-	
+
 	public void pressSpinnerItem(int spinnerIndex, int itemIndex)
 	{
 		presser.pressSpinnerItem(spinnerIndex, itemIndex);
 	} 
-	
+
 	/**
 	 * Clicks the specified View.
 	 *
 	 * @param view the {@link View} to click
 	 *
 	 */
-	
+
 	public void clickOnView(View view) {
 		waiter.waitForView(view, Timeout.getSmallTimeout());
 		clicker.clickOnScreen(view);
 	}
-	
+
 	/**
 	 * Clicks the specified View.
 	 * 
@@ -989,20 +978,19 @@ public class Solo {
 			clicker.clickOnScreen(view);
 		}
 	}
-	
+
 	/**
 	 * Long clicks the specified View.
 	 *
 	 * @param view the {@link View} to long click
 	 *
 	 */
-	
+
 	public void clickLongOnView(View view) {
 		waiter.waitForView(view, Timeout.getSmallTimeout());
 		clicker.clickOnScreen(view, true, 0);
-
 	}	
-	
+
 	/**
 	 * Long clicks the specified View for a specified amount of time.
 	 *
@@ -1010,12 +998,11 @@ public class Solo {
 	 * @param time the amount of time to long click
 	 *
 	 */
-	
+
 	public void clickLongOnView(View view, int time) {
 		clicker.clickOnScreen(view, true, time);
-
 	}
-	
+
 	/**
 	 * Clicks a View or WebElement displaying the specified
 	 * text. Will automatically scroll when needed. 
@@ -1023,11 +1010,11 @@ public class Solo {
 	 * @param text the text to click. The parameter will be interpreted as a regular expression
 	 *
 	 */
-	
+
 	public void clickOnText(String text) {
 		clicker.clickOnText(text, false, 1, true, 0);
 	}
-	
+
 	/**
 	 * Clicks a View or WebElement displaying the specified text. Will automatically scroll when needed.
 	 *
@@ -1035,11 +1022,11 @@ public class Solo {
 	 * @param match if multiple objects match the text, this determines which one to click
 	 *
 	 */
-	
+
 	public void clickOnText(String text, int match) {
 		clicker.clickOnText(text, false, match, true, 0);
 	}
-	
+
 	/**
 	 * Clicks a View or WebElement displaying the specified text.
 	 *
@@ -1048,24 +1035,23 @@ public class Solo {
 	 * @param scroll {@code true} if scrolling should be performed
 	 *
 	 */
-	
+
 	public void clickOnText(String text, int match, boolean scroll) {
 		clicker.clickOnText(text, false, match, scroll, 0);
 	}
-	
-	
+
 	/**
 	 * Long clicks a View or WebElement displaying the specified text. Will automatically scroll when needed. 
 	 *
 	 * @param text the text to click. The parameter will be interpreted as a regular expression
 	 *
 	 */
-	
+
 	public void clickLongOnText(String text)
 	{
 		clicker.clickOnText(text, true, 1, true, 0);
 	}
-	
+
 	/**
 	 * Long clicks a View or WebElement displaying the specified text. Will automatically scroll when needed.
 	 *
@@ -1073,12 +1059,12 @@ public class Solo {
 	 * @param match if multiple objects match the text, this determines which one to click
 	 *
 	 */
-	
+
 	public void clickLongOnText(String text, int match)
 	{
 		clicker.clickOnText(text, true, match, true, 0);
 	}
-	
+
 	/**
 	 * Long clicks a View or WebElement displaying the specified text.
 	 *
@@ -1087,12 +1073,12 @@ public class Solo {
 	 * @param scroll {@code true} if scrolling should be performed
 	 *
 	 */
-	
+
 	public void clickLongOnText(String text, int match, boolean scroll)
 	{
 		clicker.clickOnText(text, true, match, scroll, 0);
 	}
-	
+
 	/**
 	 * Long clicks a View or WebElement displaying the specified text. 
 	 *
@@ -1100,12 +1086,12 @@ public class Solo {
 	 * @param match if multiple objects match the text, this determines which one to click
 	 * @param time the amount of time to long click 
 	 */
-	
+
 	public void clickLongOnText(String text, int match, int time)
 	{
 		clicker.clickOnText(text, true, match, true, time);
 	}
-	
+
 	/**
 	 * Long clicks a View displaying the specified text and then selects
 	 * an item from the context menu that appears. Will automatically scroll when needed. 
@@ -1114,51 +1100,51 @@ public class Solo {
 	 * @param index the index of the menu item to press. {@code 0} if only one is available
 	 *
 	 */
-	
+
 	public void clickLongOnTextAndPress(String text, int index) {
 		clicker.clickLongOnTextAndPress(text, index);
 	}
-	
+
 	/**
 	 * Clicks a Button matching the specified index.
 	 *
 	 * @param index the index of the {@link Button} to click. {@code 0} if only one is available
 	 *
 	 */
-	
+
 	public void clickOnButton(int index) {
 		clicker.clickOn(Button.class, index);
 	}
-	
+
 	/**
 	 * Clicks a RadioButton matching the specified index.
 	 *
 	 * @param index the index of the {@link RadioButton} to click. {@code 0} if only one is available
 	 *
 	 */
-	
+
 	public void clickOnRadioButton(int index) {
 		clicker.clickOn(RadioButton.class, index);
 	}
-	
+
 	/**
 	 * Clicks a CheckBox matching the specified index.
 	 *
 	 * @param index the index of the {@link CheckBox} to click. {@code 0} if only one is available
 	 *
 	 */
-	
+
 	public void clickOnCheckBox(int index) {
 		clicker.clickOn(CheckBox.class, index);
 	}
-	
+
 	/**
 	 * Clicks an EditText matching the specified index.
 	 *
 	 * @param index the index of the {@link EditText} to click. {@code 0} if only one is available
 	 *
 	 */
-	
+
 	public void clickOnEditText(int index) {
 		clicker.clickOn(EditText.class, index);
 	}
@@ -1185,11 +1171,11 @@ public class Solo {
 	 * @return an {@code ArrayList} of the {@link TextView} objects located in the list line
 	 *
 	 */
-	
+
 	public ArrayList<TextView> clickInList(int line, int index) {
 		return clicker.clickInList(line, index, false, 0);
 	}
-	
+
 	/**
 	 * Long clicks the specified list line and returns an ArrayList of the TextView objects that
 	 * the list line is displaying. Will use the first ListView it finds.
@@ -1198,11 +1184,11 @@ public class Solo {
 	 * @return an {@code ArrayList} of the {@link TextView} objects located in the list line
 	 *
 	 */
-	
+
 	public ArrayList<TextView> clickLongInList(int line){
 		return clicker.clickInList(line, 0, true, 0);
 	}
-	
+
 	/**
 	 * Long clicks the specified list line in the ListView matching the specified index and 
 	 * returns an ArrayList of the TextView objects that the list line is displaying.
@@ -1212,11 +1198,11 @@ public class Solo {
 	 * @return an {@code ArrayList} of the {@link TextView} objects located in the list line
 	 *
 	 */
-	
+
 	public ArrayList<TextView> clickLongInList(int line, int index){
 		return clicker.clickInList(line, index, true, 0);
 	}
-	
+
 	/**
 	 * Long clicks the specified list line in the ListView matching the specified index and 
 	 * returns an ArrayList of the TextView objects that the list line is displaying.
@@ -1227,7 +1213,7 @@ public class Solo {
 	 * @return an {@code ArrayList} of the {@link TextView} objects located in the list line
 	 *
 	 */
-	
+
 	public ArrayList<TextView> clickLongInList(int line, int index, int time){
 		return clicker.clickInList(line, index, true, time);
 	}
@@ -1237,7 +1223,7 @@ public class Solo {
 	 * 
 	 * @param id the R.id of the ActionBar item to click
 	 */
-	
+
 	public void clickOnActionBarItem(int id){
 		clicker.clickOnActionBarItem(id);
 	}
@@ -1291,7 +1277,6 @@ public class Solo {
 		scroller.scroll(Scroller.DOWN, true);
 	}
 
-
 	/**
 	 * Scrolls up the screen.
 	 *
@@ -1309,7 +1294,7 @@ public class Solo {
 	/**
 	 * Scrolls to the top of the screen.
 	 */
-	
+
 	@SuppressWarnings("unchecked")
 	public void scrollToTop() {
 		waiter.waitForViews(AbsListView.class, ScrollView.class, WebView.class);
@@ -1387,7 +1372,7 @@ public class Solo {
 	public boolean scrollListToBottom(int index) {
 		return scroller.scrollList(waiter.waitForAndGetView(index, ListView.class), Scroller.DOWN, true);
 	}
-	
+
 	/**
 	 * Scrolls up a ListView matching the specified index.
 	 * 
@@ -1395,11 +1380,11 @@ public class Solo {
 	 * @return {@code true} if more scrolling can be performed
 	 * 
 	 */
-	
+
 	public boolean scrollUpList(int index) {
 		return scroller.scrollList(waiter.waitForAndGetView(index, ListView.class), Scroller.UP, false);
 	}
-	
+
     /**
    	 * Scrolls a ListView matching the specified index to the top.
    	 *
@@ -1411,29 +1396,29 @@ public class Solo {
    	public boolean scrollListToTop(int index) {
    		return scroller.scrollList(waiter.waitForAndGetView(index, ListView.class), Scroller.UP, true);
    	}
-   	
+
    	/**
 	 * Scroll the specified AbsListView to the specified line. 
 	 *
 	 * @param absListView the {@link AbsListView} to scroll
 	 * @param line the line to scroll to
 	 */
-   	
+
    	public void scrollListToLine(AbsListView absListView, int line){
    		scroller.scrollListToLine(absListView, line);
    	}
-   	
+
 	/**
 	 * Scroll a AbsListView matching the specified index to the specified line. 
 	 *
 	 * @param index the index of the {@link AbsListView} to scroll
 	 * @param line the line to scroll to
 	 */
-   	
+
    	public void scrollListToLine(int index, int line){
    		scroller.scrollListToLine(waiter.waitForAndGetView(index, AbsListView.class), line);
    	}
-   	
+
    	/**
 	 * Scrolls horizontally.
 	 *
@@ -1441,7 +1426,7 @@ public class Solo {
 	 * @param scrollPosition the position to scroll to, from 0 to 1 where 1 is all the way. Example is: 0.55.
 	 *
 	 */
-	
+
 	public void scrollToSide(int side, float scrollPosition) {
         switch (side){
             case RIGHT: scroller.scrollToSide(Scroller.Side.RIGHT, scrollPosition); break;
@@ -1449,21 +1434,20 @@ public class Solo {
         }
 	}
 
-
 	/**
 	 * Scrolls horizontally.
 	 *
 	 * @param side the side to scroll; {@link #RIGHT} or {@link #LEFT}
 	 *
 	 */
-	
+
 	public void scrollToSide(int side) {
         switch (side){
             case RIGHT: scroller.scrollToSide(Scroller.Side.RIGHT, 0.55F); break;
             case LEFT:  scroller.scrollToSide(Scroller.Side.LEFT, 0.55F);  break;
         }
 	}
-	
+
 	/**
 	 * Scrolls a View horizontally.
 	 *
@@ -1494,7 +1478,7 @@ public class Solo {
 			case LEFT:  scroller.scrollViewToSide(view, Scroller.Side.LEFT, 0.55F);  break;
 		}
 	}
-	
+
 	/**
 	 * Zooms in or out if startPoint1 and startPoint2 are larger or smaller then endPoint1 and endPoint2. Requires API level >= 14.
 	 * 
@@ -1551,7 +1535,7 @@ public class Solo {
 	 * @param center1 Center of semi-circle drawn from [0, Pi]
 	 * @param center2 Center of semi-circle drawn from [Pi, 3*Pi]
 	 */	
-	
+
 	public void rotateSmall(PointF center1, PointF center2)
 	{
 		if (android.os.Build.VERSION.SDK_INT < 14){
@@ -1569,11 +1553,11 @@ public class Solo {
 	 * @param dayOfMonth the day e.g. 10
 	 *
 	 */
-	
+
 	public void setDatePicker(int index, int year, int monthOfYear, int dayOfMonth) {
 		setDatePicker(waiter.waitForAndGetView(index, DatePicker.class), year, monthOfYear, dayOfMonth);
 	}
-	
+
 	/**
 	 * Sets the date in the specified DatePicker.
 	 *
@@ -1583,12 +1567,12 @@ public class Solo {
 	 * @param dayOfMonth the day e.g. 10
 	 *
 	 */
-	
+
 	public void setDatePicker(DatePicker datePicker, int year, int monthOfYear, int dayOfMonth) {
 		waiter.waitForView(datePicker, Timeout.getSmallTimeout());
 		setter.setDatePicker(datePicker, year, monthOfYear, dayOfMonth);
 	}
-	
+
 	/**
 	 * Sets the time in a TimePicker matching the specified index.
 	 *
@@ -1597,11 +1581,11 @@ public class Solo {
 	 * @param minute the minute e.g. 30
 	 *
 	 */
-	
+
 	public void setTimePicker(int index, int hour, int minute) {		
 		setTimePicker(waiter.waitForAndGetView(index, TimePicker.class), hour, minute);
 	}
-	
+
 	/**
 	 * Sets the time in the specified TimePicker.
 	 *
@@ -1615,8 +1599,7 @@ public class Solo {
 		waiter.waitForView(timePicker, Timeout.getSmallTimeout());
 		setter.setTimePicker(timePicker, hour, minute);
 	}
-	
-	
+
 	/**
 	 * Sets the progress of a ProgressBar matching the specified index. Examples of ProgressBars are: {@link android.widget.SeekBar} and {@link android.widget.RatingBar}.
 	 *
@@ -1641,7 +1624,7 @@ public class Solo {
 		waiter.waitForView(progressBar, Timeout.getSmallTimeout());
 		setter.setProgressBar(progressBar, progress);
 	}
-	
+
 	/**
 	 * Sets the status of a SlidingDrawer matching the specified index. Examples of status are: {@code Solo.CLOSED} and {@code Solo.OPENED}.
 	 *
@@ -1667,8 +1650,6 @@ public class Solo {
 		setter.setSlidingDrawer(slidingDrawer, status);
 	}
 
-	
-	
 	/**
 	 * Enters text in an EditText matching the specified index.
 	 *
@@ -1680,7 +1661,7 @@ public class Solo {
 	public void enterText(int index, String text) {
 		textEnterer.setEditText(waiter.waitForAndGetView(index, EditText.class), text);		
 	}
-	
+
 	/**
 	 * Enters text in the specified EditText.
 	 *
@@ -1688,12 +1669,12 @@ public class Solo {
 	 * @param text the text to enter in the {@link EditText} field
 	 *
 	 */
-	
+
 	public void enterText(EditText editText, String text) {
 		waiter.waitForView(editText, Timeout.getSmallTimeout());
 		textEnterer.setEditText(editText, text);		
 	}
-	
+
 	/**
 	 * Enters text in a WebElement matching the specified By object.
 	 * 
@@ -1708,7 +1689,7 @@ public class Solo {
 		}
 		webUtils.enterTextIntoWebElement(by, text);
 	}
-	
+
 	/**
 	 * Types text in an EditText matching the specified index.
 	 *
@@ -1720,7 +1701,7 @@ public class Solo {
 	public void typeText(int index, String text) {
 		textEnterer.typeText(waiter.waitForAndGetView(index, EditText.class), text);		
 	}
-	
+
 	/**
 	 * Types text in the specified EditText.
 	 *
@@ -1728,12 +1709,12 @@ public class Solo {
 	 * @param text the text to type in the {@link EditText} field
 	 *
 	 */
-	
+
 	public void typeText(EditText editText, String text) {
 		waiter.waitForView(editText, Timeout.getSmallTimeout());
 		textEnterer.typeText(editText, text);		
 	}
-	
+
 	/**
 	 * Types text in a WebElement matching the specified By object.
 	 * 
@@ -1741,13 +1722,13 @@ public class Solo {
 	 * @param text the text to enter in the {@link WebElement} field
 	 * 
 	 */
-	
+
 	public void typeTextInWebElement(By by, String text){
 		clickOnWebElement(by);
 		dialogUtils.hideSoftKeyboard(null, true, true);
 		instrumentation.sendStringSync(text);
 	}
-	
+
 	/**
 	 * Types text in a WebElement matching the specified By object.
 	 * 
@@ -1756,13 +1737,13 @@ public class Solo {
 	 * @param match if multiple objects match, this determines which one will be typed in
 	 * 
 	 */
-	
+
 	public void typeTextInWebElement(By by, String text, int match){
 		clickOnWebElement(by, match);
 		dialogUtils.hideSoftKeyboard(null, true, true);
 		instrumentation.sendStringSync(text);
 	}
-	
+
 	/**
 	 * Types text in the specified WebElement.
 	 * 
@@ -1770,14 +1751,13 @@ public class Solo {
 	 * @param text the text to enter in the {@link WebElement} field
 	 * 
 	 */
-	
+
 	public void typeTextInWebElement(WebElement webElement, String text){
 		clickOnWebElement(webElement);
 		dialogUtils.hideSoftKeyboard(null, true, true);
 		instrumentation.sendStringSync(text);
 	}
 
-	
 	/**
 	 * Clears the value of an EditText.
 	 * 
@@ -1788,41 +1768,41 @@ public class Solo {
 	public void clearEditText(int index) {
 		textEnterer.setEditText(waiter.waitForAndGetView(index, EditText.class), "");
 	}
-    
+
     /**
      * Clears the value of an EditText.
      * 
      * @param editText the {@link EditText} to clear
 	 *
      */
-	
+
     public void clearEditText(EditText editText) {
     	waiter.waitForView(editText, Timeout.getSmallTimeout());
     	textEnterer.setEditText(editText, "");	
     }
-    
+
     /**
 	 * Clears text in a WebElement matching the specified By object.
 	 * 
 	 * @param by the By object. Examples are: {@code By.id("id")} and {@code By.name("name")}
 	 * 
 	 */
-	
+
 	public void clearTextInWebElement(By by){
 		webUtils.enterTextIntoWebElement(by, "");
 	}
-	
+
 	/**
 	 * Clicks an ImageView matching the specified index.
 	 *
 	 * @param index the index of the {@link ImageView} to click. {@code 0} if only one is available
 	 *
 	 */
-	
+
 	public void clickOnImage(int index) {
 		clicker.clickOn(ImageView.class, index);
 	}
-	
+
 	/**
 	 * Returns an EditText matching the specified index.
 	 *
@@ -1830,11 +1810,11 @@ public class Solo {
 	 * @return an {@link EditText} matching the specified index
 	 *
 	 */
-	
+
 	public EditText getEditText(int index) {
 		return getter.getView(EditText.class, index);
 	}
-	
+
 	/**
 	 * Returns a Button matching the specified index.
 	 *
@@ -1842,11 +1822,11 @@ public class Solo {
 	 * @return a {@link Button} matching the specified index
 	 *
 	 */
-	
+
 	public Button getButton(int index) {
 		return getter.getView(Button.class, index);
 	}
-	
+
 	/**
 	 * Returns a TextView matching the specified index.
 	 *
@@ -1854,11 +1834,11 @@ public class Solo {
 	 * @return a {@link TextView} matching the specified index
 	 *
 	 */
-	
+
 	public TextView getText(int index) {
 		return getter.getView(TextView.class, index);
 	}
-	
+
 	/**
 	 * Returns an ImageView matching the specified index.
 	 *
@@ -1866,11 +1846,11 @@ public class Solo {
 	 * @return an {@link ImageView} matching the specified index
 	 *
 	 */
-	
+
 	public ImageView getImage(int index) {
 		return getter.getView(ImageView.class, index);
 	}
-	
+
 	/**
 	 * Returns an ImageButton matching the specified index.
 	 *
@@ -1878,23 +1858,23 @@ public class Solo {
 	 * @return the {@link ImageButton} matching the specified index
 	 *
 	 */
-	
+
 	public ImageButton getImageButton(int index) {
 		return getter.getView(ImageButton.class, index);
 	}
-	
+
 	/**
 	 * Returns a TextView displaying the specified text. 
 	 * 
 	 * @param text the text that is displayed, specified as a regular expression
 	 * @return the {@link TextView} displaying the specified text
 	 */
-	
+
 	public TextView getText(String text)
 	{
 		return getter.getView(TextView.class, text, false);
 	}
-	
+
 	/**
 	 * Returns a TextView displaying the specified text. 
 	 * 
@@ -1902,24 +1882,24 @@ public class Solo {
 	 * @param onlyVisible {@code true} if only visible texts on the screen should be returned
 	 * @return the {@link TextView} displaying the specified text
 	 */
-	
+
 	public TextView getText(String text, boolean onlyVisible)
 	{
 		return getter.getView(TextView.class, text, onlyVisible);
 	}
-	
+
 	/**
 	 * Returns a Button displaying the specified text.
 	 * 
 	 * @param text the text that is displayed, specified as a regular expression
 	 * @return the {@link Button} displaying the specified text
 	 */
-	
+
 	public Button getButton(String text)
 	{
 		return getter.getView(Button.class, text, false);
 	}
-	
+
 	/**
 	 * Returns a Button displaying the specified text.
 	 * 
@@ -1927,24 +1907,24 @@ public class Solo {
 	 * @param onlyVisible {@code true} if only visible buttons on the screen should be returned
 	 * @return the {@link Button} displaying the specified text
 	 */
-	
+
 	public Button getButton(String text, boolean onlyVisible)
 	{
 		return getter.getView(Button.class, text, onlyVisible);
 	}
-	
+
 	/**
 	 * Returns an EditText displaying the specified text.
 	 * 
 	 * @param text the text that is displayed, specified as a regular expression
 	 * @return the {@link EditText} displaying the specified text
 	 */
-	
+
 	public EditText getEditText(String text)
 	{
 		return getter.getView(EditText.class, text, false);
 	}
-	
+
 	/**
 	 * Returns an EditText displaying the specified text.
 	 * 
@@ -1952,13 +1932,12 @@ public class Solo {
 	 * @param onlyVisible {@code true} if only visible EditTexts on the screen should be returned
 	 * @return the {@link EditText} displaying the specified text
 	 */
-	
+
 	public EditText getEditText(String text, boolean onlyVisible)
 	{
 		return getter.getView(EditText.class, text, onlyVisible);
 	}
-	
-	
+
 	/**
 	 * Returns a View matching the specified resource id. 
 	 * 
@@ -1969,7 +1948,7 @@ public class Solo {
 	public View getView(int id){
 		return getView(id, 0);
 	}
-	
+
 	/**
 	 * Returns a View matching the specified resource id and index. 
 	 * 
@@ -1992,7 +1971,7 @@ public class Solo {
 		}
 		return viewToReturn;
 	}
-	
+
 	/**
 	 * Returns a View matching the specified resource id. 
 	 * 
@@ -2003,7 +1982,7 @@ public class Solo {
 	public View getView(String id){
 		return getView(id, 0);
 	}
-	
+
 	/**
 	 * Returns a View matching the specified resource id and index. 
 	 * 
@@ -2038,7 +2017,7 @@ public class Solo {
 	public <T extends View> T getView(Class<T> viewClass, int index){
 		return waiter.waitForAndGetView(index, viewClass);
 	}
-	
+
 	/**
 	 * Returns a WebElement matching the specified By object and index.
 	 * 
@@ -2061,7 +2040,7 @@ public class Solo {
 		}
 		return webElement;
 	}
-	
+
 	/**
 	 * Returns the current web page URL.
 	 * 
@@ -2082,7 +2061,7 @@ public class Solo {
 		});
 		return webUrl;
 	}
-	
+
 	/**
 	 * Returns an ArrayList of the Views currently displayed in the focused Activity or Dialog.
 	 *
@@ -2090,7 +2069,7 @@ public class Solo {
 	 * focused window
 	 *
 	 */
-	
+
 	public ArrayList<View> getCurrentViews() {
 		return viewFetcher.getViews(null, true);
 	}
@@ -2115,32 +2094,32 @@ public class Solo {
 	 * @return an {@code ArrayList} of {@code View}s matching the specified {@code Class} located under the specified {@code parent}
 	 * 
 	 */
-	
+
 	public <T extends View> ArrayList<T> getCurrentViews(Class<T> classToFilterBy, View parent) {
 		return viewFetcher.getCurrentViews(classToFilterBy, parent);
 	}
-	
+
 	/**
 	 * Returns an ArrayList of WebElements displayed in the active WebView.
 	 * 
 	 * @return an {@code ArrayList} of the {@link WebElement} objects currently displayed in the active WebView
 	 */
-	
+
 	public ArrayList<WebElement> getCurrentWebElements(){
 		return webUtils.getCurrentWebElements();
 	}
-	
+
 	/**
 	 * Returns an ArrayList of WebElements displayed in the active WebView matching the specified By object.
 	 * 
 	 * @param by the By object. Examples are: {@code By.id("id")} and {@code By.name("name")}
 	 * @return an {@code ArrayList} of the {@link WebElement} objects currently displayed in the active WebView 
 	 */
-	
+
 	public ArrayList<WebElement> getCurrentWebElements(By by){
 		return webUtils.getCurrentWebElements(by);
 	}
-		
+	
 	/**
 	 * Checks if a RadioButton matching the specified index is checked.
 	 *
@@ -2148,12 +2127,12 @@ public class Solo {
 	 * @return {@code true} if {@link RadioButton} is checked and {@code false} if it is not checked
 	 * 
 	 */
-	
+
 	public boolean isRadioButtonChecked(int index)
 	{
 		return checker.isButtonChecked(RadioButton.class, index);
 	}
-	
+
 	/**
 	 * Checks if a RadioButton displaying the specified text is checked.
 	 *
@@ -2161,12 +2140,12 @@ public class Solo {
 	 * @return {@code true} if a {@link RadioButton} matching the specified text is checked and {@code false} if it is not checked
 	 *
 	 */
-	
+
 	public boolean isRadioButtonChecked(String text)
 	{
 		return checker.isButtonChecked(RadioButton.class, text);
 	}
-	
+
 	/**
 	 * Checks if a CheckBox matching the specified index is checked.
 	 * 
@@ -2174,12 +2153,12 @@ public class Solo {
 	 * @return {@code true} if {@link CheckBox} is checked and {@code false} if it is not checked
 	 * 
 	 */
-	
+
 	public boolean isCheckBoxChecked(int index)
 	{
 		return checker.isButtonChecked(CheckBox.class, index);
 	}
-	
+
 	/**
 	 * Checks if a ToggleButton displaying the specified text is checked.
 	 *
@@ -2187,12 +2166,12 @@ public class Solo {
 	 * @return {@code true} if a {@link ToggleButton} matching the specified text is checked and {@code false} if it is not checked
 	 *
 	 */
-	
+
 	public boolean isToggleButtonChecked(String text)
 	{
 		return checker.isButtonChecked(ToggleButton.class, text);
 	}
-	
+
 	/**
 	 * Checks if a ToggleButton matching the specified index is checked.
 	 * 
@@ -2200,12 +2179,12 @@ public class Solo {
 	 * @return {@code true} if {@link ToggleButton} is checked and {@code false} if it is not checked
 	 * 
 	 */
-	
+
 	public boolean isToggleButtonChecked(int index)
 	{
 		return checker.isButtonChecked(ToggleButton.class, index);
 	}
-	
+
 	/**
 	 * Checks if a CheckBox displaying the specified text is checked.
 	 *
@@ -2213,19 +2192,19 @@ public class Solo {
 	 * @return {@code true} if a {@link CheckBox} displaying the specified text is checked and {@code false} if it is not checked
 	 *
 	 */
-	
+
 	public boolean isCheckBoxChecked(String text)
 	{
 		return checker.isButtonChecked(CheckBox.class, text);
 	}
-	
+
 	/**
 	 * Checks if the specified text is checked.
 	 *
 	 * @param text the text that the {@link CheckedTextView} or {@link CompoundButton} objects display, specified as a regular expression
 	 * @return {@code true} if the specified text is checked and {@code false} if it is not checked
 	 */
-	
+
 	@SuppressWarnings("unchecked")
 	public boolean isTextChecked(String text){
 		waiter.waitForViews(CheckedTextView.class, CompoundButton.class);
@@ -2238,7 +2217,7 @@ public class Solo {
 		
 		return false;
 	}
-	
+
 	/**
 	 * Checks if the specified text is selected in any Spinner located in the current screen.
 	 *
@@ -2246,12 +2225,12 @@ public class Solo {
 	 * @return {@code true} if the specified text is selected in any {@link Spinner} and false if it is not
 	 * 
 	 */
-	
+
 	public boolean isSpinnerTextSelected(String text)
 	{
 		return checker.isSpinnerTextSelected(text);
 	}
-	
+
 	/**
 	 * Checks if the specified text is selected in a Spinner matching the specified index. 
 	 *
@@ -2259,18 +2238,18 @@ public class Solo {
 	 * @param text the text that is expected to be selected, specified as a regular expression
 	 * @return {@code true} if the specified text is selected in the specified {@link Spinner} and false if it is not
 	 */
-	
+
 	public boolean isSpinnerTextSelected(int index, String text)
 	{
 		return checker.isSpinnerTextSelected(index, text);
 	}
-	
+
 	/**
 	 * Hides the soft keyboard.
 	 * 
 	 * 
 	 */
-	
+
 	public void hideSoftKeyboard() {
 		dialogUtils.hideSoftKeyboard(null, true, false);
 	}
@@ -2282,23 +2261,23 @@ public class Solo {
 	 * {@link #ENTER}, {@link #MENU}, {@link #DELETE}
 	 * 
 	 */
-	
+
 	public void sendKey(int key)
 	{
 		sender.sendKeyCode(key);
     }
-	
+
 	/**
 	 * Returns to an Activity matching the specified name.
 	 *
 	 * @param name the name of the {@link Activity} to return to. Example is: {@code "MyActivity"}
 	 *
 	 */
-	
+
 	public void goBackToActivity(String name) {
 		activityUtils.goBackToActivity(name);
 	}
-	
+
 	/**
 	 * Waits for an Activity matching the specified name. Default timeout is 20 seconds. 
 	 *
@@ -2350,8 +2329,7 @@ public class Solo {
     {
         return waiter.waitForActivity(activityClass, timeout);
     }
-	
-	
+
 	/**
 	 * Waits for a Fragment matching the specified tag. Default timeout is 20 seconds.
 	 * 
@@ -2359,11 +2337,11 @@ public class Solo {
 	 * @return {@code true} if fragment appears and {@code false} if it does not appear before the timeout
 	 *  
 	 */
-	
+
 	public boolean waitForFragmentByTag(String tag){
 		return waiter.waitForFragment(tag, 0, Timeout.getLargeTimeout());
 	}
-	
+
 	/**
 	 * Waits for a Fragment matching the specified tag.
 	 * 
@@ -2372,11 +2350,11 @@ public class Solo {
 	 * @return {@code true} if fragment appears and {@code false} if it does not appear before the timeout
 	 *  
 	 */
-	
+
 	public boolean waitForFragmentByTag(String tag, int timeout){
 		return waiter.waitForFragment(tag, 0, timeout);
 	}
-	
+
 	/**
 	 * Waits for a Fragment matching the specified resource id. Default timeout is 20 seconds.
 	 * 
@@ -2384,11 +2362,11 @@ public class Solo {
 	 * @return {@code true} if fragment appears and {@code false} if it does not appear before the timeout
 	 *  
 	 */
-	
+
 	public boolean waitForFragmentById(int id){
 		return waiter.waitForFragment(null, id, Timeout.getLargeTimeout());
 	}
-	
+
 	/**
 	 * Waits for a Fragment matching the specified resource id.
 	 * 
@@ -2397,11 +2375,11 @@ public class Solo {
 	 * @return {@code true} if fragment appears and {@code false} if it does not appear before the timeout
 	 *  
 	 */
-	
+
 	public boolean waitForFragmentById(int id, int timeout){
 		return waiter.waitForFragment(null, id, timeout);
 	}
-	
+
 	/**
 	 * Waits for the specified log message to appear. Default timeout is 20 seconds.
 	 * Requires read logs permission (android.permission.READ_LOGS) in AndroidManifest.xml of the application under test.
@@ -2452,7 +2430,7 @@ public class Solo {
 	{
 		return getter.getString(id);
 	}
-	
+
 	/**
 	 * Returns a localized String matching the specified resource id.
 	 * 
@@ -2466,19 +2444,18 @@ public class Solo {
 		return getter.getString(id);
 	}
 
-
 	/**
 	 * Robotium will sleep for the specified time.
 	 * 
 	 * @param time the time in milliseconds that Robotium should sleep 
 	 * 
 	 */
-	
+
 	public void sleep(int time)
 	{
 		sleeper.sleep(time);
 	}
-	
+
 	/**
 	 *
 	 * Finalizes the Solo object and removes the ActivityMonitor.
@@ -2486,11 +2463,11 @@ public class Solo {
 	 * @see #finishOpenedActivities() finishOpenedActivities() to close the activities that have been active
 	 *
 	 */    
-	
+
 	public void finalize() throws Throwable {
 		activityUtils.finalize();
 	}
-    
+
 	/**
 	 * The Activities that are alive are finished. Usually used in tearDown().
 	 *
@@ -2498,7 +2475,7 @@ public class Solo {
 	public void finishOpenedActivities(){
 		activityUtils.finishOpenedActivities();
 	}
-	
+
 	/**
 	 * Takes a screenshot and saves it in "/sdcard/Robotium-Screenshots/". 
 	 * Requires write permission (android.permission.WRITE_EXTERNAL_STORAGE) in AndroidManifest.xml of the application under test.
@@ -2516,6 +2493,7 @@ public class Solo {
 	 * @param name the name to give the screenshot
 	 *
 	 */
+
 	public void takeScreenshot(String name){
 		takeScreenshot(name, 100);
 	}
@@ -2528,6 +2506,7 @@ public class Solo {
 	 * @param quality the compression rate. From 0 (compress for lowest size) to 100 (compress for maximum quality)
 	 *
 	 */
+
 	public void takeScreenshot(String name, int quality){
 		screenshotTaker.takeScreenshot(name, quality);
 	}
@@ -2548,6 +2527,7 @@ public class Solo {
 	 * @param name the name prefix to give the screenshot
 	 *
 	 */
+
 	public void startScreenshotSequence(String name) {
 		startScreenshotSequence(name, 
 					80, // quality
@@ -2578,6 +2558,7 @@ public class Solo {
 	 * @param maxFrames the maximum number of frames that will comprise this sequence
 	 *
 	 */
+
 	public void startScreenshotSequence(String name, int quality, int frameDelay, int maxFrames) {
 		screenshotTaker.startScreenshotSequence(name, quality, frameDelay, maxFrames);
 	}
@@ -2588,11 +2569,11 @@ public class Solo {
 	 * If this method is not called to end a sequence and a prior sequence is still in 
 	 * progress, startScreenshotSequence() will throw an exception.
 	 */
+
 	public void stopScreenshotSequence() {
 		screenshotTaker.stopScreenshotSequence();
 	}
 
-	
 	/**
 	 * Initialize timeout using 'adb shell setprop' or use setLargeTimeout() and setSmallTimeout(). Will fall back to default hard coded values.
 	 * 
@@ -2602,7 +2583,7 @@ public class Solo {
 		Timeout.setLargeTimeout(initializeTimeout("solo_large_timeout", 20000));
 		Timeout.setSmallTimeout(initializeTimeout("solo_small_timeout", 10000));
 	}
-	
+
 	/**
 	 * Parse a timeout value set using adb shell.
 	 *
@@ -2632,4 +2613,3 @@ public class Solo {
 		}
 	}
 }
-

@@ -5,7 +5,6 @@ import android.app.Instrumentation;
 import android.text.InputType;
 import android.widget.EditText;
 
-
 /**
  * Contains setEditText() to enter text into text fields.
  * 
@@ -62,7 +61,7 @@ class TextEnterer{
 			});
 		}
 	}
-	
+
 	/**
 	 * Types text in an {@code EditText} 
 	 * 

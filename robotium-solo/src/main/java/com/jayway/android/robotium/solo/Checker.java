@@ -6,7 +6,6 @@ import android.widget.CompoundButton;
 import android.widget.Spinner;
 import android.widget.TextView;
 
-
 /**
  * Contains various check methods. Examples are: isButtonChecked(),
  * isSpinnerTextSelected.
@@ -16,7 +15,7 @@ import android.widget.TextView;
  */
 
 class Checker {
-	
+
 	private final ViewFetcher viewFetcher;
 	private final Waiter waiter;
 
@@ -26,13 +25,12 @@ class Checker {
 	 * @param viewFetcher the {@code ViewFetcher} instance.
      * @param waiter the {@code Waiter} instance
 	 */
-	
+
 	public Checker(ViewFetcher viewFetcher, Waiter waiter){
 		this.viewFetcher = viewFetcher;
 		this.waiter = waiter;
 	}
 
-	
 	/**
 	 * Checks if a {@link CompoundButton} with a given index is checked.
 	 *
@@ -40,12 +38,12 @@ class Checker {
 	 * @param index of the {@code CompoundButton} to check. {@code 0} if only one is available
 	 * @return {@code true} if {@code CompoundButton} is checked and {@code false} if it is not checked
 	 */
-	
+
 	public <T extends CompoundButton> boolean isButtonChecked(Class<T> expectedClass, int index)
 	{
 		return (waiter.waitForAndGetView(index, expectedClass).isChecked());
 	}
-	
+
 	/**
 	 * Checks if a {@link CompoundButton} with a given text is checked.
 	 *
@@ -82,33 +80,32 @@ class Checker {
 		return false;
 	}
 
-	
 	/**
 	 * Checks if a given text is selected in any {@link Spinner} located on the current screen.
 	 * 
 	 * @param text the text that is expected to be selected
 	 * @return {@code true} if the given text is selected in any {@code Spinner} and false if it is not
 	 */
-	
+
 	public boolean isSpinnerTextSelected(String text)
 	{
 		waiter.waitForAndGetView(0, Spinner.class);
 				
 		ArrayList<Spinner> spinnerList = viewFetcher.getCurrentViews(Spinner.class);
-		for(int i = 0; i < spinnerList.size(); i++){
+		for(int i = 0, n = spinnerList.size(); i < n; i++){
 			if(isSpinnerTextSelected(i, text))
 					return true;
 		}
 		return false;
 	}
-	
+
 	/**
 	 * Checks if a given text is selected in a given {@link Spinner} 
 	 * @param spinnerIndex the index of the spinner to check. 0 if only one spinner is available
 	 * @param text the text that is expected to be selected
 	 * @return true if the given text is selected in the given {@code Spinner} and false if it is not
 	 */
-	
+
 	public boolean isSpinnerTextSelected(int spinnerIndex, String text)
 	{
 		Spinner spinner = waiter.waitForAndGetView(spinnerIndex, Spinner.class);

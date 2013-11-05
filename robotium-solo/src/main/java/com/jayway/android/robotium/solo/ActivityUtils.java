@@ -17,7 +17,6 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 
-
 /**
  * Contains activity related methods. Examples are:
  * getCurrentActivity(), getActivityList(), getAllOpenedActivities().
@@ -59,8 +58,6 @@ class ActivityUtils {
 		setupActivityStackListener();
 	}
 
-
-
 	/**
 	 * Creates a new activity stack and pushes the start activity 
 	 */
@@ -99,7 +96,6 @@ class ActivityUtils {
 	 */
 
 	private void setupActivityMonitor() {
-
 		try {
 			IntentFilter filter = null;
 			activityMonitor = inst.addMonitor(filter, null, false);
@@ -144,7 +140,6 @@ class ActivityUtils {
 	 */
 
 	private void removeActivityFromStack(Activity activity){
-
 		Iterator<WeakReference<Activity>> activityStackIterator = activityStack.iterator();
 		while(activityStackIterator.hasNext()){
 			Activity activityFromWeakReference = activityStackIterator.next().get();
@@ -270,7 +265,7 @@ class ActivityUtils {
 	{
 		ArrayList<Activity> activitiesOpened = getAllOpenedActivities();
 		boolean found = false;	
-		for(int i = 0; i < activitiesOpened.size(); i++){
+		for(int i = 0, n = activitiesOpened.size(); i < n; i++){
 			if(activitiesOpened.get(i).getClass().getSimpleName().equals(name)){
 				found = true;
 				break;
@@ -375,5 +370,4 @@ class ActivityUtils {
 			}
 		}
 	}
-
 }
