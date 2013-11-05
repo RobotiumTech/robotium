@@ -20,7 +20,6 @@ import android.widget.TextView;
 
 public class RobotiumUtils {
 
-
 	/**
 	 * Removes invisible Views.
 	 * 

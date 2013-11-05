@@ -13,14 +13,13 @@ import android.view.KeyEvent;
  * 
  */
 
-class Presser{
+class Presser {
 
 	private final Clicker clicker;
 	private final Instrumentation inst;
 	private final Sleeper sleeper;
 	private final Waiter waiter;
 	private final DialogUtils dialogUtils;
-
 
 	/**
 	 * Constructs this object.
@@ -40,7 +39,6 @@ class Presser{
 		this.waiter = waiter;
 		this.dialogUtils = dialogUtils;
 	}
-
 
 	/**
 	 * Presses a {@link android.view.MenuItem} with a given index. Index {@code 0} is the first item in the

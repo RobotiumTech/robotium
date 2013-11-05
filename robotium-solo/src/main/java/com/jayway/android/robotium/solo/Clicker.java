@@ -41,7 +41,6 @@ class Clicker {
 	private final int TIMEOUT = 200;
 	private final int WAIT_TIME = 1500;
 
-
 	/**
 	 * Constructs this object.
 	 * 
@@ -56,7 +55,6 @@ class Clicker {
 	 */
 
 	public Clicker(ActivityUtils activityUtils, ViewFetcher viewFetcher, Sender sender, Instrumentation inst, Sleeper sleeper, Waiter waiter, WebUtils webUtils, DialogUtils dialogUtils) {
-
 		this.activityUtils = activityUtils;
 		this.viewFetcher = viewFetcher;
 		this.sender = sender;
@@ -142,9 +140,7 @@ class Clicker {
 		event = MotionEvent.obtain(downTime, eventTime, MotionEvent.ACTION_UP, x, y, 0);
 		inst.sendPointerSync(event);
 		sleeper.sleep();
-
 	}
-
 
 	/**
 	 * Clicks on a given {@link View}.
@@ -181,7 +177,6 @@ class Clicker {
 		else
 			clickOnScreen(x, y);
 	}
-
 
 	/**
 	 * Long clicks on a specific {@link TextView} and then selects
@@ -348,7 +343,6 @@ class Clicker {
 		clickOnScreen(webElementToClick.getLocationX(), webElementToClick.getLocationY());
 	}
 
-
 	/**
 	 * Clicks on a specific {@link TextView} displaying a given text.
 	 *
@@ -365,13 +359,11 @@ class Clicker {
 		if (textToClick != null) {
 			clickOnScreen(textToClick, longClick, time);
 		}
-
 		else {
 
 			if(match > 1){
 				Assert.assertTrue(match + " matches of text string: '" + regex +  "' are not found!", false);
 			}
-
 			else{
 				ArrayList<TextView> allTextViews = RobotiumUtils.removeInvisibleViews(viewFetcher.getCurrentViews(TextView.class));
 				allTextViews.addAll((Collection<? extends TextView>) webUtils.getTextViewsFromWebView());
@@ -384,7 +376,6 @@ class Clicker {
 			}	
 		}
 	}
-
 
 	/**
 	 * Clicks on a {@code View} of a specific class, with a given text.
@@ -418,7 +409,6 @@ class Clicker {
 	public <T extends View> void clickOn(Class<T> viewClass, int index) {
 		clickOnScreen(waiter.waitForAndGetView(index, viewClass));
 	}
-
 
 	/**
 	 * Clicks on a certain list line and returns the {@link TextView}s that
@@ -472,5 +462,4 @@ class Clicker {
 		}
 		return RobotiumUtils.filterViews(TextView.class, views);
 	}
-
 }

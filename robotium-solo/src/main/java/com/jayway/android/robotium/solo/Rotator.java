@@ -8,8 +8,8 @@ import android.view.MotionEvent;
 import android.view.MotionEvent.PointerCoords;
 import android.view.MotionEvent.PointerProperties;
 
-class Rotator
-{
+class Rotator {
+
 	private final Instrumentation _instrument;
 	private static final int EVENT_TIME_INTERVAL_MS = 10;
 	public static final int LARGE = 0;

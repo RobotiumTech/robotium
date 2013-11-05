@@ -1,6 +1,5 @@
 package com.jayway.android.robotium.solo;
 
-
 import android.app.Activity;
 import android.content.Context;
 import android.os.SystemClock;
@@ -8,7 +7,6 @@ import android.view.ContextThemeWrapper;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
-
 
 /**
  * Contains the waitForDialogToClose() method.
@@ -39,7 +37,6 @@ class DialogUtils {
 		this.sleeper = sleeper;
 	}
 
-
 	/**
 	 * Waits for a {@link android.app.Dialog} to close.
 	 *
@@ -60,8 +57,6 @@ class DialogUtils {
 		}
 		return false;
 	}
-
-
 
 	/**
 	 * Waits for a {@link android.app.Dialog} to open.

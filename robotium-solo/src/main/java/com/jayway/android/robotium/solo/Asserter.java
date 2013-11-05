@@ -12,6 +12,7 @@ import android.app.ActivityManager;
  */
 
 class Asserter {
+
 	private final ActivityUtils activityUtils;
 	private final Waiter waiter;
 
@@ -106,5 +107,4 @@ class Asserter {
 		((ActivityManager)activityUtils.getCurrentActivity().getSystemService("activity")).getMemoryInfo(mi);
 		Assert.assertFalse("Low memory available: " + mi.availMem + " bytes!", mi.lowMemory);
 	}
-
 }

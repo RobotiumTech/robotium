@@ -5,7 +5,6 @@ import android.widget.ProgressBar;
 import android.widget.SlidingDrawer;
 import android.widget.TimePicker;
 
-
 /**
  * Contains set methods. Examples are setDatePicker(),
  * setTimePicker().
@@ -29,7 +28,6 @@ class Setter{
 	public Setter(ActivityUtils activityUtils) {
 		this.activityUtils = activityUtils;
 	}
-
 
 	/**
 	 * Sets the date in a given {@link DatePicker}.
@@ -55,7 +53,6 @@ class Setter{
 		}
 	}
 
-
 	/**
 	 * Sets the time in a given {@link TimePicker}.
 	 *
@@ -79,7 +76,6 @@ class Setter{
 			});
 		}
 	}
-	
 
 	/**
 	 * Sets the progress of a given {@link ProgressBar}. Examples are SeekBar and RatingBar.
@@ -101,7 +97,6 @@ class Setter{
 			});
 		}
 	}
-
 
 	/**
 	 * Sets the status of a given SlidingDrawer. Examples are Solo.CLOSED and Solo.OPENED.
@@ -130,6 +125,5 @@ class Setter{
 				}
 			});
 		}
-
 	}
 }

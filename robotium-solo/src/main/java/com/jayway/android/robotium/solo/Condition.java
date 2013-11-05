@@ -4,6 +4,7 @@ package com.jayway.android.robotium.solo;
  * Represents a conditional statement.<br/>
  * Implementations may be used with {@link Solo#waitForCondition(Condition, int)}.
  */
+ 
 public interface Condition {
 
 	/**
