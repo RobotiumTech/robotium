@@ -138,7 +138,7 @@ class WebElementCreator {
 		}catch(Exception ignored){}
 
 		if(elements != null) {
-			for (int index = 0; index < elements.length; index++){
+			for (int index = 0, n = elements.length; index < n; index++){
 				String[] element = elements[index].split("::");
 				if (element.length > 1) {
 					attributes.put(element[0], element[1]);

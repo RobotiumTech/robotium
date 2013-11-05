@@ -95,7 +95,7 @@ class Checker {
 		waiter.waitForAndGetView(0, Spinner.class);
 				
 		ArrayList<Spinner> spinnerList = viewFetcher.getCurrentViews(Spinner.class);
-		for(int i = 0; i < spinnerList.size(); i++){
+		for(int i = 0, n = spinnerList.size(); i < n; i++){
 			if(isSpinnerTextSelected(i, text))
 					return true;
 		}

@@ -270,7 +270,7 @@ class ActivityUtils {
 	{
 		ArrayList<Activity> activitiesOpened = getAllOpenedActivities();
 		boolean found = false;	
-		for(int i = 0; i < activitiesOpened.size(); i++){
+		for(int i = 0, n = activitiesOpened.size(); i < n; i++){
 			if(activitiesOpened.get(i).getClass().getSimpleName().equals(name)){
 				found = true;
 				break;

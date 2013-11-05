@@ -306,7 +306,7 @@ class Searcher {
 	 */
 
 	public <T extends View> int getNumberOfUniqueViews(Set<T>uniqueViews, ArrayList<T> views){
-		for(int i = 0; i < views.size(); i++){
+		for(int i = 0, n = views.size(); i < n; i++){
 			uniqueViews.add(views.get(i));
 		}
 		numberOfUniqueViews = uniqueViews.size();
