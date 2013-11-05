@@ -10,7 +10,6 @@ import android.webkit.WebChromeClient;
 import android.webkit.WebView;
 import android.widget.TextView;
 
-
 /**
  * Contains web related methods. Examples are:
  * enterTextIntoWebElement(), getWebTexts(), getWebElements().
@@ -27,7 +26,6 @@ class WebUtils {
 	RobotiumWebClient robotiumWebCLient;
 	WebElementCreator webElementCreator;
 	WebChromeClient originalWebChromeClient = null;
-
 
 	/**
 	 * Constructs this object
@@ -54,8 +52,7 @@ class WebUtils {
 	 */
 
 	public ArrayList<TextView> getTextViewsFromWebView(){
-		boolean javaScriptWasExecuted = executeJavaScriptFunction("allTexts();");	
-
+		boolean javaScriptWasExecuted = executeJavaScriptFunction("allTexts();");
 		return createAndReturnTextViewsFromWebElements(javaScriptWasExecuted);	
 	}
 
@@ -100,7 +97,6 @@ class WebUtils {
 
 	public ArrayList<WebElement> getCurrentWebElements(final By by){
 		boolean javaScriptWasExecuted = executeJavaScript(by);
-
 		return getSufficientlyShownWebElements(javaScriptWasExecuted);
 	}
 
@@ -141,7 +137,7 @@ class WebUtils {
 		robotiumWebCLient.enableJavascriptAndSetRobotiumWebClient(viewFetcher.getCurrentViews(WebView.class), originalWebChromeClient);
 		return getJavaScriptAsString();
 	}
-	
+
 	/**
 	 * Returns the current WebChromeClient through reflection
 	 * 
@@ -276,7 +272,7 @@ class WebUtils {
 		}
 		return false;
 	}
-	
+
 	/**
 	 * Splits a name by upper case.
 	 * 

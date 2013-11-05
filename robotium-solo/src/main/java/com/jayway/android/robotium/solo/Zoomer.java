@@ -7,13 +7,12 @@ import android.view.MotionEvent.PointerProperties;
 import android.view.MotionEvent.PointerCoords;
 import android.graphics.PointF;
 
-
 class Zoomer {
-	
+
 	private final Instrumentation _instrument;
 	public static final int GESTURE_DURATION_MS = 1000;
     public static final int EVENT_TIME_INTERVAL_MS = 10;
-	
+
 	public Zoomer(Instrumentation inst)
 	{
 		this._instrument = inst;

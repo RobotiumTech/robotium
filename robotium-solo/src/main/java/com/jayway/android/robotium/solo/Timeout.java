@@ -1,8 +1,5 @@
 package com.jayway.android.robotium.solo;
 
-
-
-
 /**
  * Used to get and set the default timeout lengths of the various Solo methods. 
  * 
@@ -15,7 +12,6 @@ public class Timeout{
 	private static int largeTimeout;
 	private static int smallTimeout;
 
-	
 	/**
 	 * Sets the default timeout length of the waitFor methods. Its by default set to 20 000 milliseconds.
 	 * Timeout can also be set through adb shell:
@@ -25,6 +21,7 @@ public class Timeout{
 	 * @param milliseconds the default timeout length of the waitFor methods
 	 * 
 	 */
+
 	public static void setLargeTimeout(int milliseconds){
 		largeTimeout = milliseconds;
 	}
@@ -38,6 +35,7 @@ public class Timeout{
 	 * @param milliseconds the default timeout length of the get, is, set, assert, enter and click methods
 	 * 
 	 */
+
 	public static void setSmallTimeout(int milliseconds){
 		smallTimeout = milliseconds;
 	}
@@ -48,6 +46,7 @@ public class Timeout{
 	 * @return the timeout length in milliseconds
 	 * 
 	 */
+
 	public static int getLargeTimeout(){
 		return largeTimeout;
 	}
@@ -58,6 +57,7 @@ public class Timeout{
 	 * @return the timeout length in milliseconds
 	 * 
 	 */
+
 	public static int getSmallTimeout(){
 		return smallTimeout;
 	}

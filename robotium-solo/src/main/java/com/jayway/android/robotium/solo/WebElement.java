@@ -10,7 +10,7 @@ import java.util.Hashtable;
  */
 
 public class WebElement {
-	
+
 	private int locationX = 0;
 	private int locationY = 0;
 	private String id;
@@ -19,7 +19,6 @@ public class WebElement {
 	private String className;
 	private String tagName;
 	private Hashtable<String, String> attributes;
-	
 
 	/**
 	 * Constructs this object. 
@@ -32,7 +31,6 @@ public class WebElement {
 	 */
 
 	public WebElement(String webId, String textContent, String name, String className, String tagName, Hashtable<String, String> attributes) {
-
 		this.setId(webId);
 		this.setTextContent(textContent);
 		this.setName(name);
@@ -46,7 +44,6 @@ public class WebElement {
 	 */
 
 	public void getLocationOnScreen(int[] location) {
-
 		location[0] = locationX;
 		location[1] = locationY;
 	}
@@ -186,7 +183,7 @@ public class WebElement {
 	 * 
 	 * @param textContent the text content to set
 	 */
-	
+
 	public void setTextContent(String textContent) {
 		this.text = textContent;
 	}
@@ -201,7 +198,6 @@ public class WebElement {
 		if (attributeName != null){
 			return this.attributes.get(attributeName);
 		}
-		
 		return null;
 	}
 
@@ -210,9 +206,8 @@ public class WebElement {
 	 * 
 	 * @param attributes the attributes to set
 	 */
-	
+
 	public void setAttributes(Hashtable<String,String> attributes) {
 		this.attributes = attributes;
 	}
-
 }

@@ -14,7 +14,6 @@ import android.support.v4.app.FragmentActivity;
 import android.view.View;
 import android.widget.TextView;
 
-
 /**
  * Contains various wait methods. Examples are: waitForText(),
  * waitForView().
@@ -31,7 +30,6 @@ class Waiter {
 	private final Scroller scroller;
 	private final Sleeper sleeper;
 	private final int MINISLEEP = 50;
-
 
 	/**
 	 * Constructs this object.
@@ -86,7 +84,7 @@ class Waiter {
 		}
 		return false;
 	}
-	
+
 	/**
 	 * Waits for the given {@link Activity}.
 	 *
@@ -184,8 +182,6 @@ class Waiter {
 		return false;
 	}
 
-
-
 	/**
 	 * Waits for two views to be shown.
 	 *
@@ -267,7 +263,7 @@ class Waiter {
 		}
 		return false;
 	}
-	
+
 	/**
 	 * Waits for a certain view.
 	 * 
@@ -348,7 +344,6 @@ class Waiter {
 		}
 	}
 
-
 	/**
 	 * Waits for a condition to be satisfied.
 	 * 
@@ -356,6 +351,7 @@ class Waiter {
 	 * @param timeout the amount of time in milliseconds to wait
 	 * @return {@code true} if condition is satisfied and {@code false} if it is not satisfied before the timeout
 	 */
+
 	public boolean waitForCondition(Condition condition, int timeout){
 		final long endTime = SystemClock.uptimeMillis() + timeout;
 
@@ -411,7 +407,7 @@ class Waiter {
 	public TextView waitForText(String text, int expectedMinimumNumberOfMatches, long timeout, boolean scroll) {
 		return waitForText(TextView.class, text, expectedMinimumNumberOfMatches, timeout, scroll, false, true);	
 	}
-	
+
 	/**
 	 * Waits for a text to be shown.
 	 *
@@ -438,7 +434,7 @@ class Waiter {
 	 * @param hardStoppage {@code true} if search is to be stopped when timeout expires
 	 * @return {@code true} if text is found and {@code false} if it is not found before the timeout
 	 */
-	
+
 	public TextView waitForText(String text, int expectedMinimumNumberOfMatches, long timeout, boolean scroll, boolean onlyVisible, boolean hardStoppage) {
 		return waitForText(TextView.class, text, expectedMinimumNumberOfMatches, timeout, scroll, onlyVisible, hardStoppage);
 	}

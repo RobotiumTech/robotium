@@ -21,7 +21,6 @@ class Swiper
 	public void generateSwipeGesture(PointF startPoint1, PointF startPoint2,
             PointF endPoint1, PointF endPoint2)
     {
-
         long downTime = SystemClock.uptimeMillis();
         long eventTime = SystemClock.uptimeMillis();
 

@@ -13,7 +13,6 @@ class Sleeper {
         sleep(PAUSE);
 	}
 
-
 	/**
 	 * Sleeps the current thread for a default mini pause length.
 	 */
@@ -21,7 +20,6 @@ class Sleeper {
 	public void sleepMini() {
         sleep(MINIPAUSE);
 	}
-
 
 	/**
 	 * Sleeps the current thread for <code>time</code> milliseconds.
@@ -34,5 +32,4 @@ class Sleeper {
 			Thread.sleep(time);
 		} catch (InterruptedException ignored) {}
 	}
-
 }

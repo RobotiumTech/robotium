@@ -32,7 +32,6 @@ class ViewFetcher {
 		setWindowManagerString();
 	}
 
-
 	/**
 	 * Returns the absolute top parent {@code View} in for a given {@code View}.
 	 *
@@ -48,7 +47,6 @@ class ViewFetcher {
 			return view;
 		}
 	}
-
 
 	/**
 	 * Returns the scroll or list parent view
@@ -181,8 +179,6 @@ class ViewFetcher {
 		 return decorViews;
 	 }
 
-
-
 	/**
 	 * Extracts all {@code View}s located in the currently active {@code Activity}, recursively.
 	 *
@@ -292,7 +288,6 @@ class ViewFetcher {
 		return windowHeight;
 	}
 
-
 	/**
 	 * Returns an {@code ArrayList} of {@code View}s of the specified {@code Class} located in the current
 	 * {@code Activity}.
@@ -325,7 +320,6 @@ class ViewFetcher {
 		return filteredViews;
 	}
 
-	
 	/**
 	 * Tries to guess which view is the most likely to be interesting. Returns
 	 * the most recently drawn view, which presumably will be the one that the
@@ -415,10 +409,11 @@ class ViewFetcher {
 		}
 		return null;
 	}
-	
+
 	/**
 	 * Sets the window manager string.
 	 */
+
 	private void setWindowManagerString(){
 
 		if (android.os.Build.VERSION.SDK_INT >= 17) {
@@ -431,6 +426,4 @@ class ViewFetcher {
 			windowManagerString = "mWindowManager";
 		}
 	}
-
-
 }
