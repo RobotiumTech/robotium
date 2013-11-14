@@ -260,6 +260,11 @@ class ActivityUtils {
 		return activity;
 	}
 
+	/** @return true if the activity stack is currently empty */
+	public boolean isActivityStackEmpty() {
+		return activityStack.isEmpty();
+	}
+
 	/**
 	 * Returns to the given {@link Activity}.
 	 *
