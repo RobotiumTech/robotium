@@ -29,9 +29,6 @@ import android.widget.ListView;
 import android.widget.TimePicker;
 import android.widget.ToggleButton;
 import android.app.Instrumentation.ActivityMonitor;
-import android.opengl.GLSurfaceView;
-import java.util.concurrent.CountDownLatch;
-import android.opengl.GLSurfaceView.Renderer;
 
 /**
  * Main class for development of Robotium tests.  
@@ -84,6 +81,7 @@ public class Solo {
 	public final static int DELETE = KeyEvent.KEYCODE_DEL;
 	public final static int CLOSED = 0;
 	public final static int OPENED = 1;
+
 
 
 	/**
@@ -202,9 +200,6 @@ public class Solo {
 		return (waiter.waitForText(text) != null);
 	}
 
-	public boolean waitForText(String text, long timeout) {
-		return (waiter.waitForText(text, 0, timeout) != null);
-   }
 	
 	 /**
 	 * Waits for the specified text to appear. 
@@ -251,27 +246,6 @@ public class Solo {
 		return (waiter.waitForText(text, minimumNumberOfMatches, timeout, scroll, onlyVisible, true) != null);
     }
 
-   public boolean waitForButton(int id, int timeout) {
-      return waitForView(id, 0, timeout, true);
-   }
-
-   public boolean waitForEditText(int id, int timeout) {
-      return waitForView(id, 0, timeout, true);
-   }
-
-   public boolean waitForText(int id, int timeout) {
-      return waitForView(id, 0, timeout, true);
-   }
-
-   public void assertText(int id) {
-      Assert.assertTrue("text with id "+id+" not found",
-                        waitForView(id, 1, Timeout.getLargeTimeout(), true));
-   }
-
-   public boolean waitForText(int id, int minimumNumberOfMatches, int timeout) {
-      return waitForView(id, minimumNumberOfMatches, timeout, true);
-   }
-
 	/**
 	 * Waits for a View matching the specified resource id. Default timeout is 20 seconds. 
 	 * 
@@ -283,11 +257,6 @@ public class Solo {
 		return waitForView(id, 0, Timeout.getLargeTimeout(), true);
 	}
 	
-	public void assertView(int id){
-		Assert.assertTrue("view with id "+id+" not found", 
-                        waitForView(id, 1, Timeout.getLargeTimeout(), true));
-	}
-	
 	/**
 	 * Waits for a View matching the specified resource id. 
 	 * 
@@ -296,10 +265,11 @@ public class Solo {
 	 * @param timeout the amount of time in milliseconds to wait
 	 * @return {@code true} if the {@link View} is displayed and {@code false} if it is not displayed before the timeout
 	 */
+
 	public boolean waitForView(int id, int minimumNumberOfMatches, int timeout){
 		return waitForView(id, minimumNumberOfMatches, timeout, true);
 	}
-
+	
 	/**
 	 * Waits for a View matching the specified resource id. 
 	 * 
@@ -1004,11 +974,6 @@ public class Solo {
 		clicker.clickOnScreen(view);
 	}
 	
-
-	public void clickOnButton(Button view) {
-      clickOnView(view);
-	}
-	
 	/**
 	 * Clicks the specified View.
 	 * 
@@ -1061,10 +1026,6 @@ public class Solo {
 	
 	public void clickOnText(String text) {
 		clicker.clickOnText(text, false, 1, true, 0);
-	}
-	
-	public void clickOnText(TextView text) {
-      clickOnView(text);
 	}
 	
 	/**
@@ -2008,10 +1969,6 @@ public class Solo {
 	public View getView(int id){
 		return getView(id, 0);
 	}
-
-   public View findViewById(int id) {
-      return getView(id, 0);
-   }
 	
 	/**
 	 * Returns a View matching the specified resource id and index. 
@@ -2393,20 +2350,8 @@ public class Solo {
     {
         return waiter.waitForActivity(activityClass, timeout);
     }
-
-	/** Wait for the activity stack to be empty. */
-
-	public boolean waitForActivityStackToBeEmpty(int timeout)
-	{
-		return waiter.waitForCondition(
-			new Condition(){
-				@Override
-				public boolean isSatisfied() {
-					return activityUtils.isActivityStackEmpty();
-				}
-			}, timeout);
-	}
-
+	
+	
 	/**
 	 * Waits for a Fragment matching the specified tag. Default timeout is 20 seconds.
 	 * 
@@ -2647,47 +2592,6 @@ public class Solo {
 		screenshotTaker.stopScreenshotSequence();
 	}
 
-   public void fail(String name, Object e) {
-      Assert.assertTrue(name+" "+e, false);
-   }
-
-	/**
-	 * Extract and wrap the all OpenGL ES Renderer.
-	 */
-	private void wrapAllGLViews(View decorView) {
-		ArrayList<GLSurfaceView> currentViews = viewFetcher.getCurrentViews(GLSurfaceView.class, decorView);
-		final CountDownLatch latch = new CountDownLatch(currentViews.size());
-
-		for (GLSurfaceView glView : currentViews) {
-			Object renderContainer = new Reflect(glView).field("mGLThread")
-					.type(GLSurfaceView.class).out(Object.class);
-
-			Renderer renderer = new Reflect(renderContainer).field("mRenderer").out(Renderer.class);
-
-			if (renderer == null) {
-				renderer = new Reflect(glView).field("mRenderer").out(Renderer.class);
-				renderContainer = glView;
-			}  
-			if (renderer == null) {
-				latch.countDown();
-				continue;
-			}
-			if (renderer instanceof GLRenderWrapper) {
-				GLRenderWrapper wrapper = (GLRenderWrapper) renderer;
-				wrapper.setTakeScreenshot();
-				wrapper.setLatch(latch);
-			} else {
-				GLRenderWrapper wrapper = new GLRenderWrapper(glView, renderer, latch);
-				new Reflect(renderContainer).field("mRenderer").in(wrapper);
-			}
-		}
-
-		try {
-			latch.await();
-		} catch (InterruptedException ex) {
-			ex.printStackTrace();
-		}
-	}
 	
 	/**
 	 * Initialize timeout using 'adb shell setprop' or use setLargeTimeout() and setSmallTimeout(). Will fall back to default hard coded values.
