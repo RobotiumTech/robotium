@@ -21,9 +21,9 @@ import android.widget.TextView;
 /**
  * Contains various click methods. Examples are: clickOn(),
  * clickOnText(), clickOnScreen().
- * 
+ *
  * @author Renas Reda, renasreda@gmail.com
- * 
+ *
  */
 
 class Clicker {
@@ -44,7 +44,7 @@ class Clicker {
 
 	/**
 	 * Constructs this object.
-	 * 
+	 *
 	 * @param activityUtils the {@code ActivityUtils} instance.
 	 * @param viewFetcher the {@code ViewFetcher} instance.
 	 * @param sender the {@code Sender} instance.
@@ -77,6 +77,7 @@ class Clicker {
 	public void clickOnScreen(float x, float y) {
 		boolean successfull = false;
 		int retry = 0;
+      SecurityException ex = null;
 
 		while(!successfull && retry < 10) {
 			long downTime = SystemClock.uptimeMillis();
@@ -91,12 +92,13 @@ class Clicker {
 				successfull = true;
 				sleeper.sleep(MINISLEEP);
 			}catch(SecurityException e){
+            ex = e;
 				dialogUtils.hideSoftKeyboard(null, false, true);
 				retry++;
-			}		
+			}
 		}
 		if(!successfull) {
-			Assert.assertTrue("Click can not be completed!", false);
+			Assert.assertTrue("Click at ("+x+", "+y+") can not be completed! ("+(ex != null ? ex.getClass().getName()+": "+ex.getMessage() : "null")+")", false);
 		}
 	}
 
@@ -129,7 +131,7 @@ class Clicker {
 		}
 
 		eventTime = SystemClock.uptimeMillis();
-		event = MotionEvent.obtain(downTime, eventTime, MotionEvent.ACTION_MOVE, 
+		event = MotionEvent.obtain(downTime, eventTime, MotionEvent.ACTION_MOVE,
 				x + 1.0f,
 				y + 1.0f, 0);
 		inst.sendPointerSync(event);
@@ -227,19 +229,19 @@ class Clicker {
 
 	/**
 	 * Clicks on a menu item with a given text
-	 * 
+	 *
 	 * @param text the menu text that should be clicked on. The parameter <strong>will</strong> be interpreted as a regular expression.
 	 */
 
 	public void clickOnMenuItem(String text)
-	{	
+	{
 		openMenu();
 		clickOnText(text, false, 1, true, 0);
 	}
 
 	/**
 	 * Clicks on a menu item with a given text
-	 * 
+	 *
 	 * @param text the menu text that should be clicked on. The parameter <strong>will</strong> be interpreted as a regular expression.
 	 * @param subMenu true if the menu item could be located in a sub menu
 	 */
@@ -281,7 +283,7 @@ class Clicker {
 
 	/**
 	 * Clicks on an ActionBar item with a given resource id
-	 * 
+	 *
 	 * @param resourceId the R.id of the ActionBar item
 	 */
 
@@ -328,13 +330,13 @@ class Clicker {
 
 	/**
 	 * Clicks on a web element using the given By method
-	 * 
+	 *
 	 * @param by the By object e.g. By.id("id");
 	 * @param match if multiple objects match, this determines which one will be clicked
 	 * @param scroll true if scrolling should be performed
 	 */
 
-	public void clickOnWebElement(By by, int match, boolean scroll){	
+	public void clickOnWebElement(By by, int match, boolean scroll){
 		WebElement webElementToClick = waiter.waitForWebElement(by, match, Timeout.getSmallTimeout(), scroll);
 
 		if(webElementToClick == null){
@@ -381,7 +383,7 @@ class Clicker {
 				}
 				allTextViews = null;
 				Assert.assertTrue("Text string: '" + regex + "' is not found!", false);
-			}	
+			}
 		}
 	}
 
@@ -423,7 +425,7 @@ class Clicker {
 	/**
 	 * Clicks on a certain list line and returns the {@link TextView}s that
 	 * the list line is showing. Will use the first list it finds.
-	 * 
+	 *
 	 * @param line the line that should be clicked
 	 * @return a {@code List} of the {@code TextView}s located in the list line
 	 */
@@ -435,13 +437,13 @@ class Clicker {
 	/**
 	 * Clicks on a certain list line on a specified List and
 	 * returns the {@link TextView}s that the list line is showing.
-	 * 
+	 *
 	 * @param line the line that should be clicked
 	 * @param index the index of the list. E.g. Index 1 if two lists are available
 	 * @return an {@code ArrayList} of the {@code TextView}s located in the list line
 	 */
 
-	public ArrayList<TextView> clickInList(int line, int index, boolean longClick, int time) {	
+	public ArrayList<TextView> clickInList(int line, int index, boolean longClick, int time) {
 		final long endTime = SystemClock.uptimeMillis() + Timeout.getSmallTimeout();
 
 		int lineIndex = line - 1;
