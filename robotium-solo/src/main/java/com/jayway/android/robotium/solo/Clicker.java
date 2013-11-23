@@ -77,7 +77,7 @@ class Clicker {
 	public void clickOnScreen(float x, float y) {
 		boolean successfull = false;
 		int retry = 0;
-      SecurityException ex = null;
+		SecurityException ex = null;
 
 		while(!successfull && retry < 10) {
 			long downTime = SystemClock.uptimeMillis();
@@ -92,7 +92,7 @@ class Clicker {
 				successfull = true;
 				sleeper.sleep(MINISLEEP);
 			}catch(SecurityException e){
-            ex = e;
+				ex = e;
 				dialogUtils.hideSoftKeyboard(null, false, true);
 				retry++;
 			}
@@ -465,7 +465,7 @@ class Clicker {
 			sleeper.sleep();
 		}
 
-		View view = absListView.getChildAt(lineIndex);
+		View view = getViewOnListLine(absListView, lineIndex);
 
 		if(view != null){
 			views = viewFetcher.getViews(view, true);
@@ -475,4 +475,26 @@ class Clicker {
 		return RobotiumUtils.filterViews(TextView.class, views);
 	}
 
+	/**
+	 * Returns the view in the specified list line
+	 * 
+	 * @param absListView the ListView to use
+	 * @param lineIndex the line index of the View
+	 * @return the View located at a specified list line
+	 */
+
+	private View getViewOnListLine(AbsListView absListView, int lineIndex){
+		final long endTime = SystemClock.uptimeMillis() + Timeout.getSmallTimeout();
+		View view = absListView.getChildAt(lineIndex);
+
+		while(view == null){
+			final boolean timedOut = SystemClock.uptimeMillis() > endTime;
+			if (timedOut){
+				Assert.assertTrue("View is null and can therefore not be clicked!", false);
+			}
+			sleeper.sleep();
+			view = absListView.getChildAt(lineIndex);
+		}
+		return view;
+	}
 }
