@@ -94,7 +94,19 @@ class DialogUtils {
 
 	private boolean isDialogOpen(){
 		final Activity activity = activityUtils.getCurrentActivity(false);
-		final View view = viewFetcher.getRecentDecorView(viewFetcher.getWindowDecorViews());
+		final View[] views = viewFetcher.getWindowDecorViews();
+		final View activityDecorView = activity.getWindow().getDecorView();
+		View view = viewFetcher.getRecentDecorView(views);	
+
+		if(activityDecorView.equals(view)){
+			for(View v : views){
+				if(!activityDecorView.equals(v)){
+					view = v;
+					break;
+				}
+			}
+		}
+
 		Context viewContext = null;
 		if(view != null){
 			viewContext = view.getContext();
@@ -104,9 +116,8 @@ class DialogUtils {
 			viewContext = ctw.getBaseContext();
 		}
 
-		Context activityContext = activity;
 		Context activityBaseContext = activity.getBaseContext();
-		return (activityContext.equals(viewContext) || activityBaseContext.equals(viewContext)) && (view != activity.getWindow().getDecorView());
+		return (!activityBaseContext.equals(viewContext)) && (view != activityDecorView);
 	}
 
 	/**
