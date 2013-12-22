@@ -291,7 +291,7 @@ class Clicker {
 				Assert.assertTrue("Can not open the menu!", false);
 			}
 		}
-		boolean textShown = waiter.waitForText(text, 1, WAIT_TIME, false) != null;
+		boolean textShown = waiter.waitForText(text, 1, WAIT_TIME, true) != null;
 
 		if(subMenu && (viewFetcher.getCurrentViews(TextView.class).size() > 5) && !textShown){
 			for(TextView textView : viewFetcher.getCurrentViews(TextView.class)){
