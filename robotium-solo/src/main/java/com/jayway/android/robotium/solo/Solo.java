@@ -2350,8 +2350,27 @@ public class Solo {
     {
         return waiter.waitForActivity(activityClass, timeout);
     }
-	
-	
+
+
+    /**
+     * Wait for the activity stack to be empty.
+     * 
+     * @param timeout the amount of time in milliseconds to wait
+     * @return {@code true} if activity stack is empty before the timeout and {@code false} if it is not
+     */
+
+    public boolean waitForActivityStackToBeEmpty(int timeout)
+    {
+    	return waiter.waitForCondition(
+    			new Condition(){
+    				@Override
+    				public boolean isSatisfied() {
+    					return activityUtils.isActivityStackEmpty();
+    				}
+    			}, timeout);
+    }
+
+
 	/**
 	 * Waits for a Fragment matching the specified tag. Default timeout is 20 seconds.
 	 * 
