@@ -2357,6 +2357,7 @@ public class Solo {
      * 
      * @param timeout the amount of time in milliseconds to wait
      * @return {@code true} if activity stack is empty before the timeout and {@code false} if it is not
+     * 
      */
 
     public boolean waitForActivityStackToBeEmpty(int timeout)
