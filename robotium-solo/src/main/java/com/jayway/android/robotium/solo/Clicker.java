@@ -113,6 +113,7 @@ class Clicker {
 	public void clickLongOnScreen(float x, float y, int time) {
 		boolean successfull = false;
 		int retry = 0;
+		SecurityException ex = null;
 		long downTime = SystemClock.uptimeMillis();
 		long eventTime = SystemClock.uptimeMillis();
 		MotionEvent event = MotionEvent.obtain(downTime, eventTime, MotionEvent.ACTION_DOWN, x, y, 0);
@@ -122,12 +123,13 @@ class Clicker {
 				inst.sendPointerSync(event);
 				successfull = true;
 			}catch(SecurityException e){
+				ex = e;
 				dialogUtils.hideSoftKeyboard(null, false, true);
 				retry++;
 			}
 		}
 		if(!successfull) {
-			Assert.assertTrue("Click can not be completed!", false);
+			Assert.assertTrue("Long click at ("+x+", "+y+") can not be completed! ("+(ex != null ? ex.getClass().getName()+": "+ex.getMessage() : "null")+")", false);
 		}
 
 		eventTime = SystemClock.uptimeMillis();
@@ -144,7 +146,6 @@ class Clicker {
 		event = MotionEvent.obtain(downTime, eventTime, MotionEvent.ACTION_UP, x, y, 0);
 		inst.sendPointerSync(event);
 		sleeper.sleep();
-
 	}
 
 
