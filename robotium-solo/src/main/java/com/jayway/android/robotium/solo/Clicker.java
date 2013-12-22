@@ -133,9 +133,7 @@ class Clicker {
 		}
 
 		eventTime = SystemClock.uptimeMillis();
-		event = MotionEvent.obtain(downTime, eventTime, MotionEvent.ACTION_MOVE,
-				x + 1.0f,
-				y + 1.0f, 0);
+		event = MotionEvent.obtain(downTime, eventTime, MotionEvent.ACTION_MOVE, x + 1.0f, y + 1.0f, 0);
 		inst.sendPointerSync(event);
 		if(time > 0)
 			sleeper.sleep(time);
@@ -175,7 +173,7 @@ class Clicker {
 		float x = xyToClick[0];
 		float y = xyToClick[1];
 
-		if(x == 0 && y == 0){
+		if(x == 0 || y == 0){
 			view = activityUtils.getCurrentActivity().findViewById(view.getId());
 			if(view != null){
 				xyToClick = getClickCoordinates(view);
@@ -189,28 +187,28 @@ class Clicker {
 		else
 			clickOnScreen(x, y);
 	}
-	
+
 	/**
 	 * Returns click coordinates for the specified view
 	 * 
 	 * @param view the view to get click coordinates from
 	 * @return click coordinates for a specified view
 	 */
-	
+
 	private float[] getClickCoordinates(View view){
 		int[] xyLocation = new int[2];
 		float[] xyToClick = new float[2];
 
 		view.getLocationOnScreen(xyLocation);
-		
+
 		final int viewWidth = view.getWidth();
 		final int viewHeight = view.getHeight();
 		final float x = xyLocation[0] + (viewWidth / 2.0f);
 		float y = xyLocation[1] + (viewHeight / 2.0f);
-		
+
 		xyToClick[0] = x;
 		xyToClick[1] = y;
-		
+
 		return xyToClick;
 	}
 
