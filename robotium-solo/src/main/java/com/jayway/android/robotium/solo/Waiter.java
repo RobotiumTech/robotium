@@ -338,13 +338,14 @@ class Waiter {
 			}
 			sleeper.sleep();
 
-			WebElement webElementToReturn = searcher.searchForWebElement(by, minimumNumberOfMatches, timeout, scroll); 
+			WebElement webElementToReturn = searcher.searchForWebElement(by, minimumNumberOfMatches); 
 
 			if(webElementToReturn != null)
 				return webElementToReturn;
 
-			if(scroll) 
+			if(scroll) {
 				scroller.scroll(Scroller.DOWN);
+			}
 		}
 	}
 

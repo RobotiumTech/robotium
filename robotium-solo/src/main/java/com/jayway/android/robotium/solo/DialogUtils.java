@@ -53,7 +53,7 @@ class DialogUtils {
 
 		while (SystemClock.uptimeMillis() < endTime) {
 
-			if(!isDialogOpen()){
+			if(!isDialogOpen(false)){
 				return true;
 			}
 			sleeper.sleep(MINISLEEP);
@@ -78,7 +78,7 @@ class DialogUtils {
 
 		while (SystemClock.uptimeMillis() < endTime) {
 
-			if(isDialogOpen()){
+			if(isDialogOpen(true)){
 				return true;
 			}
 			sleeper.sleepMini();
@@ -92,21 +92,22 @@ class DialogUtils {
 	 * @return true if dialog is open
 	 */
 
-	private boolean isDialogOpen(){
+	private boolean isDialogOpen(boolean checkOpen){
 		final Activity activity = activityUtils.getCurrentActivity(false);
 		final View[] views = viewFetcher.getWindowDecorViews();
 		final View activityDecorView = activity.getWindow().getDecorView();
 		View view = viewFetcher.getRecentDecorView(views);	
 
-		if(activityDecorView.equals(view)){
-			for(View v : views){
-				if(!activityDecorView.equals(v)){
-					view = v;
-					break;
+		if(checkOpen){
+			if(activityDecorView.equals(view)){
+				for(View v : views){
+					if(!activityDecorView.equals(v)){
+						view = v;
+						break;
+					}
 				}
 			}
 		}
-
 		Context viewContext = null;
 		if(view != null){
 			viewContext = view.getContext();

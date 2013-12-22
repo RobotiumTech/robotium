@@ -225,12 +225,10 @@ class Searcher {
 	 * 
 	 * @param by the By object e.g. By.id("id");
 	 * @param minimumNumberOfMatches the minimum number of matches that are expected to be shown. {@code 0} means any number of matches
-	 * @param timeout the amount of time in milliseconds to wait
-	 * @param scroll true if scrolling should be performed
-	 * @return true if the web element is found
+	 * @return the web element or null if not found
 	 */
 
-	public WebElement searchForWebElement(final By by, int minimumNumberOfMatches, int timeout, boolean scroll){
+	public WebElement searchForWebElement(final By by, int minimumNumberOfMatches){
 
 		if(minimumNumberOfMatches < 1){
 			minimumNumberOfMatches = 1;
