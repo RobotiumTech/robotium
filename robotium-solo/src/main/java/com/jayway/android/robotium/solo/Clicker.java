@@ -169,19 +169,48 @@ class Clicker {
 	public void clickOnScreen(View view, boolean longClick, int time) {
 		if(view == null)
 			Assert.assertTrue("View is null and can therefore not be clicked!", false);
-		int[] xy = new int[2];
 
-		view.getLocationOnScreen(xy);
+		float[] xyToClick = getClickCoordinates(view);
+		float x = xyToClick[0];
+		float y = xyToClick[1];
 
-		final int viewWidth = view.getWidth();
-		final int viewHeight = view.getHeight();
-		final float x = xy[0] + (viewWidth / 2.0f);
-		float y = xy[1] + (viewHeight / 2.0f);
+		if(x == 0 && y == 0){
+			view = activityUtils.getCurrentActivity().findViewById(view.getId());
+			if(view != null){
+				xyToClick = getClickCoordinates(view);
+				x = xyToClick[0];
+				y = xyToClick[1];
+			}
+		}
 
 		if (longClick)
 			clickLongOnScreen(x, y, time);
 		else
 			clickOnScreen(x, y);
+	}
+	
+	/**
+	 * Returns click coordinates for the specified view
+	 * 
+	 * @param view the view to get click coordinates from
+	 * @return click coordinates for a specified view
+	 */
+	
+	private float[] getClickCoordinates(View view){
+		int[] xyLocation = new int[2];
+		float[] xyToClick = new float[2];
+
+		view.getLocationOnScreen(xyLocation);
+		
+		final int viewWidth = view.getWidth();
+		final int viewHeight = view.getHeight();
+		final float x = xyLocation[0] + (viewWidth / 2.0f);
+		float y = xyLocation[1] + (viewHeight / 2.0f);
+		
+		xyToClick[0] = x;
+		xyToClick[1] = y;
+		
+		return xyToClick;
 	}
 
 
