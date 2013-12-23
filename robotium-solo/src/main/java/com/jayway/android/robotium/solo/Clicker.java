@@ -3,6 +3,7 @@ package com.jayway.android.robotium.solo;
 import java.lang.reflect.Constructor;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 import junit.framework.Assert;
 import android.app.Activity;
 import android.app.Instrumentation;
@@ -174,7 +175,10 @@ class Clicker {
 		float y = xyToClick[1];
 
 		if(x == 0 || y == 0){
-			view = activityUtils.getCurrentActivity().findViewById(view.getId());
+			try {
+				view = getIdenticalView(view);
+			} catch (Exception ignored){}
+
 			if(view != null){
 				xyToClick = getClickCoordinates(view);
 				x = xyToClick[0];
@@ -187,6 +191,52 @@ class Clicker {
 		else
 			clickOnScreen(x, y);
 	}
+
+	/**
+	 * Returns an identical View to the one specified
+	 * 
+	 * @param view the view to find
+	 * @return identical view of the specified view
+	 */
+	
+	private View getIdenticalView(View view) {
+		View viewToReturn = null;
+		List<? extends View> visibleViews = RobotiumUtils.removeInvisibleViews(viewFetcher.getCurrentViews(view.getClass()));
+
+		for(View v : visibleViews){
+			if(v.getId() == view.getId()){
+				if(isParentsEqual(v, view)){
+					viewToReturn = v;
+					break;
+				}
+			}
+		}
+		return viewToReturn;
+	}
+	
+	/**
+	 * Compares the parent views of the specified views
+	 * 
+	 * @param firstView the first view
+	 * @param secondView the second view
+	 * @return true if parents of the specified views are equal
+	 */
+	
+	private boolean isParentsEqual(View firstView, View secondView){
+		if(firstView.getId() != secondView.getId() || !firstView.getClass().isAssignableFrom(secondView.getClass())){
+			return false;
+		}
+
+		if (firstView.getParent() != null && firstView.getParent() instanceof View && 
+				secondView.getParent() != null && secondView.getParent() instanceof View) {
+
+			return isParentsEqual((View) firstView.getParent(), (View) secondView.getParent());
+		} else {
+			return true;
+		}
+	}
+
+	
 
 	/**
 	 * Returns click coordinates for the specified view
