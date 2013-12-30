@@ -90,7 +90,7 @@ class GLRenderWrapper implements Renderer {
 		if (takeScreenshot) {
 			Bitmap screenshot = null;
 
-			if (glVersion == 2) {
+			if (glVersion >= 2) {
 				screenshot = savePixels(0, 0, width, height);
 			} else {
 				screenshot = savePixels(0, 0, width, height, gl);
