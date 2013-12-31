@@ -1,9 +1,12 @@
 package com.jayway.android.robotium.solo;
 
+import android.widget.EditText;
 import android.widget.Spinner;
 import junit.framework.Assert;
 import android.app.Instrumentation;
+import android.text.InputType;
 import android.view.KeyEvent;
+import android.view.inputmethod.EditorInfo;
 
 /**
  * Contains press methods. Examples are pressMenuItem(),
@@ -20,11 +23,13 @@ class Presser{
 	private final Sleeper sleeper;
 	private final Waiter waiter;
 	private final DialogUtils dialogUtils;
+	private final ViewFetcher viewFetcher;
 
 
 	/**
 	 * Constructs this object.
 	 *
+	 * @param viewFetcher the {@code ViewFetcher} instance.
 	 * @param clicker the {@code Clicker} instance.
 	 * @param inst the {@code Instrumentation} instance.
 	 * @param sleeper the {@code Sleeper} instance.
@@ -32,8 +37,8 @@ class Presser{
 	 * @param dialogUtils the {@code DialogUtils} instance.
 	 */
 
-	public Presser(Clicker clicker, Instrumentation inst, Sleeper sleeper, Waiter waiter, DialogUtils dialogUtils) {
-
+	public Presser(ViewFetcher viewFetcher, Clicker clicker, Instrumentation inst, Sleeper sleeper, Waiter waiter, DialogUtils dialogUtils) {
+		this.viewFetcher = viewFetcher;
 		this.clicker = clicker;
 		this.inst = inst;
 		this.sleeper = sleeper;
@@ -102,6 +107,23 @@ class Presser{
 		try{
 			inst.sendKeyDownUpSync(KeyEvent.KEYCODE_ENTER);
 		}catch (SecurityException ignored) {}
+	}
+	
+	/**
+	 * Presses the soft keyboard next button. 
+	 */
+
+	public void pressSoftKeyboardNextButton(){
+		final EditText freshestEditText = viewFetcher.getFreshestView(viewFetcher.getCurrentViews(EditText.class));
+		if(freshestEditText != null){
+			inst.runOnMainSync(new Runnable()
+			{
+				public void run()
+				{
+					freshestEditText.onEditorAction(EditorInfo.IME_ACTION_NEXT); 
+				}
+			});
+		}
 	}
 
 	/**

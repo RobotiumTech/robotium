@@ -114,7 +114,7 @@ public class Solo {
 		this.swiper = new Swiper(instrumentation);
 		this.tapper =  new Tapper(instrumentation);
 		this.rotator = new Rotator(instrumentation);
-		this.presser = new Presser(clicker, instrumentation, sleeper, waiter, dialogUtils);
+		this.presser = new Presser(viewFetcher, clicker, instrumentation, sleeper, waiter, dialogUtils);
 		this.textEnterer = new TextEnterer(instrumentation, clicker, dialogUtils);
 	}
 
@@ -946,6 +946,15 @@ public class Solo {
 	
 	public void pressMenuItem(int index, int itemsPerRow) {	
 		presser.pressMenuItem(index, itemsPerRow);
+	}
+	
+	/**
+	 * Presses the soft keyboard next button. 
+	 * 
+	 */
+
+	public void pressSoftKeyboardNextButton(){
+		presser.pressSoftKeyboardNextButton();
 	}
 	
 	/**
