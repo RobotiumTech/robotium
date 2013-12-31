@@ -2369,7 +2369,7 @@ public class Solo {
      * 
      */
 
-    public boolean waitForActivityStackToBeEmpty(int timeout)
+    public boolean waitForEmptyActivityStack(int timeout)
     {
     	return waiter.waitForCondition(
     			new Condition(){
