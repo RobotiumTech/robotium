@@ -209,7 +209,7 @@ class Searcher {
 					return view;
 				}
 			}
-			if(scroll && !scroller.scroll(Scroller.DOWN)){
+			if(scroll && !scroller.scrollDown()){
 				logMatchesFound(regex);
 				return null; 
 			}

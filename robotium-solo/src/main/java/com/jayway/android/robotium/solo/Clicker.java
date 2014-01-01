@@ -69,7 +69,7 @@ class Clicker {
 	}
 
 	/**
-	 * Clicks on a given coordinate on the screen
+	 * Clicks on a given coordinate on the screen.
 	 *
 	 * @param x the x coordinate
 	 * @param y the y coordinate
@@ -104,7 +104,7 @@ class Clicker {
 	}
 
 	/**
-	 * Long clicks a given coordinate on the screen
+	 * Long clicks a given coordinate on the screen.
 	 *
 	 * @param x the x coordinate
 	 * @param y the y coordinate
@@ -175,6 +175,7 @@ class Clicker {
 		float y = xyToClick[1];
 
 		if(x == 0 || y == 0){
+			sleeper.sleepMini();
 			try {
 				view = getIdenticalView(view);
 			} catch (Exception ignored){}
@@ -193,7 +194,7 @@ class Clicker {
 	}
 
 	/**
-	 * Returns an identical View to the one specified
+	 * Returns an identical View to the one specified.
 	 * 
 	 * @param view the view to find
 	 * @return identical view of the specified view
@@ -215,7 +216,7 @@ class Clicker {
 	}
 	
 	/**
-	 * Compares the parent views of the specified views
+	 * Compares the parent views of the specified views.
 	 * 
 	 * @param firstView the first view
 	 * @param secondView the second view
@@ -239,7 +240,7 @@ class Clicker {
 	
 
 	/**
-	 * Returns click coordinates for the specified view
+	 * Returns click coordinates for the specified view.
 	 * 
 	 * @param view the view to get click coordinates from
 	 * @return click coordinates for a specified view
@@ -288,8 +289,8 @@ class Clicker {
 		inst.sendKeyDownUpSync(KeyEvent.KEYCODE_ENTER);
 	}
 
-	/*
-	 * Opens the menu and waits for it to open
+	/**
+	 * Opens the menu and waits for it to open.
 	 */
 
 	private void openMenu(){
@@ -306,7 +307,7 @@ class Clicker {
 	}
 
 	/**
-	 * Clicks on a menu item with a given text
+	 * Clicks on a menu item with a given text.
 	 *
 	 * @param text the menu text that should be clicked on. The parameter <strong>will</strong> be interpreted as a regular expression.
 	 */
@@ -318,7 +319,7 @@ class Clicker {
 	}
 
 	/**
-	 * Clicks on a menu item with a given text
+	 * Clicks on a menu item with a given text.
 	 *
 	 * @param text the menu text that should be clicked on. The parameter <strong>will</strong> be interpreted as a regular expression.
 	 * @param subMenu true if the menu item could be located in a sub menu
@@ -407,7 +408,7 @@ class Clicker {
 	}
 
 	/**
-	 * Clicks on a web element using the given By method
+	 * Clicks on a web element using the given By method.
 	 *
 	 * @param by the By object e.g. By.id("id");
 	 * @param match if multiple objects match, this determines which one will be clicked

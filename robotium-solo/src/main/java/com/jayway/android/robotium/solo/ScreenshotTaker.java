@@ -6,12 +6,13 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.concurrent.CountDownLatch;
+import com.jayway.android.robotium.solo.Solo.Config;
+import com.jayway.android.robotium.solo.Solo.Config.ScreenshotFileType;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Picture;
 import android.opengl.GLSurfaceView;
 import android.opengl.GLSurfaceView.Renderer;
-import android.os.Environment;
 import android.os.Handler;
 import android.os.HandlerThread;
 import android.os.Message;
@@ -31,6 +32,7 @@ import android.webkit.WebView;
 
 class ScreenshotTaker {
 
+	private final Config config;
 	private final ActivityUtils activityUtils;
 	private final String LOG_TAG = "Robotium";
 	private ScreenshotSequenceThread screenshotSequenceThread = null;
@@ -43,19 +45,21 @@ class ScreenshotTaker {
 	/**
 	 * Constructs this object.
 	 * 
+	 * @param config the {@code Config} instance
 	 * @param activityUtils the {@code ActivityUtils} instance
 	 * @param viewFetcher the {@code ViewFetcher} instance
 	 * @param sleeper the {@code Sleeper} instance
 	 * 
 	 */
-	ScreenshotTaker(ActivityUtils activityUtils, ViewFetcher viewFetcher, Sleeper sleeper) {
+	ScreenshotTaker(Config config, ActivityUtils activityUtils, ViewFetcher viewFetcher, Sleeper sleeper) {
+		this.config = config;
 		this.activityUtils = activityUtils;
 		this.viewFetcher = viewFetcher;
 		this.sleeper = sleeper;
 	}
 
 	/**
-	 * Takes a screenshot and saves it in "/sdcard/Robotium-Screenshots/". 
+	 * Takes a screenshot and saves it in the {@link Config} objects save path.  
 	 * Requires write permission (android.permission.WRITE_EXTERNAL_STORAGE) in AndroidManifest.xml of the application under test.
 	 * 
 	 * @param view the view to take screenshot of
@@ -73,7 +77,7 @@ class ScreenshotTaker {
 	}
 
 	/**
-	 * Takes a screenshot sequence and saves the images with the specified name prefix in "/sdcard/Robotium-Screenshots/". 
+	 * Takes a screenshot sequence and saves the images with the name prefix in the {@link Config} objects save path.  
 	 *
 	 * The name prefix is appended with "_" + sequence_number for each image in the sequence,
 	 * where numbering starts at 0.  
@@ -237,10 +241,20 @@ class ScreenshotTaker {
 		SimpleDateFormat sdf = new SimpleDateFormat("ddMMyy-hhmmss");
 		String fileName = null;
 		if(name == null){
-			fileName = sdf.format( new Date()).toString()+ ".jpg";
+			if(config.screenshotFileType == ScreenshotFileType.JPEG){
+				fileName = sdf.format( new Date()).toString()+ ".jpg";
+			}
+			else{
+				fileName = sdf.format( new Date()).toString()+ ".png";	
+			}
 		}
 		else {
-			fileName = name + ".jpg";
+			if(config.screenshotFileType == ScreenshotFileType.JPEG){
+				fileName = name + ".jpg";
+			}
+			else {
+				fileName = name + ".png";	
+			}
 		}
 		return fileName;
 	}
@@ -402,14 +416,22 @@ class ScreenshotTaker {
 			FileOutputStream fos = null;
 			String fileName = getFileName(name);
 
-			File directory = new File(Environment.getExternalStorageDirectory() + "/Robotium-Screenshots/");
+			File directory = new File(config.screenshotSavePath);
 			directory.mkdir();
 
 			File fileToSave = new File(directory,fileName);
 			try {
 				fos = new FileOutputStream(fileToSave);
-				if (b.compress(Bitmap.CompressFormat.JPEG, quality, fos) == false)
-					Log.d(LOG_TAG, "Compress/Write failed");
+				if(config.screenshotFileType == ScreenshotFileType.JPEG){
+					if (b.compress(Bitmap.CompressFormat.JPEG, quality, fos) == false){
+						Log.d(LOG_TAG, "Compress/Write failed");
+					}
+				}
+				else{
+					if (b.compress(Bitmap.CompressFormat.PNG, quality, fos) == false){
+						Log.d(LOG_TAG, "Compress/Write failed");
+					}
+				}
 				fos.flush();
 				fos.close();
 			} catch (Exception e) {

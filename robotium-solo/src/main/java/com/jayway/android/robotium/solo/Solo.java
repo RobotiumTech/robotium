@@ -7,6 +7,7 @@ import android.app.Activity;
 import android.app.Instrumentation;
 import android.content.pm.ActivityInfo;
 import android.graphics.PointF;
+import android.os.Environment;
 import android.view.KeyEvent;
 import android.view.View;
 import android.webkit.WebView;
@@ -32,9 +33,8 @@ import android.app.Instrumentation.ActivityMonitor;
 
 /**
  * Main class for development of Robotium tests.  
- * 
  * Robotium has full support for Views, WebViews, Activities, Dialogs, Menus and Context Menus. 
- * 
+ * <br>
  * Robotium can be used in conjunction with Android test classes like 
  * ActivityInstrumentationTestCase2 and SingleLaunchActivityTestCase. 
  * 
@@ -70,6 +70,7 @@ public class Solo {
 	protected final Instrumentation instrumentation;
 	protected final Zoomer zoomer;
 	protected String webUrl = null;
+	private final Config config;
 	public final static int LANDSCAPE = ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE;   // 0
 	public final static int PORTRAIT = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT;     // 1
 	public final static int RIGHT = KeyEvent.KEYCODE_DPAD_RIGHT;
@@ -85,7 +86,7 @@ public class Solo {
 
 
 	/**
-	 * Constructor that takes in the Instrumentation and the start Activity.
+	 * Constructor that takes in the Instrumentation object and the start Activity.
 	 *
 	 * @param instrumentation the {@link Instrumentation} instance
 	 * @param activity the start {@link Activity} or {@code null}
@@ -94,15 +95,32 @@ public class Solo {
 	 */
 
 	public Solo(Instrumentation instrumentation, Activity activity) {
+		this(new Config(), instrumentation, activity);	
+	}
+
+	/**
+	 * Constructor that takes in the Instrumentation and Config objects.
+	 *
+	 * @param instrumentation the {@link Instrumentation} instance
+	 * @param config the {@link Config} instance 
+	 * 
+	 *
+	 */
+	public Solo(Instrumentation instrumentation, Config config) {
+		this(config, instrumentation, null);	
+	}
+
+	private Solo(Config config, Instrumentation instrumentation, Activity activity) {
+		this.config = config;
 		this.instrumentation = instrumentation;
 		this.sleeper = new Sleeper();
 		this.sender = new Sender(instrumentation, sleeper);
 		this.activityUtils = new ActivityUtils(instrumentation, activity, sleeper);
 		this.viewFetcher = new ViewFetcher(activityUtils);
-		this.screenshotTaker = new ScreenshotTaker(activityUtils, viewFetcher, sleeper);
+		this.screenshotTaker = new ScreenshotTaker(config, activityUtils, viewFetcher, sleeper);
 		this.dialogUtils = new DialogUtils(activityUtils, viewFetcher, sleeper);
 		this.webUtils = new WebUtils(instrumentation,activityUtils,viewFetcher, sleeper);
-		this.scroller = new Scroller(instrumentation, activityUtils, viewFetcher, sleeper);
+		this.scroller = new Scroller(config, instrumentation, activityUtils, viewFetcher, sleeper);
 		this.searcher = new Searcher(viewFetcher, webUtils, scroller, sleeper);
 		this.waiter = new Waiter(activityUtils, viewFetcher, searcher,scroller, sleeper);
 		this.setter = new Setter(activityUtils);
@@ -116,18 +134,76 @@ public class Solo {
 		this.rotator = new Rotator(instrumentation);
 		this.presser = new Presser(viewFetcher, clicker, instrumentation, sleeper, waiter, dialogUtils);
 		this.textEnterer = new TextEnterer(instrumentation, clicker, dialogUtils);
+		initialize();
+	}
+
+	/**
+	 * Config class used to set the scroll behaviour, default timeouts, screenshot filetype and screenshot save path.
+	 * <br> <br>
+	 * Example of usage:
+	 * <pre>
+	 *  public void setUp() throws Exception {
+	 *	Config config = new Config();
+	 *	config.screenshotFileType = ScreenshotFileType.PNG;
+	 *	config.screenshotSavePath = Environment.getExternalStorageDirectory() + "/Robotium/";
+	 *	config.shouldScroll = false;
+	 *	solo = new Solo(getInstrumentation(), config);
+	 *	getActivity();
+	 * }
+	 * </pre>
+	 * 
+	 * @author Renas Reda, renas.reda@robotium.com
+	 *
+	 */
+
+	public static class Config {
+
+		/**
+		 * The timeout length of the get, is, set, assert, enter and click methods. Default length is 20 000 milliseconds.
+		 */
+		public int timeout_large = 20000;
+
+		/**
+		 * The timeout length of the waitFor methods. Default length is 10 000 milliseconds.
+		 */
+		public int timeout_small = 10000;
+		
+		/**
+		 * Set to true if the get, is, set, enter, type and click methods should scroll. Default value is true.
+		 */
+		public boolean shouldScroll = true;
+
+		/**
+		 * The screenshot save path. Default save path is /sdcard/Robotium-Screenshots/.
+		 */
+		public String screenshotSavePath = Environment.getExternalStorageDirectory() + "/Robotium-Screenshots/";
+
+		/**
+		 * The screenshot file type, JPEG or PNG. Use ScreenshotFileType.JPEG or ScreenshotFileType.PNG. Default file type is JPEG. 
+		 */
+		public ScreenshotFileType screenshotFileType = ScreenshotFileType.JPEG;
+
+		/**
+		 * The screenshot file type, JPEG or PNG.
+		 * 
+		 * @author Renas Reda, renas.reda@robotium.com
+		 *
+		 */
+		public enum ScreenshotFileType {
+			JPEG, PNG
+		}
 	}
 
 
 	/**
-	 * Constructor that takes in the instrumentation.
+	 * Constructor that takes in the instrumentation object.
 	 *
 	 * @param instrumentation the {@link Instrumentation} instance
 	 *
 	 */
 
 	public Solo(Instrumentation instrumentation) {
-		this(instrumentation, null);
+		this(new Config(), instrumentation, null);
 	}
 
 	/**
@@ -1286,7 +1362,7 @@ public class Solo {
 
 	@SuppressWarnings("unchecked")
 	public boolean scrollDown() {
-		waiter.waitForViews(AbsListView.class, ScrollView.class, WebView.class);
+		waiter.waitForViews(true, AbsListView.class, ScrollView.class, WebView.class);
 		return scroller.scroll(Scroller.DOWN);
 	}
 
@@ -1296,7 +1372,7 @@ public class Solo {
 
 	@SuppressWarnings("unchecked")
 	public void scrollToBottom() {
-		waiter.waitForViews(AbsListView.class, ScrollView.class, WebView.class);
+		waiter.waitForViews(true, AbsListView.class, ScrollView.class, WebView.class);
 		scroller.scroll(Scroller.DOWN, true);
 	}
 
@@ -1311,7 +1387,7 @@ public class Solo {
 
 	@SuppressWarnings("unchecked")
 	public boolean scrollUp(){
-		waiter.waitForViews(AbsListView.class, ScrollView.class, WebView.class);
+		waiter.waitForViews(true, AbsListView.class, ScrollView.class, WebView.class);
 		return scroller.scroll(Scroller.UP);
 	}
 
@@ -1321,7 +1397,7 @@ public class Solo {
 	
 	@SuppressWarnings("unchecked")
 	public void scrollToTop() {
-		waiter.waitForViews(AbsListView.class, ScrollView.class, WebView.class);
+		waiter.waitForViews(true, AbsListView.class, ScrollView.class, WebView.class);
 		scroller.scroll(Scroller.UP, true);
 	}
 
@@ -2237,7 +2313,7 @@ public class Solo {
 	
 	@SuppressWarnings("unchecked")
 	public boolean isTextChecked(String text){
-		waiter.waitForViews(CheckedTextView.class, CompoundButton.class);
+		waiter.waitForViews(false, CheckedTextView.class, CompoundButton.class);
 		
 		if(viewFetcher.getCurrentViews(CheckedTextView.class).size() > 0 && checker.isCheckedTextChecked(text))
 			return true;
@@ -2529,7 +2605,7 @@ public class Solo {
 	}
 	
 	/**
-	 * Takes a screenshot and saves it in "/sdcard/Robotium-Screenshots/". 
+	 * Takes a screenshot and saves it in the {@link Config} objects save path (default set to: /sdcard/Robotium-Screenshots/).
 	 * Requires write permission (android.permission.WRITE_EXTERNAL_STORAGE) in AndroidManifest.xml of the application under test.
 	 *
 	 */
@@ -2539,7 +2615,7 @@ public class Solo {
 	}
 
 	/**
-	 * Takes a screenshot and saves it with the specified name in "/sdcard/Robotium-Screenshots/". 
+	 * Takes a screenshot and saves it with the specified name in the {@link Config} objects save path (default set to: /sdcard/Robotium-Screenshots/).
 	 * Requires write permission (android.permission.WRITE_EXTERNAL_STORAGE) in AndroidManifest.xml of the application under test.
 	 *
 	 * @param name the name to give the screenshot
@@ -2550,7 +2626,7 @@ public class Solo {
 	}
 
 	/**
-	 * Takes a screenshot and saves the image with the specified name in "/sdcard/Robotium-Screenshots/". 
+	 * Takes a screenshot and saves the image with the specified name in the {@link Config} objects save path (default set to: /sdcard/Robotium-Screenshots/).
 	 * Requires write permission (android.permission.WRITE_EXTERNAL_STORAGE) in AndroidManifest.xml of the application under test.
 	 *
 	 * @param name the name to give the screenshot
@@ -2562,7 +2638,7 @@ public class Solo {
 	}
 
 	/**
-	 * Takes a screenshot sequence and saves the images with the specified name prefix in "/sdcard/Robotium-Screenshots/". 
+	 * Takes a screenshot sequence and saves the images with the specified name prefix in the {@link Config} objects save path (default set to: /sdcard/Robotium-Screenshots/).
 	 *
 	 * The name prefix is appended with "_" + sequence_number for each image in the sequence,
 	 * where numbering starts at 0.  
@@ -2585,7 +2661,7 @@ public class Solo {
 	}
 
 	/**
-	 * Takes a screenshot sequence and saves the images with the specified name prefix in "/sdcard/Robotium-Screenshots/". 
+	 * Takes a screenshot sequence and saves the images with the specified name prefix in the {@link Config} objects save path (default set to: /sdcard/Robotium-Screenshots/).
 	 *
 	 * The name prefix is appended with "_" + sequence_number for each image in the sequence,
 	 * where numbering starts at 0.  
@@ -2623,13 +2699,13 @@ public class Solo {
 
 	
 	/**
-	 * Initialize timeout using 'adb shell setprop' or use setLargeTimeout() and setSmallTimeout(). Will fall back to default hard coded values.
+	 * Initialize timeout using 'adb shell setprop' or use setLargeTimeout() and setSmallTimeout(). Will fall back to the default values set by {@link Config}.
 	 * 
 	 */
 
-	static {
-		Timeout.setLargeTimeout(initializeTimeout("solo_large_timeout", 20000));
-		Timeout.setSmallTimeout(initializeTimeout("solo_small_timeout", 10000));
+	private void initialize(){
+		Timeout.setLargeTimeout(initializeTimeout("solo_large_timeout", config.timeout_large));
+		Timeout.setSmallTimeout(initializeTimeout("solo_small_timeout", config.timeout_small));
 	}
 	
 	/**

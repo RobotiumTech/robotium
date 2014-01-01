@@ -147,7 +147,7 @@ class Waiter {
 			if(foundMatchingView)
 				return true;
 
-			if(scroll && !scroller.scroll(Scroller.DOWN))
+			if(scroll && !scroller.scrollDown())
 				return false;
 
 			if(!scroll)
@@ -179,7 +179,7 @@ class Waiter {
 				return true;
 
 			if(scroll) 
-				scroller.scroll(Scroller.DOWN);
+				scroller.scrollDown();
 		}
 		return false;
 	}
@@ -189,12 +189,12 @@ class Waiter {
 	/**
 	 * Waits for two views to be shown.
 	 *
-	 * @param viewClass the first {@code View} class to wait for 
-	 * @param viewClass2 the second {@code View} class to wait for
+	 * @param scrollMethod {@code true} if it's a method used for scrolling
+	 * @param classes the classes to wait for 
 	 * @return {@code true} if any of the views are shown and {@code false} if none of the views are shown before the timeout
 	 */
 
-	public <T extends View> boolean  waitForViews(Class<? extends T>... classes) {
+	public <T extends View> boolean  waitForViews(boolean scrollMethod, Class<? extends T>... classes) {
 		final long endTime = SystemClock.uptimeMillis() + Timeout.getSmallTimeout();
 
 		while (SystemClock.uptimeMillis() < endTime) {
@@ -204,7 +204,12 @@ class Waiter {
 					return true;
 				}
 			}
-			scroller.scroll(Scroller.DOWN);
+			if(scrollMethod){
+				scroller.scroll(Scroller.DOWN);
+			}
+			else {
+				scroller.scrollDown();
+			}
 			sleeper.sleep();
 		}
 		return false;
@@ -263,7 +268,7 @@ class Waiter {
 			}
 
 			if(scroll) 
-				scroller.scroll(Scroller.DOWN);
+				scroller.scrollDown();
 		}
 		return false;
 	}
@@ -311,7 +316,7 @@ class Waiter {
 				}
 			}
 			if(scroll) 
-				scroller.scroll(Scroller.DOWN);
+				scroller.scrollDown();
 		}
 		return null;
 	}
@@ -344,7 +349,7 @@ class Waiter {
 				return webElementToReturn;
 
 			if(scroll) {
-				scroller.scroll(Scroller.DOWN);
+				scroller.scrollDown();
 			}
 		}
 	}

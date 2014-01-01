@@ -1,6 +1,9 @@
 package com.jayway.android.robotium.solo;
 
 import java.util.ArrayList;
+
+import com.jayway.android.robotium.solo.Solo.Config;
+
 import junit.framework.Assert;
 import android.app.Instrumentation;
 import android.os.SystemClock;
@@ -31,6 +34,7 @@ class Scroller {
 	private final ActivityUtils activityUtils;
 	private final ViewFetcher viewFetcher;
 	private final Sleeper sleeper;
+	private final Config config;
 
 
 	/**
@@ -42,7 +46,8 @@ class Scroller {
 	 * @param sleeper the {@code Sleeper} instance
 	 */
 
-	public Scroller(Instrumentation inst, ActivityUtils activityUtils, ViewFetcher viewFetcher, Sleeper sleeper) {
+	public Scroller(Config config, Instrumentation inst, ActivityUtils activityUtils, ViewFetcher viewFetcher, Sleeper sleeper) {
+		this.config = config;
 		this.inst = inst;
 		this.activityUtils = activityUtils;
 		this.viewFetcher = viewFetcher;
@@ -143,7 +148,7 @@ class Scroller {
 	}
 
 	/**
-	 * scrolls up or down.
+	 * Scrolls up or down.
 	 *
 	 * @param direction the direction in which to scroll
 	 * @return {@code true} if more scrolling can be done
@@ -153,6 +158,18 @@ class Scroller {
 		return scroll(direction, false);
 	}
 
+	/**
+	 * Scrolls down.
+	 *
+	 * @return {@code true} if more scrolling can be done
+	 */
+
+	public boolean scrollDown() {
+		if(!config.shouldScroll) {
+			return false;
+		}
+		return scroll(Scroller.DOWN);
+	}
 
 	/**
 	 * Scrolls up and down.
