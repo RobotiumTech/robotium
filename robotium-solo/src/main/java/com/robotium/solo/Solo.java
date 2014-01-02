@@ -86,7 +86,7 @@ public class Solo {
 
 
 	/**
-	 * Constructor that takes in the Instrumentation object and the start Activity.
+	 * Constructor that takes the Instrumentation object and the start Activity.
 	 *
 	 * @param instrumentation the {@link Instrumentation} instance
 	 * @param activity the start {@link Activity} or {@code null}
@@ -99,17 +99,27 @@ public class Solo {
 	}
 
 	/**
-	 * Constructor that takes in the Instrumentation and Config objects.
+	 * Constructor that takes the Instrumentation and Config objects.
 	 *
 	 * @param instrumentation the {@link Instrumentation} instance
 	 * @param config the {@link Config} instance 
-	 * 
 	 *
 	 */
+	
 	public Solo(Instrumentation instrumentation, Config config) {
 		this(config, instrumentation, null);	
 	}
-
+	
+	/**
+	 * Private constructor.
+	 * 
+	 * @param config the {@link Config} instance 
+	 * @param instrumentation the {@link Instrumentation} instance
+	 * @param activity the start {@link Activity} or {@code null}
+	 * if no Activity is specified
+	 * 
+	 */
+	
 	private Solo(Config config, Instrumentation instrumentation, Activity activity) {
 		this.config = config;
 		this.instrumentation = instrumentation;

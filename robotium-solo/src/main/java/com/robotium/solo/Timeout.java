@@ -57,7 +57,7 @@ public class Timeout{
 	}
 
 	/**
-	 * Gets the default timeout length of the get, is, set, assert, enter and click methods. 
+	 * Gets the default timeout length of the get, is, set, assert, enter, type and click methods. 
 	 * 
 	 * @return the timeout length in milliseconds
 	 * 
