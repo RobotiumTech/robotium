@@ -41,7 +41,7 @@ import android.app.Instrumentation.ActivityMonitor;
  *
  *
  *
- * @author Renas Reda, renasreda@gmail.com
+ * @author Renas Reda, renas.reda@robotium.com
  *
  */
 

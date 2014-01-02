@@ -5,7 +5,7 @@ import java.util.Hashtable;
 /**
  * Represents an element shown in a WebView.  
  * 
- * @author Renas Reda, renasreda@gmail.com
+ * @author Renas Reda, renas.reda@robotium.com
  * 
  */
 

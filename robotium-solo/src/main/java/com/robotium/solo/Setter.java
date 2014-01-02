@@ -10,7 +10,7 @@ import android.widget.TimePicker;
  * Contains set methods. Examples are setDatePicker(),
  * setTimePicker().
  * 
- * @author Renas Reda, renasreda@gmail.com
+ * @author Renas Reda, renas.reda@robotium.com
  * 
  */
 

@@ -11,7 +11,7 @@ import android.webkit.WebView;
  * Contains TextView related methods. Examples are:
  * getTextViewsFromWebViews(), createTextViewAndAddInList().
  * 
- * @author Renas Reda, renasreda@gmail.com
+ * @author Renas Reda, renas.reda@robotium.com
  * 
  */
 

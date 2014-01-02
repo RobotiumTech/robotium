@@ -11,7 +11,7 @@ import android.webkit.WebView;
  * Contains view methods. Examples are getViews(),
  * getCurrentTextViews(), getCurrentImageViews().
  *
- * @author Renas Reda, renasreda@gmail.com
+ * @author Renas Reda, renas.reda@robotium.com
  *
  */
 

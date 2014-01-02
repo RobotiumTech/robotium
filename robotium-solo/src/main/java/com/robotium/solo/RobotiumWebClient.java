@@ -17,7 +17,7 @@ import android.webkit.WebView;
 /**
  * WebChromeClient used to get information on web elements by injections of JavaScript. 
  * 
- * @author Renas Reda, renasreda@gmail.com
+ * @author Renas Reda, renas.reda@robotium.com
  * 
  */
 

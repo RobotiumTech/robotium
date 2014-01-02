@@ -8,7 +8,7 @@ import com.robotium.solo.Solo.Config;
 /**
  * Used to get and set the default timeout lengths of the various Solo methods. 
  * 
- * @author Renas Reda, renasreda@gmail.com
+ * @author Renas Reda, renas.reda@robotium.com
  *
  */
 

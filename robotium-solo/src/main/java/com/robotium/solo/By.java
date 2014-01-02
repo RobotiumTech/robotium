@@ -3,7 +3,7 @@ package com.robotium.solo;
 /**
  * Used in conjunction with the web methods. Examples are By.id(String id) and By.cssSelector(String selector).
  * 
- * @author Renas Reda, renasreda@gmail.com
+ * @author Renas Reda, renas.reda@robotium.com
  * 
  */
 

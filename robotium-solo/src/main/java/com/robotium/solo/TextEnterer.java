@@ -9,7 +9,7 @@ import android.widget.EditText;
 /**
  * Contains setEditText() to enter text into text fields.
  * 
- * @author Renas Reda, renasreda@gmail.com
+ * @author Renas Reda, renas.reda@robotium.com
  *
  */
 

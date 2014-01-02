@@ -7,7 +7,7 @@ import android.app.ActivityManager;
 /**
  * Contains assert methods examples are assertActivity() and assertLowMemory().
  * 
- * @author Renas Reda, renasreda@gmail.com
+ * @author Renas Reda, renas.reda@robotium.com
  *
  */
 

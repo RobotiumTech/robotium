@@ -13,7 +13,7 @@ import android.widget.EditText;
 /**
  * Contains the waitForDialogToClose() method.
  * 
- * @author Renas Reda, renasreda@gmail.com
+ * @author Renas Reda, renas.reda@robotium.com
  * 
  */
 

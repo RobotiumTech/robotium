@@ -6,7 +6,7 @@ import android.widget.TextView;
 /**
  * Used to create a TextView object that is based on a web element. Contains the web element text and location.  
  * 
- * @author Renas Reda, renasreda@gmail.com
+ * @author Renas Reda, renas.reda@robotium.com
  * 
  */
 

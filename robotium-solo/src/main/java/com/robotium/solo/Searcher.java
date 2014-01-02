@@ -16,7 +16,7 @@ import android.widget.TextView;
  * Contains various search methods. Examples are: searchForEditTextWithTimeout(),
  * searchForTextWithTimeout(), searchForButtonWithTimeout().
  * 
- * @author Renas Reda, renasreda@gmail.com
+ * @author Renas Reda, renas.reda@robotium.com
  * 
  */
 

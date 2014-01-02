@@ -19,7 +19,7 @@ import android.view.KeyEvent;
  * Contains activity related methods. Examples are:
  * getCurrentActivity(), getActivityList(), getAllOpenedActivities().
  * 
- * @author Renas Reda, renasreda@gmail.com
+ * @author Renas Reda, renas.reda@robotium.com
  * 
  */
 

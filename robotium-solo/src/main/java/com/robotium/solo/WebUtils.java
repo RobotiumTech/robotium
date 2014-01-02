@@ -15,7 +15,7 @@ import android.widget.TextView;
  * Contains web related methods. Examples are:
  * enterTextIntoWebElement(), getWebTexts(), getWebElements().
  * 
- * @author Renas Reda, renasreda@gmail.com
+ * @author Renas Reda, renas.reda@robotium.com
  * 
  */
 

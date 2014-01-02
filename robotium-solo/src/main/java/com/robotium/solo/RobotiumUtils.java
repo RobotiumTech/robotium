@@ -14,7 +14,7 @@ import android.widget.TextView;
  * Contains utility methods. Examples are: removeInvisibleViews(Iterable<T> viewList),
  * filterViews(Class<T> classToFilterBy, Iterable<?> viewList), sortViewsByLocationOnScreen(List<? extends View> views).
  * 
- * @author Renas Reda, renasreda@gmail.com
+ * @author Renas Reda, renas.reda@robotium.com
  * 
  */
 

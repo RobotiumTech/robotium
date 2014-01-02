@@ -12,7 +12,7 @@ import android.view.inputmethod.EditorInfo;
  * Contains press methods. Examples are pressMenuItem(),
  * pressSpinnerItem().
  * 
- * @author Renas Reda, renasreda@gmail.com
+ * @author Renas Reda, renas.reda@robotium.com
  * 
  */
 

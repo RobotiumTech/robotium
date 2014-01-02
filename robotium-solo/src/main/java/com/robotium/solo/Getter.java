@@ -12,7 +12,7 @@ import android.widget.TextView;
  * Contains various get methods. Examples are: getView(int id),
  * getView(Class<T> classToFilterBy, int index).
  * 
- * @author Renas Reda, renasreda@gmail.com
+ * @author Renas Reda, renas.reda@robotium.com
  * 
  */
 

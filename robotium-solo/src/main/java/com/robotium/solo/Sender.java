@@ -9,7 +9,7 @@ import android.view.KeyEvent;
  * Contains send key event methods. Examples are:
  * sendKeyCode(), goBack()
  * 
- * @author Renas Reda, renasreda@gmail.com
+ * @author Renas Reda, renas.reda@robotium.com
  * 
  */
 

@@ -19,7 +19,7 @@ import android.widget.TextView;
  * Contains various wait methods. Examples are: waitForText(),
  * waitForView().
  * 
- * @author Renas Reda, renasreda@gmail.com
+ * @author Renas Reda, renas.reda@robotium.com
  * 
  */
 

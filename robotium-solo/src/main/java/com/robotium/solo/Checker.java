@@ -11,7 +11,7 @@ import android.widget.TextView;
  * Contains various check methods. Examples are: isButtonChecked(),
  * isSpinnerTextSelected.
  * 
- * @author Renas Reda, renasreda@gmail.com
+ * @author Renas Reda, renas.reda@robotium.com
  * 
  */
 

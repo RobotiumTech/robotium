@@ -1,7 +1,7 @@
 /**
  * Used by the web methods.
  * 
- * @author Renas Reda, renasreda@gmail.com
+ * @author Renas Reda, renas.reda@robotium.com
  * 
  */
 

@@ -28,7 +28,7 @@ import android.webkit.WebView;
  * stopScreenshotSequence().
  * 
  * 
- * @author Renas Reda, renasreda@gmail.com
+ * @author Renas Reda, renas.reda@robotium.com
  * 
  */
 
