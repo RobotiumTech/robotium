@@ -17,7 +17,7 @@ import android.view.KeyEvent;
 
 /**
  * Contains activity related methods. Examples are:
- * getCurrentActivity(), getActivityList(), getAllOpenedActivities().
+ * getCurrentActivity(), getActivityMonitor(), setActivityOrientation(int orientation).
  * 
  * @author Renas Reda, renas.reda@robotium.com
  * 
@@ -59,7 +59,7 @@ class ActivityUtils {
 
 
 	/**
-	 * Creates a new activity stack and pushes the start activity 
+	 * Creates a new activity stack and pushes the start activity. 
 	 */
 
 	private void createStackAndPushStartActivity(){
@@ -258,7 +258,7 @@ class ActivityUtils {
 	}
 
 	/**
-	 * Check if activity stack is empty
+	 * Check if activity stack is empty.
 	 * 
 	 * @return true if activity stack is empty
 	 */
@@ -300,7 +300,7 @@ class ActivityUtils {
 	}
 
 	/**
-	 * Returns a localized string
+	 * Returns a localized string.
 	 * 
 	 * @param resId the resource ID for the string
 	 * @return the localized string
@@ -359,7 +359,7 @@ class ActivityUtils {
 	}
 
 	/**
-	 * Clears the activity stack
+	 * Clears the activity stack.
 	 */
 
 	private void clearActivityStack(){
@@ -368,7 +368,7 @@ class ActivityUtils {
 	}
 
 	/**
-	 * Finishes an activity
+	 * Finishes an activity.
 	 * 
 	 * @param activity the activity to finish
 	 */
