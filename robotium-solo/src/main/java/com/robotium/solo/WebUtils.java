@@ -105,6 +105,9 @@ class WebUtils {
 		boolean javaScriptWasExecuted = executeJavaScript(by, false);
 		
 		if(config.useJavaScriptToClickWebElements){
+			if(!javaScriptWasExecuted){
+				return new ArrayList<WebElement>();
+			}
 			return webElementCreator.getWebElementsFromWebViews();
 		}
 
