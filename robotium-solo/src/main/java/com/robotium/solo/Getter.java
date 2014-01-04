@@ -26,8 +26,8 @@ class Getter {
 	/**
 	 * Constructs this object.
 	 * 
-	 * @param activityUtils the {@code ActivityUtil} instance.
-	 * @param viewFetcher the {@code ViewFetcher} instance.
+	 * @param inst the {@code Instrumentation} instance
+	 * @param viewFetcher the {@code ViewFetcher} instance
 	 * @param waiter the {@code Waiter} instance
 	 */
 

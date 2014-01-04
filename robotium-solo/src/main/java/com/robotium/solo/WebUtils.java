@@ -30,7 +30,7 @@ class WebUtils {
 
 
 	/**
-	 * Constructs this object
+	 * Constructs this object.
 	 * 
 	 * @param instrumentation the {@code Instrumentation} instance
 	 * @param activityUtils the {@code ActivityUtils} instance

@@ -23,7 +23,7 @@ class Checker {
 	/**
 	 * Constructs this object.
 	 * 
-	 * @param viewFetcher the {@code ViewFetcher} instance.
+	 * @param viewFetcher the {@code ViewFetcher} instance
      * @param waiter the {@code Waiter} instance
 	 */
 	

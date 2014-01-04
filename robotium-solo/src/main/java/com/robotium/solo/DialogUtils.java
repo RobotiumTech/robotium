@@ -28,9 +28,9 @@ class DialogUtils {
 	/**
 	 * Constructs this object.
 	 * 
-	 * @param activityUtils the {@code ActivityUtils} instance.
-	 * @param viewFetcher the {@code ViewFetcher} instance.
-	 * @param sleeper the {@code Sleeper} instance.
+	 * @param activityUtils the {@code ActivityUtils} instance
+	 * @param viewFetcher the {@code ViewFetcher} instance
+	 * @param sleeper the {@code Sleeper} instance
 	 */
 
 	public DialogUtils(ActivityUtils activityUtils, ViewFetcher viewFetcher, Sleeper sleeper) {

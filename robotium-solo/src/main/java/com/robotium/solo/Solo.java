@@ -206,7 +206,7 @@ public class Solo {
 
 
 	/**
-	 * Constructor that takes in the instrumentation object.
+	 * Constructor that takes the instrumentation object.
 	 *
 	 * @param instrumentation the {@link Instrumentation} instance
 	 *

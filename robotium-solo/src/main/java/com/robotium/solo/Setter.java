@@ -23,7 +23,7 @@ class Setter{
 	/**
 	 * Constructs this object.
 	 *
-	 * @param activityUtils the {@code ActivityUtils} instance.
+	 * @param activityUtils the {@code ActivityUtils} instance
 	 */
 
 	public Setter(ActivityUtils activityUtils) {

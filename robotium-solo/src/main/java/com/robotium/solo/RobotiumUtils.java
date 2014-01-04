@@ -24,8 +24,8 @@ public class RobotiumUtils {
 	/**
 	 * Removes invisible Views.
 	 * 
-	 * @param viewList an Iterable with Views that is being checked for invisible Views.
-	 * @return a filtered Iterable with no invisible Views.
+	 * @param viewList an Iterable with Views that is being checked for invisible Views
+	 * @return a filtered Iterable with no invisible Views
 	 */
 
 	public static <T extends View> ArrayList<T> removeInvisibleViews(Iterable<T> viewList) {

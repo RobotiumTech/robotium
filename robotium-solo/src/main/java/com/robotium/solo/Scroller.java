@@ -1,9 +1,7 @@
 package com.robotium.solo;
 
 import java.util.ArrayList;
-
 import com.robotium.solo.Solo.Config;
-
 import junit.framework.Assert;
 import android.app.Instrumentation;
 import android.os.SystemClock;
@@ -40,9 +38,9 @@ class Scroller {
 	/**
 	 * Constructs this object.
 	 *
-	 * @param inst the {@code Instrumentation} instance.
-	 * @param activityUtils the {@code ActivityUtils} instance.
-	 * @param viewFetcher the {@code ViewFetcher} instance.
+	 * @param inst the {@code Instrumentation} instance
+	 * @param activityUtils the {@code ActivityUtils} instance
+	 * @param viewFetcher the {@code ViewFetcher} instance
 	 * @param sleeper the {@code Sleeper} instance
 	 */
 

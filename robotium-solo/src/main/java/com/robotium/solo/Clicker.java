@@ -46,10 +46,10 @@ class Clicker {
 	/**
 	 * Constructs this object.
 	 *
-	 * @param activityUtils the {@code ActivityUtils} instance.
-	 * @param viewFetcher the {@code ViewFetcher} instance.
-	 * @param sender the {@code Sender} instance.
-	 * @param inst the {@code android.app.Instrumentation} instance.
+	 * @param activityUtils the {@code ActivityUtils} instance
+	 * @param viewFetcher the {@code ViewFetcher} instance
+	 * @param sender the {@code Sender} instance
+	 * @param inst the {@code android.app.Instrumentation} instance
 	 * @param sleeper the {@code Sleeper} instance
 	 * @param waiter the {@code Waiter} instance
 	 * @param webUtils the {@code WebUtils} instance

@@ -22,14 +22,13 @@ class GLRenderWrapper implements Renderer {
 	private Renderer renderer;
 	private int width;
 	private int height;
-
 	private final GLSurfaceView view;
 	private CountDownLatch latch;
 	private boolean takeScreenshot = true;
 	private int glVersion;
 
 	/**
-	 * Constructs this object 
+	 * Constructs this object.
 	 * 
 	 * @param view the current glSurfaceView
 	 * @param renderer the renderer to wrap

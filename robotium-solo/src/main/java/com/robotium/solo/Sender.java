@@ -21,8 +21,8 @@ class Sender {
 	/**
 	 * Constructs this object.
 	 * 
-	 * @param inst the {@code Instrumentation} instance.
-	 * @param sleeper the {@code Sleeper} instance.
+	 * @param inst the {@code Instrumentation} instance
+	 * @param sleeper the {@code Sleeper} instance
 	 */
 
 	Sender(Instrumentation inst, Sleeper sleeper) {

@@ -22,9 +22,9 @@ class TextEnterer{
 	/**
 	 * Constructs this object.
 	 * 
-	 * @param inst the {@code Instrumentation} instance.
-	 * @param clicker the {@code Clicker} instance.
-	 * @param dialogUtils the {@code DialogUtils} instance.
+	 * @param inst the {@code Instrumentation} instance
+	 * @param clicker the {@code Clicker} instance
+	 * @param dialogUtils the {@code DialogUtils} instance
 	 * 
 	 */
 

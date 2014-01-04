@@ -29,6 +29,7 @@ public class WebElement {
 	 * @param name the given name to be set
 	 * @param className the given class name to set
 	 * @param tagName the given tag name to be set
+	 * @param attributes the attributes to set
 	 */
 
 	public WebElement(String webId, String textContent, String name, String className, String tagName, Hashtable<String, String> attributes) {

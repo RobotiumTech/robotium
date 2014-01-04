@@ -4,7 +4,6 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import junit.framework.Assert;
 import android.app.Instrumentation;
-import android.text.InputType;
 import android.view.KeyEvent;
 import android.view.inputmethod.EditorInfo;
 
@@ -29,12 +28,12 @@ class Presser{
 	/**
 	 * Constructs this object.
 	 *
-	 * @param viewFetcher the {@code ViewFetcher} instance.
-	 * @param clicker the {@code Clicker} instance.
-	 * @param inst the {@code Instrumentation} instance.
-	 * @param sleeper the {@code Sleeper} instance.
-	 * @param waiter the {@code Waiter} instance.
-	 * @param dialogUtils the {@code DialogUtils} instance.
+	 * @param viewFetcher the {@code ViewFetcher} instance
+	 * @param clicker the {@code Clicker} instance
+	 * @param inst the {@code Instrumentation} instance
+	 * @param sleeper the {@code Sleeper} instance
+	 * @param waiter the {@code Waiter} instance
+	 * @param dialogUtils the {@code DialogUtils} instance
 	 */
 
 	public Presser(ViewFetcher viewFetcher, Clicker clicker, Instrumentation inst, Sleeper sleeper, Waiter waiter, DialogUtils dialogUtils) {

@@ -22,7 +22,7 @@ class WebElementCreator {
 	private boolean isFinished = false;
 
 	/**
-	 * Constructs this object
+	 * Constructs this object.
 	 * 
 	 * @param sleeper the {@code Sleeper} instance
 	 * 
