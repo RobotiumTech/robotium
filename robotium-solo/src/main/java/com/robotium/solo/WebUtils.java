@@ -213,30 +213,31 @@ class WebUtils {
 	 * Executes JavaScript determined by the given By object
 	 * 
 	 * @param by the By object e.g. By.id("id");
+	 * @param shouldClick true if click should be performed
 	 * @return true if JavaScript function was executed
 	 */
 
-	public boolean executeJavaScript(final By by, boolean click){
+	public boolean executeJavaScript(final By by, boolean shouldClick){
 		if(by instanceof By.Id){
-			return executeJavaScriptFunction("id(\""+by.getValue()+"\", \"" + String.valueOf(click) + "\");");
+			return executeJavaScriptFunction("id(\""+by.getValue()+"\", \"" + String.valueOf(shouldClick) + "\");");
 		}
 		else if(by instanceof By.Xpath){
-			return executeJavaScriptFunction("xpath(\""+by.getValue()+"\", \"" + String.valueOf(click) + "\");");
+			return executeJavaScriptFunction("xpath(\""+by.getValue()+"\", \"" + String.valueOf(shouldClick) + "\");");
 		}
 		else if(by instanceof By.CssSelector){
-			return executeJavaScriptFunction("cssSelector(\""+by.getValue()+"\", \"" + String.valueOf(click) + "\");");
+			return executeJavaScriptFunction("cssSelector(\""+by.getValue()+"\", \"" + String.valueOf(shouldClick) + "\");");
 		}
 		else if(by instanceof By.Name){
-			return executeJavaScriptFunction("name(\""+by.getValue()+"\", \"" + String.valueOf(click) + "\");");
+			return executeJavaScriptFunction("name(\""+by.getValue()+"\", \"" + String.valueOf(shouldClick) + "\");");
 		}
 		else if(by instanceof By.ClassName){
-			return executeJavaScriptFunction("className(\""+by.getValue()+"\", \"" + String.valueOf(click) + "\");");
+			return executeJavaScriptFunction("className(\""+by.getValue()+"\", \"" + String.valueOf(shouldClick) + "\");");
 		}
 		else if(by instanceof By.Text){
-			return executeJavaScriptFunction("textContent(\""+by.getValue()+"\", \"" + String.valueOf(click) + "\");");
+			return executeJavaScriptFunction("textContent(\""+by.getValue()+"\", \"" + String.valueOf(shouldClick) + "\");");
 		}
 		else if(by instanceof By.TagName){
-			return executeJavaScriptFunction("tagName(\""+by.getValue()+"\", \"" + String.valueOf(click) + "\");");
+			return executeJavaScriptFunction("tagName(\""+by.getValue()+"\", \"" + String.valueOf(shouldClick) + "\");");
 		}
 		return false;
 	}
