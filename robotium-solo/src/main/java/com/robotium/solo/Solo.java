@@ -1843,9 +1843,7 @@ public class Solo {
 	 */
 	
 	public void typeTextInWebElement(By by, String text){
-		clickOnWebElement(by);
-		dialogUtils.hideSoftKeyboard(null, true, true);
-		instrumentation.sendStringSync(text);
+		typeTextInWebElement(by, text, 0);
 	}
 	
 	/**
@@ -1858,7 +1856,7 @@ public class Solo {
 	 */
 	
 	public void typeTextInWebElement(By by, String text, int match){
-		clickOnWebElement(by, match);
+		clicker.clickOnWebElement(by, match, true, false);
 		dialogUtils.hideSoftKeyboard(null, true, true);
 		instrumentation.sendStringSync(text);
 	}
