@@ -27,7 +27,7 @@ function allTexts() {
 
 function clickElement(element){
 	var e = document.createEvent('MouseEvents');
-	e.initMouseEvent('click', true, true, window, 0, 0, 0, 0, 0, true, false, false, true, 0, null);
+	e.initMouseEvent(‘click’, true, true, window, 1, 0, 0, 0, 0, false, false, false, true, 0, null);
 	element.dispatchEvent(e);
 }
 
