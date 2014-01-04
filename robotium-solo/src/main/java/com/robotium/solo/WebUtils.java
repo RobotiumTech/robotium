@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import com.robotium.solo.Solo.Config;
 import android.app.Instrumentation;
 import android.webkit.WebChromeClient;
 import android.webkit.WebView;
@@ -27,18 +28,20 @@ class WebUtils {
 	RobotiumWebClient robotiumWebCLient;
 	WebElementCreator webElementCreator;
 	WebChromeClient originalWebChromeClient = null;
+	private Config config;
 
 
 	/**
 	 * Constructs this object.
 	 * 
+	 * @param config the {@code Config} instance
 	 * @param instrumentation the {@code Instrumentation} instance
 	 * @param activityUtils the {@code ActivityUtils} instance
 	 * @param viewFetcher the {@code ViewFetcher} instance
-	 * 
 	 */
 
-	public WebUtils(Instrumentation instrumentation, ActivityUtils activityUtils, ViewFetcher viewFetcher, Sleeper sleeper){
+	public WebUtils(Config config, Instrumentation instrumentation, ActivityUtils activityUtils, ViewFetcher viewFetcher, Sleeper sleeper){
+		this.config = config;
 		this.inst = instrumentation;
 		this.activityUtils = activityUtils;
 		this.viewFetcher = viewFetcher;
@@ -99,7 +102,11 @@ class WebUtils {
 	 */
 
 	public ArrayList<WebElement> getCurrentWebElements(final By by){
-		boolean javaScriptWasExecuted = executeJavaScript(by);
+		boolean javaScriptWasExecuted = executeJavaScript(by, false);
+		
+		if(config.useJavaScriptToClickWebElements){
+			return webElementCreator.getWebElementsFromWebViews();
+		}
 
 		return getSufficientlyShownWebElements(javaScriptWasExecuted);
 	}
@@ -206,27 +213,27 @@ class WebUtils {
 	 * @return true if JavaScript function was executed
 	 */
 
-	private boolean executeJavaScript(final By by){
+	public boolean executeJavaScript(final By by, boolean click){
 		if(by instanceof By.Id){
-			return executeJavaScriptFunction("id(\""+by.getValue()+"\");");
+			return executeJavaScriptFunction("id(\""+by.getValue()+"\", \"" + String.valueOf(click) + "\");");
 		}
 		else if(by instanceof By.Xpath){
-			return executeJavaScriptFunction("xpath(\""+by.getValue()+"\");");
+			return executeJavaScriptFunction("xpath(\""+by.getValue()+"\", \"" + String.valueOf(click) + "\");");
 		}
 		else if(by instanceof By.CssSelector){
-			return executeJavaScriptFunction("cssSelector(\""+by.getValue()+"\");");
+			return executeJavaScriptFunction("cssSelector(\""+by.getValue()+"\", \"" + String.valueOf(click) + "\");");
 		}
 		else if(by instanceof By.Name){
-			return executeJavaScriptFunction("name(\""+by.getValue()+"\");");
+			return executeJavaScriptFunction("name(\""+by.getValue()+"\", \"" + String.valueOf(click) + "\");");
 		}
 		else if(by instanceof By.ClassName){
-			return executeJavaScriptFunction("className(\""+by.getValue()+"\");");
+			return executeJavaScriptFunction("className(\""+by.getValue()+"\", \"" + String.valueOf(click) + "\");");
 		}
 		else if(by instanceof By.Text){
-			return executeJavaScriptFunction("textContent(\""+by.getValue()+"\");");
+			return executeJavaScriptFunction("textContent(\""+by.getValue()+"\", \"" + String.valueOf(click) + "\");");
 		}
 		else if(by instanceof By.TagName){
-			return executeJavaScriptFunction("tagName(\""+by.getValue()+"\");");
+			return executeJavaScriptFunction("tagName(\""+by.getValue()+"\", \"" + String.valueOf(click) + "\");");
 		}
 		return false;
 	}

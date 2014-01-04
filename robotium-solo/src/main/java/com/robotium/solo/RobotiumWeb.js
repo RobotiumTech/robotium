@@ -25,17 +25,35 @@ function allTexts() {
 	finished();
 }
 
-function id(id) {
+function clickElement(element){
+	var e = document.createEvent('MouseEvents');
+	e.initMouseEvent('click', true, true, window, 0, 0, 0, 0, 0, true, false, false, true, 0, null);
+	element.dispatchEvent(e);
+}
+
+function id(id, click) {
 	var element = document.getElementById(id);
 	if(element != null){ 
-		promptElement(element);
+
+		if(click == 'true'){
+			clickElement(element);
+		}
+		else{
+			promptElement(element);
+		}
 	} 
 	else {
 		for (var key in document.all){
 			try{
 				element = document.all[key];
 				if(element.id == id) {
-					promptElement(element);
+					if(click == 'true'){
+						clickElement(element);
+						return;
+					}
+					else{
+						promptElement(element);
+					}
 				}
 			} catch(ignored){}			
 		}
@@ -43,77 +61,113 @@ function id(id) {
 	finished(); 
 }
 
-function xpath(xpath) {
+function xpath(xpath, click) {
 	var elements = document.evaluate(xpath, document, null, XPathResult.ORDERED_NODE_ITERATOR_TYPE, null); 
 
 	if (elements){
 		var element = elements.iterateNext();
 		while(element) {
-			promptElement(element);
-			element = result.iterateNext();
+			if(click == 'true'){
+				clickElement(element);
+				return;
+			}
+			else{
+				promptElement(element);
+				element = result.iterateNext();
+			}
 		}
 		finished();
 	}
 }
 
-function cssSelector(cssSelector) {
+function cssSelector(cssSelector, click) {
 	var elements = document.querySelectorAll(cssSelector);
 	for (var key in elements) {
 		if(elements != null){ 
 			try{
-				promptElement(elements[key]);
+				if(click == 'true'){
+					clickElement(elements[key]);
+					return;
+				}
+				else{
+					promptElement(elements[key]);
+				}	
 			}catch(ignored){}  
 		}
 	}
 	finished(); 
 }
 
-function name(name) {
+function name(name, click) {
 	var walk=document.createTreeWalker(document.body,NodeFilter.SHOW_ELEMENT,null,false); 
 	while(n=walk.nextNode()){
 		try{
 			var attributeName = n.getAttribute('name');
 			if(attributeName != null && attributeName.trim().length>0 && attributeName == name){
-				promptElement(n);
+				if(click == 'true'){
+					clickElement(n);
+					return;
+				}
+				else{
+					promptElement(n);
+				}	
 			}
 		}catch(ignored){} 
 	} 
 	finished();
 }
 
-function className(nameOfClass) {
+function className(nameOfClass, click) {
 	var walk=document.createTreeWalker(document.body,NodeFilter.SHOW_ELEMENT,null,false); 
 	while(n=walk.nextNode()){
 		try{
 			var className = n.className; 
 			if(className != null && className.trim().length>0 && className == nameOfClass) {
-				promptElement(n);
+				if(click == 'true'){
+					clickElement(n);
+					return;
+				}
+				else{
+					promptElement(n);
+				}	
 			}
 		}catch(ignored){} 
 	} 
 	finished(); 
 }
 
-function textContent(text) {
+function textContent(text, click) {
 	var range = document.createRange();
 	var walk=document.createTreeWalker(document.body,NodeFilter.SHOW_TEXT,null,false); 
 	while(n=walk.nextNode()){ 
 		try{
 			var textContent = n.textContent; 
 			if(textContent.trim() == text.trim()){  
-				promptText(n, range);
+				if(click == 'true'){
+					clickElement(n);
+					return;
+				}
+				else{
+					promptText(n, range);
+				}
 			}
 		}catch(ignored){} 
 	} 
 	finished();  
 }
 
-function tagName(tagName) {
+function tagName(tagName, click) {
 	var elements = document.getElementsByTagName(tagName);
 	for (var key in elements) {
 		if(elements != null){ 
 			try{
-				promptElement(elements[key]);
+				if(click == 'true'){
+					clickElement(elements[key]);
+					return;
+				}
+				else{
+					promptElement(elements[key]);
+				}	
 			}catch(ignored){}  
 		}
 	}
@@ -199,7 +253,7 @@ function promptElement(element) {
 			attributes += "#$";
 		}
 	}
-	
+
 	var rect = element.getBoundingClientRect();
 	if(rect.width > 0 && rect.height > 0 && rect.left >= 0 && rect.top >= 0){
 		prompt(id + ';,' + text + ';,' + name + ";," + className + ";," + tagName + ";," + rect.left + ';,' + rect.top + ';,' + rect.width + ';,' + rect.height + ';,' + attributes);

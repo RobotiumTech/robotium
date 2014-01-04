@@ -129,7 +129,7 @@ public class Solo {
 		this.viewFetcher = new ViewFetcher(activityUtils);
 		this.screenshotTaker = new ScreenshotTaker(config, activityUtils, viewFetcher, sleeper);
 		this.dialogUtils = new DialogUtils(activityUtils, viewFetcher, sleeper);
-		this.webUtils = new WebUtils(instrumentation,activityUtils,viewFetcher, sleeper);
+		this.webUtils = new WebUtils(config, instrumentation,activityUtils,viewFetcher, sleeper);
 		this.scroller = new Scroller(config, instrumentation, activityUtils, viewFetcher, sleeper);
 		this.searcher = new Searcher(viewFetcher, webUtils, scroller, sleeper);
 		this.waiter = new Waiter(activityUtils, viewFetcher, searcher,scroller, sleeper);
@@ -177,11 +177,6 @@ public class Solo {
 		 * The timeout length of the waitFor methods. Default length is 10 000 milliseconds.
 		 */
 		public int timeout_small = 10000;
-		
-		/**
-		 * Set to true if the get, is, set, enter, type and click methods should scroll. Default value is true.
-		 */
-		public boolean shouldScroll = true;
 
 		/**
 		 * The screenshot save path. Default save path is /sdcard/Robotium-Screenshots/.
@@ -192,6 +187,16 @@ public class Solo {
 		 * The screenshot file type, JPEG or PNG. Use ScreenshotFileType.JPEG or ScreenshotFileType.PNG. Default file type is JPEG. 
 		 */
 		public ScreenshotFileType screenshotFileType = ScreenshotFileType.JPEG;
+		
+		/**
+		 * Set to true if the get, is, set, enter, type and click methods should scroll. Default value is true.
+		 */
+		public boolean shouldScroll = true;	
+		
+		/**
+		 * Set to true if JavaScript should be used to click WebElements. Default value is false. 
+		 */
+		public boolean useJavaScriptToClickWebElements = false;
 
 		/**
 		 * The screenshot file type, JPEG or PNG.
@@ -979,7 +984,7 @@ public class Solo {
 	 */
 	
 	public void clickOnWebElement(By by){
-		clicker.clickOnWebElement(by, 0, true);
+		clickOnWebElement(by, 0, true);
 	}
 	
 	/**
@@ -991,7 +996,7 @@ public class Solo {
 	 */
 	
 	public void clickOnWebElement(By by, int match){
-		clicker.clickOnWebElement(by, match, true);
+		clickOnWebElement(by, match, true);
 	}
 	
 	/**
@@ -1004,7 +1009,7 @@ public class Solo {
 	 */
 	
 	public void clickOnWebElement(By by, int match, boolean scroll){
-		clicker.clickOnWebElement(by, match, scroll);
+		clicker.clickOnWebElement(by, match, scroll, config.useJavaScriptToClickWebElements);
 	}
 	
 	/**

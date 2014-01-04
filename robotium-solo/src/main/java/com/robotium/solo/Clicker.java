@@ -413,11 +413,17 @@ class Clicker {
 	 * @param by the By object e.g. By.id("id");
 	 * @param match if multiple objects match, this determines which one will be clicked
 	 * @param scroll true if scrolling should be performed
+	 * @param useJavascriptToClick true if click should be perfomed through JavaScript
 	 */
 
-	public void clickOnWebElement(By by, int match, boolean scroll){
+	public void clickOnWebElement(By by, int match, boolean scroll, boolean useJavascriptToClick){
 		WebElement webElementToClick = waiter.waitForWebElement(by, match, Timeout.getSmallTimeout(), scroll);
-
+		
+		if(useJavascriptToClick){
+			webUtils.executeJavaScript(by, true);
+			return;
+		}
+		
 		if(webElementToClick == null){
 			if(match > 1) {
 				Assert.assertTrue(match + " WebElements with " + webUtils.splitNameByUpperCase(by.getClass().getSimpleName()) + ": '" + by.getValue() + "' are not found!", false);
@@ -426,6 +432,7 @@ class Clicker {
 				Assert.assertTrue("WebElement with " + webUtils.splitNameByUpperCase(by.getClass().getSimpleName()) + ": '" + by.getValue() + "' is not found!", false);
 			}
 		}
+		
 		clickOnScreen(webElementToClick.getLocationX(), webElementToClick.getLocationY());
 	}
 
