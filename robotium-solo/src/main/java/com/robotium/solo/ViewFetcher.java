@@ -404,7 +404,9 @@ class ViewFetcher {
 				result = (View[]) viewsField.get(instance);
 			}
 			return result;
-		} catch (Exception ignored) {}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		return null;
 	}
 	
