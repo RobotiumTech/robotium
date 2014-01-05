@@ -404,15 +404,7 @@ class ViewFetcher {
 				result = (View[]) viewsField.get(instance);
 			}
 			return result;
-		} catch (SecurityException e) {
-			e.printStackTrace();
-		} catch (NoSuchFieldException e) {
-			e.printStackTrace();
-		} catch (IllegalArgumentException e) {
-			e.printStackTrace();
-		} catch (IllegalAccessException e) {
-			e.printStackTrace();
-		}
+		} catch (Exception ignored) {}
 		return null;
 	}
 	
