@@ -169,14 +169,14 @@ public class Solo {
 	public static class Config {
 
 		/**
-		 * The timeout length of the get, is, set, assert, enter and click methods. Default length is 20 000 milliseconds.
-		 */
-		public int timeout_large = 20000;
-
-		/**
-		 * The timeout length of the waitFor methods. Default length is 10 000 milliseconds.
+		 * The timeout length of the get, is, set, assert, enter and click methods. Default length is 10 000 milliseconds.
 		 */
 		public int timeout_small = 10000;
+		
+		/**
+		 * The timeout length of the waitFor methods. Default length is 20 000 milliseconds.
+		 */
+		public int timeout_large = 20000;
 
 		/**
 		 * The screenshot save path. Default save path is /sdcard/Robotium-Screenshots/.
