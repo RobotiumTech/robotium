@@ -96,7 +96,7 @@ class TextEnterer{
 				}
 			}
 			if(!successfull) {
-				Assert.assertTrue("Text can not be typed!", false);
+				Assert.fail("Text can not be typed!");
 			}
 		}
 	}

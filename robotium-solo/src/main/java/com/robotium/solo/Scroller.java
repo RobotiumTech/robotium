@@ -300,7 +300,7 @@ class Scroller {
 
 	public <T extends AbsListView> void scrollListToLine(final T view, final int line){
 		if(view == null)
-			Assert.assertTrue("AbsListView is null!", false);
+			Assert.fail("AbsListView is null!");
 
 		final int lineToMoveTo;
 		if(view instanceof GridView)

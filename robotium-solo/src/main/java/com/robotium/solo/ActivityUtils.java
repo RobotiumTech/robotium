@@ -295,7 +295,7 @@ class ActivityUtils {
 			for (int i = 0; i < activitiesOpened.size(); i++){
 				Log.d(LOG_TAG, "Activity priorly opened: "+ activitiesOpened.get(i).getClass().getSimpleName());
 			}
-			Assert.assertTrue("No Activity named: '" + name + "' has been priorly opened", false);
+			Assert.fail("No Activity named: '" + name + "' has been priorly opened");
 		}
 	}
 

@@ -79,7 +79,7 @@ class Presser{
 			inst.sendKeyDownUpSync(KeyEvent.KEYCODE_DPAD_UP);
 			inst.sendKeyDownUpSync(KeyEvent.KEYCODE_DPAD_UP);
 		}catch(SecurityException e){
-			Assert.assertTrue("Can not press the menu!", false);
+			Assert.fail("Can not press the menu!");
 		}
 		if (index < row[1]) {
 			for (int i = 0; i < index; i++) {

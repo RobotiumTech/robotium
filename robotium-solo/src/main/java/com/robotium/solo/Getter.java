@@ -64,7 +64,7 @@ class Getter {
 		T viewToReturn = (T) waiter.waitForText(classToFilterBy, text, 0, Timeout.getSmallTimeout(), false, onlyVisible, false);
 
 		if(viewToReturn == null)
-			Assert.assertTrue(classToFilterBy.getSimpleName() + " with text: '" + text + "' is not found!", false);
+			Assert.fail(classToFilterBy.getSimpleName() + " with text: '" + text + "' is not found!");
 
 		return viewToReturn;
 	}

@@ -911,7 +911,7 @@ public class Solo {
 
 	public void clickOnWebElement(WebElement webElement){
 		if(webElement == null)
-			Assert.assertTrue("WebElement is null and can therefore not be clicked!", false);
+			Assert.fail("WebElement is null and can therefore not be clicked!");
 
 		clicker.clickOnScreen(webElement.getLocationX(), webElement.getLocationY());
 	}
@@ -1688,7 +1688,7 @@ public class Solo {
 
 	public void enterTextInWebElement(By by, String text){
 		if(waiter.waitForWebElement(by, 0, Timeout.getSmallTimeout(), false) == null) {
-			Assert.assertTrue("WebElement with " + webUtils.splitNameByUpperCase(by.getClass().getSimpleName()) + ": '" + by.getValue() + "' is not found!", false);
+			Assert.fail("WebElement with " + webUtils.splitNameByUpperCase(by.getClass().getSimpleName()) + ": '" + by.getValue() + "' is not found!");
 		}
 		webUtils.enterTextIntoWebElement(by, text);
 	}
@@ -1950,10 +1950,10 @@ public class Solo {
 		if(viewToReturn == null) {
 			int match = index + 1;
 			if(match > 1){
-				Assert.assertTrue(match + " Views with id: '" + id + "' are not found!", false);
+				Assert.fail(match + " Views with id: '" + id + "' are not found!");
 			}
 			else {
-				Assert.assertTrue("View with id: '" + id + "' is not found!", false);
+				Assert.fail("View with id: '" + id + "' is not found!");
 			}
 		}
 		return viewToReturn;
@@ -1984,10 +1984,10 @@ public class Solo {
 		if(viewToReturn == null) {
 			int match = index + 1;
 			if(match > 1){
-				Assert.assertTrue(match + " Views with id: '" + id + "' are not found!", false);
+				Assert.fail(match + " Views with id: '" + id + "' are not found!");
 			}
 			else {
-				Assert.assertTrue("View with id: '" + id + "' is not found!", false);
+				Assert.fail("View with id: '" + id + "' is not found!");
 			}
 		}
 		return viewToReturn;
@@ -2019,10 +2019,10 @@ public class Solo {
 
 		if(webElement == null) {
 			if(match > 1){
-				Assert.assertTrue(match + " WebElements with " + webUtils.splitNameByUpperCase(by.getClass().getSimpleName()) + ": '" + by.getValue() + "' are not found!", false);
+				Assert.fail(match + " WebElements with " + webUtils.splitNameByUpperCase(by.getClass().getSimpleName()) + ": '" + by.getValue() + "' are not found!");
 			}
 			else {
-				Assert.assertTrue("WebElement with " + webUtils.splitNameByUpperCase(by.getClass().getSimpleName()) + ": '" + by.getValue() + "' is not found!", false);
+				Assert.fail("WebElement with " + webUtils.splitNameByUpperCase(by.getClass().getSimpleName()) + ": '" + by.getValue() + "' is not found!");
 			}
 		}
 		return webElement;
@@ -2038,7 +2038,7 @@ public class Solo {
 		final WebView webView = waiter.waitForAndGetView(0, WebView.class);
 
 		if(webView == null)
-			Assert.assertTrue("WebView is not found!", false);
+			Assert.fail("WebView is not found!");
 
 		instrumentation.runOnMainSync(new Runnable() {
 			public void run() {

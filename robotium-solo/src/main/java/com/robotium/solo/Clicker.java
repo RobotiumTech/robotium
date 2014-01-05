@@ -99,7 +99,7 @@ class Clicker {
 			}
 		}
 		if(!successfull) {
-			Assert.assertTrue("Click at ("+x+", "+y+") can not be completed! ("+(ex != null ? ex.getClass().getName()+": "+ex.getMessage() : "null")+")", false);
+			Assert.fail("Click at ("+x+", "+y+") can not be completed! ("+(ex != null ? ex.getClass().getName()+": "+ex.getMessage() : "null")+")");
 		}
 	}
 
@@ -130,7 +130,7 @@ class Clicker {
 			}
 		}
 		if(!successfull) {
-			Assert.assertTrue("Long click at ("+x+", "+y+") can not be completed! ("+(ex != null ? ex.getClass().getName()+": "+ex.getMessage() : "null")+")", false);
+			Assert.fail("Long click at ("+x+", "+y+") can not be completed! ("+(ex != null ? ex.getClass().getName()+": "+ex.getMessage() : "null")+")");
 		}
 
 		eventTime = SystemClock.uptimeMillis();
@@ -168,7 +168,7 @@ class Clicker {
 
 	public void clickOnScreen(View view, boolean longClick, int time) {
 		if(view == null)
-			Assert.assertTrue("View is null and can therefore not be clicked!", false);
+			Assert.fail("View is null and can therefore not be clicked!");
 
 		float[] xyToClick = getClickCoordinates(view);
 		float x = xyToClick[0];
@@ -279,7 +279,7 @@ class Clicker {
 		try{
 			inst.sendKeyDownUpSync(KeyEvent.KEYCODE_DPAD_DOWN);
 		}catch(SecurityException e){
-			Assert.assertTrue("Can not press the context menu!", false);
+			Assert.fail("Can not press the context menu!");
 		}
 		for(int i = 0; i < index; i++)
 		{
@@ -301,7 +301,7 @@ class Clicker {
 				sender.sendKeyCode(KeyEvent.KEYCODE_MENU);
 				dialogUtils.waitForDialogToOpen(WAIT_TIME, true);
 			}catch(SecurityException e){
-				Assert.assertTrue("Can not open the menu!", false);
+				Assert.fail("Can not open the menu!");
 			}
 		}
 	}
@@ -339,7 +339,7 @@ class Clicker {
 				sender.sendKeyCode(KeyEvent.KEYCODE_MENU);
 				dialogUtils.waitForDialogToOpen(WAIT_TIME, true);
 			}catch(SecurityException e){
-				Assert.assertTrue("Can not open the menu!", false);
+				Assert.fail("Can not open the menu!");
 			}
 		}
 		boolean textShown = waiter.waitForText(text, 1, WAIT_TIME, true) != null;
@@ -432,10 +432,10 @@ class Clicker {
 		
 		if(webElementToClick == null){
 			if(match > 1) {
-				Assert.assertTrue(match + " WebElements with " + webUtils.splitNameByUpperCase(by.getClass().getSimpleName()) + ": '" + by.getValue() + "' are not found!", false);
+				Assert.fail(match + " WebElements with " + webUtils.splitNameByUpperCase(by.getClass().getSimpleName()) + ": '" + by.getValue() + "' are not found!");
 			}
 			else {
-				Assert.assertTrue("WebElement with " + webUtils.splitNameByUpperCase(by.getClass().getSimpleName()) + ": '" + by.getValue() + "' is not found!", false);
+				Assert.fail("WebElement with " + webUtils.splitNameByUpperCase(by.getClass().getSimpleName()) + ": '" + by.getValue() + "' is not found!");
 			}
 		}
 		
@@ -463,7 +463,7 @@ class Clicker {
 		else {
 
 			if(match > 1){
-				Assert.assertTrue(match + " matches of text string: '" + regex +  "' are not found!", false);
+				Assert.fail(match + " matches of text string: '" + regex +  "' are not found!");
 			}
 
 			else{
@@ -474,7 +474,7 @@ class Clicker {
 					Log.d(LOG_TAG, "'" + regex + "' not found. Have found: '" + textView.getText() + "'");
 				}
 				allTextViews = null;
-				Assert.assertTrue("Text string: '" + regex + "' is not found!", false);
+				Assert.fail("Text string: '" + regex + "' is not found!");
 			}
 		}
 	}
@@ -498,7 +498,7 @@ class Clicker {
 			for (T view : allTextViews) {
 				Log.d(LOG_TAG, "'" + nameRegex + "' not found. Have found: '" + view.getText() + "'");
 			}
-			Assert.assertTrue(viewClass.getSimpleName() + " with text: '" + nameRegex + "' is not found!", false);
+			Assert.fail(viewClass.getSimpleName() + " with text: '" + nameRegex + "' is not found!");
 		}
 	}
 
@@ -546,13 +546,13 @@ class Clicker {
 		final AbsListView absListView = waiter.waitForAndGetView(index, AbsListView.class);
 
 		if(absListView == null)
-			Assert.assertTrue("ListView is null!", false);
+			Assert.fail("ListView is null!");
 
 		while(lineIndex > absListView.getChildCount()){
 			final boolean timedOut = SystemClock.uptimeMillis() > endTime;
 			if (timedOut){
 				int numberOfLines = absListView.getChildCount();
-				Assert.assertTrue("Can not click on line number " + line + " as there are only " + numberOfLines + " lines available", false);
+				Assert.fail("Can not click on line number " + line + " as there are only " + numberOfLines + " lines available");
 			}
 			sleeper.sleep();
 		}
@@ -582,7 +582,7 @@ class Clicker {
 		while(view == null){
 			final boolean timedOut = SystemClock.uptimeMillis() > endTime;
 			if (timedOut){
-				Assert.assertTrue("View is null and can therefore not be clicked!", false);
+				Assert.fail("View is null and can therefore not be clicked!");
 			}
 			sleeper.sleep();
 			view = absListView.getChildAt(lineIndex);

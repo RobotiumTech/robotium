@@ -42,7 +42,7 @@ class Sender {
 		try{
 			inst.sendCharacterSync(keycode);
 		}catch(SecurityException e){
-			Assert.assertTrue("Can not complete action! ("+(e != null ? e.getClass().getName()+": "+e.getMessage() : "null")+")", false);
+			Assert.fail("Can not complete action! ("+(e != null ? e.getClass().getName()+": "+e.getMessage() : "null")+")");
 		}
 	}
 

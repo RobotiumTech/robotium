@@ -510,10 +510,10 @@ class Waiter {
 		}catch (IndexOutOfBoundsException exception) {
 			int match = index + 1;
 			if(match > 1) {
-				Assert.assertTrue(match + " " + classToFilterBy.getSimpleName() +"s" + " are not found!", false);
+				Assert.fail(match + " " + classToFilterBy.getSimpleName() +"s" + " are not found!");
 			}
 			else {
-				Assert.assertTrue(classToFilterBy.getSimpleName() + " is not found!", false);
+				Assert.fail(classToFilterBy.getSimpleName() + " is not found!");
 			}
 		}
 		views = null;

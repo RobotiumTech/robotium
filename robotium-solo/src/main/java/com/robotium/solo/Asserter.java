@@ -50,7 +50,7 @@ class Asserter {
 
 	public void assertCurrentActivity(String message, Class<? extends Activity> expectedClass) {
 		if(expectedClass == null){
-			Assert.assertTrue("The specified Activity is null!", false);
+			Assert.fail("The specified Activity is null!");
 		}
 		
 		boolean foundActivity = waiter.waitForActivity(expectedClass);
