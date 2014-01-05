@@ -4,7 +4,6 @@ package com.robotium.solo;
 import android.app.Activity;
 import android.content.Context;
 import android.os.SystemClock;
-import android.view.ContextThemeWrapper;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
@@ -101,20 +100,17 @@ class DialogUtils {
 		if(checkOpen){
 			if(activityDecorView.equals(view)){
 				for(View v : views){
-					if(!activityDecorView.equals(v)){
+					if(v != null && v.isShown() && !activityDecorView.equals(v)){
 						view = v;
 						break;
 					}
 				}
 			}
 		}
+
 		Context viewContext = null;
 		if(view != null){
 			viewContext = view.getContext();
-		}
-		if (viewContext instanceof ContextThemeWrapper) {
-			ContextThemeWrapper ctw = (ContextThemeWrapper) viewContext;
-			viewContext = ctw.getBaseContext();
 		}
 
 		Context activityBaseContext = activity.getBaseContext();
