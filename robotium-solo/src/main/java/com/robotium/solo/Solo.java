@@ -2560,11 +2560,13 @@ public class Solo {
 	/**
 	 * Parse a timeout value set using adb shell.
 	 *
-	 * There are two options to set the timeout. Set it using adb shell:
+	 * There are two options to set the timeout. Set it using adb shell (requires root access):
 	 * <br><br>
 	 * 'adb shell setprop solo_large_timeout milliseconds' 
 	 * <br>  
 	 * 'adb shell setprop solo_small_timeout milliseconds'
+	 * <br>
+	 * Example: adb shell setprop solo_small_timeout 10000
 	 * <br><br>
 	 * Set the values directly using setLargeTimeout() and setSmallTimeout
 	 *

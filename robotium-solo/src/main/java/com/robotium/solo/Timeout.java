@@ -21,7 +21,7 @@ public class Timeout{
 	/**
 	 * Sets the default timeout length of the waitFor methods. Will fall back to the default values set by {@link Config}.
 	 * <br><br>
-	 * Timeout can also be set through adb shell:
+	 * Timeout can also be set through adb shell (requires root access):
 	 * <br><br>
 	 * 'adb shell setprop solo_large_timeout milliseconds' 
 	 * 
@@ -35,7 +35,7 @@ public class Timeout{
 	/**
 	 * Sets the default timeout length of the get, is, set, assert, enter, type and click methods. Will fall back to the default values set by {@link Config}.
 	 * <br><br>
-	 * Timeout can also be set through adb shell:
+	 * Timeout can also be set through adb shell (requires root access):
 	 * <br><br>
 	 * 'adb shell setprop solo_small_timeout milliseconds' 
 	 * 
