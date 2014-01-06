@@ -4,6 +4,7 @@ package com.robotium.solo;
 import android.app.Activity;
 import android.content.Context;
 import android.os.SystemClock;
+import android.view.ContextThemeWrapper;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
@@ -52,7 +53,7 @@ class DialogUtils {
 
 		while (SystemClock.uptimeMillis() < endTime) {
 
-			if(!isDialogOpen(false)){
+			if(!isDialogOpen()){
 				return true;
 			}
 			sleeper.sleep(MINISLEEP);
@@ -77,7 +78,7 @@ class DialogUtils {
 
 		while (SystemClock.uptimeMillis() < endTime) {
 
-			if(isDialogOpen(true)){
+			if(isDialogOpen()){
 				return true;
 			}
 			sleeper.sleepMini();
@@ -91,30 +92,48 @@ class DialogUtils {
 	 * @return true if dialog is open
 	 */
 
-	private boolean isDialogOpen(boolean checkOpen){
+	private boolean isDialogOpen(){
 		final Activity activity = activityUtils.getCurrentActivity(false);
 		final View[] views = viewFetcher.getWindowDecorViews();
-		final View activityDecorView = activity.getWindow().getDecorView();
 		View view = viewFetcher.getRecentDecorView(views);	
-
-		if(checkOpen){
-			if(activityDecorView.equals(view)){
-				for(View v : views){
-					if(v != null && v.isShown() && !activityDecorView.equals(v)){
-						view = v;
-						break;
-					}
+		
+		if(!isDialog(activity, view)){
+			for(View v : views){
+				if(isDialog(activity, v)){
+					return true;
 				}
 			}
 		}
-
-		Context viewContext = null;
-		if(view != null){
-			viewContext = view.getContext();
+		else {
+			return true;
 		}
-
+		return false;
+	}
+	
+	/**
+	 * Checks that the specified DecorView and the Activity DecorView are not equal.
+	 * 
+	 * @param activity the activity which DecorView is to be compared
+	 * @param decorView the DecorView to compare
+	 * @return true if not equal
+	 */
+	
+	private boolean isDialog(Activity activity, View decorView){
+		if(decorView == null || !decorView.isShown()){
+			return false;
+		}
+		Context viewContext = null;
+		if(decorView != null){
+			viewContext = decorView.getContext();
+		}
+		
+		if (viewContext instanceof ContextThemeWrapper) {
+			ContextThemeWrapper ctw = (ContextThemeWrapper) viewContext;
+			viewContext = ctw.getBaseContext();
+		}
+		Context activityContext = activity;
 		Context activityBaseContext = activity.getBaseContext();
-		return (!activityBaseContext.equals(viewContext)) && (view != activityDecorView);
+		return (activityContext.equals(viewContext) || activityBaseContext.equals(viewContext)) && (decorView != activity.getWindow().getDecorView());
 	}
 
 	/**
