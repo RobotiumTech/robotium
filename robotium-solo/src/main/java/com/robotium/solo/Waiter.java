@@ -598,12 +598,13 @@ class Waiter {
 	 * @return the log
 	 */
 
-	private StringBuilder getLog(StringBuilder stringBuilder){
+	private StringBuilder getLog(StringBuilder stringBuilder) {
 		Process p = null;
 		BufferedReader reader = null;
 		String line = null;  
 
 		try {
+            // read output from logcat
 			p = Runtime.getRuntime().exec("logcat -d");
 			reader = new BufferedReader(  
 					new InputStreamReader(p.getInputStream())); 
@@ -612,9 +613,36 @@ class Waiter {
 			while ((line = reader.readLine()) != null) {  
 				stringBuilder.append(line); 
 			}
+            reader.close();
+
+            // read error from logcat
+            StringBuilder errorLog = new StringBuilder();
+            reader = new BufferedReader(new InputStreamReader(
+                    p.getErrorStream()));
+            errorLog.append("logcat returns error: ");
+            while ((line = reader.readLine()) != null) {
+                errorLog.append(line);
+            }
+            reader.close();
+
+            // Exception would be thrown if we get exitValue without waiting for the process
+            // to finish
+            p.waitFor();
+
+            // if exit value of logcat is non-zero, it means error
+            if (p.exitValue() != 0) {
+                destroy(p, reader);
+
+                throw new Exception(errorLog.toString());
+            }
+
 		} catch (IOException e) {
 			e.printStackTrace();
-		}  
+		} catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 		destroy(p, reader);
 		return stringBuilder;
 	}
