@@ -249,7 +249,7 @@ class Waiter {
 	 */
 
 	public boolean waitForView(View view, int timeout, boolean scroll, boolean checkIsShown){
-	
+
 		if(view == null)
 			return false;
 
@@ -259,12 +259,20 @@ class Waiter {
 			sleeper.sleep();
 
 			final boolean foundAnyMatchingView = searcher.searchFor(view);
-		
+
 			if (foundAnyMatchingView){
 				return true;
 			}
-			else if(checkIsShown && view != null && view.isShown()){
+
+			if(checkIsShown && view != null && view.isShown()){
 				return true;
+			}
+
+			if(checkIsShown && view != null){
+				View identicalView = viewFetcher.getIdenticalView(view);
+				if(identicalView != null){
+					view = identicalView;
+				}
 			}
 
 			if(scroll) 

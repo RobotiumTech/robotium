@@ -360,6 +360,50 @@ class ViewFetcher {
 		views = null;
 		return viewToReturn;
 	}
+	
+	/**
+	 * Returns an identical View to the one specified.
+	 * 
+	 * @param view the view to find
+	 * @return identical view of the specified view
+	 */
+	
+	public View getIdenticalView(View view) {
+		View viewToReturn = null;
+		List<? extends View> visibleViews = RobotiumUtils.removeInvisibleViews(getCurrentViews(view.getClass()));
+
+		for(View v : visibleViews){
+			if(v.getId() == view.getId()){
+				if(isParentsEqual(v, view)){
+					viewToReturn = v;
+					break;
+				}
+			}
+		}
+		return viewToReturn;
+	}
+	
+	/**
+	 * Compares the parent views of the specified views.
+	 * 
+	 * @param firstView the first view
+	 * @param secondView the second view
+	 * @return true if parents of the specified views are equal
+	 */
+	
+	private boolean isParentsEqual(View firstView, View secondView){
+		if(firstView.getId() != secondView.getId() || !firstView.getClass().isAssignableFrom(secondView.getClass())){
+			return false;
+		}
+
+		if (firstView.getParent() != null && firstView.getParent() instanceof View && 
+				secondView.getParent() != null && secondView.getParent() instanceof View) {
+
+			return isParentsEqual((View) firstView.getParent(), (View) secondView.getParent());
+		} else {
+			return true;
+		}
+	}
 
 	private static Class<?> windowManager;
 	static{
