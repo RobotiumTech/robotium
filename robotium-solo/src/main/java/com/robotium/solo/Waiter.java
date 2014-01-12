@@ -263,7 +263,7 @@ class Waiter {
 
 		while (SystemClock.uptimeMillis() < endTime) {
 			sleeper.sleep();
-
+			
 			final boolean foundAnyMatchingView = searcher.searchFor(view);
 
 			if (foundAnyMatchingView){
@@ -279,7 +279,7 @@ class Waiter {
 				view = identicalView;
 				continue;
 			}
-
+		
 			if(scroll) 
 				scroller.scrollDown();
 		}

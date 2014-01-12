@@ -73,7 +73,7 @@ class Clicker {
 	 * @param y the y coordinate
 	 */
 
-	public void clickOnScreen(float x, float y) {
+	public void clickOnScreen(float x, float y, View view) {
 		boolean successfull = false;
 		int retry = 0;
 		SecurityException ex = null;
@@ -93,6 +93,12 @@ class Clicker {
 				ex = e;
 				dialogUtils.hideSoftKeyboard(null, false, true);
 				retry++;
+				View identicalView = viewFetcher.getIdenticalView(view);
+				if(identicalView != null){
+					float[] xyToClick = getClickCoordinates(identicalView);
+					x = xyToClick[0]; 
+					y = xyToClick[1];
+				}
 			}
 		}
 		if(!successfull) {
@@ -108,7 +114,7 @@ class Clicker {
 	 * @param time the amount of time to long click
 	 */
 
-	public void clickLongOnScreen(float x, float y, int time) {
+	public void clickLongOnScreen(float x, float y, int time, View view) {
 		boolean successfull = false;
 		int retry = 0;
 		SecurityException ex = null;
@@ -124,6 +130,12 @@ class Clicker {
 				ex = e;
 				dialogUtils.hideSoftKeyboard(null, false, true);
 				retry++;
+				View identicalView = viewFetcher.getIdenticalView(view);
+				if(identicalView != null){
+					float[] xyToClick = getClickCoordinates(identicalView);
+					x = xyToClick[0];
+					y = xyToClick[1];
+				}
 			}
 		}
 		if(!successfull) {
@@ -185,9 +197,9 @@ class Clicker {
 		}
 
 		if (longClick)
-			clickLongOnScreen(x, y, time);
+			clickLongOnScreen(x, y, time, view);
 		else
-			clickOnScreen(x, y);
+			clickOnScreen(x, y, view);
 	}	
 
 	/**
@@ -390,7 +402,7 @@ class Clicker {
 			}
 		}
 		
-		clickOnScreen(webElementToClick.getLocationX(), webElementToClick.getLocationY());
+		clickOnScreen(webElementToClick.getLocationX(), webElementToClick.getLocationY(), null);
 	}
 
 

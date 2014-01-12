@@ -811,7 +811,7 @@ public class Solo {
 
 	public void clickOnScreen(float x, float y) {
 		sleeper.sleep();
-		clicker.clickOnScreen(x, y);
+		clicker.clickOnScreen(x, y, null);
 	}
 
 	/**
@@ -838,7 +838,7 @@ public class Solo {
 	 */
 
 	public void clickLongOnScreen(float x, float y) {
-		clicker.clickLongOnScreen(x, y, 0);
+		clicker.clickLongOnScreen(x, y, 0, null);
 	}
 
 	/**
@@ -850,7 +850,7 @@ public class Solo {
 	 */
 
 	public void clickLongOnScreen(float x, float y, int time) {
-		clicker.clickLongOnScreen(x, y, time);
+		clicker.clickLongOnScreen(x, y, time, null);
 	}
 
 
@@ -918,7 +918,7 @@ public class Solo {
 		if(webElement == null)
 			Assert.fail("WebElement is null and can therefore not be clicked!");
 
-		clicker.clickOnScreen(webElement.getLocationX(), webElement.getLocationY());
+		clicker.clickOnScreen(webElement.getLocationX(), webElement.getLocationY(), null);
 	}
 
 	/**
