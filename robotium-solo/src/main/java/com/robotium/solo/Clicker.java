@@ -3,7 +3,6 @@ package com.robotium.solo;
 import java.lang.reflect.Constructor;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
 import junit.framework.Assert;
 import android.app.Activity;
 import android.app.Instrumentation;
@@ -38,7 +37,6 @@ class Clicker {
 	private final Waiter waiter;
 	private final WebUtils webUtils;
 	private final DialogUtils dialogUtils;
-	private final int MINISLEEP = 100;
 	private final int TIMEOUT = 200;
 	private final int WAIT_TIME = 1500;
 
@@ -91,7 +89,6 @@ class Clicker {
 				inst.sendPointerSync(event);
 				inst.sendPointerSync(event2);
 				successfull = true;
-				sleeper.sleep(MINISLEEP);
 			}catch(SecurityException e){
 				ex = e;
 				dialogUtils.hideSoftKeyboard(null, false, true);

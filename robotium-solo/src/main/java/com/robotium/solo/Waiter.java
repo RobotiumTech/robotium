@@ -80,13 +80,13 @@ class Waiter {
 			if(currentActivity != null && currentActivity.getClass().getSimpleName().equals(name)) {
 				return true;
 			}
-			
+
 			sleeper.sleep(MINISLEEP);
 			currentActivity = activityUtils.getCurrentActivity(false, false);
 		}
 		return false;
 	}
-	
+
 	/**
 	 * Waits for the given {@link Activity}.
 	 *
@@ -116,7 +116,7 @@ class Waiter {
 			if(currentActivity != null && currentActivity.getClass().equals(activityClass)) {
 				return true;
 			}
-			
+
 			sleeper.sleep(MINISLEEP);
 			currentActivity = activityUtils.getCurrentActivity(false, false);
 		}
@@ -223,7 +223,13 @@ class Waiter {
 	 */
 
 	public boolean waitForView(View view){
-		return waitForView(view, Timeout.getLargeTimeout(), true, true);
+		View viewToWaitFor = waitForView(view, Timeout.getLargeTimeout(), true, true);
+		
+		if(viewToWaitFor != null)
+			return true;
+		
+		return false;
+		
 	}
 
 	/**
@@ -234,7 +240,7 @@ class Waiter {
 	 * @return {@code true} if view is shown and {@code false} if it is not shown before the timeout
 	 */
 
-	public boolean waitForView(View view, int timeout){
+	public View waitForView(View view, int timeout){
 		return waitForView(view, timeout, true, false);
 	}
 
@@ -248,10 +254,10 @@ class Waiter {
 	 * @return {@code true} if view is shown and {@code false} if it is not shown before the timeout
 	 */
 
-	public boolean waitForView(View view, int timeout, boolean scroll, boolean checkIsShown){
+	public View waitForView(View view, int timeout, boolean scroll, boolean checkIsShown){
 
 		if(view == null)
-			return false;
+			return null;
 
 		long endTime = SystemClock.uptimeMillis() + timeout;
 
@@ -261,26 +267,25 @@ class Waiter {
 			final boolean foundAnyMatchingView = searcher.searchFor(view);
 
 			if (foundAnyMatchingView){
-				return true;
+				return view;
 			}
 
 			if(checkIsShown && view != null && view.isShown()){
-				return true;
+				return view;
 			}
-
-			if(checkIsShown && view != null){
-				View identicalView = viewFetcher.getIdenticalView(view);
-				if(identicalView != null){
-					view = identicalView;
-				}
+			
+			View identicalView = viewFetcher.getIdenticalView(view);
+			if(identicalView != null && !view.equals(identicalView)){
+				view = identicalView;
+				continue;
 			}
 
 			if(scroll) 
 				scroller.scrollDown();
 		}
-		return false;
+		return null;
 	}
-	
+
 	/**
 	 * Waits for a certain view.
 	 * 
@@ -314,7 +319,7 @@ class Waiter {
 
 			for (View view : viewFetcher.getAllViews(false)) {
 				Integer idOfView = Integer.valueOf(view.getId());
-				
+
 				if (idOfView.equals(id)) {
 					uniqueViewsMatchingId.add(view);
 
@@ -425,7 +430,7 @@ class Waiter {
 	public TextView waitForText(String text, int expectedMinimumNumberOfMatches, long timeout, boolean scroll) {
 		return waitForText(TextView.class, text, expectedMinimumNumberOfMatches, timeout, scroll, false, true);	
 	}
-	
+
 	/**
 	 * Waits for a text to be shown.
 	 *
@@ -452,7 +457,7 @@ class Waiter {
 	 * @param hardStoppage {@code true} if search is to be stopped when timeout expires
 	 * @return {@code true} if text is found and {@code false} if it is not found before the timeout
 	 */
-	
+
 	public TextView waitForText(String text, int expectedMinimumNumberOfMatches, long timeout, boolean scroll, boolean onlyVisible, boolean hardStoppage) {
 		return waitForText(TextView.class, text, expectedMinimumNumberOfMatches, timeout, scroll, onlyVisible, hardStoppage);
 	}
@@ -612,7 +617,7 @@ class Waiter {
 		String line = null;  
 
 		try {
-            // read output from logcat
+			// read output from logcat
 			p = Runtime.getRuntime().exec("logcat -d");
 			reader = new BufferedReader(  
 					new InputStreamReader(p.getInputStream())); 
@@ -621,36 +626,36 @@ class Waiter {
 			while ((line = reader.readLine()) != null) {  
 				stringBuilder.append(line); 
 			}
-            reader.close();
+			reader.close();
 
-            // read error from logcat
-            StringBuilder errorLog = new StringBuilder();
-            reader = new BufferedReader(new InputStreamReader(
-                    p.getErrorStream()));
-            errorLog.append("logcat returns error: ");
-            while ((line = reader.readLine()) != null) {
-                errorLog.append(line);
-            }
-            reader.close();
+			// read error from logcat
+			StringBuilder errorLog = new StringBuilder();
+			reader = new BufferedReader(new InputStreamReader(
+					p.getErrorStream()));
+			errorLog.append("logcat returns error: ");
+			while ((line = reader.readLine()) != null) {
+				errorLog.append(line);
+			}
+			reader.close();
 
-            // Exception would be thrown if we get exitValue without waiting for the process
-            // to finish
-            p.waitFor();
+			// Exception would be thrown if we get exitValue without waiting for the process
+			// to finish
+			p.waitFor();
 
-            // if exit value of logcat is non-zero, it means error
-            if (p.exitValue() != 0) {
-                destroy(p, reader);
+			// if exit value of logcat is non-zero, it means error
+			if (p.exitValue() != 0) {
+				destroy(p, reader);
 
-                throw new Exception(errorLog.toString());
-            }
+				throw new Exception(errorLog.toString());
+			}
 
 		} catch (IOException e) {
 			e.printStackTrace();
 		} catch (InterruptedException e) {
-            e.printStackTrace();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+			e.printStackTrace();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		destroy(p, reader);
 		return stringBuilder;
 	}
