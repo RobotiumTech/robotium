@@ -3,7 +3,6 @@ package com.robotium.solo;
 import java.lang.reflect.Constructor;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
 import junit.framework.Assert;
 import android.app.Activity;
 import android.app.Instrumentation;
@@ -38,7 +37,6 @@ class Clicker {
 	private final Waiter waiter;
 	private final WebUtils webUtils;
 	private final DialogUtils dialogUtils;
-	private final int MINISLEEP = 100;
 	private final int TIMEOUT = 200;
 	private final int WAIT_TIME = 1500;
 
@@ -75,7 +73,7 @@ class Clicker {
 	 * @param y the y coordinate
 	 */
 
-	public void clickOnScreen(float x, float y) {
+	public void clickOnScreen(float x, float y, View view) {
 		boolean successfull = false;
 		int retry = 0;
 		SecurityException ex = null;
@@ -91,11 +89,16 @@ class Clicker {
 				inst.sendPointerSync(event);
 				inst.sendPointerSync(event2);
 				successfull = true;
-				sleeper.sleep(MINISLEEP);
 			}catch(SecurityException e){
 				ex = e;
 				dialogUtils.hideSoftKeyboard(null, false, true);
 				retry++;
+				View identicalView = viewFetcher.getIdenticalView(view);
+				if(identicalView != null){
+					float[] xyToClick = getClickCoordinates(identicalView);
+					x = xyToClick[0]; 
+					y = xyToClick[1];
+				}
 			}
 		}
 		if(!successfull) {
@@ -111,7 +114,7 @@ class Clicker {
 	 * @param time the amount of time to long click
 	 */
 
-	public void clickLongOnScreen(float x, float y, int time) {
+	public void clickLongOnScreen(float x, float y, int time, View view) {
 		boolean successfull = false;
 		int retry = 0;
 		SecurityException ex = null;
@@ -127,6 +130,12 @@ class Clicker {
 				ex = e;
 				dialogUtils.hideSoftKeyboard(null, false, true);
 				retry++;
+				View identicalView = viewFetcher.getIdenticalView(view);
+				if(identicalView != null){
+					float[] xyToClick = getClickCoordinates(identicalView);
+					x = xyToClick[0];
+					y = xyToClick[1];
+				}
 			}
 		}
 		if(!successfull) {
@@ -177,7 +186,7 @@ class Clicker {
 		if(x == 0 || y == 0){
 			sleeper.sleepMini();
 			try {
-				view = getIdenticalView(view);
+				view = viewFetcher.getIdenticalView(view);
 			} catch (Exception ignored){}
 
 			if(view != null){
@@ -188,56 +197,10 @@ class Clicker {
 		}
 
 		if (longClick)
-			clickLongOnScreen(x, y, time);
+			clickLongOnScreen(x, y, time, view);
 		else
-			clickOnScreen(x, y);
-	}
-
-	/**
-	 * Returns an identical View to the one specified.
-	 * 
-	 * @param view the view to find
-	 * @return identical view of the specified view
-	 */
-	
-	private View getIdenticalView(View view) {
-		View viewToReturn = null;
-		List<? extends View> visibleViews = RobotiumUtils.removeInvisibleViews(viewFetcher.getCurrentViews(view.getClass()));
-
-		for(View v : visibleViews){
-			if(v.getId() == view.getId()){
-				if(isParentsEqual(v, view)){
-					viewToReturn = v;
-					break;
-				}
-			}
-		}
-		return viewToReturn;
-	}
-	
-	/**
-	 * Compares the parent views of the specified views.
-	 * 
-	 * @param firstView the first view
-	 * @param secondView the second view
-	 * @return true if parents of the specified views are equal
-	 */
-	
-	private boolean isParentsEqual(View firstView, View secondView){
-		if(firstView.getId() != secondView.getId() || !firstView.getClass().isAssignableFrom(secondView.getClass())){
-			return false;
-		}
-
-		if (firstView.getParent() != null && firstView.getParent() instanceof View && 
-				secondView.getParent() != null && secondView.getParent() instanceof View) {
-
-			return isParentsEqual((View) firstView.getParent(), (View) secondView.getParent());
-		} else {
-			return true;
-		}
-	}
-
-	
+			clickOnScreen(x, y, view);
+	}	
 
 	/**
 	 * Returns click coordinates for the specified view.
@@ -439,7 +402,7 @@ class Clicker {
 			}
 		}
 		
-		clickOnScreen(webElementToClick.getLocationX(), webElementToClick.getLocationY());
+		clickOnScreen(webElementToClick.getLocationX(), webElementToClick.getLocationY(), null);
 	}
 
 

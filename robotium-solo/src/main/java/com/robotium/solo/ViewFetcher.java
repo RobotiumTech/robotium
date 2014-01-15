@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewParent;
 import android.webkit.WebView;
 
 /**
@@ -359,6 +360,99 @@ class ViewFetcher {
 		}
 		views = null;
 		return viewToReturn;
+	}
+	
+	/**
+	 * Returns an identical View to the one specified.
+	 * 
+	 * @param view the view to find
+	 * @return identical view of the specified view
+	 */
+
+	public View getIdenticalView(View view) {
+		if(view == null){
+			return null;
+		}
+		View viewToReturn = null;
+		List<? extends View> visibleViews = RobotiumUtils.removeInvisibleViews(getCurrentViews(view.getClass()));
+
+		for(View v : visibleViews){
+			if(areViewsIdentical(v, view)){
+				viewToReturn = v;
+				break;
+			}
+		}
+		return viewToReturn;
+	}
+
+	/**
+	 * Compares if the specified views are identical. This is used instead of View.compare 
+	 * as it always returns false in cases where the View tree is refreshed.  
+	 * 
+	 * @param firstView the first view
+	 * @param secondView the second view
+	 * @return true if views are equal
+	 */
+
+	private boolean areViewsIdentical(View firstView, View secondView){
+
+		if(firstView.getId() != secondView.getId() || !firstView.getClass().isAssignableFrom(secondView.getClass())){
+			return false;
+		}
+		
+		if(!isSamePlacementInRespectiveTree(firstView, secondView)){
+			return false;
+		}
+
+		if (firstView.getParent() != null && firstView.getParent() instanceof View && 
+				secondView.getParent() != null && secondView.getParent() instanceof View) {
+
+			return areViewsIdentical((View) firstView.getParent(), (View) secondView.getParent());
+		} else {
+			return true;
+		}
+	}
+	
+	/**
+	 * Compares if two views have the same placement in their respective trees. 
+	 * 
+	 * @param firstView the first view to compare
+	 * @param secondView the second view to compare
+	 * @return true if equal placement and false if not
+	 */
+	
+	private boolean isSamePlacementInRespectiveTree(View firstView, View secondView){
+		
+		if(getObjectPlacementNumber(firstView) == getObjectPlacementNumber(secondView)){
+			return true;
+		}
+		return false;
+	}
+	
+	/**
+	 * Returns the placement number of the specified view relative to its parent.
+	 * 
+	 * @param view the view to check placement number
+	 * @return the object placement number of the specified view 
+	 */
+	
+	private int getObjectPlacementNumber(View view){
+		final ArrayList<View> allViewsFirst = new ArrayList<View>();
+		int numberOrder = 0;
+		try{
+			ViewParent parent = view.getParent();
+			if(parent instanceof ViewGroup){
+				addChildren(allViewsFirst, (ViewGroup) parent, true);
+			}
+
+			for(View v : allViewsFirst){
+				numberOrder++;
+				if(v.equals(view)){
+					break;
+				}
+			}
+		}catch(Exception ignored){}
+		return numberOrder;
 	}
 
 	private static Class<?> windowManager;

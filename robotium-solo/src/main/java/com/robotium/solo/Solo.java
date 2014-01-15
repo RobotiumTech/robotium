@@ -400,8 +400,13 @@ public class Solo {
 		if(!scroll){
 			checkIsShown = true;
 		}
-
-		return waiter.waitForView(view, timeout, scroll, checkIsShown);
+		
+		View viewToWaitFor = waiter.waitForView(view, timeout, scroll, checkIsShown);
+		
+		if(viewToWaitFor != null)
+			return true;
+		
+		return false;
 	}
 
 	/**
@@ -806,7 +811,7 @@ public class Solo {
 
 	public void clickOnScreen(float x, float y) {
 		sleeper.sleep();
-		clicker.clickOnScreen(x, y);
+		clicker.clickOnScreen(x, y, null);
 	}
 
 	/**
@@ -833,7 +838,7 @@ public class Solo {
 	 */
 
 	public void clickLongOnScreen(float x, float y) {
-		clicker.clickLongOnScreen(x, y, 0);
+		clicker.clickLongOnScreen(x, y, 0, null);
 	}
 
 	/**
@@ -845,7 +850,7 @@ public class Solo {
 	 */
 
 	public void clickLongOnScreen(float x, float y, int time) {
-		clicker.clickLongOnScreen(x, y, time);
+		clicker.clickLongOnScreen(x, y, time, null);
 	}
 
 
@@ -913,7 +918,7 @@ public class Solo {
 		if(webElement == null)
 			Assert.fail("WebElement is null and can therefore not be clicked!");
 
-		clicker.clickOnScreen(webElement.getLocationX(), webElement.getLocationY());
+		clicker.clickOnScreen(webElement.getLocationX(), webElement.getLocationY(), null);
 	}
 
 	/**
@@ -1002,7 +1007,7 @@ public class Solo {
 	 */
 
 	public void clickOnView(View view) {
-		waiter.waitForView(view, Timeout.getSmallTimeout());
+		view = waiter.waitForView(view, Timeout.getSmallTimeout());
 		clicker.clickOnScreen(view);
 	}
 
@@ -1017,7 +1022,7 @@ public class Solo {
 		if(immediately)
 			clicker.clickOnScreen(view);
 		else{
-			waiter.waitForView(view, Timeout.getSmallTimeout());
+			view = waiter.waitForView(view, Timeout.getSmallTimeout());
 			clicker.clickOnScreen(view);
 		}
 	}
@@ -1029,7 +1034,7 @@ public class Solo {
 	 */
 
 	public void clickLongOnView(View view) {
-		waiter.waitForView(view, Timeout.getSmallTimeout());
+		view = waiter.waitForView(view, Timeout.getSmallTimeout());
 		clicker.clickOnScreen(view, true, 0);
 
 	}	
@@ -1581,7 +1586,7 @@ public class Solo {
 	 */
 
 	public void setDatePicker(DatePicker datePicker, int year, int monthOfYear, int dayOfMonth) {
-		waiter.waitForView(datePicker, Timeout.getSmallTimeout());
+		datePicker = (DatePicker) waiter.waitForView(datePicker, Timeout.getSmallTimeout());
 		setter.setDatePicker(datePicker, year, monthOfYear, dayOfMonth);
 	}
 
@@ -1606,7 +1611,7 @@ public class Solo {
 	 */
 
 	public void setTimePicker(TimePicker timePicker, int hour, int minute) {
-		waiter.waitForView(timePicker, Timeout.getSmallTimeout());
+		timePicker = (TimePicker) waiter.waitForView(timePicker, Timeout.getSmallTimeout());
 		setter.setTimePicker(timePicker, hour, minute);
 	}
 
@@ -1629,7 +1634,7 @@ public class Solo {
 	 */
 
 	public void setProgressBar(ProgressBar progressBar, int progress){
-		waiter.waitForView(progressBar, Timeout.getSmallTimeout());
+		progressBar = (ProgressBar) waiter.waitForView(progressBar, Timeout.getSmallTimeout());
 		setter.setProgressBar(progressBar, progress);
 	}
 
@@ -1651,8 +1656,9 @@ public class Solo {
 	 * @param status the status to set the {@link SlidingDrawer} 
 	 */
 
+	@SuppressWarnings("deprecation")
 	public void setSlidingDrawer(SlidingDrawer slidingDrawer, int status){
-		waiter.waitForView(slidingDrawer, Timeout.getSmallTimeout());
+		slidingDrawer = (SlidingDrawer) waiter.waitForView(slidingDrawer, Timeout.getSmallTimeout());
 		setter.setSlidingDrawer(slidingDrawer, status);
 	}
 
@@ -1675,7 +1681,7 @@ public class Solo {
 	 */
 
 	public void enterText(EditText editText, String text) {
-		waiter.waitForView(editText, Timeout.getSmallTimeout());
+		editText = (EditText) waiter.waitForView(editText, Timeout.getSmallTimeout());
 		textEnterer.setEditText(editText, text);		
 	}
 
@@ -1712,7 +1718,7 @@ public class Solo {
 	 */
 
 	public void typeText(EditText editText, String text) {
-		waiter.waitForView(editText, Timeout.getSmallTimeout());
+		editText = (EditText) waiter.waitForView(editText, Timeout.getSmallTimeout());
 		textEnterer.typeText(editText, text);		
 	}
 
@@ -1771,7 +1777,7 @@ public class Solo {
 	 */
 
 	public void clearEditText(EditText editText) {
-		waiter.waitForView(editText, Timeout.getSmallTimeout());
+		editText = (EditText) waiter.waitForView(editText, Timeout.getSmallTimeout());
 		textEnterer.setEditText(editText, "");	
 	}
 
