@@ -548,6 +548,7 @@ class Clicker {
 				Assert.fail("View is null and can therefore not be clicked!");
 			}
 			sleeper.sleep();
+			absListView = (AbsListView) viewFetcher.getIdenticalView(absListView);
 			view = absListView.getChildAt(lineIndex);
 		}
 		return view;
