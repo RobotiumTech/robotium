@@ -549,7 +549,9 @@ class Clicker {
 			}
 			sleeper.sleep();
 			absListView = (AbsListView) viewFetcher.getIdenticalView(absListView);
-			view = absListView.getChildAt(lineIndex);
+			if(absListView != null){
+				view = absListView.getChildAt(lineIndex);
+			}
 		}
 		return view;
 	}
