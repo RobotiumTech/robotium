@@ -520,7 +520,7 @@ class Clicker {
 			sleeper.sleep();
 		}
 
-		View view = getViewOnListLine(absListView, lineIndex);
+		View view = getViewOnListLine(absListView, index, lineIndex);
 
 		if(view != null){
 			views = viewFetcher.getViews(view, true);
@@ -534,11 +534,12 @@ class Clicker {
 	 * Returns the view in the specified list line
 	 * 
 	 * @param absListView the ListView to use
+	 * @param index the index of the list. E.g. Index 1 if two lists are available
 	 * @param lineIndex the line index of the View
 	 * @return the View located at a specified list line
 	 */
 
-	private View getViewOnListLine(AbsListView absListView, int lineIndex){
+	private View getViewOnListLine(AbsListView absListView, int index, int lineIndex){
 		final long endTime = SystemClock.uptimeMillis() + Timeout.getSmallTimeout();
 		View view = absListView.getChildAt(lineIndex);
 
@@ -547,11 +548,15 @@ class Clicker {
 			if (timedOut){
 				Assert.fail("View is null and can therefore not be clicked!");
 			}
+			
 			sleeper.sleep();
 			absListView = (AbsListView) viewFetcher.getIdenticalView(absListView);
-			if(absListView != null){
-				view = absListView.getChildAt(lineIndex);
+
+			if(absListView == null){
+				absListView = waiter.waitForAndGetView(index, AbsListView.class);
 			}
+			
+			view = absListView.getChildAt(lineIndex);
 		}
 		return view;
 	}
