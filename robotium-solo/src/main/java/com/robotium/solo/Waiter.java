@@ -224,9 +224,9 @@ class Waiter {
 
 	public boolean waitForView(View view){
 		View viewToWaitFor = waitForView(view, Timeout.getLargeTimeout(), true, true);
-		
-		if(viewToWaitFor != null)
+		if(viewToWaitFor != null) {
 			return true;
+		}
 		
 		return false;
 		
@@ -262,15 +262,14 @@ class Waiter {
 		long endTime = SystemClock.uptimeMillis() + timeout;
 
 		while (SystemClock.uptimeMillis() < endTime) {
-			sleeper.sleep();
+			
+			if(checkIsShown && view != null && view.isShown()){
+				return view;
+			}
 			
 			final boolean foundAnyMatchingView = searcher.searchFor(view);
 
 			if (foundAnyMatchingView){
-				return view;
-			}
-
-			if(checkIsShown && view != null && view.isShown()){
 				return view;
 			}
 			
@@ -282,6 +281,8 @@ class Waiter {
 		
 			if(scroll) 
 				scroller.scrollDown();
+			
+			sleeper.sleep();
 		}
 		return null;
 	}

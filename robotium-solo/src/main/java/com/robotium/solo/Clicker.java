@@ -37,7 +37,7 @@ class Clicker {
 	private final Waiter waiter;
 	private final WebUtils webUtils;
 	private final DialogUtils dialogUtils;
-	private final int TIMEOUT = 200;
+	private final int MINI_WAIT = 200;
 	private final int WAIT_TIME = 1500;
 
 
@@ -89,9 +89,11 @@ class Clicker {
 				inst.sendPointerSync(event);
 				inst.sendPointerSync(event2);
 				successfull = true;
+				sleeper.sleep(MINI_WAIT);
 			}catch(SecurityException e){
 				ex = e;
 				dialogUtils.hideSoftKeyboard(null, false, true);
+				sleeper.sleep(MINI_WAIT);
 				retry++;
 				View identicalView = viewFetcher.getIdenticalView(view);
 				if(identicalView != null){
@@ -126,9 +128,11 @@ class Clicker {
 			try{
 				inst.sendPointerSync(event);
 				successfull = true;
+				sleeper.sleep(MINI_WAIT);
 			}catch(SecurityException e){
 				ex = e;
 				dialogUtils.hideSoftKeyboard(null, false, true);
+				sleeper.sleep(MINI_WAIT);
 				retry++;
 				View identicalView = viewFetcher.getIdenticalView(view);
 				if(identicalView != null){
@@ -259,7 +263,7 @@ class Clicker {
 	private void openMenu(){
 		sleeper.sleepMini();
 
-		if(!dialogUtils.waitForDialogToOpen(TIMEOUT, false)) {
+		if(!dialogUtils.waitForDialogToOpen(MINI_WAIT, false)) {
 			try{
 				sender.sendKeyCode(KeyEvent.KEYCODE_MENU);
 				dialogUtils.waitForDialogToOpen(WAIT_TIME, true);
@@ -297,7 +301,7 @@ class Clicker {
 		int x = 0;
 		int y = 0;
 
-		if(!dialogUtils.waitForDialogToOpen(TIMEOUT, false)) {
+		if(!dialogUtils.waitForDialogToOpen(MINI_WAIT, false)) {
 			try{
 				sender.sendKeyCode(KeyEvent.KEYCODE_MENU);
 				dialogUtils.waitForDialogToOpen(WAIT_TIME, true);
