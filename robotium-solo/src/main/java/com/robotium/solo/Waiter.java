@@ -284,7 +284,7 @@ class Waiter {
 			sleeper.sleep();
 
 		}
-		return null;
+		return view;
 	}
 
 	/**
