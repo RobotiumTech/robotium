@@ -89,7 +89,6 @@ class Clicker {
 				inst.sendPointerSync(event);
 				inst.sendPointerSync(event2);
 				successfull = true;
-				sleeper.sleep(MINI_WAIT);
 			}catch(SecurityException e){
 				ex = e;
 				dialogUtils.hideSoftKeyboard(null, false, true);
@@ -214,6 +213,7 @@ class Clicker {
 	 */
 
 	private float[] getClickCoordinates(View view){
+		sleeper.sleep(MINI_WAIT);
 		int[] xyLocation = new int[2];
 		float[] xyToClick = new float[2];
 
@@ -229,6 +229,8 @@ class Clicker {
 
 		return xyToClick;
 	}
+	
+	
 
 
 	/**
@@ -334,6 +336,7 @@ class Clicker {
 	 */
 
 	public void clickOnActionBarItem(int resourceId){
+		sleeper.sleep();
 		inst.invokeMenuActionSync(activityUtils.getCurrentActivity(), resourceId, 0);
 	}
 

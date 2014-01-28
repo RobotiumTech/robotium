@@ -241,7 +241,7 @@ class Waiter {
 	 */
 
 	public View waitForView(View view, int timeout){
-		return waitForView(view, timeout, true, false);
+		return waitForView(view, timeout, true, true);
 	}
 
 	/**
@@ -262,27 +262,27 @@ class Waiter {
 		long endTime = SystemClock.uptimeMillis() + timeout;
 
 		while (SystemClock.uptimeMillis() < endTime) {
-			
-			if(checkIsShown && view != null && view.isShown()){
-				return view;
-			}
-			
+
 			final boolean foundAnyMatchingView = searcher.searchFor(view);
+
+			if(checkIsShown && foundAnyMatchingView && !view.isShown()){
+				sleeper.sleep();
+				View identicalView = viewFetcher.getIdenticalView(view);
+				if(identicalView != null && !view.equals(identicalView)){
+					view = identicalView;
+				}
+				continue;
+			}
 
 			if (foundAnyMatchingView){
 				return view;
 			}
-			
-			View identicalView = viewFetcher.getIdenticalView(view);
-			if(identicalView != null && !view.equals(identicalView)){
-				view = identicalView;
-				continue;
-			}
-		
+
 			if(scroll) 
 				scroller.scrollDown();
-			
+
 			sleeper.sleep();
+
 		}
 		return null;
 	}
