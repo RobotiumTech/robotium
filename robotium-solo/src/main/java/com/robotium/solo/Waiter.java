@@ -255,21 +255,27 @@ class Waiter {
 	 */
 
 	public View waitForView(View view, int timeout, boolean scroll, boolean checkIsShown){
-
+		long endTime = SystemClock.uptimeMillis() + timeout;
+		int retry = 0;
+		
 		if(view == null)
 			return null;
-
-		long endTime = SystemClock.uptimeMillis() + timeout;
 
 		while (SystemClock.uptimeMillis() < endTime) {
 
 			final boolean foundAnyMatchingView = searcher.searchFor(view);
 
 			if(checkIsShown && foundAnyMatchingView && !view.isShown()){
-				sleeper.sleep();
+				sleeper.sleepMini();
+				retry++;
+			
 				View identicalView = viewFetcher.getIdenticalView(view);
 				if(identicalView != null && !view.equals(identicalView)){
 					view = identicalView;
+				}
+	
+				if(retry > 5){
+					return view;
 				}
 				continue;
 			}
