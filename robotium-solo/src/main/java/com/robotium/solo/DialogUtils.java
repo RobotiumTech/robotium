@@ -72,9 +72,14 @@ class DialogUtils {
 
 	public boolean waitForDialogToOpen(long timeout, boolean sleepFirst) {
 		final long endTime = SystemClock.uptimeMillis() + timeout;
+		boolean dialogIsOpen = isDialogOpen();
 
 		if(sleepFirst)
 			sleeper.sleep();
+		
+		if(dialogIsOpen){
+			return true;
+		}
 
 		while (SystemClock.uptimeMillis() < endTime) {
 
