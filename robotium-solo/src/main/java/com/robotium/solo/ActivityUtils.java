@@ -70,6 +70,7 @@ class ActivityUtils {
 			activityStack.push(weakReference);
 		}
 	}
+	
 
 	/**
 	 * Returns a {@code List} of all the opened/active activities.
@@ -150,7 +151,7 @@ class ActivityUtils {
 				activityStackIterator.remove();
 			}
 
-			if(activity!=null && activityFromWeakReference!=null && activityFromWeakReference.equals(activity)){
+			if(activity != null && activityFromWeakReference != null && activityFromWeakReference.equals(activity)){
 				activityStackIterator.remove();
 			}
 		}
@@ -206,7 +207,7 @@ class ActivityUtils {
 	 */
 
 	private void addActivityToStack(Activity activity){
-		activitiesStoredInActivityStack.add(activity.toString());
+		activitiesStoredInActivityStack.push(activity.toString());
 		weakActivityReference = new WeakReference<Activity>(activity);
 		activity = null;
 		activityStack.push(weakActivityReference);
@@ -234,6 +235,19 @@ class ActivityUtils {
 				waitForActivityIfNotAvailable();
 			}
 		}
+	}
+	
+	/**
+	 * Returns the name of the most recent Activity
+	 *  
+	 * @return the name of the current {@code Activity}
+	 */
+	
+	public String getCurrentActivityName(){
+		if(!activityStack.isEmpty()){
+			return activitiesStoredInActivityStack.peek();
+		}
+		return "";
 	}
 
 	/**

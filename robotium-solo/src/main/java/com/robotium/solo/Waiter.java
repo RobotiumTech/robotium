@@ -80,6 +80,10 @@ class Waiter {
 			if(currentActivity != null && currentActivity.getClass().getSimpleName().equals(name)) {
 				return true;
 			}
+			
+			if(activityUtils.getCurrentActivityName().contains(name)){
+				return true;
+			}
 
 			sleeper.sleep(MINISLEEP);
 			currentActivity = activityUtils.getCurrentActivity(false, false);
