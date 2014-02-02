@@ -118,10 +118,7 @@ class ActivityUtils {
 				if (activityMonitor != null){
 					Activity activity = activityMonitor.getLastActivity();
 					if (activity != null){
-
-						if(!activitiesStoredInActivityStack.isEmpty() && activitiesStoredInActivityStack.peek().equals(activity.toString())){
-							return;
-						}						
+						
 						if (activitiesStoredInActivityStack.remove(activity.toString())){
 							removeActivityFromStack(activity);
 						}
