@@ -984,7 +984,15 @@ public class Solo {
 	 */
 
 	public void pressSoftKeyboardNextButton(){
-		presser.pressSoftKeyboardNextButton();
+		presser.pressSoftKeyboardSearchOrNextButton(false);
+	}
+	
+	/**
+	 * Presses the soft keyboard search button. 
+	 */
+
+	public void pressSoftKeyboardSearchButton(){
+		presser.pressSoftKeyboardSearchOrNextButton(true);
 	}
 
 	/**

@@ -109,17 +109,25 @@ class Presser{
 	}
 	
 	/**
-	 * Presses the soft keyboard next button. 
+	 * Presses the soft keyboard search/next button.
+	 * 
+	 * @param search true if search button should be pressed otherwise next is pressed
+	 *  
 	 */
 
-	public void pressSoftKeyboardNextButton(){
+	public void pressSoftKeyboardSearchOrNextButton(final boolean search){
 		final EditText freshestEditText = viewFetcher.getFreshestView(viewFetcher.getCurrentViews(EditText.class));
 		if(freshestEditText != null){
 			inst.runOnMainSync(new Runnable()
 			{
 				public void run()
 				{
-					freshestEditText.onEditorAction(EditorInfo.IME_ACTION_NEXT); 
+					if(search){
+						freshestEditText.onEditorAction(EditorInfo.IME_ACTION_SEARCH); 
+					}
+					else {
+						freshestEditText.onEditorAction(EditorInfo.IME_ACTION_NEXT); 	
+					}
 				}
 			});
 		}
