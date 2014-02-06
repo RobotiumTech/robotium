@@ -241,7 +241,7 @@ class ActivityUtils {
 	 */
 	
 	public String getCurrentActivityName(){
-		if(!activityStack.isEmpty()){
+		if(!activitiesStoredInActivityStack.isEmpty()){
 			return activitiesStoredInActivityStack.peek();
 		}
 		return "";
