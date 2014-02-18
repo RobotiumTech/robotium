@@ -17,7 +17,6 @@ class Sender {
 
 	private final Instrumentation inst;
 	private final Sleeper sleeper;
-	private final int WAIT_TIME = 1000;
 
 	/**
 	 * Constructs this object.
@@ -52,7 +51,7 @@ class Sender {
 	 */
 
 	public void goBack() {
-		sleeper.sleep(WAIT_TIME);
+		sleeper.sleep();
 		try {
 			inst.sendKeyDownUpSync(KeyEvent.KEYCODE_BACK);
 			sleeper.sleep();

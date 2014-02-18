@@ -127,11 +127,11 @@ public class Solo {
 		this.scroller = new Scroller(config, instrumentation, activityUtils, viewFetcher, sleeper);
 		this.searcher = new Searcher(viewFetcher, webUtils, scroller, sleeper);
 		this.waiter = new Waiter(activityUtils, viewFetcher, searcher,scroller, sleeper);
-		this.setter = new Setter(activityUtils);
 		this.getter = new Getter(instrumentation, activityUtils, waiter);
+		this.clicker = new Clicker(activityUtils, viewFetcher,sender, instrumentation, sleeper, waiter, webUtils, dialogUtils);
+		this.setter = new Setter(activityUtils, getter, clicker, waiter);
 		this.asserter = new Asserter(activityUtils, waiter);
 		this.checker = new Checker(viewFetcher, waiter);
-		this.clicker = new Clicker(activityUtils, viewFetcher,sender, instrumentation, sleeper, waiter, webUtils, dialogUtils);
 		this.zoomer = new Zoomer(instrumentation);
 		this.swiper = new Swiper(instrumentation);
 		this.tapper =  new Tapper(instrumentation);
@@ -799,6 +799,7 @@ public class Solo {
 
 	public void goBack()
 	{
+		hideSoftKeyboard();
 		sender.goBack();
 	}
 
@@ -1644,6 +1645,16 @@ public class Solo {
 	public void setProgressBar(ProgressBar progressBar, int progress){
 		progressBar = (ProgressBar) waiter.waitForView(progressBar, Timeout.getSmallTimeout());
 		setter.setProgressBar(progressBar, progress);
+	}
+	
+	/**
+	 * Sets the status of the NavigationDrawer. Examples of status are: {@code Solo.CLOSED} and {@code Solo.OPENED}.
+	 *
+	 * @param status the status that the {@link NavigationDrawer} should be set to
+	 */
+
+	public void setNavigationDrawer(final int status){
+		setter.setNavigationDrawer(status);
 	}
 
 	/**

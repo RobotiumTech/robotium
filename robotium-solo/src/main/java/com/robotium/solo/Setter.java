@@ -1,5 +1,6 @@
 package com.robotium.solo;
 
+import android.view.View;
 import android.widget.DatePicker;
 import android.widget.ProgressBar;
 import android.widget.SlidingDrawer;
@@ -19,15 +20,24 @@ class Setter{
 	private final int CLOSED = 0;
 	private final int OPENED = 1;
 	private final ActivityUtils activityUtils;
+	private final Getter getter;
+	private final Clicker clicker;
+	private final Waiter waiter;
 
 	/**
 	 * Constructs this object.
 	 *
 	 * @param activityUtils the {@code ActivityUtils} instance
+	 * @param getter the {@code Getter} instance
+	 * @param clicker the {@code Clicker} instance
+	 * @param waiter the {@code Waiter} instance
 	 */
 
-	public Setter(ActivityUtils activityUtils) {
+	public Setter(ActivityUtils activityUtils, Getter getter, Clicker clicker, Waiter waiter) {
 		this.activityUtils = activityUtils;
+		this.getter = getter;
+		this.clicker = clicker;
+		this.waiter = waiter;
 	}
 
 
@@ -79,7 +89,7 @@ class Setter{
 			});
 		}
 	}
-	
+
 
 	/**
 	 * Sets the progress of a given {@link ProgressBar}. Examples are SeekBar and RatingBar.
@@ -131,5 +141,42 @@ class Setter{
 			});
 		}
 
+	}
+
+	/**
+	 * Sets the status of the NavigationDrawer. Examples are Solo.CLOSED and Solo.OPENED.
+	 *
+	 * @param status the status that the {@link NavigationDrawer} should be set to
+	 */
+
+	public void setNavigationDrawer(final int status){
+		final View homeView = getter.getView("home", 0);
+		final View leftDrawer = getter.getView("left_drawer", 0);
+		
+		try{
+			switch (status) {
+			
+			case CLOSED:
+				if(leftDrawer != null && homeView != null && leftDrawer.isShown()){
+					clicker.clickOnScreen(homeView);
+				}
+				break;
+				
+			case OPENED:
+				if(leftDrawer != null && homeView != null &&  !leftDrawer.isShown()){
+					clicker.clickOnScreen(homeView);
+
+					Condition condition = new Condition() {
+
+						@Override
+						public boolean isSatisfied() {
+							return leftDrawer.isShown();
+						}
+					};
+					waiter.waitForCondition(condition, Timeout.getSmallTimeout());
+				}
+				break;
+			}
+		}catch (Exception ignored){}
 	}
 }
