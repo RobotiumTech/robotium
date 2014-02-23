@@ -350,7 +350,7 @@ class ViewFetcher {
 
 			view.getLocationOnScreen(locationOnScreen);
 
-			if (locationOnScreen[0] < 0 ) 
+			if (locationOnScreen[0] <= 0 ) 
 				continue;
 
 			if(view.getDrawingTime() > drawingTime && view.getHeight() > 0){

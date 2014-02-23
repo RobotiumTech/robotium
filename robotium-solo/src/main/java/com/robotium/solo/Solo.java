@@ -1473,8 +1473,8 @@ public class Solo {
 
 	public void scrollToSide(int side) {
 		switch (side){
-		case RIGHT: scroller.scrollToSide(Scroller.Side.RIGHT, 0.60F); break;
-		case LEFT:  scroller.scrollToSide(Scroller.Side.LEFT, 0.60F);  break;
+		case RIGHT: scroller.scrollToSide(Scroller.Side.RIGHT, 0.70F); break;
+		case LEFT:  scroller.scrollToSide(Scroller.Side.LEFT, 0.70F);  break;
 		}
 	}
 
@@ -1502,8 +1502,8 @@ public class Solo {
 
 	public void scrollViewToSide(View view, int side) {
 		switch (side){
-		case RIGHT: scroller.scrollViewToSide(view, Scroller.Side.RIGHT, 0.60F); break;
-		case LEFT:  scroller.scrollViewToSide(view, Scroller.Side.LEFT, 0.60F);  break;
+		case RIGHT: scroller.scrollViewToSide(view, Scroller.Side.RIGHT, 0.70F); break;
+		case LEFT:  scroller.scrollViewToSide(view, Scroller.Side.LEFT, 0.70F);  break;
 		}
 	}
 
