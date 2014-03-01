@@ -1487,6 +1487,8 @@ public class Solo {
 	 */
 
 	public void scrollViewToSide(View view, int side, float scrollPosition) {
+		waitForView(view);
+		sleeper.sleep();
 		switch (side){
 		case RIGHT: scroller.scrollViewToSide(view, Scroller.Side.RIGHT, scrollPosition); break;
 		case LEFT:  scroller.scrollViewToSide(view, Scroller.Side.LEFT, scrollPosition);  break;
@@ -1501,6 +1503,8 @@ public class Solo {
 	 */
 
 	public void scrollViewToSide(View view, int side) {
+		waitForView(view);
+		sleeper.sleep();
 		switch (side){
 		case RIGHT: scroller.scrollViewToSide(view, Scroller.Side.RIGHT, 0.70F); break;
 		case LEFT:  scroller.scrollViewToSide(view, Scroller.Side.LEFT, 0.70F);  break;
