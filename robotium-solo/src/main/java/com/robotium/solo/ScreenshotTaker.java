@@ -225,6 +225,7 @@ class ScreenshotTaker {
 			config = Bitmap.Config.ARGB_8888;
 		}
 		Bitmap b = orig.copy(config, false);
+		orig.recycle();
 		view.destroyDrawingCache();
 		return b; 
 	}
@@ -347,8 +348,10 @@ class ScreenshotTaker {
 				else{
 					b = getBitmapOfView(view);
 				}
-				if(b != null)
+				if(b != null) {
 					screenShotSaver.saveBitmap(b, name, quality);
+					b = null;
+				}
 				else 
 					Log.d(LOG_TAG, "NULL BITMAP!!");
 			}
