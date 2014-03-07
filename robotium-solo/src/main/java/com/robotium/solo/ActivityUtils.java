@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Stack;
 import java.util.Timer;
-import java.util.TimerTask;
 import junit.framework.Assert;
 import android.app.Activity;
 import android.app.Instrumentation;
@@ -31,11 +30,12 @@ class ActivityUtils {
 	private final Sleeper sleeper;
 	private final String LOG_TAG = "Robotium";
 	private final int MINISLEEP = 100;
-	private static final int ACTIVITYSYNCTIME = 50;
 	private Stack<WeakReference<Activity>> activityStack;
 	private WeakReference<Activity> weakActivityReference;
 	private Stack<String> activitiesStoredInActivityStack;
 	private Timer activitySyncTimer;
+	private boolean registerActivities;
+	Thread activityThread;
 
 	/**
 	 * Constructs this object.
@@ -105,6 +105,28 @@ class ActivityUtils {
 			e.printStackTrace();
 		}
 	}
+	
+	
+	/**
+	 * Returns true if registration of Activites should be performed
+	 * 
+	 * @return true if registration of Activities should be performed
+	 */
+	
+	public boolean shouldRegisterActivities() {
+		return registerActivities;
+	}
+
+
+	/**
+	 * Set true if registration of Activities should be performed
+	 * @param registerActivities true if registration of Activities should be performed
+	 * 
+	 */
+	
+	public void setRegisterActivities(boolean registerActivities) {
+		this.registerActivities = registerActivities;
+	}
 
 	/**
 	 * This is were the activityStack listener is set up. The listener will keep track of the
@@ -112,24 +134,27 @@ class ActivityUtils {
 	 */
 
 	private void setupActivityStackListener() {
-		TimerTask activitySyncTimerTask = new TimerTask() {
-			@Override
+		setRegisterActivities(true);
+		
+		Runnable runnable = new Runnable() {
 			public void run() {
-				if (activityMonitor != null){
-					Activity activity = activityMonitor.getLastActivity();
-					if (activity != null){
-						
+				while (shouldRegisterActivities()) {
+					
+					Activity activity = activityMonitor.waitForActivity();
+
+					if(activity != null){
 						if (activitiesStoredInActivityStack.remove(activity.toString())){
 							removeActivityFromStack(activity);
 						}
-						if (!activity.isFinishing()){
+						if(!activity.isFinishing()){
 							addActivityToStack(activity);
 						}
 					}
 				}
 			}
 		};
-		activitySyncTimer.schedule(activitySyncTimerTask, 0, ACTIVITYSYNCTIME);
+		activityThread = new Thread(runnable, "activityMonitorThread");
+		activityThread.start();
 	}
 
 	/**
@@ -357,6 +382,7 @@ class ActivityUtils {
 		sleeper.sleep(MINISLEEP);
 		// Finish the initial activity, pressing Back for good measure
 		finishActivity(getCurrentActivity(true, false));
+		setRegisterActivities(false);
 		this.activity = null;
 		sleeper.sleepMini();
 		try {
@@ -374,6 +400,7 @@ class ActivityUtils {
 	 */
 
 	private void clearActivityStack(){
+		
 		activityStack.clear();
 		activitiesStoredInActivityStack.clear();
 	}
@@ -393,5 +420,4 @@ class ActivityUtils {
 			}
 		}
 	}
-
 }
