@@ -171,8 +171,14 @@ class WebUtils {
 		}
 
 		try{
-			Object mCallbackProxy = new Reflect(currentWebView).field("mCallbackProxy").out(Object.class);
-			currentWebChromeClient = new Reflect(mCallbackProxy).field("mWebChromeClient").out(WebChromeClient.class);
+			if (android.os.Build.VERSION.SDK_INT >= 19) {
+				Object mClientAdapter = new Reflect(currentWebView).field("mContentsClientAdapter").out(Object.class);
+				currentWebChromeClient = new Reflect(mClientAdapter).field("mWebChromeClient").out(WebChromeClient.class);
+			}
+			else {
+				Object mCallbackProxy = new Reflect(currentWebView).field("mCallbackProxy").out(Object.class);
+				currentWebChromeClient = new Reflect(mCallbackProxy).field("mWebChromeClient").out(WebChromeClient.class);
+			}
 		}catch(Exception ignored){}
 
 		return currentWebChromeClient;
