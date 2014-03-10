@@ -85,23 +85,25 @@ class WebUtils {
 	/**
 	 * Returns an ArrayList of WebElements currently shown in the active WebView.
 	 * 
-	 * @return an {@code ArrayList} of the {@link WebElement} objects currently shown in the active WebView
+	 * @param onlySufficientlyVisible true if only sufficiently visible {@link WebElement} objects should be returned
+	 * @return an {@code ArrayList} of the {@link WebElement} objects shown in the active WebView
 	 */
 
-	public ArrayList<WebElement> getCurrentWebElements(){
+	public ArrayList<WebElement> getWebElements(boolean onlySufficientlyVisible){
 		boolean javaScriptWasExecuted = executeJavaScriptFunction("allWebElements();");
-
-		return getSufficientlyShownWebElements(javaScriptWasExecuted);
+		
+		return getWebElements(javaScriptWasExecuted, onlySufficientlyVisible);
 	}
 
 	/**
 	 * Returns an ArrayList of WebElements of the specified By object currently shown in the active WebView.
 	 * 
 	 * @param by the By object. Examples are By.id("id") and By.name("name")
+	 * @param onlySufficientlyVisible true if only sufficiently visible {@link WebElement} objects should be returned
 	 * @return an {@code ArrayList} of the {@link WebElement} objects currently shown in the active WebView 
 	 */
 
-	public ArrayList<WebElement> getCurrentWebElements(final By by){
+	public ArrayList<WebElement> getWebElements(final By by, boolean onlySufficientlyVisbile){
 		boolean javaScriptWasExecuted = executeJavaScript(by, false);
 		
 		if(config.useJavaScriptToClickWebElements){
@@ -111,26 +113,31 @@ class WebUtils {
 			return webElementCreator.getWebElementsFromWebViews();
 		}
 
-		return getSufficientlyShownWebElements(javaScriptWasExecuted);
+		return getWebElements(javaScriptWasExecuted, onlySufficientlyVisbile);
 	}
 
 	/**
 	 * Returns the sufficiently shown WebElements
 	 * 
+	 * @param javaScriptWasExecuted true if JavaScript was executed
+	 * @param onlySufficientlyVisible true if only sufficiently visible {@link WebElement} objects should be returned
 	 * @return the sufficiently shown WebElements
 	 */
 
-	private ArrayList<WebElement> getSufficientlyShownWebElements(boolean javaScriptWasExecuted){
-		ArrayList<WebElement> currentWebElements = new ArrayList<WebElement>();
+	private ArrayList<WebElement> getWebElements(boolean javaScriptWasExecuted, boolean onlySufficientlyVisbile){
+		ArrayList<WebElement> webElements = new ArrayList<WebElement>();
 
 		if(javaScriptWasExecuted){
 			for(WebElement webElement : webElementCreator.getWebElementsFromWebViews()){
-				if(isWebElementSufficientlyShown(webElement)){
-					currentWebElements.add(webElement);
+				if(!onlySufficientlyVisbile){
+					webElements.add(webElement);
+				}
+				else if(isWebElementSufficientlyShown(webElement)){
+					webElements.add(webElement);
 				}
 			}
 		}
-		return currentWebElements;
+		return webElements;
 	}
 
 	/**

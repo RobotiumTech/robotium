@@ -234,7 +234,7 @@ class Searcher {
 			minimumNumberOfMatches = 1;
 		}
 
-		List<WebElement> viewsFromScreen = webUtils.getCurrentWebElements(by);
+		List<WebElement> viewsFromScreen = webUtils.getWebElements(by, true);
 		addViewsToList (webElements, viewsFromScreen);
 
 		return getViewFromList(webElements, minimumNumberOfMatches);

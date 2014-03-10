@@ -2110,26 +2110,47 @@ public class Solo {
 	public <T extends View> ArrayList<T> getCurrentViews(Class<T> classToFilterBy, View parent) {
 		return viewFetcher.getCurrentViews(classToFilterBy, parent);
 	}
-
+	
 	/**
-	 * Returns an ArrayList of WebElements displayed in the active WebView.
+	 * Returns an ArrayList of all the WebElements displayed in the active WebView.
 	 * 
-	 * @return an {@code ArrayList} of the {@link WebElement} objects currently displayed in the active WebView
+	 * @return an {@code ArrayList} of all the {@link WebElement} objects currently displayed in the active WebView
 	 */	
 
-	public ArrayList<WebElement> getCurrentWebElements(){
-		return webUtils.getCurrentWebElements();
+	public ArrayList<WebElement> getWebElements(){
+		return webUtils.getWebElements(false);
 	}
 
 	/**
-	 * Returns an ArrayList of WebElements displayed in the active WebView matching the specified By object.
+	 * Returns an ArrayList of all the WebElements displayed in the active WebView matching the specified By object.
+	 * 
+	 * @param by the By object. Examples are: {@code By.id("id")} and {@code By.name("name")}
+	 * @return an {@code ArrayList} of all the {@link WebElement} objects displayed in the active WebView 
+	 */	
+
+	public ArrayList<WebElement> getWebElements(By by){
+		return webUtils.getWebElements(by, false);
+	}
+
+	/**
+	 * Returns an ArrayList of the currently displayed WebElements in the active WebView.
+	 * 
+	 * @return an {@code ArrayList} of the {@link WebElement} objects displayed in the active WebView
+	 */	
+
+	public ArrayList<WebElement> getCurrentWebElements(){
+		return webUtils.getWebElements(true);
+	}
+
+	/**
+	 * Returns an ArrayList of the currently displayed WebElements in the active WebView matching the specified By object.
 	 * 
 	 * @param by the By object. Examples are: {@code By.id("id")} and {@code By.name("name")}
 	 * @return an {@code ArrayList} of the {@link WebElement} objects currently displayed in the active WebView 
 	 */	
 
 	public ArrayList<WebElement> getCurrentWebElements(By by){
-		return webUtils.getCurrentWebElements(by);
+		return webUtils.getWebElements(by, true);
 	}
 
 	/**
