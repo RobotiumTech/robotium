@@ -108,14 +108,14 @@ public class Solo {
 	/**
 	 * Private constructor.
 	 * 
-	 * @param config the {@link Config} instance 
+	 * @param config the {@link Config} instance. If {@code null} one will be created. 
 	 * @param instrumentation the {@link Instrumentation} instance
 	 * @param activity the start {@link Activity} or {@code null}
 	 * if no Activity is specified
 	 */
 
 	private Solo(Config config, Instrumentation instrumentation, Activity activity) {
-		this.config = config;
+		this.config = (config == null) ? new Config(): config;
 		this.instrumentation = instrumentation;
 		this.sleeper = new Sleeper();
 		this.sender = new Sender(instrumentation, sleeper);
@@ -222,6 +222,16 @@ public class Solo {
 		return activityUtils.getActivityMonitor();
 	}
 
+	/**
+	 * Returns the Config used by Robotium.
+	 * 
+	 * @return the Config used by Robotium
+	 */
+
+	public Config getConfig(){
+		return config;
+	}
+	
 	/**
 	 * Returns an ArrayList of all the View objects located in the focused 
 	 * Activity or Dialog.
