@@ -104,6 +104,19 @@ public class Solo {
 	public Solo(Instrumentation instrumentation, Config config) {
 		this(config, instrumentation, null);	
 	}
+	
+	/**
+	 * Constructor that takes the Instrumentation, Config and Activity objects.
+	 *
+	 * @param instrumentation the {@link Instrumentation} instance
+	 * @param config the {@link Config} instance 
+	 * @param activity the start {@link Activity} or {@code null}
+	 * if no Activity is specified
+	 */
+
+	public Solo(Instrumentation instrumentation, Config config, Activity activity) {
+		this(config, instrumentation, activity);	
+	}
 
 	/**
 	 * Private constructor.
