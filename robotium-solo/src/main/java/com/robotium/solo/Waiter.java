@@ -715,7 +715,7 @@ class Waiter {
 				return activityUtils.getCurrentActivity().getFragmentManager().findFragmentById(id);
 			else
 				return activityUtils.getCurrentActivity().getFragmentManager().findFragmentByTag(tag);
-		}catch (Exception ignored) {}
+		}catch (Throwable ignored) {}
 
 		return null;
 	}
