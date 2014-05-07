@@ -42,7 +42,7 @@ class ViewFetcher {
 	 */
 
 	public View getTopParent(View view) {
-		ViewParent viewParent = view.getParent();
+		final ViewParent viewParent = view.getParent();
 		if (viewParent != null
 				&& viewParent instanceof android.view.View) {
 			return getTopParent((View) viewParent);
