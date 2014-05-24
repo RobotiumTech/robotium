@@ -313,8 +313,8 @@ class Clicker {
 		}
 		boolean textShown = waiter.waitForText(text, 1, WAIT_TIME, true) != null;
 
-		if(subMenu && (viewFetcher.getCurrentViews(TextView.class).size() > 5) && !textShown){
-			for(TextView textView : viewFetcher.getCurrentViews(TextView.class)){
+		if(subMenu && (viewFetcher.getCurrentViews(TextView.class, true).size() > 5) && !textShown){
+			for(TextView textView : viewFetcher.getCurrentViews(TextView.class, true)){
 				x = xy[0];
 				y = xy[1];
 				textView.getLocationOnScreen(xy);
@@ -437,7 +437,7 @@ class Clicker {
 			}
 
 			else{
-				ArrayList<TextView> allTextViews = RobotiumUtils.removeInvisibleViews(viewFetcher.getCurrentViews(TextView.class));
+				ArrayList<TextView> allTextViews = RobotiumUtils.removeInvisibleViews(viewFetcher.getCurrentViews(TextView.class, true));
 				allTextViews.addAll((Collection<? extends TextView>) webUtils.getTextViewsFromWebView());
 
 				for (TextView textView : allTextViews) {
@@ -463,7 +463,7 @@ class Clicker {
 		if (viewToClick != null) {
 			clickOnScreen(viewToClick);
 		} else {
-			ArrayList <T> allTextViews = RobotiumUtils.removeInvisibleViews(viewFetcher.getCurrentViews(viewClass));
+			ArrayList <T> allTextViews = RobotiumUtils.removeInvisibleViews(viewFetcher.getCurrentViews(viewClass, true));
 
 			for (T view : allTextViews) {
 				Log.d(LOG_TAG, "'" + nameRegex + "' not found. Have found: '" + view.getText() + "'");

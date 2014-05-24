@@ -109,7 +109,7 @@ class Searcher {
 			public Collection<T> call() throws Exception {
 				sleeper.sleep();
 	
-				ArrayList<T> viewsToReturn = viewFetcher.getCurrentViews(viewClass);
+				ArrayList<T> viewsToReturn = viewFetcher.getCurrentViews(viewClass, true);
 
 				if(onlyVisible){
 					viewsToReturn = RobotiumUtils.removeInvisibleViews(viewsToReturn);
@@ -139,7 +139,7 @@ class Searcher {
 	 */
 
 	public <T extends View> boolean searchFor(Set<T> uniqueViews, Class<T> viewClass, final int index) {
-		ArrayList<T> allViews = RobotiumUtils.removeInvisibleViews(viewFetcher.getCurrentViews(viewClass));
+		ArrayList<T> allViews = RobotiumUtils.removeInvisibleViews(viewFetcher.getCurrentViews(viewClass, true));
 
 		int uniqueViewsFound = (getNumberOfUniqueViews(uniqueViews, allViews));
 

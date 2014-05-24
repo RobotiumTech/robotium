@@ -300,26 +300,32 @@ class ViewFetcher {
 	 * {@code Activity}.
 	 *
 	 * @param classToFilterBy return all instances of this class, e.g. {@code Button.class} or {@code GridView.class}
+	 * @param includeSubclass include instances of subclasses in {@code ArrayList} that will be returned
 	 * @return an {@code ArrayList} of {@code View}s of the specified {@code Class} located in the current {@code Activity}
 	 */
 
-	public <T extends View> ArrayList<T> getCurrentViews(Class<T> classToFilterBy) {
-		return getCurrentViews(classToFilterBy, null);
+	public <T extends View> ArrayList<T> getCurrentViews(Class<T> classToFilterBy, boolean includeSubclass) {
+		return getCurrentViews(classToFilterBy, true, null);
 	}
 
 	/**
 	 * Returns an {@code ArrayList} of {@code View}s of the specified {@code Class} located under the specified {@code parent}.
 	 *
 	 * @param classToFilterBy return all instances of this class, e.g. {@code Button.class} or {@code GridView.class}
+	 * @param includeSubclass include instances of subclasses in {@code ArrayList} that will be returned
 	 * @param parent the parent {@code View} for where to start the traversal
 	 * @return an {@code ArrayList} of {@code View}s of the specified {@code Class} located under the specified {@code parent}
 	 */
 
-	public <T extends View> ArrayList<T> getCurrentViews(Class<T> classToFilterBy, View parent) {
+	public <T extends View> ArrayList<T> getCurrentViews(Class<T> classToFilterBy, boolean includeSubclass, View parent) {
 		ArrayList<T> filteredViews = new ArrayList<T>();
 		List<View> allViews = getViews(parent, true);
 		for(View view : allViews){
-			if (view != null && classToFilterBy.isAssignableFrom(view.getClass())) {
+			if (view == null) {
+				continue;
+			}
+			Class<? extends View> classOfView = view.getClass();
+			if (includeSubclass && classToFilterBy.isAssignableFrom(classOfView) || !includeSubclass && classToFilterBy == classOfView) {
 				filteredViews.add(classToFilterBy.cast(view));
 			}
 		}
@@ -375,7 +381,7 @@ class ViewFetcher {
 			return null;
 		}
 		View viewToReturn = null;
-		List<? extends View> visibleViews = RobotiumUtils.removeInvisibleViews(getCurrentViews(view.getClass()));
+		List<? extends View> visibleViews = RobotiumUtils.removeInvisibleViews(getCurrentViews(view.getClass(), true));
 
 		for(View v : visibleViews){
 			if(areViewsIdentical(v, view)){

@@ -520,7 +520,7 @@ class Waiter {
 		long endTime = SystemClock.uptimeMillis() + Timeout.getSmallTimeout();
 		while (SystemClock.uptimeMillis() <= endTime && !waitForView(classToFilterBy, index, true, true));
 		int numberOfUniqueViews = searcher.getNumberOfUniqueViews();
-		ArrayList<T> views = RobotiumUtils.removeInvisibleViews(viewFetcher.getCurrentViews(classToFilterBy));
+		ArrayList<T> views = RobotiumUtils.removeInvisibleViews(viewFetcher.getCurrentViews(classToFilterBy, true));
 
 		if(views.size() < numberOfUniqueViews){
 			int newIndex = index - (numberOfUniqueViews - views.size());
