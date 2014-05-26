@@ -116,7 +116,7 @@ class Presser{
 	 */
 
 	public void pressSoftKeyboardSearchOrNextButton(final boolean search){
-		final EditText freshestEditText = viewFetcher.getFreshestView(viewFetcher.getCurrentViews(EditText.class));
+		final EditText freshestEditText = viewFetcher.getFreshestView(viewFetcher.getCurrentViews(EditText.class, true));
 		if(freshestEditText != null){
 			inst.runOnMainSync(new Runnable()
 			{

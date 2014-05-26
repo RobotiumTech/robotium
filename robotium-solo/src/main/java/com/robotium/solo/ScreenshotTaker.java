@@ -150,7 +150,7 @@ class ScreenshotTaker {
 	 * Extract and wrap the all OpenGL ES Renderer.
 	 */
 	private void wrapAllGLViews(View decorView) {
-		ArrayList<GLSurfaceView> currentViews = viewFetcher.getCurrentViews(GLSurfaceView.class, decorView);
+		ArrayList<GLSurfaceView> currentViews = viewFetcher.getCurrentViews(GLSurfaceView.class, true, decorView);
 		final CountDownLatch latch = new CountDownLatch(currentViews.size());
 
 		for (GLSurfaceView glView : currentViews) {

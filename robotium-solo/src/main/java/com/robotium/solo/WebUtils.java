@@ -155,7 +155,7 @@ class WebUtils {
 			originalWebChromeClient = getCurrentWebChromeClient();	
 		}
 
-		robotiumWebCLient.enableJavascriptAndSetRobotiumWebClient(viewFetcher.getCurrentViews(WebView.class), originalWebChromeClient);
+		robotiumWebCLient.enableJavascriptAndSetRobotiumWebClient(viewFetcher.getCurrentViews(WebView.class, true), originalWebChromeClient);
 		return getJavaScriptAsString();
 	}
 	
@@ -169,7 +169,7 @@ class WebUtils {
 	private WebChromeClient getCurrentWebChromeClient(){
 		WebChromeClient currentWebChromeClient = null;
 
-		Object currentWebView = viewFetcher.getFreshestView(viewFetcher.getCurrentViews(WebView.class));
+		Object currentWebView = viewFetcher.getFreshestView(viewFetcher.getCurrentViews(WebView.class, true));
 
 		if (android.os.Build.VERSION.SDK_INT >= 16) {
 			try{
@@ -263,7 +263,7 @@ class WebUtils {
 	 */
 
 	private boolean executeJavaScriptFunction(final String function){
-		final WebView webView = viewFetcher.getFreshestView(viewFetcher.getCurrentViews(WebView.class));
+		final WebView webView = viewFetcher.getFreshestView(viewFetcher.getCurrentViews(WebView.class, true));
 
 		if(webView == null){
 			return false;
@@ -289,7 +289,7 @@ class WebUtils {
 	 */
 
 	public final boolean isWebElementSufficientlyShown(WebElement webElement){
-		final WebView webView = viewFetcher.getFreshestView(viewFetcher.getCurrentViews(WebView.class));
+		final WebView webView = viewFetcher.getFreshestView(viewFetcher.getCurrentViews(WebView.class, true));
 		final int[] xyWebView = new int[2];
 
 		if(webView != null && webElement != null){

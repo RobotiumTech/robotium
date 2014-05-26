@@ -160,7 +160,7 @@ class DialogUtils {
 		View focusedView = activity.getCurrentFocus();
 
 		if(!(focusedView instanceof EditText)) {
-			EditText freshestEditText = viewFetcher.getFreshestView(viewFetcher.getCurrentViews(EditText.class));
+			EditText freshestEditText = viewFetcher.getFreshestView(viewFetcher.getCurrentViews(EditText.class, true));
 			if(freshestEditText != null){
 				focusedView = freshestEditText;
 			}
