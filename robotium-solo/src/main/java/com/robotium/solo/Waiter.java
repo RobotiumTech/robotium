@@ -579,7 +579,7 @@ class Waiter {
 
 		try{
 			fragmentActivity = (FragmentActivity) activityUtils.getCurrentActivity(false);
-		}catch (ClassCastException ignored) {}
+		}catch (Throwable ignored) {}
 
 		if(fragmentActivity != null){
 			try{

@@ -2126,12 +2126,12 @@ public class Solo {
 	 * Returns an ArrayList of Views matching the specified class located in the focused Activity or Dialog.
 	 *
 	 * @param classToFilterBy return all instances of this class. Examples are: {@code Button.class} or {@code ListView.class}
-	 * @param includeSubclass include instances of subclasses in {@code ArrayList} that will be returned
+	 * @param includeSubclasses include instances of the subclasses in the {@code ArrayList} that will be returned
 	 * @return an {@code ArrayList} of {@code View}s matching the specified {@code Class} located in the current {@code Activity}
 	 */
 
-	public <T extends View> ArrayList<T> getCurrentViews(Class<T> classToFilterBy, boolean includeSubclass) {
-		return viewFetcher.getCurrentViews(classToFilterBy, includeSubclass);
+	public <T extends View> ArrayList<T> getCurrentViews(Class<T> classToFilterBy, boolean includeSubclasses) {
+		return viewFetcher.getCurrentViews(classToFilterBy, includeSubclasses);
 	}
 
 	/**

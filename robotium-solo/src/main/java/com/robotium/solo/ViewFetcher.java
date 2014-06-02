@@ -300,11 +300,11 @@ class ViewFetcher {
 	 * {@code Activity}.
 	 *
 	 * @param classToFilterBy return all instances of this class, e.g. {@code Button.class} or {@code GridView.class}
-	 * @param includeSubclass include instances of subclasses in {@code ArrayList} that will be returned
+	 * @param includeSubclasses include instances of the subclasses in the {@code ArrayList} that will be returned
 	 * @return an {@code ArrayList} of {@code View}s of the specified {@code Class} located in the current {@code Activity}
 	 */
 
-	public <T extends View> ArrayList<T> getCurrentViews(Class<T> classToFilterBy, boolean includeSubclass) {
+	public <T extends View> ArrayList<T> getCurrentViews(Class<T> classToFilterBy, boolean includeSubclasses) {
 		return getCurrentViews(classToFilterBy, true, null);
 	}
 
