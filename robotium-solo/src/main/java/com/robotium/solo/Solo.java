@@ -10,6 +10,7 @@ import android.graphics.PointF;
 import android.os.Environment;
 import android.view.KeyEvent;
 import android.view.View;
+import android.view.WindowManager;
 import android.webkit.WebView;
 import android.widget.AbsListView;
 import android.widget.Button;
@@ -2323,6 +2324,19 @@ public class Solo {
 
 	public void hideSoftKeyboard() {
 		dialogUtils.hideSoftKeyboard(null, true, false);
+	}
+
+	/**
+	 * Unlocks the screen.
+	 */
+
+	public void unlockScreen(){
+		instrumentation.runOnMainSync(new Runnable() {
+			@Override
+			public void run() {
+				activityUtils.getCurrentActivity(false).getWindow().addFlags(WindowManager.LayoutParams.FLAG_DISMISS_KEYGUARD);
+			}
+		});
 	}
 
 	/**
