@@ -61,15 +61,15 @@ class ViewFetcher {
 
 	public View getScrollOrListParent(View view) {
 
-	    if (!(view instanceof android.widget.AbsListView) && !(view instanceof android.widget.ScrollView) && !(view instanceof WebView)) {
-	        try{
-	            return getScrollOrListParent((View) view.getParent());
-	        }catch(Exception e){
-	            return null;
-	        }
-	    } else {
-	        return view;
-	    }
+		if (!(view instanceof android.widget.AbsListView) && !(view instanceof android.widget.ScrollView) && !(view instanceof WebView)) {
+			try{
+				return getScrollOrListParent((View) view.getParent());
+			}catch(Exception e){
+				return null;
+			}
+		} else {
+			return view;
+		}
 	}
 
 	/**
@@ -114,24 +114,25 @@ class ViewFetcher {
 	 * @return the most recent DecorView
 	 */
 
-	 public final View getRecentDecorView(View[] views) {
-		 if(views == null)
-			 return null;
-		 
-		 final View[] decorViews = new View[views.length];
-		 int i = 0;
-		 View view;
+	public final View getRecentDecorView(View[] views) {
+		if(views == null)
+			return null;
 
-		 for (int j = 0; j < views.length; j++) {
-			 view = views[j];
-			 if (view != null && view.getClass().getName()
-					 .equals("com.android.internal.policy.impl.PhoneWindow$DecorView")) {
-				 decorViews[i] = view;
-				 i++;
-			 }
-		 }
-		 return getRecentContainer(decorViews);
-	 }
+		final View[] decorViews = new View[views.length];
+		int i = 0;
+		View view;
+
+		for (int j = 0; j < views.length; j++) {
+			view = views[j];
+			if (view != null && (view.getClass().getName()
+					.equals("com.android.internal.policy.impl.PhoneWindow$DecorView") || view.getClass().getName()
+					.equals("com.android.internal.policy.impl.MultiPhoneWindow$MultiPhoneDecorView"))) {
+				decorViews[i] = view;
+				i++;
+			}
+		}
+		return getRecentContainer(decorViews);
+	}
 
 	/**
 	 * Returns the most recent view container
@@ -140,48 +141,48 @@ class ViewFetcher {
 	 * @return the most recent view container
 	 */
 
-	 private final View getRecentContainer(View[] views) {
-		 View container = null;
-		 long drawingTime = 0;
-		 View view;
+	private final View getRecentContainer(View[] views) {
+		View container = null;
+		long drawingTime = 0;
+		View view;
 
-		 for(int i = 0; i < views.length; i++){
-			 view = views[i];
-			 if (view != null && view.isShown() && view.hasWindowFocus() && view.getDrawingTime() > drawingTime) {
-				 container = view;
-				 drawingTime = view.getDrawingTime();
-			 }
-		 }
-		 return container;
-	 }
+		for(int i = 0; i < views.length; i++){
+			view = views[i];
+			if (view != null && view.isShown() && view.hasWindowFocus() && view.getDrawingTime() > drawingTime) {
+				container = view;
+				drawingTime = view.getDrawingTime();
+			}
+		}
+		return container;
+	}
 
-	 /**
-	  * Returns all views that are non DecorViews
-	  *
-	  * @param views the views to check
-	  * @return the non DecorViews
-	  */
+	/**
+	 * Returns all views that are non DecorViews
+	 *
+	 * @param views the views to check
+	 * @return the non DecorViews
+	 */
 
-	 private final View[] getNonDecorViews(View[] views) {
-		 View[] decorViews = null;
+	private final View[] getNonDecorViews(View[] views) {
+		View[] decorViews = null;
 
-		 if(views != null) {
-			 decorViews = new View[views.length];
+		if(views != null) {
+			decorViews = new View[views.length];
 
-			 int i = 0;
-			 View view;
+			int i = 0;
+			View view;
 
-			 for (int j = 0; j < views.length; j++) {
-				 view = views[j];
-				 if (view != null && !(view.getClass().getName()
-						 .equals("com.android.internal.policy.impl.PhoneWindow$DecorView"))) {
-					 decorViews[i] = view;
-					 i++;
-				 }
-			 }
-		 }
-		 return decorViews;
-	 }
+			for (int j = 0; j < views.length; j++) {
+				view = views[j];
+				if (view != null && !(view.getClass().getName()
+						.equals("com.android.internal.policy.impl.PhoneWindow$DecorView"))) {
+					decorViews[i] = view;
+					i++;
+				}
+			}
+		}
+		return decorViews;
+	}
 
 
 
@@ -284,7 +285,7 @@ class ViewFetcher {
 		final float windowHeight;
 		if(parent == null){
 			windowHeight = activityUtils.getCurrentActivity(false).getWindowManager()
-			.getDefaultDisplay().getHeight();
+					.getDefaultDisplay().getHeight();
 		}
 		else{
 			parent.getLocationOnScreen(xyParent);
@@ -333,7 +334,7 @@ class ViewFetcher {
 		return filteredViews;
 	}
 
-	
+
 	/**
 	 * Tries to guess which view is the most likely to be interesting. Returns
 	 * the most recently drawn view, which presumably will be the one that the
@@ -368,7 +369,7 @@ class ViewFetcher {
 		views = null;
 		return viewToReturn;
 	}
-	
+
 	/**
 	 * Returns an identical View to the one specified.
 	 * 
@@ -406,7 +407,7 @@ class ViewFetcher {
 		if(firstView.getId() != secondView.getId() || !firstView.getClass().isAssignableFrom(secondView.getClass())){
 			return false;
 		}
-		
+
 		if(!isSamePlacementInRespectiveTree(firstView, secondView)){
 			return false;
 		}
@@ -419,7 +420,7 @@ class ViewFetcher {
 			return true;
 		}
 	}
-	
+
 	/**
 	 * Compares if two views have the same placement in their respective trees. 
 	 * 
@@ -427,22 +428,22 @@ class ViewFetcher {
 	 * @param secondView the second view to compare
 	 * @return true if equal placement and false if not
 	 */
-	
+
 	private boolean isSamePlacementInRespectiveTree(View firstView, View secondView){
-		
+
 		if(getObjectPlacementNumber(firstView) == getObjectPlacementNumber(secondView)){
 			return true;
 		}
 		return false;
 	}
-	
+
 	/**
 	 * Returns the placement number of the specified view relative to its parent.
 	 * 
 	 * @param view the view to check placement number
 	 * @return the object placement number of the specified view 
 	 */
-	
+
 	private int getObjectPlacementNumber(View view){
 		final ArrayList<View> allViewsFirst = new ArrayList<View>();
 		int numberOrder = 0;
@@ -471,7 +472,7 @@ class ViewFetcher {
 			} else {
 				windowManagerClassName = "android.view.WindowManagerImpl"; 
 			}
- 			windowManager = Class.forName(windowManagerClassName);
+			windowManager = Class.forName(windowManagerClassName);
 
 		} catch (ClassNotFoundException e) {
 			throw new RuntimeException(e);
@@ -510,7 +511,7 @@ class ViewFetcher {
 		}
 		return null;
 	}
-	
+
 	/**
 	 * Sets the window manager string.
 	 */
@@ -518,7 +519,7 @@ class ViewFetcher {
 
 		if (android.os.Build.VERSION.SDK_INT >= 17) {
 			windowManagerString = "sDefaultWindowManager";
-			
+
 		} else if(android.os.Build.VERSION.SDK_INT >= 13) {
 			windowManagerString = "sWindowManager";
 
