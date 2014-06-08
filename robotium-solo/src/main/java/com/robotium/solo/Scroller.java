@@ -332,9 +332,9 @@ class Scroller {
 		float x = screenWidth * scrollPosition;
 		float y = screenHeight / 2.0f;
 		if (side == Side.LEFT)
-			drag(0, x, y, y, 40);
+			drag(0, x, y, y, 15);
 		else if (side == Side.RIGHT)
-			drag(x, 0, y, y, 40);
+			drag(x, 0, y, y, 15);
 	}
 
 	/**
@@ -353,9 +353,9 @@ class Scroller {
 		float x = corners[0] + viewWidth * scrollPosition;
 		float y = corners[1] + viewHeight / 2.0f;
 		if (side == Side.LEFT)
-			drag(corners[0], x, y, y, 40);
+			drag(corners[0], x, y, y, 15);
 		else if (side == Side.RIGHT)
-			drag(x, corners[0], y, y, 40);
+			drag(x, corners[0], y, y, 15);
 	}
 
 }
