@@ -1480,7 +1480,7 @@ public class Solo {
 	 *
 	 * @param side the side to scroll; {@link #RIGHT} or {@link #LEFT}
 	 * @param scrollPosition the position to scroll to, from 0 to 1 where 1 is all the way. Example is: 0.60
-	 * @param stepCount how many move steps to include in the scroll. Less steps results in a faster scroll
+	 * @param stepCount how many steps to include in the scroll. Less steps results in a faster scroll
 	 */
 
 	public void scrollToSide(int side, float scrollPosition, int stepCount) {
@@ -1517,7 +1517,7 @@ public class Solo {
 	 * @param view the View to scroll
 	 * @param side the side to scroll; {@link #RIGHT} or {@link #LEFT}
 	 * @param scrollPosition the position to scroll to, from 0 to 1 where 1 is all the way. Example is: 0.60
-	 * @param stepCount how many move steps to include in the scroll. Less steps results in a faster scroll
+	 * @param stepCount how many steps to include in the scroll. Less steps results in a faster scroll
 	 */
 
 	public void scrollViewToSide(View view, int side, float scrollPosition, int stepCount) {
