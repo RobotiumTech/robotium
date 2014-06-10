@@ -1309,7 +1309,7 @@ public class Solo {
 	 * @param toX X coordinate of the drag destination, in screen coordinates
 	 * @param fromY Y coordinate of the initial touch, in screen coordinates
 	 * @param toY Y coordinate of the drag destination, in screen coordinates
-	 * @param stepCount How many move steps to include in the drag
+	 * @param stepCount how many move steps to include in the drag. Less steps results in a faster drag
 	 */
 
 	public void drag(float fromX, float toX, float fromY, float toY, 
@@ -1474,19 +1474,31 @@ public class Solo {
 	public void scrollListToLine(int index, int line){
 		scroller.scrollListToLine(waiter.waitForAndGetView(index, AbsListView.class), line);
 	}
+	
+	/**
+	 * Scrolls horizontally.
+	 *
+	 * @param side the side to scroll; {@link #RIGHT} or {@link #LEFT}
+	 * @param scrollPosition the position to scroll to, from 0 to 1 where 1 is all the way. Example is: 0.60
+	 * @param stepCount how many move steps to include in the scroll. Less steps results in a faster scroll
+	 */
+
+	public void scrollToSide(int side, float scrollPosition, int stepCount) {
+		switch (side){
+		case RIGHT: scroller.scrollToSide(Scroller.Side.RIGHT, scrollPosition, stepCount); break;
+		case LEFT:  scroller.scrollToSide(Scroller.Side.LEFT, scrollPosition, stepCount);  break;
+		}
+	}
 
 	/**
 	 * Scrolls horizontally.
 	 *
 	 * @param side the side to scroll; {@link #RIGHT} or {@link #LEFT}
-	 * @param scrollPosition the position to scroll to, from 0 to 1 where 1 is all the way. Example is: 0.60.
+	 * @param scrollPosition the position to scroll to, from 0 to 1 where 1 is all the way. Example is: 0.60
 	 */
 
 	public void scrollToSide(int side, float scrollPosition) {
-		switch (side){
-		case RIGHT: scroller.scrollToSide(Scroller.Side.RIGHT, scrollPosition); break;
-		case LEFT:  scroller.scrollToSide(Scroller.Side.LEFT, scrollPosition);  break;
-		}
+		scrollToSide(side, scrollPosition, 15);
 	}
 
 	/**
@@ -1496,9 +1508,24 @@ public class Solo {
 	 */
 
 	public void scrollToSide(int side) {
+		scrollToSide(side, 0.75F);
+	}
+	
+	/**
+	 * Scrolls a View horizontally.
+	 *
+	 * @param view the View to scroll
+	 * @param side the side to scroll; {@link #RIGHT} or {@link #LEFT}
+	 * @param scrollPosition the position to scroll to, from 0 to 1 where 1 is all the way. Example is: 0.60
+	 * @param stepCount how many move steps to include in the scroll. Less steps results in a faster scroll
+	 */
+
+	public void scrollViewToSide(View view, int side, float scrollPosition, int stepCount) {
+		waitForView(view);
+		sleeper.sleep();
 		switch (side){
-		case RIGHT: scroller.scrollToSide(Scroller.Side.RIGHT, 0.70F); break;
-		case LEFT:  scroller.scrollToSide(Scroller.Side.LEFT, 0.70F);  break;
+		case RIGHT: scroller.scrollViewToSide(view, Scroller.Side.RIGHT, scrollPosition, stepCount); break;
+		case LEFT:  scroller.scrollViewToSide(view, Scroller.Side.LEFT, scrollPosition, stepCount);  break;
 		}
 	}
 
@@ -1507,16 +1534,11 @@ public class Solo {
 	 *
 	 * @param view the View to scroll
 	 * @param side the side to scroll; {@link #RIGHT} or {@link #LEFT}
-	 * @param scrollPosition the position to scroll to, from 0 to 1 where 1 is all the way. Example is: 0.60.
+	 * @param scrollPosition the position to scroll to, from 0 to 1 where 1 is all the way. Example is: 0.60
 	 */
 
 	public void scrollViewToSide(View view, int side, float scrollPosition) {
-		waitForView(view);
-		sleeper.sleep();
-		switch (side){
-		case RIGHT: scroller.scrollViewToSide(view, Scroller.Side.RIGHT, scrollPosition); break;
-		case LEFT:  scroller.scrollViewToSide(view, Scroller.Side.LEFT, scrollPosition);  break;
-		}
+		scrollViewToSide(view, side, scrollPosition, 15);
 	}
 
 	/**
@@ -1527,12 +1549,7 @@ public class Solo {
 	 */
 
 	public void scrollViewToSide(View view, int side) {
-		waitForView(view);
-		sleeper.sleep();
-		switch (side){
-		case RIGHT: scroller.scrollViewToSide(view, Scroller.Side.RIGHT, 0.70F); break;
-		case LEFT:  scroller.scrollViewToSide(view, Scroller.Side.LEFT, 0.70F);  break;
-		}
+		scrollViewToSide(view, side, 0.70F);
 	}
 
 	/**
@@ -1616,7 +1633,7 @@ public class Solo {
 	/**
 	 * Sets the date in the specified DatePicker.
 	 *
-	 * @param datePicker the {@link DatePicker} object.
+	 * @param datePicker the {@link DatePicker} object
 	 * @param year the year e.g. 2011
 	 * @param monthOfYear the month which starts from zero e.g. 03 for April
 	 * @param dayOfMonth the day e.g. 10
@@ -1642,7 +1659,7 @@ public class Solo {
 	/**
 	 * Sets the time in the specified TimePicker.
 	 *
-	 * @param timePicker the {@link TimePicker} object.
+	 * @param timePicker the {@link TimePicker} object
 	 * @param hour the hour e.g. 15
 	 * @param minute the minute e.g. 30
 	 */

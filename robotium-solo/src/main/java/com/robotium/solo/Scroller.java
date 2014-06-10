@@ -321,10 +321,11 @@ class Scroller {
 	 *
 	 * @param side the side to which to scroll; {@link Side#RIGHT} or {@link Side#LEFT}
 	 * @param scrollPosition the position to scroll to, from 0 to 1 where 1 is all the way. Example is: 0.55.
+	 * @param stepCount how many move steps to include in the scroll. Less steps results in a faster scroll
 	 */
 
 	@SuppressWarnings("deprecation")
-	public void scrollToSide(Side side, float scrollPosition) {
+	public void scrollToSide(Side side, float scrollPosition, int stepCount) {
 		int screenHeight = activityUtils.getCurrentActivity().getWindowManager().getDefaultDisplay()
 				.getHeight();
 		int screenWidth = activityUtils.getCurrentActivity(false).getWindowManager().getDefaultDisplay()
@@ -332,9 +333,9 @@ class Scroller {
 		float x = screenWidth * scrollPosition;
 		float y = screenHeight / 2.0f;
 		if (side == Side.LEFT)
-			drag(0, x, y, y, 15);
+			drag(70, x, y, y, stepCount);
 		else if (side == Side.RIGHT)
-			drag(x, 0, y, y, 15);
+			drag(x, 0, y, y, stepCount);
 	}
 
 	/**
@@ -343,9 +344,10 @@ class Scroller {
 	 * @param view the view to scroll
 	 * @param side the side to which to scroll; {@link Side#RIGHT} or {@link Side#LEFT}
 	 * @param scrollPosition the position to scroll to, from 0 to 1 where 1 is all the way. Example is: 0.55.
+	 * @param stepCount how many move steps to include in the scroll. Less steps results in a faster scroll
 	 */
 
-	public void scrollViewToSide(View view, Side side, float scrollPosition) {
+	public void scrollViewToSide(View view, Side side, float scrollPosition, int stepCount) {
 		int[] corners = new int[2];
 		view.getLocationOnScreen(corners);
 		int viewHeight = view.getHeight();
@@ -353,9 +355,9 @@ class Scroller {
 		float x = corners[0] + viewWidth * scrollPosition;
 		float y = corners[1] + viewHeight / 2.0f;
 		if (side == Side.LEFT)
-			drag(corners[0], x, y, y, 15);
+			drag(corners[0], x, y, y, stepCount);
 		else if (side == Side.RIGHT)
-			drag(x, corners[0], y, y, 15);
+			drag(x, corners[0], y, y, stepCount);
 	}
 
 }
