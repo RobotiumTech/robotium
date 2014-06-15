@@ -255,10 +255,17 @@ class Scroller {
 		}
 
 		if (direction == DOWN) {
+			
+			if(absListView.getCount() == 1){
+				absListView.smoothScrollToPosition(1);
+				return false;
+			}
+			
 			if (allTheWay) {
 				scrollListToLine(absListView, absListView.getCount()-1);
 				return false;
 			}
+			
 			if (absListView.getLastVisiblePosition() >= absListView.getCount()-1) {
 				scrollListToLine(absListView, absListView.getLastVisiblePosition());
 				return false;
