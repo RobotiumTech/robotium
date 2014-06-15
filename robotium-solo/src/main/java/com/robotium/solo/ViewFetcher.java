@@ -306,7 +306,7 @@ class ViewFetcher {
 	 */
 
 	public <T extends View> ArrayList<T> getCurrentViews(Class<T> classToFilterBy, boolean includeSubclasses) {
-		return getCurrentViews(classToFilterBy, true, null);
+		return getCurrentViews(classToFilterBy, includeSubclasses, null);
 	}
 
 	/**
