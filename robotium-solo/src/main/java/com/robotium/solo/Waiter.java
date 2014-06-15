@@ -30,7 +30,7 @@ class Waiter {
 	private final Searcher searcher;
 	private final Scroller scroller;
 	private final Sleeper sleeper;
-	private final int MINISLEEP = 50;
+	private final int MINISLEEP = 20;
 
 
 	/**

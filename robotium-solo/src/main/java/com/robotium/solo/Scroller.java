@@ -185,6 +185,7 @@ class Scroller {
 		@SuppressWarnings("unchecked")
 		ArrayList<View> views = RobotiumUtils.filterViewsToSet(new Class[] { ListView.class,
 				ScrollView.class, GridView.class, WebView.class}, viewList);
+		views = RobotiumUtils.removeEmptyAbsListViews(views);
 		View view = viewFetcher.getFreshestView(views);
 
 		if (view == null)

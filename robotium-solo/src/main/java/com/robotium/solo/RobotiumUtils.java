@@ -8,6 +8,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.regex.PatternSyntaxException;
 import android.view.View;
+import android.widget.AbsListView;
 import android.widget.TextView;
 
 /**
@@ -34,6 +35,30 @@ public class RobotiumUtils {
 			if (view != null && view.isShown()) {
 				tmpViewList.add(view);
 			}
+		}
+		return tmpViewList;
+	}
+	
+	/**
+	 * Removes empty AbsListViews.
+	 * 
+	 * @param viewList an Iterable with Views that is being checked for empty AbsListViews
+	 * @return a filtered Iterable with no empty AbsListViews
+	 */
+
+	public static <T extends View> ArrayList<T> removeEmptyAbsListViews(Iterable<T> viewList) {
+		ArrayList<T> tmpViewList = new ArrayList<T>();
+		for (T view : viewList) {
+			if(view instanceof AbsListView){
+				AbsListView absListView = (AbsListView) view;
+				if (absListView.getCount() != 0) {
+					tmpViewList.add(view);
+				}
+			}
+			else{
+				tmpViewList.add(view);
+			}
+			
 		}
 		return tmpViewList;
 	}
