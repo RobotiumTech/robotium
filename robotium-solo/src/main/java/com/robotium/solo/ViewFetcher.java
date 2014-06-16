@@ -124,11 +124,13 @@ class ViewFetcher {
 
 		for (int j = 0; j < views.length; j++) {
 			view = views[j];
-			if (view != null && (view.getClass().getName()
-					.equals("com.android.internal.policy.impl.PhoneWindow$DecorView") || view.getClass().getName()
-					.equals("com.android.internal.policy.impl.MultiPhoneWindow$MultiPhoneDecorView"))) {
-				decorViews[i] = view;
-				i++;
+			if (view != null){ 
+				String nameOfClass = view.getClass().getName();
+				if(nameOfClass.equals("com.android.internal.policy.impl.PhoneWindow$DecorView") || nameOfClass
+						.equals("com.android.internal.policy.impl.MultiPhoneWindow$MultiPhoneDecorView")) {
+					decorViews[i] = view;
+					i++;
+				}
 			}
 		}
 		return getRecentContainer(decorViews);

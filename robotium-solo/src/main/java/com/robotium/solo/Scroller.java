@@ -179,15 +179,13 @@ class Scroller {
 	 */
 
 	public boolean scroll(int direction, boolean allTheWay) {
-
 		final ArrayList<View> viewList = RobotiumUtils.
 				removeInvisibleViews(viewFetcher.getAllViews(true));
 		@SuppressWarnings("unchecked")
 		ArrayList<View> views = RobotiumUtils.filterViewsToSet(new Class[] { ListView.class,
 				ScrollView.class, GridView.class, WebView.class}, viewList);
-		views = RobotiumUtils.removeEmptyAbsListViews(views);
 		View view = viewFetcher.getFreshestView(views);
-
+		
 		if (view == null)
 		{
 			return false;
@@ -256,37 +254,42 @@ class Scroller {
 
 		if (direction == DOWN) {
 			
-			if(absListView.getCount() == 1){
-				absListView.smoothScrollToPosition(1);
-				return false;
-			}
+			int listCount = absListView.getCount();
+			int lastVisiblePosition = absListView.getLastVisiblePosition();
 			
 			if (allTheWay) {
-				scrollListToLine(absListView, absListView.getCount()-1);
+				scrollListToLine(absListView, listCount-1);
 				return false;
 			}
 			
-			if (absListView.getLastVisiblePosition() >= absListView.getCount()-1) {
-				scrollListToLine(absListView, absListView.getLastVisiblePosition());
+			if (lastVisiblePosition >= listCount - 1) {
+				scrollListToLine(absListView, lastVisiblePosition);
 				return false;
 			}
+			
+			int firstVisiblePosition = absListView.getFirstVisiblePosition();
+			
 
-			if(absListView.getFirstVisiblePosition() != absListView.getLastVisiblePosition())
-				scrollListToLine(absListView, absListView.getLastVisiblePosition());
+			if(firstVisiblePosition != lastVisiblePosition)
+				scrollListToLine(absListView, lastVisiblePosition);
 
 			else
-				scrollListToLine(absListView, absListView.getFirstVisiblePosition()+1);
+				scrollListToLine(absListView, firstVisiblePosition + 1);
 
 		} else if (direction == UP) {
-			if (allTheWay || absListView.getFirstVisiblePosition() < 2) {
+			int firstVisiblePosition = absListView.getFirstVisiblePosition();
+			
+			if (allTheWay || firstVisiblePosition < 2) {
 				scrollListToLine(absListView, 0);
 				return false;
 			}
+			int lastVisiblePosition = absListView.getLastVisiblePosition();
 
-			final int lines = absListView.getLastVisiblePosition() - absListView.getFirstVisiblePosition();
-			int lineToScrollTo = absListView.getFirstVisiblePosition() - lines;
+			final int lines = lastVisiblePosition - firstVisiblePosition;
+			
+			int lineToScrollTo = firstVisiblePosition - lines;
 
-			if(lineToScrollTo == absListView.getLastVisiblePosition())
+			if(lineToScrollTo == lastVisiblePosition)
 				lineToScrollTo--;
 
 			if(lineToScrollTo < 0)
@@ -311,11 +314,15 @@ class Scroller {
 			Assert.fail("AbsListView is null!");
 
 		final int lineToMoveTo;
-		if(view instanceof GridView)
+		if(view instanceof GridView) {
 			lineToMoveTo = line+1;
-		else
+		}
+		else {
 			lineToMoveTo = line;
-
+		}
+		if(lineToMoveTo < 1){
+			return;
+		}
 		inst.runOnMainSync(new Runnable(){
 			public void run(){
 				view.setSelection(lineToMoveTo);
