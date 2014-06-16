@@ -6,6 +6,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.TimeUnit;
 import com.robotium.solo.Solo.Config;
 import com.robotium.solo.Solo.Config.ScreenshotFileType;
 import android.graphics.Bitmap;
@@ -32,6 +33,8 @@ import android.webkit.WebView;
 
 class ScreenshotTaker {
 
+    private static final long TIMEOUT_SCREENSHOT_MUTEX = TimeUnit.SECONDS.toMillis(2);
+    private final Object screenshotMutex = new Object();
 	private final Config config;
 	private final ActivityUtils activityUtils;
 	private final String LOG_TAG = "Robotium";
@@ -73,7 +76,14 @@ class ScreenshotTaker {
 
 		initScreenShotSaver();
 		ScreenshotRunnable runnable = new ScreenshotRunnable(decorView, name, quality);
-		activityUtils.getCurrentActivity(false).runOnUiThread(runnable);
+
+        synchronized (screenshotMutex) {
+            activityUtils.getCurrentActivity(false).runOnUiThread(runnable);
+            try {
+                screenshotMutex.wait(TIMEOUT_SCREENSHOT_MUTEX);
+            } catch (InterruptedException ignored) {
+            }
+        }
 	}
 
 	/**
@@ -351,10 +361,18 @@ class ScreenshotTaker {
 				if(b != null) {
 					screenShotSaver.saveBitmap(b, name, quality);
 					b = null;
+                    // Return here so that the screenshotMutex is not unlocked,
+                    // since this is handled by save bitmap
+                    return;
 				}
-				else 
+				else
 					Log.d(LOG_TAG, "NULL BITMAP!!");
 			}
+
+            // Make sure the screenshotMutex is unlocked
+            synchronized (screenshotMutex) {
+                screenshotMutex.notify();
+            }
 		}
 	}
 
@@ -395,16 +413,20 @@ class ScreenshotTaker {
 		 * @param message A Message containing the bitmap to save, and some metadata.
 		 */
 		public void handleMessage(Message message) {
-			String name = message.getData().getString("name");
-			int quality = message.arg1;
-			Bitmap b = (Bitmap)message.obj;
-			if(b != null) {
-				saveFile(name, b, quality);
-				b.recycle();
-			}
-			else {
-				Log.d(LOG_TAG, "NULL BITMAP!!");
-			}
+            synchronized (screenshotMutex) {
+                String name = message.getData().getString("name");
+                int quality = message.arg1;
+                Bitmap b = (Bitmap)message.obj;
+                if(b != null) {
+                    saveFile(name, b, quality);
+                    b.recycle();
+                }
+                else {
+                    Log.d(LOG_TAG, "NULL BITMAP!!");
+                }
+
+                screenshotMutex.notify();
+            }
 		}
 
 		/**
