@@ -33,8 +33,8 @@ import android.webkit.WebView;
 
 class ScreenshotTaker {
 
-    private static final long TIMEOUT_SCREENSHOT_MUTEX = TimeUnit.SECONDS.toMillis(2);
-    private final Object screenshotMutex = new Object();
+	private static final long TIMEOUT_SCREENSHOT_MUTEX = TimeUnit.SECONDS.toMillis(2);
+	private final Object screenshotMutex = new Object();
 	private final Config config;
 	private final ActivityUtils activityUtils;
 	private final String LOG_TAG = "Robotium";
@@ -65,7 +65,6 @@ class ScreenshotTaker {
 	 * Takes a screenshot and saves it in the {@link Config} objects save path.  
 	 * Requires write permission (android.permission.WRITE_EXTERNAL_STORAGE) in AndroidManifest.xml of the application under test.
 	 * 
-	 * @param view the view to take screenshot of
 	 * @param name the name to give the screenshot image
 	 * @param quality the compression rate. From 0 (compress for lowest size) to 100 (compress for maximum quality).
 	 */
@@ -77,13 +76,13 @@ class ScreenshotTaker {
 		initScreenShotSaver();
 		ScreenshotRunnable runnable = new ScreenshotRunnable(decorView, name, quality);
 
-        synchronized (screenshotMutex) {
-            activityUtils.getCurrentActivity(false).runOnUiThread(runnable);
-            try {
-                screenshotMutex.wait(TIMEOUT_SCREENSHOT_MUTEX);
-            } catch (InterruptedException ignored) {
-            }
-        }
+		synchronized (screenshotMutex) {
+			activityUtils.getCurrentActivity(false).runOnUiThread(runnable);
+			try {
+				screenshotMutex.wait(TIMEOUT_SCREENSHOT_MUTEX);
+			} catch (InterruptedException ignored) {
+			}
+		}
 	}
 
 	/**
@@ -361,18 +360,18 @@ class ScreenshotTaker {
 				if(b != null) {
 					screenShotSaver.saveBitmap(b, name, quality);
 					b = null;
-                    // Return here so that the screenshotMutex is not unlocked,
-                    // since this is handled by save bitmap
-                    return;
+					// Return here so that the screenshotMutex is not unlocked,
+					// since this is handled by save bitmap
+					return;
 				}
 				else
 					Log.d(LOG_TAG, "NULL BITMAP!!");
 			}
 
-            // Make sure the screenshotMutex is unlocked
-            synchronized (screenshotMutex) {
-                screenshotMutex.notify();
-            }
+			// Make sure the screenshotMutex is unlocked
+			synchronized (screenshotMutex) {
+				screenshotMutex.notify();
+			}
 		}
 	}
 
@@ -413,20 +412,20 @@ class ScreenshotTaker {
 		 * @param message A Message containing the bitmap to save, and some metadata.
 		 */
 		public void handleMessage(Message message) {
-            synchronized (screenshotMutex) {
-                String name = message.getData().getString("name");
-                int quality = message.arg1;
-                Bitmap b = (Bitmap)message.obj;
-                if(b != null) {
-                    saveFile(name, b, quality);
-                    b.recycle();
-                }
-                else {
-                    Log.d(LOG_TAG, "NULL BITMAP!!");
-                }
+			synchronized (screenshotMutex) {
+				String name = message.getData().getString("name");
+				int quality = message.arg1;
+				Bitmap b = (Bitmap)message.obj;
+				if(b != null) {
+					saveFile(name, b, quality);
+					b.recycle();
+				}
+				else {
+					Log.d(LOG_TAG, "NULL BITMAP!!");
+				}
 
-                screenshotMutex.notify();
-            }
+				screenshotMutex.notify();
+			}
 		}
 
 		/**
