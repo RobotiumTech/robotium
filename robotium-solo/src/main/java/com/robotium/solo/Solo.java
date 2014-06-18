@@ -2168,7 +2168,7 @@ public class Solo {
 	 * Returns an ArrayList of Views matching the specified class located under the specified parent.
 	 *
 	 * @param classToFilterBy return all instances of this class. Examples are: {@code Button.class} or {@code ListView.class}
-	 * @param includeSubclasses include instances of subclasses in {@code ArrayList} that will be returned
+	 * @param includeSubclasses include instances of subclasses in the {@code ArrayList} that will be returned
 	 * @param parent the parent {@code View} for where to start the traversal
 	 * @return an {@code ArrayList} of {@code View}s matching the specified {@code Class} located under the specified {@code parent}
 	 */
