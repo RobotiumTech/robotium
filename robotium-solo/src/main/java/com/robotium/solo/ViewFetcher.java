@@ -315,12 +315,12 @@ class ViewFetcher {
 	 * Returns an {@code ArrayList} of {@code View}s of the specified {@code Class} located under the specified {@code parent}.
 	 *
 	 * @param classToFilterBy return all instances of this class, e.g. {@code Button.class} or {@code GridView.class}
-	 * @param includeSubclass include instances of subclasses in {@code ArrayList} that will be returned
+	 * @param includeSubclasses include instances of subclasses in {@code ArrayList} that will be returned
 	 * @param parent the parent {@code View} for where to start the traversal
 	 * @return an {@code ArrayList} of {@code View}s of the specified {@code Class} located under the specified {@code parent}
 	 */
 
-	public <T extends View> ArrayList<T> getCurrentViews(Class<T> classToFilterBy, boolean includeSubclass, View parent) {
+	public <T extends View> ArrayList<T> getCurrentViews(Class<T> classToFilterBy, boolean includeSubclasses, View parent) {
 		ArrayList<T> filteredViews = new ArrayList<T>();
 		List<View> allViews = getViews(parent, true);
 		for(View view : allViews){
@@ -328,7 +328,7 @@ class ViewFetcher {
 				continue;
 			}
 			Class<? extends View> classOfView = view.getClass();
-			if (includeSubclass && classToFilterBy.isAssignableFrom(classOfView) || !includeSubclass && classToFilterBy == classOfView) {
+			if (includeSubclasses && classToFilterBy.isAssignableFrom(classOfView) || !includeSubclasses && classToFilterBy == classOfView) {
 				filteredViews.add(classToFilterBy.cast(view));
 			}
 		}

@@ -2168,12 +2168,12 @@ public class Solo {
 	 * Returns an ArrayList of Views matching the specified class located under the specified parent.
 	 *
 	 * @param classToFilterBy return all instances of this class. Examples are: {@code Button.class} or {@code ListView.class}
-	 * @param includeSubclass include instances of subclasses in {@code ArrayList} that will be returned
+	 * @param includeSubclasses include instances of subclasses in {@code ArrayList} that will be returned
 	 * @param parent the parent {@code View} for where to start the traversal
 	 * @return an {@code ArrayList} of {@code View}s matching the specified {@code Class} located under the specified {@code parent}
 	 */
-	public <T extends View> ArrayList<T> getCurrentViews(Class<T> classToFilterBy, boolean includeSubclass, View parent) {
-		return viewFetcher.getCurrentViews(classToFilterBy, includeSubclass, parent);
+	public <T extends View> ArrayList<T> getCurrentViews(Class<T> classToFilterBy, boolean includeSubclasses, View parent) {
+		return viewFetcher.getCurrentViews(classToFilterBy, includeSubclasses, parent);
 	}
 	
 	/**
@@ -2344,7 +2344,7 @@ public class Solo {
 	}
 
 	/**
-	 * Unlocks the screen.
+	 * Unlocks the lock screen.
 	 */
 
 	public void unlockScreen(){
