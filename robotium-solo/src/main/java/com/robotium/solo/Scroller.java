@@ -261,9 +261,11 @@ class Scroller {
 				scrollListToLine(absListView, listCount-1);
 				return false;
 			}
-			
+
 			if (lastVisiblePosition >= listCount - 1) {
-				scrollListToLine(absListView, lastVisiblePosition);
+				if(lastVisiblePosition > 0){
+					scrollListToLine(absListView, lastVisiblePosition);
+				}
 				return false;
 			}
 			
@@ -320,9 +322,7 @@ class Scroller {
 		else {
 			lineToMoveTo = line;
 		}
-		if(lineToMoveTo < 1){
-			return;
-		}
+		
 		inst.runOnMainSync(new Runnable(){
 			public void run(){
 				view.setSelection(lineToMoveTo);
