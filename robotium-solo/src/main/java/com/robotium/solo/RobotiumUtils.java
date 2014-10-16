@@ -7,6 +7,9 @@ import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.regex.PatternSyntaxException;
+
+import android.content.Context;
+import android.net.wifi.WifiManager;
 import android.view.View;
 import android.widget.TextView;
 
@@ -176,4 +179,22 @@ public class RobotiumUtils {
 		}
 		return filteredViews;
 	}
+	
+	/*
+	 * Turn on/off wifi
+	 * @true or false
+	 * 
+	 * User should have following permissions in AUT(Application Under Test)'s menifest.xml file
+	 *   <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+	 *   <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+	 */
+	static void turnOnOffWifi(Solo solo, Boolean vStatus){
+			WifiManager wifiManager = (WifiManager)solo.getCurrentActivity().getSystemService(Context.WIFI_SERVICE);
+			if (vStatus == true && !wifiManager.isWifiEnabled()) {
+				wifiManager.setWifiEnabled(true);
+			} else if (vStatus == false && wifiManager.isWifiEnabled()) {
+				wifiManager.setWifiEnabled(false);
+			}
+		}
+	
 }
