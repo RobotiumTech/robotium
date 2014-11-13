@@ -83,7 +83,7 @@ public class RobotiumUtils {
 	/**
 	 * Orders Views by their location on-screen.
 	 * 
-	 * @param views The views to sort.
+	 * @param views The views to sort
 	 * @see ViewLocationComparator
 	 */
 
@@ -94,8 +94,8 @@ public class RobotiumUtils {
 	/**
 	 * Orders Views by their location on-screen.
 	 * 
-	 * @param views The views to sort.
-	 * @param yAxisFirst Whether the y-axis should be compared before the x-axis.
+	 * @param views The views to sort
+	 * @param yAxisFirst Whether the y-axis should be compared before the x-axis
 	 * @see ViewLocationComparator
 	 */
 
@@ -149,9 +149,9 @@ public class RobotiumUtils {
 	 * Filters a collection of Views and returns a list that contains only Views
 	 * with text that matches a specified regular expression.
 	 * 
-	 * @param views The collection of views to scan.
-	 * @param regex The text pattern to search for.
-	 * @return A list of views whose text matches the given regex.
+	 * @param views The collection of views to scan
+	 * @param regex The text pattern to search for
+	 * @return A list of views whose text matches the given regex
 	 */
 
 	public static <T extends TextView> List<T> filterViewsByText(Iterable<T> views, String regex) {
@@ -162,9 +162,9 @@ public class RobotiumUtils {
 	 * Filters a collection of Views and returns a list that contains only Views
 	 * with text that matches a specified regular expression.
 	 * 
-	 * @param views The collection of views to scan.
-	 * @param regex The text pattern to search for.
-	 * @return A list of views whose text matches the given regex.
+	 * @param views The collection of views to scan
+	 * @param regex The text pattern to search for
+	 * @return A list of views whose text matches the given regex
 	 */
 
 	public static <T extends TextView> List<T> filterViewsByText(Iterable<T> views, Pattern regex) {
