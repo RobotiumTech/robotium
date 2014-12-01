@@ -8,9 +8,12 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.regex.PatternSyntaxException;
 
+import android.app.KeyguardManager;
+import android.app.KeyguardManager.KeyguardLock;
 import android.content.Context;
 import android.content.res.Configuration;
 import android.net.wifi.WifiManager;
+import android.test.UiThreadTest;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -202,22 +205,25 @@ public class RobotiumUtils {
 			}
 		}
 	
+	@UiThreadTest
 	/*
-	 * unlock/lock android device
-	 * @true or false
+	 * unlock android device
+	 *  @solo reference
+	 *  @main activity name of AUT
 	 * 
 	 * User should have following permissions in AUT(Application Under Test)'s menifest.xml file
-	 *   <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
-	 *   <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+	 *   <uses-permission android:name="android.permission.DISABLE_KEYGUARD"/>
+	 *   
 	 */
-	static void lockUnlockDevice(Solo solo, Boolean status){
-			WifiManager wifiManager = (WifiManager)solo.getCurrentActivity().getSystemService(Context.WIFI_SERVICE);
-			if (status == true && !wifiManager.isWifiEnabled()) {
-				wifiManager.setWifiEnabled(true);
-			} else if (status == false && wifiManager.isWifiEnabled()) {
-				wifiManager.setWifiEnabled(false);
-			}
-		}
+	void unlockDevice(Solo solo, String activityName){
+		KeyguardManager keyGuardManager;
+		KeyguardLock locker;
+		
+		keyGuardManager= (KeyguardManager) solo.getCurrentActivity().getSystemService(Context.KEYGUARD_SERVICE);
+		  locker =  keyGuardManager.newKeyguardLock(activityName);
+		  ((KeyguardLock) locker).disableKeyguard();
+
+	}
 	
 	/*
 	 * check if connected device is tablet
@@ -244,136 +250,16 @@ public class RobotiumUtils {
 	 *   
 	 */
 	static void checkMemory() {
-		double vTotalMem = Double.valueOf(Runtime.getRuntime().totalMemory());
-		double vMaxMem = Double.valueOf(Runtime.getRuntime().maxMemory());
-		double vAvailableMem = Double
+		double totalMem = Double.valueOf(Runtime.getRuntime().totalMemory());
+		double maxMem = Double.valueOf(Runtime.getRuntime().maxMemory());
+		double availableMem = Double
 				.valueOf(Runtime.getRuntime().freeMemory());
 		System.out.println("Runtime Memory info: TotalMem="
-				+ Math.round(vTotalMem / 1048576) + "mb. MaxMemory"
-				+ Math.round(vMaxMem / 1048576) + " mb. AvailableMemory="
-				+ Math.round(vAvailableMem / 1048576) + " mb.");
+				+ Math.round(totalMem / 1048576) + "mb. MaxMemory"
+				+ Math.round(maxMem / 1048576) + " mb. AvailableMemory="
+				+ Math.round(availableMem / 1048576) + " mb.");
 	}
 	
-	/*
-	 * Prints details of all ImageViews on visible screen
-	 *   
-	 */
-	static void printAllImageViews(Solo solo) {
-		ArrayList<ImageView> allImageViews = solo
-				.getCurrentViews(ImageView.class);
-		System.out.println("Total ImageViews:" + allImageViews.size());
-		for (ImageView vImageView : allImageViews) {
-			if (vImageView.getVisibility() == View.VISIBLE) {
-				System.out.println("Image ID: "
-						+ vImageView.getId()
-						+ "Tag: "
-						+ (vImageView.getTag() != null ? vImageView.getTag()
-								.toString() : "null") + " Visibility:"
-						+ vImageView.getVisibility() + " View String :"
-						+ vImageView.toString());
-			}
-		}
-	}
 	
-	/*
-	 * Prints details of all ImageButtons on visible screen
-	 *   
-	 */
-	static void printAllImageButtons(Solo solo) {
-		ArrayList<ImageButton> allImageButton = solo
-				.getCurrentViews(ImageButton.class);
-		System.out.println("Total ImageButtons:" + allImageButton.size());
-		for (ImageView vImageButton : allImageButton) {
-			if (vImageButton.getVisibility() == View.VISIBLE) {
-				System.out.println("Image Button ID: " + vImageButton.getId() + "Tag: "
-						+ vImageButton.getTag().toString() + " Visibility:"
-						+ vImageButton.getVisibility() + "View String: "
-						+ vImageButton.toString());
-			}
-		}
-	}
-	
-	/*
-	 * Prints details of all Views on visible screen
-	 *   
-	 */
-	static void printAllViews(Solo solo) {
-		ArrayList<View> allViews = solo.getCurrentViews();
-		System.out.println("Total Views:" + allViews.size());
-		for (View vView : allViews) {
-			if (vView.getVisibility() == View.VISIBLE) {
-				System.out.println("View : " + vView.toString() + "View ID: "
-						+ vView.getId() + " Value:"
-						+ vView.getClass().getName().toString()
-						+ " Visibility:" + vView.getVisibility());
-			}
-		}
-	}
-	
-	/*
-	 * Prints details of all TextViews on visible screen
-	 *   
-	 */
-	static void printAllTextViews(Solo solo) {
-		ArrayList<TextView> textViewsList = null;
-		textViewsList = solo.getCurrentViews(TextView.class);
-		System.out.println("Total TextViews:" + textViewsList.size());
-		int index = 0;
-		for (TextView textView : textViewsList) {
-			if (textView.getVisibility() == View.VISIBLE) {
-				System.out.println("TextView ID: "
-						+ textView.getId()
-						+ "Index: "
-						+ index
-						+ " Tag: "
-						+ (textView.getTag() != null ? textView.getTag()
-								.toString() : "null") + " Value: "
-						+ textView.getText().toString() + " Visibility: "
-						+ textView.getVisibility() + " View String: "
-						+ textView.toString());
-				index++;
-			}
-		}
-	}
-	
-	/*
-	 * Prints details of all Buttons on visible screen
-	 *   
-	 */
-	static void printAllButtons(Solo solo) {
-		ArrayList<Button> allButtons = solo.getCurrentViews(Button.class);
-		System.out.println("Total Buttons:" + allButtons.size());
-		for (Button vButton : allButtons) {
-			if (vButton.getVisibility() == View.VISIBLE) {
-				System.out.println("Button ID: "
-						+ vButton.getId()
-						+ " Tag:"
-						+ (vButton.getTag() != null ? vButton.getTag()
-								.toString() : "null") + " Value:"
-						+ vButton.getText().toString() + " Visibility:"
-						+ vButton.getVisibility() + " View String:"
-						+ vButton.toString());
-			}
-		}
-	}
-
-	/*
-	 * Prints details of all ToggleButtons on visible screen
-	 *   
-	 */
-	static void printAllToggleButtons(Solo solo) {
-		ArrayList<ToggleButton> allToggleButtons = solo
-				.getCurrentViews(ToggleButton.class);
-		System.out.println("Total ToggleButtons:" + allToggleButtons.size());
-		for (ToggleButton vToggleButton : allToggleButtons) {
-			if (vToggleButton.getVisibility() == View.VISIBLE) {
-				System.out.println("Button ID: " + vToggleButton.getId() + " Tag :"
-						+ vToggleButton.getTag().toString() + " Value:"
-						+ vToggleButton.getText().toString() + " Visibility:"
-						+ vToggleButton.getVisibility() + " View String :"
-						+ vToggleButton.toString());
-			}
-		}
-	}
 	
 }
