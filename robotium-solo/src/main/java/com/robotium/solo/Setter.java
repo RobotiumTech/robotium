@@ -55,7 +55,7 @@ class Setter{
 		if(datePicker != null){
 			Activity activity = activityUtils.getCurrentActivity(false);
 			if(activity != null){
-				activityUtils.getCurrentActivity(false).runOnUiThread(new Runnable()
+				activity.runOnUiThread(new Runnable()
 				{
 					public void run()
 					{
