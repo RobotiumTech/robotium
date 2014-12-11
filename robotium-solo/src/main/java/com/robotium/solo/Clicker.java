@@ -337,7 +337,10 @@ class Clicker {
 
 	public void clickOnActionBarItem(int resourceId){
 		sleeper.sleep();
-		inst.invokeMenuActionSync(activityUtils.getCurrentActivity(), resourceId, 0);
+		Activity activity = activityUtils.getCurrentActivity();
+		if(activity != null){
+			inst.invokeMenuActionSync(activity, resourceId, 0);
+		}
 	}
 
 	/**

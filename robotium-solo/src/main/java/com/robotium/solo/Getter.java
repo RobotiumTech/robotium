@@ -115,7 +115,9 @@ class Getter {
 
 		if(index < 1){
 			index = 0;
-			viewToReturn = activity.findViewById(id);
+			if(activity != null){
+				viewToReturn = activity.findViewById(id);
+			}
 		}
 
 		if (viewToReturn != null) {

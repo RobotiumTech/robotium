@@ -133,8 +133,8 @@ public class Solo {
 		this.instrumentation = instrumentation;
 		this.sleeper = new Sleeper();
 		this.sender = new Sender(instrumentation, sleeper);
-		this.activityUtils = new ActivityUtils(instrumentation, activity, sleeper);
-		this.viewFetcher = new ViewFetcher(activityUtils);
+		this.activityUtils = new ActivityUtils(config, instrumentation, activity, sleeper);
+		this.viewFetcher = new ViewFetcher(instrumentation);
 		this.screenshotTaker = new ScreenshotTaker(config, activityUtils, viewFetcher, sleeper);
 		this.dialogUtils = new DialogUtils(activityUtils, viewFetcher, sleeper);
 		this.webUtils = new WebUtils(config, instrumentation,activityUtils,viewFetcher, sleeper);
@@ -214,6 +214,12 @@ public class Solo {
 		public enum ScreenshotFileType {
 			JPEG, PNG
 		}
+		
+		/**
+		 *  Set to true if Activity tracking should be enabled. Default value is true.
+		 */
+		
+		public boolean trackActivities = true;
 	}
 
 	/**
@@ -1725,7 +1731,7 @@ public class Solo {
 		slidingDrawer = (SlidingDrawer) waiter.waitForView(slidingDrawer, Timeout.getSmallTimeout());
 		setter.setSlidingDrawer(slidingDrawer, status);
 	}
-
+		
 	/**
 	 * Enters text in an EditText matching the specified index.
 	 *

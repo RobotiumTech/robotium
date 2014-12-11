@@ -124,7 +124,7 @@ class DialogUtils {
 	 */
 	
 	private boolean isDialog(Activity activity, View decorView){
-		if(decorView == null || !decorView.isShown()){
+		if(decorView == null || !decorView.isShown() || activity == null){
 			return false;
 		}
 		Context viewContext = null;
