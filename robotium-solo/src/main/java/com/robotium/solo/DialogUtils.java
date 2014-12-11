@@ -2,6 +2,7 @@ package com.robotium.solo;
 
 
 import android.app.Activity;
+import android.app.Instrumentation;
 import android.content.Context;
 import android.os.SystemClock;
 import android.view.ContextThemeWrapper;
@@ -19,6 +20,7 @@ import android.widget.EditText;
 
 class DialogUtils {
 
+	private final Instrumentation instrumentation;
 	private final ActivityUtils activityUtils;
 	private final ViewFetcher viewFetcher;
 	private final Sleeper sleeper;
@@ -33,7 +35,8 @@ class DialogUtils {
 	 * @param sleeper the {@code Sleeper} instance
 	 */
 
-	public DialogUtils(ActivityUtils activityUtils, ViewFetcher viewFetcher, Sleeper sleeper) {
+	public DialogUtils(Instrumentation instrumentation, ActivityUtils activityUtils, ViewFetcher viewFetcher, Sleeper sleeper) {
+		this.instrumentation = instrumentation;
 		this.activityUtils = activityUtils;
 		this.viewFetcher = viewFetcher;
 		this.sleeper = sleeper;
@@ -149,9 +152,15 @@ class DialogUtils {
 	 */
 
 	public void hideSoftKeyboard(EditText editText, boolean shouldSleepFirst, boolean shouldSleepAfter) {
-		Activity activity = activityUtils.getCurrentActivity(shouldSleepFirst);
+		InputMethodManager inputMethodManager;
 
-		InputMethodManager inputMethodManager = (InputMethodManager)  activity.getSystemService(Activity.INPUT_METHOD_SERVICE);
+		Activity activity = activityUtils.getCurrentActivity(shouldSleepFirst);
+		if(activity == null){
+			inputMethodManager = (InputMethodManager) instrumentation.getTargetContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+		}
+		else {
+			inputMethodManager = (InputMethodManager)  activity.getSystemService(Activity.INPUT_METHOD_SERVICE);
+		}
 
 		if(editText != null) {
 			inputMethodManager.hideSoftInputFromWindow(editText.getWindowToken(), 0);

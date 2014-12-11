@@ -4,9 +4,11 @@ import java.util.ArrayList;
 import com.robotium.solo.Solo.Config;
 import junit.framework.Assert;
 import android.app.Instrumentation;
+import android.content.Context;
 import android.os.SystemClock;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.WindowManager;
 import android.webkit.WebView;
 import android.widget.AbsListView;
 import android.widget.GridView;
@@ -341,9 +343,12 @@ class Scroller {
 
 	@SuppressWarnings("deprecation")
 	public void scrollToSide(Side side, float scrollPosition, int stepCount) {
-		int screenHeight = activityUtils.getCurrentActivity().getWindowManager().getDefaultDisplay()
+		WindowManager windowManager = (WindowManager) 
+				inst.getTargetContext().getSystemService(Context.WINDOW_SERVICE);
+		
+		int screenHeight = windowManager.getDefaultDisplay()
 				.getHeight();
-		int screenWidth = activityUtils.getCurrentActivity(false).getWindowManager().getDefaultDisplay()
+		int screenWidth = windowManager.getDefaultDisplay()
 				.getWidth();
 		float x = screenWidth * scrollPosition;
 		float y = screenHeight / 2.0f;

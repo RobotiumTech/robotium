@@ -79,6 +79,9 @@ class Getter {
 	public String getString(int id)
 	{
 		Activity activity = activityUtils.getCurrentActivity(false);
+		if(activity == null){
+			return "";
+		}
 		return activity.getString(id);
 	}
 

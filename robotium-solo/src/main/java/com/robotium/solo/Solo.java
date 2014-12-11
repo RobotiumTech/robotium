@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import junit.framework.Assert;
 import android.app.Activity;
 import android.app.Instrumentation;
+import android.content.Context;
 import android.content.pm.ActivityInfo;
 import android.graphics.PointF;
 import android.os.Environment;
@@ -135,8 +136,8 @@ public class Solo {
 		this.sender = new Sender(instrumentation, sleeper);
 		this.activityUtils = new ActivityUtils(config, instrumentation, activity, sleeper);
 		this.viewFetcher = new ViewFetcher(instrumentation);
-		this.screenshotTaker = new ScreenshotTaker(config, activityUtils, viewFetcher, sleeper);
-		this.dialogUtils = new DialogUtils(activityUtils, viewFetcher, sleeper);
+		this.screenshotTaker = new ScreenshotTaker(config, instrumentation, activityUtils, viewFetcher, sleeper);
+		this.dialogUtils = new DialogUtils(instrumentation, activityUtils, viewFetcher, sleeper);
 		this.webUtils = new WebUtils(config, instrumentation,activityUtils,viewFetcher, sleeper);
 		this.scroller = new Scroller(config, instrumentation, activityUtils, viewFetcher, sleeper);
 		this.searcher = new Searcher(viewFetcher, webUtils, scroller, sleeper);
@@ -2354,10 +2355,13 @@ public class Solo {
 	 */
 
 	public void unlockScreen(){
+		final Activity activity = activityUtils.getCurrentActivity(false);
 		instrumentation.runOnMainSync(new Runnable() {
 			@Override
 			public void run() {
-				activityUtils.getCurrentActivity(false).getWindow().addFlags(WindowManager.LayoutParams.FLAG_DISMISS_KEYGUARD);
+				if(activity != null){
+					activity.getWindow().addFlags(WindowManager.LayoutParams.FLAG_DISMISS_KEYGUARD);
+				}
 			}
 		});
 	}

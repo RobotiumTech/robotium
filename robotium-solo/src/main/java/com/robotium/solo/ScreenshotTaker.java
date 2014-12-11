@@ -9,6 +9,8 @@ import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 import com.robotium.solo.Solo.Config;
 import com.robotium.solo.Solo.Config.ScreenshotFileType;
+import android.app.Activity;
+import android.app.Instrumentation;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Picture;
@@ -36,6 +38,7 @@ class ScreenshotTaker {
 	private static final long TIMEOUT_SCREENSHOT_MUTEX = TimeUnit.SECONDS.toMillis(2);
 	private final Object screenshotMutex = new Object();
 	private final Config config;
+	private final Instrumentation instrumentation;
 	private final ActivityUtils activityUtils;
 	private final String LOG_TAG = "Robotium";
 	private ScreenshotSequenceThread screenshotSequenceThread = null;
@@ -49,13 +52,15 @@ class ScreenshotTaker {
 	 * Constructs this object.
 	 * 
 	 * @param config the {@code Config} instance
+	 * @param instrumentation the {@code Instrumentation} instance.
 	 * @param activityUtils the {@code ActivityUtils} instance
 	 * @param viewFetcher the {@code ViewFetcher} instance
 	 * @param sleeper the {@code Sleeper} instance
 	 * 
 	 */
-	ScreenshotTaker(Config config, ActivityUtils activityUtils, ViewFetcher viewFetcher, Sleeper sleeper) {
+	ScreenshotTaker(Config config, Instrumentation instrumentation, ActivityUtils activityUtils, ViewFetcher viewFetcher, Sleeper sleeper) {
 		this.config = config;
+		this.instrumentation = instrumentation;
 		this.activityUtils = activityUtils;
 		this.viewFetcher = viewFetcher;
 		this.sleeper = sleeper;
@@ -77,7 +82,12 @@ class ScreenshotTaker {
 		ScreenshotRunnable runnable = new ScreenshotRunnable(decorView, name, quality);
 
 		synchronized (screenshotMutex) {
-			activityUtils.getCurrentActivity(false).runOnUiThread(runnable);
+			Activity activity = activityUtils.getCurrentActivity(false);
+			if(activity != null)
+				activity.runOnUiThread(runnable);
+			else
+				instrumentation.runOnMainSync(runnable);
+
 			try {
 				screenshotMutex.wait(TIMEOUT_SCREENSHOT_MUTEX);
 			} catch (InterruptedException ignored) {
@@ -320,7 +330,13 @@ class ScreenshotTaker {
 			String final_name = name+"_"+seqno;
 			ScreenshotRunnable r = new ScreenshotRunnable(v, final_name, quality);
 			Log.d(LOG_TAG, "taking screenshot "+final_name);
-			activityUtils.getCurrentActivity(false).runOnUiThread(r);
+			Activity activity = activityUtils.getCurrentActivity(false);
+			if(activity != null){
+				activity.runOnUiThread(r);
+			}
+			else {
+				instrumentation.runOnMainSync(r);
+			}
 		}
 
 		public void interrupt() {

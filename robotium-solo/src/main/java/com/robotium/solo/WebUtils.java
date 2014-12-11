@@ -6,6 +6,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import com.robotium.solo.Solo.Config;
+import android.app.Activity;
 import android.app.Instrumentation;
 import android.webkit.WebChromeClient;
 import android.webkit.WebView;
@@ -270,14 +271,25 @@ class WebUtils {
 		}
 
 		final String javaScript = prepareForStartOfJavascriptExecution();
-
-		activityUtils.getCurrentActivity(false).runOnUiThread(new Runnable() {
+		Activity activity = activityUtils.getCurrentActivity(false);
+		if(activity != null){
+		activity.runOnUiThread(new Runnable() {
 			public void run() {
 				if(webView != null){
 					webView.loadUrl("javascript:" + javaScript + function);
 				}
 			}
 		});
+		}
+		else{
+			inst.runOnMainSync(new Runnable() {
+			public void run() {
+				if(webView != null){
+					webView.loadUrl("javascript:" + javaScript + function);
+				}
+			}
+		});
+		}
 		return true;
 	}
 
