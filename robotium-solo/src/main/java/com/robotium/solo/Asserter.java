@@ -40,10 +40,8 @@ class Asserter {
 		if(!foundActivity){
 			Activity activity = activityUtils.getCurrentActivity();
 			if(activity != null){
-
 				Assert.assertEquals(message, name, activity.getClass().getSimpleName());	
 			}
-
 			else{
 				Assert.assertEquals(message, name, "No actvity found");
 			}
@@ -64,13 +62,11 @@ class Asserter {
 
 		boolean foundActivity = waiter.waitForActivity(expectedClass);
 
-		if(!foundActivity) {
-			
+		if(!foundActivity) {		
 			Activity activity = activityUtils.getCurrentActivity();
 			if(activity != null){
 				Assert.assertEquals(message, expectedClass.getName(), activity.getClass().getName());
-			}
-			
+			}		
 			else{
 				Assert.assertEquals(message, expectedClass.getName(), "No activity found");
 			}
