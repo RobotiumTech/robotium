@@ -394,6 +394,50 @@ public class Solo {
 	}
 
 	/**
+	 * Waits for a View matching the specified tag. Default timeout is 20 seconds.
+	 *
+	 * @param tag the {@link View#getTag() tag} of the {@link View} to wait for
+	 * @return {@code true} if the {@link View} is displayed and {@code false} if it is not displayed before the timeout
+	 */
+
+	public boolean waitForView(Object tag){
+		return waitForView(tag, 0, Timeout.getLargeTimeout(), true);
+	}
+
+	/**
+	 * Waits for a View matching the specified tag.
+	 *
+	 * @param tag the {@link View#getTag() tag} of the {@link View} to wait for
+	 * @param minimumNumberOfMatches the minimum number of matches that are expected to be found. {@code 0} means any number of matches
+	 * @param timeout the amount of time in milliseconds to wait
+	 * @return {@code true} if the {@link View} is displayed and {@code false} if it is not displayed before the timeout
+	 */
+
+	public boolean waitForView(Object tag, int minimumNumberOfMatches, int timeout){
+		return waitForView(tag, minimumNumberOfMatches, timeout, true);
+	}
+
+	/**
+	 * Waits for a View matching the specified tag
+	 *
+	 * @param tag the {@link View#getTag() tag} of the {@link View} to wait for
+	 * @param minimumNumberOfMatches the minimum number of matches that are expected to be found. {@code 0} means any number of matches
+	 * @param timeout the amount of time in milliseconds to wait
+	 * @param scroll {@code true} if scrolling should be performed
+	 * @return {@code true} if the {@link View} is displayed and {@code false} if it is not displayed before the timeout
+	 */
+
+	public boolean waitForView(Object tag, int minimumNumberOfMatches, int timeout, boolean scroll){
+		int index = minimumNumberOfMatches-1;
+
+		if(index < 1) {
+			index = 0;
+		}
+
+		return (waiter.waitForView(tag, index, timeout, scroll) != null);
+	}
+
+	/**
 	 * Waits for a View matching the specified class. Default timeout is 20 seconds. 
 	 * 
 	 * @param viewClass the {@link View} class to wait for
@@ -2031,6 +2075,42 @@ public class Solo {
 			}
 			else {
 				Assert.fail("View with id: '" + id + "' is not found!");
+			}
+		}
+		return viewToReturn;
+	}
+
+	/**
+	 * Returns a View matching the specified tag.
+	 *
+	 * @param tag the tag of the {@link View} to return
+	 * @return a {@link View} matching the specified id
+	 * @see {@link View#getTag()}
+	 */
+
+	public View getView(Object tag){
+		return getView(tag, 0);
+	}
+
+	/**
+	 * Returns a View matching the specified tag and index.
+	 *
+	 * @param tag the tag of the {@link View} to return
+	 * @param index the index of the {@link View}. {@code 0} if only one is available
+	 * @return a {@link View} matching the specified id and index
+	 * @see {@link View#getTag()}
+	 */
+
+	public View getView(Object tag, int index){
+		View viewToReturn = getter.getView(tag, index);
+
+		if(viewToReturn == null) {
+			int match = index + 1;
+			if(match > 1){
+				Assert.fail(match + " Views with id: '" + tag + "' are not found!");
+			}
+			else {
+				Assert.fail("View with id: '" + tag + "' is not found!");
 			}
 		}
 		return viewToReturn;
