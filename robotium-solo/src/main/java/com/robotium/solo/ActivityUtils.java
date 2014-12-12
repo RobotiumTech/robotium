@@ -207,7 +207,9 @@ class ActivityUtils {
 	public void setActivityOrientation(int orientation)
 	{
 		Activity activity = getCurrentActivity();
-		activity.setRequestedOrientation(orientation);	
+		if(activity != null){
+			activity.setRequestedOrientation(orientation);	
+		}
 	}
 
 	/**
