@@ -1349,7 +1349,12 @@ public class Solo {
 	 */
 
 	public void clickOnActionBarHomeButton() {
-		clicker.clickOnActionBarHomeButton();
+		instrumentation.runOnMainSync(new Runnable() {
+			@Override
+			public void run() {
+				clicker.clickOnActionBarHomeButton();
+			}
+		});
 	}
 
 	/**

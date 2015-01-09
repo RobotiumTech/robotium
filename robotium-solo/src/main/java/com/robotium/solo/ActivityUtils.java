@@ -428,6 +428,7 @@ class ActivityUtils {
 			}
 		}
 	}
+	
 	/**
 	 * Clears the activity stack.
 	 */
