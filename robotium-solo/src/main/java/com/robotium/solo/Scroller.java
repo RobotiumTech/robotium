@@ -391,10 +391,12 @@ class Scroller {
 		@SuppressWarnings("unchecked")
 		ArrayList<View> views = RobotiumUtils.filterViewsToSet(new Class[] {ViewGroup.class}, viewList);
 		for(View view : views){
+			
 			if(view.getClass().getName().contains("widget.RecyclerView") || 
-					view.getClass().getSuperclass().getName().contains("widget.RecyclerView")){
+					(view.getClass().getSuperclass() != null && view.getClass().getSuperclass().getName().contains("widget.RecyclerView"))){
 				return view;
 			}
+
 		}
 		return null;
 	}
