@@ -8,6 +8,7 @@ import android.content.Context;
 import android.os.SystemClock;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.webkit.WebView;
 import android.widget.AbsListView;
@@ -31,7 +32,6 @@ class Scroller {
 	public enum Side {LEFT, RIGHT}
 	private boolean canScroll = false;
 	private final Instrumentation inst;
-	private final ActivityUtils activityUtils;
 	private final ViewFetcher viewFetcher;
 	private final Sleeper sleeper;
 	private final Config config;
@@ -41,15 +41,13 @@ class Scroller {
 	 * Constructs this object.
 	 *
 	 * @param inst the {@code Instrumentation} instance
-	 * @param activityUtils the {@code ActivityUtils} instance
 	 * @param viewFetcher the {@code ViewFetcher} instance
 	 * @param sleeper the {@code Sleeper} instance
 	 */
 
-	public Scroller(Config config, Instrumentation inst, ActivityUtils activityUtils, ViewFetcher viewFetcher, Sleeper sleeper) {
+	public Scroller(Config config, Instrumentation inst, ViewFetcher viewFetcher, Sleeper sleeper) {
 		this.config = config;
 		this.inst = inst;
-		this.activityUtils = activityUtils;
 		this.viewFetcher = viewFetcher;
 		this.sleeper = sleeper;
 	}
@@ -103,8 +101,7 @@ class Scroller {
 	 * @return {@code true} if scrolling occurred, false if it did not
 	 */
 
-	private boolean scrollScrollView(final ScrollView view, int direction){
-
+	private boolean scrollView(final View view, int direction){
 		if(view == null){
 			return false;
 		}
@@ -143,8 +140,8 @@ class Scroller {
 	 * @param direction the direction to be scrolled
 	 */
 
-	private void scrollScrollViewAllTheWay(final ScrollView view, final int direction) {
-		while(scrollScrollView(view, direction));
+	private void scrollViewAllTheWay(final View view, final int direction) {
+		while(scrollView(view, direction));
 	}
 
 	/**
@@ -186,29 +183,31 @@ class Scroller {
 		@SuppressWarnings("unchecked")
 		ArrayList<View> views = RobotiumUtils.filterViewsToSet(new Class[] { ListView.class,
 				ScrollView.class, GridView.class, WebView.class}, viewList);
+
 		View view = viewFetcher.getFreshestView(views);
-		
-		if (view == null)
-		{
-			return false;
+
+		if (view == null) {
+			view = getRecyclerView(viewList);
+
+			if(view == null){
+				return false;
+			}
 		}
 
 		if (view instanceof AbsListView) {
 			return scrollList((AbsListView)view, direction, allTheWay);
 		}
 
-		if (view instanceof ScrollView) {
-			if (allTheWay) {
-				scrollScrollViewAllTheWay((ScrollView) view, direction);
-				return false;
-			} else {
-				return scrollScrollView((ScrollView)view, direction);
-			}
-		}
 		if(view instanceof WebView){
 			return scrollWebView((WebView)view, direction, allTheWay);
 		}
-		return false;
+
+		if (allTheWay) {
+			scrollViewAllTheWay(view, direction);
+			return false;
+		} else {
+			return scrollView(view, direction);
+		}
 	}
 	
 	/**
@@ -378,6 +377,27 @@ class Scroller {
 			drag(corners[0], x, y, y, stepCount);
 		else if (side == Side.RIGHT)
 			drag(x, corners[0], y, y, stepCount);
+	}
+	
+	/**
+	 * Returns a RecyclerView or null if not found
+	 * 
+	 * @param viewList the list to check in 
+	 * 
+	 * @return a RecyclerView
+	 */
+	
+	private View getRecyclerView(ArrayList<View> viewList){
+		@SuppressWarnings("unchecked")
+		ArrayList<View> views = RobotiumUtils.filterViewsToSet(new Class[] {ViewGroup.class}, viewList);
+		for(View view : views){
+			if(view.getClass().getName().contains("widget.RecyclerView") || 
+					view.getParent().getClass().getName().contains("widget.RecyclerView")){
+				
+				return view;
+			}
+		}
+		return null;
 	}
 
 }

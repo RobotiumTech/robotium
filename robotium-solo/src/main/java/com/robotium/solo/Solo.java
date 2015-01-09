@@ -5,12 +5,12 @@ import java.util.ArrayList;
 import junit.framework.Assert;
 import android.app.Activity;
 import android.app.Instrumentation;
-import android.content.Context;
 import android.content.pm.ActivityInfo;
 import android.graphics.PointF;
 import android.os.Environment;
 import android.view.KeyEvent;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.webkit.WebView;
 import android.widget.AbsListView;
@@ -139,7 +139,7 @@ public class Solo {
 		this.screenshotTaker = new ScreenshotTaker(config, instrumentation, activityUtils, viewFetcher, sleeper);
 		this.dialogUtils = new DialogUtils(instrumentation, activityUtils, viewFetcher, sleeper);
 		this.webUtils = new WebUtils(config, instrumentation,activityUtils,viewFetcher, sleeper);
-		this.scroller = new Scroller(config, instrumentation, activityUtils, viewFetcher, sleeper);
+		this.scroller = new Scroller(config, instrumentation, viewFetcher, sleeper);
 		this.searcher = new Searcher(viewFetcher, webUtils, scroller, sleeper);
 		this.waiter = new Waiter(activityUtils, viewFetcher, searcher,scroller, sleeper);
 		this.getter = new Getter(instrumentation, activityUtils, waiter);
@@ -1383,7 +1383,7 @@ public class Solo {
 
 	@SuppressWarnings("unchecked")
 	public boolean scrollDown() {
-		waiter.waitForViews(true, AbsListView.class, ScrollView.class, WebView.class);
+		waiter.waitForViews(true, AbsListView.class, ScrollView.class, WebView.class, ViewGroup.class);
 		return scroller.scroll(Scroller.DOWN);
 	}
 
