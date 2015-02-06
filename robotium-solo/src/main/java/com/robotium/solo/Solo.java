@@ -1688,6 +1688,7 @@ public class Solo {
 	
 	/**
 	 * Sets if mobile data should be turned on or off. Requires android.permission.CHANGE_NETWORK_STATE in the AndroidManifest.xml of the application under test.
+	 * NOTE: Setting it to false can kill the adb connection. 
 	 * 
 	 * @param turnedOn true if mobile data is to be turned on and false if not
 	 */
