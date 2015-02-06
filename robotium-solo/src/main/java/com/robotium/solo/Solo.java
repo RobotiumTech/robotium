@@ -70,6 +70,7 @@ public class Solo {
 	protected final ScreenshotTaker screenshotTaker;
 	protected final Instrumentation instrumentation;
 	protected final Zoomer zoomer;
+	protected final SystemUtils systemUtils;
 	protected String webUrl = null;
 	private final Config config;
 	public final static int LANDSCAPE = ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE;   // 0
@@ -153,6 +154,7 @@ public class Solo {
 		this.rotator = new Rotator(instrumentation);
 		this.presser = new Presser(viewFetcher, clicker, instrumentation, sleeper, waiter, dialogUtils);
 		this.textEnterer = new TextEnterer(instrumentation, clicker, dialogUtils);
+		this.systemUtils = new SystemUtils(instrumentation);
 		initialize();
 	}
 
@@ -1672,6 +1674,28 @@ public class Solo {
 		}
 		rotator.generateRotateGesture(Rotator.SMALL, center1, center2);
 	}
+	
+	/**
+	 * Sets the device locale. Requires android.permission.CHANGE_CONFIGURATION in the AndroidManifest.xml of the application under test.
+	 * 
+	 * @param language the language e.g. "en"
+	 * @param country the country e.g. "US"
+	 */
+
+	public void setDeviceLocale(String language, String country){
+		systemUtils.setDeviceLocale(language, country);
+	}
+	
+	/**
+	 * Sets if mobile data should be turned on or off. Requires android.permission.CHANGE_NETWORK_STATE in the AndroidManifest.xml of the application under test.
+	 * 
+	 * @param turnedOn true if mobile data is to be turned on and false if not
+	 */
+
+	public void setMobileData(Boolean turnedOn){
+		systemUtils.setMobileData(turnedOn);
+	}
+	
 
 	/**
 	 * Sets the date in a DatePicker matching the specified index.
