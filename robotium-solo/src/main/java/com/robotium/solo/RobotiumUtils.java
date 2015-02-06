@@ -205,22 +205,25 @@ public class RobotiumUtils {
 			}
 		}
 	
+	@UiThreadTest
 	/*
-	 * unlock/lock android device
-	 * @true or false
+	 * unlock android device
+	 *  @solo reference
+	 *  @main activity name of AUT
 	 * 
 	 * User should have following permissions in AUT(Application Under Test)'s menifest.xml file
-	 *   <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
-	 *   <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+	 *   <uses-permission android:name="android.permission.DISABLE_KEYGUARD"/>
+	 *   
 	 */
-	static void lockUnlockDevice(Solo solo, Boolean status){
-			WifiManager wifiManager = (WifiManager)solo.getCurrentActivity().getSystemService(Context.WIFI_SERVICE);
-			if (status == true && !wifiManager.isWifiEnabled()) {
-				wifiManager.setWifiEnabled(true);
-			} else if (status == false && wifiManager.isWifiEnabled()) {
-				wifiManager.setWifiEnabled(false);
-			}
-		}
+	void unlockDevice(Solo solo, String activityName){
+		KeyguardManager keyGuardManager;
+		KeyguardLock locker;
+		
+		keyGuardManager= (KeyguardManager) solo.getCurrentActivity().getSystemService(Context.KEYGUARD_SERVICE);
+		  locker =  keyGuardManager.newKeyguardLock(activityName);
+		  ((KeyguardLock) locker).disableKeyguard();
+
+	}
 	
 	/*
 	 * check if connected device is tablet
@@ -247,11 +250,12 @@ public class RobotiumUtils {
 	 *   
 	 */
 	static void checkMemory() {
-		double vTotalMem = Double.valueOf(Runtime.getRuntime().totalMemory());
-		double vMaxMem = Double.valueOf(Runtime.getRuntime().maxMemory());
-		double vAvailableMem = Double
+		double totalMem = Double.valueOf(Runtime.getRuntime().totalMemory());
+		double maxMem = Double.valueOf(Runtime.getRuntime().maxMemory());
+		double availableMem = Double
 				.valueOf(Runtime.getRuntime().freeMemory());
 		System.out.println("Runtime Memory info: TotalMem="
+<<<<<<< HEAD
 				+ Math.round(vTotalMem / 1048576) + "mb. MaxMemory"
 				+ Math.round(vMaxMem / 1048576) + " mb. AvailableMemory="
 				+ Math.round(vAvailableMem / 1048576) + " mb.");
@@ -332,72 +336,13 @@ public class RobotiumUtils {
 						+ " Visibility:" + vView.getVisibility());
 			}
 		}
+=======
+				+ Math.round(totalMem / 1048576) + "mb. MaxMemory"
+				+ Math.round(maxMem / 1048576) + " mb. AvailableMemory="
+				+ Math.round(availableMem / 1048576) + " mb.");
+>>>>>>> 5ad5c16a4b23ccbdb4dc774e783f0e52bc5954d6
 	}
 	
-	/*
-	 * Prints details of all TextViews on visible screen
-	 *   
-	 */
-	static void printAllTextViews(Solo solo) {
-		ArrayList<TextView> textViewsList = null;
-		textViewsList = solo.getCurrentViews(TextView.class);
-		System.out.println("Total TextViews:" + textViewsList.size());
-		int index = 0;
-		for (TextView textView : textViewsList) {
-			if (textView.getVisibility() == View.VISIBLE) {
-				System.out.println("TextView ID: "
-						+ textView.getId()
-						+ "Index: "
-						+ index
-						+ " Tag: "
-						+ (textView.getTag() != null ? textView.getTag()
-								.toString() : "null") + " Value: "
-						+ textView.getText().toString() + " Visibility: "
-						+ textView.getVisibility() + " View String: "
-						+ textView.toString());
-				index++;
-			}
-		}
-	}
 	
-	/*
-	 * Prints details of all Buttons on visible screen
-	 *   
-	 */
-	static void printAllButtons(Solo solo) {
-		ArrayList<Button> allButtons = solo.getCurrentViews(Button.class);
-		System.out.println("Total Buttons:" + allButtons.size());
-		for (Button vButton : allButtons) {
-			if (vButton.getVisibility() == View.VISIBLE) {
-				System.out.println("Button ID: "
-						+ vButton.getId()
-						+ " Tag:"
-						+ (vButton.getTag() != null ? vButton.getTag()
-								.toString() : "null") + " Value:"
-						+ vButton.getText().toString() + " Visibility:"
-						+ vButton.getVisibility() + " View String:"
-						+ vButton.toString());
-			}
-		}
-	}
-
-	/*
-	 * Prints details of all ToggleButtons on visible screen
-	 *   
-	 */
-	static void printAllToggleButtons(Solo solo) {
-		ArrayList<ToggleButton> allToggleButtons = solo
-				.getCurrentViews(ToggleButton.class);
-		System.out.println("Total ToggleButtons:" + allToggleButtons.size());
-		for (ToggleButton vToggleButton : allToggleButtons) {
-			if (vToggleButton.getVisibility() == View.VISIBLE) {
-				System.out.println("Button ID: " + vToggleButton.getId() + " Tag :"
-						+ vToggleButton.getTag().toString() + " Value:"
-						+ vToggleButton.getText().toString() + " Visibility:"
-						+ vToggleButton.getVisibility() + " View String :"
-						+ vToggleButton.toString());
-			}
-		}
-	}
 	
 }
