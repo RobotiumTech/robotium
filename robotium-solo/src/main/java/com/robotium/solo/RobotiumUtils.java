@@ -10,6 +10,7 @@ import java.util.regex.PatternSyntaxException;
 import android.view.View;
 import android.widget.TextView;
 
+
 /**
  * Contains utility methods. Examples are: removeInvisibleViews(Iterable<T> viewList),
  * filterViews(Class<T> classToFilterBy, Iterable<?> viewList), sortViewsByLocationOnScreen(List<? extends View> views).
