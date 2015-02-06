@@ -7,19 +7,9 @@ import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.regex.PatternSyntaxException;
-
-import android.app.KeyguardManager;
-import android.app.KeyguardManager.KeyguardLock;
-import android.content.Context;
-import android.content.res.Configuration;
-import android.net.wifi.WifiManager;
-import android.test.UiThreadTest;
 import android.view.View;
-import android.widget.Button;
-import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.ToggleButton;
+
 
 /**
  * Contains utility methods. Examples are: removeInvisibleViews(Iterable<T> viewList),
@@ -187,6 +177,4 @@ public class RobotiumUtils {
 		}
 		return filteredViews;
 	}
-	
-	
 }

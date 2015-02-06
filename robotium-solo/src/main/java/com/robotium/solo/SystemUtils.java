@@ -68,15 +68,14 @@ public class SystemUtils {
 		}
 	}
 	
-	/*
-	 * Turn on/off wifi
-	 * @solo reference
-	 * @true or false
-	 * User should have following permissions in AUT(Application Under Test)'s menifest.xml file
-	 *   <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
-	 *   <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+	/**
+	 * Sets if mobile wifi should be turned on or off. Requires following permissions in the AndroidManifest.xml of the application under test. 
+	 * 1. android.permission.ACCESS_WIFI_STATE 
+	 * 2. android.permission.CHANGE_WIFI_STATE 
+	 * 
+	 * @param turnedOn true if mobile wifi is to be turned on and false if not
 	 */
-	static void setWifiData(Boolean turnedOn){
+	static void setWiFiData(Boolean turnedOn){
 			WifiManager wifiManager = (WifiManager)instrumentation.getTargetContext().getSystemService(Context.WIFI_SERVICE);
 			if (turnedOn == true && !wifiManager.isWifiEnabled()) {
 				wifiManager.setWifiEnabled(true);
