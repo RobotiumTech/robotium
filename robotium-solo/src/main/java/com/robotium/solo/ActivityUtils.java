@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Stack;
 import java.util.Timer;
+import com.robotium.solo.Solo.Config;
 import junit.framework.Assert;
 import android.app.Activity;
 import android.app.Instrumentation;
@@ -24,6 +25,7 @@ import android.view.KeyEvent;
 
 class ActivityUtils {
 
+	private final Config config;
 	private final Instrumentation inst;
 	private ActivityMonitor activityMonitor;
 	private Activity activity;
@@ -40,12 +42,14 @@ class ActivityUtils {
 	/**
 	 * Constructs this object.
 	 *
+	 * @param config the {@code Config} instance	
 	 * @param inst the {@code Instrumentation} instance.
 	 * @param activity the start {@code Activity}
 	 * @param sleeper the {@code Sleeper} instance
 	 */
 
-	public ActivityUtils(Instrumentation inst, Activity activity, Sleeper sleeper) {
+	public ActivityUtils(Config config, Instrumentation inst, Activity activity, Sleeper sleeper) {
+		this.config = config;
 		this.inst = inst;
 		this.activity = activity;
 		this.sleeper = sleeper;
@@ -64,7 +68,7 @@ class ActivityUtils {
 
 	private void createStackAndPushStartActivity(){
 		activityStack = new Stack<WeakReference<Activity>>();
-		if (activity != null){
+		if (activity != null && config.trackActivities){
 			WeakReference<Activity> weakReference = new WeakReference<Activity>(activity);
 			activity = null;
 			activityStack.push(weakReference);
@@ -97,12 +101,13 @@ class ActivityUtils {
 	 */
 
 	private void setupActivityMonitor() {
-
-		try {
-			IntentFilter filter = null;
-			activityMonitor = inst.addMonitor(filter, null, false);
-		} catch (Exception e) {
-			e.printStackTrace();
+		if(config.trackActivities){
+			try {
+				IntentFilter filter = null;
+				activityMonitor = inst.addMonitor(filter, null, false);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		}
 	}
 	
@@ -134,6 +139,10 @@ class ActivityUtils {
 	 */
 
 	private void setupActivityStackListener() {
+		if(activityMonitor == null){
+			return;
+		}
+		
 		setRegisterActivities(true);
 		
 		Runnable runnable = new Runnable() {
@@ -198,7 +207,9 @@ class ActivityUtils {
 	public void setActivityOrientation(int orientation)
 	{
 		Activity activity = getCurrentActivity();
-		activity.setRequestedOrientation(orientation);	
+		if(activity != null){
+			activity.setRequestedOrientation(orientation);	
+		}
 	}
 
 	/**
@@ -251,7 +262,7 @@ class ActivityUtils {
 				}
 				addActivityToStack(activity);
 			}
-			else{
+			else if(config.trackActivities){
 				sleeper.sleepMini();
 				setupActivityMonitor();
 				waitForActivityIfNotAvailable();
@@ -284,6 +295,10 @@ class ActivityUtils {
 		if(shouldSleepFirst){
 			sleeper.sleep();
 		}
+		if(!config.trackActivities){
+			return activity;
+		}
+		
 		if(waitForActivity){
 			waitForActivityIfNotAvailable();
 		}
@@ -345,6 +360,9 @@ class ActivityUtils {
 	public String getString(int resId)
 	{
 		Activity activity = getCurrentActivity(false);
+		if(activity == null){
+			return "";
+		}
 		return activity.getString(resId);
 	}
 
@@ -372,6 +390,10 @@ class ActivityUtils {
 	public void finishOpenedActivities(){
 		// Stops the activityStack listener
 		activitySyncTimer.cancel();
+		if(!config.trackActivities){
+			useGoBack(3);
+			return;
+		}
 		ArrayList<Activity> activitiesOpened = getAllOpenedActivities();
 		// Finish all opened activities
 		for (int i = activitiesOpened.size()-1; i >= 0; i--) {
@@ -385,16 +407,28 @@ class ActivityUtils {
 		setRegisterActivities(false);
 		this.activity = null;
 		sleeper.sleepMini();
-		try {
-			inst.sendKeyDownUpSync(KeyEvent.KEYCODE_BACK);
-			sleeper.sleep(MINISLEEP);
-			inst.sendKeyDownUpSync(KeyEvent.KEYCODE_BACK);
-		} catch (Throwable ignored) {
-			// Guard against lack of INJECT_EVENT permission
-		}
+		useGoBack(1);
 		clearActivityStack();
 	}
-
+	
+	/**
+	 * Sends the back button command a given number of times
+	 * 
+	 * @param numberOfTimes the number of times to press "back"
+	 */
+	
+	private void useGoBack(int numberOfTimes){
+		for(int i = 0; i < numberOfTimes; i++){
+			try {
+				inst.sendKeyDownUpSync(KeyEvent.KEYCODE_BACK);
+				sleeper.sleep(MINISLEEP);
+				inst.sendKeyDownUpSync(KeyEvent.KEYCODE_BACK);
+			} catch (Throwable ignored) {
+				// Guard against lack of INJECT_EVENT permission
+			}
+		}
+	}
+	
 	/**
 	 * Clears the activity stack.
 	 */

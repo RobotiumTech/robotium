@@ -5,6 +5,7 @@ import android.app.Activity;
 import android.app.Instrumentation;
 import android.content.Context;
 import android.view.View;
+import android.view.Window;
 import android.widget.TextView;
 
 
@@ -79,6 +80,9 @@ class Getter {
 	public String getString(int id)
 	{
 		Activity activity = activityUtils.getCurrentActivity(false);
+		if(activity == null){
+			return "";
+		}
 		return activity.getString(id);
 	}
 
@@ -115,7 +119,9 @@ class Getter {
 
 		if(index < 1){
 			index = 0;
-			viewToReturn = activity.findViewById(id);
+			if(activity != null){
+				viewToReturn = activity.findViewById(id);
+			}
 		}
 
 		if (viewToReturn != null) {
@@ -166,5 +172,56 @@ class Getter {
 			return viewToReturn;
 		}
 		return getView(viewId, index); 
+	}
+
+	/**
+	 * Returns a {@code View} with a given tag.
+	 *
+	 * @param tag the <code>tag</code> of the {@code View} to be returned
+	 * @param index the index of the {@link View}. {@code 0} if only one is available
+	 * @param timeout the timeout in milliseconds
+	 * @return a {@code View} with a given tag if available, <code>null</code> otherwise
+	 */
+
+	public View getView(Object tag, int index, int timeout){
+		//Because https://github.com/android/platform_frameworks_base/blob/master/core/java/android/view/View.java#L17005-L17007
+		if(tag == null) {
+			return null;
+		}
+
+		final Activity activity = activityUtils.getCurrentActivity(false);
+		View viewToReturn = null;
+
+		if(index < 1){
+			index = 0;
+			if(activity != null){
+				//Using https://github.com/android/platform_frameworks_base/blob/master/core/java/android/app/Activity.java#L2070-L2072
+				Window window = activity.getWindow();
+				if(window != null) {
+					View decorView = window.getDecorView();
+					if(decorView != null) {
+						viewToReturn = decorView.findViewWithTag(tag);
+					}
+				}
+			}
+		}
+
+		if (viewToReturn != null) {
+			return viewToReturn;
+		}
+
+		return waiter.waitForView(tag, index, timeout);
+	}
+
+	/**
+	 * Returns a {@code View} with a given tag.
+	 *
+	 * @param tag the <code>tag</code> of the {@code View} to be returned
+	 * @param index the index of the {@link View}. {@code 0} if only one is available
+	 * @return a {@code View} with a given tag if available, <code>null</code> otherwise
+	 */
+
+	public View getView(Object tag, int index){
+		return getView(tag, index, 0);
 	}
 }

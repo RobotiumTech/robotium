@@ -1,5 +1,6 @@
 package com.robotium.solo;
 
+import android.app.Activity;
 import android.view.View;
 import android.widget.DatePicker;
 import android.widget.ProgressBar;
@@ -52,16 +53,18 @@ class Setter{
 
 	public void setDatePicker(final DatePicker datePicker, final int year, final int monthOfYear, final int dayOfMonth) {
 		if(datePicker != null){
-
-			activityUtils.getCurrentActivity(false).runOnUiThread(new Runnable()
-			{
-				public void run()
+			Activity activity = activityUtils.getCurrentActivity(false);
+			if(activity != null){
+				activity.runOnUiThread(new Runnable()
 				{
-					try{
-						datePicker.updateDate(year, monthOfYear, dayOfMonth);
-					}catch (Exception ignored){}
-				}
-			});
+					public void run()
+					{
+						try{
+							datePicker.updateDate(year, monthOfYear, dayOfMonth);
+						}catch (Exception ignored){}
+					}
+				});
+			}
 		}
 	}
 
@@ -76,17 +79,19 @@ class Setter{
 
 	public void setTimePicker(final TimePicker timePicker, final int hour, final int minute) {
 		if(timePicker != null){
-
-			activityUtils.getCurrentActivity(false).runOnUiThread(new Runnable()
-			{
-				public void run()
+			Activity activity = activityUtils.getCurrentActivity(false);
+			if(activity != null){
+				activity.runOnUiThread(new Runnable()
 				{
-					try{
-						timePicker.setCurrentHour(hour);
-						timePicker.setCurrentMinute(minute);
-					}catch (Exception ignored){}
-				}
-			});
+					public void run()
+					{
+						try{
+							timePicker.setCurrentHour(hour);
+							timePicker.setCurrentMinute(minute);
+						}catch (Exception ignored){}
+					}
+				});
+			}
 		}
 	}
 
@@ -99,16 +104,18 @@ class Setter{
 
 	public void setProgressBar(final ProgressBar progressBar,final int progress) {
 		if(progressBar != null){
-
-			activityUtils.getCurrentActivity(false).runOnUiThread(new Runnable()
-			{
-				public void run()
+			Activity activity = activityUtils.getCurrentActivity(false);
+			if(activity != null){
+				activity.runOnUiThread(new Runnable()
 				{
-					try{
-						progressBar.setProgress(progress);
-					}catch (Exception ignored){}
-				}
-			});
+					public void run()
+					{
+						try{
+							progressBar.setProgress(progress);
+						}catch (Exception ignored){}
+					}
+				});
+			}
 		}
 	}
 
@@ -122,25 +129,26 @@ class Setter{
 
 	public void setSlidingDrawer(final SlidingDrawer slidingDrawer, final int status){
 		if(slidingDrawer != null){
-
-			activityUtils.getCurrentActivity(false).runOnUiThread(new Runnable()
-			{
-				public void run()
+			Activity activity = activityUtils.getCurrentActivity(false);
+			if(activity != null){
+				activity.runOnUiThread(new Runnable()
 				{
-					try{
-						switch (status) {
-						case CLOSED:
-							slidingDrawer.close();
-							break;
-						case OPENED:
-							slidingDrawer.open();
-							break;
-						}
-					}catch (Exception ignored){}
-				}
-			});
+					public void run()
+					{
+						try{
+							switch (status) {
+							case CLOSED:
+								slidingDrawer.close();
+								break;
+							case OPENED:
+								slidingDrawer.open();
+								break;
+							}
+						}catch (Exception ignored){}
+					}
+				});
+			}
 		}
-
 	}
 
 	/**

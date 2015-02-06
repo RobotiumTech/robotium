@@ -346,6 +346,58 @@ class Waiter {
 	}
 
 	/**
+	 * Waits for a certain view.
+	 *
+	 * @param tag the tag of the view to wait for
+	 * @param index the index of the {@link View}. {@code 0} if only one is available
+	 * @param timeout the timeout in milliseconds
+	 * @return the specified View
+	 */
+
+	public View waitForView(Object tag, int index, int timeout){
+		if(timeout == 0){
+			timeout = Timeout.getSmallTimeout();
+		}
+		return waitForView(tag, index, timeout, false);
+	}
+
+	/**
+	 * Waits for a certain view.
+	 *
+	 * @param tag the tag of the view to wait for
+	 * @param index the index of the {@link View}. {@code 0} if only one is available
+	 * @return the specified View
+	 */
+
+	public View waitForView(Object tag, int index, int timeout, boolean scroll){
+		//Because https://github.com/android/platform_frameworks_base/blob/master/core/java/android/view/View.java#L17005-L17007
+		if(tag == null) {
+			return null;
+		}
+
+		Set<View> uniqueViewsMatchingId = new HashSet<View>();
+		long endTime = SystemClock.uptimeMillis() + timeout;
+
+		while (SystemClock.uptimeMillis() <= endTime) {
+			sleeper.sleep();
+
+			for (View view : viewFetcher.getAllViews(false)) {
+				if (tag.equals(view.getTag())) {
+					uniqueViewsMatchingId.add(view);
+
+					if(uniqueViewsMatchingId.size() > index) {
+						return view;
+					}
+				}
+			}
+			if(scroll) {
+				scroller.scrollDown();
+			}
+		}
+		return null;
+	}
+
+	/**
 	 * Waits for a web element.
 	 * 
 	 * @param by the By object. Examples are By.id("id") and By.name("name")

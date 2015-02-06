@@ -3,9 +3,12 @@ package com.robotium.solo;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
+import android.app.Instrumentation;
+import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewParent;
+import android.view.WindowManager;
 import android.webkit.WebView;
 
 /**
@@ -18,18 +21,18 @@ import android.webkit.WebView;
 
 class ViewFetcher {
 
-	private final ActivityUtils activityUtils;
 	private String windowManagerString;
+	private Instrumentation instrumentation;
 
 	/**
 	 * Constructs this object.
 	 *
-	 * @param activityUtils the {@code ActivityUtils} instance
+	 * @param instrumentation the {@code Instrumentation} instance.
 	 *
 	 */
 
-	public ViewFetcher(ActivityUtils activityUtils) {
-		this.activityUtils = activityUtils;
+	public ViewFetcher(Instrumentation instrumentation) {
+		this.instrumentation = instrumentation;
 		setWindowManagerString();
 	}
 
@@ -285,10 +288,14 @@ class ViewFetcher {
 		final int[] xyParent = new int[2];
 		View parent = getScrollOrListParent(view);
 		final float windowHeight;
+		
 		if(parent == null){
-			windowHeight = activityUtils.getCurrentActivity(false).getWindowManager()
-					.getDefaultDisplay().getHeight();
+			WindowManager windowManager = (WindowManager) 
+					instrumentation.getTargetContext().getSystemService(Context.WINDOW_SERVICE);
+			
+			windowHeight = windowManager.getDefaultDisplay().getHeight();
 		}
+		
 		else{
 			parent.getLocationOnScreen(xyParent);
 			windowHeight = xyParent[1] + parent.getHeight();

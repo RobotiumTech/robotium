@@ -37,8 +37,15 @@ class Asserter {
 	public void assertCurrentActivity(String message, String name) {
 		boolean foundActivity = waiter.waitForActivity(name);
 
-		if(!foundActivity)
-			Assert.assertEquals(message, name, activityUtils.getCurrentActivity().getClass().getSimpleName());		
+		if(!foundActivity){
+			Activity activity = activityUtils.getCurrentActivity();
+			if(activity != null){
+				Assert.assertEquals(message, name, activity.getClass().getSimpleName());	
+			}
+			else{
+				Assert.assertEquals(message, name, "No actvity found");
+			}
+		}
 	}
 
 	/**
@@ -52,11 +59,17 @@ class Asserter {
 		if(expectedClass == null){
 			Assert.fail("The specified Activity is null!");
 		}
-		
+
 		boolean foundActivity = waiter.waitForActivity(expectedClass);
 
-		if(!foundActivity) {
-			Assert.assertEquals(message, expectedClass.getName(), activityUtils.getCurrentActivity().getClass().getName());
+		if(!foundActivity) {		
+			Activity activity = activityUtils.getCurrentActivity();
+			if(activity != null){
+				Assert.assertEquals(message, expectedClass.getName(), activity.getClass().getName());
+			}		
+			else{
+				Assert.assertEquals(message, expectedClass.getName(), "No activity found");
+			}
 		}
 	}
 
@@ -71,8 +84,11 @@ class Asserter {
 
 	public void assertCurrentActivity(String message, String name, boolean isNewInstance) {
 		assertCurrentActivity(message, name);
-		assertCurrentActivity(message, activityUtils.getCurrentActivity().getClass(),
-				isNewInstance);
+		Activity activity = activityUtils.getCurrentActivity();
+		if(activity != null){
+			assertCurrentActivity(message, activity.getClass(),
+					isNewInstance);	
+		}
 	}
 
 	/**
@@ -89,6 +105,11 @@ class Asserter {
 		boolean found = false;
 		assertCurrentActivity(message, expectedClass);
 		Activity activity = activityUtils.getCurrentActivity(false);
+		if(activity == null){
+			Assert.assertNotSame(message, isNewInstance, false);
+			return;
+		}
+		
 		for (int i = 0; i < activityUtils.getAllOpenedActivities().size() - 1; i++) {
 			String instanceString = activityUtils.getAllOpenedActivities().get(i).toString();
 			if (instanceString.equals(activity.toString()))

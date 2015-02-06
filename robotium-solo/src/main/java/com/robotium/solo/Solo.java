@@ -10,6 +10,7 @@ import android.graphics.PointF;
 import android.os.Environment;
 import android.view.KeyEvent;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.webkit.WebView;
 import android.widget.AbsListView;
@@ -69,6 +70,7 @@ public class Solo {
 	protected final ScreenshotTaker screenshotTaker;
 	protected final Instrumentation instrumentation;
 	protected final Zoomer zoomer;
+	protected final SystemUtils systemUtils;
 	protected String webUrl = null;
 	private final Config config;
 	public final static int LANDSCAPE = ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE;   // 0
@@ -133,12 +135,12 @@ public class Solo {
 		this.instrumentation = instrumentation;
 		this.sleeper = new Sleeper();
 		this.sender = new Sender(instrumentation, sleeper);
-		this.activityUtils = new ActivityUtils(instrumentation, activity, sleeper);
-		this.viewFetcher = new ViewFetcher(activityUtils);
-		this.screenshotTaker = new ScreenshotTaker(config, activityUtils, viewFetcher, sleeper);
-		this.dialogUtils = new DialogUtils(activityUtils, viewFetcher, sleeper);
+		this.activityUtils = new ActivityUtils(config, instrumentation, activity, sleeper);
+		this.viewFetcher = new ViewFetcher(instrumentation);
+		this.screenshotTaker = new ScreenshotTaker(config, instrumentation, activityUtils, viewFetcher, sleeper);
+		this.dialogUtils = new DialogUtils(instrumentation, activityUtils, viewFetcher, sleeper);
 		this.webUtils = new WebUtils(config, instrumentation,activityUtils,viewFetcher, sleeper);
-		this.scroller = new Scroller(config, instrumentation, activityUtils, viewFetcher, sleeper);
+		this.scroller = new Scroller(config, instrumentation, viewFetcher, sleeper);
 		this.searcher = new Searcher(viewFetcher, webUtils, scroller, sleeper);
 		this.waiter = new Waiter(activityUtils, viewFetcher, searcher,scroller, sleeper);
 		this.getter = new Getter(instrumentation, activityUtils, waiter);
@@ -152,6 +154,7 @@ public class Solo {
 		this.rotator = new Rotator(instrumentation);
 		this.presser = new Presser(viewFetcher, clicker, instrumentation, sleeper, waiter, dialogUtils);
 		this.textEnterer = new TextEnterer(instrumentation, clicker, dialogUtils);
+		this.systemUtils = new SystemUtils(instrumentation);
 		initialize();
 	}
 
@@ -214,6 +217,12 @@ public class Solo {
 		public enum ScreenshotFileType {
 			JPEG, PNG
 		}
+		
+		/**
+		 *  Set to true if Activity tracking should be enabled. Default value is true.
+		 */
+		
+		public boolean trackActivities = true;
 	}
 
 	/**
@@ -384,6 +393,50 @@ public class Solo {
 			index = 0;
 
 		return (waiter.waitForView(id, index, timeout, scroll) != null);
+	}
+
+	/**
+	 * Waits for a View matching the specified tag. Default timeout is 20 seconds.
+	 *
+	 * @param tag the {@link View#getTag() tag} of the {@link View} to wait for
+	 * @return {@code true} if the {@link View} is displayed and {@code false} if it is not displayed before the timeout
+	 */
+
+	public boolean waitForView(Object tag){
+		return waitForView(tag, 0, Timeout.getLargeTimeout(), true);
+	}
+
+	/**
+	 * Waits for a View matching the specified tag.
+	 *
+	 * @param tag the {@link View#getTag() tag} of the {@link View} to wait for
+	 * @param minimumNumberOfMatches the minimum number of matches that are expected to be found. {@code 0} means any number of matches
+	 * @param timeout the amount of time in milliseconds to wait
+	 * @return {@code true} if the {@link View} is displayed and {@code false} if it is not displayed before the timeout
+	 */
+
+	public boolean waitForView(Object tag, int minimumNumberOfMatches, int timeout){
+		return waitForView(tag, minimumNumberOfMatches, timeout, true);
+	}
+
+	/**
+	 * Waits for a View matching the specified tag
+	 *
+	 * @param tag the {@link View#getTag() tag} of the {@link View} to wait for
+	 * @param minimumNumberOfMatches the minimum number of matches that are expected to be found. {@code 0} means any number of matches
+	 * @param timeout the amount of time in milliseconds to wait
+	 * @param scroll {@code true} if scrolling should be performed
+	 * @return {@code true} if the {@link View} is displayed and {@code false} if it is not displayed before the timeout
+	 */
+
+	public boolean waitForView(Object tag, int minimumNumberOfMatches, int timeout, boolean scroll){
+		int index = minimumNumberOfMatches-1;
+
+		if(index < 1) {
+			index = 0;
+		}
+
+		return (waiter.waitForView(tag, index, timeout, scroll) != null);
 	}
 
 	/**
@@ -1298,7 +1351,12 @@ public class Solo {
 	 */
 
 	public void clickOnActionBarHomeButton() {
-		clicker.clickOnActionBarHomeButton();
+		instrumentation.runOnMainSync(new Runnable() {
+			@Override
+			public void run() {
+				clicker.clickOnActionBarHomeButton();
+			}
+		});
 	}
 
 	/**
@@ -1327,7 +1385,7 @@ public class Solo {
 
 	@SuppressWarnings("unchecked")
 	public boolean scrollDown() {
-		waiter.waitForViews(true, AbsListView.class, ScrollView.class, WebView.class);
+		waiter.waitForViews(true, AbsListView.class, ScrollView.class, WebView.class, ViewGroup.class);
 		return scroller.scroll(Scroller.DOWN);
 	}
 
@@ -1616,6 +1674,29 @@ public class Solo {
 		}
 		rotator.generateRotateGesture(Rotator.SMALL, center1, center2);
 	}
+	
+	/**
+	 * Sets the device locale. Requires android.permission.CHANGE_CONFIGURATION in the AndroidManifest.xml of the application under test.
+	 * 
+	 * @param language the language e.g. "en"
+	 * @param country the country e.g. "US"
+	 */
+
+	public void setDeviceLocale(String language, String country){
+		systemUtils.setDeviceLocale(language, country);
+	}
+	
+	/**
+	 * Sets if mobile data should be turned on or off. Requires android.permission.CHANGE_NETWORK_STATE in the AndroidManifest.xml of the application under test.
+	 * NOTE: Setting it to false can kill the adb connection. 
+	 * 
+	 * @param turnedOn true if mobile data is to be turned on and false if not
+	 */
+
+	public void setMobileData(Boolean turnedOn){
+		systemUtils.setMobileData(turnedOn);
+	}
+	
 
 	/**
 	 * Sets the date in a DatePicker matching the specified index.
@@ -1725,7 +1806,7 @@ public class Solo {
 		slidingDrawer = (SlidingDrawer) waiter.waitForView(slidingDrawer, Timeout.getSmallTimeout());
 		setter.setSlidingDrawer(slidingDrawer, status);
 	}
-
+		
 	/**
 	 * Enters text in an EditText matching the specified index.
 	 *
@@ -2024,6 +2105,42 @@ public class Solo {
 			}
 			else {
 				Assert.fail("View with id: '" + id + "' is not found!");
+			}
+		}
+		return viewToReturn;
+	}
+
+	/**
+	 * Returns a View matching the specified tag.
+	 *
+	 * @param tag the tag of the {@link View} to return
+	 * @return a {@link View} matching the specified id
+	 * @see {@link View#getTag()}
+	 */
+
+	public View getView(Object tag){
+		return getView(tag, 0);
+	}
+
+	/**
+	 * Returns a View matching the specified tag and index.
+	 *
+	 * @param tag the tag of the {@link View} to return
+	 * @param index the index of the {@link View}. {@code 0} if only one is available
+	 * @return a {@link View} matching the specified id and index
+	 * @see {@link View#getTag()}
+	 */
+
+	public View getView(Object tag, int index){
+		View viewToReturn = getter.getView(tag, index);
+
+		if(viewToReturn == null) {
+			int match = index + 1;
+			if(match > 1){
+				Assert.fail(match + " Views with id: '" + tag + "' are not found!");
+			}
+			else {
+				Assert.fail("View with id: '" + tag + "' is not found!");
 			}
 		}
 		return viewToReturn;
@@ -2348,10 +2465,13 @@ public class Solo {
 	 */
 
 	public void unlockScreen(){
+		final Activity activity = activityUtils.getCurrentActivity(false);
 		instrumentation.runOnMainSync(new Runnable() {
 			@Override
 			public void run() {
-				activityUtils.getCurrentActivity(false).getWindow().addFlags(WindowManager.LayoutParams.FLAG_DISMISS_KEYGUARD);
+				if(activity != null){
+					activity.getWindow().addFlags(WindowManager.LayoutParams.FLAG_DISMISS_KEYGUARD);
+				}
 			}
 		});
 	}
