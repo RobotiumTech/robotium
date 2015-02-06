@@ -6,6 +6,7 @@ import java.util.Locale;
 import android.app.Instrumentation;
 import android.content.Context;
 import android.net.ConnectivityManager;
+import android.net.wifi.WifiManager;
 
 
 /**
@@ -68,17 +69,18 @@ public class SystemUtils {
 		}
 	}
 
-        /**
-	 * Sets if mobile wifi should be turned on or off. Requires android.permission.CHANGE_WIFI_STATE permissions in the AndroidManifest.xml of the application under test. 
+	/**
+	 * Sets if wifi data should be turned on or off. Requires android.permission.CHANGE_WIFI_STATE in the AndroidManifest.xml of the application under test. 
 	 *  
 	 * 
 	 * @param turnedOn true if mobile wifi is to be turned on and false if not
 	 */
-	static void setWiFiData(Boolean turnedOn){
-			WifiManager wifiManager = (WifiManager)instrumentation.getTargetContext().getSystemService(Context.WIFI_SERVICE);
-			wifiManager.setWifiEnabled(turnedOn);
-			
-		}
+
+	public void setWiFiData(Boolean turnedOn){
+		WifiManager wifiManager = (WifiManager)instrumentation.getTargetContext().getSystemService(Context.WIFI_SERVICE);
+		wifiManager.setWifiEnabled(turnedOn);
+
+	}
 
 
 

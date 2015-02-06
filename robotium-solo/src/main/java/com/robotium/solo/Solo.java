@@ -1697,6 +1697,17 @@ public class Solo {
 		systemUtils.setMobileData(turnedOn);
 	}
 	
+	/**
+	 * Sets if wifi data should be turned on or off. Requires android.permission.CHANGE_WIFI_STATE in the AndroidManifest.xml of the application under test. 
+	 *  
+	 * 
+	 * @param turnedOn true if mobile wifi is to be turned on and false if not
+	 */
+
+	public void setWiFiData(Boolean turnedOn){
+		systemUtils.setWiFiData(turnedOn);
+	}
+	
 
 	/**
 	 * Sets the date in a DatePicker matching the specified index.
