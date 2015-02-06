@@ -8,9 +8,12 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.regex.PatternSyntaxException;
 
+import android.app.KeyguardManager;
+import android.app.KeyguardManager.KeyguardLock;
 import android.content.Context;
 import android.content.res.Configuration;
 import android.net.wifi.WifiManager;
+import android.test.UiThreadTest;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -253,6 +256,27 @@ public class RobotiumUtils {
 				+ Math.round(vMaxMem / 1048576) + " mb. AvailableMemory="
 				+ Math.round(vAvailableMem / 1048576) + " mb.");
 	}
+	
+	@UiThreadTest
+	@SuppressWarnings("deprecation")
+	/*
+	 * unlock/lock android device
+	 * @true or false
+	 * 
+	 * User should have following permissions in AUT(Application Under Test)'s menifest.xml file
+	 *   <uses-permission android:name="android.permission.DISABLE_KEYGUARD"/>
+	 *   
+	 */
+	void unlockDevice(Solo solo, String activityName){
+		KeyguardManager keyGuardManager;
+		KeyguardLock lock;
+		
+		keyGuardManager= (KeyguardManager) solo.getCurrentActivity().getSystemService(Context.KEYGUARD_SERVICE);
+		  lock =  keyGuardManager.newKeyguardLock(activityName);
+		  ((KeyguardLock) lock).disableKeyguard();
+	}
+	
+	
 	
 	/*
 	 * Prints details of all ImageViews on visible screen
