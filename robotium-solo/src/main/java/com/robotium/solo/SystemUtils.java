@@ -78,10 +78,10 @@ public class SystemUtils {
 
 	public void setWiFiData(Boolean turnedOn){
 		WifiManager wifiManager = (WifiManager)instrumentation.getTargetContext().getSystemService(Context.WIFI_SERVICE);
-		wifiManager.setWifiEnabled(turnedOn);
-
+		try{
+			wifiManager.setWifiEnabled(turnedOn);
+		}catch(Exception e){
+			e.printStackTrace();
+		}
 	}
-
-
-
 }
