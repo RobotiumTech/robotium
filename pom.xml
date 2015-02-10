@@ -218,12 +218,12 @@
         <repository>
             <id>oss.sonatype.org-jayway-staging</id>
             <name>OpenSource Release Staging on Sonatype.org</name>
-            <url>http://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+            <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
         </repository>
         <snapshotRepository>
             <id>oss.sonatype.org-jayway-snapshots</id>
             <name>Jayway OpenSource SNAPSHOTs on Sonatype.org</name>
-            <url>http://oss.sonatype.org/content/repositories/jayway-snapshots/</url>
+            <url>https://oss.sonatype.org/content/repositories/jayway-snapshots/</url>
         </snapshotRepository>
     </distributionManagement>
     
