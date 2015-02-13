@@ -37,7 +37,7 @@ class Clicker {
 	private final Waiter waiter;
 	private final WebUtils webUtils;
 	private final DialogUtils dialogUtils;
-	private final int MINI_WAIT = 200;
+	private final int MINI_WAIT = 300;
 	private final int WAIT_TIME = 1500;
 
 
@@ -78,7 +78,7 @@ class Clicker {
 		int retry = 0;
 		SecurityException ex = null;
 
-		while(!successfull && retry < 10) {
+		while(!successfull && retry < 20) {
 			long downTime = SystemClock.uptimeMillis();
 			long eventTime = SystemClock.uptimeMillis();
 			MotionEvent event = MotionEvent.obtain(downTime, eventTime,
@@ -123,7 +123,7 @@ class Clicker {
 		long eventTime = SystemClock.uptimeMillis();
 		MotionEvent event = MotionEvent.obtain(downTime, eventTime, MotionEvent.ACTION_DOWN, x, y, 0);
 
-		while(!successfull && retry < 10) {
+		while(!successfull && retry < 20) {
 			try{
 				inst.sendPointerSync(event);
 				successfull = true;
@@ -213,7 +213,7 @@ class Clicker {
 	 */
 
 	private float[] getClickCoordinates(View view){
-		sleeper.sleep(MINI_WAIT);
+		sleeper.sleep(200);
 		int[] xyLocation = new int[2];
 		float[] xyToClick = new float[2];
 
