@@ -127,7 +127,6 @@ class Getter {
 		if (viewToReturn != null) {
 			return viewToReturn;
 		}
-
 		return waiter.waitForView(id, index, timeout);
 	}
 

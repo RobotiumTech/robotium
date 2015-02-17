@@ -185,7 +185,6 @@ class Scroller {
 				ScrollView.class, GridView.class, WebView.class}, viewList);
 
 		View view = viewFetcher.getFreshestView(views);
-
 		if (view == null) {
 			view = getRecyclerView(viewList);
 
@@ -387,7 +386,11 @@ class Scroller {
 	 * @return a RecyclerView
 	 */
 	
-	private View getRecyclerView(ArrayList<View> viewList){
+	public View getRecyclerView(ArrayList<View> viewList){
+		if(viewList == null){
+			sleeper.sleep();
+			viewList = viewFetcher.getAllViews(true);
+		}
 		@SuppressWarnings("unchecked")
 		ArrayList<View> views = RobotiumUtils.filterViewsToSet(new Class[] {ViewGroup.class}, viewList);
 		for(View view : views){

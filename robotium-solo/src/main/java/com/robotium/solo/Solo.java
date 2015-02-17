@@ -10,7 +10,6 @@ import android.graphics.PointF;
 import android.os.Environment;
 import android.view.KeyEvent;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.webkit.WebView;
 import android.widget.AbsListView;
@@ -1385,7 +1384,14 @@ public class Solo {
 
 	@SuppressWarnings("unchecked")
 	public boolean scrollDown() {
-		waiter.waitForViews(true, AbsListView.class, ScrollView.class, WebView.class, ViewGroup.class);
+		View recyclerView = scroller.getRecyclerView(null);
+		
+		if(recyclerView != null){
+			waiter.waitForViews(true, AbsListView.class, ScrollView.class, WebView.class, recyclerView.getClass());
+		}
+		else {
+			waiter.waitForViews(true, AbsListView.class, ScrollView.class, WebView.class);
+		}
 		return scroller.scroll(Scroller.DOWN);
 	}
 
@@ -1395,7 +1401,13 @@ public class Solo {
 
 	@SuppressWarnings("unchecked")
 	public void scrollToBottom() {
-		waiter.waitForViews(true, AbsListView.class, ScrollView.class, WebView.class);
+		View recyclerView = scroller.getRecyclerView(null);
+		if(recyclerView != null){
+			waiter.waitForViews(true, AbsListView.class, ScrollView.class, WebView.class, recyclerView.getClass());
+		}
+		else {
+			waiter.waitForViews(true, AbsListView.class, ScrollView.class, WebView.class);
+		}
 		scroller.scroll(Scroller.DOWN, true);
 	}
 
@@ -1409,7 +1421,13 @@ public class Solo {
 
 	@SuppressWarnings("unchecked")
 	public boolean scrollUp(){
-		waiter.waitForViews(true, AbsListView.class, ScrollView.class, WebView.class);
+		View recyclerView = scroller.getRecyclerView(null);
+		if(recyclerView != null){
+			waiter.waitForViews(true, AbsListView.class, ScrollView.class, WebView.class, recyclerView.getClass());
+		}
+		else {
+			waiter.waitForViews(true, AbsListView.class, ScrollView.class, WebView.class);
+		}
 		return scroller.scroll(Scroller.UP);
 	}
 
@@ -1419,7 +1437,13 @@ public class Solo {
 
 	@SuppressWarnings("unchecked")
 	public void scrollToTop() {
-		waiter.waitForViews(true, AbsListView.class, ScrollView.class, WebView.class);
+		View recyclerView = scroller.getRecyclerView(null);
+		if(recyclerView != null){
+			waiter.waitForViews(true, AbsListView.class, ScrollView.class, WebView.class, recyclerView.getClass());
+		}
+		else {
+			waiter.waitForViews(true, AbsListView.class, ScrollView.class, WebView.class);
+		}
 		scroller.scroll(Scroller.UP, true);
 	}
 
