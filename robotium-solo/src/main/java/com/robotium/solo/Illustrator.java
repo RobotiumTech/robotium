@@ -8,6 +8,11 @@ import android.view.InputDevice;
 import android.app.Instrumentation;
 import android.os.SystemClock;
 
+/**
+ * A class that draws Illustrations to the screen
+ *
+ * @author Jake Kuli, 3kajjak3@gmail.com
+ */
 class Illustrator {
 
     private Instrumentation inst;
@@ -17,48 +22,34 @@ class Illustrator {
     }
 
     public void illustrate(Illustration illustration) {
+        if (illustration == null || illustration.getPoints().isEmpty()) {
+            throw new IllegalArgumentException("Illustration requires at least one point.");
+        }
         MotionEvent event;
         int currentAction;
+        long downTime = SystemClock.uptimeMillis();
+        long eventTime = SystemClock.uptimeMillis();
         PointerCoords[] coords = new PointerCoords[1];
+        PointerCoords coord = new PointerCoords();
         PointerProperties[] properties = new PointerProperties[1];
         PointerProperties prop = new PointerProperties();
         prop.id = 0;
         prop.toolType = illustration.getToolType();
         properties[0] = prop;
+        coords[0] = coord;
         ArrayList<PressurePoint> points = illustration.getPoints();
-        if (points.size() > 0) {
-            for (int i = 0; i < points.size(); i++) {
-                coords[0] = new PointerCoords();
-                coords[0].x = points.get(i).x;
-                coords[0].y = points.get(i).y;
-                coords[0].pressure = points.get(i).pressure;
-                coords[0].size = 1;
-
-                long downTime = SystemClock.uptimeMillis();
-                long eventTime = SystemClock.uptimeMillis();
-
-                if (i == 0) currentAction = MotionEvent.ACTION_DOWN;
-                else currentAction = MotionEvent.ACTION_MOVE;
-
-                event = MotionEvent.obtain(downTime,
-                    eventTime,
-                    currentAction,
-                    1,
-                    properties,
-                    coords,
-                    0, 0, 1, 1, 0, 0,
-                    InputDevice.SOURCE_TOUCHSCREEN,
-                    0);
-                inst.sendPointerSync(event);
+        for (int i = 0; i < points.size(); i++) {
+            coord.x = points.get(i).x;
+            coord.y = points.get(i).y;
+            coord.pressure = points.get(i).pressure;
+            coord.size = 1;
+            if (i == 0) {
+                currentAction = MotionEvent.ACTION_DOWN;
             }
-            currentAction = MotionEvent.ACTION_UP;
-            coords[0] = new PointerCoords();
-            coords[0].x = points.get(points.size() - 1).x;
-            coords[0].y = points.get(points.size() - 1).y;
-            coords[0].pressure = points.get(points.size() - 1).pressure;
-            coords[0].size = 1;
-            long downTime = SystemClock.uptimeMillis();
-            long eventTime = SystemClock.uptimeMillis();
+            else {
+                currentAction = MotionEvent.ACTION_MOVE;
+            }
+
             event = MotionEvent.obtain(downTime,
                 eventTime,
                 currentAction,
@@ -68,10 +59,27 @@ class Illustrator {
                 0, 0, 1, 1, 0, 0,
                 InputDevice.SOURCE_TOUCHSCREEN,
                 0);
-            inst.sendPointerSync(event);
+            try {
+			    inst.sendPointerSync(event);
+		    } catch (SecurityException ignored) {}
         }
-        else {
-            throw new RuntimeException("Illustration requires at least one point.");
-        }
+        currentAction = MotionEvent.ACTION_UP;
+        coords[0] = new PointerCoords();
+        coords[0].x = points.get(points.size() - 1).x;
+        coords[0].y = points.get(points.size() - 1).y;
+        coords[0].pressure = points.get(points.size() - 1).pressure;
+        coords[0].size = 1;
+        event = MotionEvent.obtain(downTime,
+            eventTime,
+            currentAction,
+            1,
+            properties,
+            coords,
+            0, 0, 1, 1, 0, 0,
+            InputDevice.SOURCE_TOUCHSCREEN,
+            0);
+        try {
+			inst.sendPointerSync(event);
+		} catch (SecurityException ignored) {}
     }
 }

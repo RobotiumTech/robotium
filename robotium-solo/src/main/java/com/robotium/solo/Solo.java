@@ -1368,7 +1368,7 @@ public class Solo {
 		return new Illustration.Builder();
 	}
 
-  /**
+    /**
 	 * Simulate drawing an illustration on the screen
 	 *
 	 * @param illustration Built-up illustration containing toolType, pressure, and

@@ -3,10 +3,16 @@ package com.robotium.solo;
 import java.util.ArrayList;
 import android.view.MotionEvent;
 
+/**
+ * A class used to build Illustrations for an Illustrator.
+ * Compatible with specific MotionEvent.TOOL_TYPEs
+ *
+ * @author Jake Kuli, 3kajjak3@gmail.com
+ */
 public class Illustration {
 
-  private int toolType = MotionEvent.TOOL_TYPE_STYLUS;
-  private ArrayList<PressurePoint> points = new ArrayList<PressurePoint>();
+  private final int toolType;
+  private final ArrayList<PressurePoint> points;
 
   private Illustration(Builder builder) {
       this.toolType = builder.builderToolType;
@@ -15,9 +21,14 @@ public class Illustration {
 
   public static class Builder {
 
-      private int builderToolType;
+      private int builderToolType = MotionEvent.TOOL_TYPE_FINGER;
       private ArrayList<PressurePoint> builderPoints = new ArrayList<PressurePoint>();
 
+      /**
+        * Sets the tool type to use when illustrating.
+        * By default this is set to MotionEvent.TOOL_TYPE_FINGER
+        * @param toolType a static int from MotionEvent's TOOL_TYPEs
+        */
       public Builder setToolType(int toolType) {
           builderToolType = toolType;
           return this;
@@ -33,13 +44,11 @@ public class Illustration {
       }
   }
 
-  public ArrayList<PressurePoint> getPoints()
-  {
+  public ArrayList<PressurePoint> getPoints() {
     return points;
   }
 
-  public int getToolType()
-  {
+  public int getToolType() {
     return toolType;
   }
 }
