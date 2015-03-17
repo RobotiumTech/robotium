@@ -23,7 +23,7 @@ class Illustrator {
 
     public void illustrate(Illustration illustration) {
         if (illustration == null || illustration.getPoints().isEmpty()) {
-            throw new IllegalArgumentException("Illustration requires at least one point.");
+            throw new IllegalArgumentException("Illustration must not be null and requires at least one point.");
         }
         MotionEvent event;
         int currentAction;
@@ -39,9 +39,10 @@ class Illustrator {
         coords[0] = coord;
         ArrayList<PressurePoint> points = illustration.getPoints();
         for (int i = 0; i < points.size(); i++) {
-            coord.x = points.get(i).x;
-            coord.y = points.get(i).y;
-            coord.pressure = points.get(i).pressure;
+            PressurePoint currentPoint = points.get(i);
+            coord.x = currentPoint.x;
+            coord.y = currentPoint.y;
+            coord.pressure = currentPoint.pressure;
             coord.size = 1;
             if (i == 0) {
                 currentAction = MotionEvent.ACTION_DOWN;
@@ -49,7 +50,7 @@ class Illustrator {
             else {
                 currentAction = MotionEvent.ACTION_MOVE;
             }
-
+            eventTime = SystemClock.uptimeMillis();
             event = MotionEvent.obtain(downTime,
                 eventTime,
                 currentAction,
@@ -61,14 +62,17 @@ class Illustrator {
                 0);
             try {
 			    inst.sendPointerSync(event);
-		    } catch (SecurityException ignored) {}
+		    }
+            catch (SecurityException ignored) {}
         }
         currentAction = MotionEvent.ACTION_UP;
-        coords[0] = new PointerCoords();
-        coords[0].x = points.get(points.size() - 1).x;
-        coords[0].y = points.get(points.size() - 1).y;
-        coords[0].pressure = points.get(points.size() - 1).pressure;
-        coords[0].size = 1;
+        coords[0] = coord;
+        PressurePoint currentPoint = points.get(points.size() - 1);
+        coord.x = currentPoint.x;
+        coord.y = currentPoint.y;
+        coord.pressure = currentPoint.pressure;
+        coord.size = 1;
+        eventTime = SystemClock.uptimeMillis();
         event = MotionEvent.obtain(downTime,
             eventTime,
             currentAction,
@@ -80,6 +84,7 @@ class Illustrator {
             0);
         try {
 			inst.sendPointerSync(event);
-		} catch (SecurityException ignored) {}
+		}
+        catch (SecurityException ignored) {}
     }
 }

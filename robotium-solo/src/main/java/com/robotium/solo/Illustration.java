@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import android.view.MotionEvent;
 
 /**
- * A class used to build Illustrations for an Illustrator.
+ * A class used to pass Illustrations to an Illustrator.
  * Compatible with specific MotionEvent.TOOL_TYPEs
  *
  * @author Jake Kuli, 3kajjak3@gmail.com
@@ -19,6 +19,9 @@ public class Illustration {
       this.points = builder.builderPoints;
   }
 
+  /**
+   * Builder class to build illustrations
+   */
   public static class Builder {
 
       private int builderToolType = MotionEvent.TOOL_TYPE_FINGER;
@@ -27,7 +30,7 @@ public class Illustration {
       /**
         * Sets the tool type to use when illustrating.
         * By default this is set to MotionEvent.TOOL_TYPE_FINGER
-        * @param toolType a static int from MotionEvent's TOOL_TYPEs
+        * @param toolType an int from MotionEvent's static int TOOL_TYPEs
         */
       public Builder setToolType(int toolType) {
           builderToolType = toolType;
