@@ -373,6 +373,14 @@ class ActivityUtils {
 	@Override
 	public void finalize() throws Throwable {
 		activitySyncTimer.cancel();
+		stopActivityMonitor();
+		super.finalize();
+	}
+	
+	/**
+	 * Removes the ActivityMonitor
+	 */
+	private void stopActivityMonitor(){
 		try {
 			// Remove the monitor added during startup
 			if (activityMonitor != null) {
@@ -380,7 +388,7 @@ class ActivityUtils {
 				activityMonitor = null;
 			}
 		} catch (Exception ignored) {}
-		super.finalize();
+
 	}
 
 	/**
@@ -404,6 +412,7 @@ class ActivityUtils {
 		sleeper.sleep(MINISLEEP);
 		// Finish the initial activity, pressing Back for good measure
 		finishActivity(getCurrentActivity(true, false));
+		stopActivityMonitor();
 		setRegisterActivities(false);
 		this.activity = null;
 		sleeper.sleepMini();
