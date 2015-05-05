@@ -136,7 +136,7 @@ public class Solo {
 		this.sleeper = new Sleeper();
 		this.sender = new Sender(instrumentation, sleeper);
 		this.activityUtils = new ActivityUtils(config, instrumentation, activity, sleeper);
-		this.viewFetcher = new ViewFetcher(instrumentation);
+		this.viewFetcher = new ViewFetcher(instrumentation, sleeper);
 		this.screenshotTaker = new ScreenshotTaker(config, instrumentation, activityUtils, viewFetcher, sleeper);
 		this.dialogUtils = new DialogUtils(instrumentation, activityUtils, viewFetcher, sleeper);
 		this.webUtils = new WebUtils(config, instrumentation,activityUtils,viewFetcher, sleeper);
@@ -1336,6 +1336,71 @@ public class Solo {
 	public ArrayList<TextView> clickLongInList(int line, int index, int time){
 		return clicker.clickInList(line, index, true, time);
 	}
+	
+	
+	/**
+	 * Clicks the specified item index and returns an ArrayList of the TextView objects that
+	 * the item index is displaying. Will use the first RecyclerView it finds.
+	 *
+	 * @param itemIndex the item index to click
+	 * @return an {@code ArrayList} of the {@link TextView} objects located in the item index
+	 */
+
+	public ArrayList<TextView> clickInRecyclerView(int itemIndex) {
+		return clicker.clickInRecyclerView(itemIndex);
+	}
+
+	/**
+	 * Clicks the specified item index in the RecyclerView matching the specified RecyclerView index and
+	 * returns an ArrayList of the TextView objects that the list line is displaying.
+	 *
+	 * @param itemIndex the line to click
+	 * @param recyclerViewIndex the index of the RecyclerView. {@code 0} if only one is available
+	 * @return an {@code ArrayList} of the {@link TextView} objects located in the item index
+	 */
+
+	public ArrayList<TextView> clickInRecyclerView(int itemIndex, int recyclerViewIndex) {
+		return clicker.clickInRecyclerView(itemIndex, recyclerViewIndex, false, 0);
+	}
+
+	/**
+	 * Long clicks the specified item index and returns an ArrayList of the TextView objects that
+	 * the item index is displaying. Will use the first RecyclerView it finds.
+	 *
+	 * @param itemIndex the item index to click
+	 * @return an {@code ArrayList} of the {@link TextView} objects located in the list line
+	 */
+
+	public ArrayList<TextView> clickLongInRecycleView(int itemIndex){
+		return clicker.clickInRecyclerView(itemIndex, 0, true, 0);
+	}
+
+	/**
+	 * Long clicks the specified item index in the RecyclerView matching the specified RecyclerView index and
+	 * returns an ArrayList of the TextView objects that the item index is displaying.
+	 *
+	 * @param itemIndex the item index to click
+	 * @param recyclerViewIndex the index of the RecyclerView. {@code 0} if only one is available
+	 * @return an {@code ArrayList} of the {@link TextView} objects located in the list line
+	 */
+
+	public ArrayList<TextView> clickLongInRecycleView(int itemIndex, int recyclerViewIndex){
+		return clicker.clickInRecyclerView(itemIndex, recyclerViewIndex, true, 0);
+	}
+
+	/**
+	 * Long clicks the specified item index in the RecyclerView matching the specified RecyclerView index and
+	 * returns an ArrayList of the TextView objects that the item index is displaying.
+	 *
+	 * @param itemIndex the item index to click
+	 * @param recyclerViewIndex the index of the RecyclerView. {@code 0} if only one is available
+	 * @param time the amount of time to long click
+	 * @return an {@code ArrayList} of the {@link TextView} objects located in the list line
+	 */
+
+	public ArrayList<TextView> clickLongInRecycleView(int itemIndex, int recyclerViewIndex, int time){
+		return clicker.clickInRecyclerView(itemIndex, recyclerViewIndex, true, time);
+	}
 
 	/**
 	 * Clicks an ActionBarItem matching the specified resource id.
@@ -1405,7 +1470,7 @@ public class Solo {
 
 	@SuppressWarnings("unchecked")
 	public boolean scrollDown() {
-		View recyclerView = scroller.getRecyclerView(null);
+		View recyclerView = viewFetcher.getRecyclerView(null, true);
 
 		if(recyclerView != null){
 			waiter.waitForViews(true, AbsListView.class, ScrollView.class, WebView.class, recyclerView.getClass());
@@ -1422,7 +1487,7 @@ public class Solo {
 
 	@SuppressWarnings("unchecked")
 	public void scrollToBottom() {
-		View recyclerView = scroller.getRecyclerView(null);
+		View recyclerView = viewFetcher.getRecyclerView(null, true);
 		if(recyclerView != null){
 			waiter.waitForViews(true, AbsListView.class, ScrollView.class, WebView.class, recyclerView.getClass());
 		}
@@ -1442,7 +1507,7 @@ public class Solo {
 
 	@SuppressWarnings("unchecked")
 	public boolean scrollUp(){
-		View recyclerView = scroller.getRecyclerView(null);
+		View recyclerView = viewFetcher.getRecyclerView(null, true);
 		if(recyclerView != null){
 			waiter.waitForViews(true, AbsListView.class, ScrollView.class, WebView.class, recyclerView.getClass());
 		}
@@ -1458,7 +1523,7 @@ public class Solo {
 
 	@SuppressWarnings("unchecked")
 	public void scrollToTop() {
-		View recyclerView = scroller.getRecyclerView(null);
+		View recyclerView = viewFetcher.getRecyclerView(null, true);
 		if(recyclerView != null){
 			waiter.waitForViews(true, AbsListView.class, ScrollView.class, WebView.class, recyclerView.getClass());
 		}

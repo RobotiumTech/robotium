@@ -12,6 +12,7 @@ import android.os.SystemClock;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.TextView;
 
 
@@ -90,6 +91,7 @@ class Waiter {
 		}
 		return false;
 	}
+	
 
 	/**
 	 * Waits for the given {@link Activity}.
@@ -218,6 +220,34 @@ class Waiter {
 		}
 		return false;
 	}
+	
+	/**
+	 * Waits for a RecyclerView and returns it.
+	 * 
+	 * @param recyclerViewIndex the index of the RecyclerView
+	 * @return {@code ViewGroup} if RecycleView is displayed
+	 */
+
+
+	public <T extends View> ViewGroup waitForRecyclerView(int recyclerViewIndex) {
+		Set<View> uniqueViews = new HashSet<View>();
+		final long endTime = SystemClock.uptimeMillis() + Timeout.getSmallTimeout();
+
+		while (SystemClock.uptimeMillis() < endTime) {
+			View recyclerView = viewFetcher.getRecyclerView(null, true);
+			if(recyclerView != null){
+				if (waitForView(recyclerView.getClass(), 0, false, false)) {
+					uniqueViews.add(recyclerView);
+				}
+			}
+			if(uniqueViews.size() > recyclerViewIndex) {
+				return (ViewGroup) recyclerView;
+			}
+			scroller.scrollDown();
+		}
+		return null;
+	}
+
 
 	/**
 	 * Waits for a given view. Default timeout is 20 seconds.

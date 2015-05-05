@@ -114,19 +114,6 @@ class Getter {
 	 */
 
 	public View getView(int id, int index, int timeout){
-		final Activity activity = activityUtils.getCurrentActivity(false);
-		View viewToReturn = null;
-
-		if(index < 1){
-			index = 0;
-			if(activity != null){
-				viewToReturn = activity.findViewById(id);
-			}
-		}
-
-		if (viewToReturn != null) {
-			return viewToReturn;
-		}
 		return waiter.waitForView(id, index, timeout);
 	}
 

@@ -23,6 +23,7 @@ class ViewFetcher {
 
 	private String windowManagerString;
 	private Instrumentation instrumentation;
+	private Sleeper sleeper;
 
 	/**
 	 * Constructs this object.
@@ -31,8 +32,9 @@ class ViewFetcher {
 	 *
 	 */
 
-	public ViewFetcher(Instrumentation instrumentation) {
+	public ViewFetcher(Instrumentation instrumentation, Sleeper sleeper) {
 		this.instrumentation = instrumentation;
+		this.sleeper = sleeper;
 		setWindowManagerString();
 	}
 
@@ -378,6 +380,44 @@ class ViewFetcher {
 		views = null;
 		return viewToReturn;
 	}
+	
+	/**
+	 * Returns a RecyclerView or null if none is found
+	 * 
+	 * @param viewList the list to check in 
+	 * 
+	 * @return a RecyclerView
+	 */
+	
+	public View getRecyclerView(ArrayList<View> viewList, boolean shouldSleep){
+		if(viewList == null){
+			if(shouldSleep){
+				sleeper.sleep();
+			}
+			viewList = getAllViews(true);
+		}
+		@SuppressWarnings("unchecked")
+		ArrayList<View> views = RobotiumUtils.filterViewsToSet(new Class[] {ViewGroup.class}, viewList);
+		for(View view : views){
+
+			if(isViewType(view.getClass(), "widget.RecyclerView")){
+				return view;
+			}
+		}
+		return null;
+	}
+	
+	 private boolean isViewType(Class<?> aClass, String typeName) {
+		   if (aClass.getName().contains(typeName)) {
+		       return true;
+		   }
+
+		   if (aClass.getSuperclass() != null) {
+		       return isViewType(aClass.getSuperclass(), typeName);
+		   }
+
+		   return false;
+		}
 
 	/**
 	 * Returns an identical View to the one specified.

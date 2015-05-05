@@ -186,7 +186,7 @@ class Scroller {
 
 		View view = viewFetcher.getFreshestView(views);
 		if (view == null) {
-			view = getRecyclerView(viewList);
+			view = viewFetcher.getRecyclerView(viewList, true);
 
 			if(view == null){
 				return false;
@@ -377,41 +377,4 @@ class Scroller {
 		else if (side == Side.RIGHT)
 			drag(x, corners[0], y, y, stepCount);
 	}
-	
-	/**
-	 * Returns a RecyclerView or null if not found
-	 * 
-	 * @param viewList the list to check in 
-	 * 
-	 * @return a RecyclerView
-	 */
-	
-	public View getRecyclerView(ArrayList<View> viewList){
-		if(viewList == null){
-			sleeper.sleep();
-			viewList = viewFetcher.getAllViews(true);
-		}
-		@SuppressWarnings("unchecked")
-		ArrayList<View> views = RobotiumUtils.filterViewsToSet(new Class[] {ViewGroup.class}, viewList);
-		for(View view : views){
-
-			if(isViewType(view.getClass(), "widget.RecyclerView")){
-				return view;
-			}
-		}
-		return null;
-	}
-
-	
-	 private boolean isViewType(Class<?> aClass, String typeName) {
-		   if (aClass.getName().contains(typeName)) {
-		       return true;
-		   }
-
-		   if (aClass.getSuperclass() != null) {
-		       return isViewType(aClass.getSuperclass(), typeName);
-		   }
-
-		   return false;
-		}
 }

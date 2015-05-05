@@ -14,6 +14,7 @@ import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewConfiguration;
+import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.AbsListView;
 import android.widget.TextView;
@@ -517,28 +518,84 @@ class Clicker {
 
 		ArrayList<View> views = new ArrayList<View>();
 		final AbsListView absListView = waiter.waitForAndGetView(index, AbsListView.class);
-
+		
 		if(absListView == null)
-			Assert.fail("ListView is null!");
+			Assert.fail("AbsListView is null!");
 
-		while(lineIndex > absListView.getChildCount()){
-			final boolean timedOut = SystemClock.uptimeMillis() > endTime;
-			if (timedOut){
-				int numberOfLines = absListView.getChildCount();
-				Assert.fail("Can not click on line number " + line + " as there are only " + numberOfLines + " lines available");
-			}
-			sleeper.sleep();
-		}
-
-		View view = getViewOnListLine(absListView, index, lineIndex);
-
-		if(view != null){
-			views = viewFetcher.getViews(view, true);
+		failIfIndexHigherThenChildCount(absListView, lineIndex, endTime);
+		
+		View viewOnLine = getViewOnAbsListLine(absListView, index, lineIndex);
+		
+		if(viewOnLine != null){
+			views = viewFetcher.getViews(viewOnLine, true);
 			views = RobotiumUtils.removeInvisibleViews(views);
-			clickOnScreen(view, longClick, time);
+			clickOnScreen(viewOnLine, longClick, time);
 		}
 		return RobotiumUtils.filterViews(TextView.class, views);
 	}
+	
+	/**
+	 * Clicks on a certain list line and returns the {@link TextView}s that
+	 * the list line is showing. Will use the first list it finds.
+	 *
+	 * @param line the line that should be clicked
+	 * @return a {@code List} of the {@code TextView}s located in the list line
+	 */
+
+	public ArrayList<TextView> clickInRecyclerView(int line) {
+		return clickInRecyclerView(line, 0, false, 0);
+	}
+
+	
+	/**
+	 * Clicks on a certain list line on a specified List and
+	 * returns the {@link TextView}s that the list line is showing.
+	 *
+	 * @param itemIndex the item index that should be clicked
+	 * @param recyclerViewIndex the index of the RecyclerView. E.g. Index 1 if two RecyclerViews are available
+	 * @return an {@code ArrayList} of the {@code TextView}s located in the list line
+	 */
+
+	public ArrayList<TextView> clickInRecyclerView(int itemIndex, int recyclerViewIndex, boolean longClick, int time) {
+		View viewOnLine = null;
+		final long endTime = SystemClock.uptimeMillis() + Timeout.getSmallTimeout();
+
+		if(itemIndex < 0)
+			itemIndex = 0;
+
+		ArrayList<View> views = new ArrayList<View>();
+		ViewGroup recyclerView = waiter.waitForRecyclerView(recyclerViewIndex);
+		
+		
+		if(recyclerView == null){
+			Assert.fail("RecycleView is null!");
+		}
+		else{
+			viewOnLine = getViewOnRecyclerItemIndex((ViewGroup) recyclerView, itemIndex);
+		}
+
+		failIfIndexHigherThenChildCount(recyclerView, itemIndex, endTime);
+		
+		if(viewOnLine != null){
+			views = viewFetcher.getViews(viewOnLine, true);
+			views = RobotiumUtils.removeInvisibleViews(views);
+			clickOnScreen(viewOnLine, longClick, time);
+		}
+		return RobotiumUtils.filterViews(TextView.class, views);
+	}
+	
+	
+	private void failIfIndexHigherThenChildCount(ViewGroup viewGroup, int index, long endTime){
+		while(index > viewGroup.getChildCount()){
+			final boolean timedOut = SystemClock.uptimeMillis() > endTime;
+			if (timedOut){
+				int numberOfLines = viewGroup.getChildCount();
+				Assert.fail("Can not click on line number " + index + " as there are only " + numberOfLines + " lines available");
+			}
+			sleeper.sleep();
+		}
+	}
+	
 
 	/**
 	 * Returns the view in the specified list line
@@ -549,7 +606,7 @@ class Clicker {
 	 * @return the View located at a specified list line
 	 */
 
-	private View getViewOnListLine(AbsListView absListView, int index, int lineIndex){
+	private View getViewOnAbsListLine(AbsListView absListView, int index, int lineIndex){
 		final long endTime = SystemClock.uptimeMillis() + Timeout.getSmallTimeout();
 		View view = absListView.getChildAt(lineIndex);
 
@@ -570,4 +627,36 @@ class Clicker {
 		}
 		return view;
 	}
+	
+	/**
+	 * Returns the view in the specified item index
+	 * 
+	 * @param recyclerView the RecyclerView to use
+	 * @param itemIndex the item index of the View
+	 * @return the View located at a specified item index
+	 */
+
+	private View getViewOnRecyclerItemIndex(ViewGroup recyclerView, int itemIndex){
+		final long endTime = SystemClock.uptimeMillis() + Timeout.getSmallTimeout();
+		View view = recyclerView.getChildAt(itemIndex);
+
+		while(view == null){
+			final boolean timedOut = SystemClock.uptimeMillis() > endTime;
+			if (timedOut){
+				Assert.fail("View is null and can therefore not be clicked!");
+			}
+			
+			sleeper.sleep();
+			recyclerView = (ViewGroup) viewFetcher.getIdenticalView(recyclerView);
+
+			if(recyclerView == null){
+				recyclerView = (ViewGroup) viewFetcher.getRecyclerView(null, false);
+			}
+			
+			view = recyclerView.getChildAt(itemIndex);
+		}
+		return view;
+	}
+	
+	
 }
