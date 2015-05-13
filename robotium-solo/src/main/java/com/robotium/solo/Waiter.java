@@ -8,6 +8,9 @@ import java.util.HashSet;
 import java.util.Set;
 import junit.framework.Assert;
 import android.app.Activity;
+import android.app.Instrumentation;
+import android.app.Instrumentation.ActivityMonitor;
+import android.content.IntentFilter;
 import android.os.SystemClock;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
@@ -31,12 +34,13 @@ class Waiter {
 	private final Searcher searcher;
 	private final Scroller scroller;
 	private final Sleeper sleeper;
-	private final int MINISLEEP = 10;
+	private final Instrumentation instrumentation;
 
 
 	/**
 	 * Constructs this object.
 	 *
+	 * @param instrumentation the {@code Instrumentation} object
 	 * @param activityUtils the {@code ActivityUtils} instance
 	 * @param viewFetcher the {@code ViewFetcher} instance
 	 * @param searcher the {@code Searcher} instance
@@ -44,12 +48,13 @@ class Waiter {
 	 * @param sleeper the {@code Sleeper} instance
 	 */
 
-	public Waiter(ActivityUtils activityUtils, ViewFetcher viewFetcher, Searcher searcher, Scroller scroller, Sleeper sleeper){
+	public Waiter(Instrumentation instrumentation, ActivityUtils activityUtils, ViewFetcher viewFetcher, Searcher searcher, Scroller scroller, Sleeper sleeper){
+		this.instrumentation = instrumentation;
 		this.activityUtils = activityUtils;
 		this.viewFetcher = viewFetcher;
 		this.searcher = searcher;
 		this.scroller = scroller;
-		this.sleeper = sleeper;
+		this.sleeper = sleeper;		
 	}
 
 	/**
@@ -74,16 +79,39 @@ class Waiter {
 	 */
 
 	public boolean waitForActivity(String name, int timeout){
-		Activity currentActivity = activityUtils.getCurrentActivity(false, false);
-		final long endTime = SystemClock.uptimeMillis() + timeout;
+		if(isActivityMatching(activityUtils.getCurrentActivity(false, false), name)){
+			return true;
+		}
+		
+		boolean foundActivity = false;
+		ActivityMonitor activityMonitor = getActivityMonitor();
+		long currentTime = SystemClock.uptimeMillis();
+		final long endTime = currentTime + timeout;
 
-		while(SystemClock.uptimeMillis() < endTime){
-			if(currentActivity != null && currentActivity.getClass().getSimpleName().equals(name)) {
-				return true;
-			}
-
-			sleeper.sleep(MINISLEEP);
-			currentActivity = activityUtils.getCurrentActivity(false, false);
+		while(currentTime < endTime){
+			Activity currentActivity = activityMonitor.waitForActivityWithTimeout(endTime - currentTime);
+			
+			if(isActivityMatching(currentActivity, name)){
+				foundActivity = true;
+				break;
+			}	
+			currentTime = SystemClock.uptimeMillis();
+		}
+		removeMonitor(activityMonitor);
+		return foundActivity;
+	}
+	
+	/**
+	 * Compares Activity names.
+	 * 
+	 * @param currentActivity the Activity that is currently active
+	 * @param name the name to compare
+	 * 
+	 * @return true if the Activity names match
+	 */
+	private boolean isActivityMatching(Activity currentActivity, String name){
+		if(currentActivity != null && currentActivity.getClass().getSimpleName().equals(name)) {
+			return true;
 		}
 		return false;
 	}
@@ -111,18 +139,65 @@ class Waiter {
 	 */
 
 	public boolean waitForActivity(Class<? extends Activity> activityClass, int timeout){
-		Activity currentActivity = activityUtils.getCurrentActivity(false, false);
-		final long endTime = SystemClock.uptimeMillis() + timeout;
+		if(isActivityMatching(activityClass, activityUtils.getCurrentActivity(false, false))){
+			return true;
+		}
+		
+		boolean foundActivity = false;
+		ActivityMonitor activityMonitor = getActivityMonitor();
+		long currentTime = SystemClock.uptimeMillis();
+		final long endTime = currentTime + timeout;
 
-		while(SystemClock.uptimeMillis() < endTime){
+		while(currentTime < endTime){
+			Activity currentActivity = activityMonitor.waitForActivityWithTimeout(endTime - currentTime);
+			
 			if(currentActivity != null && currentActivity.getClass().equals(activityClass)) {
-				return true;
-			}
-
-			sleeper.sleep(MINISLEEP);
-			currentActivity = activityUtils.getCurrentActivity(false, false);
+				foundActivity = true;
+				break;
+			}		
+			currentTime = SystemClock.uptimeMillis();
+		}
+		removeMonitor(activityMonitor);
+		return foundActivity;
+	}
+	
+	/**
+	 * Compares Activity classes.
+	 * 
+	 * @param activityClass the Activity class to compare	
+	 * @param currentActivity the Activity that is currently active
+	 * 
+	 * @return true if Activity classes match
+	 */
+	private boolean isActivityMatching(Class<? extends Activity> activityClass, Activity currentActivity){
+		if(currentActivity != null && currentActivity.getClass().equals(activityClass)) {
+			return true;
 		}
 		return false;
+	}
+	
+	/**
+	 * Creates a new ActivityMonitor and returns it
+	 * 
+	 * @return an ActivityMonitor
+	 */
+	private ActivityMonitor getActivityMonitor(){
+		IntentFilter filter = null;
+		ActivityMonitor activityMonitor = instrumentation.addMonitor(filter, null, false);
+		return activityMonitor;
+	}
+	
+	
+	/**
+	 * Removes the AcitivityMonitor
+	 * 
+	 * @param activityMonitor the ActivityMonitor to remove
+	 */
+	
+	private void removeMonitor(ActivityMonitor activityMonitor){
+		try{
+			instrumentation.removeMonitor(activityMonitor);	
+		}catch (Exception ignored) {}
 	}
 
 	/**
@@ -215,33 +290,6 @@ class Waiter {
 			sleeper.sleep();
 		}
 		return false;
-	}
-	
-	/**
-	 * Waits for a RecyclerView and returns it.
-	 * 
-	 * @param recyclerViewIndex the index of the RecyclerView
-	 * @return {@code ViewGroup} if RecycleView is displayed
-	 */
-
-
-	public <T extends View> ViewGroup waitForRecyclerView(int recyclerViewIndex) {
-		Set<View> uniqueViews = new HashSet<View>();
-		final long endTime = SystemClock.uptimeMillis() + Timeout.getSmallTimeout();
-
-		while (SystemClock.uptimeMillis() < endTime) {
-			View recyclerView = viewFetcher.getRecyclerView(recyclerViewIndex);
-			if(recyclerView != null){
-				if (waitForView(recyclerView.getClass(), 0, false, false)) {
-					uniqueViews.add(recyclerView);
-				}
-			}
-			if(uniqueViews.size() > recyclerViewIndex) {
-				return (ViewGroup) recyclerView;
-			}
-			scroller.scrollDown();
-		}
-		return null;
 	}
 
 

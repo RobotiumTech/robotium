@@ -142,7 +142,7 @@ public class Solo {
 		this.webUtils = new WebUtils(config, instrumentation,activityUtils,viewFetcher, sleeper);
 		this.scroller = new Scroller(config, instrumentation, viewFetcher, sleeper);
 		this.searcher = new Searcher(viewFetcher, webUtils, scroller, sleeper);
-		this.waiter = new Waiter(activityUtils, viewFetcher, searcher,scroller, sleeper);
+		this.waiter = new Waiter(instrumentation, activityUtils, viewFetcher, searcher,scroller, sleeper);
 		this.getter = new Getter(instrumentation, activityUtils, waiter);
 		this.clicker = new Clicker(activityUtils, viewFetcher,sender, instrumentation, sleeper, waiter, webUtils, dialogUtils);
 		this.setter = new Setter(activityUtils, getter, clicker, waiter);
@@ -225,6 +225,10 @@ public class Solo {
 
 		public boolean trackActivities = true;
 		
+		/**
+		 * Set the web frame to be used by Robotium. Default value is document.  
+		 */
+		public String webFrame = "document";
 	}
 
 	/**
@@ -1471,7 +1475,7 @@ public class Solo {
 
 	@SuppressWarnings("unchecked")
 	public boolean scrollDown() {
-		View recyclerView = viewFetcher.getRecyclerView(0);
+		View recyclerView = viewFetcher.getRecyclerView(true, 0);
 
 		if(recyclerView != null){
 			waiter.waitForViews(true, AbsListView.class, ScrollView.class, WebView.class, recyclerView.getClass());
