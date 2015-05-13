@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.regex.Pattern;
 import com.robotium.solo.Solo.Config;
 import android.app.Activity;
 import android.app.Instrumentation;
@@ -270,7 +271,7 @@ class WebUtils {
 			return false;
 		}
 
-		final String javaScript = prepareForStartOfJavascriptExecution();
+		final String javaScript = setWebFrame(prepareForStartOfJavascriptExecution());
 		Activity activity = activityUtils.getCurrentActivity(false);
 		if(activity != null){
 		activity.runOnUiThread(new Runnable() {
@@ -291,6 +292,17 @@ class WebUtils {
 		});
 		}
 		return true;
+	}
+	
+	private String setWebFrame(String javascript){
+		String frame = config.webFrame;
+		
+		if(frame.isEmpty() || frame.equals("document")){
+			return javascript;
+		}
+		javascript = javascript.replaceAll(Pattern.quote("document, "), "document.getElementById(\""+frame+"\").contentDocument, ");
+		javascript = javascript.replaceAll(Pattern.quote("document.body, "), "document.getElementById(\""+frame+"\").contentDocument, ");
+		return javascript;
 	}
 
 	/**

@@ -16,7 +16,7 @@ function allWebElements() {
 
 function allTexts() {
 	var range = document.createRange();
-	var walk=document.createTreeWalker(document.body,NodeFilter.SHOW_TEXT,null,false); 
+	var walk=document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT, null, false); 
 	while(n=walk.nextNode()){
 		try{
 			promptText(n, range);
@@ -99,7 +99,7 @@ function cssSelector(cssSelector, click) {
 }
 
 function name(name, click) {
-	var walk=document.createTreeWalker(document.body,NodeFilter.SHOW_ELEMENT,null,false); 
+	var walk=document.createTreeWalker(document.body, NodeFilter.SHOW_ELEMENT, null, false); 
 	while(n=walk.nextNode()){
 		try{
 			var attributeName = n.getAttribute('name');
@@ -118,7 +118,7 @@ function name(name, click) {
 }
 
 function className(nameOfClass, click) {
-	var walk=document.createTreeWalker(document.body,NodeFilter.SHOW_ELEMENT,null,false); 
+	var walk=document.createTreeWalker(document.body, NodeFilter.SHOW_ELEMENT, null, false); 
 	while(n=walk.nextNode()){
 		try{
 			var className = n.className; 
@@ -199,7 +199,7 @@ function enterTextByCssSelector(cssSelector, text) {
 }
 
 function enterTextByName(name, text) {
-	var walk=document.createTreeWalker(document.body,NodeFilter.SHOW_ELEMENT,null,false); 
+	var walk=document.createTreeWalker(document.body, NodeFilter.SHOW_ELEMENT, null, false); 
 	while(n=walk.nextNode()){
 		var attributeName = n.getAttribute('name');
 		if(attributeName != null && attributeName.trim().length>0 && attributeName == name) 
@@ -209,7 +209,7 @@ function enterTextByName(name, text) {
 }
 
 function enterTextByClassName(name, text) {
-	var walk=document.createTreeWalker(document.body,NodeFilter.SHOW_ELEMENT,null,false); 
+	var walk=document.createTreeWalker(document.body, NodeFilter.SHOW_ELEMENT, null, false); 
 	while(n=walk.nextNode()){
 		var className = n.className; 
 		if(className != null && className.trim().length>0 && className == name) 
@@ -219,7 +219,7 @@ function enterTextByClassName(name, text) {
 }
 
 function enterTextByTextContent(textContent, text) {
-	var walk=document.createTreeWalker(document.body,NodeFilter.SHOW_TEXT,null,false); 
+	var walk=document.createTreeWalker(document.body,NodeFilter.SHOW_TEXT, null, false); 
 	while(n=walk.nextNode()){ 
 		var textValue = n.textContent; 
 		if(textValue == textContent) 
