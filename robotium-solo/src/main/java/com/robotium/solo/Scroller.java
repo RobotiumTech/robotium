@@ -186,7 +186,7 @@ class Scroller {
 
 		View view = viewFetcher.getFreshestView(views);
 		if (view == null) {
-			view = viewFetcher.getRecyclerView(viewList, true);
+			view = viewFetcher.getRecyclerView(0);
 
 			if(view == null){
 				return false;

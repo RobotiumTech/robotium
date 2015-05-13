@@ -564,17 +564,15 @@ class Clicker {
 			itemIndex = 0;
 
 		ArrayList<View> views = new ArrayList<View>();
-		ViewGroup recyclerView = waiter.waitForRecyclerView(recyclerViewIndex);
-		
+		ViewGroup recyclerView = viewFetcher.getRecyclerView(recyclerViewIndex);
 		
 		if(recyclerView == null){
-			Assert.fail("RecycleView is null!");
+			Assert.fail("RecyclerView is not found!");
 		}
 		else{
-			viewOnLine = getViewOnRecyclerItemIndex((ViewGroup) recyclerView, itemIndex);
+			failIfIndexHigherThenChildCount(recyclerView, itemIndex, endTime);
+			viewOnLine = getViewOnRecyclerItemIndex((ViewGroup) recyclerView, recyclerViewIndex, itemIndex);
 		}
-
-		failIfIndexHigherThenChildCount(recyclerView, itemIndex, endTime);
 		
 		if(viewOnLine != null){
 			views = viewFetcher.getViews(viewOnLine, true);
@@ -636,10 +634,10 @@ class Clicker {
 	 * @return the View located at a specified item index
 	 */
 
-	private View getViewOnRecyclerItemIndex(ViewGroup recyclerView, int itemIndex){
+	private View getViewOnRecyclerItemIndex(ViewGroup recyclerView, int recyclerViewIndex, int itemIndex){
 		final long endTime = SystemClock.uptimeMillis() + Timeout.getSmallTimeout();
 		View view = recyclerView.getChildAt(itemIndex);
-
+		
 		while(view == null){
 			final boolean timedOut = SystemClock.uptimeMillis() > endTime;
 			if (timedOut){
@@ -650,7 +648,7 @@ class Clicker {
 			recyclerView = (ViewGroup) viewFetcher.getIdenticalView(recyclerView);
 
 			if(recyclerView == null){
-				recyclerView = (ViewGroup) viewFetcher.getRecyclerView(null, false);
+				recyclerView = (ViewGroup) viewFetcher.getRecyclerView(false, recyclerViewIndex);
 			}
 			
 			view = recyclerView.getChildAt(itemIndex);

@@ -81,10 +81,6 @@ class Waiter {
 			if(currentActivity != null && currentActivity.getClass().getSimpleName().equals(name)) {
 				return true;
 			}
-			
-			if(activityUtils.getCurrentActivityName().contains(name)){
-				return true;
-			}
 
 			sleeper.sleep(MINISLEEP);
 			currentActivity = activityUtils.getCurrentActivity(false, false);
@@ -234,7 +230,7 @@ class Waiter {
 		final long endTime = SystemClock.uptimeMillis() + Timeout.getSmallTimeout();
 
 		while (SystemClock.uptimeMillis() < endTime) {
-			View recyclerView = viewFetcher.getRecyclerView(null, true);
+			View recyclerView = viewFetcher.getRecyclerView(recyclerViewIndex);
 			if(recyclerView != null){
 				if (waitForView(recyclerView.getClass(), 0, false, false)) {
 					uniqueViews.add(recyclerView);

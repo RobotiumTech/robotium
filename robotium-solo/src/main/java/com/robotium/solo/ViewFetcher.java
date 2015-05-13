@@ -2,9 +2,12 @@ package com.robotium.solo;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import android.app.Instrumentation;
 import android.content.Context;
+import android.os.SystemClock;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewParent;
@@ -382,6 +385,27 @@ class ViewFetcher {
 	}
 	
 	/**
+	 * Waits for a RecyclerView and returns it.
+	 * 
+	 * @param recyclerViewIndex the index of the RecyclerView
+	 * @return {@code ViewGroup} if RecycleView is displayed
+	 */
+
+
+	public <T extends View> ViewGroup getRecyclerView(int recyclerViewIndex) {
+		final long endTime = SystemClock.uptimeMillis() + Timeout.getSmallTimeout();
+
+		while (SystemClock.uptimeMillis() < endTime) {
+			View recyclerView = getRecyclerView(true, recyclerViewIndex);
+			if(recyclerView != null){
+					return (ViewGroup) recyclerView;
+			}
+		}
+		return null;
+	}
+	
+	
+	/**
 	 * Returns a RecyclerView or null if none is found
 	 * 
 	 * @param viewList the list to check in 
@@ -389,19 +413,24 @@ class ViewFetcher {
 	 * @return a RecyclerView
 	 */
 	
-	public View getRecyclerView(ArrayList<View> viewList, boolean shouldSleep){
-		if(viewList == null){
+	public View getRecyclerView(boolean shouldSleep, int recyclerViewIndex){
+		Set<View> uniqueViews = new HashSet<View>();
 			if(shouldSleep){
 				sleeper.sleep();
 			}
-			viewList = getAllViews(true);
-		}
-		@SuppressWarnings("unchecked")
-		ArrayList<View> views = RobotiumUtils.filterViewsToSet(new Class[] {ViewGroup.class}, viewList);
+
+			@SuppressWarnings("unchecked")
+		ArrayList<View> views = RobotiumUtils.filterViewsToSet(new Class[] {ViewGroup.class}, getAllViews(true));
+		views = RobotiumUtils.removeInvisibleViews(views);
+		
 		for(View view : views){
 
 			if(isViewType(view.getClass(), "widget.RecyclerView")){
-				return view;
+				uniqueViews.add(view);
+			}
+			
+			if(uniqueViews.size() > recyclerViewIndex) {
+				return (ViewGroup) view;
 			}
 		}
 		return null;

@@ -224,6 +224,7 @@ public class Solo {
 		 */
 
 		public boolean trackActivities = true;
+		
 	}
 
 	/**
@@ -1470,7 +1471,7 @@ public class Solo {
 
 	@SuppressWarnings("unchecked")
 	public boolean scrollDown() {
-		View recyclerView = viewFetcher.getRecyclerView(null, true);
+		View recyclerView = viewFetcher.getRecyclerView(0);
 
 		if(recyclerView != null){
 			waiter.waitForViews(true, AbsListView.class, ScrollView.class, WebView.class, recyclerView.getClass());
@@ -1487,7 +1488,7 @@ public class Solo {
 
 	@SuppressWarnings("unchecked")
 	public void scrollToBottom() {
-		View recyclerView = viewFetcher.getRecyclerView(null, true);
+		View recyclerView = viewFetcher.getRecyclerView(true, 0);
 		if(recyclerView != null){
 			waiter.waitForViews(true, AbsListView.class, ScrollView.class, WebView.class, recyclerView.getClass());
 		}
@@ -1507,7 +1508,7 @@ public class Solo {
 
 	@SuppressWarnings("unchecked")
 	public boolean scrollUp(){
-		View recyclerView = viewFetcher.getRecyclerView(null, true);
+		View recyclerView = viewFetcher.getRecyclerView(true, 0);
 		if(recyclerView != null){
 			waiter.waitForViews(true, AbsListView.class, ScrollView.class, WebView.class, recyclerView.getClass());
 		}
@@ -1523,7 +1524,7 @@ public class Solo {
 
 	@SuppressWarnings("unchecked")
 	public void scrollToTop() {
-		View recyclerView = viewFetcher.getRecyclerView(null, true);
+		View recyclerView = viewFetcher.getRecyclerView(true, 0);
 		if(recyclerView != null){
 			waiter.waitForViews(true, AbsListView.class, ScrollView.class, WebView.class, recyclerView.getClass());
 		}
