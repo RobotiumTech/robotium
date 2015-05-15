@@ -73,7 +73,7 @@ function xpath(xpath, click) {
 			}
 			else{
 				promptElement(element);
-				element = result.iterateNext();
+				element = elements.iterateNext();
 			}
 		}
 		finished();
