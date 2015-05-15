@@ -8,6 +8,7 @@ import android.app.Instrumentation;
 import android.content.pm.ActivityInfo;
 import android.graphics.PointF;
 import android.os.Environment;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.WindowManager;
@@ -95,6 +96,10 @@ public class Solo {
 
 	public Solo(Instrumentation instrumentation, Activity activity) {
 		this(new Config(), instrumentation, activity);
+		
+		if(config.commandLogging){
+			Log.d("Robotium", "Solo(\""+instrumentation+", "+activity+"\")");
+		}	
 	}
 
 	/**
@@ -106,6 +111,10 @@ public class Solo {
 
 	public Solo(Instrumentation instrumentation, Config config) {
 		this(config, instrumentation, null);
+		
+		if(config.commandLogging){
+			Log.d("Robotium", "Solo(\""+instrumentation+", "+config+"\")");
+		}
 	}
 
 	/**
@@ -119,6 +128,10 @@ public class Solo {
 
 	public Solo(Instrumentation instrumentation, Config config, Activity activity) {
 		this(config, instrumentation, activity);
+		
+		if(config.commandLogging){
+			Log.d("Robotium", "Solo(\""+instrumentation+", "+config+", "+activity+"\")");
+		}
 	}
 
 	/**
@@ -131,6 +144,11 @@ public class Solo {
 	 */
 
 	private Solo(Config config, Instrumentation instrumentation, Activity activity) {
+		
+		if(config.commandLogging){
+			Log.d("Robotium", "Solo(\""+config+", "+instrumentation+", "+activity+"\")");
+		}
+		
 		this.config = (config == null) ? new Config(): config;
 		this.instrumentation = instrumentation;
 		this.sleeper = new Sleeper();
@@ -229,6 +247,13 @@ public class Solo {
 		 * Set the web frame to be used by Robotium. Default value is document.  
 		 */
 		public String webFrame = "document";
+		
+		/**
+		 *  Set to true if logging should be enabled. Default value is false.
+		 */
+		
+		public boolean commandLogging = false;
+		
 	}
 
 	/**
@@ -239,6 +264,10 @@ public class Solo {
 
 	public Solo(Instrumentation instrumentation) {
 		this(new Config(), instrumentation, null);
+		
+		if(config.commandLogging){
+			Log.d("Robotium", "Solo(\""+instrumentation+"\")");
+		}
 	}
 
 	/**
@@ -248,6 +277,10 @@ public class Solo {
 	 */
 
 	public ActivityMonitor getActivityMonitor(){
+		if(config.commandLogging){
+			Log.d("Robotium", "getActivityMonitor()");
+		}
+		
 		return activityUtils.getActivityMonitor();
 	}
 
@@ -258,6 +291,10 @@ public class Solo {
 	 */
 
 	public Config getConfig(){
+		if(config.commandLogging){
+			Log.d("Robotium", "getConfig()");
+		}
+		
 		return config;
 	}
 
@@ -270,6 +307,10 @@ public class Solo {
 
 	public ArrayList<View> getViews() {
 		try {
+			if(config.commandLogging){
+				Log.d("Robotium", "getViews()");
+			}
+			
 			return viewFetcher.getViews(null, false);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -286,6 +327,10 @@ public class Solo {
 
 	public ArrayList<View> getViews(View parent) {
 		try {
+			if(config.commandLogging){
+				Log.d("Robotium", "getViews()");
+			}
+			
 			return viewFetcher.getViews(parent, false);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -301,6 +346,10 @@ public class Solo {
 	 */
 
 	public View getTopParent(View view) {
+		if(config.commandLogging){
+			Log.d("Robotium", "getTopParent(\""+view+"\")");
+		}
+		
 		View topParent = viewFetcher.getTopParent(view);
 		return topParent;
 	}
@@ -313,6 +362,10 @@ public class Solo {
 	 */
 
 	public boolean waitForText(String text) {
+		if(config.commandLogging){
+			Log.d("Robotium", "waitForText(\""+text+"\")");
+		}
+		
 		return (waiter.waitForText(text) != null);
 	}
 
@@ -326,6 +379,10 @@ public class Solo {
 	 */
 
 	public boolean waitForText(String text, int minimumNumberOfMatches, long timeout) {
+		if(config.commandLogging){
+			Log.d("Robotium", "waitForText(\""+text+", "+minimumNumberOfMatches+", "+timeout+"\")");
+		}
+		
 		return (waiter.waitForText(text, minimumNumberOfMatches, timeout) != null);
 	}
 
@@ -340,6 +397,10 @@ public class Solo {
 	 */
 
 	public boolean waitForText(String text, int minimumNumberOfMatches, long timeout, boolean scroll) {
+		if(config.commandLogging){
+			Log.d("Robotium", "waitForText(\""+text+", "+minimumNumberOfMatches+", "+timeout+", "+scroll+"\")");
+		}
+		
 		return (waiter.waitForText(text, minimumNumberOfMatches, timeout, scroll) != null);
 	}
 
@@ -355,6 +416,10 @@ public class Solo {
 	 */
 
 	public boolean waitForText(String text, int minimumNumberOfMatches, long timeout, boolean scroll, boolean onlyVisible) {
+		if(config.commandLogging){
+			Log.d("Robotium", "waitForText(\""+text+", "+minimumNumberOfMatches+", "+timeout+", "+scroll+", "+onlyVisible+"\")");
+		}
+		
 		return (waiter.waitForText(text, minimumNumberOfMatches, timeout, scroll, onlyVisible, true) != null);
 	}
 
@@ -366,6 +431,10 @@ public class Solo {
 	 */
 
 	public boolean waitForView(int id){
+		if(config.commandLogging){
+			Log.d("Robotium", "waitForView(\""+id+"\")");
+		}
+		
 		return waitForView(id, 0, Timeout.getLargeTimeout(), true);
 	}
 
@@ -379,6 +448,10 @@ public class Solo {
 	 */
 
 	public boolean waitForView(int id, int minimumNumberOfMatches, int timeout){
+		if(config.commandLogging){
+			Log.d("Robotium", "waitForView(\""+id+", "+minimumNumberOfMatches+", "+timeout+"\")");
+		}
+		
 		return waitForView(id, minimumNumberOfMatches, timeout, true);
 	}
 
@@ -393,6 +466,10 @@ public class Solo {
 	 */
 
 	public boolean waitForView(int id, int minimumNumberOfMatches, int timeout, boolean scroll){
+		if(config.commandLogging){
+			Log.d("Robotium", "waitForView(\""+id+", "+minimumNumberOfMatches+", "+timeout+", "+scroll+"\")");
+		}
+		
 		int index = minimumNumberOfMatches-1;
 
 		if(index < 1)
@@ -409,6 +486,10 @@ public class Solo {
 	 */
 
 	public boolean waitForView(Object tag){
+		if(config.commandLogging){
+			Log.d("Robotium", "waitForView(\""+tag+"\")");
+		}
+		
 		return waitForView(tag, 0, Timeout.getLargeTimeout(), true);
 	}
 
@@ -422,6 +503,10 @@ public class Solo {
 	 */
 
 	public boolean waitForView(Object tag, int minimumNumberOfMatches, int timeout){
+		if(config.commandLogging){
+			Log.d("Robotium", "waitForView(\""+tag+", "+minimumNumberOfMatches+", "+timeout+"\")");
+		}
+		
 		return waitForView(tag, minimumNumberOfMatches, timeout, true);
 	}
 
@@ -436,6 +521,10 @@ public class Solo {
 	 */
 
 	public boolean waitForView(Object tag, int minimumNumberOfMatches, int timeout, boolean scroll){
+		if(config.commandLogging){
+			Log.d("Robotium", "waitForView(\""+tag+", "+minimumNumberOfMatches+", "+timeout+", "+scroll+"\")");
+		}
+		
 		int index = minimumNumberOfMatches-1;
 
 		if(index < 1) {
@@ -453,7 +542,10 @@ public class Solo {
 	 */
 
 	public <T extends View> boolean waitForView(final Class<T> viewClass){
-
+		if(config.commandLogging){
+			Log.d("Robotium", "waitForView(\""+viewClass+"\")");
+		}
+		
 		return waiter.waitForView(viewClass, 0, Timeout.getLargeTimeout(), true);
 	}
 
@@ -465,6 +557,10 @@ public class Solo {
 	 */
 
 	public <T extends View> boolean waitForView(View view){
+		if(config.commandLogging){
+			Log.d("Robotium", "waitForView(\""+view+"\")");
+		}
+		
 		return waiter.waitForView(view);
 	}
 
@@ -478,6 +574,10 @@ public class Solo {
 	 */
 
 	public <T extends View> boolean waitForView(View view, int timeout, boolean scroll){
+		if(config.commandLogging){
+			Log.d("Robotium", "waitForView(\""+view+", "+timeout+", "+scroll+"\")");
+		}
+		
 		boolean checkIsShown = false;
 
 		if(!scroll){
@@ -502,6 +602,10 @@ public class Solo {
 	 */
 
 	public <T extends View> boolean waitForView(final Class<T> viewClass, final int minimumNumberOfMatches, final int timeout){
+		if(config.commandLogging){
+			Log.d("Robotium", "waitForView(\""+viewClass+", "+minimumNumberOfMatches+", "+timeout+"\")");
+		}
+		
 		int index = minimumNumberOfMatches-1;
 
 		if(index < 1)
@@ -521,6 +625,10 @@ public class Solo {
 	 */
 
 	public <T extends View> boolean waitForView(final Class<T> viewClass, final int minimumNumberOfMatches, final int timeout,final boolean scroll){
+		if(config.commandLogging){
+			Log.d("Robotium", "waitForView(\""+viewClass+", "+minimumNumberOfMatches+", "+timeout+", "+scroll+"\")");
+		}
+		
 		int index = minimumNumberOfMatches-1;
 
 		if(index < 1)
@@ -537,6 +645,10 @@ public class Solo {
 	 */
 
 	public boolean waitForWebElement(By by){
+		if(config.commandLogging){
+			Log.d("Robotium", "waitForWebElement(\""+by+"\")");
+		}
+		
 		return (waiter.waitForWebElement(by, 0, Timeout.getLargeTimeout(), true) != null);
 	}
 
@@ -550,6 +662,10 @@ public class Solo {
 	 */
 
 	public boolean waitForWebElement(By by, int timeout, boolean scroll){
+		if(config.commandLogging){
+			Log.d("Robotium", "waitForWebElement(\""+by+", "+timeout+", "+scroll+"\")");
+		}
+		
 		return (waiter.waitForWebElement(by, 0, timeout, scroll) != null);
 	}
 
@@ -564,6 +680,10 @@ public class Solo {
 	 */
 
 	public boolean waitForWebElement(By by, int minimumNumberOfMatches, int timeout, boolean scroll){
+		if(config.commandLogging){
+			Log.d("Robotium", "waitForWebElement(\""+by+", "+minimumNumberOfMatches+","+timeout+", "+scroll+"\")");
+		}
+		
 		return (waiter.waitForWebElement(by, minimumNumberOfMatches, timeout, scroll) != null);
 	}
 
@@ -576,6 +696,10 @@ public class Solo {
 	 */
 
 	public boolean waitForCondition(Condition condition, final int timeout){
+		if(config.commandLogging){
+			Log.d("Robotium", "waitForCondition(\""+condition+","+timeout+"\")");
+		}
+		
 		return waiter.waitForCondition(condition, timeout);
 	}
 
@@ -587,6 +711,10 @@ public class Solo {
 	 */
 
 	public boolean searchEditText(String text) {
+		if(config.commandLogging){
+			Log.d("Robotium", "searchEditText(\""+text+"\")");
+		}
+		
 		return searcher.searchWithTimeoutFor(EditText.class, text, 1, true, false);
 	}
 
@@ -600,6 +728,10 @@ public class Solo {
 	 */
 
 	public boolean searchButton(String text) {
+		if(config.commandLogging){
+			Log.d("Robotium", "searchButton(\""+text+"\")");
+		}
+		
 		return searcher.searchWithTimeoutFor(Button.class, text, 0, true, false);
 	}
 
@@ -613,6 +745,10 @@ public class Solo {
 	 */
 
 	public boolean searchButton(String text, boolean onlyVisible) {
+		if(config.commandLogging){
+			Log.d("Robotium", "searchButton(\""+text+", "+onlyVisible+"\")");
+		}
+		
 		return searcher.searchWithTimeoutFor(Button.class, text, 0, true, onlyVisible);
 	}
 
@@ -625,6 +761,10 @@ public class Solo {
 	 */
 
 	public boolean searchToggleButton(String text) {
+		if(config.commandLogging){
+			Log.d("Robotium", "searchToggleButton(\""+text+"\")");
+		}
+		
 		return searcher.searchWithTimeoutFor(ToggleButton.class, text, 0, true, false);
 	}
 
@@ -640,6 +780,10 @@ public class Solo {
 	 */
 
 	public boolean searchButton(String text, int minimumNumberOfMatches) {
+		if(config.commandLogging){
+			Log.d("Robotium", "searchButton(\""+text+", "+minimumNumberOfMatches+"\")");
+		}
+		
 		return searcher.searchWithTimeoutFor(Button.class, text, minimumNumberOfMatches, true, false);
 	}
 
@@ -656,6 +800,10 @@ public class Solo {
 	 */
 
 	public boolean searchButton(String text, int minimumNumberOfMatches, boolean onlyVisible) {
+		if(config.commandLogging){
+			Log.d("Robotium", "searchButton(\""+text+", "+minimumNumberOfMatches+", "+onlyVisible+"\")");
+		}
+		
 		return searcher.searchWithTimeoutFor(Button.class, text, minimumNumberOfMatches, true, onlyVisible);
 	}
 
@@ -671,6 +819,10 @@ public class Solo {
 	 */
 
 	public boolean searchToggleButton(String text, int minimumNumberOfMatches) {
+		if(config.commandLogging){
+			Log.d("Robotium", "searchToggleButton(\""+text+", "+minimumNumberOfMatches+"\")");
+		}
+		
 		return searcher.searchWithTimeoutFor(ToggleButton.class, text, minimumNumberOfMatches, true, false);
 	}
 
@@ -683,6 +835,10 @@ public class Solo {
 	 */
 
 	public boolean searchText(String text) {
+		if(config.commandLogging){
+			Log.d("Robotium", "searchText(\""+text+"\")");
+		}
+		
 		return searcher.searchWithTimeoutFor(TextView.class, text, 0, true, false);
 	}
 
@@ -696,6 +852,10 @@ public class Solo {
 	 */
 
 	public boolean searchText(String text, boolean onlyVisible) {
+		if(config.commandLogging){
+			Log.d("Robotium", "searchText(\""+text+", "+onlyVisible+"\")");
+		}
+		
 		return searcher.searchWithTimeoutFor(TextView.class, text, 0, true, onlyVisible);
 	}
 
@@ -711,6 +871,10 @@ public class Solo {
 	 */
 
 	public boolean searchText(String text, int minimumNumberOfMatches) {
+		if(config.commandLogging){
+			Log.d("Robotium", "searchText(\""+text+", "+minimumNumberOfMatches+"\")");
+		}
+		
 		return searcher.searchWithTimeoutFor(TextView.class, text, minimumNumberOfMatches, true, false);
 	}
 
@@ -727,6 +891,10 @@ public class Solo {
 	 */
 
 	public boolean searchText(String text, int minimumNumberOfMatches, boolean scroll) {
+		if(config.commandLogging){
+			Log.d("Robotium", "searchText(\""+text+", "+minimumNumberOfMatches+", "+scroll+"\")");
+		}
+		
 		return searcher.searchWithTimeoutFor(TextView.class, text, minimumNumberOfMatches, scroll, false);
 	}
 
@@ -744,6 +912,10 @@ public class Solo {
 	 */
 
 	public boolean searchText(String text, int minimumNumberOfMatches, boolean scroll, boolean onlyVisible) {
+		if(config.commandLogging){
+			Log.d("Robotium", "searchText(\""+text+", "+minimumNumberOfMatches+", "+scroll+", "+onlyVisible+"\")");
+		}
+		
 		return searcher.searchWithTimeoutFor(TextView.class, text, minimumNumberOfMatches, scroll, onlyVisible);
 	}
 
@@ -756,6 +928,10 @@ public class Solo {
 
 	public void setActivityOrientation(int orientation)
 	{
+		if(config.commandLogging){
+			Log.d("Robotium", "setActivityOrientation(\""+orientation+"\")");
+		}
+		
 		activityUtils.setActivityOrientation(orientation);
 	}
 
@@ -766,6 +942,10 @@ public class Solo {
 	 */
 
 	public Activity getCurrentActivity() {
+		if(config.commandLogging){
+			Log.d("Robotium", "getCurrentActivity()");
+		}
+		
 		return activityUtils.getCurrentActivity(false);
 	}
 
@@ -778,6 +958,10 @@ public class Solo {
 
 	public void assertCurrentActivity(String message, String name)
 	{
+		if(config.commandLogging){
+			Log.d("Robotium", "assertCurrentActivity(\""+message+", "+name+"\")");
+		}
+		
 		asserter.assertCurrentActivity(message, name);
 	}
 
@@ -791,6 +975,10 @@ public class Solo {
 	@SuppressWarnings("unchecked")
 	public void assertCurrentActivity(String message, @SuppressWarnings("rawtypes") Class activityClass)
 	{
+		if(config.commandLogging){
+			Log.d("Robotium", "assertCurrentActivity(\""+message+", "+activityClass+"\")");
+		}
+		
 		asserter.assertCurrentActivity(message, activityClass);
 
 	}
@@ -806,6 +994,10 @@ public class Solo {
 
 	public void assertCurrentActivity(String message, String name, boolean isNewInstance)
 	{
+		if(config.commandLogging){
+			Log.d("Robotium", "assertCurrentActivity(\""+message+", "+name+", "+isNewInstance+"\")");
+		}
+		
 		asserter.assertCurrentActivity(message, name, isNewInstance);
 	}
 
@@ -821,6 +1013,10 @@ public class Solo {
 	@SuppressWarnings("unchecked")
 	public void assertCurrentActivity(String message, @SuppressWarnings("rawtypes") Class activityClass,
 			boolean isNewInstance) {
+		if(config.commandLogging){
+			Log.d("Robotium", "assertCurrentActivity(\""+message+", "+activityClass+", "+isNewInstance+"\")");
+		}
+		
 		asserter.assertCurrentActivity(message, activityClass, isNewInstance);
 	}
 
@@ -830,6 +1026,10 @@ public class Solo {
 
 	public void assertMemoryNotLow()
 	{
+		if(config.commandLogging){
+			Log.d("Robotium", "assertMemoryNotLow()");
+		}
+		
 		asserter.assertMemoryNotLow();
 	}
 
@@ -840,6 +1040,10 @@ public class Solo {
 	 */
 
 	public boolean waitForDialogToOpen() {
+		if(config.commandLogging){
+			Log.d("Robotium", "waitForDialogToOpen()");
+		}
+		
 		return dialogUtils.waitForDialogToOpen(Timeout.getLargeTimeout(), true);
 	}
 
@@ -850,6 +1054,10 @@ public class Solo {
 	 */
 
 	public boolean waitForDialogToClose() {
+		if(config.commandLogging){
+			Log.d("Robotium", "waitForDialogToClose()");
+		}
+		
 		return dialogUtils.waitForDialogToClose(Timeout.getLargeTimeout());
 	}
 
@@ -861,6 +1069,10 @@ public class Solo {
 	 */
 
 	public boolean waitForDialogToOpen(long timeout) {
+		if(config.commandLogging){
+			Log.d("Robotium", "waitForDialogToOpen(\""+timeout+"\")");
+		}
+		
 		return dialogUtils.waitForDialogToOpen(timeout, true);
 	}
 
@@ -872,6 +1084,10 @@ public class Solo {
 	 */
 
 	public boolean waitForDialogToClose(long timeout) {
+		if(config.commandLogging){
+			Log.d("Robotium", "waitForDialogToClose(\""+timeout+"\")");
+		}
+		
 		return dialogUtils.waitForDialogToClose(timeout);
 	}
 
@@ -882,6 +1098,10 @@ public class Solo {
 
 	public void goBack()
 	{
+		if(config.commandLogging){
+			Log.d("Robotium", "goBack()");
+		}
+		
 		hideSoftKeyboard();
 		sender.goBack();
 	}
@@ -894,6 +1114,10 @@ public class Solo {
 	 */
 
 	public void clickOnScreen(float x, float y) {
+		if(config.commandLogging){
+			Log.d("Robotium", "clickOnScreen(\""+x+", "+y+"\")");
+		}
+		
 		sleeper.sleep();
 		clicker.clickOnScreen(x, y, null);
 	}
@@ -907,6 +1131,10 @@ public class Solo {
 	 */
 
 	public void clickOnScreen(float x, float y, int numberOfClicks) {
+		if(config.commandLogging){
+			Log.d("Robotium", "clickOnScreen(\""+x+", "+y+", "+numberOfClicks+"\")");
+		}
+		
 		if (android.os.Build.VERSION.SDK_INT < 14){
 			throw new RuntimeException("clickOnScreen(float x, float y, int numberOfClicks) requires API level >= 14");
 
@@ -922,6 +1150,10 @@ public class Solo {
 	 */
 
 	public void clickLongOnScreen(float x, float y) {
+		if(config.commandLogging){
+			Log.d("Robotium", "clickLongOnScreen(\""+x+", "+y+"\")");
+		}
+		
 		clicker.clickLongOnScreen(x, y, 0, null);
 	}
 
@@ -934,6 +1166,10 @@ public class Solo {
 	 */
 
 	public void clickLongOnScreen(float x, float y, int time) {
+		if(config.commandLogging){
+			Log.d("Robotium", "clickLongOnScreen(\""+x+", "+y+", "+time+"\")");
+		}
+		
 		clicker.clickLongOnScreen(x, y, time, null);
 	}
 
@@ -945,6 +1181,10 @@ public class Solo {
 	 */
 
 	public void clickOnButton(String text) {
+		if(config.commandLogging){
+			Log.d("Robotium", "clickOnButton(\""+text+"\")");
+		}
+			
 		clicker.clickOn(Button.class, text);
 
 	}
@@ -956,6 +1196,10 @@ public class Solo {
 	 */
 
 	public void clickOnImageButton(int index) {
+		if(config.commandLogging){
+			Log.d("Robotium", "clickOnImageButton(\""+index+"\")");
+		}
+		
 		clicker.clickOn(ImageButton.class, index);
 	}
 
@@ -966,6 +1210,10 @@ public class Solo {
 	 */
 
 	public void clickOnToggleButton(String text) {
+		if(config.commandLogging){
+			Log.d("Robotium", "clickOnToggleButton(\""+text+"\")");
+		}
+		
 		clicker.clickOn(ToggleButton.class, text);
 	}
 
@@ -977,6 +1225,10 @@ public class Solo {
 
 	public void clickOnMenuItem(String text)
 	{
+		if(config.commandLogging){
+			Log.d("Robotium", "clickOnMenuItem(\""+text+"\")");
+		}
+		
 		clicker.clickOnMenuItem(text);
 	}
 
@@ -989,6 +1241,10 @@ public class Solo {
 
 	public void clickOnMenuItem(String text, boolean subMenu)
 	{
+		if(config.commandLogging){
+			Log.d("Robotium", "clickOnMenuItem(\""+text+", "+subMenu+"\")");
+		}
+		
 		clicker.clickOnMenuItem(text, subMenu);
 	}
 
@@ -999,6 +1255,10 @@ public class Solo {
 	 */
 
 	public void clickOnWebElement(WebElement webElement){
+		if(config.commandLogging){
+			Log.d("Robotium", "clickOnWebElement(\""+webElement+"\")");
+		}
+		
 		if(webElement == null)
 			Assert.fail("WebElement is null and can therefore not be clicked!");
 
@@ -1012,6 +1272,10 @@ public class Solo {
 	 */
 
 	public void clickOnWebElement(By by){
+		if(config.commandLogging){
+			Log.d("Robotium", "clickOnWebElement(\""+by+"\")");
+		}
+		
 		clickOnWebElement(by, 0, true);
 	}
 
@@ -1023,6 +1287,10 @@ public class Solo {
 	 */
 
 	public void clickOnWebElement(By by, int match){
+		if(config.commandLogging){
+			Log.d("Robotium", "clickOnWebElement(\""+by+", "+match+"\")");
+		}
+		
 		clickOnWebElement(by, match, true);
 	}
 
@@ -1035,6 +1303,10 @@ public class Solo {
 	 */
 
 	public void clickOnWebElement(By by, int match, boolean scroll){
+		if(config.commandLogging){
+			Log.d("Robotium", "clickOnWebElement(\""+by+", "+match+", "+scroll+"\")");
+		}
+		
 		clicker.clickOnWebElement(by, match, scroll, config.useJavaScriptToClickWebElements);
 	}
 
@@ -1047,6 +1319,10 @@ public class Solo {
 	 */
 
 	public void pressMenuItem(int index) {
+		if(config.commandLogging){
+			Log.d("Robotium", "pressMenuItem(\""+index+"\")");
+		}
+		
 		presser.pressMenuItem(index);
 	}
 
@@ -1060,6 +1336,10 @@ public class Solo {
 	 */
 
 	public void pressMenuItem(int index, int itemsPerRow) {
+		if(config.commandLogging){
+			Log.d("Robotium", "pressMenuItem(\""+index+", "+itemsPerRow+"\")");
+		}
+		
 		presser.pressMenuItem(index, itemsPerRow);
 	}
 
@@ -1068,6 +1348,10 @@ public class Solo {
 	 */
 
 	public void pressSoftKeyboardNextButton(){
+		if(config.commandLogging){
+			Log.d("Robotium", "pressSoftKeyboardNextButton()");
+		}
+		
 		presser.pressSoftKeyboardSearchOrNextButton(false);
 	}
 
@@ -1076,6 +1360,10 @@ public class Solo {
 	 */
 
 	public void pressSoftKeyboardSearchButton(){
+		if(config.commandLogging){
+			Log.d("Robotium", "pressSoftKeyboardSearchButton()");
+		}
+		
 		presser.pressSoftKeyboardSearchOrNextButton(true);
 	}
 
@@ -1089,6 +1377,10 @@ public class Solo {
 
 	public void pressSpinnerItem(int spinnerIndex, int itemIndex)
 	{
+		if(config.commandLogging){
+			Log.d("Robotium", "pressSpinnerItem(\""+spinnerIndex+", "+itemIndex+"\")");
+		}
+		
 		presser.pressSpinnerItem(spinnerIndex, itemIndex);
 	}
 
@@ -1099,6 +1391,10 @@ public class Solo {
 	 */
 
 	public void clickOnView(View view) {
+		if(config.commandLogging){
+			Log.d("Robotium", "clickOnView(\""+view+"\")");
+		}
+		
 		view = waiter.waitForView(view, Timeout.getSmallTimeout());
 		clicker.clickOnScreen(view);
 	}
@@ -1111,6 +1407,10 @@ public class Solo {
 	 */
 
 	public void clickOnView(View view, boolean immediately){
+		if(config.commandLogging){
+			Log.d("Robotium", "clickOnView(\""+view+", "+immediately+"\")");
+		}
+		
 		if(immediately)
 			clicker.clickOnScreen(view);
 		else{
@@ -1126,6 +1426,10 @@ public class Solo {
 	 */
 
 	public void clickLongOnView(View view) {
+		if(config.commandLogging){
+			Log.d("Robotium", "clickLongOnView(\""+view+"\")");
+		}
+		
 		view = waiter.waitForView(view, Timeout.getSmallTimeout());
 		clicker.clickOnScreen(view, true, 0);
 
@@ -1139,6 +1443,10 @@ public class Solo {
 	 */
 
 	public void clickLongOnView(View view, int time) {
+		if(config.commandLogging){
+			Log.d("Robotium", "clickLongOnView(\""+view+", "+time+"\")");
+		}
+		
 		clicker.clickOnScreen(view, true, time);
 
 	}
@@ -1151,6 +1459,10 @@ public class Solo {
 	 */
 
 	public void clickOnText(String text) {
+		if(config.commandLogging){
+			Log.d("Robotium", "clickOnText(\""+text+"\")");
+		}
+		
 		clicker.clickOnText(text, false, 1, true, 0);
 	}
 
@@ -1162,6 +1474,10 @@ public class Solo {
 	 */
 
 	public void clickOnText(String text, int match) {
+		if(config.commandLogging){
+			Log.d("Robotium", "clickOnText(\""+text+", "+match+"\")");
+		}
+		
 		clicker.clickOnText(text, false, match, true, 0);
 	}
 
@@ -1174,6 +1490,10 @@ public class Solo {
 	 */
 
 	public void clickOnText(String text, int match, boolean scroll) {
+		if(config.commandLogging){
+			Log.d("Robotium", "clickOnText(\""+text+", "+match+", "+scroll+"\")");
+		}
+		
 		clicker.clickOnText(text, false, match, scroll, 0);
 	}
 
@@ -1185,6 +1505,10 @@ public class Solo {
 
 	public void clickLongOnText(String text)
 	{
+		if(config.commandLogging){
+			Log.d("Robotium", "clickLongOnText(\""+text+"\")");
+		}
+		
 		clicker.clickOnText(text, true, 1, true, 0);
 	}
 
@@ -1197,6 +1521,10 @@ public class Solo {
 
 	public void clickLongOnText(String text, int match)
 	{
+		if(config.commandLogging){
+			Log.d("Robotium", "clickLongOnText(\""+text+", "+match+"\")");
+		}
+		
 		clicker.clickOnText(text, true, match, true, 0);
 	}
 
@@ -1210,6 +1538,10 @@ public class Solo {
 
 	public void clickLongOnText(String text, int match, boolean scroll)
 	{
+		if(config.commandLogging){
+			Log.d("Robotium", "clickLongOnText(\""+text+", "+match+", "+scroll+"\")");
+		}
+		
 		clicker.clickOnText(text, true, match, scroll, 0);
 	}
 
@@ -1223,6 +1555,10 @@ public class Solo {
 
 	public void clickLongOnText(String text, int match, int time)
 	{
+		if(config.commandLogging){
+			Log.d("Robotium", "clickLongOnText(\""+text+", "+match+", "+time+"\")");
+		}
+		
 		clicker.clickOnText(text, true, match, true, time);
 	}
 
@@ -1235,6 +1571,10 @@ public class Solo {
 	 */
 
 	public void clickLongOnTextAndPress(String text, int index) {
+		if(config.commandLogging){
+			Log.d("Robotium", "clickLongOnTextAndPress(\""+text+", "+index+"\")");
+		}
+		
 		clicker.clickLongOnTextAndPress(text, index);
 	}
 
@@ -1245,6 +1585,10 @@ public class Solo {
 	 */
 
 	public void clickOnButton(int index) {
+		if(config.commandLogging){
+			Log.d("Robotium", "clickOnButton(\""+index+"\")");
+		}
+		
 		clicker.clickOn(Button.class, index);
 	}
 
@@ -1255,6 +1599,10 @@ public class Solo {
 	 */
 
 	public void clickOnRadioButton(int index) {
+		if(config.commandLogging){
+			Log.d("Robotium", "clickOnRadioButton(\""+index+"\")");
+		}
+		
 		clicker.clickOn(RadioButton.class, index);
 	}
 
@@ -1265,6 +1613,10 @@ public class Solo {
 	 */
 
 	public void clickOnCheckBox(int index) {
+		if(config.commandLogging){
+			Log.d("Robotium", "clickOnCheckBox(\""+index+"\")");
+		}
+		
 		clicker.clickOn(CheckBox.class, index);
 	}
 
@@ -1275,6 +1627,10 @@ public class Solo {
 	 */
 
 	public void clickOnEditText(int index) {
+		if(config.commandLogging){
+			Log.d("Robotium", "clickOnEditText(\""+index+"\")");
+		}
+		
 		clicker.clickOn(EditText.class, index);
 	}
 
@@ -1287,6 +1643,10 @@ public class Solo {
 	 */
 
 	public ArrayList<TextView> clickInList(int line) {
+		if(config.commandLogging){
+			Log.d("Robotium", "clickInList(\""+line+"\")");
+		}
+		
 		return clicker.clickInList(line);
 	}
 
@@ -1300,6 +1660,10 @@ public class Solo {
 	 */
 
 	public ArrayList<TextView> clickInList(int line, int index) {
+		if(config.commandLogging){
+			Log.d("Robotium", "clickInList(\""+line+", "+index+"\")");
+		}
+		
 		return clicker.clickInList(line, index, false, 0);
 	}
 
@@ -1312,6 +1676,10 @@ public class Solo {
 	 */
 
 	public ArrayList<TextView> clickLongInList(int line){
+		if(config.commandLogging){
+			Log.d("Robotium", "clickLongInList(\""+line+"\")");
+		}
+		
 		return clicker.clickInList(line, 0, true, 0);
 	}
 
@@ -1325,6 +1693,10 @@ public class Solo {
 	 */
 
 	public ArrayList<TextView> clickLongInList(int line, int index){
+		if(config.commandLogging){
+			Log.d("Robotium", "clickLongInList(\""+line+", "+index+"\")");
+		}
+		
 		return clicker.clickInList(line, index, true, 0);
 	}
 
@@ -1339,6 +1711,10 @@ public class Solo {
 	 */
 
 	public ArrayList<TextView> clickLongInList(int line, int index, int time){
+		if(config.commandLogging){
+			Log.d("Robotium", "clickLongInList(\""+line+", "+index+", "+time+"\")");
+		}
+		
 		return clicker.clickInList(line, index, true, time);
 	}
 	
@@ -1352,6 +1728,10 @@ public class Solo {
 	 */
 
 	public ArrayList<TextView> clickInRecyclerView(int itemIndex) {
+		if(config.commandLogging){
+			Log.d("Robotium", "clickInRecyclerView(\""+itemIndex+"\")");
+		}
+		
 		return clicker.clickInRecyclerView(itemIndex);
 	}
 
@@ -1365,6 +1745,10 @@ public class Solo {
 	 */
 
 	public ArrayList<TextView> clickInRecyclerView(int itemIndex, int recyclerViewIndex) {
+		if(config.commandLogging){
+			Log.d("Robotium", "clickInRecyclerView(\""+itemIndex+", "+recyclerViewIndex+"\")");
+		}
+		
 		return clicker.clickInRecyclerView(itemIndex, recyclerViewIndex, false, 0);
 	}
 
@@ -1377,6 +1761,10 @@ public class Solo {
 	 */
 
 	public ArrayList<TextView> clickLongInRecycleView(int itemIndex){
+		if(config.commandLogging){
+			Log.d("Robotium", "clickLongInRecycleView(\""+itemIndex+"\")");
+		}
+		
 		return clicker.clickInRecyclerView(itemIndex, 0, true, 0);
 	}
 
@@ -1390,6 +1778,10 @@ public class Solo {
 	 */
 
 	public ArrayList<TextView> clickLongInRecycleView(int itemIndex, int recyclerViewIndex){
+		if(config.commandLogging){
+			Log.d("Robotium", "clickLongInRecycleView(\""+itemIndex+", "+recyclerViewIndex+"\")");
+		}
+		
 		return clicker.clickInRecyclerView(itemIndex, recyclerViewIndex, true, 0);
 	}
 
@@ -1404,6 +1796,10 @@ public class Solo {
 	 */
 
 	public ArrayList<TextView> clickLongInRecycleView(int itemIndex, int recyclerViewIndex, int time){
+		if(config.commandLogging){
+			Log.d("Robotium", "clickLongInRecycleView(\""+itemIndex+", "+recyclerViewIndex+", "+time+"\")");
+		}
+		
 		return clicker.clickInRecyclerView(itemIndex, recyclerViewIndex, true, time);
 	}
 
@@ -1414,6 +1810,10 @@ public class Solo {
 	 */
 
 	public void clickOnActionBarItem(int id){
+		if(config.commandLogging){
+			Log.d("Robotium", "clickOnActionBarItem(\""+id+"\")");
+		}
+		
 		clicker.clickOnActionBarItem(id);
 	}
 
@@ -1422,6 +1822,10 @@ public class Solo {
 	 */
 
 	public void clickOnActionBarHomeButton() {
+		if(config.commandLogging){
+			Log.d("Robotium", "clickOnActionBarHomeButton()");
+		}
+		
 		instrumentation.runOnMainSync(new Runnable() {
 			@Override
 			public void run() {
@@ -1435,6 +1839,10 @@ public class Solo {
 	*/
 
 	public Illustration.Builder createIllustrationBuilder(){
+		if(config.commandLogging){
+			Log.d("Robotium", "createIllustrationBuilder()");
+		}
+		
 		return new Illustration.Builder();
 	}
 
@@ -1446,6 +1854,10 @@ public class Solo {
 	 */
 
 	public void illustrate(Illustration illustration){
+		if(config.commandLogging){
+			Log.d("Robotium", "illustrate(\""+illustration+"\")");
+		}
+		
 		illustrator.illustrate(illustration);
 	}
 
@@ -1462,6 +1874,10 @@ public class Solo {
 
 	public void drag(float fromX, float toX, float fromY, float toY,
 			int stepCount) {
+		if(config.commandLogging){
+			Log.d("Robotium", "drag(\""+fromX+", "+toX+", "+fromY+", "+toY+"\")");
+		}
+		
 		dialogUtils.hideSoftKeyboard(null, false, true);
 		scroller.drag(fromX, toX, fromY, toY, stepCount);
 	}
@@ -1475,6 +1891,10 @@ public class Solo {
 
 	@SuppressWarnings("unchecked")
 	public boolean scrollDown() {
+		if(config.commandLogging){
+			Log.d("Robotium", "scrollDown()");
+		}
+		
 		View recyclerView = viewFetcher.getRecyclerView(true, 0);
 
 		if(recyclerView != null){
@@ -1492,6 +1912,10 @@ public class Solo {
 
 	@SuppressWarnings("unchecked")
 	public void scrollToBottom() {
+		if(config.commandLogging){
+			Log.d("Robotium", "scrollToBottom()");
+		}
+		
 		View recyclerView = viewFetcher.getRecyclerView(true, 0);
 		if(recyclerView != null){
 			waiter.waitForViews(true, AbsListView.class, ScrollView.class, WebView.class, recyclerView.getClass());
@@ -1512,6 +1936,10 @@ public class Solo {
 
 	@SuppressWarnings("unchecked")
 	public boolean scrollUp(){
+		if(config.commandLogging){
+			Log.d("Robotium", "scrollUp()");
+		}
+		
 		View recyclerView = viewFetcher.getRecyclerView(true, 0);
 		if(recyclerView != null){
 			waiter.waitForViews(true, AbsListView.class, ScrollView.class, WebView.class, recyclerView.getClass());
@@ -1528,6 +1956,10 @@ public class Solo {
 
 	@SuppressWarnings("unchecked")
 	public void scrollToTop() {
+		if(config.commandLogging){
+			Log.d("Robotium", "scrollToTop()");
+		}
+		
 		View recyclerView = viewFetcher.getRecyclerView(true, 0);
 		if(recyclerView != null){
 			waiter.waitForViews(true, AbsListView.class, ScrollView.class, WebView.class, recyclerView.getClass());
@@ -1546,6 +1978,10 @@ public class Solo {
 	 */
 
 	public boolean scrollDownList(AbsListView list) {
+		if(config.commandLogging){
+			Log.d("Robotium", "scrollDownList(\""+list+"\")");
+		}
+		
 		return scroller.scrollList(list, Scroller.DOWN, false);
 	}
 
@@ -1557,6 +1993,10 @@ public class Solo {
 	 */
 
 	public boolean scrollListToBottom(AbsListView list) {
+		if(config.commandLogging){
+			Log.d("Robotium", "scrollListToBottom(\""+list+"\")");
+		}
+		
 		return scroller.scrollList(list, Scroller.DOWN, true);
 	}
 
@@ -1568,6 +2008,10 @@ public class Solo {
 	 */
 
 	public boolean scrollUpList(AbsListView list) {
+		if(config.commandLogging){
+			Log.d("Robotium", "scrollUpList(\""+list+"\")");
+		}
+		
 		return scroller.scrollList(list, Scroller.UP, false);
 	}
 
@@ -1579,6 +2023,10 @@ public class Solo {
 	 */
 
 	public boolean scrollListToTop(AbsListView list) {
+		if(config.commandLogging){
+			Log.d("Robotium", "scrollListToTop(\""+list+"\")");
+		}
+		
 		return scroller.scrollList(list, Scroller.UP, true);
 	}
 
@@ -1590,6 +2038,10 @@ public class Solo {
 	 */
 
 	public boolean scrollDownList(int index) {
+		if(config.commandLogging){
+			Log.d("Robotium", "scrollDownList(\""+index+"\")");
+		}
+		
 		return scroller.scrollList(waiter.waitForAndGetView(index, ListView.class), Scroller.DOWN, false);
 	}
 
@@ -1601,6 +2053,10 @@ public class Solo {
 	 */
 
 	public boolean scrollListToBottom(int index) {
+		if(config.commandLogging){
+			Log.d("Robotium", "scrollListToBottom(\""+index+"\")");
+		}
+		
 		return scroller.scrollList(waiter.waitForAndGetView(index, ListView.class), Scroller.DOWN, true);
 	}
 
@@ -1612,6 +2068,10 @@ public class Solo {
 	 */
 
 	public boolean scrollUpList(int index) {
+		if(config.commandLogging){
+			Log.d("Robotium", "scrollUpList(\""+index+"\")");
+		}
+		
 		return scroller.scrollList(waiter.waitForAndGetView(index, ListView.class), Scroller.UP, false);
 	}
 
@@ -1623,6 +2083,10 @@ public class Solo {
 	 */
 
 	public boolean scrollListToTop(int index) {
+		if(config.commandLogging){
+			Log.d("Robotium", "scrollListToTop(\""+index+"\")");
+		}
+		
 		return scroller.scrollList(waiter.waitForAndGetView(index, ListView.class), Scroller.UP, true);
 	}
 
@@ -1634,6 +2098,10 @@ public class Solo {
 	 */
 
 	public void scrollListToLine(AbsListView absListView, int line){
+		if(config.commandLogging){
+			Log.d("Robotium", "scrollListToLine(\""+absListView+", "+line+"\")");
+		}
+		
 		scroller.scrollListToLine(absListView, line);
 	}
 
@@ -1645,6 +2113,10 @@ public class Solo {
 	 */
 
 	public void scrollListToLine(int index, int line){
+		if(config.commandLogging){
+			Log.d("Robotium", "scrollListToLine(\""+index+", "+line+"\")");
+		}
+			
 		scroller.scrollListToLine(waiter.waitForAndGetView(index, AbsListView.class), line);
 	}
 
@@ -1657,6 +2129,10 @@ public class Solo {
 	 */
 
 	public void scrollToSide(int side, float scrollPosition, int stepCount) {
+		if(config.commandLogging){
+			Log.d("Robotium", "scrollToSide(\""+side+", "+scrollPosition+", "+stepCount+"\")");
+		}
+		
 		switch (side){
 		case RIGHT: scroller.scrollToSide(Scroller.Side.RIGHT, scrollPosition, stepCount); break;
 		case LEFT:  scroller.scrollToSide(Scroller.Side.LEFT, scrollPosition, stepCount);  break;
@@ -1671,6 +2147,10 @@ public class Solo {
 	 */
 
 	public void scrollToSide(int side, float scrollPosition) {
+		if(config.commandLogging){
+			Log.d("Robotium", "scrollToSide(\""+scrollPosition+"\")");
+		}
+		
 		scrollToSide(side, scrollPosition, 20);
 	}
 
@@ -1681,6 +2161,10 @@ public class Solo {
 	 */
 
 	public void scrollToSide(int side) {
+		if(config.commandLogging){
+			Log.d("Robotium", "scrollToSide(\""+side+"\")");
+		}
+		
 		scrollToSide(side, 0.75F);
 	}
 
@@ -1694,6 +2178,10 @@ public class Solo {
 	 */
 
 	public void scrollViewToSide(View view, int side, float scrollPosition, int stepCount) {
+		if(config.commandLogging){
+			Log.d("Robotium", "scrollViewToSide(\""+view+", "+side+", "+scrollPosition+", "+stepCount+"\")");
+		}
+		
 		waitForView(view);
 		sleeper.sleep();
 		switch (side){
@@ -1711,6 +2199,10 @@ public class Solo {
 	 */
 
 	public void scrollViewToSide(View view, int side, float scrollPosition) {
+		if(config.commandLogging){
+			Log.d("Robotium", "scrollViewToSide(\""+view+", "+side+", "+scrollPosition+"\")");
+		}
+		
 		scrollViewToSide(view, side, scrollPosition, 20);
 	}
 
@@ -1722,6 +2214,10 @@ public class Solo {
 	 */
 
 	public void scrollViewToSide(View view, int side) {
+		if(config.commandLogging){
+			Log.d("Robotium", "scrollViewToSide(\""+view+", "+side+"\")");
+		}
+		
 		scrollViewToSide(view, side, 0.70F);
 	}
 
@@ -1736,6 +2232,10 @@ public class Solo {
 
 	public void pinchToZoom(PointF startPoint1, PointF startPoint2, PointF endPoint1, PointF endPoint2)
 	{
+		if(config.commandLogging){
+			Log.d("Robotium", "pinchToZoom(\""+startPoint1+", "+startPoint2+", "+endPoint1+", "+endPoint2+"\")");
+		}
+		
 		if (android.os.Build.VERSION.SDK_INT < 14){
 			throw new RuntimeException("pinchToZoom() requires API level >= 14");
 		}
@@ -1753,6 +2253,10 @@ public class Solo {
 
 	public void swipe(PointF startPoint1, PointF startPoint2, PointF endPoint1, PointF endPoint2)
 	{
+		if(config.commandLogging){
+			Log.d("Robotium", "swipe(\""+startPoint1+", "+startPoint2+", "+endPoint1+", "+endPoint2+"\")");
+		}
+		
 		if (android.os.Build.VERSION.SDK_INT < 14){
 			throw new RuntimeException("swipe() requires API level >= 14");
 		}
@@ -1769,6 +2273,10 @@ public class Solo {
 
 	public void rotateLarge(PointF center1, PointF center2)
 	{
+		if(config.commandLogging){
+			Log.d("Robotium", "rotateLarge(\""+center1+", "+center2+"\")");
+		}
+		
 		if (android.os.Build.VERSION.SDK_INT < 14){
 			throw new RuntimeException("rotateLarge(PointF center1, PointF center2) requires API level >= 14");
 		}
@@ -1784,6 +2292,10 @@ public class Solo {
 
 	public void rotateSmall(PointF center1, PointF center2)
 	{
+		if(config.commandLogging){
+			Log.d("Robotium", "rotateSmall(\""+center1+", "+center2+"\")");
+		}
+		
 		if (android.os.Build.VERSION.SDK_INT < 14){
 			throw new RuntimeException("rotateSmall(PointF center1, PointF center2) requires API level >= 14");
 		}
@@ -1798,6 +2310,10 @@ public class Solo {
 	 */
 
 	public void setMobileData(Boolean turnedOn){
+		if(config.commandLogging){
+			Log.d("Robotium", "setMobileData(\""+turnedOn+"\")");
+		}
+		
 		systemUtils.setMobileData(turnedOn);
 	}
 
@@ -1809,6 +2325,10 @@ public class Solo {
 	 */
 
 	public void setWiFiData(Boolean turnedOn){
+		if(config.commandLogging){
+			Log.d("Robotium", "setWiFiData(\""+turnedOn+"\")");
+		}
+		
 		systemUtils.setWiFiData(turnedOn);
 	}
 
@@ -1823,6 +2343,10 @@ public class Solo {
 	 */
 
 	public void setDatePicker(int index, int year, int monthOfYear, int dayOfMonth) {
+		if(config.commandLogging){
+			Log.d("Robotium", "setDatePicker(\""+index+", "+year+", "+monthOfYear+", "+dayOfMonth+"\")");
+		}
+		
 		setDatePicker(waiter.waitForAndGetView(index, DatePicker.class), year, monthOfYear, dayOfMonth);
 	}
 
@@ -1836,6 +2360,10 @@ public class Solo {
 	 */
 
 	public void setDatePicker(DatePicker datePicker, int year, int monthOfYear, int dayOfMonth) {
+		if(config.commandLogging){
+			Log.d("Robotium", "setDatePicker(\""+datePicker+", "+year+", "+monthOfYear+", "+dayOfMonth+"\")");
+		}
+		
 		datePicker = (DatePicker) waiter.waitForView(datePicker, Timeout.getSmallTimeout());
 		setter.setDatePicker(datePicker, year, monthOfYear, dayOfMonth);
 	}
@@ -1849,6 +2377,10 @@ public class Solo {
 	 */
 
 	public void setTimePicker(int index, int hour, int minute) {
+		if(config.commandLogging){
+			Log.d("Robotium", "setTimePicker(\""+index+", "+hour+", "+minute+"\")");
+		}
+		
 		setTimePicker(waiter.waitForAndGetView(index, TimePicker.class), hour, minute);
 	}
 
@@ -1861,6 +2393,10 @@ public class Solo {
 	 */
 
 	public void setTimePicker(TimePicker timePicker, int hour, int minute) {
+		if(config.commandLogging){
+			Log.d("Robotium", "setTimePicker(\""+timePicker+", "+hour+", "+minute+"\")");
+		}
+		
 		timePicker = (TimePicker) waiter.waitForView(timePicker, Timeout.getSmallTimeout());
 		setter.setTimePicker(timePicker, hour, minute);
 	}
@@ -1873,6 +2409,10 @@ public class Solo {
 	 */
 
 	public void setProgressBar(int index, int progress){
+		if(config.commandLogging){
+			Log.d("Robotium", "setProgressBar(\""+index+", "+progress+"\")");
+		}
+		
 		setProgressBar(waiter.waitForAndGetView(index, ProgressBar.class), progress);
 	}
 
@@ -1884,6 +2424,10 @@ public class Solo {
 	 */
 
 	public void setProgressBar(ProgressBar progressBar, int progress){
+		if(config.commandLogging){
+			Log.d("Robotium", "setProgressBar(\""+progressBar+", "+progress+"\")");
+		}
+		
 		progressBar = (ProgressBar) waiter.waitForView(progressBar, Timeout.getSmallTimeout());
 		setter.setProgressBar(progressBar, progress);
 	}
@@ -1895,6 +2439,10 @@ public class Solo {
 	 */
 
 	public void setNavigationDrawer(final int status){
+		if(config.commandLogging){
+			Log.d("Robotium", "setNavigationDrawer(\""+status+"\")");
+		}
+		
 		setter.setNavigationDrawer(status);
 	}
 
@@ -1906,6 +2454,10 @@ public class Solo {
 	 */
 
 	public void setSlidingDrawer(int index, int status){
+		if(config.commandLogging){
+			Log.d("Robotium", "setSlidingDrawer(\""+index+", "+status+"\")");
+		}
+		
 		setSlidingDrawer(waiter.waitForAndGetView(index, SlidingDrawer.class), status);
 	}
 
@@ -1918,6 +2470,10 @@ public class Solo {
 
 	@SuppressWarnings("deprecation")
 	public void setSlidingDrawer(SlidingDrawer slidingDrawer, int status){
+		if(config.commandLogging){
+			Log.d("Robotium", "setSlidingDrawer(\""+slidingDrawer+", "+status+"\")");
+		}
+		
 		slidingDrawer = (SlidingDrawer) waiter.waitForView(slidingDrawer, Timeout.getSmallTimeout());
 		setter.setSlidingDrawer(slidingDrawer, status);
 	}
@@ -1930,6 +2486,10 @@ public class Solo {
 	 */
 
 	public void enterText(int index, String text) {
+		if(config.commandLogging){
+			Log.d("Robotium", "enterText(\""+index+", "+text+"\")");
+		}
+		
 		textEnterer.setEditText(waiter.waitForAndGetView(index, EditText.class), text);
 	}
 
@@ -1941,6 +2501,10 @@ public class Solo {
 	 */
 
 	public void enterText(EditText editText, String text) {
+		if(config.commandLogging){
+			Log.d("Robotium", "enterText(\""+editText+", "+text+"\")");
+		}
+		
 		editText = (EditText) waiter.waitForView(editText, Timeout.getSmallTimeout());
 		textEnterer.setEditText(editText, text);
 	}
@@ -1953,6 +2517,10 @@ public class Solo {
 	 */
 
 	public void enterTextInWebElement(By by, String text){
+		if(config.commandLogging){
+			Log.d("Robotium", "enterTextInWebElement(\""+by+", "+text+"\")");
+		}
+		
 		if(waiter.waitForWebElement(by, 0, Timeout.getSmallTimeout(), false) == null) {
 			Assert.fail("WebElement with " + webUtils.splitNameByUpperCase(by.getClass().getSimpleName()) + ": '" + by.getValue() + "' is not found!");
 		}
@@ -1967,6 +2535,10 @@ public class Solo {
 	 */
 
 	public void typeText(int index, String text) {
+		if(config.commandLogging){
+			Log.d("Robotium", "typeText(\""+index+", "+text+"\")");
+		}
+		
 		textEnterer.typeText(waiter.waitForAndGetView(index, EditText.class), text);
 	}
 
@@ -1978,6 +2550,10 @@ public class Solo {
 	 */
 
 	public void typeText(EditText editText, String text) {
+		if(config.commandLogging){
+			Log.d("Robotium", "typeText(\""+editText+", "+text+"\")");
+		}
+		
 		editText = (EditText) waiter.waitForView(editText, Timeout.getSmallTimeout());
 		textEnterer.typeText(editText, text);
 	}
@@ -1990,6 +2566,10 @@ public class Solo {
 	 */
 
 	public void typeTextInWebElement(By by, String text){
+		if(config.commandLogging){
+			Log.d("Robotium", "typeTextInWebElement(\""+by+", "+text+"\")");
+		}
+		
 		typeTextInWebElement(by, text, 0);
 	}
 
@@ -2002,6 +2582,10 @@ public class Solo {
 	 */
 
 	public void typeTextInWebElement(By by, String text, int match){
+		if(config.commandLogging){
+			Log.d("Robotium", "typeTextInWebElement(\""+by+", "+text+", "+match+"\")");
+		}
+		
 		clicker.clickOnWebElement(by, match, true, false);
 		dialogUtils.hideSoftKeyboard(null, true, true);
 		instrumentation.sendStringSync(text);
@@ -2015,6 +2599,10 @@ public class Solo {
 	 */
 
 	public void typeTextInWebElement(WebElement webElement, String text){
+		if(config.commandLogging){
+			Log.d("Robotium", "typeTextInWebElement(\""+webElement+", "+text+"\")");
+		}
+		
 		clickOnWebElement(webElement);
 		dialogUtils.hideSoftKeyboard(null, true, true);
 		instrumentation.sendStringSync(text);
@@ -2027,6 +2615,10 @@ public class Solo {
 	 */
 
 	public void clearEditText(int index) {
+		if(config.commandLogging){
+			Log.d("Robotium", "clearEditText(\""+index+"\")");
+		}
+		
 		textEnterer.setEditText(waiter.waitForAndGetView(index, EditText.class), "");
 	}
 
@@ -2037,6 +2629,10 @@ public class Solo {
 	 */
 
 	public void clearEditText(EditText editText) {
+		if(config.commandLogging){
+			Log.d("Robotium", "clearEditText(\""+editText+"\")");
+		}
+		
 		editText = (EditText) waiter.waitForView(editText, Timeout.getSmallTimeout());
 		textEnterer.setEditText(editText, "");
 	}
@@ -2048,6 +2644,10 @@ public class Solo {
 	 */
 
 	public void clearTextInWebElement(By by){
+		if(config.commandLogging){
+			Log.d("Robotium", "clearTextInWebElement(\""+by+"\")");
+		}
+		
 		webUtils.enterTextIntoWebElement(by, "");
 	}
 
@@ -2058,6 +2658,10 @@ public class Solo {
 	 */
 
 	public void clickOnImage(int index) {
+		if(config.commandLogging){
+			Log.d("Robotium", "clickOnImage(\""+index+"\")");
+		}
+		
 		clicker.clickOn(ImageView.class, index);
 	}
 
@@ -2069,6 +2673,10 @@ public class Solo {
 	 */
 
 	public EditText getEditText(int index) {
+		if(config.commandLogging){
+			Log.d("Robotium", "getEditText(\""+index+"\")");
+		}
+		
 		return getter.getView(EditText.class, index);
 	}
 
@@ -2080,6 +2688,10 @@ public class Solo {
 	 */
 
 	public Button getButton(int index) {
+		if(config.commandLogging){
+			Log.d("Robotium", "getButton(\""+index+"\")");
+		}
+		
 		return getter.getView(Button.class, index);
 	}
 
@@ -2091,6 +2703,10 @@ public class Solo {
 	 */
 
 	public TextView getText(int index) {
+		if(config.commandLogging){
+			Log.d("Robotium", "getText(\""+index+"\")");
+		}
+		
 		return getter.getView(TextView.class, index);
 	}
 
@@ -2102,6 +2718,10 @@ public class Solo {
 	 */
 
 	public ImageView getImage(int index) {
+		if(config.commandLogging){
+			Log.d("Robotium", "getImage(\""+index+"\")");
+		}
+		
 		return getter.getView(ImageView.class, index);
 	}
 
@@ -2113,6 +2733,10 @@ public class Solo {
 	 */
 
 	public ImageButton getImageButton(int index) {
+		if(config.commandLogging){
+			Log.d("Robotium", "getImageButton(\""+index+"\")");
+		}
+		
 		return getter.getView(ImageButton.class, index);
 	}
 
@@ -2125,6 +2749,10 @@ public class Solo {
 
 	public TextView getText(String text)
 	{
+		if(config.commandLogging){
+			Log.d("Robotium", "getText(\""+text+"\")");
+		}
+		
 		return getter.getView(TextView.class, text, false);
 	}
 
@@ -2138,6 +2766,10 @@ public class Solo {
 
 	public TextView getText(String text, boolean onlyVisible)
 	{
+		if(config.commandLogging){
+			Log.d("Robotium", "getText(\""+text+", "+onlyVisible+"\")");
+		}
+		
 		return getter.getView(TextView.class, text, onlyVisible);
 	}
 
@@ -2150,6 +2782,10 @@ public class Solo {
 
 	public Button getButton(String text)
 	{
+		if(config.commandLogging){
+			Log.d("Robotium", "getButton(\""+text+"\")");
+		}
+		
 		return getter.getView(Button.class, text, false);
 	}
 
@@ -2163,6 +2799,10 @@ public class Solo {
 
 	public Button getButton(String text, boolean onlyVisible)
 	{
+		if(config.commandLogging){
+			Log.d("Robotium", "getButton(\""+text+", "+onlyVisible+"\")");
+		}
+		
 		return getter.getView(Button.class, text, onlyVisible);
 	}
 
@@ -2175,6 +2815,10 @@ public class Solo {
 
 	public EditText getEditText(String text)
 	{
+		if(config.commandLogging){
+		Log.d("Robotium", "getEditText(\""+text+"\")");
+	}
+	
 		return getter.getView(EditText.class, text, false);
 	}
 
@@ -2188,6 +2832,10 @@ public class Solo {
 
 	public EditText getEditText(String text, boolean onlyVisible)
 	{
+		if(config.commandLogging){
+			Log.d("Robotium", "getEditText(\""+text+", "+onlyVisible+"\")");
+		}
+		
 		return getter.getView(EditText.class, text, onlyVisible);
 	}
 
@@ -2199,6 +2847,10 @@ public class Solo {
 	 */
 
 	public View getView(int id){
+		if(config.commandLogging){
+			Log.d("Robotium", "getView(\""+id+"\")");
+		}
+		
 		return getView(id, 0);
 	}
 
@@ -2211,6 +2863,10 @@ public class Solo {
 	 */
 
 	public View getView(int id, int index){
+		if(config.commandLogging){
+			Log.d("Robotium", "getView(\""+id+", "+index+"\")");
+		}
+		
 		View viewToReturn = getter.getView(id, index);
 
 		if(viewToReturn == null) {
@@ -2234,6 +2890,10 @@ public class Solo {
 	 */
 
 	public View getView(Object tag){
+		if(config.commandLogging){
+			Log.d("Robotium", "getView(\""+tag+"\")");
+		}
+		
 		return getView(tag, 0);
 	}
 
@@ -2247,6 +2907,10 @@ public class Solo {
 	 */
 
 	public View getView(Object tag, int index){
+		if(config.commandLogging){
+			Log.d("Robotium", "getView(\""+tag+", "+index+"\")");
+		}
+		
 		View viewToReturn = getter.getView(tag, index);
 
 		if(viewToReturn == null) {
@@ -2269,6 +2933,10 @@ public class Solo {
 	 */
 
 	public View getView(String id){
+		if(config.commandLogging){
+			Log.d("Robotium", "getView(\""+id+"\")");
+		}
+		
 		return getView(id, 0);
 	}
 
@@ -2281,6 +2949,10 @@ public class Solo {
 	 */
 
 	public View getView(String id, int index){
+		if(config.commandLogging){
+			Log.d("Robotium", "getView(\""+id+", "+index+"\")");
+		}
+		
 		View viewToReturn = getter.getView(id, index);
 
 		if(viewToReturn == null) {
@@ -2304,6 +2976,10 @@ public class Solo {
 	 */
 
 	public <T extends View> T getView(Class<T> viewClass, int index){
+		if(config.commandLogging){
+			Log.d("Robotium", "getView(\""+viewClass+", "+index+"\")");
+		}
+		
 		return waiter.waitForAndGetView(index, viewClass);
 	}
 
@@ -2316,6 +2992,10 @@ public class Solo {
 	 */
 
 	public WebElement getWebElement(By by, int index){
+		if(config.commandLogging){
+			Log.d("Robotium", "getWebElement(\""+by+", "+index+"\")");
+		}
+		
 		int match = index + 1;
 		WebElement webElement = waiter.waitForWebElement(by, match, Timeout.getSmallTimeout(), true);
 
@@ -2337,6 +3017,10 @@ public class Solo {
 	 */
 
 	public String getWebUrl() {
+		if(config.commandLogging){
+			Log.d("Robotium", "getWebUrl()");
+		}
+		
 		final WebView webView = waiter.waitForAndGetView(0, WebView.class);
 
 		if(webView == null)
@@ -2358,6 +3042,10 @@ public class Solo {
 	 */
 
 	public ArrayList<View> getCurrentViews() {
+		if(config.commandLogging){
+			Log.d("Robotium", "getCurrentViews()");
+		}
+		
 		return viewFetcher.getViews(null, true);
 	}
 
@@ -2369,6 +3057,10 @@ public class Solo {
 	 */
 
 	public <T extends View> ArrayList<T> getCurrentViews(Class<T> classToFilterBy) {
+		if(config.commandLogging){
+			Log.d("Robotium", "getCurrentViews(\""+classToFilterBy+"\")");
+		}
+		
 		return viewFetcher.getCurrentViews(classToFilterBy, true);
 	}
 
@@ -2381,6 +3073,10 @@ public class Solo {
 	 */
 
 	public <T extends View> ArrayList<T> getCurrentViews(Class<T> classToFilterBy, boolean includeSubclasses) {
+		if(config.commandLogging){
+			Log.d("Robotium", "getCurrentViews(\""+classToFilterBy+", "+includeSubclasses+"\")");
+		}
+		
 		return viewFetcher.getCurrentViews(classToFilterBy, includeSubclasses);
 	}
 
@@ -2393,6 +3089,10 @@ public class Solo {
 	 */
 
 	public <T extends View> ArrayList<T> getCurrentViews(Class<T> classToFilterBy, View parent) {
+		if(config.commandLogging){
+			Log.d("Robotium", "getCurrentViews(\""+classToFilterBy+", "+parent+"\")");
+		}
+		
 		return viewFetcher.getCurrentViews(classToFilterBy, true, parent);
 	}
 
@@ -2405,6 +3105,10 @@ public class Solo {
 	 * @return an {@code ArrayList} of {@code View}s matching the specified {@code Class} located under the specified {@code parent}
 	 */
 	public <T extends View> ArrayList<T> getCurrentViews(Class<T> classToFilterBy, boolean includeSubclasses, View parent) {
+		if(config.commandLogging){
+			Log.d("Robotium", "getCurrentViews(\""+classToFilterBy+", "+includeSubclasses+", "+parent+"\")");
+		}
+		
 		return viewFetcher.getCurrentViews(classToFilterBy, includeSubclasses, parent);
 	}
 
@@ -2415,6 +3119,10 @@ public class Solo {
 	 */
 
 	public ArrayList<WebElement> getWebElements(){
+		if(config.commandLogging){
+			Log.d("Robotium", "getWebElements()");
+		}
+		
 		return webUtils.getWebElements(false);
 	}
 
@@ -2426,6 +3134,10 @@ public class Solo {
 	 */
 
 	public ArrayList<WebElement> getWebElements(By by){
+		if(config.commandLogging){
+			Log.d("Robotium", "getWebElements(\""+by+"\")");
+		}
+		
 		return webUtils.getWebElements(by, false);
 	}
 
@@ -2436,6 +3148,10 @@ public class Solo {
 	 */
 
 	public ArrayList<WebElement> getCurrentWebElements(){
+		if(config.commandLogging){
+			Log.d("Robotium", "getCurrentWebElements()");
+		}
+		
 		return webUtils.getWebElements(true);
 	}
 
@@ -2447,6 +3163,10 @@ public class Solo {
 	 */
 
 	public ArrayList<WebElement> getCurrentWebElements(By by){
+		if(config.commandLogging){
+			Log.d("Robotium", "getCurrentWebElements(\""+by+"\")");
+		}
+		
 		return webUtils.getWebElements(by, true);
 	}
 
@@ -2459,6 +3179,10 @@ public class Solo {
 
 	public boolean isRadioButtonChecked(int index)
 	{
+		if(config.commandLogging){
+			Log.d("Robotium", "isRadioButtonChecked(\""+index+"\")");
+		}
+		
 		return checker.isButtonChecked(RadioButton.class, index);
 	}
 
@@ -2471,6 +3195,10 @@ public class Solo {
 
 	public boolean isRadioButtonChecked(String text)
 	{
+		if(config.commandLogging){
+			Log.d("Robotium", "isRadioButtonChecked(\""+text+"\")");
+		}
+		
 		return checker.isButtonChecked(RadioButton.class, text);
 	}
 
@@ -2483,6 +3211,10 @@ public class Solo {
 
 	public boolean isCheckBoxChecked(int index)
 	{
+		if(config.commandLogging){
+			Log.d("Robotium", "isCheckBoxChecked(\""+index+"\")");
+		}
+		
 		return checker.isButtonChecked(CheckBox.class, index);
 	}
 
@@ -2495,6 +3227,10 @@ public class Solo {
 
 	public boolean isToggleButtonChecked(String text)
 	{
+		if(config.commandLogging){
+			Log.d("Robotium", "isToggleButtonChecked(\""+text+"\")");
+		}
+		
 		return checker.isButtonChecked(ToggleButton.class, text);
 	}
 
@@ -2507,6 +3243,10 @@ public class Solo {
 
 	public boolean isToggleButtonChecked(int index)
 	{
+		if(config.commandLogging){
+			Log.d("Robotium", "isToggleButtonChecked(\""+index+"\")");
+		}
+		
 		return checker.isButtonChecked(ToggleButton.class, index);
 	}
 
@@ -2519,6 +3259,10 @@ public class Solo {
 
 	public boolean isCheckBoxChecked(String text)
 	{
+		if(config.commandLogging){
+			Log.d("Robotium", "isCheckBoxChecked(\""+text+"\")");
+		}
+		
 		return checker.isButtonChecked(CheckBox.class, text);
 	}
 
@@ -2531,6 +3275,10 @@ public class Solo {
 
 	@SuppressWarnings("unchecked")
 	public boolean isTextChecked(String text){
+		if(config.commandLogging){
+			Log.d("Robotium", "isTextChecked(\""+text+"\")");
+		}
+		
 		waiter.waitForViews(false, CheckedTextView.class, CompoundButton.class);
 
 		if(viewFetcher.getCurrentViews(CheckedTextView.class, true).size() > 0 && checker.isCheckedTextChecked(text))
@@ -2551,6 +3299,10 @@ public class Solo {
 
 	public boolean isSpinnerTextSelected(String text)
 	{
+		if(config.commandLogging){
+			Log.d("Robotium", "isSpinnerTextSelected(\""+text+"\")");
+		}
+		
 		return checker.isSpinnerTextSelected(text);
 	}
 
@@ -2564,6 +3316,10 @@ public class Solo {
 
 	public boolean isSpinnerTextSelected(int index, String text)
 	{
+		if(config.commandLogging){
+			Log.d("Robotium", "isSpinnerTextSelected(\""+index+","+text+"\")");
+		}
+		
 		return checker.isSpinnerTextSelected(index, text);
 	}
 
@@ -2572,6 +3328,10 @@ public class Solo {
 	 */
 
 	public void hideSoftKeyboard() {
+		if(config.commandLogging){
+			Log.d("Robotium", "hideSoftKeyboard()");
+		}
+		
 		dialogUtils.hideSoftKeyboard(null, true, false);
 	}
 
@@ -2580,6 +3340,10 @@ public class Solo {
 	 */
 
 	public void unlockScreen(){
+		if(config.commandLogging){
+			Log.d("Robotium", "unlockScreen()");
+		}
+		
 		final Activity activity = activityUtils.getCurrentActivity(false);
 		instrumentation.runOnMainSync(new Runnable() {
 			@Override
@@ -2600,6 +3364,10 @@ public class Solo {
 
 	public void sendKey(int key)
 	{
+		if(config.commandLogging){
+			Log.d("Robotium", "sendKey(\""+key+"\")");
+		}
+		
 		sender.sendKeyCode(key);
 	}
 
@@ -2610,6 +3378,10 @@ public class Solo {
 	 */
 
 	public void goBackToActivity(String name) {
+		if(config.commandLogging){
+			Log.d("Robotium", "goBackToActivity(\""+name+"\")");
+		}
+		
 		activityUtils.goBackToActivity(name);
 	}
 
@@ -2621,6 +3393,10 @@ public class Solo {
 	 */
 
 	public boolean waitForActivity(String name){
+		if(config.commandLogging){
+			Log.d("Robotium", "waitForActivity(\""+name+"\")");
+		}
+		
 		return waiter.waitForActivity(name, Timeout.getLargeTimeout());
 	}
 
@@ -2634,6 +3410,10 @@ public class Solo {
 
 	public boolean waitForActivity(String name, int timeout)
 	{
+		if(config.commandLogging){
+			Log.d("Robotium", "waitForActivity(\""+name+", "+timeout+"\")");
+		}
+		
 		return waiter.waitForActivity(name, timeout);
 	}
 
@@ -2645,6 +3425,10 @@ public class Solo {
 	 */
 
 	public boolean waitForActivity(Class<? extends Activity> activityClass){
+		if(config.commandLogging){
+			Log.d("Robotium", "waitForActivity(\""+activityClass+"\")");
+		}
+		
 		return waiter.waitForActivity(activityClass, Timeout.getLargeTimeout());
 	}
 
@@ -2658,6 +3442,10 @@ public class Solo {
 
 	public boolean waitForActivity(Class<? extends Activity> activityClass, int timeout)
 	{
+		if(config.commandLogging){
+			Log.d("Robotium", "waitForActivity(\""+activityClass+", "+timeout+"\")");
+		}
+		
 		return waiter.waitForActivity(activityClass, timeout);
 	}
 
@@ -2671,6 +3459,10 @@ public class Solo {
 
 	public boolean waitForEmptyActivityStack(int timeout)
 	{
+		if(config.commandLogging){
+			Log.d("Robotium", "waitForEmptyActivityStack(\""+timeout+"\")");
+		}
+		
 		return waiter.waitForCondition(
 				new Condition(){
 					@Override
@@ -2688,6 +3480,10 @@ public class Solo {
 	 */
 
 	public boolean waitForFragmentByTag(String tag){
+		if(config.commandLogging){
+			Log.d("Robotium", "waitForFragmentByTag(\""+tag+"\")");
+		}
+		
 		return waiter.waitForFragment(tag, 0, Timeout.getLargeTimeout());
 	}
 
@@ -2700,6 +3496,10 @@ public class Solo {
 	 */
 
 	public boolean waitForFragmentByTag(String tag, int timeout){
+		if(config.commandLogging){
+			Log.d("Robotium", "waitForFragmentByTag(\""+tag+", "+timeout+"\")");
+		}
+		
 		return waiter.waitForFragment(tag, 0, timeout);
 	}
 
@@ -2711,6 +3511,10 @@ public class Solo {
 	 */
 
 	public boolean waitForFragmentById(int id){
+		if(config.commandLogging){
+			Log.d("Robotium", "waitForFragmentById(\""+id+"\")");
+		}
+		
 		return waiter.waitForFragment(null, id, Timeout.getLargeTimeout());
 	}
 
@@ -2723,6 +3527,10 @@ public class Solo {
 	 */
 
 	public boolean waitForFragmentById(int id, int timeout){
+		if(config.commandLogging){
+			Log.d("Robotium", "waitForFragmentById(\""+id+", "+timeout+"\")");
+		}
+		
 		return waiter.waitForFragment(null, id, timeout);
 	}
 
@@ -2737,6 +3545,10 @@ public class Solo {
 	 */
 
 	public boolean waitForLogMessage(String logMessage){
+		if(config.commandLogging){
+			Log.d("Robotium", "waitForLogMessage(\""+logMessage+"\")");
+		}
+		
 		return waiter.waitForLogMessage(logMessage, Timeout.getLargeTimeout());
 	}
 
@@ -2752,6 +3564,10 @@ public class Solo {
 	 */
 
 	public boolean waitForLogMessage(String logMessage, int timeout){
+		if(config.commandLogging){
+			Log.d("Robotium", "waitForLogMessage(\""+logMessage+", "+timeout+"\")");
+		}
+		
 		return waiter.waitForLogMessage(logMessage, timeout);
 	}
 
@@ -2760,6 +3576,10 @@ public class Solo {
 	 */
 
 	public void clearLog(){
+		if(config.commandLogging){
+			Log.d("Robotium", "clearLog()");
+		}
+		
 		waiter.clearLog();
 	}
 
@@ -2772,6 +3592,10 @@ public class Solo {
 
 	public String getString(int id)
 	{
+		if(config.commandLogging){
+			Log.d("Robotium", "getString(\""+id+"\")");
+		}
+		
 		return getter.getString(id);
 	}
 
@@ -2784,6 +3608,10 @@ public class Solo {
 
 	public String getString(String id)
 	{
+		if(config.commandLogging){
+			Log.d("Robotium", "getString(\""+id+"\")");
+		}
+		
 		return getter.getString(id);
 	}
 
@@ -2795,6 +3623,10 @@ public class Solo {
 
 	public void sleep(int time)
 	{
+		if(config.commandLogging){
+			Log.d("Robotium", "sleep(\""+time+"\")");
+		}
+		
 		sleeper.sleep(time);
 	}
 
@@ -2806,6 +3638,10 @@ public class Solo {
 	 */
 
 	public void finalize() throws Throwable {
+		if(config.commandLogging){
+			Log.d("Robotium", "finalize()");
+		}
+		
 		activityUtils.finalize();
 	}
 
@@ -2814,6 +3650,10 @@ public class Solo {
 	 */
 
 	public void finishOpenedActivities(){
+		if(config.commandLogging){
+			Log.d("Robotium", "finishOpenedActivities()");
+		}
+		
 		activityUtils.finishOpenedActivities();
 	}
 
@@ -2823,6 +3663,10 @@ public class Solo {
 	 */
 
 	public void takeScreenshot(){
+		if(config.commandLogging){
+			Log.d("Robotium", "takeScreenshot()");
+		}
+		
 		takeScreenshot(null);
 	}
 
@@ -2834,6 +3678,10 @@ public class Solo {
 	 */
 
 	public void takeScreenshot(String name){
+		if(config.commandLogging){
+			Log.d("Robotium", "takeScreenshot(\""+name+"\")");
+		}
+		
 		takeScreenshot(name, 100);
 	}
 
@@ -2846,6 +3694,10 @@ public class Solo {
 	 */
 
 	public void takeScreenshot(String name, int quality){
+		if(config.commandLogging){
+			Log.d("Robotium", "takeScreenshot(\""+name+", "+quality+"\")");
+		}
+		
 		screenshotTaker.takeScreenshot(name, quality);
 	}
 
@@ -2866,6 +3718,10 @@ public class Solo {
 	 */
 
 	public void startScreenshotSequence(String name) {
+		if(config.commandLogging){
+			Log.d("Robotium", "startScreenshotSequence(\""+name+"\")");
+		}
+		
 		startScreenshotSequence(name,
 				80, // quality
 				400, // 400 ms frame delay
@@ -2896,6 +3752,10 @@ public class Solo {
 	 */
 
 	public void startScreenshotSequence(String name, int quality, int frameDelay, int maxFrames) {
+		if(config.commandLogging){
+			Log.d("Robotium", "startScreenshotSequence(\""+name+", "+quality+", "+frameDelay+", "+maxFrames+"\")");
+		}
+		
 		screenshotTaker.startScreenshotSequence(name, quality, frameDelay, maxFrames);
 	}
 
@@ -2907,6 +3767,10 @@ public class Solo {
 	 */
 
 	public void stopScreenshotSequence() {
+		if(config.commandLogging){
+			Log.d("Robotium", "stopScreenshotSequence()");
+		}
+		
 		screenshotTaker.stopScreenshotSequence();
 	}
 
@@ -2916,6 +3780,10 @@ public class Solo {
 	 */
 
 	private void initialize(){
+		if(config.commandLogging){
+			Log.d("Robotium", "initialize()");
+		}
+		
 		Timeout.setLargeTimeout(initializeTimeout("solo_large_timeout", config.timeout_large));
 		Timeout.setSmallTimeout(initializeTimeout("solo_small_timeout", config.timeout_small));
 	}
@@ -2940,6 +3808,7 @@ public class Solo {
 
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	private static int initializeTimeout(String property, int defaultValue) {
+
 		try {
 			Class clazz = Class.forName("android.os.SystemProperties");
 			Method method = clazz.getDeclaredMethod("get", String.class);
