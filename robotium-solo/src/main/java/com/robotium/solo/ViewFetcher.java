@@ -415,20 +415,20 @@ class ViewFetcher {
 	
 	public View getRecyclerView(boolean shouldSleep, int recyclerViewIndex){
 		Set<View> uniqueViews = new HashSet<View>();
-			if(shouldSleep){
-				sleeper.sleep();
-			}
+		if(shouldSleep){
+			sleeper.sleep();
+		}
 
-			@SuppressWarnings("unchecked")
+		@SuppressWarnings("unchecked")
 		ArrayList<View> views = RobotiumUtils.filterViewsToSet(new Class[] {ViewGroup.class}, getAllViews(true));
 		views = RobotiumUtils.removeInvisibleViews(views);
-		
+
 		for(View view : views){
 
 			if(isViewType(view.getClass(), "widget.RecyclerView")){
 				uniqueViews.add(view);
 			}
-			
+
 			if(uniqueViews.size() > recyclerViewIndex) {
 				return (ViewGroup) view;
 			}

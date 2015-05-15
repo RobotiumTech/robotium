@@ -637,21 +637,23 @@ class Clicker {
 	private View getViewOnRecyclerItemIndex(ViewGroup recyclerView, int recyclerViewIndex, int itemIndex){
 		final long endTime = SystemClock.uptimeMillis() + Timeout.getSmallTimeout();
 		View view = recyclerView.getChildAt(itemIndex);
-		
+
 		while(view == null){
 			final boolean timedOut = SystemClock.uptimeMillis() > endTime;
 			if (timedOut){
 				Assert.fail("View is null and can therefore not be clicked!");
 			}
-			
+
 			sleeper.sleep();
 			recyclerView = (ViewGroup) viewFetcher.getIdenticalView(recyclerView);
 
 			if(recyclerView == null){
 				recyclerView = (ViewGroup) viewFetcher.getRecyclerView(false, recyclerViewIndex);
 			}
-			
-			view = recyclerView.getChildAt(itemIndex);
+
+			if(recyclerView != null){
+				view = recyclerView.getChildAt(itemIndex);
+			}
 		}
 		return view;
 	}
