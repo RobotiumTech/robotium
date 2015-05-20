@@ -98,7 +98,7 @@ public class Solo {
 		this(new Config(), instrumentation, activity);
 		
 		if(config.commandLogging){
-			Log.d(config.commandLoggingTag, "Solo(\""+instrumentation+", "+activity+"\")");
+			Log.d(config.commandLoggingTag, "Solo("+instrumentation+", "+activity+")");
 		}	
 	}
 
@@ -113,7 +113,7 @@ public class Solo {
 		this(config, instrumentation, null);
 		
 		if(config.commandLogging){
-			Log.d(config.commandLoggingTag, "Solo(\""+instrumentation+", "+config+"\")");
+			Log.d(config.commandLoggingTag, "Solo("+instrumentation+", "+config+")");
 		}
 	}
 
@@ -130,7 +130,7 @@ public class Solo {
 		this(config, instrumentation, activity);
 		
 		if(config.commandLogging){
-			Log.d(config.commandLoggingTag, "Solo(\""+instrumentation+", "+config+", "+activity+"\")");
+			Log.d(config.commandLoggingTag, "Solo("+instrumentation+", "+config+", "+activity+")");
 		}
 	}
 
@@ -146,7 +146,7 @@ public class Solo {
 	private Solo(Config config, Instrumentation instrumentation, Activity activity) {
 		
 		if(config.commandLogging){
-			Log.d(config.commandLoggingTag, "Solo(\""+config+", "+instrumentation+", "+activity+"\")");
+			Log.d(config.commandLoggingTag, "Solo("+config+", "+instrumentation+", "+activity+")");
 		}
 		
 		this.config = (config == null) ? new Config(): config;
@@ -273,7 +273,7 @@ public class Solo {
 		this(new Config(), instrumentation, null);
 		
 		if(config.commandLogging){
-			Log.d(config.commandLoggingTag, "Solo(\""+instrumentation+"\")");
+			Log.d(config.commandLoggingTag, "Solo("+instrumentation+")");
 		}
 	}
 
@@ -354,7 +354,7 @@ public class Solo {
 
 	public View getTopParent(View view) {
 		if(config.commandLogging){
-			Log.d(config.commandLoggingTag, "getTopParent(\""+view+"\")");
+			Log.d(config.commandLoggingTag, "getTopParent("+view+")");
 		}
 		
 		View topParent = viewFetcher.getTopParent(view);
@@ -387,7 +387,7 @@ public class Solo {
 
 	public boolean waitForText(String text, int minimumNumberOfMatches, long timeout) {
 		if(config.commandLogging){
-			Log.d(config.commandLoggingTag, "waitForText(\""+text+", "+minimumNumberOfMatches+", "+timeout+"\")");
+			Log.d(config.commandLoggingTag, "waitForText(\""+text+"\", "+minimumNumberOfMatches+", "+timeout+")");
 		}
 		
 		return (waiter.waitForText(text, minimumNumberOfMatches, timeout) != null);
@@ -405,7 +405,7 @@ public class Solo {
 
 	public boolean waitForText(String text, int minimumNumberOfMatches, long timeout, boolean scroll) {
 		if(config.commandLogging){
-			Log.d(config.commandLoggingTag, "waitForText(\""+text+", "+minimumNumberOfMatches+", "+timeout+", "+scroll+"\")");
+			Log.d(config.commandLoggingTag, "waitForText(\""+text+"\", "+minimumNumberOfMatches+", "+timeout+", "+scroll+")");
 		}
 		
 		return (waiter.waitForText(text, minimumNumberOfMatches, timeout, scroll) != null);
@@ -424,7 +424,7 @@ public class Solo {
 
 	public boolean waitForText(String text, int minimumNumberOfMatches, long timeout, boolean scroll, boolean onlyVisible) {
 		if(config.commandLogging){
-			Log.d(config.commandLoggingTag, "waitForText(\""+text+", "+minimumNumberOfMatches+", "+timeout+", "+scroll+", "+onlyVisible+"\")");
+			Log.d(config.commandLoggingTag, "waitForText(\""+text+"\", "+minimumNumberOfMatches+", "+timeout+", "+scroll+", "+onlyVisible+")");
 		}
 		
 		return (waiter.waitForText(text, minimumNumberOfMatches, timeout, scroll, onlyVisible, true) != null);
@@ -439,7 +439,7 @@ public class Solo {
 
 	public boolean waitForView(int id){
 		if(config.commandLogging){
-			Log.d(config.commandLoggingTag, "waitForView(\""+id+"\")");
+			Log.d(config.commandLoggingTag, "waitForView("+id+")");
 		}
 		
 		return waitForView(id, 0, Timeout.getLargeTimeout(), true);
@@ -456,7 +456,7 @@ public class Solo {
 
 	public boolean waitForView(int id, int minimumNumberOfMatches, int timeout){
 		if(config.commandLogging){
-			Log.d(config.commandLoggingTag, "waitForView(\""+id+", "+minimumNumberOfMatches+", "+timeout+"\")");
+			Log.d(config.commandLoggingTag, "waitForView("+id+", "+minimumNumberOfMatches+", "+timeout+")");
 		}
 		
 		return waitForView(id, minimumNumberOfMatches, timeout, true);
@@ -474,7 +474,7 @@ public class Solo {
 
 	public boolean waitForView(int id, int minimumNumberOfMatches, int timeout, boolean scroll){
 		if(config.commandLogging){
-			Log.d(config.commandLoggingTag, "waitForView(\""+id+", "+minimumNumberOfMatches+", "+timeout+", "+scroll+"\")");
+			Log.d(config.commandLoggingTag, "waitForView("+id+", "+minimumNumberOfMatches+", "+timeout+", "+scroll+")");
 		}
 		
 		int index = minimumNumberOfMatches-1;
@@ -494,7 +494,7 @@ public class Solo {
 
 	public boolean waitForView(Object tag){
 		if(config.commandLogging){
-			Log.d(config.commandLoggingTag, "waitForView(\""+tag+"\")");
+			Log.d(config.commandLoggingTag, "waitForView("+tag+")");
 		}
 		
 		return waitForView(tag, 0, Timeout.getLargeTimeout(), true);
@@ -511,7 +511,7 @@ public class Solo {
 
 	public boolean waitForView(Object tag, int minimumNumberOfMatches, int timeout){
 		if(config.commandLogging){
-			Log.d(config.commandLoggingTag, "waitForView(\""+tag+", "+minimumNumberOfMatches+", "+timeout+"\")");
+			Log.d(config.commandLoggingTag, "waitForView("+tag+", "+minimumNumberOfMatches+", "+timeout+")");
 		}
 		
 		return waitForView(tag, minimumNumberOfMatches, timeout, true);
@@ -529,7 +529,7 @@ public class Solo {
 
 	public boolean waitForView(Object tag, int minimumNumberOfMatches, int timeout, boolean scroll){
 		if(config.commandLogging){
-			Log.d(config.commandLoggingTag, "waitForView(\""+tag+", "+minimumNumberOfMatches+", "+timeout+", "+scroll+"\")");
+			Log.d(config.commandLoggingTag, "waitForView("+tag+", "+minimumNumberOfMatches+", "+timeout+", "+scroll+")");
 		}
 		
 		int index = minimumNumberOfMatches-1;
@@ -550,7 +550,7 @@ public class Solo {
 
 	public <T extends View> boolean waitForView(final Class<T> viewClass){
 		if(config.commandLogging){
-			Log.d(config.commandLoggingTag, "waitForView(\""+viewClass+"\")");
+			Log.d(config.commandLoggingTag, "waitForView("+viewClass+")");
 		}
 		
 		return waiter.waitForView(viewClass, 0, Timeout.getLargeTimeout(), true);
@@ -565,7 +565,7 @@ public class Solo {
 
 	public <T extends View> boolean waitForView(View view){
 		if(config.commandLogging){
-			Log.d(config.commandLoggingTag, "waitForView(\""+view+"\")");
+			Log.d(config.commandLoggingTag, "waitForView("+view+")");
 		}
 		
 		return waiter.waitForView(view);
@@ -582,7 +582,7 @@ public class Solo {
 
 	public <T extends View> boolean waitForView(View view, int timeout, boolean scroll){
 		if(config.commandLogging){
-			Log.d(config.commandLoggingTag, "waitForView(\""+view+", "+timeout+", "+scroll+"\")");
+			Log.d(config.commandLoggingTag, "waitForView("+view+", "+timeout+", "+scroll+")");
 		}
 		
 		boolean checkIsShown = false;
@@ -610,7 +610,7 @@ public class Solo {
 
 	public <T extends View> boolean waitForView(final Class<T> viewClass, final int minimumNumberOfMatches, final int timeout){
 		if(config.commandLogging){
-			Log.d(config.commandLoggingTag, "waitForView(\""+viewClass+", "+minimumNumberOfMatches+", "+timeout+"\")");
+			Log.d(config.commandLoggingTag, "waitForView("+viewClass+", "+minimumNumberOfMatches+", "+timeout+")");
 		}
 		
 		int index = minimumNumberOfMatches-1;
@@ -633,7 +633,7 @@ public class Solo {
 
 	public <T extends View> boolean waitForView(final Class<T> viewClass, final int minimumNumberOfMatches, final int timeout,final boolean scroll){
 		if(config.commandLogging){
-			Log.d(config.commandLoggingTag, "waitForView(\""+viewClass+", "+minimumNumberOfMatches+", "+timeout+", "+scroll+"\")");
+			Log.d(config.commandLoggingTag, "waitForView("+viewClass+", "+minimumNumberOfMatches+", "+timeout+", "+scroll+")");
 		}
 		
 		int index = minimumNumberOfMatches-1;
@@ -653,7 +653,7 @@ public class Solo {
 
 	public boolean waitForWebElement(By by){
 		if(config.commandLogging){
-			Log.d(config.commandLoggingTag, "waitForWebElement(\""+by+"\")");
+			Log.d(config.commandLoggingTag, "waitForWebElement("+by+")");
 		}
 		
 		return (waiter.waitForWebElement(by, 0, Timeout.getLargeTimeout(), true) != null);
@@ -670,7 +670,7 @@ public class Solo {
 
 	public boolean waitForWebElement(By by, int timeout, boolean scroll){
 		if(config.commandLogging){
-			Log.d(config.commandLoggingTag, "waitForWebElement(\""+by+", "+timeout+", "+scroll+"\")");
+			Log.d(config.commandLoggingTag, "waitForWebElement("+by+", "+timeout+", "+scroll+")");
 		}
 		
 		return (waiter.waitForWebElement(by, 0, timeout, scroll) != null);
@@ -688,7 +688,7 @@ public class Solo {
 
 	public boolean waitForWebElement(By by, int minimumNumberOfMatches, int timeout, boolean scroll){
 		if(config.commandLogging){
-			Log.d(config.commandLoggingTag, "waitForWebElement(\""+by+", "+minimumNumberOfMatches+","+timeout+", "+scroll+"\")");
+			Log.d(config.commandLoggingTag, "waitForWebElement("+by+", "+minimumNumberOfMatches+","+timeout+", "+scroll+")");
 		}
 		
 		return (waiter.waitForWebElement(by, minimumNumberOfMatches, timeout, scroll) != null);
@@ -704,7 +704,7 @@ public class Solo {
 
 	public boolean waitForCondition(Condition condition, final int timeout){
 		if(config.commandLogging){
-			Log.d(config.commandLoggingTag, "waitForCondition(\""+condition+","+timeout+"\")");
+			Log.d(config.commandLoggingTag, "waitForCondition("+condition+","+timeout+")");
 		}
 		
 		return waiter.waitForCondition(condition, timeout);
@@ -753,7 +753,7 @@ public class Solo {
 
 	public boolean searchButton(String text, boolean onlyVisible) {
 		if(config.commandLogging){
-			Log.d(config.commandLoggingTag, "searchButton(\""+text+", "+onlyVisible+"\")");
+			Log.d(config.commandLoggingTag, "searchButton(\""+text+"\", "+onlyVisible+")");
 		}
 		
 		return searcher.searchWithTimeoutFor(Button.class, text, 0, true, onlyVisible);
@@ -788,7 +788,7 @@ public class Solo {
 
 	public boolean searchButton(String text, int minimumNumberOfMatches) {
 		if(config.commandLogging){
-			Log.d(config.commandLoggingTag, "searchButton(\""+text+", "+minimumNumberOfMatches+"\")");
+			Log.d(config.commandLoggingTag, "searchButton(\""+text+"\", "+minimumNumberOfMatches+")");
 		}
 		
 		return searcher.searchWithTimeoutFor(Button.class, text, minimumNumberOfMatches, true, false);
@@ -808,7 +808,7 @@ public class Solo {
 
 	public boolean searchButton(String text, int minimumNumberOfMatches, boolean onlyVisible) {
 		if(config.commandLogging){
-			Log.d(config.commandLoggingTag, "searchButton(\""+text+", "+minimumNumberOfMatches+", "+onlyVisible+"\")");
+			Log.d(config.commandLoggingTag, "searchButton(\""+text+"\", "+minimumNumberOfMatches+", "+onlyVisible+")");
 		}
 		
 		return searcher.searchWithTimeoutFor(Button.class, text, minimumNumberOfMatches, true, onlyVisible);
@@ -827,7 +827,7 @@ public class Solo {
 
 	public boolean searchToggleButton(String text, int minimumNumberOfMatches) {
 		if(config.commandLogging){
-			Log.d(config.commandLoggingTag, "searchToggleButton(\""+text+", "+minimumNumberOfMatches+"\")");
+			Log.d(config.commandLoggingTag, "searchToggleButton(\""+text+"\", "+minimumNumberOfMatches+")");
 		}
 		
 		return searcher.searchWithTimeoutFor(ToggleButton.class, text, minimumNumberOfMatches, true, false);
@@ -860,7 +860,7 @@ public class Solo {
 
 	public boolean searchText(String text, boolean onlyVisible) {
 		if(config.commandLogging){
-			Log.d(config.commandLoggingTag, "searchText(\""+text+", "+onlyVisible+"\")");
+			Log.d(config.commandLoggingTag, "searchText(\""+text+"\", "+onlyVisible+")");
 		}
 		
 		return searcher.searchWithTimeoutFor(TextView.class, text, 0, true, onlyVisible);
@@ -879,7 +879,7 @@ public class Solo {
 
 	public boolean searchText(String text, int minimumNumberOfMatches) {
 		if(config.commandLogging){
-			Log.d(config.commandLoggingTag, "searchText(\""+text+", "+minimumNumberOfMatches+"\")");
+			Log.d(config.commandLoggingTag, "searchText(\""+text+"\", "+minimumNumberOfMatches+")");
 		}
 		
 		return searcher.searchWithTimeoutFor(TextView.class, text, minimumNumberOfMatches, true, false);
@@ -899,7 +899,7 @@ public class Solo {
 
 	public boolean searchText(String text, int minimumNumberOfMatches, boolean scroll) {
 		if(config.commandLogging){
-			Log.d(config.commandLoggingTag, "searchText(\""+text+", "+minimumNumberOfMatches+", "+scroll+"\")");
+			Log.d(config.commandLoggingTag, "searchText(\""+text+"\", "+minimumNumberOfMatches+", "+scroll+")");
 		}
 		
 		return searcher.searchWithTimeoutFor(TextView.class, text, minimumNumberOfMatches, scroll, false);
@@ -920,7 +920,7 @@ public class Solo {
 
 	public boolean searchText(String text, int minimumNumberOfMatches, boolean scroll, boolean onlyVisible) {
 		if(config.commandLogging){
-			Log.d(config.commandLoggingTag, "searchText(\""+text+", "+minimumNumberOfMatches+", "+scroll+", "+onlyVisible+"\")");
+			Log.d(config.commandLoggingTag, "searchText(\""+text+"\", "+minimumNumberOfMatches+", "+scroll+", "+onlyVisible+")");
 		}
 		
 		return searcher.searchWithTimeoutFor(TextView.class, text, minimumNumberOfMatches, scroll, onlyVisible);
@@ -936,7 +936,7 @@ public class Solo {
 	public void setActivityOrientation(int orientation)
 	{
 		if(config.commandLogging){
-			Log.d(config.commandLoggingTag, "setActivityOrientation(\""+orientation+"\")");
+			Log.d(config.commandLoggingTag, "setActivityOrientation("+orientation+")");
 		}
 		
 		activityUtils.setActivityOrientation(orientation);
@@ -966,7 +966,7 @@ public class Solo {
 	public void assertCurrentActivity(String message, String name)
 	{
 		if(config.commandLogging){
-			Log.d(config.commandLoggingTag, "assertCurrentActivity(\""+message+", "+name+"\")");
+			Log.d(config.commandLoggingTag, "assertCurrentActivity(\""+message+"\", \""+name+"\")");
 		}
 		
 		asserter.assertCurrentActivity(message, name);
@@ -983,7 +983,7 @@ public class Solo {
 	public void assertCurrentActivity(String message, @SuppressWarnings("rawtypes") Class activityClass)
 	{
 		if(config.commandLogging){
-			Log.d(config.commandLoggingTag, "assertCurrentActivity(\""+message+", "+activityClass+"\")");
+			Log.d(config.commandLoggingTag, "assertCurrentActivity("+message+", "+activityClass+")");
 		}
 		
 		asserter.assertCurrentActivity(message, activityClass);
@@ -1002,7 +1002,7 @@ public class Solo {
 	public void assertCurrentActivity(String message, String name, boolean isNewInstance)
 	{
 		if(config.commandLogging){
-			Log.d(config.commandLoggingTag, "assertCurrentActivity(\""+message+", "+name+", "+isNewInstance+"\")");
+			Log.d(config.commandLoggingTag, "assertCurrentActivity("+message+", "+name+", "+isNewInstance+")");
 		}
 		
 		asserter.assertCurrentActivity(message, name, isNewInstance);
@@ -1021,7 +1021,7 @@ public class Solo {
 	public void assertCurrentActivity(String message, @SuppressWarnings("rawtypes") Class activityClass,
 			boolean isNewInstance) {
 		if(config.commandLogging){
-			Log.d(config.commandLoggingTag, "assertCurrentActivity(\""+message+", "+activityClass+", "+isNewInstance+"\")");
+			Log.d(config.commandLoggingTag, "assertCurrentActivity(\""+message+"\", "+activityClass+", "+isNewInstance+")");
 		}
 		
 		asserter.assertCurrentActivity(message, activityClass, isNewInstance);
@@ -1077,7 +1077,7 @@ public class Solo {
 
 	public boolean waitForDialogToOpen(long timeout) {
 		if(config.commandLogging){
-			Log.d(config.commandLoggingTag, "waitForDialogToOpen(\""+timeout+"\")");
+			Log.d(config.commandLoggingTag, "waitForDialogToOpen("+timeout+")");
 		}
 		
 		return dialogUtils.waitForDialogToOpen(timeout, true);
@@ -1092,7 +1092,7 @@ public class Solo {
 
 	public boolean waitForDialogToClose(long timeout) {
 		if(config.commandLogging){
-			Log.d(config.commandLoggingTag, "waitForDialogToClose(\""+timeout+"\")");
+			Log.d(config.commandLoggingTag, "waitForDialogToClose("+timeout+")");
 		}
 		
 		return dialogUtils.waitForDialogToClose(timeout);
@@ -1122,7 +1122,7 @@ public class Solo {
 
 	public void clickOnScreen(float x, float y) {
 		if(config.commandLogging){
-			Log.d(config.commandLoggingTag, "clickOnScreen(\""+x+", "+y+"\")");
+			Log.d(config.commandLoggingTag, "clickOnScreen("+x+", "+y+")");
 		}
 		
 		sleeper.sleep();
@@ -1139,7 +1139,7 @@ public class Solo {
 
 	public void clickOnScreen(float x, float y, int numberOfClicks) {
 		if(config.commandLogging){
-			Log.d(config.commandLoggingTag, "clickOnScreen(\""+x+", "+y+", "+numberOfClicks+"\")");
+			Log.d(config.commandLoggingTag, "clickOnScreen("+x+", "+y+", "+numberOfClicks+")");
 		}
 		
 		if (android.os.Build.VERSION.SDK_INT < 14){
@@ -1158,7 +1158,7 @@ public class Solo {
 
 	public void clickLongOnScreen(float x, float y) {
 		if(config.commandLogging){
-			Log.d(config.commandLoggingTag, "clickLongOnScreen(\""+x+", "+y+"\")");
+			Log.d(config.commandLoggingTag, "clickLongOnScreen("+x+", "+y+")");
 		}
 		
 		clicker.clickLongOnScreen(x, y, 0, null);
@@ -1174,7 +1174,7 @@ public class Solo {
 
 	public void clickLongOnScreen(float x, float y, int time) {
 		if(config.commandLogging){
-			Log.d(config.commandLoggingTag, "clickLongOnScreen(\""+x+", "+y+", "+time+"\")");
+			Log.d(config.commandLoggingTag, "clickLongOnScreen("+x+", "+y+", "+time+")");
 		}
 		
 		clicker.clickLongOnScreen(x, y, time, null);
@@ -1204,7 +1204,7 @@ public class Solo {
 
 	public void clickOnImageButton(int index) {
 		if(config.commandLogging){
-			Log.d(config.commandLoggingTag, "clickOnImageButton(\""+index+"\")");
+			Log.d(config.commandLoggingTag, "clickOnImageButton("+index+")");
 		}
 		
 		clicker.clickOn(ImageButton.class, index);
@@ -1249,7 +1249,7 @@ public class Solo {
 	public void clickOnMenuItem(String text, boolean subMenu)
 	{
 		if(config.commandLogging){
-			Log.d(config.commandLoggingTag, "clickOnMenuItem(\""+text+", "+subMenu+"\")");
+			Log.d(config.commandLoggingTag, "clickOnMenuItem(\""+text+"\", "+subMenu+")");
 		}
 		
 		clicker.clickOnMenuItem(text, subMenu);
@@ -1263,7 +1263,7 @@ public class Solo {
 
 	public void clickOnWebElement(WebElement webElement){
 		if(config.commandLogging){
-			Log.d(config.commandLoggingTag, "clickOnWebElement(\""+webElement+"\")");
+			Log.d(config.commandLoggingTag, "clickOnWebElement("+webElement+")");
 		}
 		
 		if(webElement == null)
@@ -1280,7 +1280,7 @@ public class Solo {
 
 	public void clickOnWebElement(By by){
 		if(config.commandLogging){
-			Log.d(config.commandLoggingTag, "clickOnWebElement(\""+by+"\")");
+			Log.d(config.commandLoggingTag, "clickOnWebElement("+by+")");
 		}
 		
 		clickOnWebElement(by, 0, true);
@@ -1295,7 +1295,7 @@ public class Solo {
 
 	public void clickOnWebElement(By by, int match){
 		if(config.commandLogging){
-			Log.d(config.commandLoggingTag, "clickOnWebElement(\""+by+", "+match+"\")");
+			Log.d(config.commandLoggingTag, "clickOnWebElement("+by+", "+match+")");
 		}
 		
 		clickOnWebElement(by, match, true);
@@ -1311,7 +1311,7 @@ public class Solo {
 
 	public void clickOnWebElement(By by, int match, boolean scroll){
 		if(config.commandLogging){
-			Log.d(config.commandLoggingTag, "clickOnWebElement(\""+by+", "+match+", "+scroll+"\")");
+			Log.d(config.commandLoggingTag, "clickOnWebElement("+by+", "+match+", "+scroll+")");
 		}
 		
 		clicker.clickOnWebElement(by, match, scroll, config.useJavaScriptToClickWebElements);
@@ -1327,7 +1327,7 @@ public class Solo {
 
 	public void pressMenuItem(int index) {
 		if(config.commandLogging){
-			Log.d(config.commandLoggingTag, "pressMenuItem(\""+index+"\")");
+			Log.d(config.commandLoggingTag, "pressMenuItem("+index+")");
 		}
 		
 		presser.pressMenuItem(index);
@@ -1344,7 +1344,7 @@ public class Solo {
 
 	public void pressMenuItem(int index, int itemsPerRow) {
 		if(config.commandLogging){
-			Log.d(config.commandLoggingTag, "pressMenuItem(\""+index+", "+itemsPerRow+"\")");
+			Log.d(config.commandLoggingTag, "pressMenuItem("+index+", "+itemsPerRow+")");
 		}
 		
 		presser.pressMenuItem(index, itemsPerRow);
@@ -1385,7 +1385,7 @@ public class Solo {
 	public void pressSpinnerItem(int spinnerIndex, int itemIndex)
 	{
 		if(config.commandLogging){
-			Log.d(config.commandLoggingTag, "pressSpinnerItem(\""+spinnerIndex+", "+itemIndex+"\")");
+			Log.d(config.commandLoggingTag, "pressSpinnerItem("+spinnerIndex+", "+itemIndex+")");
 		}
 		
 		presser.pressSpinnerItem(spinnerIndex, itemIndex);
@@ -1399,7 +1399,7 @@ public class Solo {
 
 	public void clickOnView(View view) {
 		if(config.commandLogging){
-			Log.d(config.commandLoggingTag, "clickOnView(\""+view+"\")");
+			Log.d(config.commandLoggingTag, "clickOnView("+view+")");
 		}
 		
 		view = waiter.waitForView(view, Timeout.getSmallTimeout());
@@ -1415,7 +1415,7 @@ public class Solo {
 
 	public void clickOnView(View view, boolean immediately){
 		if(config.commandLogging){
-			Log.d(config.commandLoggingTag, "clickOnView(\""+view+", "+immediately+"\")");
+			Log.d(config.commandLoggingTag, "clickOnView("+view+", "+immediately+")");
 		}
 		
 		if(immediately)
@@ -1434,7 +1434,7 @@ public class Solo {
 
 	public void clickLongOnView(View view) {
 		if(config.commandLogging){
-			Log.d(config.commandLoggingTag, "clickLongOnView(\""+view+"\")");
+			Log.d(config.commandLoggingTag, "clickLongOnView("+view+")");
 		}
 		
 		view = waiter.waitForView(view, Timeout.getSmallTimeout());
@@ -1451,7 +1451,7 @@ public class Solo {
 
 	public void clickLongOnView(View view, int time) {
 		if(config.commandLogging){
-			Log.d(config.commandLoggingTag, "clickLongOnView(\""+view+", "+time+"\")");
+			Log.d(config.commandLoggingTag, "clickLongOnView("+view+", "+time+")");
 		}
 		
 		clicker.clickOnScreen(view, true, time);
@@ -1482,7 +1482,7 @@ public class Solo {
 
 	public void clickOnText(String text, int match) {
 		if(config.commandLogging){
-			Log.d(config.commandLoggingTag, "clickOnText(\""+text+", "+match+"\")");
+			Log.d(config.commandLoggingTag, "clickOnText(\""+text+"\", "+match+")");
 		}
 		
 		clicker.clickOnText(text, false, match, true, 0);
@@ -1498,7 +1498,7 @@ public class Solo {
 
 	public void clickOnText(String text, int match, boolean scroll) {
 		if(config.commandLogging){
-			Log.d(config.commandLoggingTag, "clickOnText(\""+text+", "+match+", "+scroll+"\")");
+			Log.d(config.commandLoggingTag, "clickOnText(\""+text+"\", "+match+", "+scroll+")");
 		}
 		
 		clicker.clickOnText(text, false, match, scroll, 0);
@@ -1529,7 +1529,7 @@ public class Solo {
 	public void clickLongOnText(String text, int match)
 	{
 		if(config.commandLogging){
-			Log.d(config.commandLoggingTag, "clickLongOnText(\""+text+", "+match+"\")");
+			Log.d(config.commandLoggingTag, "clickLongOnText(\""+text+"\", "+match+")");
 		}
 		
 		clicker.clickOnText(text, true, match, true, 0);
@@ -1546,7 +1546,7 @@ public class Solo {
 	public void clickLongOnText(String text, int match, boolean scroll)
 	{
 		if(config.commandLogging){
-			Log.d(config.commandLoggingTag, "clickLongOnText(\""+text+", "+match+", "+scroll+"\")");
+			Log.d(config.commandLoggingTag, "clickLongOnText(\""+text+"\", "+match+", "+scroll+")");
 		}
 		
 		clicker.clickOnText(text, true, match, scroll, 0);
@@ -1563,7 +1563,7 @@ public class Solo {
 	public void clickLongOnText(String text, int match, int time)
 	{
 		if(config.commandLogging){
-			Log.d(config.commandLoggingTag, "clickLongOnText(\""+text+", "+match+", "+time+"\")");
+			Log.d(config.commandLoggingTag, "clickLongOnText(\""+text+"\", "+match+", "+time+")");
 		}
 		
 		clicker.clickOnText(text, true, match, true, time);
@@ -1579,7 +1579,7 @@ public class Solo {
 
 	public void clickLongOnTextAndPress(String text, int index) {
 		if(config.commandLogging){
-			Log.d(config.commandLoggingTag, "clickLongOnTextAndPress(\""+text+", "+index+"\")");
+			Log.d(config.commandLoggingTag, "clickLongOnTextAndPress(\""+text+"\", "+index+")");
 		}
 		
 		clicker.clickLongOnTextAndPress(text, index);
@@ -1593,7 +1593,7 @@ public class Solo {
 
 	public void clickOnButton(int index) {
 		if(config.commandLogging){
-			Log.d(config.commandLoggingTag, "clickOnButton(\""+index+"\")");
+			Log.d(config.commandLoggingTag, "clickOnButton("+index+")");
 		}
 		
 		clicker.clickOn(Button.class, index);
@@ -1607,7 +1607,7 @@ public class Solo {
 
 	public void clickOnRadioButton(int index) {
 		if(config.commandLogging){
-			Log.d(config.commandLoggingTag, "clickOnRadioButton(\""+index+"\")");
+			Log.d(config.commandLoggingTag, "clickOnRadioButton("+index+")");
 		}
 		
 		clicker.clickOn(RadioButton.class, index);
@@ -1621,7 +1621,7 @@ public class Solo {
 
 	public void clickOnCheckBox(int index) {
 		if(config.commandLogging){
-			Log.d(config.commandLoggingTag, "clickOnCheckBox(\""+index+"\")");
+			Log.d(config.commandLoggingTag, "clickOnCheckBox("+index+")");
 		}
 		
 		clicker.clickOn(CheckBox.class, index);
@@ -1635,7 +1635,7 @@ public class Solo {
 
 	public void clickOnEditText(int index) {
 		if(config.commandLogging){
-			Log.d(config.commandLoggingTag, "clickOnEditText(\""+index+"\")");
+			Log.d(config.commandLoggingTag, "clickOnEditText("+index+")");
 		}
 		
 		clicker.clickOn(EditText.class, index);
@@ -1651,7 +1651,7 @@ public class Solo {
 
 	public ArrayList<TextView> clickInList(int line) {
 		if(config.commandLogging){
-			Log.d(config.commandLoggingTag, "clickInList(\""+line+"\")");
+			Log.d(config.commandLoggingTag, "clickInList("+line+")");
 		}
 		
 		return clicker.clickInList(line);
@@ -1668,7 +1668,7 @@ public class Solo {
 
 	public ArrayList<TextView> clickInList(int line, int index) {
 		if(config.commandLogging){
-			Log.d(config.commandLoggingTag, "clickInList(\""+line+", "+index+"\")");
+			Log.d(config.commandLoggingTag, "clickInList("+line+", "+index+")");
 		}
 		
 		return clicker.clickInList(line, index, false, 0);
@@ -1684,7 +1684,7 @@ public class Solo {
 
 	public ArrayList<TextView> clickLongInList(int line){
 		if(config.commandLogging){
-			Log.d(config.commandLoggingTag, "clickLongInList(\""+line+"\")");
+			Log.d(config.commandLoggingTag, "clickLongInList("+line+")");
 		}
 		
 		return clicker.clickInList(line, 0, true, 0);
@@ -1701,7 +1701,7 @@ public class Solo {
 
 	public ArrayList<TextView> clickLongInList(int line, int index){
 		if(config.commandLogging){
-			Log.d(config.commandLoggingTag, "clickLongInList(\""+line+", "+index+"\")");
+			Log.d(config.commandLoggingTag, "clickLongInList("+line+", "+index+")");
 		}
 		
 		return clicker.clickInList(line, index, true, 0);
@@ -1719,7 +1719,7 @@ public class Solo {
 
 	public ArrayList<TextView> clickLongInList(int line, int index, int time){
 		if(config.commandLogging){
-			Log.d(config.commandLoggingTag, "clickLongInList(\""+line+", "+index+", "+time+"\")");
+			Log.d(config.commandLoggingTag, "clickLongInList("+line+", "+index+", "+time+")");
 		}
 		
 		return clicker.clickInList(line, index, true, time);
@@ -1736,7 +1736,7 @@ public class Solo {
 
 	public ArrayList<TextView> clickInRecyclerView(int itemIndex) {
 		if(config.commandLogging){
-			Log.d(config.commandLoggingTag, "clickInRecyclerView(\""+itemIndex+"\")");
+			Log.d(config.commandLoggingTag, "clickInRecyclerView("+itemIndex+")");
 		}
 		
 		return clicker.clickInRecyclerView(itemIndex);
@@ -1753,7 +1753,7 @@ public class Solo {
 
 	public ArrayList<TextView> clickInRecyclerView(int itemIndex, int recyclerViewIndex) {
 		if(config.commandLogging){
-			Log.d(config.commandLoggingTag, "clickInRecyclerView(\""+itemIndex+", "+recyclerViewIndex+"\")");
+			Log.d(config.commandLoggingTag, "clickInRecyclerView("+itemIndex+", "+recyclerViewIndex+")");
 		}
 		
 		return clicker.clickInRecyclerView(itemIndex, recyclerViewIndex, false, 0);
@@ -1769,7 +1769,7 @@ public class Solo {
 
 	public ArrayList<TextView> clickLongInRecycleView(int itemIndex){
 		if(config.commandLogging){
-			Log.d(config.commandLoggingTag, "clickLongInRecycleView(\""+itemIndex+"\")");
+			Log.d(config.commandLoggingTag, "clickLongInRecycleView("+itemIndex+")");
 		}
 		
 		return clicker.clickInRecyclerView(itemIndex, 0, true, 0);
@@ -1786,7 +1786,7 @@ public class Solo {
 
 	public ArrayList<TextView> clickLongInRecycleView(int itemIndex, int recyclerViewIndex){
 		if(config.commandLogging){
-			Log.d(config.commandLoggingTag, "clickLongInRecycleView(\""+itemIndex+", "+recyclerViewIndex+"\")");
+			Log.d(config.commandLoggingTag, "clickLongInRecycleView("+itemIndex+", "+recyclerViewIndex+")");
 		}
 		
 		return clicker.clickInRecyclerView(itemIndex, recyclerViewIndex, true, 0);
@@ -1804,7 +1804,7 @@ public class Solo {
 
 	public ArrayList<TextView> clickLongInRecycleView(int itemIndex, int recyclerViewIndex, int time){
 		if(config.commandLogging){
-			Log.d(config.commandLoggingTag, "clickLongInRecycleView(\""+itemIndex+", "+recyclerViewIndex+", "+time+"\")");
+			Log.d(config.commandLoggingTag, "clickLongInRecycleView("+itemIndex+", "+recyclerViewIndex+", "+time+")");
 		}
 		
 		return clicker.clickInRecyclerView(itemIndex, recyclerViewIndex, true, time);
@@ -1818,7 +1818,7 @@ public class Solo {
 
 	public void clickOnActionBarItem(int id){
 		if(config.commandLogging){
-			Log.d(config.commandLoggingTag, "clickOnActionBarItem(\""+id+"\")");
+			Log.d(config.commandLoggingTag, "clickOnActionBarItem("+id+")");
 		}
 		
 		clicker.clickOnActionBarItem(id);
@@ -1870,7 +1870,7 @@ public class Solo {
 
 	public void illustrate(Illustration illustration){
 		if(config.commandLogging){
-			Log.d(config.commandLoggingTag, "illustrate(\""+illustration+"\")");
+			Log.d(config.commandLoggingTag, "illustrate("+illustration+")");
 		}
 		
 		illustrator.illustrate(illustration);
@@ -1890,7 +1890,7 @@ public class Solo {
 	public void drag(float fromX, float toX, float fromY, float toY,
 			int stepCount) {
 		if(config.commandLogging){
-			Log.d(config.commandLoggingTag, "drag(\""+fromX+", "+toX+", "+fromY+", "+toY+"\")");
+			Log.d(config.commandLoggingTag, "drag("+fromX+", "+toX+", "+fromY+", "+toY+")");
 		}
 		
 		dialogUtils.hideSoftKeyboard(null, false, true);
@@ -1994,7 +1994,7 @@ public class Solo {
 
 	public boolean scrollDownList(AbsListView list) {
 		if(config.commandLogging){
-			Log.d(config.commandLoggingTag, "scrollDownList(\""+list+"\")");
+			Log.d(config.commandLoggingTag, "scrollDownList("+list+")");
 		}
 		
 		return scroller.scrollList(list, Scroller.DOWN, false);
@@ -2009,7 +2009,7 @@ public class Solo {
 
 	public boolean scrollListToBottom(AbsListView list) {
 		if(config.commandLogging){
-			Log.d(config.commandLoggingTag, "scrollListToBottom(\""+list+"\")");
+			Log.d(config.commandLoggingTag, "scrollListToBottom("+list+")");
 		}
 		
 		return scroller.scrollList(list, Scroller.DOWN, true);
@@ -2024,7 +2024,7 @@ public class Solo {
 
 	public boolean scrollUpList(AbsListView list) {
 		if(config.commandLogging){
-			Log.d(config.commandLoggingTag, "scrollUpList(\""+list+"\")");
+			Log.d(config.commandLoggingTag, "scrollUpList("+list+")");
 		}
 		
 		return scroller.scrollList(list, Scroller.UP, false);
@@ -2039,7 +2039,7 @@ public class Solo {
 
 	public boolean scrollListToTop(AbsListView list) {
 		if(config.commandLogging){
-			Log.d(config.commandLoggingTag, "scrollListToTop(\""+list+"\")");
+			Log.d(config.commandLoggingTag, "scrollListToTop("+list+")");
 		}
 		
 		return scroller.scrollList(list, Scroller.UP, true);
@@ -2054,7 +2054,7 @@ public class Solo {
 
 	public boolean scrollDownList(int index) {
 		if(config.commandLogging){
-			Log.d(config.commandLoggingTag, "scrollDownList(\""+index+"\")");
+			Log.d(config.commandLoggingTag, "scrollDownList("+index+")");
 		}
 		
 		return scroller.scrollList(waiter.waitForAndGetView(index, ListView.class), Scroller.DOWN, false);
@@ -2069,7 +2069,7 @@ public class Solo {
 
 	public boolean scrollListToBottom(int index) {
 		if(config.commandLogging){
-			Log.d(config.commandLoggingTag, "scrollListToBottom(\""+index+"\")");
+			Log.d(config.commandLoggingTag, "scrollListToBottom("+index+")");
 		}
 		
 		return scroller.scrollList(waiter.waitForAndGetView(index, ListView.class), Scroller.DOWN, true);
@@ -2084,7 +2084,7 @@ public class Solo {
 
 	public boolean scrollUpList(int index) {
 		if(config.commandLogging){
-			Log.d(config.commandLoggingTag, "scrollUpList(\""+index+"\")");
+			Log.d(config.commandLoggingTag, "scrollUpList("+index+")");
 		}
 		
 		return scroller.scrollList(waiter.waitForAndGetView(index, ListView.class), Scroller.UP, false);
@@ -2099,7 +2099,7 @@ public class Solo {
 
 	public boolean scrollListToTop(int index) {
 		if(config.commandLogging){
-			Log.d(config.commandLoggingTag, "scrollListToTop(\""+index+"\")");
+			Log.d(config.commandLoggingTag, "scrollListToTop("+index+")");
 		}
 		
 		return scroller.scrollList(waiter.waitForAndGetView(index, ListView.class), Scroller.UP, true);
@@ -2114,7 +2114,7 @@ public class Solo {
 
 	public void scrollListToLine(AbsListView absListView, int line){
 		if(config.commandLogging){
-			Log.d(config.commandLoggingTag, "scrollListToLine(\""+absListView+", "+line+"\")");
+			Log.d(config.commandLoggingTag, "scrollListToLine("+absListView+", "+line+")");
 		}
 		
 		scroller.scrollListToLine(absListView, line);
@@ -2129,7 +2129,7 @@ public class Solo {
 
 	public void scrollListToLine(int index, int line){
 		if(config.commandLogging){
-			Log.d(config.commandLoggingTag, "scrollListToLine(\""+index+", "+line+"\")");
+			Log.d(config.commandLoggingTag, "scrollListToLine("+index+", "+line+")");
 		}
 			
 		scroller.scrollListToLine(waiter.waitForAndGetView(index, AbsListView.class), line);
@@ -2145,7 +2145,7 @@ public class Solo {
 
 	public void scrollToSide(int side, float scrollPosition, int stepCount) {
 		if(config.commandLogging){
-			Log.d(config.commandLoggingTag, "scrollToSide(\""+side+", "+scrollPosition+", "+stepCount+"\")");
+			Log.d(config.commandLoggingTag, "scrollToSide("+side+", "+scrollPosition+", "+stepCount+")");
 		}
 		
 		switch (side){
@@ -2163,7 +2163,7 @@ public class Solo {
 
 	public void scrollToSide(int side, float scrollPosition) {
 		if(config.commandLogging){
-			Log.d(config.commandLoggingTag, "scrollToSide(\""+scrollPosition+"\")");
+			Log.d(config.commandLoggingTag, "scrollToSide("+scrollPosition+")");
 		}
 		
 		scrollToSide(side, scrollPosition, 20);
@@ -2177,7 +2177,7 @@ public class Solo {
 
 	public void scrollToSide(int side) {
 		if(config.commandLogging){
-			Log.d(config.commandLoggingTag, "scrollToSide(\""+side+"\")");
+			Log.d(config.commandLoggingTag, "scrollToSide("+side+")");
 		}
 		
 		scrollToSide(side, 0.75F);
@@ -2194,7 +2194,7 @@ public class Solo {
 
 	public void scrollViewToSide(View view, int side, float scrollPosition, int stepCount) {
 		if(config.commandLogging){
-			Log.d(config.commandLoggingTag, "scrollViewToSide(\""+view+", "+side+", "+scrollPosition+", "+stepCount+"\")");
+			Log.d(config.commandLoggingTag, "scrollViewToSide("+view+", "+side+", "+scrollPosition+", "+stepCount+")");
 		}
 		
 		waitForView(view);
@@ -2215,7 +2215,7 @@ public class Solo {
 
 	public void scrollViewToSide(View view, int side, float scrollPosition) {
 		if(config.commandLogging){
-			Log.d(config.commandLoggingTag, "scrollViewToSide(\""+view+", "+side+", "+scrollPosition+"\")");
+			Log.d(config.commandLoggingTag, "scrollViewToSide("+view+", "+side+", "+scrollPosition+")");
 		}
 		
 		scrollViewToSide(view, side, scrollPosition, 20);
@@ -2230,7 +2230,7 @@ public class Solo {
 
 	public void scrollViewToSide(View view, int side) {
 		if(config.commandLogging){
-			Log.d(config.commandLoggingTag, "scrollViewToSide(\""+view+", "+side+"\")");
+			Log.d(config.commandLoggingTag, "scrollViewToSide("+view+", "+side+")");
 		}
 		
 		scrollViewToSide(view, side, 0.70F);
@@ -2248,7 +2248,7 @@ public class Solo {
 	public void pinchToZoom(PointF startPoint1, PointF startPoint2, PointF endPoint1, PointF endPoint2)
 	{
 		if(config.commandLogging){
-			Log.d(config.commandLoggingTag, "pinchToZoom(\""+startPoint1+", "+startPoint2+", "+endPoint1+", "+endPoint2+"\")");
+			Log.d(config.commandLoggingTag, "pinchToZoom("+startPoint1+", "+startPoint2+", "+endPoint1+", "+endPoint2+")");
 		}
 		
 		if (android.os.Build.VERSION.SDK_INT < 14){
@@ -2269,7 +2269,7 @@ public class Solo {
 	public void swipe(PointF startPoint1, PointF startPoint2, PointF endPoint1, PointF endPoint2)
 	{
 		if(config.commandLogging){
-			Log.d(config.commandLoggingTag, "swipe(\""+startPoint1+", "+startPoint2+", "+endPoint1+", "+endPoint2+"\")");
+			Log.d(config.commandLoggingTag, "swipe("+startPoint1+", "+startPoint2+", "+endPoint1+", "+endPoint2+")");
 		}
 		
 		if (android.os.Build.VERSION.SDK_INT < 14){
@@ -2289,7 +2289,7 @@ public class Solo {
 	public void rotateLarge(PointF center1, PointF center2)
 	{
 		if(config.commandLogging){
-			Log.d(config.commandLoggingTag, "rotateLarge(\""+center1+", "+center2+"\")");
+			Log.d(config.commandLoggingTag, "rotateLarge("+center1+", "+center2+")");
 		}
 		
 		if (android.os.Build.VERSION.SDK_INT < 14){
@@ -2308,7 +2308,7 @@ public class Solo {
 	public void rotateSmall(PointF center1, PointF center2)
 	{
 		if(config.commandLogging){
-			Log.d(config.commandLoggingTag, "rotateSmall(\""+center1+", "+center2+"\")");
+			Log.d(config.commandLoggingTag, "rotateSmall("+center1+", "+center2+")");
 		}
 		
 		if (android.os.Build.VERSION.SDK_INT < 14){
@@ -2326,7 +2326,7 @@ public class Solo {
 
 	public void setMobileData(Boolean turnedOn){
 		if(config.commandLogging){
-			Log.d(config.commandLoggingTag, "setMobileData(\""+turnedOn+"\")");
+			Log.d(config.commandLoggingTag, "setMobileData("+turnedOn+")");
 		}
 		
 		systemUtils.setMobileData(turnedOn);
@@ -2341,7 +2341,7 @@ public class Solo {
 
 	public void setWiFiData(Boolean turnedOn){
 		if(config.commandLogging){
-			Log.d(config.commandLoggingTag, "setWiFiData(\""+turnedOn+"\")");
+			Log.d(config.commandLoggingTag, "setWiFiData("+turnedOn+")");
 		}
 		
 		systemUtils.setWiFiData(turnedOn);
@@ -2359,7 +2359,7 @@ public class Solo {
 
 	public void setDatePicker(int index, int year, int monthOfYear, int dayOfMonth) {
 		if(config.commandLogging){
-			Log.d(config.commandLoggingTag, "setDatePicker(\""+index+", "+year+", "+monthOfYear+", "+dayOfMonth+"\")");
+			Log.d(config.commandLoggingTag, "setDatePicker("+index+", "+year+", "+monthOfYear+", "+dayOfMonth+")");
 		}
 		
 		setDatePicker(waiter.waitForAndGetView(index, DatePicker.class), year, monthOfYear, dayOfMonth);
@@ -2376,7 +2376,7 @@ public class Solo {
 
 	public void setDatePicker(DatePicker datePicker, int year, int monthOfYear, int dayOfMonth) {
 		if(config.commandLogging){
-			Log.d(config.commandLoggingTag, "setDatePicker(\""+datePicker+", "+year+", "+monthOfYear+", "+dayOfMonth+"\")");
+			Log.d(config.commandLoggingTag, "setDatePicker("+datePicker+", "+year+", "+monthOfYear+", "+dayOfMonth+")");
 		}
 		
 		datePicker = (DatePicker) waiter.waitForView(datePicker, Timeout.getSmallTimeout());
@@ -2393,7 +2393,7 @@ public class Solo {
 
 	public void setTimePicker(int index, int hour, int minute) {
 		if(config.commandLogging){
-			Log.d(config.commandLoggingTag, "setTimePicker(\""+index+", "+hour+", "+minute+"\")");
+			Log.d(config.commandLoggingTag, "setTimePicker("+index+", "+hour+", "+minute+")");
 		}
 		
 		setTimePicker(waiter.waitForAndGetView(index, TimePicker.class), hour, minute);
@@ -2409,7 +2409,7 @@ public class Solo {
 
 	public void setTimePicker(TimePicker timePicker, int hour, int minute) {
 		if(config.commandLogging){
-			Log.d(config.commandLoggingTag, "setTimePicker(\""+timePicker+", "+hour+", "+minute+"\")");
+			Log.d(config.commandLoggingTag, "setTimePicker("+timePicker+", "+hour+", "+minute+")");
 		}
 		
 		timePicker = (TimePicker) waiter.waitForView(timePicker, Timeout.getSmallTimeout());
@@ -2425,7 +2425,7 @@ public class Solo {
 
 	public void setProgressBar(int index, int progress){
 		if(config.commandLogging){
-			Log.d(config.commandLoggingTag, "setProgressBar(\""+index+", "+progress+"\")");
+			Log.d(config.commandLoggingTag, "setProgressBar("+index+", "+progress+")");
 		}
 		
 		setProgressBar(waiter.waitForAndGetView(index, ProgressBar.class), progress);
@@ -2440,7 +2440,7 @@ public class Solo {
 
 	public void setProgressBar(ProgressBar progressBar, int progress){
 		if(config.commandLogging){
-			Log.d(config.commandLoggingTag, "setProgressBar(\""+progressBar+", "+progress+"\")");
+			Log.d(config.commandLoggingTag, "setProgressBar("+progressBar+", "+progress+")");
 		}
 		
 		progressBar = (ProgressBar) waiter.waitForView(progressBar, Timeout.getSmallTimeout());
@@ -2455,7 +2455,7 @@ public class Solo {
 
 	public void setNavigationDrawer(final int status){
 		if(config.commandLogging){
-			Log.d(config.commandLoggingTag, "setNavigationDrawer(\""+status+"\")");
+			Log.d(config.commandLoggingTag, "setNavigationDrawer("+status+")");
 		}
 		
 		setter.setNavigationDrawer(status);
@@ -2470,7 +2470,7 @@ public class Solo {
 
 	public void setSlidingDrawer(int index, int status){
 		if(config.commandLogging){
-			Log.d(config.commandLoggingTag, "setSlidingDrawer(\""+index+", "+status+"\")");
+			Log.d(config.commandLoggingTag, "setSlidingDrawer("+index+", "+status+")");
 		}
 		
 		setSlidingDrawer(waiter.waitForAndGetView(index, SlidingDrawer.class), status);
@@ -2486,7 +2486,7 @@ public class Solo {
 	@SuppressWarnings("deprecation")
 	public void setSlidingDrawer(SlidingDrawer slidingDrawer, int status){
 		if(config.commandLogging){
-			Log.d(config.commandLoggingTag, "setSlidingDrawer(\""+slidingDrawer+", "+status+"\")");
+			Log.d(config.commandLoggingTag, "setSlidingDrawer("+slidingDrawer+", "+status+")");
 		}
 		
 		slidingDrawer = (SlidingDrawer) waiter.waitForView(slidingDrawer, Timeout.getSmallTimeout());
@@ -2502,7 +2502,7 @@ public class Solo {
 
 	public void enterText(int index, String text) {
 		if(config.commandLogging){
-			Log.d(config.commandLoggingTag, "enterText(\""+index+", "+text+"\")");
+			Log.d(config.commandLoggingTag, "enterText("+index+", \""+text+"\")");
 		}
 		
 		textEnterer.setEditText(waiter.waitForAndGetView(index, EditText.class), text);
@@ -2517,7 +2517,7 @@ public class Solo {
 
 	public void enterText(EditText editText, String text) {
 		if(config.commandLogging){
-			Log.d(config.commandLoggingTag, "enterText(\""+editText+", "+text+"\")");
+			Log.d(config.commandLoggingTag, "enterText("+editText+", \""+text+"\")");
 		}
 		
 		editText = (EditText) waiter.waitForView(editText, Timeout.getSmallTimeout());
@@ -2533,7 +2533,7 @@ public class Solo {
 
 	public void enterTextInWebElement(By by, String text){
 		if(config.commandLogging){
-			Log.d(config.commandLoggingTag, "enterTextInWebElement(\""+by+", "+text+"\")");
+			Log.d(config.commandLoggingTag, "enterTextInWebElement("+by+", \""+text+"\")");
 		}
 		
 		if(waiter.waitForWebElement(by, 0, Timeout.getSmallTimeout(), false) == null) {
@@ -2551,7 +2551,7 @@ public class Solo {
 
 	public void typeText(int index, String text) {
 		if(config.commandLogging){
-			Log.d(config.commandLoggingTag, "typeText(\""+index+", "+text+"\")");
+			Log.d(config.commandLoggingTag, "typeText("+index+", \""+text+"\")");
 		}
 		
 		textEnterer.typeText(waiter.waitForAndGetView(index, EditText.class), text);
@@ -2566,7 +2566,7 @@ public class Solo {
 
 	public void typeText(EditText editText, String text) {
 		if(config.commandLogging){
-			Log.d(config.commandLoggingTag, "typeText(\""+editText+", "+text+"\")");
+			Log.d(config.commandLoggingTag, "typeText("+editText+", \""+text+"\")");
 		}
 		
 		editText = (EditText) waiter.waitForView(editText, Timeout.getSmallTimeout());
@@ -2582,7 +2582,7 @@ public class Solo {
 
 	public void typeTextInWebElement(By by, String text){
 		if(config.commandLogging){
-			Log.d(config.commandLoggingTag, "typeTextInWebElement(\""+by+", "+text+"\")");
+			Log.d(config.commandLoggingTag, "typeTextInWebElement("+by+", \""+text+"\")");
 		}
 		
 		typeTextInWebElement(by, text, 0);
@@ -2598,7 +2598,7 @@ public class Solo {
 
 	public void typeTextInWebElement(By by, String text, int match){
 		if(config.commandLogging){
-			Log.d(config.commandLoggingTag, "typeTextInWebElement(\""+by+", "+text+", "+match+"\")");
+			Log.d(config.commandLoggingTag, "typeTextInWebElement("+by+", \""+text+"\", "+match+")");
 		}
 		
 		clicker.clickOnWebElement(by, match, true, false);
@@ -2615,7 +2615,7 @@ public class Solo {
 
 	public void typeTextInWebElement(WebElement webElement, String text){
 		if(config.commandLogging){
-			Log.d(config.commandLoggingTag, "typeTextInWebElement(\""+webElement+", "+text+"\")");
+			Log.d(config.commandLoggingTag, "typeTextInWebElement("+webElement+", \""+text+"\")");
 		}
 		
 		clickOnWebElement(webElement);
@@ -2631,7 +2631,7 @@ public class Solo {
 
 	public void clearEditText(int index) {
 		if(config.commandLogging){
-			Log.d(config.commandLoggingTag, "clearEditText(\""+index+"\")");
+			Log.d(config.commandLoggingTag, "clearEditText("+index+")");
 		}
 		
 		textEnterer.setEditText(waiter.waitForAndGetView(index, EditText.class), "");
@@ -2645,7 +2645,7 @@ public class Solo {
 
 	public void clearEditText(EditText editText) {
 		if(config.commandLogging){
-			Log.d(config.commandLoggingTag, "clearEditText(\""+editText+"\")");
+			Log.d(config.commandLoggingTag, "clearEditText("+editText+")");
 		}
 		
 		editText = (EditText) waiter.waitForView(editText, Timeout.getSmallTimeout());
@@ -2660,7 +2660,7 @@ public class Solo {
 
 	public void clearTextInWebElement(By by){
 		if(config.commandLogging){
-			Log.d(config.commandLoggingTag, "clearTextInWebElement(\""+by+"\")");
+			Log.d(config.commandLoggingTag, "clearTextInWebElement("+by+")");
 		}
 		
 		webUtils.enterTextIntoWebElement(by, "");
@@ -2674,7 +2674,7 @@ public class Solo {
 
 	public void clickOnImage(int index) {
 		if(config.commandLogging){
-			Log.d(config.commandLoggingTag, "clickOnImage(\""+index+"\")");
+			Log.d(config.commandLoggingTag, "clickOnImage("+index+")");
 		}
 		
 		clicker.clickOn(ImageView.class, index);
@@ -2689,7 +2689,7 @@ public class Solo {
 
 	public EditText getEditText(int index) {
 		if(config.commandLogging){
-			Log.d(config.commandLoggingTag, "getEditText(\""+index+"\")");
+			Log.d(config.commandLoggingTag, "getEditText("+index+")");
 		}
 		
 		return getter.getView(EditText.class, index);
@@ -2704,7 +2704,7 @@ public class Solo {
 
 	public Button getButton(int index) {
 		if(config.commandLogging){
-			Log.d(config.commandLoggingTag, "getButton(\""+index+"\")");
+			Log.d(config.commandLoggingTag, "getButton("+index+")");
 		}
 		
 		return getter.getView(Button.class, index);
@@ -2719,7 +2719,7 @@ public class Solo {
 
 	public TextView getText(int index) {
 		if(config.commandLogging){
-			Log.d(config.commandLoggingTag, "getText(\""+index+"\")");
+			Log.d(config.commandLoggingTag, "getText("+index+")");
 		}
 		
 		return getter.getView(TextView.class, index);
@@ -2734,7 +2734,7 @@ public class Solo {
 
 	public ImageView getImage(int index) {
 		if(config.commandLogging){
-			Log.d(config.commandLoggingTag, "getImage(\""+index+"\")");
+			Log.d(config.commandLoggingTag, "getImage("+index+")");
 		}
 		
 		return getter.getView(ImageView.class, index);
@@ -2749,7 +2749,7 @@ public class Solo {
 
 	public ImageButton getImageButton(int index) {
 		if(config.commandLogging){
-			Log.d(config.commandLoggingTag, "getImageButton(\""+index+"\")");
+			Log.d(config.commandLoggingTag, "getImageButton("+index+")");
 		}
 		
 		return getter.getView(ImageButton.class, index);
@@ -2782,7 +2782,7 @@ public class Solo {
 	public TextView getText(String text, boolean onlyVisible)
 	{
 		if(config.commandLogging){
-			Log.d(config.commandLoggingTag, "getText(\""+text+", "+onlyVisible+"\")");
+			Log.d(config.commandLoggingTag, "getText(\""+text+"\", "+onlyVisible+")");
 		}
 		
 		return getter.getView(TextView.class, text, onlyVisible);
@@ -2815,7 +2815,7 @@ public class Solo {
 	public Button getButton(String text, boolean onlyVisible)
 	{
 		if(config.commandLogging){
-			Log.d(config.commandLoggingTag, "getButton(\""+text+", "+onlyVisible+"\")");
+			Log.d(config.commandLoggingTag, "getButton(\""+text+"\", "+onlyVisible+")");
 		}
 		
 		return getter.getView(Button.class, text, onlyVisible);
@@ -2848,7 +2848,7 @@ public class Solo {
 	public EditText getEditText(String text, boolean onlyVisible)
 	{
 		if(config.commandLogging){
-			Log.d(config.commandLoggingTag, "getEditText(\""+text+", "+onlyVisible+"\")");
+			Log.d(config.commandLoggingTag, "getEditText(\""+text+"\", "+onlyVisible+")");
 		}
 		
 		return getter.getView(EditText.class, text, onlyVisible);
@@ -2863,7 +2863,7 @@ public class Solo {
 
 	public View getView(int id){
 		if(config.commandLogging){
-			Log.d(config.commandLoggingTag, "getView(\""+id+"\")");
+			Log.d(config.commandLoggingTag, "getView("+id+")");
 		}
 		
 		return getView(id, 0);
@@ -2879,7 +2879,7 @@ public class Solo {
 
 	public View getView(int id, int index){
 		if(config.commandLogging){
-			Log.d(config.commandLoggingTag, "getView(\""+id+", "+index+"\")");
+			Log.d(config.commandLoggingTag, "getView("+id+", "+index+")");
 		}
 		
 		View viewToReturn = getter.getView(id, index);
@@ -2906,7 +2906,7 @@ public class Solo {
 
 	public View getView(Object tag){
 		if(config.commandLogging){
-			Log.d(config.commandLoggingTag, "getView(\""+tag+"\")");
+			Log.d(config.commandLoggingTag, "getView("+tag+")");
 		}
 		
 		return getView(tag, 0);
@@ -2923,7 +2923,7 @@ public class Solo {
 
 	public View getView(Object tag, int index){
 		if(config.commandLogging){
-			Log.d(config.commandLoggingTag, "getView(\""+tag+", "+index+"\")");
+			Log.d(config.commandLoggingTag, "getView("+tag+", "+index+")");
 		}
 		
 		View viewToReturn = getter.getView(tag, index);
@@ -2965,7 +2965,7 @@ public class Solo {
 
 	public View getView(String id, int index){
 		if(config.commandLogging){
-			Log.d(config.commandLoggingTag, "getView(\""+id+", "+index+"\")");
+			Log.d(config.commandLoggingTag, "getView(\""+id+"\", "+index+")");
 		}
 		
 		View viewToReturn = getter.getView(id, index);
@@ -2992,7 +2992,7 @@ public class Solo {
 
 	public <T extends View> T getView(Class<T> viewClass, int index){
 		if(config.commandLogging){
-			Log.d(config.commandLoggingTag, "getView(\""+viewClass+", "+index+"\")");
+			Log.d(config.commandLoggingTag, "getView("+viewClass+", "+index+")");
 		}
 		
 		return waiter.waitForAndGetView(index, viewClass);
@@ -3008,7 +3008,7 @@ public class Solo {
 
 	public WebElement getWebElement(By by, int index){
 		if(config.commandLogging){
-			Log.d(config.commandLoggingTag, "getWebElement(\""+by+", "+index+"\")");
+			Log.d(config.commandLoggingTag, "getWebElement("+by+", "+index+")");
 		}
 		
 		int match = index + 1;
@@ -3073,7 +3073,7 @@ public class Solo {
 
 	public <T extends View> ArrayList<T> getCurrentViews(Class<T> classToFilterBy) {
 		if(config.commandLogging){
-			Log.d(config.commandLoggingTag, "getCurrentViews(\""+classToFilterBy+"\")");
+			Log.d(config.commandLoggingTag, "getCurrentViews("+classToFilterBy+")");
 		}
 		
 		return viewFetcher.getCurrentViews(classToFilterBy, true);
@@ -3089,7 +3089,7 @@ public class Solo {
 
 	public <T extends View> ArrayList<T> getCurrentViews(Class<T> classToFilterBy, boolean includeSubclasses) {
 		if(config.commandLogging){
-			Log.d(config.commandLoggingTag, "getCurrentViews(\""+classToFilterBy+", "+includeSubclasses+"\")");
+			Log.d(config.commandLoggingTag, "getCurrentViews("+classToFilterBy+", "+includeSubclasses+")");
 		}
 		
 		return viewFetcher.getCurrentViews(classToFilterBy, includeSubclasses);
@@ -3105,7 +3105,7 @@ public class Solo {
 
 	public <T extends View> ArrayList<T> getCurrentViews(Class<T> classToFilterBy, View parent) {
 		if(config.commandLogging){
-			Log.d(config.commandLoggingTag, "getCurrentViews(\""+classToFilterBy+", "+parent+"\")");
+			Log.d(config.commandLoggingTag, "getCurrentViews("+classToFilterBy+", "+parent+")");
 		}
 		
 		return viewFetcher.getCurrentViews(classToFilterBy, true, parent);
@@ -3121,7 +3121,7 @@ public class Solo {
 	 */
 	public <T extends View> ArrayList<T> getCurrentViews(Class<T> classToFilterBy, boolean includeSubclasses, View parent) {
 		if(config.commandLogging){
-			Log.d(config.commandLoggingTag, "getCurrentViews(\""+classToFilterBy+", "+includeSubclasses+", "+parent+"\")");
+			Log.d(config.commandLoggingTag, "getCurrentViews("+classToFilterBy+", "+includeSubclasses+", "+parent+")");
 		}
 		
 		return viewFetcher.getCurrentViews(classToFilterBy, includeSubclasses, parent);
@@ -3150,7 +3150,7 @@ public class Solo {
 
 	public ArrayList<WebElement> getWebElements(By by){
 		if(config.commandLogging){
-			Log.d(config.commandLoggingTag, "getWebElements(\""+by+"\")");
+			Log.d(config.commandLoggingTag, "getWebElements("+by+")");
 		}
 		
 		return webUtils.getWebElements(by, false);
@@ -3179,7 +3179,7 @@ public class Solo {
 
 	public ArrayList<WebElement> getCurrentWebElements(By by){
 		if(config.commandLogging){
-			Log.d(config.commandLoggingTag, "getCurrentWebElements(\""+by+"\")");
+			Log.d(config.commandLoggingTag, "getCurrentWebElements("+by+")");
 		}
 		
 		return webUtils.getWebElements(by, true);
@@ -3195,7 +3195,7 @@ public class Solo {
 	public boolean isRadioButtonChecked(int index)
 	{
 		if(config.commandLogging){
-			Log.d(config.commandLoggingTag, "isRadioButtonChecked(\""+index+"\")");
+			Log.d(config.commandLoggingTag, "isRadioButtonChecked("+index+")");
 		}
 		
 		return checker.isButtonChecked(RadioButton.class, index);
@@ -3227,7 +3227,7 @@ public class Solo {
 	public boolean isCheckBoxChecked(int index)
 	{
 		if(config.commandLogging){
-			Log.d(config.commandLoggingTag, "isCheckBoxChecked(\""+index+"\")");
+			Log.d(config.commandLoggingTag, "isCheckBoxChecked("+index+")");
 		}
 		
 		return checker.isButtonChecked(CheckBox.class, index);
@@ -3259,7 +3259,7 @@ public class Solo {
 	public boolean isToggleButtonChecked(int index)
 	{
 		if(config.commandLogging){
-			Log.d(config.commandLoggingTag, "isToggleButtonChecked(\""+index+"\")");
+			Log.d(config.commandLoggingTag, "isToggleButtonChecked("+index+")");
 		}
 		
 		return checker.isButtonChecked(ToggleButton.class, index);
@@ -3332,7 +3332,7 @@ public class Solo {
 	public boolean isSpinnerTextSelected(int index, String text)
 	{
 		if(config.commandLogging){
-			Log.d(config.commandLoggingTag, "isSpinnerTextSelected(\""+index+","+text+"\")");
+			Log.d(config.commandLoggingTag, "isSpinnerTextSelected("+index+",\""+text+"\")");
 		}
 		
 		return checker.isSpinnerTextSelected(index, text);
@@ -3380,7 +3380,7 @@ public class Solo {
 	public void sendKey(int key)
 	{
 		if(config.commandLogging){
-			Log.d(config.commandLoggingTag, "sendKey(\""+key+"\")");
+			Log.d(config.commandLoggingTag, "sendKey("+key+")");
 		}
 		
 		sender.sendKeyCode(key);
@@ -3426,7 +3426,7 @@ public class Solo {
 	public boolean waitForActivity(String name, int timeout)
 	{
 		if(config.commandLogging){
-			Log.d(config.commandLoggingTag, "waitForActivity(\""+name+", "+timeout+"\")");
+			Log.d(config.commandLoggingTag, "waitForActivity(\""+name+"\", "+timeout+")");
 		}
 		
 		return waiter.waitForActivity(name, timeout);
@@ -3441,7 +3441,7 @@ public class Solo {
 
 	public boolean waitForActivity(Class<? extends Activity> activityClass){
 		if(config.commandLogging){
-			Log.d(config.commandLoggingTag, "waitForActivity(\""+activityClass+"\")");
+			Log.d(config.commandLoggingTag, "waitForActivity("+activityClass+")");
 		}
 		
 		return waiter.waitForActivity(activityClass, Timeout.getLargeTimeout());
@@ -3458,7 +3458,7 @@ public class Solo {
 	public boolean waitForActivity(Class<? extends Activity> activityClass, int timeout)
 	{
 		if(config.commandLogging){
-			Log.d(config.commandLoggingTag, "waitForActivity(\""+activityClass+", "+timeout+"\")");
+			Log.d(config.commandLoggingTag, "waitForActivity("+activityClass+", "+timeout+")");
 		}
 		
 		return waiter.waitForActivity(activityClass, timeout);
@@ -3475,7 +3475,7 @@ public class Solo {
 	public boolean waitForEmptyActivityStack(int timeout)
 	{
 		if(config.commandLogging){
-			Log.d(config.commandLoggingTag, "waitForEmptyActivityStack(\""+timeout+"\")");
+			Log.d(config.commandLoggingTag, "waitForEmptyActivityStack("+timeout+")");
 		}
 		
 		return waiter.waitForCondition(
@@ -3512,7 +3512,7 @@ public class Solo {
 
 	public boolean waitForFragmentByTag(String tag, int timeout){
 		if(config.commandLogging){
-			Log.d(config.commandLoggingTag, "waitForFragmentByTag(\""+tag+", "+timeout+"\")");
+			Log.d(config.commandLoggingTag, "waitForFragmentByTag(\""+tag+"\", "+timeout+")");
 		}
 		
 		return waiter.waitForFragment(tag, 0, timeout);
@@ -3527,7 +3527,7 @@ public class Solo {
 
 	public boolean waitForFragmentById(int id){
 		if(config.commandLogging){
-			Log.d(config.commandLoggingTag, "waitForFragmentById(\""+id+"\")");
+			Log.d(config.commandLoggingTag, "waitForFragmentById("+id+")");
 		}
 		
 		return waiter.waitForFragment(null, id, Timeout.getLargeTimeout());
@@ -3543,7 +3543,7 @@ public class Solo {
 
 	public boolean waitForFragmentById(int id, int timeout){
 		if(config.commandLogging){
-			Log.d(config.commandLoggingTag, "waitForFragmentById(\""+id+", "+timeout+"\")");
+			Log.d(config.commandLoggingTag, "waitForFragmentById("+id+", "+timeout+")");
 		}
 		
 		return waiter.waitForFragment(null, id, timeout);
@@ -3580,7 +3580,7 @@ public class Solo {
 
 	public boolean waitForLogMessage(String logMessage, int timeout){
 		if(config.commandLogging){
-			Log.d(config.commandLoggingTag, "waitForLogMessage(\""+logMessage+", "+timeout+"\")");
+			Log.d(config.commandLoggingTag, "waitForLogMessage(\""+logMessage+"\", "+timeout+")");
 		}
 		
 		return waiter.waitForLogMessage(logMessage, timeout);
@@ -3608,7 +3608,7 @@ public class Solo {
 	public String getString(int id)
 	{
 		if(config.commandLogging){
-			Log.d(config.commandLoggingTag, "getString(\""+id+"\")");
+			Log.d(config.commandLoggingTag, "getString("+id+")");
 		}
 		
 		return getter.getString(id);
@@ -3639,7 +3639,7 @@ public class Solo {
 	public void sleep(int time)
 	{
 		if(config.commandLogging){
-			Log.d(config.commandLoggingTag, "sleep(\""+time+"\")");
+			Log.d(config.commandLoggingTag, "sleep("+time+")");
 		}
 		
 		sleeper.sleep(time);
@@ -3710,7 +3710,7 @@ public class Solo {
 
 	public void takeScreenshot(String name, int quality){
 		if(config.commandLogging){
-			Log.d(config.commandLoggingTag, "takeScreenshot(\""+name+", "+quality+"\")");
+			Log.d(config.commandLoggingTag, "takeScreenshot(\""+name+"\", "+quality+")");
 		}
 		
 		screenshotTaker.takeScreenshot(name, quality);
@@ -3768,7 +3768,7 @@ public class Solo {
 
 	public void startScreenshotSequence(String name, int quality, int frameDelay, int maxFrames) {
 		if(config.commandLogging){
-			Log.d(config.commandLoggingTag, "startScreenshotSequence(\""+name+", "+quality+", "+frameDelay+", "+maxFrames+"\")");
+			Log.d(config.commandLoggingTag, "startScreenshotSequence(\""+name+"\", "+quality+", "+frameDelay+", "+maxFrames+")");
 		}
 		
 		screenshotTaker.startScreenshotSequence(name, quality, frameDelay, maxFrames);
