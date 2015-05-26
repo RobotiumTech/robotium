@@ -2883,7 +2883,6 @@ public class Solo {
 		}
 		
 		View viewToReturn = getter.getView(id, index);
-
 		if(viewToReturn == null) {
 			int match = index + 1;
 			if(match > 1){

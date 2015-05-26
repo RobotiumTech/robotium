@@ -15,7 +15,6 @@ import android.os.SystemClock;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.TextView;
 
 
@@ -362,8 +361,9 @@ class Waiter {
 				return view;
 			}
 
-			if(scroll) 
+			if(scroll) {
 				scroller.scrollDown();
+			}
 
 			sleeper.sleep();
 

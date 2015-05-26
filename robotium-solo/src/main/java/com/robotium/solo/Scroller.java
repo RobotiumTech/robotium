@@ -8,7 +8,6 @@ import android.content.Context;
 import android.os.SystemClock;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.webkit.WebView;
 import android.widget.AbsListView;
@@ -177,19 +176,31 @@ class Scroller {
 	 * @return {@code true} if more scrolling can be done
 	 */
 
+	@SuppressWarnings("unchecked")
 	public boolean scroll(int direction, boolean allTheWay) {
-		final ArrayList<View> viewList = RobotiumUtils.
+		ArrayList<View> viewList = RobotiumUtils.
 				removeInvisibleViews(viewFetcher.getAllViews(true));
-		@SuppressWarnings("unchecked")
+		
 		ArrayList<View> views = RobotiumUtils.filterViewsToSet(new Class[] { ListView.class,
 				ScrollView.class, GridView.class, WebView.class}, viewList);
-
+		
 		View view = viewFetcher.getFreshestView(views);
-		if (view == null) {
-			view = viewFetcher.getRecyclerView(0);
 
-			if(view == null){
-				return false;
+		if (view == null) {
+			sleeper.sleep();
+			viewList = RobotiumUtils.
+					removeInvisibleViews(viewFetcher.getAllViews(true));
+			
+			views = RobotiumUtils.filterViewsToSet(new Class[] { ListView.class,
+					ScrollView.class, GridView.class, WebView.class}, viewList);
+
+			view = viewFetcher.getFreshestView(views);
+			if (view == null){
+				view = viewFetcher.getRecyclerView(0);
+
+				if(view == null){
+					return false;
+				}
 			}
 		}
 
