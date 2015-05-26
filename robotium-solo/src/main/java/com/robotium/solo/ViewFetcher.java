@@ -392,8 +392,8 @@ class ViewFetcher {
 	 */
 
 
-	public <T extends View> ViewGroup getRecyclerView(int recyclerViewIndex) {
-		final long endTime = SystemClock.uptimeMillis() + Timeout.getSmallTimeout();
+	public <T extends View> ViewGroup getRecyclerView(int recyclerViewIndex, int timeOut) {
+		final long endTime = SystemClock.uptimeMillis() + timeOut;
 
 		while (SystemClock.uptimeMillis() < endTime) {
 			View recyclerView = getRecyclerView(true, recyclerViewIndex);

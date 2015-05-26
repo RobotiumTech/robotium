@@ -564,7 +564,7 @@ class Clicker {
 			itemIndex = 0;
 
 		ArrayList<View> views = new ArrayList<View>();
-		ViewGroup recyclerView = viewFetcher.getRecyclerView(recyclerViewIndex);
+		ViewGroup recyclerView = viewFetcher.getRecyclerView(recyclerViewIndex, Timeout.getSmallTimeout());
 		
 		if(recyclerView == null){
 			Assert.fail("RecyclerView is not found!");

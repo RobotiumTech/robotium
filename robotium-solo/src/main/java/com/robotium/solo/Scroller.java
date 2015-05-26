@@ -187,21 +187,11 @@ class Scroller {
 		View view = viewFetcher.getFreshestView(views);
 
 		if (view == null) {
-			sleeper.sleep();
-			viewList = RobotiumUtils.
-					removeInvisibleViews(viewFetcher.getAllViews(true));
-			
-			views = RobotiumUtils.filterViewsToSet(new Class[] { ListView.class,
-					ScrollView.class, GridView.class, WebView.class}, viewList);
-
-			view = viewFetcher.getFreshestView(views);
-			if (view == null){
-				view = viewFetcher.getRecyclerView(0);
+				view = viewFetcher.getRecyclerView(0, 5);
 
 				if(view == null){
 					return false;
 				}
-			}
 		}
 
 		if (view instanceof AbsListView) {
