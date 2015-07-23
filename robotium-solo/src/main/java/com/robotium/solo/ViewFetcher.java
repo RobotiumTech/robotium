@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import android.view.ViewParent;
 import android.view.WindowManager;
 import android.webkit.WebView;
+import android.widget.TextView;
 
 /**
  * Contains view methods. Examples are getViews(),
@@ -361,7 +362,7 @@ class ViewFetcher {
 	 * @return most recently drawn view, or null if no views were passed 
 	 */
 
-	public final <T extends View> T getFreshestView(ArrayList<T> views){
+	public final <T extends View> T getFreshestView(ArrayList<T> views){		
 		final int[] locationOnScreen = new int[2];
 		T viewToReturn = null;
 		long drawingTime = 0;
@@ -369,20 +370,23 @@ class ViewFetcher {
 			return null;
 		}
 		for(T view : views){
+			if(view != null){
+				view.getLocationOnScreen(locationOnScreen);
 
-			view.getLocationOnScreen(locationOnScreen);
+				if (locationOnScreen[0] < 0) 
+					continue;
 
-			if (locationOnScreen[0] < 0 ) 
-				continue;
-
-			if(view.getDrawingTime() > drawingTime && view.getHeight() > 0){
-				drawingTime = view.getDrawingTime();
-				viewToReturn = view;
+				if(view.getDrawingTime() > drawingTime && view.getHeight() > 0){
+					drawingTime = view.getDrawingTime();
+					viewToReturn = view;
+				}
+				
 			}
 		}
 		views = null;
 		return viewToReturn;
 	}
+	
 	
 	/**
 	 * Waits for a RecyclerView and returns it.
@@ -420,11 +424,11 @@ class ViewFetcher {
 		}
 
 		@SuppressWarnings("unchecked")
-		ArrayList<View> views = RobotiumUtils.filterViewsToSet(new Class[] {ViewGroup.class}, getAllViews(true));
+		ArrayList<View> views = RobotiumUtils.filterViewsToSet(new Class[] {ViewGroup.class}, getAllViews(false));
 		views = RobotiumUtils.removeInvisibleViews(views);
 
 		for(View view : views){
-
+			
 			if(isViewType(view.getClass(), "widget.RecyclerView")){
 				uniqueViews.add(view);
 			}
@@ -434,6 +438,33 @@ class ViewFetcher {
 			}
 		}
 		return null;
+	}
+	
+	/**
+	 * Returns a Set of all RecyclerView or empty Set if none is found
+	 * 
+	 * 
+	 * @return a Set of RecyclerViews
+	 */
+	
+	public List<View> getAllRecyclerViews(boolean shouldSleep){
+		List <View> viewsToReturn = new ArrayList<View>();
+		if(shouldSleep){
+			sleeper.sleep();
+		}
+
+		@SuppressWarnings("unchecked")
+		ArrayList<View> views = RobotiumUtils.filterViewsToSet(new Class[] {ViewGroup.class}, getAllViews(true));
+		views = RobotiumUtils.removeInvisibleViews(views);
+
+		for(View view : views){
+			
+			if(isViewType(view.getClass(), "widget.RecyclerView")){
+				viewsToReturn.add(view);
+			}
+
+		}
+		return viewsToReturn;
 	}
 	
 	 private boolean isViewType(Class<?> aClass, String typeName) {

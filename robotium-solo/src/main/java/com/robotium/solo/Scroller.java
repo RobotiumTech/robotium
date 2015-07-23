@@ -1,6 +1,8 @@
 package com.robotium.solo;
 
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
 import com.robotium.solo.Solo.Config;
 import junit.framework.Assert;
 import android.app.Instrumentation;
@@ -185,13 +187,21 @@ class Scroller {
 				ScrollView.class, GridView.class, WebView.class}, viewList);
 		
 		View view = viewFetcher.getFreshestView(views);
-
+		
+		ArrayList<View> viewsToCheck = new ArrayList<View>();
+		viewsToCheck.add(view);
+		
+		List<View> recyclerViews = viewFetcher.getAllRecyclerViews(true);
+		
+		for(View viewToScroll : recyclerViews){
+			viewsToCheck.add(viewToScroll);
+		}
+	
+		view = viewFetcher.getFreshestView(viewsToCheck);
+		
+		
 		if (view == null) {
-				view = viewFetcher.getRecyclerView(0, 5);
-
-				if(view == null){
-					return false;
-				}
+				return false;
 		}
 
 		if (view instanceof AbsListView) {
