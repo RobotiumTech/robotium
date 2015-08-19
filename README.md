@@ -4,10 +4,10 @@
 Robotium is an Android test automation framework that has full support for native and hybrid applications. Robotium makes it easy to write powerful and robust automatic black-box UI tests for Android applications. With the support of Robotium, test case developers can write function, system and user acceptance test scenarios, spanning multiple Android activities.
 
 
-See [Questions & Answers](http://code.google.com/p/robotium/wiki/QuestionsAndAnswers) for common Robotium questions and answers. 
+See [Questions & Answers](https://github.com/RobotiumTech/robotium/wiki/Questions-&-Answers) for common Robotium questions and answers. 
 <br>
 
-See [Getting Started](https://code.google.com/p/robotium/wiki/Getting_Started) for instructions and examples on how to create your first Robotium tests. 
+See [Getting Started](https://github.com/RobotiumTech/robotium/wiki/Getting-Started) for instructions and examples on how to create your first Robotium tests. 
 <br>
 
 Join the discussions in the [Robotium Developers Group](http://groups.google.com/group/robotium-developers). 
@@ -32,6 +32,4 @@ New functionality includes: illustrate(), clickInRecyclerView(), clickLongInRecy
 
 
 #### Robotium Recorder ####
-  * Check out [Robotium Recorder](http://Robotium.com Robotium Recorder) that will allow you to record Robotium test cases in minutes. Now also available for Android Studio! *Free trial, for previous and new users alike!*
-
-
+  * Check out [Robotium Recorder](http://Robotium.com) that will allow you to record Robotium test cases in minutes. Now also available for Android Studio! 
