@@ -2884,12 +2884,19 @@ public class Solo {
 		
 		View viewToReturn = getter.getView(id, index);
 		if(viewToReturn == null) {
+			String resourceName = "";
+			try {
+				resourceName = this.getCurrentActivity().getApplication().getResources().getResourceEntryName(id);
+			} catch (Exception e) {
+				Log.d(config.commandLoggingTag, "unable to get resource entry name for ("+id+")");
+			}
+
 			int match = index + 1;
 			if(match > 1){
-				Assert.fail(match + " Views with id: '" + id + "' are not found!");
+				Assert.fail(match + " Views with id: '" + id + "', resource name: '" + resourceName + "' are not found!");
 			}
 			else {
-				Assert.fail("View with id: '" + id + "' is not found!");
+				Assert.fail("View with id: '" + id + "', resource name: '" + resourceName + "' is not found!");
 			}
 		}
 		return viewToReturn;
