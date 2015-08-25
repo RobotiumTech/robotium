@@ -14,7 +14,7 @@ Join the discussions in the [Robotium Developers Group](http://groups.google.com
 
 ----
 ### NEWS: Robotium 5.4.1 is released!
-[Robotium 5.4.1](http://dl.bintray.com/robotium/generic/robotium-solo-5.4.1.jar) is the fastest, most accurate and stable version of Robotium yet. Note: Robotium has a new package name: com.robotium.solo.
+[Robotium 5.4.1](https://github.com/RobotiumTech/robotium/wiki/Downloads) is the fastest, most accurate and stable version of Robotium yet. Note: Robotium has a new package name: com.robotium.solo.
 
 New functionality includes: illustrate(), clickInRecyclerView(), clickLongInRecyclerView(), Solo.Config.commandLogging and more. See the [Javadoc](http://robotium.googlecode.com/svn/doc/index.html) for more information.
 
