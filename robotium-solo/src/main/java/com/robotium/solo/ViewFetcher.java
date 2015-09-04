@@ -136,7 +136,8 @@ class ViewFetcher {
 			if (view != null){ 
 				String nameOfClass = view.getClass().getName();
 				if(nameOfClass.equals("com.android.internal.policy.impl.PhoneWindow$DecorView") || nameOfClass
-						.equals("com.android.internal.policy.impl.MultiPhoneWindow$MultiPhoneDecorView")) {
+						.equals("com.android.internal.policy.impl.MultiPhoneWindow$MultiPhoneDecorView") || 
+						nameOfClass.equals("com.android.internal.policy.PhoneWindow$DecorView")) {
 					decorViews[i] = view;
 					i++;
 				}
