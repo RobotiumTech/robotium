@@ -102,7 +102,7 @@ class Scroller {
 	 * @return {@code true} if scrolling occurred, false if it did not
 	 */
 
-	private boolean scrollView(final View view, int direction){
+	public boolean scrollView(final View view, int direction){
 		if(view == null){
 			return false;
 		}
@@ -141,7 +141,7 @@ class Scroller {
 	 * @param direction the direction to be scrolled
 	 */
 
-	private void scrollViewAllTheWay(final View view, final int direction) {
+	public void scrollViewAllTheWay(final View view, final int direction) {
 		while(scrollView(view, direction));
 	}
 

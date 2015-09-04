@@ -587,8 +587,8 @@ class Clicker {
 		while(index > viewGroup.getChildCount()){
 			final boolean timedOut = SystemClock.uptimeMillis() > endTime;
 			if (timedOut){
-				int numberOfLines = viewGroup.getChildCount();
-				Assert.fail("Can not click on line number " + index + " as there are only " + numberOfLines + " lines available");
+				int numberOfIndexes = viewGroup.getChildCount();
+				Assert.fail("Can not click on index " + index + " as there are only " + numberOfIndexes + " indexes available");
 			}
 			sleeper.sleep();
 		}

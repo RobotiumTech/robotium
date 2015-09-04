@@ -2134,6 +2134,96 @@ public class Solo {
 			
 		scroller.scrollListToLine(waiter.waitForAndGetView(index, AbsListView.class), line);
 	}
+	
+
+	/**
+	 * Scrolls down a RecyclerView matching the specified index.
+	 *
+	 * @param index the index of the {@link RecyclerView} to scroll. {@code 0} if only one RecyclerView is available
+	 * @return {@code true} if more scrolling can be performed
+	 */
+
+	public boolean scrollDownRecyclerView(int index) {
+		if(config.commandLogging){
+			Log.d(config.commandLoggingTag, "scrollDownRecyclerView("+index+")");
+		}
+		
+		if(!config.shouldScroll) {
+			return true;
+		}
+		
+		View recyclerView = viewFetcher.getRecyclerView(index, Timeout.getSmallTimeout());
+	
+		return scroller.scrollView(recyclerView, Scroller.DOWN);
+		
+	}
+
+	/**
+	 * Scrolls a RecyclerView matching the specified index to the bottom.
+	 *
+	 * @param index the index of the {@link RecyclerView} to scroll. {@code 0} if only one list is available
+	 * @return {@code true} if more scrolling can be performed
+	 */
+
+	public boolean scrollRecyclerViewToBottom(int index) {
+		if(config.commandLogging){
+			Log.d(config.commandLoggingTag, "scrollRecyclerViewToBottom("+index+")");
+		}
+		
+		if(!config.shouldScroll) {
+			return true;
+		}
+		
+		View recyclerView = viewFetcher.getRecyclerView(index, Timeout.getSmallTimeout());
+		
+		scroller.scrollViewAllTheWay(recyclerView, Scroller.DOWN);
+		
+		return false;
+	}
+
+	/**
+	 * Scrolls up a RecyclerView matching the specified index.
+	 *
+	 * @param index the index of the {@link RecyclerView} to scroll. {@code 0} if only one list is available
+	 * @return {@code true} if more scrolling can be performed
+	 */
+
+	public boolean scrollUpRecyclerView(int index) {
+		if(config.commandLogging){
+			Log.d(config.commandLoggingTag, "scrollUpRecyclerView("+index+")");
+		}
+		
+		if(!config.shouldScroll) {
+			return true;
+		}
+		
+		View recyclerView = viewFetcher.getRecyclerView(index, Timeout.getSmallTimeout());
+	
+		return scroller.scrollView(recyclerView, Scroller.UP);
+	}
+
+	/**
+	 * Scrolls a RecyclerView matching the specified index to the top.
+	 *
+	 * @param index the index of the {@link RecyclerView} to scroll. {@code 0} if only one list is available
+	 * @return {@code true} if more scrolling can be performed
+	 */
+
+	public boolean scrollRecyclerViewToTop(int index) {
+		if(config.commandLogging){
+			Log.d(config.commandLoggingTag, "scrollRecyclerViewToTop("+index+")");
+		}
+		
+		if(!config.shouldScroll) {
+			return false;
+		}
+		
+		View recyclerView = viewFetcher.getRecyclerView(index, Timeout.getSmallTimeout());
+		
+		scroller.scrollViewAllTheWay(recyclerView, Scroller.UP);
+		
+		return false;
+	}
 
 	/**
 	 * Scrolls horizontally.
