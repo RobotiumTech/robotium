@@ -5,7 +5,6 @@ import android.widget.Spinner;
 import junit.framework.Assert;
 import android.app.Instrumentation;
 import android.view.KeyEvent;
-import android.view.inputmethod.EditorInfo;
 
 /**
  * Contains press methods. Examples are pressMenuItem(),
@@ -111,23 +110,19 @@ class Presser{
 	/**
 	 * Presses the soft keyboard search/next button.
 	 * 
-	 * @param search true if search button should be pressed otherwise next is pressed
+	 * @param imeAction the action to be performed
 	 *  
 	 */
 
-	public void pressSoftKeyboardSearchOrNextButton(final boolean search){
+	public void pressSoftKeyboard(final int imeAction){
 		final EditText freshestEditText = viewFetcher.getFreshestView(viewFetcher.getCurrentViews(EditText.class, true));
 		if(freshestEditText != null){
 			inst.runOnMainSync(new Runnable()
 			{
 				public void run()
 				{
-					if(search){
-						freshestEditText.onEditorAction(EditorInfo.IME_ACTION_SEARCH); 
-					}
-					else {
-						freshestEditText.onEditorAction(EditorInfo.IME_ACTION_NEXT); 	
-					}
+						freshestEditText.onEditorAction(imeAction); 	
+
 				}
 			});
 		}

@@ -12,6 +12,7 @@ import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.WindowManager;
+import android.view.inputmethod.EditorInfo;
 import android.webkit.WebView;
 import android.widget.AbsListView;
 import android.widget.Button;
@@ -1354,12 +1355,16 @@ public class Solo {
 	 * Presses the soft keyboard next button.
 	 */
 
+	/**
+	 * Presses the soft keyboard next button.
+	 */
+
 	public void pressSoftKeyboardNextButton(){
 		if(config.commandLogging){
 			Log.d(config.commandLoggingTag, "pressSoftKeyboardNextButton()");
 		}
 		
-		presser.pressSoftKeyboardSearchOrNextButton(false);
+		presser.pressSoftKeyboard(EditorInfo.IME_ACTION_NEXT);
 	}
 
 	/**
@@ -1371,7 +1376,31 @@ public class Solo {
 			Log.d(config.commandLoggingTag, "pressSoftKeyboardSearchButton()");
 		}
 		
-		presser.pressSoftKeyboardSearchOrNextButton(true);
+		presser.pressSoftKeyboard(EditorInfo.IME_ACTION_SEARCH);
+	}
+	
+	/**
+	 * Presses the soft keyboard go button.
+	 */
+
+	public void pressSoftKeyboardGoButton(){
+		if(config.commandLogging){
+			Log.d(config.commandLoggingTag, "pressSoftKeyboardGoButton()");
+		}
+		
+		presser.pressSoftKeyboard(EditorInfo.IME_ACTION_GO);
+	}
+	
+	/**
+	 * Presses the soft keyboard done button.
+	 */
+
+	public void pressSoftKeyboardDoneButton(){
+		if(config.commandLogging){
+			Log.d(config.commandLoggingTag, "pressSoftKeyboardDoneButton()");
+		}
+		
+		presser.pressSoftKeyboard(EditorInfo.IME_ACTION_DONE);
 	}
 
 	/**
@@ -2976,7 +3005,7 @@ public class Solo {
 		if(viewToReturn == null) {
 			String resourceName = "";
 			try {
-				resourceName = this.getCurrentActivity().getApplication().getResources().getResourceEntryName(id);
+				resourceName = instrumentation.getTargetContext().getResources().getResourceEntryName(id);
 			} catch (Exception e) {
 				Log.d(config.commandLoggingTag, "unable to get resource entry name for ("+id+")");
 			}
