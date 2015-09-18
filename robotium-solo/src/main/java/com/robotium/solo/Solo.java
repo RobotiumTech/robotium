@@ -2168,7 +2168,7 @@ public class Solo {
 	/**
 	 * Scrolls down a RecyclerView matching the specified index.
 	 *
-	 * @param index the index of the {@link RecyclerView} to scroll. {@code 0} if only one RecyclerView is available
+	 * @param index the index of the RecyclerView to scroll. {@code 0} if only one RecyclerView is available
 	 * @return {@code true} if more scrolling can be performed
 	 */
 
@@ -2190,7 +2190,7 @@ public class Solo {
 	/**
 	 * Scrolls a RecyclerView matching the specified index to the bottom.
 	 *
-	 * @param index the index of the {@link RecyclerView} to scroll. {@code 0} if only one list is available
+	 * @param index the index of the RecyclerView to scroll. {@code 0} if only one list is available
 	 * @return {@code true} if more scrolling can be performed
 	 */
 
@@ -2213,7 +2213,7 @@ public class Solo {
 	/**
 	 * Scrolls up a RecyclerView matching the specified index.
 	 *
-	 * @param index the index of the {@link RecyclerView} to scroll. {@code 0} if only one list is available
+	 * @param index the index of the RecyclerView to scroll. {@code 0} if only one list is available
 	 * @return {@code true} if more scrolling can be performed
 	 */
 
@@ -2234,7 +2234,7 @@ public class Solo {
 	/**
 	 * Scrolls a RecyclerView matching the specified index to the top.
 	 *
-	 * @param index the index of the {@link RecyclerView} to scroll. {@code 0} if only one list is available
+	 * @param index the index of the RecyclerView to scroll. {@code 0} if only one list is available
 	 * @return {@code true} if more scrolling can be performed
 	 */
 
@@ -2569,7 +2569,7 @@ public class Solo {
 	/**
 	 * Sets the status of the NavigationDrawer. Examples of status are: {@code Solo.CLOSED} and {@code Solo.OPENED}.
 	 *
-	 * @param status the status that the {@link NavigationDrawer} should be set to
+	 * @param status the status that the NavigationDrawer should be set to
 	 */
 
 	public void setNavigationDrawer(final int status){
@@ -3026,7 +3026,6 @@ public class Solo {
 	 *
 	 * @param tag the tag of the {@link View} to return
 	 * @return a {@link View} matching the specified id
-	 * @see {@link View#getTag()}
 	 */
 
 	public View getView(Object tag){
@@ -3043,7 +3042,6 @@ public class Solo {
 	 * @param tag the tag of the {@link View} to return
 	 * @param index the index of the {@link View}. {@code 0} if only one is available
 	 * @return a {@link View} matching the specified id and index
-	 * @see {@link View#getTag()}
 	 */
 
 	public View getView(Object tag, int index){
@@ -3681,7 +3679,7 @@ public class Solo {
 	 * @param logMessage the log message to wait for
 	 * @return {@code true} if log message appears and {@code false} if it does not appear before the timeout
 	 *
-	 * @see clearLog()
+	 * @see #clearLog()
 	 */
 
 	public boolean waitForLogMessage(String logMessage){
@@ -3700,7 +3698,7 @@ public class Solo {
 	 * @param timeout the amount of time in milliseconds to wait
 	 * @return {@code true} if log message appears and {@code false} if it does not appear before the timeout
 	 *
-	 * @see clearLog()
+	 * @see #clearLog()
 	 */
 
 	public boolean waitForLogMessage(String logMessage, int timeout){
