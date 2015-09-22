@@ -2,13 +2,13 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.jayway.android.robotium</groupId>
 	<artifactId>robotium-solo</artifactId>
-	<version>5.5.1-SNAPSHOT</version>
+	<version>5.5.1</version>
 	<packaging>jar</packaging>
 	<name>Robotium :: Solo</name>
     <parent>
         <groupId>com.jayway.android.robotium</groupId>
         <artifactId>robotium</artifactId>
-        <version>5.5.1-SNAPSHOT</version>
+        <version>5.5.1</version>
     </parent>
 	<dependencies>
 		<dependency>
