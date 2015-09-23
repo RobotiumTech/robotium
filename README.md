@@ -13,10 +13,10 @@ See [Getting Started](https://github.com/RobotiumTech/robotium/wiki/Getting-Star
 Join the discussions in the [Robotium Developers Group](http://groups.google.com/group/robotium-developers). 
 
 ----
-### NEWS: Robotium 5.4.1 is released!
-[Robotium 5.4.1](https://github.com/RobotiumTech/robotium/wiki/Downloads) is the fastest, most accurate and stable version of Robotium yet. Note: Robotium has a new package name: com.robotium.solo.
+### NEWS: Robotium 5.5.1 is released!
+[Robotium 5.5.1](https://github.com/RobotiumTech/robotium/wiki/Downloads) is the fastest, most accurate and stable version of Robotium yet. Note: Robotium has a new package name: com.robotium.solo.
 
-New functionality includes: illustrate(), clickInRecyclerView(), clickLongInRecyclerView(), Solo.Config.commandLogging and more. See the [Javadoc](http://robotium.googlecode.com/svn/doc/index.html) for more information.
+New functionality includes: scrollDownRecyclerView(int index), scrollUpRecyclerView(int index), pressSoftKeyboardGoButton(), pressSoftKeyboardDoneButton() and more. See the [Javadoc](http://robotium.googlecode.com/svn/doc/index.html) for more information.
 
 ----
 
