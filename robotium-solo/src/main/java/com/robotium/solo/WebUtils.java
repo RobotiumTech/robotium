@@ -5,9 +5,9 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.regex.Pattern;
 import com.robotium.solo.Solo.Config;
-import android.app.Activity;
 import android.app.Instrumentation;
 import android.webkit.WebChromeClient;
 import android.webkit.WebView;
@@ -26,7 +26,6 @@ class WebUtils {
 
 	private ViewFetcher viewFetcher;
 	private Instrumentation inst;
-	private ActivityUtils activityUtils;
 	RobotiumWebClient robotiumWebCLient;
 	WebElementCreator webElementCreator;
 	WebChromeClient originalWebChromeClient = null;
@@ -38,14 +37,13 @@ class WebUtils {
 	 * 
 	 * @param config the {@code Config} instance
 	 * @param instrumentation the {@code Instrumentation} instance
-	 * @param activityUtils the {@code ActivityUtils} instance
-	 * @param viewFetcher the {@code ViewFetcher} instance
+	 * @param viewFetcher the {@code ViewFetcher} 
+	 * @param sleeper the {@code Sleeper} instance
 	 */
 
-	public WebUtils(Config config, Instrumentation instrumentation, ActivityUtils activityUtils, ViewFetcher viewFetcher, Sleeper sleeper){
+	public WebUtils(Config config, Instrumentation instrumentation, ViewFetcher viewFetcher, Sleeper sleeper){
 		this.config = config;
 		this.inst = instrumentation;
-		this.activityUtils = activityUtils;
 		this.viewFetcher = viewFetcher;
 		webElementCreator = new WebElementCreator(sleeper);
 		robotiumWebCLient = new RobotiumWebClient(instrumentation, webElementCreator);
@@ -148,17 +146,20 @@ class WebUtils {
 	 * @return the JavaScript as a String
 	 */
 
-	private String prepareForStartOfJavascriptExecution(){
+	private String prepareForStartOfJavascriptExecution() {
 		webElementCreator.prepareForStart();
 
 		WebChromeClient currentWebChromeClient = getCurrentWebChromeClient();
 
 		if(currentWebChromeClient != null && !currentWebChromeClient.getClass().isAssignableFrom(RobotiumWebClient.class)){
-			originalWebChromeClient = getCurrentWebChromeClient();	
+			originalWebChromeClient = currentWebChromeClient;	
 		}
-
-		robotiumWebCLient.enableJavascriptAndSetRobotiumWebClient(viewFetcher.getCurrentViews(WebView.class, true), originalWebChromeClient);
-		return getJavaScriptAsString();
+		List<WebView> webViews = viewFetcher.getCurrentViews(WebView.class, true);
+		if(webViews.size() > 0) {
+			robotiumWebCLient.enableJavascriptAndSetRobotiumWebClient(webViews, originalWebChromeClient);
+			return getJavaScriptAsString();
+		}
+		return "";
 	}
 	
 	/**
@@ -264,33 +265,24 @@ class WebUtils {
 	 * @return true if JavaScript function was executed
 	 */
 
-	private boolean executeJavaScriptFunction(final String function){
+	private boolean executeJavaScriptFunction(final String function) {
 		final WebView webView = viewFetcher.getFreshestView(viewFetcher.getCurrentViews(WebView.class, true));
-
-		if(webView == null){
+		if(webView == null) {
 			return false;
 		}
 
 		final String javaScript = setWebFrame(prepareForStartOfJavascriptExecution());
-		Activity activity = activityUtils.getCurrentActivity(false);
-		if(activity != null){
-		activity.runOnUiThread(new Runnable() {
+		if(javaScript.isEmpty()) {
+			return true;
+		}
+		
+		inst.runOnMainSync(new Runnable() {
 			public void run() {
 				if(webView != null){
 					webView.loadUrl("javascript:" + javaScript + function);
 				}
 			}
 		});
-		}
-		else{
-			inst.runOnMainSync(new Runnable() {
-			public void run() {
-				if(webView != null){
-					webView.loadUrl("javascript:" + javaScript + function);
-				}
-			}
-		});
-		}
 		return true;
 	}
 	

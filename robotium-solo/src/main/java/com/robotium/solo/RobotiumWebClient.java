@@ -49,15 +49,12 @@ class RobotiumWebClient extends WebChromeClient{
 
 	public void enableJavascriptAndSetRobotiumWebClient(List<WebView> webViews, WebChromeClient originalWebChromeClient){
 		this.originalWebChromeClient = originalWebChromeClient;
-
 		for(final WebView webView : webViews){
-
 			if(webView != null){ 
 				inst.runOnMainSync(new Runnable() {
 					public void run() {
 						webView.getSettings().setJavaScriptEnabled(true);
 						webView.setWebChromeClient(robotiumWebClient);
-
 					}
 				});
 			}
@@ -70,9 +67,9 @@ class RobotiumWebClient extends WebChromeClient{
 
 	@Override
 	public boolean onJsPrompt(WebView view, String url, String message,	String defaultValue, JsPromptResult r) {
-
+		
 		if(message != null && (message.contains(";,") || message.contains("robotium-finished"))){
-
+	
 			if(message.equals("robotium-finished")){
 				webElementCreator.setFinished(true);
 			}
