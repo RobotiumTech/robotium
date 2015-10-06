@@ -237,11 +237,13 @@ class ViewFetcher {
 			for (int i = 0; i < viewGroup.getChildCount(); i++) {
 				final View child = viewGroup.getChildAt(i);
 
-				if(onlySufficientlyVisible && isViewSufficientlyShown(child))
+				if(onlySufficientlyVisible && isViewSufficientlyShown(child)) {
 					views.add(child);
+				}
 
-				else if(!onlySufficientlyVisible)
+				else if(!onlySufficientlyVisible && child != null) {
 					views.add(child);
+				}
 
 				if (child instanceof ViewGroup) {
 					addChildren(views, (ViewGroup) child, onlySufficientlyVisible);
