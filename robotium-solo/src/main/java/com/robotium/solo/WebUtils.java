@@ -9,7 +9,6 @@ import java.util.List;
 import java.util.regex.Pattern;
 import com.robotium.solo.Solo.Config;
 import android.app.Instrumentation;
-import android.util.Log;
 import android.webkit.WebChromeClient;
 import android.webkit.WebView;
 import android.widget.TextView;
