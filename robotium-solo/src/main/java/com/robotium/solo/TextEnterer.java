@@ -45,21 +45,23 @@ class TextEnterer{
 		if(editText != null){
 			final String previousText = editText.getText().toString();
 	
-			inst.runOnMainSync(new Runnable()
-			{
-				public void run()
-				{
+			inst.runOnMainSync(new Runnable() {
+				public void run() {
 					editText.setInputType(InputType.TYPE_NULL);
 				}
 			});
 			clicker.clickOnScreen(editText, false, 0);
 			dialogUtils.hideSoftKeyboard(editText, false, false);
-			if(text.equals(""))
-				editText.setText(text);
-			else{
-				editText.setText(previousText + text);
-				editText.setCursorVisible(false);
-			}
+			inst.runOnMainSync(new Runnable() {
+				public void run() {
+					if (text.equals(""))
+						editText.setText(text);
+					else {
+						editText.setText(previousText + text);
+						editText.setCursorVisible(false);
+					}
+				}
+			});
 		}
 	}
 	
@@ -86,11 +88,10 @@ class TextEnterer{
 			int retry = 0;
 
 			while(!successfull && retry < 10) {
-
-				try{
+				try {
 					inst.sendStringSync(text);
 					successfull = true;
-				}catch(SecurityException e){
+				} catch(SecurityException e) {
 					dialogUtils.hideSoftKeyboard(editText, true, true);
 					retry++;
 				}
