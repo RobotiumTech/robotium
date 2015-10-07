@@ -49,17 +49,17 @@ class TextEnterer{
 			{
 				public void run()
 				{
-					editText.setInputType(InputType.TYPE_NULL); 
-					editText.performClick();
-					dialogUtils.hideSoftKeyboard(editText, false, false);
-					if(text.equals(""))
-						editText.setText(text);
-					else{
-						editText.setText(previousText + text);
-						editText.setCursorVisible(false);
-					}
+					editText.setInputType(InputType.TYPE_NULL);
 				}
 			});
+			clicker.clickOnScreen(editText, false, 0);
+			dialogUtils.hideSoftKeyboard(editText, false, false);
+			if(text.equals(""))
+				editText.setText(text);
+			else{
+				editText.setText(previousText + text);
+				editText.setCursorVisible(false);
+			}
 		}
 	}
 	
