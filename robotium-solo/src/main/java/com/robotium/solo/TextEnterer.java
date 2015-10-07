@@ -1,9 +1,10 @@
 package com.robotium.solo;
 
-import junit.framework.Assert;
 import android.app.Instrumentation;
 import android.text.InputType;
 import android.widget.EditText;
+
+import junit.framework.Assert;
 
 
 /**
@@ -36,11 +37,10 @@ class TextEnterer{
 
 	/**
 	 * Sets an {@code EditText} text
-	 * 
-	 * @param index the index of the {@code EditText} 
+	 *
+	 * @param editText the target {@code EditText}
 	 * @param text the text that should be set
 	 */
-
 	public void setEditText(final EditText editText, final String text) {
 		if(editText != null){
 			final String previousText = editText.getText().toString();
@@ -65,8 +65,8 @@ class TextEnterer{
 	
 	/**
 	 * Types text in an {@code EditText} 
-	 * 
-	 * @param index the index of the {@code EditText} 
+	 *
+	 * @param editText the target {@code EditText}
 	 * @param text the text that should be typed
 	 */
 
