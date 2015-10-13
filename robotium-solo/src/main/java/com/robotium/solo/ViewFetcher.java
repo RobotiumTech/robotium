@@ -133,14 +133,9 @@ class ViewFetcher {
 
 		for (int j = 0; j < views.length; j++) {
 			view = views[j];
-			if (view != null){ 
-				String nameOfClass = view.getClass().getName();
-				if(nameOfClass.equals("com.android.internal.policy.impl.PhoneWindow$DecorView") || nameOfClass
-						.equals("com.android.internal.policy.impl.MultiPhoneWindow$MultiPhoneDecorView") || 
-						nameOfClass.equals("com.android.internal.policy.PhoneWindow$DecorView")) {
-					decorViews[i] = view;
-					i++;
-				}
+			if (isDecorView(view)){ 
+				decorViews[i] = view;
+				i++;
 			}
 		}
 		return getRecentContainer(decorViews);
@@ -186,8 +181,7 @@ class ViewFetcher {
 
 			for (int j = 0; j < views.length; j++) {
 				view = views[j];
-				if (view != null && !(view.getClass().getName()
-						.equals("com.android.internal.policy.impl.PhoneWindow$DecorView"))) {
+				if (!isDecorView(view)) {
 					decorViews[i] = view;
 					i++;
 				}
@@ -196,6 +190,21 @@ class ViewFetcher {
 		return decorViews;
 	}
 
+	/**
+	 * Returns whether a view is a DecorView
+ 	 * @param view
+	 * @return true if view is a DecorView, false otherwise
+	 */
+	private boolean isDecorView(View view) {
+		if (view == null) {
+			return false;
+		}
+
+		final String nameOfClass = view.getClass().getName();
+		return (nameOfClass.equals("com.android.internal.policy.impl.PhoneWindow$DecorView") ||
+				nameOfClass.equals("com.android.internal.policy.impl.MultiPhoneWindow$MultiPhoneDecorView") ||
+				nameOfClass.equals("com.android.internal.policy.PhoneWindow$DecorView"));
+	}
 
 
 	/**
