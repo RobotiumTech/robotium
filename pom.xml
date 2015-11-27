@@ -2,7 +2,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.jayway.android.robotium</groupId>
 	<artifactId>robotium</artifactId>
-	<version>5.5.3-SNAPSHOT</version>
+	<version>5.5.3</version>
 	<packaging>pom</packaging>
     <name>Robotium</name>
     <description>User scenario testing for Android</description>
@@ -21,7 +21,7 @@
         <url>http://github.com/jayway/robotium/tree/${scm.branch}</url>
         <connection>scm:git:git://github.com/jayway/robotium.git</connection>
         <developerConnection>scm:git:ssh://git@github.com/jayway/robotium.git</developerConnection>
-      <tag>HEAD</tag>
+      <tag>robotium-5.5.3</tag>
   </scm>
     <issueManagement>
         <system>Google Code Issue Tracking</system>
