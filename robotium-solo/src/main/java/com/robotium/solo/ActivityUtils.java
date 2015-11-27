@@ -149,7 +149,7 @@ class ActivityUtils {
 			public void run() {
 				while (shouldRegisterActivities()) {
 					
-					Activity activity = activityMonitor.waitForActivity();
+					Activity activity = activityMonitor.waitForActivityWithTimeout(2000);
 
 					if(activity != null){
 						if (activitiesStoredInActivityStack.remove(activity.toString())){
