@@ -142,21 +142,22 @@ class ActivityUtils {
 		if(activityMonitor == null){
 			return;
 		}
-		
+
 		setRegisterActivities(true);
-		
+
 		Runnable runnable = new Runnable() {
 			public void run() {
 				while (shouldRegisterActivities()) {
-					
-					Activity activity = activityMonitor.waitForActivityWithTimeout(2000);
+					if(activityMonitor != null){
+						Activity activity = activityMonitor.waitForActivityWithTimeout(2000);
 
-					if(activity != null){
-						if (activitiesStoredInActivityStack.remove(activity.toString())){
-							removeActivityFromStack(activity);
-						}
-						if(!activity.isFinishing()){
-							addActivityToStack(activity);
+						if(activity != null){
+							if (activitiesStoredInActivityStack.remove(activity.toString())){
+								removeActivityFromStack(activity);
+							}
+							if(!activity.isFinishing()){
+								addActivityToStack(activity);
+							}
 						}
 					}
 				}
