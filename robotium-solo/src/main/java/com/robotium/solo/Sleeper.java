@@ -2,24 +2,40 @@ package com.robotium.solo;
 
 class Sleeper {
 
-	private final int PAUSE = 500;
-	private final int MINIPAUSE = 300;
+	private int pauseDuration;
+	private int miniPauseDuration;
+
+	private Sleeper() {
+
+	}
 
 	/**
-	 * Sleeps the current thread for a default pause length.
+	 * Constructs this object.
+	 *
+	 * @param pauseDuration pause duration used in {@code sleep}
+	 * @param miniPauseDuration pause duration used in {@code sleepMini}
+	 */
+
+	public Sleeper(int pauseDuration, int miniPauseDuration) {
+		this.pauseDuration = pauseDuration;
+		this.miniPauseDuration = miniPauseDuration;
+	}
+
+	/**
+	 * Sleeps the current thread for the pause length.
 	 */
 
 	public void sleep() {
-        sleep(PAUSE);
+        sleep(pauseDuration);
 	}
 
 
 	/**
-	 * Sleeps the current thread for a default mini pause length.
+	 * Sleeps the current thread for the mini pause length.
 	 */
 
 	public void sleepMini() {
-        sleep(MINIPAUSE);
+        sleep(miniPauseDuration);
 	}
 
 

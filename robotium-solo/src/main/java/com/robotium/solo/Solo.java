@@ -152,7 +152,7 @@ public class Solo {
 		
 		this.config = (config == null) ? new Config(): config;
 		this.instrumentation = instrumentation;
-		this.sleeper = new Sleeper();
+		this.sleeper = new Sleeper(config.sleepDuration, config.sleepMiniDuration);
 		this.sender = new Sender(instrumentation, sleeper);
 		this.activityUtils = new ActivityUtils(config, instrumentation, activity, sleeper);
 		this.viewFetcher = new ViewFetcher(instrumentation, sleeper);
@@ -261,7 +261,17 @@ public class Solo {
 		 */
 		
 		public String commandLoggingTag = "Robotium";
-		
+
+		/**
+		 * The sleep duration for the Sleeper sleep method. Default length is 500 milliseconds.
+		 */
+		public int sleepDuration = 500;
+
+		/**
+		 * The sleep duration for the Sleeper sleepMini method. Default length is 300 milliseconds.
+		 */
+		public int sleepMiniDuration = 300;
+
 	}
 
 	/**
