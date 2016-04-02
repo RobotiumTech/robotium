@@ -36,7 +36,7 @@ class ActivityUtils {
 	private WeakReference<Activity> weakActivityReference;
 	private Stack<String> activitiesStoredInActivityStack;
 	private Timer activitySyncTimer;
-	private boolean registerActivities;
+	private volatile boolean registerActivities;
 	Thread activityThread;
 
 	/**
