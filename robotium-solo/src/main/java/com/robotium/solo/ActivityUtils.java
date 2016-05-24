@@ -11,9 +11,9 @@ import android.app.Activity;
 import android.app.Instrumentation;
 import android.app.Instrumentation.ActivityMonitor;
 import android.content.IntentFilter;
+import android.os.SystemClock;
 import android.util.Log;
 import android.view.KeyEvent;
-
 
 /**
  * Contains activity related methods. Examples are:
@@ -145,27 +145,27 @@ class ActivityUtils {
 
 		setRegisterActivities(true);
 
-		Runnable runnable = new Runnable() {
-			public void run() {
-				while (shouldRegisterActivities()) {
-					if(activityMonitor != null){
-						Activity activity = activityMonitor.waitForActivityWithTimeout(2000);
-
-						if(activity != null){
-							if (activitiesStoredInActivityStack.remove(activity.toString())){
-								removeActivityFromStack(activity);
-							}
-							if(!activity.isFinishing()){
-								addActivityToStack(activity);
-							}
-						}
-					}
-				}
-			}
-		};
-		activityThread = new Thread(runnable, "activityMonitorThread");
+		activityThread = new RegisterActivitiesThread(this);
 		activityThread.start();
 	}
+
+
+	void monitorActivities() {
+		if(activityMonitor != null){
+			Activity activity = activityMonitor.waitForActivityWithTimeout(2000L);
+
+			if(activity != null){
+				if (activitiesStoredInActivityStack.remove(activity.toString())){
+					removeActivityFromStack(activity);
+				}
+				if(!activity.isFinishing()){
+					addActivityToStack(activity);
+				}
+			}
+		}
+	}
+
+
 
 	/**
 	 * Removes a given activity from the activity stack
@@ -464,4 +464,38 @@ class ActivityUtils {
 			}
 		}
 	}
+
+	private static final class RegisterActivitiesThread extends Thread {
+
+		public static final long REGISTER_ACTIVITY_THREAD_SLEEP_MS = 16L;
+		private final WeakReference<ActivityUtils> activityUtilsWR;
+
+		RegisterActivitiesThread(ActivityUtils activityUtils) {
+			super("activityMonitorThread");
+			activityUtilsWR = new WeakReference<ActivityUtils>(activityUtils);
+			setPriority(Thread.MIN_PRIORITY);
+		}
+
+		@Override
+		public void run() {
+			while (shouldMonitor()) {
+				monitorActivities();
+				SystemClock.sleep(REGISTER_ACTIVITY_THREAD_SLEEP_MS);
+			}
+		}
+
+		private boolean shouldMonitor() {
+			ActivityUtils activityUtils = activityUtilsWR.get();
+
+			return activityUtils != null && activityUtils.shouldRegisterActivities();
+		}
+
+		private void monitorActivities() {
+			ActivityUtils activityUtils = activityUtilsWR.get();
+			if (activityUtils != null) {
+				activityUtils.monitorActivities();
+			}
+		}
+	}
+
 }
