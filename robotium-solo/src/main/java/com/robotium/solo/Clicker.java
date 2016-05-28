@@ -3,6 +3,8 @@ package com.robotium.solo;
 import java.lang.reflect.Constructor;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
+
 import junit.framework.Assert;
 import android.app.Activity;
 import android.app.Instrumentation;
@@ -543,7 +545,18 @@ class Clicker {
 	 */
 
 	public ArrayList<TextView> clickInRecyclerView(int line) {
-		return clickInRecyclerView(line, 0, false, 0);
+		return clickInRecyclerView(line, 0, 0, false, 0);
+	}
+	
+	/**
+	 * Clicks on a View with a specified resource id located in a specified list line
+	 *
+	 * @param line the line where the View is located
+	 * @param id the resource id of the View
+	 */
+
+	public void clickInRecyclerView(int line, int id) {
+		clickInRecyclerView(line, 0, id, false, 0);
 	}
 
 	
@@ -556,7 +569,7 @@ class Clicker {
 	 * @return an {@code ArrayList} of the {@code TextView}s located in the list line
 	 */
 
-	public ArrayList<TextView> clickInRecyclerView(int itemIndex, int recyclerViewIndex, boolean longClick, int time) {
+	public ArrayList<TextView> clickInRecyclerView(int itemIndex, int recyclerViewIndex, int id, boolean longClick, int time) {
 		View viewOnLine = null;
 		final long endTime = SystemClock.uptimeMillis() + Timeout.getSmallTimeout();
 
@@ -577,11 +590,25 @@ class Clicker {
 		if(viewOnLine != null){
 			views = viewFetcher.getViews(viewOnLine, true);
 			views = RobotiumUtils.removeInvisibleViews(views);
-			clickOnScreen(viewOnLine, longClick, time);
+			
+			if(id == 0){
+				clickOnScreen(viewOnLine, longClick, time);
+			}
+			else{
+				clickOnScreen(getView(id, views));
+			}
 		}
 		return RobotiumUtils.filterViews(TextView.class, views);
 	}
 	
+	private View getView(int id, List<View> views){
+		for(View view : views){
+			if(id == view.getId()){
+				return view;
+			}
+		}
+		return null;
+	}
 	
 	private void failIfIndexHigherThenChildCount(ViewGroup viewGroup, int index, long endTime){
 		while(index > viewGroup.getChildCount()){
