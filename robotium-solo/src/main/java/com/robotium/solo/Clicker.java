@@ -499,7 +499,18 @@ class Clicker {
 	 */
 
 	public ArrayList<TextView> clickInList(int line) {
-		return clickInList(line, 0, false, 0);
+		return clickInList(line, 0, 0, false, 0);
+	}
+	
+	/**
+	 * Clicks on a View with a specified resource id located in a specified list line
+	 *
+	 * @param line the line where the View is located
+	 * @param id the resource id of the View
+	 */
+
+	public void clickInList(int line, int id) {
+		clickInList(line, 0, id, false, 0);
 	}
 
 	/**
@@ -508,10 +519,11 @@ class Clicker {
 	 *
 	 * @param line the line that should be clicked
 	 * @param index the index of the list. E.g. Index 1 if two lists are available
+	 * @param id the resource id of the View to click
 	 * @return an {@code ArrayList} of the {@code TextView}s located in the list line
 	 */
 
-	public ArrayList<TextView> clickInList(int line, int index, boolean longClick, int time) {
+	public ArrayList<TextView> clickInList(int line, int index, int id, boolean longClick, int time) {
 		final long endTime = SystemClock.uptimeMillis() + Timeout.getSmallTimeout();
 
 		int lineIndex = line - 1;
@@ -520,18 +532,24 @@ class Clicker {
 
 		ArrayList<View> views = new ArrayList<View>();
 		final AbsListView absListView = waiter.waitForAndGetView(index, AbsListView.class);
-		
+
 		if(absListView == null)
 			Assert.fail("AbsListView is null!");
 
 		failIfIndexHigherThenChildCount(absListView, lineIndex, endTime);
-		
+
 		View viewOnLine = getViewOnAbsListLine(absListView, index, lineIndex);
-		
+
 		if(viewOnLine != null){
 			views = viewFetcher.getViews(viewOnLine, true);
 			views = RobotiumUtils.removeInvisibleViews(views);
-			clickOnScreen(viewOnLine, longClick, time);
+
+			if(id == 0){
+				clickOnScreen(viewOnLine, longClick, time);
+			}
+			else{
+				clickOnScreen(getView(id, views));
+			}
 		}
 		return RobotiumUtils.filterViews(TextView.class, views);
 	}
@@ -549,14 +567,14 @@ class Clicker {
 	}
 	
 	/**
-	 * Clicks on a View with a specified resource id located in a specified list line
+	 * Clicks on a View with a specified resource id located in a specified RecyclerView itemIndex
 	 *
-	 * @param line the line where the View is located
+	 * @param itemIndex the index where the View is located
 	 * @param id the resource id of the View
 	 */
 
-	public void clickInRecyclerView(int line, int id) {
-		clickInRecyclerView(line, 0, id, false, 0);
+	public void clickInRecyclerView(int itemIndex, int id) {
+		clickInRecyclerView(itemIndex, 0, id, false, 0);
 	}
 
 	
@@ -566,6 +584,7 @@ class Clicker {
 	 *
 	 * @param itemIndex the item index that should be clicked
 	 * @param recyclerViewIndex the index of the RecyclerView. E.g. Index 1 if two RecyclerViews are available
+	 * @param id the resource id of the View to click
 	 * @return an {@code ArrayList} of the {@code TextView}s located in the list line
 	 */
 
