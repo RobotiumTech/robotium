@@ -13,10 +13,10 @@ See [Getting Started](https://github.com/RobotiumTech/robotium/wiki/Getting-Star
 Join the discussions in the [Robotium Developers Group](http://groups.google.com/group/robotium-developers). 
 
 ----
-### NEWS: Robotium 5.5.4 is released!
-[Robotium 5.5.4](https://github.com/RobotiumTech/robotium/wiki/Downloads) is the fastest, most accurate and stable version of Robotium yet. Note: Robotium has a new package name: com.robotium.solo.
+### NEWS: Robotium 5.6.0 is released!
+[Robotium 5.6.0](https://github.com/RobotiumTech/robotium/wiki/Downloads) is the fastest, most accurate and stable version of Robotium yet.
 
-New functionality includes: scrollDownRecyclerView(int index), scrollUpRecyclerView(int index), pressSoftKeyboardGoButton(), pressSoftKeyboardDoneButton() and more. See the [Javadoc](http://recorder.robotium.com/javadoc/) for more information.
+New functionality includes: clickInRecyclerView(int itemIndex, int recyclerViewIndex, int id) and Config.sleepDuration, Config.sleepMiniDuration (to adjust the execution speed, lower means faster) and more. See the [Javadoc](http://recorder.robotium.com/javadoc/) for more information.
 
 ----
 
