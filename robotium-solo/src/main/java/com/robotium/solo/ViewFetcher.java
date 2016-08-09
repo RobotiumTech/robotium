@@ -192,7 +192,7 @@ class ViewFetcher {
 
 	/**
 	 * Returns whether a view is a DecorView
- 	 * @param view
+	 * @param view
 	 * @return true if view is a DecorView, false otherwise
 	 */
 	private boolean isDecorView(View view) {
@@ -306,14 +306,14 @@ class ViewFetcher {
 		final int[] xyParent = new int[2];
 		View parent = getScrollOrListParent(view);
 		final float windowHeight;
-		
+
 		if(parent == null){
 			WindowManager windowManager = (WindowManager) 
 					instrumentation.getTargetContext().getSystemService(Context.WINDOW_SERVICE);
-			
+
 			windowHeight = windowManager.getDefaultDisplay().getHeight();
 		}
-		
+
 		else{
 			parent.getLocationOnScreen(xyParent);
 			windowHeight = xyParent[1] + parent.getHeight();
@@ -374,7 +374,7 @@ class ViewFetcher {
 	 * @return most recently drawn view, or null if no views were passed 
 	 */
 
-	public final <T extends View> T getFreshestView(ArrayList<T> views){		
+	public final <T extends View> T getFreshestView(ArrayList<T> views){       
 		final int[] locationOnScreen = new int[2];
 		T viewToReturn = null;
 		long drawingTime = 0;
@@ -385,21 +385,27 @@ class ViewFetcher {
 			if(view != null){
 				view.getLocationOnScreen(locationOnScreen);
 
-				if (locationOnScreen[0] < 0) 
+				if (locationOnScreen[0] < 0 || !(view.getHeight() > 0)){
 					continue;
+				}
 
-				if(view.getDrawingTime() > drawingTime && view.getHeight() > 0){
+				if(view.getDrawingTime() > drawingTime){
 					drawingTime = view.getDrawingTime();
 					viewToReturn = view;
 				}
-				
+				else if (view.getDrawingTime() == drawingTime){
+					if(view.isFocused()){
+						viewToReturn = view;
+					}
+				}
+
 			}
 		}
 		views = null;
 		return viewToReturn;
 	}
-	
-	
+
+
 	/**
 	 * Waits for a RecyclerView and returns it.
 	 * 
@@ -414,13 +420,13 @@ class ViewFetcher {
 		while (SystemClock.uptimeMillis() < endTime) {
 			View recyclerView = getRecyclerView(true, recyclerViewIndex);
 			if(recyclerView != null){
-					return (ViewGroup) recyclerView;
+				return (ViewGroup) recyclerView;
 			}
 		}
 		return null;
 	}
-	
-	
+
+
 	/**
 	 * Returns a RecyclerView or null if none is found
 	 * 
@@ -428,7 +434,7 @@ class ViewFetcher {
 	 * 
 	 * @return a RecyclerView
 	 */
-	
+
 	public View getRecyclerView(boolean shouldSleep, int recyclerViewIndex){
 		Set<View> uniqueViews = new HashSet<View>();
 		if(shouldSleep){
@@ -440,7 +446,7 @@ class ViewFetcher {
 		views = RobotiumUtils.removeInvisibleViews(views);
 
 		for(View view : views){
-			
+
 			if(isViewType(view.getClass(), "widget.RecyclerView")){
 				uniqueViews.add(view);
 			}
@@ -451,14 +457,14 @@ class ViewFetcher {
 		}
 		return null;
 	}
-	
+
 	/**
 	 * Returns a Set of all RecyclerView or empty Set if none is found
 	 * 
 	 * 
 	 * @return a Set of RecyclerViews
 	 */
-	
+
 	public List<View> getAllRecyclerViews(boolean shouldSleep){
 		List <View> viewsToReturn = new ArrayList<View>();
 		if(shouldSleep){
@@ -470,7 +476,7 @@ class ViewFetcher {
 		views = RobotiumUtils.removeInvisibleViews(views);
 
 		for(View view : views){
-			
+
 			if(isViewType(view.getClass(), "widget.RecyclerView")){
 				viewsToReturn.add(view);
 			}
@@ -478,18 +484,18 @@ class ViewFetcher {
 		}
 		return viewsToReturn;
 	}
-	
-	 private boolean isViewType(Class<?> aClass, String typeName) {
-		   if (aClass.getName().contains(typeName)) {
-		       return true;
-		   }
 
-		   if (aClass.getSuperclass() != null) {
-		       return isViewType(aClass.getSuperclass(), typeName);
-		   }
-
-		   return false;
+	private boolean isViewType(Class<?> aClass, String typeName) {
+		if (aClass.getName().contains(typeName)) {
+			return true;
 		}
+
+		if (aClass.getSuperclass() != null) {
+			return isViewType(aClass.getSuperclass(), typeName);
+		}
+
+		return false;
+	}
 
 	/**
 	 * Returns an identical View to the one specified.
@@ -511,7 +517,7 @@ class ViewFetcher {
 				break;
 			}
 		}
-		
+
 		return viewToReturn;
 	}
 
@@ -531,7 +537,7 @@ class ViewFetcher {
 
 		if (firstView.getParent() != null && firstView.getParent() instanceof View && 
 				secondView.getParent() != null && secondView.getParent() instanceof View) {
-			
+
 			return areViewsIdentical((View) firstView.getParent(), (View) secondView.getParent());
 		} else {
 			return true;

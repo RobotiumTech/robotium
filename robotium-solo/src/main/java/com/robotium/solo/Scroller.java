@@ -180,45 +180,38 @@ class Scroller {
 
 	@SuppressWarnings("unchecked")
 	public boolean scroll(int direction, boolean allTheWay) {
-		ArrayList<View> viewList = RobotiumUtils.
-				removeInvisibleViews(viewFetcher.getAllViews(true));
-		
-		ArrayList<View> views = RobotiumUtils.filterViewsToSet(new Class[] { ListView.class,
-				ScrollView.class, GridView.class, WebView.class}, viewList);
-		
-		View view = viewFetcher.getFreshestView(views);
-		
-		ArrayList<View> viewsToCheck = new ArrayList<View>();
-		viewsToCheck.add(view);
-		
-		List<View> recyclerViews = viewFetcher.getAllRecyclerViews(true);
-		
-		for(View viewToScroll : recyclerViews){
-			viewsToCheck.add(viewToScroll);
-		}
-	
-		view = viewFetcher.getFreshestView(viewsToCheck);
-		
-		
-		if (view == null) {
-				return false;
-		}
+		   ArrayList<View> viewList = RobotiumUtils.removeInvisibleViews(viewFetcher.getAllViews(true));
 
-		if (view instanceof AbsListView) {
-			return scrollList((AbsListView)view, direction, allTheWay);
-		}
+		   ArrayList<View> views = RobotiumUtils.filterViewsToSet(new Class[] { ListView.class,
+		         ScrollView.class, GridView.class, WebView.class}, viewList);
 
-		if(view instanceof WebView){
-			return scrollWebView((WebView)view, direction, allTheWay);
-		}
+		   List<View> recyclerViews = viewFetcher.getAllRecyclerViews(true);
+		   
+		   for(View viewToScroll : recyclerViews){
+		      views.add(viewToScroll);
+		   }
 
-		if (allTheWay) {
-			scrollViewAllTheWay(view, direction);
-			return false;
-		} else {
-			return scrollView(view, direction);
+		   View view = viewFetcher.getFreshestView(views);
+		   
+		   if (view == null) {
+		         return false;
+		   }
+
+		   if (view instanceof AbsListView) {
+		      return scrollList((AbsListView)view, direction, allTheWay);
+		   }
+
+		   if(view instanceof WebView){
+		      return scrollWebView((WebView)view, direction, allTheWay);
+		   }
+
+		   if (allTheWay) {
+		      scrollViewAllTheWay(view, direction);
+		      return false;
+		   } else {
+		      return scrollView(view, direction);
+		   }
 		}
-	}
 	
 	/**
 	 * Scrolls a WebView.
