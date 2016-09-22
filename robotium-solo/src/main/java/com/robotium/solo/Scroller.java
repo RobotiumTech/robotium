@@ -180,39 +180,39 @@ class Scroller {
 
 	@SuppressWarnings("unchecked")
 	public boolean scroll(int direction, boolean allTheWay) {
-		   ArrayList<View> viewList = RobotiumUtils.removeInvisibleViews(viewFetcher.getAllViews(true));
+		ArrayList<View> viewList = RobotiumUtils.removeInvisibleViews(viewFetcher.getAllViews(true));
 
-		   ArrayList<View> views = RobotiumUtils.filterViewsToSet(new Class[] { ListView.class,
-		         ScrollView.class, GridView.class, WebView.class}, viewList);
+		ArrayList<View> filteredViews = RobotiumUtils.filterViewsToSet(new Class[] { ListView.class,
+				ScrollView.class, GridView.class, WebView.class}, viewList);
 
-		   List<View> recyclerViews = viewFetcher.getAllRecyclerViews(true);
-		   
-		   for(View viewToScroll : recyclerViews){
-		      views.add(viewToScroll);
-		   }
+		List<View> scrollableSupportPackageViews = viewFetcher.getScrollableSupportPackageViews(true);
 
-		   View view = viewFetcher.getFreshestView(views);
-		   
-		   if (view == null) {
-		         return false;
-		   }
-
-		   if (view instanceof AbsListView) {
-		      return scrollList((AbsListView)view, direction, allTheWay);
-		   }
-
-		   if(view instanceof WebView){
-		      return scrollWebView((WebView)view, direction, allTheWay);
-		   }
-
-		   if (allTheWay) {
-		      scrollViewAllTheWay(view, direction);
-		      return false;
-		   } else {
-		      return scrollView(view, direction);
-		   }
+		for(View viewToScroll : scrollableSupportPackageViews){
+			filteredViews.add(viewToScroll);
 		}
-	
+
+		View view = viewFetcher.getFreshestView(filteredViews);
+
+		if (view == null) {
+			return false;
+		}
+
+		if (view instanceof AbsListView) {
+			return scrollList((AbsListView)view, direction, allTheWay);
+		}
+
+		if(view instanceof WebView){
+			return scrollWebView((WebView)view, direction, allTheWay);
+		}
+
+		if (allTheWay) {
+			scrollViewAllTheWay(view, direction);
+			return false;
+		} else {
+			return scrollView(view, direction);
+		}
+	}
+
 	/**
 	 * Scrolls a WebView.
 	 * 
@@ -221,7 +221,7 @@ class Scroller {
 	 * @param allTheWay {@code true} to scroll the view all the way up or down, {@code false} to scroll one page up or down                          or down.
 	 * @return {@code true} if more scrolling can be done
 	 */
-	
+
 	public boolean scrollWebView(final WebView webView, int direction, final boolean allTheWay){
 
 		if (direction == DOWN) {
@@ -257,10 +257,10 @@ class Scroller {
 		}
 
 		if (direction == DOWN) {
-			
+
 			int listCount = absListView.getCount();
 			int lastVisiblePosition = absListView.getLastVisiblePosition();
-			
+
 			if (allTheWay) {
 				scrollListToLine(absListView, listCount-1);
 				return false;
@@ -272,9 +272,9 @@ class Scroller {
 				}
 				return false;
 			}
-			
+
 			int firstVisiblePosition = absListView.getFirstVisiblePosition();
-			
+
 
 			if(firstVisiblePosition != lastVisiblePosition)
 				scrollListToLine(absListView, lastVisiblePosition);
@@ -284,7 +284,7 @@ class Scroller {
 
 		} else if (direction == UP) {
 			int firstVisiblePosition = absListView.getFirstVisiblePosition();
-			
+
 			if (allTheWay || firstVisiblePosition < 2) {
 				scrollListToLine(absListView, 0);
 				return false;
@@ -292,7 +292,7 @@ class Scroller {
 			int lastVisiblePosition = absListView.getLastVisiblePosition();
 
 			final int lines = lastVisiblePosition - firstVisiblePosition;
-			
+
 			int lineToScrollTo = firstVisiblePosition - lines;
 
 			if(lineToScrollTo == lastVisiblePosition)
@@ -326,7 +326,7 @@ class Scroller {
 		else {
 			lineToMoveTo = line;
 		}
-		
+
 		inst.runOnMainSync(new Runnable(){
 			public void run(){
 				view.setSelection(lineToMoveTo);
@@ -347,7 +347,7 @@ class Scroller {
 	public void scrollToSide(Side side, float scrollPosition, int stepCount) {
 		WindowManager windowManager = (WindowManager) 
 				inst.getTargetContext().getSystemService(Context.WINDOW_SERVICE);
-		
+
 		int screenHeight = windowManager.getDefaultDisplay()
 				.getHeight();
 		int screenWidth = windowManager.getDefaultDisplay()

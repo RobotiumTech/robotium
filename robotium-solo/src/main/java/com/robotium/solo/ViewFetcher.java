@@ -465,7 +465,7 @@ class ViewFetcher {
 	 * @return a Set of RecyclerViews
 	 */
 
-	public List<View> getAllRecyclerViews(boolean shouldSleep){
+	public List<View> getScrollableSupportPackageViews(boolean shouldSleep){
 		List <View> viewsToReturn = new ArrayList<View>();
 		if(shouldSleep){
 			sleeper.sleep();
@@ -477,7 +477,8 @@ class ViewFetcher {
 
 		for(View view : views){
 
-			if(isViewType(view.getClass(), "widget.RecyclerView")){
+			if(isViewType(view.getClass(), "widget.RecyclerView") || 
+					isViewType(view.getClass(), "widget.NestedScrollView")){
 				viewsToReturn.add(view);
 			}
 
