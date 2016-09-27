@@ -202,6 +202,7 @@ class Clicker {
 			}
 		}
 
+		sleeper.sleep(300);
 		if (longClick)
 			clickLongOnScreen(x, y, time, view);
 		else
@@ -216,11 +217,16 @@ class Clicker {
 	 */
 
 	private float[] getClickCoordinates(View view){
-		sleeper.sleep(200);
 		int[] xyLocation = new int[2];
 		float[] xyToClick = new float[2];
+		int trialCount = 0;
 
 		view.getLocationOnScreen(xyLocation);
+		while(xyLocation[0] == 0 && xyLocation[1] == 0 && trialCount < 10) {
+			sleeper.sleep(300);
+			view.getLocationOnScreen(xyLocation);
+			trialCount++;
+		}
 
 		final int viewWidth = view.getWidth();
 		final int viewHeight = view.getHeight();
