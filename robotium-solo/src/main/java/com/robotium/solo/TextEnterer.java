@@ -1,9 +1,10 @@
 package com.robotium.solo;
 
-import junit.framework.Assert;
 import android.app.Instrumentation;
 import android.text.InputType;
 import android.widget.EditText;
+
+import junit.framework.Assert;
 
 
 /**
@@ -36,25 +37,26 @@ class TextEnterer{
 
 	/**
 	 * Sets an {@code EditText} text
-	 * 
-	 * @param index the index of the {@code EditText} 
+	 *
+	 * @param editText the target {@code EditText}
 	 * @param text the text that should be set
 	 */
-
 	public void setEditText(final EditText editText, final String text) {
 		if(editText != null){
 			final String previousText = editText.getText().toString();
 	
-			inst.runOnMainSync(new Runnable()
-			{
-				public void run()
-				{
-					editText.setInputType(InputType.TYPE_NULL); 
-					editText.performClick();
-					dialogUtils.hideSoftKeyboard(editText, false, false);
-					if(text.equals(""))
+			inst.runOnMainSync(new Runnable() {
+				public void run() {
+					editText.setInputType(InputType.TYPE_NULL);
+				}
+			});
+			clicker.clickOnScreen(editText, false, 0);
+			dialogUtils.hideSoftKeyboard(editText, false, false);
+			inst.runOnMainSync(new Runnable() {
+				public void run() {
+					if (text.equals(""))
 						editText.setText(text);
-					else{
+					else {
 						editText.setText(previousText + text);
 						editText.setCursorVisible(false);
 					}
@@ -65,8 +67,8 @@ class TextEnterer{
 	
 	/**
 	 * Types text in an {@code EditText} 
-	 * 
-	 * @param index the index of the {@code EditText} 
+	 *
+	 * @param editText the target {@code EditText}
 	 * @param text the text that should be typed
 	 */
 
@@ -86,11 +88,10 @@ class TextEnterer{
 			int retry = 0;
 
 			while(!successfull && retry < 10) {
-
-				try{
+				try {
 					inst.sendStringSync(text);
 					successfull = true;
-				}catch(SecurityException e){
+				} catch(SecurityException e) {
 					dialogUtils.hideSoftKeyboard(editText, true, true);
 					retry++;
 				}
