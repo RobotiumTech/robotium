@@ -1,5 +1,6 @@
 package com.robotium.solo;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -177,4 +178,19 @@ public class RobotiumUtils {
 		}
 		return filteredViews;
 	}
+
+    /**
+     * Clear log from logcat by executing logcat -c
+     * This is a blocking call and will return once the process has finished
+     * 
+     */
+    public static void clearLogcat() {
+        try {
+            Runtime.getRuntime().exec("logcat -c").waitFor();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
 }
